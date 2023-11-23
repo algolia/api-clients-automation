@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mime;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -34,9 +35,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>AddApiKeyResponse</returns>
-    AddApiKeyResponse AddApiKey(ApiKey apiKey, int operationIndex = 0);
+    AddApiKeyResponse AddApiKey(ApiKey apiKey);
 
     /// <summary>
     /// Add API key.
@@ -46,9 +46,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of AddApiKeyResponse</returns>
-    ApiResponse<AddApiKeyResponse> AddApiKeyWithHttpInfo(ApiKey apiKey, int operationIndex = 0);
+    ApiResponse<AddApiKeyResponse> AddApiKeyWithHttpInfo(ApiKey apiKey);
     /// <summary>
     /// Add or update a record (using objectID).
     /// </summary>
@@ -59,9 +58,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtWithObjectIdResponse</returns>
-    UpdatedAtWithObjectIdResponse AddOrUpdateObject(string indexName, string objectID, Object body, int operationIndex = 0);
+    UpdatedAtWithObjectIdResponse AddOrUpdateObject(string indexName, string objectID, Object body);
 
     /// <summary>
     /// Add or update a record (using objectID).
@@ -73,9 +71,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtWithObjectIdResponse</returns>
-    ApiResponse<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectWithHttpInfo(string indexName, string objectID, Object body, int operationIndex = 0);
+    ApiResponse<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectWithHttpInfo(string indexName, string objectID, Object body);
     /// <summary>
     /// Add a source.
     /// </summary>
@@ -84,9 +81,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    CreatedAtResponse AppendSource(Source source, int operationIndex = 0);
+    CreatedAtResponse AppendSource(Source source);
 
     /// <summary>
     /// Add a source.
@@ -96,9 +92,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    ApiResponse<CreatedAtResponse> AppendSourceWithHttpInfo(Source source, int operationIndex = 0);
+    ApiResponse<CreatedAtResponse> AppendSourceWithHttpInfo(Source source);
     /// <summary>
     /// Assign or move a user ID.
     /// </summary>
@@ -108,9 +103,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0);
+    CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams);
 
     /// <summary>
     /// Assign or move a user ID.
@@ -121,9 +115,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    ApiResponse<CreatedAtResponse> AssignUserIdWithHttpInfo(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0);
+    ApiResponse<CreatedAtResponse> AssignUserIdWithHttpInfo(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams);
     /// <summary>
     /// Batch write operations on one index.
     /// </summary>
@@ -133,9 +126,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BatchResponse</returns>
-    BatchResponse Batch(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0);
+    BatchResponse Batch(string indexName, BatchWriteParams batchWriteParams);
 
     /// <summary>
     /// Batch write operations on one index.
@@ -146,9 +138,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BatchResponse</returns>
-    ApiResponse<BatchResponse> BatchWithHttpInfo(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0);
+    ApiResponse<BatchResponse> BatchWithHttpInfo(string indexName, BatchWriteParams batchWriteParams);
     /// <summary>
     /// Batch assign userIDs.
     /// </summary>
@@ -158,9 +149,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0);
+    CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams);
 
     /// <summary>
     /// Batch assign userIDs.
@@ -171,9 +161,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    ApiResponse<CreatedAtResponse> BatchAssignUserIdsWithHttpInfo(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0);
+    ApiResponse<CreatedAtResponse> BatchAssignUserIdsWithHttpInfo(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams);
     /// <summary>
     /// Batch dictionary entries.
     /// </summary>
@@ -183,9 +172,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse BatchDictionaryEntries(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0);
+    UpdatedAtResponse BatchDictionaryEntries(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams);
 
     /// <summary>
     /// Batch dictionary entries.
@@ -196,9 +184,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> BatchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> BatchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams);
     /// <summary>
     /// Get all records from an index.
     /// </summary>
@@ -208,9 +195,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BrowseResponse</returns>
-    BrowseResponse Browse(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0);
+    BrowseResponse Browse(string indexName, BrowseParams browseParams = default(BrowseParams));
 
     /// <summary>
     /// Get all records from an index.
@@ -221,9 +207,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BrowseResponse</returns>
-    ApiResponse<BrowseResponse> BrowseWithHttpInfo(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0);
+    ApiResponse<BrowseResponse> BrowseWithHttpInfo(string indexName, BrowseParams browseParams = default(BrowseParams));
     /// <summary>
     /// Delete all synonyms.
     /// </summary>
@@ -233,9 +218,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse ClearAllSynonyms(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse ClearAllSynonyms(string indexName, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Delete all synonyms.
@@ -246,9 +230,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> ClearAllSynonymsWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> ClearAllSynonymsWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Delete all records from an index.
     /// </summary>
@@ -257,9 +240,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse ClearObjects(string indexName, int operationIndex = 0);
+    UpdatedAtResponse ClearObjects(string indexName);
 
     /// <summary>
     /// Delete all records from an index.
@@ -269,9 +251,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> ClearObjectsWithHttpInfo(string indexName, int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> ClearObjectsWithHttpInfo(string indexName);
     /// <summary>
     /// Delete all rules.
     /// </summary>
@@ -281,9 +262,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse ClearRules(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse ClearRules(string indexName, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Delete all rules.
@@ -294,9 +274,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> ClearRulesWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> ClearRulesWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -306,9 +285,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    Object Del(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0);
+    Object Del(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -319,9 +297,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    ApiResponse<Object> DelWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0);
+    ApiResponse<Object> DelWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>));
     /// <summary>
     /// Delete API key.
     /// </summary>
@@ -330,9 +307,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeleteApiKeyResponse</returns>
-    DeleteApiKeyResponse DeleteApiKey(string key, int operationIndex = 0);
+    DeleteApiKeyResponse DeleteApiKey(string key);
 
     /// <summary>
     /// Delete API key.
@@ -342,9 +318,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeleteApiKeyResponse</returns>
-    ApiResponse<DeleteApiKeyResponse> DeleteApiKeyWithHttpInfo(string key, int operationIndex = 0);
+    ApiResponse<DeleteApiKeyResponse> DeleteApiKeyWithHttpInfo(string key);
     /// <summary>
     /// Delete all records matching a query.
     /// </summary>
@@ -354,9 +329,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    DeletedAtResponse DeleteBy(string indexName, DeleteByParams deleteByParams, int operationIndex = 0);
+    DeletedAtResponse DeleteBy(string indexName, DeleteByParams deleteByParams);
 
     /// <summary>
     /// Delete all records matching a query.
@@ -367,9 +341,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    ApiResponse<DeletedAtResponse> DeleteByWithHttpInfo(string indexName, DeleteByParams deleteByParams, int operationIndex = 0);
+    ApiResponse<DeletedAtResponse> DeleteByWithHttpInfo(string indexName, DeleteByParams deleteByParams);
     /// <summary>
     /// Delete index.
     /// </summary>
@@ -378,9 +351,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    DeletedAtResponse DeleteIndex(string indexName, int operationIndex = 0);
+    DeletedAtResponse DeleteIndex(string indexName);
 
     /// <summary>
     /// Delete index.
@@ -390,9 +362,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    ApiResponse<DeletedAtResponse> DeleteIndexWithHttpInfo(string indexName, int operationIndex = 0);
+    ApiResponse<DeletedAtResponse> DeleteIndexWithHttpInfo(string indexName);
     /// <summary>
     /// Delete a record.
     /// </summary>
@@ -402,9 +373,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    DeletedAtResponse DeleteObject(string indexName, string objectID, int operationIndex = 0);
+    DeletedAtResponse DeleteObject(string indexName, string objectID);
 
     /// <summary>
     /// Delete a record.
@@ -415,9 +385,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    ApiResponse<DeletedAtResponse> DeleteObjectWithHttpInfo(string indexName, string objectID, int operationIndex = 0);
+    ApiResponse<DeletedAtResponse> DeleteObjectWithHttpInfo(string indexName, string objectID);
     /// <summary>
     /// Delete a rule.
     /// </summary>
@@ -428,9 +397,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse DeleteRule(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse DeleteRule(string indexName, string objectID, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Delete a rule.
@@ -442,9 +410,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> DeleteRuleWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> DeleteRuleWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Remove a source.
     /// </summary>
@@ -453,9 +420,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeleteSourceResponse</returns>
-    DeleteSourceResponse DeleteSource(string source, int operationIndex = 0);
+    DeleteSourceResponse DeleteSource(string source);
 
     /// <summary>
     /// Remove a source.
@@ -465,9 +431,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeleteSourceResponse</returns>
-    ApiResponse<DeleteSourceResponse> DeleteSourceWithHttpInfo(string source, int operationIndex = 0);
+    ApiResponse<DeleteSourceResponse> DeleteSourceWithHttpInfo(string source);
     /// <summary>
     /// Delete a synonym.
     /// </summary>
@@ -478,9 +443,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    DeletedAtResponse DeleteSynonym(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    DeletedAtResponse DeleteSynonym(string indexName, string objectID, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Delete a synonym.
@@ -492,9 +456,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    ApiResponse<DeletedAtResponse> DeleteSynonymWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<DeletedAtResponse> DeleteSynonymWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -504,9 +467,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    Object Get(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0);
+    Object Get(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -517,9 +479,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    ApiResponse<Object> GetWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0);
+    ApiResponse<Object> GetWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>));
     /// <summary>
     /// Get API key permissions.
     /// </summary>
@@ -528,9 +489,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetApiKeyResponse</returns>
-    GetApiKeyResponse GetApiKey(string key, int operationIndex = 0);
+    GetApiKeyResponse GetApiKey(string key);
 
     /// <summary>
     /// Get API key permissions.
@@ -540,9 +500,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetApiKeyResponse</returns>
-    ApiResponse<GetApiKeyResponse> GetApiKeyWithHttpInfo(string key, int operationIndex = 0);
+    ApiResponse<GetApiKeyResponse> GetApiKeyWithHttpInfo(string key);
     /// <summary>
     /// List available languages.
     /// </summary>
@@ -550,9 +509,8 @@ namespace Org.OpenAPITools.Api
     /// Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Dictionary&lt;string, Languages&gt;</returns>
-    Dictionary<string, Languages> GetDictionaryLanguages(int operationIndex = 0);
+    Dictionary<string, Languages> GetDictionaryLanguages();
 
     /// <summary>
     /// List available languages.
@@ -561,9 +519,8 @@ namespace Org.OpenAPITools.Api
     /// Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Dictionary&lt;string, Languages&gt;</returns>
-    ApiResponse<Dictionary<string, Languages>> GetDictionaryLanguagesWithHttpInfo(int operationIndex = 0);
+    ApiResponse<Dictionary<string, Languages>> GetDictionaryLanguagesWithHttpInfo();
     /// <summary>
     /// Get stop word settings.
     /// </summary>
@@ -571,9 +528,8 @@ namespace Org.OpenAPITools.Api
     /// Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetDictionarySettingsResponse</returns>
-    GetDictionarySettingsResponse GetDictionarySettings(int operationIndex = 0);
+    GetDictionarySettingsResponse GetDictionarySettings();
 
     /// <summary>
     /// Get stop word settings.
@@ -582,9 +538,8 @@ namespace Org.OpenAPITools.Api
     /// Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetDictionarySettingsResponse</returns>
-    ApiResponse<GetDictionarySettingsResponse> GetDictionarySettingsWithHttpInfo(int operationIndex = 0);
+    ApiResponse<GetDictionarySettingsResponse> GetDictionarySettingsWithHttpInfo();
     /// <summary>
     /// Return the latest log entries.
     /// </summary>
@@ -596,9 +551,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetLogsResponse</returns>
-    GetLogsResponse GetLogs(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0);
+    GetLogsResponse GetLogs(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType));
 
     /// <summary>
     /// Return the latest log entries.
@@ -611,9 +565,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetLogsResponse</returns>
-    ApiResponse<GetLogsResponse> GetLogsWithHttpInfo(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0);
+    ApiResponse<GetLogsResponse> GetLogsWithHttpInfo(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType));
     /// <summary>
     /// Get a record.
     /// </summary>
@@ -624,9 +577,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Dictionary&lt;string, string&gt;</returns>
-    Dictionary<string, string> GetObject(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0);
+    Dictionary<string, string> GetObject(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>));
 
     /// <summary>
     /// Get a record.
@@ -638,9 +590,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Dictionary&lt;string, string&gt;</returns>
-    ApiResponse<Dictionary<string, string>> GetObjectWithHttpInfo(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0);
+    ApiResponse<Dictionary<string, string>> GetObjectWithHttpInfo(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>));
     /// <summary>
     /// Get multiple records.
     /// </summary>
@@ -649,9 +600,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetObjectsResponse</returns>
-    GetObjectsResponse GetObjects(GetObjectsParams getObjectsParams, int operationIndex = 0);
+    GetObjectsResponse GetObjects(GetObjectsParams getObjectsParams);
 
     /// <summary>
     /// Get multiple records.
@@ -661,9 +611,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetObjectsResponse</returns>
-    ApiResponse<GetObjectsResponse> GetObjectsWithHttpInfo(GetObjectsParams getObjectsParams, int operationIndex = 0);
+    ApiResponse<GetObjectsResponse> GetObjectsWithHttpInfo(GetObjectsParams getObjectsParams);
     /// <summary>
     /// Get a rule.
     /// </summary>
@@ -673,9 +622,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Rule</returns>
-    Rule GetRule(string indexName, string objectID, int operationIndex = 0);
+    Rule GetRule(string indexName, string objectID);
 
     /// <summary>
     /// Get a rule.
@@ -686,9 +634,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Rule</returns>
-    ApiResponse<Rule> GetRuleWithHttpInfo(string indexName, string objectID, int operationIndex = 0);
+    ApiResponse<Rule> GetRuleWithHttpInfo(string indexName, string objectID);
     /// <summary>
     /// Get index settings.
     /// </summary>
@@ -697,9 +644,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>IndexSettings</returns>
-    IndexSettings GetSettings(string indexName, int operationIndex = 0);
+    IndexSettings GetSettings(string indexName);
 
     /// <summary>
     /// Get index settings.
@@ -709,9 +655,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of IndexSettings</returns>
-    ApiResponse<IndexSettings> GetSettingsWithHttpInfo(string indexName, int operationIndex = 0);
+    ApiResponse<IndexSettings> GetSettingsWithHttpInfo(string indexName);
     /// <summary>
     /// Get all allowed IP addresses.
     /// </summary>
@@ -719,9 +664,8 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed sources (IP addresses).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>List&lt;Source&gt;</returns>
-    List<Source> GetSources(int operationIndex = 0);
+    List<Source> GetSources();
 
     /// <summary>
     /// Get all allowed IP addresses.
@@ -730,9 +674,8 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed sources (IP addresses).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of List&lt;Source&gt;</returns>
-    ApiResponse<List<Source>> GetSourcesWithHttpInfo(int operationIndex = 0);
+    ApiResponse<List<Source>> GetSourcesWithHttpInfo();
     /// <summary>
     /// Get a synonym object.
     /// </summary>
@@ -742,9 +685,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SynonymHit</returns>
-    SynonymHit GetSynonym(string indexName, string objectID, int operationIndex = 0);
+    SynonymHit GetSynonym(string indexName, string objectID);
 
     /// <summary>
     /// Get a synonym object.
@@ -755,9 +697,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SynonymHit</returns>
-    ApiResponse<SynonymHit> GetSynonymWithHttpInfo(string indexName, string objectID, int operationIndex = 0);
+    ApiResponse<SynonymHit> GetSynonymWithHttpInfo(string indexName, string objectID);
     /// <summary>
     /// Check a task&#39;s status.
     /// </summary>
@@ -767,9 +708,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetTaskResponse</returns>
-    GetTaskResponse GetTask(string indexName, long taskID, int operationIndex = 0);
+    GetTaskResponse GetTask(string indexName, long taskID);
 
     /// <summary>
     /// Check a task&#39;s status.
@@ -780,9 +720,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetTaskResponse</returns>
-    ApiResponse<GetTaskResponse> GetTaskWithHttpInfo(string indexName, long taskID, int operationIndex = 0);
+    ApiResponse<GetTaskResponse> GetTaskWithHttpInfo(string indexName, long taskID);
     /// <summary>
     /// Get top userID.
     /// </summary>
@@ -790,9 +729,8 @@ namespace Org.OpenAPITools.Api
     /// Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetTopUserIdsResponse</returns>
-    GetTopUserIdsResponse GetTopUserIds(int operationIndex = 0);
+    GetTopUserIdsResponse GetTopUserIds();
 
     /// <summary>
     /// Get top userID.
@@ -801,9 +739,8 @@ namespace Org.OpenAPITools.Api
     /// Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetTopUserIdsResponse</returns>
-    ApiResponse<GetTopUserIdsResponse> GetTopUserIdsWithHttpInfo(int operationIndex = 0);
+    ApiResponse<GetTopUserIdsResponse> GetTopUserIdsWithHttpInfo();
     /// <summary>
     /// Get userID.
     /// </summary>
@@ -812,9 +749,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UserId</returns>
-    UserId GetUserId(string userID, int operationIndex = 0);
+    UserId GetUserId(string userID);
 
     /// <summary>
     /// Get userID.
@@ -824,9 +760,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UserId</returns>
-    ApiResponse<UserId> GetUserIdWithHttpInfo(string userID, int operationIndex = 0);
+    ApiResponse<UserId> GetUserIdWithHttpInfo(string userID);
     /// <summary>
     /// Get migration and user mapping status.
     /// </summary>
@@ -835,9 +770,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>HasPendingMappingsResponse</returns>
-    HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default(bool?), int operationIndex = 0);
+    HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default(bool?));
 
     /// <summary>
     /// Get migration and user mapping status.
@@ -847,9 +781,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of HasPendingMappingsResponse</returns>
-    ApiResponse<HasPendingMappingsResponse> HasPendingMappingsWithHttpInfo(bool? getClusters = default(bool?), int operationIndex = 0);
+    ApiResponse<HasPendingMappingsResponse> HasPendingMappingsWithHttpInfo(bool? getClusters = default(bool?));
     /// <summary>
     /// List API keys.
     /// </summary>
@@ -857,9 +790,8 @@ namespace Org.OpenAPITools.Api
     /// List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListApiKeysResponse</returns>
-    ListApiKeysResponse ListApiKeys(int operationIndex = 0);
+    ListApiKeysResponse ListApiKeys();
 
     /// <summary>
     /// List API keys.
@@ -868,9 +800,8 @@ namespace Org.OpenAPITools.Api
     /// List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListApiKeysResponse</returns>
-    ApiResponse<ListApiKeysResponse> ListApiKeysWithHttpInfo(int operationIndex = 0);
+    ApiResponse<ListApiKeysResponse> ListApiKeysWithHttpInfo();
     /// <summary>
     /// List clusters.
     /// </summary>
@@ -878,9 +809,8 @@ namespace Org.OpenAPITools.Api
     /// List the available clusters in a multi-cluster setup.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListClustersResponse</returns>
-    ListClustersResponse ListClusters(int operationIndex = 0);
+    ListClustersResponse ListClusters();
 
     /// <summary>
     /// List clusters.
@@ -889,9 +819,8 @@ namespace Org.OpenAPITools.Api
     /// List the available clusters in a multi-cluster setup.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListClustersResponse</returns>
-    ApiResponse<ListClustersResponse> ListClustersWithHttpInfo(int operationIndex = 0);
+    ApiResponse<ListClustersResponse> ListClustersWithHttpInfo();
     /// <summary>
     /// List indices.
     /// </summary>
@@ -901,9 +830,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListIndicesResponse</returns>
-    ListIndicesResponse ListIndices(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0);
+    ListIndicesResponse ListIndices(int? page = default(int?), int? hitsPerPage = default(int?));
 
     /// <summary>
     /// List indices.
@@ -914,9 +842,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListIndicesResponse</returns>
-    ApiResponse<ListIndicesResponse> ListIndicesWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0);
+    ApiResponse<ListIndicesResponse> ListIndicesWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?));
     /// <summary>
     /// List userIDs.
     /// </summary>
@@ -926,9 +853,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListUserIdsResponse</returns>
-    ListUserIdsResponse ListUserIds(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0);
+    ListUserIdsResponse ListUserIds(int? page = default(int?), int? hitsPerPage = default(int?));
 
     /// <summary>
     /// List userIDs.
@@ -939,9 +865,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListUserIdsResponse</returns>
-    ApiResponse<ListUserIdsResponse> ListUserIdsWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0);
+    ApiResponse<ListUserIdsResponse> ListUserIdsWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?));
     /// <summary>
     /// Batch write operations on multiple indices.
     /// </summary>
@@ -950,9 +875,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>MultipleBatchResponse</returns>
-    MultipleBatchResponse MultipleBatch(BatchParams batchParams, int operationIndex = 0);
+    MultipleBatchResponse MultipleBatch(BatchParams batchParams);
 
     /// <summary>
     /// Batch write operations on multiple indices.
@@ -962,9 +886,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of MultipleBatchResponse</returns>
-    ApiResponse<MultipleBatchResponse> MultipleBatchWithHttpInfo(BatchParams batchParams, int operationIndex = 0);
+    ApiResponse<MultipleBatchResponse> MultipleBatchWithHttpInfo(BatchParams batchParams);
     /// <summary>
     /// Copy, move, or rename an index.
     /// </summary>
@@ -974,9 +897,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse OperationIndex(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0);
+    UpdatedAtResponse OperationIndex(string indexName, OperationIndexParams operationIndexParams);
 
     /// <summary>
     /// Copy, move, or rename an index.
@@ -987,9 +909,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> OperationIndexWithHttpInfo(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> OperationIndexWithHttpInfo(string indexName, OperationIndexParams operationIndexParams);
     /// <summary>
     /// Update record attributes.
     /// </summary>
@@ -1001,9 +922,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtWithObjectIdResponse</returns>
-    UpdatedAtWithObjectIdResponse PartialUpdateObject(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0);
+    UpdatedAtWithObjectIdResponse PartialUpdateObject(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?));
 
     /// <summary>
     /// Update record attributes.
@@ -1016,9 +936,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtWithObjectIdResponse</returns>
-    ApiResponse<UpdatedAtWithObjectIdResponse> PartialUpdateObjectWithHttpInfo(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtWithObjectIdResponse> PartialUpdateObjectWithHttpInfo(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -1029,9 +948,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    Object Post(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0);
+    Object Post(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -1043,9 +961,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    ApiResponse<Object> PostWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0);
+    ApiResponse<Object> PostWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -1056,9 +973,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    Object Put(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0);
+    Object Put(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -1070,9 +986,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    ApiResponse<Object> PutWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0);
+    ApiResponse<Object> PutWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object));
     /// <summary>
     /// Remove userID.
     /// </summary>
@@ -1081,9 +996,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>RemoveUserIdResponse</returns>
-    RemoveUserIdResponse RemoveUserId(string userID, int operationIndex = 0);
+    RemoveUserIdResponse RemoveUserId(string userID);
 
     /// <summary>
     /// Remove userID.
@@ -1093,9 +1007,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of RemoveUserIdResponse</returns>
-    ApiResponse<RemoveUserIdResponse> RemoveUserIdWithHttpInfo(string userID, int operationIndex = 0);
+    ApiResponse<RemoveUserIdResponse> RemoveUserIdWithHttpInfo(string userID);
     /// <summary>
     /// Replace all sources.
     /// </summary>
@@ -1104,9 +1017,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ReplaceSourceResponse</returns>
-    ReplaceSourceResponse ReplaceSources(List<Source> source, int operationIndex = 0);
+    ReplaceSourceResponse ReplaceSources(List<Source> source);
 
     /// <summary>
     /// Replace all sources.
@@ -1116,9 +1028,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ReplaceSourceResponse</returns>
-    ApiResponse<ReplaceSourceResponse> ReplaceSourcesWithHttpInfo(List<Source> source, int operationIndex = 0);
+    ApiResponse<ReplaceSourceResponse> ReplaceSourcesWithHttpInfo(List<Source> source);
     /// <summary>
     /// Restore API key.
     /// </summary>
@@ -1127,9 +1038,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>AddApiKeyResponse</returns>
-    AddApiKeyResponse RestoreApiKey(string key, int operationIndex = 0);
+    AddApiKeyResponse RestoreApiKey(string key);
 
     /// <summary>
     /// Restore API key.
@@ -1139,9 +1049,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of AddApiKeyResponse</returns>
-    ApiResponse<AddApiKeyResponse> RestoreApiKeyWithHttpInfo(string key, int operationIndex = 0);
+    ApiResponse<AddApiKeyResponse> RestoreApiKeyWithHttpInfo(string key);
     /// <summary>
     /// Add or update a record.
     /// </summary>
@@ -1151,9 +1060,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SaveObjectResponse</returns>
-    SaveObjectResponse SaveObject(string indexName, Object body, int operationIndex = 0);
+    SaveObjectResponse SaveObject(string indexName, Object body);
 
     /// <summary>
     /// Add or update a record.
@@ -1164,9 +1072,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SaveObjectResponse</returns>
-    ApiResponse<SaveObjectResponse> SaveObjectWithHttpInfo(string indexName, Object body, int operationIndex = 0);
+    ApiResponse<SaveObjectResponse> SaveObjectWithHttpInfo(string indexName, Object body);
     /// <summary>
     /// Create or update a rule.
     /// </summary>
@@ -1178,9 +1085,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedRuleResponse</returns>
-    UpdatedRuleResponse SaveRule(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    UpdatedRuleResponse SaveRule(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Create or update a rule.
@@ -1193,9 +1099,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedRuleResponse</returns>
-    ApiResponse<UpdatedRuleResponse> SaveRuleWithHttpInfo(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedRuleResponse> SaveRuleWithHttpInfo(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Save a batch of rules.
     /// </summary>
@@ -1207,9 +1112,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse SaveRules(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse SaveRules(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?));
 
     /// <summary>
     /// Save a batch of rules.
@@ -1222,9 +1126,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> SaveRulesWithHttpInfo(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> SaveRulesWithHttpInfo(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?));
     /// <summary>
     /// Save a synonym.
     /// </summary>
@@ -1236,9 +1139,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SaveSynonymResponse</returns>
-    SaveSynonymResponse SaveSynonym(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    SaveSynonymResponse SaveSynonym(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Save a synonym.
@@ -1251,9 +1153,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SaveSynonymResponse</returns>
-    ApiResponse<SaveSynonymResponse> SaveSynonymWithHttpInfo(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<SaveSynonymResponse> SaveSynonymWithHttpInfo(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Save a batch of synonyms.
     /// </summary>
@@ -1265,9 +1166,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse SaveSynonyms(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse SaveSynonyms(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?));
 
     /// <summary>
     /// Save a batch of synonyms.
@@ -1280,9 +1180,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> SaveSynonymsWithHttpInfo(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> SaveSynonymsWithHttpInfo(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?));
     /// <summary>
     /// Search multiple indices.
     /// </summary>
@@ -1291,9 +1190,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchResponses</returns>
-    SearchResponses Search(SearchMethodParams searchMethodParams, int operationIndex = 0);
+    SearchResponses Search(SearchMethodParams searchMethodParams);
 
     /// <summary>
     /// Search multiple indices.
@@ -1303,9 +1201,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchResponses</returns>
-    ApiResponse<SearchResponses> SearchWithHttpInfo(SearchMethodParams searchMethodParams, int operationIndex = 0);
+    ApiResponse<SearchResponses> SearchWithHttpInfo(SearchMethodParams searchMethodParams);
     /// <summary>
     /// Search dictionary entries.
     /// </summary>
@@ -1315,9 +1212,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse SearchDictionaryEntries(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0);
+    UpdatedAtResponse SearchDictionaryEntries(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams);
 
     /// <summary>
     /// Search dictionary entries.
@@ -1328,9 +1224,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> SearchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> SearchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams);
     /// <summary>
     /// Search for facet values.
     /// </summary>
@@ -1341,9 +1236,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchForFacetValuesResponse</returns>
-    SearchForFacetValuesResponse SearchForFacetValues(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0);
+    SearchForFacetValuesResponse SearchForFacetValues(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest));
 
     /// <summary>
     /// Search for facet values.
@@ -1355,9 +1249,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchForFacetValuesResponse</returns>
-    ApiResponse<SearchForFacetValuesResponse> SearchForFacetValuesWithHttpInfo(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0);
+    ApiResponse<SearchForFacetValuesResponse> SearchForFacetValuesWithHttpInfo(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest));
     /// <summary>
     /// Search for rules.
     /// </summary>
@@ -1367,9 +1260,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchRulesResponse</returns>
-    SearchRulesResponse SearchRules(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0);
+    SearchRulesResponse SearchRules(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams));
 
     /// <summary>
     /// Search for rules.
@@ -1380,9 +1272,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchRulesResponse</returns>
-    ApiResponse<SearchRulesResponse> SearchRulesWithHttpInfo(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0);
+    ApiResponse<SearchRulesResponse> SearchRulesWithHttpInfo(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams));
     /// <summary>
     /// Search an index.
     /// </summary>
@@ -1392,9 +1283,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchResponse</returns>
-    SearchResponse SearchSingleIndex(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0);
+    SearchResponse SearchSingleIndex(string indexName, SearchParams searchParams = default(SearchParams));
 
     /// <summary>
     /// Search an index.
@@ -1405,9 +1295,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchResponse</returns>
-    ApiResponse<SearchResponse> SearchSingleIndexWithHttpInfo(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0);
+    ApiResponse<SearchResponse> SearchSingleIndexWithHttpInfo(string indexName, SearchParams searchParams = default(SearchParams));
     /// <summary>
     /// Search for synonyms.
     /// </summary>
@@ -1420,9 +1309,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchSynonymsResponse</returns>
-    SearchSynonymsResponse SearchSynonyms(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0);
+    SearchSynonymsResponse SearchSynonyms(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams));
 
     /// <summary>
     /// Search for synonyms.
@@ -1436,9 +1324,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchSynonymsResponse</returns>
-    ApiResponse<SearchSynonymsResponse> SearchSynonymsWithHttpInfo(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0);
+    ApiResponse<SearchSynonymsResponse> SearchSynonymsWithHttpInfo(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams));
     /// <summary>
     /// Search for a user ID.
     /// </summary>
@@ -1447,9 +1334,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchUserIdsResponse</returns>
-    SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0);
+    SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams);
 
     /// <summary>
     /// Search for a user ID.
@@ -1459,9 +1345,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchUserIdsResponse</returns>
-    ApiResponse<SearchUserIdsResponse> SearchUserIdsWithHttpInfo(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0);
+    ApiResponse<SearchUserIdsResponse> SearchUserIdsWithHttpInfo(SearchUserIdsParams searchUserIdsParams);
     /// <summary>
     /// Set stop word settings.
     /// </summary>
@@ -1470,9 +1355,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse SetDictionarySettings(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0);
+    UpdatedAtResponse SetDictionarySettings(DictionarySettingsParams dictionarySettingsParams);
 
     /// <summary>
     /// Set stop word settings.
@@ -1482,9 +1366,8 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> SetDictionarySettingsWithHttpInfo(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> SetDictionarySettingsWithHttpInfo(DictionarySettingsParams dictionarySettingsParams);
     /// <summary>
     /// Update index settings.
     /// </summary>
@@ -1495,9 +1378,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    UpdatedAtResponse SetSettings(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    UpdatedAtResponse SetSettings(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?));
 
     /// <summary>
     /// Update index settings.
@@ -1509,9 +1391,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    ApiResponse<UpdatedAtResponse> SetSettingsWithHttpInfo(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0);
+    ApiResponse<UpdatedAtResponse> SetSettingsWithHttpInfo(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?));
     /// <summary>
     /// Update an API key.
     /// </summary>
@@ -1521,9 +1402,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdateApiKeyResponse</returns>
-    UpdateApiKeyResponse UpdateApiKey(string key, ApiKey apiKey, int operationIndex = 0);
+    UpdateApiKeyResponse UpdateApiKey(string key, ApiKey apiKey);
 
     /// <summary>
     /// Update an API key.
@@ -1534,9 +1414,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdateApiKeyResponse</returns>
-    ApiResponse<UpdateApiKeyResponse> UpdateApiKeyWithHttpInfo(string key, ApiKey apiKey, int operationIndex = 0);
+    ApiResponse<UpdateApiKeyResponse> UpdateApiKeyWithHttpInfo(string key, ApiKey apiKey);
     #endregion Synchronous Operations
   }
 
@@ -1554,10 +1433,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of AddApiKeyResponse</returns>
-    System.Threading.Tasks.Task<AddApiKeyResponse> AddApiKeyAsync(ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<AddApiKeyResponse> AddApiKeyAsync(ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Add API key.
@@ -1567,10 +1445,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (AddApiKeyResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<AddApiKeyResponse>> AddApiKeyWithHttpInfoAsync(ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<AddApiKeyResponse>> AddApiKeyWithHttpInfoAsync(ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Add or update a record (using objectID).
     /// </summary>
@@ -1581,10 +1458,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtWithObjectIdResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectAsync(string indexName, string objectID, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectAsync(string indexName, string objectID, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Add or update a record (using objectID).
@@ -1596,10 +1472,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtWithObjectIdResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtWithObjectIdResponse>> AddOrUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtWithObjectIdResponse>> AddOrUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Add a source.
     /// </summary>
@@ -1608,10 +1483,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    System.Threading.Tasks.Task<CreatedAtResponse> AppendSourceAsync(Source source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<CreatedAtResponse> AppendSourceAsync(Source source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Add a source.
@@ -1621,10 +1495,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> AppendSourceWithHttpInfoAsync(Source source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> AppendSourceWithHttpInfoAsync(Source source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Assign or move a user ID.
     /// </summary>
@@ -1634,10 +1507,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    System.Threading.Tasks.Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Assign or move a user ID.
@@ -1648,10 +1520,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> AssignUserIdWithHttpInfoAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> AssignUserIdWithHttpInfoAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Batch write operations on one index.
     /// </summary>
@@ -1661,10 +1532,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BatchResponse</returns>
-    System.Threading.Tasks.Task<BatchResponse> BatchAsync(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<BatchResponse> BatchAsync(string indexName, BatchWriteParams batchWriteParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Batch write operations on one index.
@@ -1675,10 +1545,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BatchResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<BatchResponse>> BatchWithHttpInfoAsync(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<BatchResponse>> BatchWithHttpInfoAsync(string indexName, BatchWriteParams batchWriteParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Batch assign userIDs.
     /// </summary>
@@ -1688,10 +1557,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    System.Threading.Tasks.Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Batch assign userIDs.
@@ -1702,10 +1570,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> BatchAssignUserIdsWithHttpInfoAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<CreatedAtResponse>> BatchAssignUserIdsWithHttpInfoAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Batch dictionary entries.
     /// </summary>
@@ -1715,10 +1582,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> BatchDictionaryEntriesAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> BatchDictionaryEntriesAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Batch dictionary entries.
@@ -1729,10 +1595,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> BatchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> BatchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get all records from an index.
     /// </summary>
@@ -1742,10 +1607,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BrowseResponse</returns>
-    System.Threading.Tasks.Task<BrowseResponse> BrowseAsync(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<BrowseResponse> BrowseAsync(string indexName, BrowseParams browseParams = default(BrowseParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get all records from an index.
@@ -1756,10 +1620,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BrowseResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<BrowseResponse>> BrowseWithHttpInfoAsync(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<BrowseResponse>> BrowseWithHttpInfoAsync(string indexName, BrowseParams browseParams = default(BrowseParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete all synonyms.
     /// </summary>
@@ -1769,10 +1632,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> ClearAllSynonymsAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> ClearAllSynonymsAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete all synonyms.
@@ -1783,10 +1645,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearAllSynonymsWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearAllSynonymsWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete all records from an index.
     /// </summary>
@@ -1795,10 +1656,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> ClearObjectsAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> ClearObjectsAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete all records from an index.
@@ -1808,10 +1668,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearObjectsWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearObjectsWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete all rules.
     /// </summary>
@@ -1821,10 +1680,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> ClearRulesAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> ClearRulesAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete all rules.
@@ -1835,10 +1693,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearRulesWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> ClearRulesWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -1848,10 +1705,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    System.Threading.Tasks.Task<Object> DelAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Object> DelAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -1862,10 +1718,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Object>> DelWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Object>> DelWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete API key.
     /// </summary>
@@ -1874,10 +1729,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeleteApiKeyResponse</returns>
-    System.Threading.Tasks.Task<DeleteApiKeyResponse> DeleteApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeleteApiKeyResponse> DeleteApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete API key.
@@ -1887,10 +1741,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeleteApiKeyResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeleteApiKeyResponse>> DeleteApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeleteApiKeyResponse>> DeleteApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete all records matching a query.
     /// </summary>
@@ -1900,10 +1753,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    System.Threading.Tasks.Task<DeletedAtResponse> DeleteByAsync(string indexName, DeleteByParams deleteByParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeletedAtResponse> DeleteByAsync(string indexName, DeleteByParams deleteByParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete all records matching a query.
@@ -1914,10 +1766,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteByWithHttpInfoAsync(string indexName, DeleteByParams deleteByParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteByWithHttpInfoAsync(string indexName, DeleteByParams deleteByParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete index.
     /// </summary>
@@ -1926,10 +1777,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    System.Threading.Tasks.Task<DeletedAtResponse> DeleteIndexAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeletedAtResponse> DeleteIndexAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete index.
@@ -1939,10 +1789,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteIndexWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteIndexWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete a record.
     /// </summary>
@@ -1952,10 +1801,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    System.Threading.Tasks.Task<DeletedAtResponse> DeleteObjectAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeletedAtResponse> DeleteObjectAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete a record.
@@ -1966,10 +1814,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteObjectWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteObjectWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete a rule.
     /// </summary>
@@ -1980,10 +1827,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> DeleteRuleAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> DeleteRuleAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete a rule.
@@ -1995,10 +1841,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> DeleteRuleWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> DeleteRuleWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Remove a source.
     /// </summary>
@@ -2007,10 +1852,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeleteSourceResponse</returns>
-    System.Threading.Tasks.Task<DeleteSourceResponse> DeleteSourceAsync(string source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeleteSourceResponse> DeleteSourceAsync(string source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Remove a source.
@@ -2020,10 +1864,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeleteSourceResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeleteSourceResponse>> DeleteSourceWithHttpInfoAsync(string source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeleteSourceResponse>> DeleteSourceWithHttpInfoAsync(string source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Delete a synonym.
     /// </summary>
@@ -2034,10 +1877,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    System.Threading.Tasks.Task<DeletedAtResponse> DeleteSynonymAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<DeletedAtResponse> DeleteSynonymAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Delete a synonym.
@@ -2049,10 +1891,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteSynonymWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<DeletedAtResponse>> DeleteSynonymWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -2062,10 +1903,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    System.Threading.Tasks.Task<Object> GetAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Object> GetAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -2076,10 +1916,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Object>> GetWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Object>> GetWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get API key permissions.
     /// </summary>
@@ -2088,10 +1927,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetApiKeyResponse</returns>
-    System.Threading.Tasks.Task<GetApiKeyResponse> GetApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetApiKeyResponse> GetApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get API key permissions.
@@ -2101,10 +1939,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetApiKeyResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetApiKeyResponse>> GetApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetApiKeyResponse>> GetApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// List available languages.
     /// </summary>
@@ -2112,10 +1949,9 @@ namespace Org.OpenAPITools.Api
     /// Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Dictionary&lt;string, Languages&gt;</returns>
-    System.Threading.Tasks.Task<Dictionary<string, Languages>> GetDictionaryLanguagesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Dictionary<string, Languages>> GetDictionaryLanguagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// List available languages.
@@ -2124,10 +1960,9 @@ namespace Org.OpenAPITools.Api
     /// Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Dictionary&lt;string, Languages&gt;)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Dictionary<string, Languages>>> GetDictionaryLanguagesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Dictionary<string, Languages>>> GetDictionaryLanguagesWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get stop word settings.
     /// </summary>
@@ -2135,10 +1970,9 @@ namespace Org.OpenAPITools.Api
     /// Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetDictionarySettingsResponse</returns>
-    System.Threading.Tasks.Task<GetDictionarySettingsResponse> GetDictionarySettingsAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetDictionarySettingsResponse> GetDictionarySettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get stop word settings.
@@ -2147,10 +1981,9 @@ namespace Org.OpenAPITools.Api
     /// Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetDictionarySettingsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetDictionarySettingsResponse>> GetDictionarySettingsWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetDictionarySettingsResponse>> GetDictionarySettingsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Return the latest log entries.
     /// </summary>
@@ -2162,10 +1995,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetLogsResponse</returns>
-    System.Threading.Tasks.Task<GetLogsResponse> GetLogsAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetLogsResponse> GetLogsAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Return the latest log entries.
@@ -2178,10 +2010,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetLogsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetLogsResponse>> GetLogsWithHttpInfoAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetLogsResponse>> GetLogsWithHttpInfoAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get a record.
     /// </summary>
@@ -2192,10 +2023,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Dictionary&lt;string, string&gt;</returns>
-    System.Threading.Tasks.Task<Dictionary<string, string>> GetObjectAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Dictionary<string, string>> GetObjectAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get a record.
@@ -2207,10 +2037,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Dictionary&lt;string, string&gt;)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Dictionary<string, string>>> GetObjectWithHttpInfoAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Dictionary<string, string>>> GetObjectWithHttpInfoAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get multiple records.
     /// </summary>
@@ -2219,10 +2048,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetObjectsResponse</returns>
-    System.Threading.Tasks.Task<GetObjectsResponse> GetObjectsAsync(GetObjectsParams getObjectsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetObjectsResponse> GetObjectsAsync(GetObjectsParams getObjectsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get multiple records.
@@ -2232,10 +2060,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetObjectsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetObjectsResponse>> GetObjectsWithHttpInfoAsync(GetObjectsParams getObjectsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetObjectsResponse>> GetObjectsWithHttpInfoAsync(GetObjectsParams getObjectsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get a rule.
     /// </summary>
@@ -2245,10 +2072,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Rule</returns>
-    System.Threading.Tasks.Task<Rule> GetRuleAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Rule> GetRuleAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get a rule.
@@ -2259,10 +2085,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Rule)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Rule>> GetRuleWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Rule>> GetRuleWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get index settings.
     /// </summary>
@@ -2271,10 +2096,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of IndexSettings</returns>
-    System.Threading.Tasks.Task<IndexSettings> GetSettingsAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<IndexSettings> GetSettingsAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get index settings.
@@ -2284,10 +2108,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (IndexSettings)</returns>
-    System.Threading.Tasks.Task<ApiResponse<IndexSettings>> GetSettingsWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<IndexSettings>> GetSettingsWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get all allowed IP addresses.
     /// </summary>
@@ -2295,10 +2118,9 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed sources (IP addresses).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of List&lt;Source&gt;</returns>
-    System.Threading.Tasks.Task<List<Source>> GetSourcesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<List<Source>> GetSourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get all allowed IP addresses.
@@ -2307,10 +2129,9 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed sources (IP addresses).
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (List&lt;Source&gt;)</returns>
-    System.Threading.Tasks.Task<ApiResponse<List<Source>>> GetSourcesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<List<Source>>> GetSourcesWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get a synonym object.
     /// </summary>
@@ -2320,10 +2141,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SynonymHit</returns>
-    System.Threading.Tasks.Task<SynonymHit> GetSynonymAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SynonymHit> GetSynonymAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get a synonym object.
@@ -2334,10 +2154,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SynonymHit)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SynonymHit>> GetSynonymWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SynonymHit>> GetSynonymWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Check a task&#39;s status.
     /// </summary>
@@ -2347,10 +2166,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetTaskResponse</returns>
-    System.Threading.Tasks.Task<GetTaskResponse> GetTaskAsync(string indexName, long taskID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetTaskResponse> GetTaskAsync(string indexName, long taskID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Check a task&#39;s status.
@@ -2361,10 +2179,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetTaskResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetTaskResponse>> GetTaskWithHttpInfoAsync(string indexName, long taskID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetTaskResponse>> GetTaskWithHttpInfoAsync(string indexName, long taskID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get top userID.
     /// </summary>
@@ -2372,10 +2189,9 @@ namespace Org.OpenAPITools.Api
     /// Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetTopUserIdsResponse</returns>
-    System.Threading.Tasks.Task<GetTopUserIdsResponse> GetTopUserIdsAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<GetTopUserIdsResponse> GetTopUserIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get top userID.
@@ -2384,10 +2200,9 @@ namespace Org.OpenAPITools.Api
     /// Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetTopUserIdsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<GetTopUserIdsResponse>> GetTopUserIdsWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<GetTopUserIdsResponse>> GetTopUserIdsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get userID.
     /// </summary>
@@ -2396,10 +2211,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UserId</returns>
-    System.Threading.Tasks.Task<UserId> GetUserIdAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UserId> GetUserIdAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get userID.
@@ -2409,10 +2223,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UserId)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UserId>> GetUserIdWithHttpInfoAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UserId>> GetUserIdWithHttpInfoAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Get migration and user mapping status.
     /// </summary>
@@ -2421,10 +2234,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of HasPendingMappingsResponse</returns>
-    System.Threading.Tasks.Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Get migration and user mapping status.
@@ -2434,10 +2246,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (HasPendingMappingsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<HasPendingMappingsResponse>> HasPendingMappingsWithHttpInfoAsync(bool? getClusters = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<HasPendingMappingsResponse>> HasPendingMappingsWithHttpInfoAsync(bool? getClusters = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// List API keys.
     /// </summary>
@@ -2445,10 +2256,9 @@ namespace Org.OpenAPITools.Api
     /// List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListApiKeysResponse</returns>
-    System.Threading.Tasks.Task<ListApiKeysResponse> ListApiKeysAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ListApiKeysResponse> ListApiKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// List API keys.
@@ -2457,10 +2267,9 @@ namespace Org.OpenAPITools.Api
     /// List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListApiKeysResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<ListApiKeysResponse>> ListApiKeysWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<ListApiKeysResponse>> ListApiKeysWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// List clusters.
     /// </summary>
@@ -2468,10 +2277,9 @@ namespace Org.OpenAPITools.Api
     /// List the available clusters in a multi-cluster setup.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListClustersResponse</returns>
-    System.Threading.Tasks.Task<ListClustersResponse> ListClustersAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ListClustersResponse> ListClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// List clusters.
@@ -2480,10 +2288,9 @@ namespace Org.OpenAPITools.Api
     /// List the available clusters in a multi-cluster setup.
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListClustersResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<ListClustersResponse>> ListClustersWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<ListClustersResponse>> ListClustersWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// List indices.
     /// </summary>
@@ -2493,10 +2300,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListIndicesResponse</returns>
-    System.Threading.Tasks.Task<ListIndicesResponse> ListIndicesAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ListIndicesResponse> ListIndicesAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// List indices.
@@ -2507,10 +2313,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListIndicesResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<ListIndicesResponse>> ListIndicesWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<ListIndicesResponse>> ListIndicesWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// List userIDs.
     /// </summary>
@@ -2520,10 +2325,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListUserIdsResponse</returns>
-    System.Threading.Tasks.Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// List userIDs.
@@ -2534,10 +2338,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListUserIdsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<ListUserIdsResponse>> ListUserIdsWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<ListUserIdsResponse>> ListUserIdsWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Batch write operations on multiple indices.
     /// </summary>
@@ -2546,10 +2349,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of MultipleBatchResponse</returns>
-    System.Threading.Tasks.Task<MultipleBatchResponse> MultipleBatchAsync(BatchParams batchParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<MultipleBatchResponse> MultipleBatchAsync(BatchParams batchParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Batch write operations on multiple indices.
@@ -2559,10 +2361,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (MultipleBatchResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<MultipleBatchResponse>> MultipleBatchWithHttpInfoAsync(BatchParams batchParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<MultipleBatchResponse>> MultipleBatchWithHttpInfoAsync(BatchParams batchParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Copy, move, or rename an index.
     /// </summary>
@@ -2572,10 +2373,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> OperationIndexAsync(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> OperationIndexAsync(string indexName, OperationIndexParams operationIndexParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Copy, move, or rename an index.
@@ -2586,10 +2386,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> OperationIndexWithHttpInfoAsync(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> OperationIndexWithHttpInfoAsync(string indexName, OperationIndexParams operationIndexParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Update record attributes.
     /// </summary>
@@ -2601,10 +2400,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtWithObjectIdResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> PartialUpdateObjectAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> PartialUpdateObjectAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Update record attributes.
@@ -2617,10 +2415,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtWithObjectIdResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtWithObjectIdResponse>> PartialUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtWithObjectIdResponse>> PartialUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -2631,10 +2428,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    System.Threading.Tasks.Task<Object> PostAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Object> PostAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -2646,10 +2442,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Object>> PostWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Object>> PostWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Send requests to the Algolia REST API.
     /// </summary>
@@ -2660,10 +2455,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    System.Threading.Tasks.Task<Object> PutAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<Object> PutAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Send requests to the Algolia REST API.
@@ -2675,10 +2469,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    System.Threading.Tasks.Task<ApiResponse<Object>> PutWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<Object>> PutWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Remove userID.
     /// </summary>
@@ -2687,10 +2480,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of RemoveUserIdResponse</returns>
-    System.Threading.Tasks.Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Remove userID.
@@ -2700,10 +2492,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (RemoveUserIdResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<RemoveUserIdResponse>> RemoveUserIdWithHttpInfoAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<RemoveUserIdResponse>> RemoveUserIdWithHttpInfoAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Replace all sources.
     /// </summary>
@@ -2712,10 +2503,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ReplaceSourceResponse</returns>
-    System.Threading.Tasks.Task<ReplaceSourceResponse> ReplaceSourcesAsync(List<Source> source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ReplaceSourceResponse> ReplaceSourcesAsync(List<Source> source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Replace all sources.
@@ -2725,10 +2515,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ReplaceSourceResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<ReplaceSourceResponse>> ReplaceSourcesWithHttpInfoAsync(List<Source> source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<ReplaceSourceResponse>> ReplaceSourcesWithHttpInfoAsync(List<Source> source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Restore API key.
     /// </summary>
@@ -2737,10 +2526,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of AddApiKeyResponse</returns>
-    System.Threading.Tasks.Task<AddApiKeyResponse> RestoreApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<AddApiKeyResponse> RestoreApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Restore API key.
@@ -2750,10 +2538,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (AddApiKeyResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<AddApiKeyResponse>> RestoreApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<AddApiKeyResponse>> RestoreApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Add or update a record.
     /// </summary>
@@ -2763,10 +2550,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SaveObjectResponse</returns>
-    System.Threading.Tasks.Task<SaveObjectResponse> SaveObjectAsync(string indexName, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SaveObjectResponse> SaveObjectAsync(string indexName, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Add or update a record.
@@ -2777,10 +2563,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SaveObjectResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SaveObjectResponse>> SaveObjectWithHttpInfoAsync(string indexName, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SaveObjectResponse>> SaveObjectWithHttpInfoAsync(string indexName, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Create or update a rule.
     /// </summary>
@@ -2792,10 +2577,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedRuleResponse</returns>
-    System.Threading.Tasks.Task<UpdatedRuleResponse> SaveRuleAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedRuleResponse> SaveRuleAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Create or update a rule.
@@ -2808,10 +2592,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedRuleResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedRuleResponse>> SaveRuleWithHttpInfoAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedRuleResponse>> SaveRuleWithHttpInfoAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Save a batch of rules.
     /// </summary>
@@ -2823,10 +2606,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> SaveRulesAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> SaveRulesAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Save a batch of rules.
@@ -2839,10 +2621,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SaveRulesWithHttpInfoAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SaveRulesWithHttpInfoAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Save a synonym.
     /// </summary>
@@ -2854,10 +2635,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SaveSynonymResponse</returns>
-    System.Threading.Tasks.Task<SaveSynonymResponse> SaveSynonymAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SaveSynonymResponse> SaveSynonymAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Save a synonym.
@@ -2870,10 +2650,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SaveSynonymResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SaveSynonymResponse>> SaveSynonymWithHttpInfoAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SaveSynonymResponse>> SaveSynonymWithHttpInfoAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Save a batch of synonyms.
     /// </summary>
@@ -2885,10 +2664,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> SaveSynonymsAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> SaveSynonymsAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Save a batch of synonyms.
@@ -2901,10 +2679,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SaveSynonymsWithHttpInfoAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SaveSynonymsWithHttpInfoAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search multiple indices.
     /// </summary>
@@ -2913,10 +2690,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchResponses</returns>
-    System.Threading.Tasks.Task<SearchResponses> SearchAsync(SearchMethodParams searchMethodParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchResponses> SearchAsync(SearchMethodParams searchMethodParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search multiple indices.
@@ -2926,10 +2702,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchResponses)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchResponses>> SearchWithHttpInfoAsync(SearchMethodParams searchMethodParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchResponses>> SearchWithHttpInfoAsync(SearchMethodParams searchMethodParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search dictionary entries.
     /// </summary>
@@ -2939,10 +2714,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> SearchDictionaryEntriesAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> SearchDictionaryEntriesAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search dictionary entries.
@@ -2953,10 +2727,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SearchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SearchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search for facet values.
     /// </summary>
@@ -2967,10 +2740,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchForFacetValuesResponse</returns>
-    System.Threading.Tasks.Task<SearchForFacetValuesResponse> SearchForFacetValuesAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchForFacetValuesResponse> SearchForFacetValuesAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search for facet values.
@@ -2982,10 +2754,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchForFacetValuesResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchForFacetValuesResponse>> SearchForFacetValuesWithHttpInfoAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchForFacetValuesResponse>> SearchForFacetValuesWithHttpInfoAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search for rules.
     /// </summary>
@@ -2995,10 +2766,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchRulesResponse</returns>
-    System.Threading.Tasks.Task<SearchRulesResponse> SearchRulesAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchRulesResponse> SearchRulesAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search for rules.
@@ -3009,10 +2779,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchRulesResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchRulesResponse>> SearchRulesWithHttpInfoAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchRulesResponse>> SearchRulesWithHttpInfoAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search an index.
     /// </summary>
@@ -3022,10 +2791,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchResponse</returns>
-    System.Threading.Tasks.Task<SearchResponse> SearchSingleIndexAsync(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchResponse> SearchSingleIndexAsync(string indexName, SearchParams searchParams = default(SearchParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search an index.
@@ -3036,10 +2804,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchResponse>> SearchSingleIndexWithHttpInfoAsync(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchResponse>> SearchSingleIndexWithHttpInfoAsync(string indexName, SearchParams searchParams = default(SearchParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search for synonyms.
     /// </summary>
@@ -3052,10 +2819,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchSynonymsResponse</returns>
-    System.Threading.Tasks.Task<SearchSynonymsResponse> SearchSynonymsAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchSynonymsResponse> SearchSynonymsAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search for synonyms.
@@ -3069,10 +2835,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchSynonymsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchSynonymsResponse>> SearchSynonymsWithHttpInfoAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchSynonymsResponse>> SearchSynonymsWithHttpInfoAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Search for a user ID.
     /// </summary>
@@ -3081,10 +2846,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchUserIdsResponse</returns>
-    System.Threading.Tasks.Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Search for a user ID.
@@ -3094,10 +2858,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchUserIdsResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<SearchUserIdsResponse>> SearchUserIdsWithHttpInfoAsync(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<SearchUserIdsResponse>> SearchUserIdsWithHttpInfoAsync(SearchUserIdsParams searchUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Set stop word settings.
     /// </summary>
@@ -3106,10 +2869,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> SetDictionarySettingsAsync(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> SetDictionarySettingsAsync(DictionarySettingsParams dictionarySettingsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Set stop word settings.
@@ -3119,10 +2881,9 @@ namespace Org.OpenAPITools.Api
     /// </remarks>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SetDictionarySettingsWithHttpInfoAsync(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SetDictionarySettingsWithHttpInfoAsync(DictionarySettingsParams dictionarySettingsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Update index settings.
     /// </summary>
@@ -3133,10 +2894,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    System.Threading.Tasks.Task<UpdatedAtResponse> SetSettingsAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdatedAtResponse> SetSettingsAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Update index settings.
@@ -3148,10 +2908,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SetSettingsWithHttpInfoAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdatedAtResponse>> SetSettingsWithHttpInfoAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     /// <summary>
     /// Update an API key.
     /// </summary>
@@ -3161,10 +2920,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdateApiKeyResponse</returns>
-    System.Threading.Tasks.Task<UpdateApiKeyResponse> UpdateApiKeyAsync(string key, ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<UpdateApiKeyResponse> UpdateApiKeyAsync(string key, ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     /// <summary>
     /// Update an API key.
@@ -3175,10 +2933,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdateApiKeyResponse)</returns>
-    System.Threading.Tasks.Task<ApiResponse<UpdateApiKeyResponse>> UpdateApiKeyWithHttpInfoAsync(string key, ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    System.Threading.Tasks.Task<ApiResponse<UpdateApiKeyResponse>> UpdateApiKeyWithHttpInfoAsync(string key, ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     #endregion Asynchronous Operations
   }
 
@@ -3193,12 +2950,14 @@ namespace Org.OpenAPITools.Api
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  public partial class SearchApi : ISearchApi
+  public partial class SearchApi : IDisposable, ISearchApi
   {
     private Org.OpenAPITools.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchApi"/> class.
+    /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
+    /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
     /// </summary>
     /// <returns></returns>
     public SearchApi() : this((string)null)
@@ -3207,7 +2966,11 @@ namespace Org.OpenAPITools.Api
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchApi"/> class.
+    /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
+    /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
     /// </summary>
+    /// <param name="basePath">The target service's base path in URL format.</param>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public SearchApi(string basePath)
     {
@@ -3215,16 +2978,19 @@ namespace Org.OpenAPITools.Api
           Org.OpenAPITools.Client.GlobalConfiguration.Instance,
           new Org.OpenAPITools.Client.Configuration { BasePath = basePath }
       );
-      this.Client = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
-      this.AsynchronousClient = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
+      this.ApiClient = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
+      this.Client = this.ApiClient;
+      this.AsynchronousClient = this.ApiClient;
       this.ExceptionFactory = Org.OpenAPITools.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SearchApi"/> class
-    /// using Configuration object
+    /// Initializes a new instance of the <see cref="SearchApi"/> class using Configuration object.
+    /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
+    /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
     /// </summary>
-    /// <param name="configuration">An instance of Configuration</param>
+    /// <param name="configuration">An instance of Configuration.</param>
+    /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
     public SearchApi(Org.OpenAPITools.Client.Configuration configuration)
     {
@@ -3234,8 +3000,78 @@ namespace Org.OpenAPITools.Api
           Org.OpenAPITools.Client.GlobalConfiguration.Instance,
           configuration
       );
-      this.Client = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
-      this.AsynchronousClient = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
+      this.ApiClient = new Org.OpenAPITools.Client.ApiClient(this.Configuration.BasePath);
+      this.Client = this.ApiClient;
+      this.AsynchronousClient = this.ApiClient;
+      ExceptionFactory = Org.OpenAPITools.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchApi"/> class.
+    /// </summary>
+    /// <param name="client">An instance of HttpClient.</param>
+    /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <returns></returns>
+    /// <remarks>
+    /// Some configuration settings will not be applied without passing an HttpClientHandler.
+    /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
+    /// </remarks>
+    public SearchApi(HttpClient client, HttpClientHandler handler = null) : this(client, (string)null, handler)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchApi"/> class.
+    /// </summary>
+    /// <param name="client">An instance of HttpClient.</param>
+    /// <param name="basePath">The target service's base path in URL format.</param>
+    /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    /// <returns></returns>
+    /// <remarks>
+    /// Some configuration settings will not be applied without passing an HttpClientHandler.
+    /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
+    /// </remarks>
+    public SearchApi(HttpClient client, string basePath, HttpClientHandler handler = null)
+    {
+      if (client == null) throw new ArgumentNullException("client");
+
+      this.Configuration = Org.OpenAPITools.Client.Configuration.MergeConfigurations(
+          Org.OpenAPITools.Client.GlobalConfiguration.Instance,
+          new Org.OpenAPITools.Client.Configuration { BasePath = basePath }
+      );
+      this.ApiClient = new Org.OpenAPITools.Client.ApiClient(client, this.Configuration.BasePath, handler);
+      this.Client = this.ApiClient;
+      this.AsynchronousClient = this.ApiClient;
+      this.ExceptionFactory = Org.OpenAPITools.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchApi"/> class using Configuration object.
+    /// </summary>
+    /// <param name="client">An instance of HttpClient.</param>
+    /// <param name="configuration">An instance of Configuration.</param>
+    /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <returns></returns>
+    /// <remarks>
+    /// Some configuration settings will not be applied without passing an HttpClientHandler.
+    /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
+    /// </remarks>
+    public SearchApi(HttpClient client, Org.OpenAPITools.Client.Configuration configuration, HttpClientHandler handler = null)
+    {
+      if (configuration == null) throw new ArgumentNullException("configuration");
+      if (client == null) throw new ArgumentNullException("client");
+
+      this.Configuration = Org.OpenAPITools.Client.Configuration.MergeConfigurations(
+          Org.OpenAPITools.Client.GlobalConfiguration.Instance,
+          configuration
+      );
+      this.ApiClient = new Org.OpenAPITools.Client.ApiClient(client, this.Configuration.BasePath, handler);
+      this.Client = this.ApiClient;
+      this.AsynchronousClient = this.ApiClient;
       ExceptionFactory = Org.OpenAPITools.Client.Configuration.DefaultExceptionFactory;
     }
 
@@ -3246,6 +3082,7 @@ namespace Org.OpenAPITools.Api
     /// <param name="client">The client interface for synchronous API access.</param>
     /// <param name="asyncClient">The client interface for asynchronous API access.</param>
     /// <param name="configuration">The configuration object.</param>
+    /// <exception cref="ArgumentNullException"></exception>
     public SearchApi(Org.OpenAPITools.Client.ISynchronousClient client, Org.OpenAPITools.Client.IAsynchronousClient asyncClient, Org.OpenAPITools.Client.IReadableConfiguration configuration)
     {
       if (client == null) throw new ArgumentNullException("client");
@@ -3257,6 +3094,19 @@ namespace Org.OpenAPITools.Api
       this.Configuration = configuration;
       this.ExceptionFactory = Org.OpenAPITools.Client.Configuration.DefaultExceptionFactory;
     }
+
+    /// <summary>
+    /// Disposes resources if they were created by us
+    /// </summary>
+    public void Dispose()
+    {
+      this.ApiClient?.Dispose();
+    }
+
+    /// <summary>
+    /// Holds the ApiClient if created
+    /// </summary>
+    public Org.OpenAPITools.Client.ApiClient ApiClient { get; set; } = null;
 
     /// <summary>
     /// The client for accessing this underlying API asynchronously.
@@ -3304,9 +3154,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>AddApiKeyResponse</returns>
-    public AddApiKeyResponse AddApiKey(ApiKey apiKey, int operationIndex = 0)
+    public AddApiKeyResponse AddApiKey(ApiKey apiKey)
     {
       Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = AddApiKeyWithHttpInfo(apiKey);
       return localVarResponse.Data;
@@ -3317,15 +3166,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of AddApiKeyResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> AddApiKeyWithHttpInfo(ApiKey apiKey, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> AddApiKeyWithHttpInfo(ApiKey apiKey)
     {
       // verify the required parameter 'apiKey' is set
       if (apiKey == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'apiKey' when calling SearchApi->AddApiKey");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -3339,21 +3185,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = apiKey;
-
-      localVarRequestOptions.Operation = "SearchApi.AddApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3368,13 +3205,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<AddApiKeyResponse>("/1/keys", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AddApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3385,12 +3220,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of AddApiKeyResponse</returns>
-    public async System.Threading.Tasks.Task<AddApiKeyResponse> AddApiKeyAsync(ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<AddApiKeyResponse> AddApiKeyAsync(ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = await AddApiKeyWithHttpInfoAsync(apiKey, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = await AddApiKeyWithHttpInfoAsync(apiKey, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -3399,16 +3233,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (AddApiKeyResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse>> AddApiKeyWithHttpInfoAsync(ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse>> AddApiKeyWithHttpInfoAsync(ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'apiKey' is set
       if (apiKey == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'apiKey' when calling SearchApi->AddApiKey");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -3422,22 +3253,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = apiKey;
-
-      localVarRequestOptions.Operation = "SearchApi.AddApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3451,15 +3274,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<AddApiKeyResponse>("/1/keys", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AddApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3472,9 +3293,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtWithObjectIdResponse</returns>
-    public UpdatedAtWithObjectIdResponse AddOrUpdateObject(string indexName, string objectID, Object body, int operationIndex = 0)
+    public UpdatedAtWithObjectIdResponse AddOrUpdateObject(string indexName, string objectID, Object body)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = AddOrUpdateObjectWithHttpInfo(indexName, objectID, body);
       return localVarResponse.Data;
@@ -3487,27 +3307,20 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtWithObjectIdResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectWithHttpInfo(string indexName, string objectID, Object body, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectWithHttpInfo(string indexName, string objectID, Object body)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->AddOrUpdateObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->AddOrUpdateObject");
-      }
 
       // verify the required parameter 'body' is set
       if (body == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'body' when calling SearchApi->AddOrUpdateObject");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -3521,23 +3334,14 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.AddOrUpdateObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3552,13 +3356,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<UpdatedAtWithObjectIdResponse>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AddOrUpdateObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3571,12 +3373,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtWithObjectIdResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectAsync(string indexName, string objectID, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> AddOrUpdateObjectAsync(string indexName, string objectID, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = await AddOrUpdateObjectWithHttpInfoAsync(indexName, objectID, body, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = await AddOrUpdateObjectWithHttpInfoAsync(indexName, objectID, body, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -3587,28 +3388,21 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="body">Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtWithObjectIdResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse>> AddOrUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse>> AddOrUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->AddOrUpdateObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->AddOrUpdateObject");
-      }
 
       // verify the required parameter 'body' is set
       if (body == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'body' when calling SearchApi->AddOrUpdateObject");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -3622,24 +3416,16 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.AddOrUpdateObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3653,15 +3439,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<UpdatedAtWithObjectIdResponse>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AddOrUpdateObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3672,9 +3456,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    public CreatedAtResponse AppendSource(Source source, int operationIndex = 0)
+    public CreatedAtResponse AppendSource(Source source)
     {
       Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = AppendSourceWithHttpInfo(source);
       return localVarResponse.Data;
@@ -3685,15 +3468,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> AppendSourceWithHttpInfo(Source source, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> AppendSourceWithHttpInfo(Source source)
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->AppendSource");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -3707,21 +3487,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = source;
-
-      localVarRequestOptions.Operation = "SearchApi.AppendSource";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3736,13 +3507,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<CreatedAtResponse>("/1/security/sources/append", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AppendSource", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3753,12 +3522,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<CreatedAtResponse> AppendSourceAsync(Source source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<CreatedAtResponse> AppendSourceAsync(Source source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await AppendSourceWithHttpInfoAsync(source, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await AppendSourceWithHttpInfoAsync(source, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -3767,16 +3535,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Source to add.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> AppendSourceWithHttpInfoAsync(Source source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> AppendSourceWithHttpInfoAsync(Source source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->AppendSource");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -3790,22 +3555,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = source;
-
-      localVarRequestOptions.Operation = "SearchApi.AppendSource";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3819,15 +3576,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<CreatedAtResponse>("/1/security/sources/append", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AppendSource", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3839,9 +3594,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    public CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0)
+    public CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams)
     {
       Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = AssignUserIdWithHttpInfo(xAlgoliaUserID, assignUserIdParams);
       return localVarResponse.Data;
@@ -3853,21 +3607,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> AssignUserIdWithHttpInfo(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> AssignUserIdWithHttpInfo(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams)
     {
       // verify the required parameter 'xAlgoliaUserID' is set
       if (xAlgoliaUserID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'xAlgoliaUserID' when calling SearchApi->AssignUserId");
-      }
 
       // verify the required parameter 'assignUserIdParams' is set
       if (assignUserIdParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'assignUserIdParams' when calling SearchApi->AssignUserId");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -3881,22 +3630,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.HeaderParameters.Add("X-Algolia-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xAlgoliaUserID)); // header parameter
       localVarRequestOptions.Data = assignUserIdParams;
-
-      localVarRequestOptions.Operation = "SearchApi.AssignUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -3911,13 +3651,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<CreatedAtResponse>("/1/clusters/mapping", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AssignUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -3929,12 +3667,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await AssignUserIdWithHttpInfoAsync(xAlgoliaUserID, assignUserIdParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await AssignUserIdWithHttpInfoAsync(xAlgoliaUserID, assignUserIdParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -3944,22 +3681,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="assignUserIdParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> AssignUserIdWithHttpInfoAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> AssignUserIdWithHttpInfoAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'xAlgoliaUserID' is set
       if (xAlgoliaUserID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'xAlgoliaUserID' when calling SearchApi->AssignUserId");
-      }
 
       // verify the required parameter 'assignUserIdParams' is set
       if (assignUserIdParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'assignUserIdParams' when calling SearchApi->AssignUserId");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -3973,23 +3705,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.HeaderParameters.Add("X-Algolia-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xAlgoliaUserID)); // header parameter
       localVarRequestOptions.Data = assignUserIdParams;
-
-      localVarRequestOptions.Operation = "SearchApi.AssignUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4003,15 +3727,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<CreatedAtResponse>("/1/clusters/mapping", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("AssignUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4023,9 +3745,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BatchResponse</returns>
-    public BatchResponse Batch(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0)
+    public BatchResponse Batch(string indexName, BatchWriteParams batchWriteParams)
     {
       Org.OpenAPITools.Client.ApiResponse<BatchResponse> localVarResponse = BatchWithHttpInfo(indexName, batchWriteParams);
       return localVarResponse.Data;
@@ -4037,21 +3758,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BatchResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<BatchResponse> BatchWithHttpInfo(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<BatchResponse> BatchWithHttpInfo(string indexName, BatchWriteParams batchWriteParams)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->Batch");
-      }
 
       // verify the required parameter 'batchWriteParams' is set
       if (batchWriteParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchWriteParams' when calling SearchApi->Batch");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4065,22 +3781,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = batchWriteParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Batch";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4095,13 +3802,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<BatchResponse>("/1/indexes/{indexName}/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Batch", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4113,12 +3818,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BatchResponse</returns>
-    public async System.Threading.Tasks.Task<BatchResponse> BatchAsync(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<BatchResponse> BatchAsync(string indexName, BatchWriteParams batchWriteParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<BatchResponse> localVarResponse = await BatchWithHttpInfoAsync(indexName, batchWriteParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<BatchResponse> localVarResponse = await BatchWithHttpInfoAsync(indexName, batchWriteParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -4128,22 +3832,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="batchWriteParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BatchResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<BatchResponse>> BatchWithHttpInfoAsync(string indexName, BatchWriteParams batchWriteParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<BatchResponse>> BatchWithHttpInfoAsync(string indexName, BatchWriteParams batchWriteParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->Batch");
-      }
 
       // verify the required parameter 'batchWriteParams' is set
       if (batchWriteParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchWriteParams' when calling SearchApi->Batch");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -4157,23 +3856,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = batchWriteParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Batch";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4187,15 +3878,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<BatchResponse>("/1/indexes/{indexName}/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Batch", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4207,9 +3896,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>CreatedAtResponse</returns>
-    public CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0)
+    public CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams)
     {
       Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = BatchAssignUserIdsWithHttpInfo(xAlgoliaUserID, batchAssignUserIdsParams);
       return localVarResponse.Data;
@@ -4221,21 +3909,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of CreatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> BatchAssignUserIdsWithHttpInfo(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> BatchAssignUserIdsWithHttpInfo(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams)
     {
       // verify the required parameter 'xAlgoliaUserID' is set
       if (xAlgoliaUserID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'xAlgoliaUserID' when calling SearchApi->BatchAssignUserIds");
-      }
 
       // verify the required parameter 'batchAssignUserIdsParams' is set
       if (batchAssignUserIdsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchAssignUserIdsParams' when calling SearchApi->BatchAssignUserIds");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4249,22 +3932,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.HeaderParameters.Add("X-Algolia-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xAlgoliaUserID)); // header parameter
       localVarRequestOptions.Data = batchAssignUserIdsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.BatchAssignUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4279,13 +3953,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<CreatedAtResponse>("/1/clusters/mapping/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("BatchAssignUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4297,12 +3969,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of CreatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await BatchAssignUserIdsWithHttpInfoAsync(xAlgoliaUserID, batchAssignUserIdsParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse> localVarResponse = await BatchAssignUserIdsWithHttpInfoAsync(xAlgoliaUserID, batchAssignUserIdsParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -4312,22 +3983,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="xAlgoliaUserID">userID to assign.</param>
     /// <param name="batchAssignUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (CreatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> BatchAssignUserIdsWithHttpInfoAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<CreatedAtResponse>> BatchAssignUserIdsWithHttpInfoAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'xAlgoliaUserID' is set
       if (xAlgoliaUserID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'xAlgoliaUserID' when calling SearchApi->BatchAssignUserIds");
-      }
 
       // verify the required parameter 'batchAssignUserIdsParams' is set
       if (batchAssignUserIdsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchAssignUserIdsParams' when calling SearchApi->BatchAssignUserIds");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -4341,23 +4007,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.HeaderParameters.Add("X-Algolia-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xAlgoliaUserID)); // header parameter
       localVarRequestOptions.Data = batchAssignUserIdsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.BatchAssignUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4371,15 +4029,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<CreatedAtResponse>("/1/clusters/mapping/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("BatchAssignUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4391,9 +4047,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse BatchDictionaryEntries(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0)
+    public UpdatedAtResponse BatchDictionaryEntries(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = BatchDictionaryEntriesWithHttpInfo(dictionaryName, batchDictionaryEntriesParams);
       return localVarResponse.Data;
@@ -4405,21 +4060,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> BatchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> BatchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams)
     {
       // verify the required parameter 'dictionaryName' is set
       if (dictionaryName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionaryName' when calling SearchApi->BatchDictionaryEntries");
-      }
 
       // verify the required parameter 'batchDictionaryEntriesParams' is set
       if (batchDictionaryEntriesParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchDictionaryEntriesParams' when calling SearchApi->BatchDictionaryEntries");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4433,22 +4083,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("dictionaryName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(dictionaryName)); // path parameter
       localVarRequestOptions.Data = batchDictionaryEntriesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.BatchDictionaryEntries";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4463,13 +4104,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/dictionaries/{dictionaryName}/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("BatchDictionaryEntries", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4481,12 +4120,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> BatchDictionaryEntriesAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> BatchDictionaryEntriesAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await BatchDictionaryEntriesWithHttpInfoAsync(dictionaryName, batchDictionaryEntriesParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await BatchDictionaryEntriesWithHttpInfoAsync(dictionaryName, batchDictionaryEntriesParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -4496,22 +4134,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="batchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> BatchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> BatchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'dictionaryName' is set
       if (dictionaryName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionaryName' when calling SearchApi->BatchDictionaryEntries");
-      }
 
       // verify the required parameter 'batchDictionaryEntriesParams' is set
       if (batchDictionaryEntriesParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchDictionaryEntriesParams' when calling SearchApi->BatchDictionaryEntries");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -4525,23 +4158,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("dictionaryName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(dictionaryName)); // path parameter
       localVarRequestOptions.Data = batchDictionaryEntriesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.BatchDictionaryEntries";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4555,15 +4180,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/dictionaries/{dictionaryName}/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("BatchDictionaryEntries", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4575,9 +4198,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BrowseResponse</returns>
-    public BrowseResponse Browse(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0)
+    public BrowseResponse Browse(string indexName, BrowseParams browseParams = default(BrowseParams))
     {
       Org.OpenAPITools.Client.ApiResponse<BrowseResponse> localVarResponse = BrowseWithHttpInfo(indexName, browseParams);
       return localVarResponse.Data;
@@ -4589,15 +4211,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BrowseResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<BrowseResponse> BrowseWithHttpInfo(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<BrowseResponse> BrowseWithHttpInfo(string indexName, BrowseParams browseParams = default(BrowseParams))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->Browse");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4611,22 +4230,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = browseParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Browse";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4641,13 +4251,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<BrowseResponse>("/1/indexes/{indexName}/browse", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Browse", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4659,12 +4267,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BrowseResponse</returns>
-    public async System.Threading.Tasks.Task<BrowseResponse> BrowseAsync(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<BrowseResponse> BrowseAsync(string indexName, BrowseParams browseParams = default(BrowseParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<BrowseResponse> localVarResponse = await BrowseWithHttpInfoAsync(indexName, browseParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<BrowseResponse> localVarResponse = await BrowseWithHttpInfoAsync(indexName, browseParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -4674,16 +4281,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="browseParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BrowseResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<BrowseResponse>> BrowseWithHttpInfoAsync(string indexName, BrowseParams browseParams = default(BrowseParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<BrowseResponse>> BrowseWithHttpInfoAsync(string indexName, BrowseParams browseParams = default(BrowseParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->Browse");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -4697,23 +4301,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = browseParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Browse";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4727,15 +4323,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<BrowseResponse>("/1/indexes/{indexName}/browse", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Browse", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4747,9 +4341,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse ClearAllSynonyms(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse ClearAllSynonyms(string indexName, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = ClearAllSynonymsWithHttpInfo(indexName, forwardToReplicas);
       return localVarResponse.Data;
@@ -4761,15 +4354,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearAllSynonymsWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearAllSynonymsWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearAllSynonyms");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4782,25 +4372,16 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ClearAllSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4815,13 +4396,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/synonyms/clear", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearAllSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4833,12 +4412,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearAllSynonymsAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearAllSynonymsAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearAllSynonymsWithHttpInfoAsync(indexName, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearAllSynonymsWithHttpInfoAsync(indexName, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -4848,16 +4426,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearAllSynonymsWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearAllSynonymsWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearAllSynonyms");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -4870,26 +4445,18 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ClearAllSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4903,15 +4470,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/synonyms/clear", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearAllSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -4922,9 +4487,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse ClearObjects(string indexName, int operationIndex = 0)
+    public UpdatedAtResponse ClearObjects(string indexName)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = ClearObjectsWithHttpInfo(indexName);
       return localVarResponse.Data;
@@ -4935,15 +4499,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearObjectsWithHttpInfo(string indexName, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearObjectsWithHttpInfo(string indexName)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearObjects");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -4956,21 +4517,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.ClearObjects";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -4985,13 +4537,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/clear", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearObjects", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5002,12 +4552,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearObjectsAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearObjectsAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearObjectsWithHttpInfoAsync(indexName, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearObjectsWithHttpInfoAsync(indexName, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5016,16 +4565,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearObjectsWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearObjectsWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearObjects");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5038,22 +4584,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.ClearObjects";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5067,15 +4605,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/clear", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearObjects", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5087,9 +4623,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse ClearRules(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse ClearRules(string indexName, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = ClearRulesWithHttpInfo(indexName, forwardToReplicas);
       return localVarResponse.Data;
@@ -5101,15 +4636,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearRulesWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> ClearRulesWithHttpInfo(string indexName, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearRules");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5122,25 +4654,16 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ClearRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5155,13 +4678,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/rules/clear", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5173,12 +4694,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearRulesAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> ClearRulesAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearRulesWithHttpInfoAsync(indexName, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await ClearRulesWithHttpInfoAsync(indexName, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5188,16 +4708,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearRulesWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> ClearRulesWithHttpInfoAsync(string indexName, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->ClearRules");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5210,26 +4727,18 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ClearRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5243,15 +4752,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/rules/clear", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ClearRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5263,9 +4770,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    public Object Del(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0)
+    public Object Del(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>))
     {
       Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = DelWithHttpInfo(path, parameters);
       return localVarResponse.Data;
@@ -5277,15 +4783,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Object> DelWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Object> DelWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Del");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5298,25 +4801,16 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.Del";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5331,13 +4825,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<Object>("/1{path}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Del", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5349,12 +4841,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    public async System.Threading.Tasks.Task<Object> DelAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Object> DelAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await DelWithHttpInfoAsync(path, parameters, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await DelWithHttpInfoAsync(path, parameters, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5364,16 +4855,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> DelWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> DelWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Del");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5386,26 +4874,18 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.Del";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5419,15 +4899,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/1{path}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Del", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5438,9 +4916,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeleteApiKeyResponse</returns>
-    public DeleteApiKeyResponse DeleteApiKey(string key, int operationIndex = 0)
+    public DeleteApiKeyResponse DeleteApiKey(string key)
     {
       Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse> localVarResponse = DeleteApiKeyWithHttpInfo(key);
       return localVarResponse.Data;
@@ -5451,15 +4928,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeleteApiKeyResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse> DeleteApiKeyWithHttpInfo(string key, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse> DeleteApiKeyWithHttpInfo(string key)
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->DeleteApiKey");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5472,21 +4946,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5501,13 +4966,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<DeleteApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5518,12 +4981,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeleteApiKeyResponse</returns>
-    public async System.Threading.Tasks.Task<DeleteApiKeyResponse> DeleteApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeleteApiKeyResponse> DeleteApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse> localVarResponse = await DeleteApiKeyWithHttpInfoAsync(key, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse> localVarResponse = await DeleteApiKeyWithHttpInfoAsync(key, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5532,16 +4994,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeleteApiKeyResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse>> DeleteApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeleteApiKeyResponse>> DeleteApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->DeleteApiKey");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5554,22 +5013,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5583,15 +5034,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<DeleteApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5603,9 +5052,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    public DeletedAtResponse DeleteBy(string indexName, DeleteByParams deleteByParams, int operationIndex = 0)
+    public DeletedAtResponse DeleteBy(string indexName, DeleteByParams deleteByParams)
     {
       Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = DeleteByWithHttpInfo(indexName, deleteByParams);
       return localVarResponse.Data;
@@ -5617,21 +5065,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteByWithHttpInfo(string indexName, DeleteByParams deleteByParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteByWithHttpInfo(string indexName, DeleteByParams deleteByParams)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteBy");
-      }
 
       // verify the required parameter 'deleteByParams' is set
       if (deleteByParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'deleteByParams' when calling SearchApi->DeleteBy");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5645,22 +5088,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = deleteByParams;
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteBy";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5675,13 +5109,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<DeletedAtResponse>("/1/indexes/{indexName}/deleteByQuery", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteBy", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5693,12 +5125,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteByAsync(string indexName, DeleteByParams deleteByParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteByAsync(string indexName, DeleteByParams deleteByParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteByWithHttpInfoAsync(indexName, deleteByParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteByWithHttpInfoAsync(indexName, deleteByParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5708,22 +5139,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="deleteByParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteByWithHttpInfoAsync(string indexName, DeleteByParams deleteByParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteByWithHttpInfoAsync(string indexName, DeleteByParams deleteByParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteBy");
-      }
 
       // verify the required parameter 'deleteByParams' is set
       if (deleteByParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'deleteByParams' when calling SearchApi->DeleteBy");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5737,23 +5163,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = deleteByParams;
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteBy";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5767,15 +5185,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<DeletedAtResponse>("/1/indexes/{indexName}/deleteByQuery", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteBy", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5786,9 +5202,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    public DeletedAtResponse DeleteIndex(string indexName, int operationIndex = 0)
+    public DeletedAtResponse DeleteIndex(string indexName)
     {
       Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = DeleteIndexWithHttpInfo(indexName);
       return localVarResponse.Data;
@@ -5799,15 +5214,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteIndexWithHttpInfo(string indexName, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteIndexWithHttpInfo(string indexName)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteIndex");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5820,21 +5232,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5849,13 +5252,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<DeletedAtResponse>("/1/indexes/{indexName}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5866,12 +5267,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteIndexAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteIndexAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteIndexWithHttpInfoAsync(indexName, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteIndexWithHttpInfoAsync(indexName, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -5880,16 +5280,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteIndexWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteIndexWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteIndex");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -5902,22 +5299,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -5931,15 +5320,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<DeletedAtResponse>("/1/indexes/{indexName}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -5951,9 +5338,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    public DeletedAtResponse DeleteObject(string indexName, string objectID, int operationIndex = 0)
+    public DeletedAtResponse DeleteObject(string indexName, string objectID)
     {
       Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = DeleteObjectWithHttpInfo(indexName, objectID);
       return localVarResponse.Data;
@@ -5965,21 +5351,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteObjectWithHttpInfo(string indexName, string objectID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteObjectWithHttpInfo(string indexName, string objectID)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteObject");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -5992,22 +5373,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6022,13 +5394,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<DeletedAtResponse>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6040,12 +5410,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteObjectAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteObjectAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteObjectWithHttpInfoAsync(indexName, objectID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteObjectWithHttpInfoAsync(indexName, objectID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6055,22 +5424,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteObjectWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteObjectWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteObject");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6083,23 +5447,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6113,15 +5469,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<DeletedAtResponse>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6134,9 +5488,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse DeleteRule(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse DeleteRule(string indexName, string objectID, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = DeleteRuleWithHttpInfo(indexName, objectID, forwardToReplicas);
       return localVarResponse.Data;
@@ -6149,21 +5502,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> DeleteRuleWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> DeleteRuleWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteRule");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -6176,16 +5524,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -6193,9 +5535,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6210,13 +5549,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<UpdatedAtResponse>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6229,12 +5566,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> DeleteRuleAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> DeleteRuleAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await DeleteRuleWithHttpInfoAsync(indexName, objectID, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await DeleteRuleWithHttpInfoAsync(indexName, objectID, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6245,22 +5581,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> DeleteRuleWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> DeleteRuleWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteRule");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6273,17 +5604,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -6291,9 +5617,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6307,15 +5630,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<UpdatedAtResponse>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6326,9 +5647,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeleteSourceResponse</returns>
-    public DeleteSourceResponse DeleteSource(string source, int operationIndex = 0)
+    public DeleteSourceResponse DeleteSource(string source)
     {
       Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse> localVarResponse = DeleteSourceWithHttpInfo(source);
       return localVarResponse.Data;
@@ -6339,15 +5659,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeleteSourceResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse> DeleteSourceWithHttpInfo(string source, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse> DeleteSourceWithHttpInfo(string source)
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->DeleteSource");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -6360,21 +5677,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("source", Org.OpenAPITools.Client.ClientUtils.ParameterToString(source)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteSource";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6389,13 +5697,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<DeleteSourceResponse>("/1/security/sources/{source}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteSource", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6406,12 +5712,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeleteSourceResponse</returns>
-    public async System.Threading.Tasks.Task<DeleteSourceResponse> DeleteSourceAsync(string source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeleteSourceResponse> DeleteSourceAsync(string source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse> localVarResponse = await DeleteSourceWithHttpInfoAsync(source, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse> localVarResponse = await DeleteSourceWithHttpInfoAsync(source, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6420,16 +5725,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">IP address range of the source.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeleteSourceResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse>> DeleteSourceWithHttpInfoAsync(string source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeleteSourceResponse>> DeleteSourceWithHttpInfoAsync(string source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->DeleteSource");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6442,22 +5744,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("source", Org.OpenAPITools.Client.ClientUtils.ParameterToString(source)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteSource";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6471,15 +5765,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<DeleteSourceResponse>("/1/security/sources/{source}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteSource", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6492,9 +5784,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>DeletedAtResponse</returns>
-    public DeletedAtResponse DeleteSynonym(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public DeletedAtResponse DeleteSynonym(string indexName, string objectID, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = DeleteSynonymWithHttpInfo(indexName, objectID, forwardToReplicas);
       return localVarResponse.Data;
@@ -6507,21 +5798,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of DeletedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteSynonymWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> DeleteSynonymWithHttpInfo(string indexName, string objectID, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteSynonym");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -6534,16 +5820,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -6551,9 +5831,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6568,13 +5845,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<DeletedAtResponse>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6587,12 +5862,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of DeletedAtResponse</returns>
-    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteSynonymAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<DeletedAtResponse> DeleteSynonymAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteSynonymWithHttpInfoAsync(indexName, objectID, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse> localVarResponse = await DeleteSynonymWithHttpInfoAsync(indexName, objectID, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6603,22 +5877,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (DeletedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteSynonymWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<DeletedAtResponse>> DeleteSynonymWithHttpInfoAsync(string indexName, string objectID, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->DeleteSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->DeleteSynonym");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6631,17 +5900,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -6649,9 +5913,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.DeleteSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6665,15 +5926,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<DeletedAtResponse>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("DeleteSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6685,9 +5944,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    public Object Get(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0)
+    public Object Get(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>))
     {
       Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = GetWithHttpInfo(path, parameters);
       return localVarResponse.Data;
@@ -6699,15 +5957,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Object> GetWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Object> GetWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Get");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -6720,25 +5975,16 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.Get";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6753,13 +5999,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<Object>("/1{path}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Get", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6771,12 +6015,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    public async System.Threading.Tasks.Task<Object> GetAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Object> GetAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await GetWithHttpInfoAsync(path, parameters, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await GetWithHttpInfoAsync(path, parameters, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6786,16 +6029,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> GetWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> GetWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Get");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6808,26 +6048,18 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.Get";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6841,15 +6073,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/1{path}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Get", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6860,9 +6090,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetApiKeyResponse</returns>
-    public GetApiKeyResponse GetApiKey(string key, int operationIndex = 0)
+    public GetApiKeyResponse GetApiKey(string key)
     {
       Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse> localVarResponse = GetApiKeyWithHttpInfo(key);
       return localVarResponse.Data;
@@ -6873,15 +6102,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetApiKeyResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse> GetApiKeyWithHttpInfo(string key, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse> GetApiKeyWithHttpInfo(string key)
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->GetApiKey");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -6894,21 +6120,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -6923,13 +6140,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<GetApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -6940,12 +6155,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetApiKeyResponse</returns>
-    public async System.Threading.Tasks.Task<GetApiKeyResponse> GetApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetApiKeyResponse> GetApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse> localVarResponse = await GetApiKeyWithHttpInfoAsync(key, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse> localVarResponse = await GetApiKeyWithHttpInfoAsync(key, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -6954,16 +6168,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetApiKeyResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse>> GetApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetApiKeyResponse>> GetApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->GetApiKey");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -6976,22 +6187,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7005,15 +6208,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<GetApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7023,9 +6224,8 @@ namespace Org.OpenAPITools.Api
     /// List available languages. Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Dictionary&lt;string, Languages&gt;</returns>
-    public Dictionary<string, Languages> GetDictionaryLanguages(int operationIndex = 0)
+    public Dictionary<string, Languages> GetDictionaryLanguages()
     {
       Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>> localVarResponse = GetDictionaryLanguagesWithHttpInfo();
       return localVarResponse.Data;
@@ -7035,9 +6235,8 @@ namespace Org.OpenAPITools.Api
     /// List available languages. Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Dictionary&lt;string, Languages&gt;</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>> GetDictionaryLanguagesWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>> GetDictionaryLanguagesWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7050,20 +6249,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetDictionaryLanguages";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7078,13 +6268,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<Dictionary<string, Languages>>("/1/dictionaries/*/languages", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetDictionaryLanguages", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7094,12 +6282,11 @@ namespace Org.OpenAPITools.Api
     /// List available languages. Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Dictionary&lt;string, Languages&gt;</returns>
-    public async System.Threading.Tasks.Task<Dictionary<string, Languages>> GetDictionaryLanguagesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Dictionary<string, Languages>> GetDictionaryLanguagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>> localVarResponse = await GetDictionaryLanguagesWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>> localVarResponse = await GetDictionaryLanguagesWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7107,10 +6294,9 @@ namespace Org.OpenAPITools.Api
     /// List available languages. Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Dictionary&lt;string, Languages&gt;)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>>> GetDictionaryLanguagesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Dictionary<string, Languages>>> GetDictionaryLanguagesWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -7123,21 +6309,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetDictionaryLanguages";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7151,15 +6329,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<Dictionary<string, Languages>>("/1/dictionaries/*/languages", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetDictionaryLanguages", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7169,9 +6345,8 @@ namespace Org.OpenAPITools.Api
     /// Get stop word settings. Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetDictionarySettingsResponse</returns>
-    public GetDictionarySettingsResponse GetDictionarySettings(int operationIndex = 0)
+    public GetDictionarySettingsResponse GetDictionarySettings()
     {
       Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse> localVarResponse = GetDictionarySettingsWithHttpInfo();
       return localVarResponse.Data;
@@ -7181,9 +6356,8 @@ namespace Org.OpenAPITools.Api
     /// Get stop word settings. Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetDictionarySettingsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse> GetDictionarySettingsWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse> GetDictionarySettingsWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7196,20 +6370,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetDictionarySettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7224,13 +6389,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<GetDictionarySettingsResponse>("/1/dictionaries/*/settings", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetDictionarySettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7240,12 +6403,11 @@ namespace Org.OpenAPITools.Api
     /// Get stop word settings. Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetDictionarySettingsResponse</returns>
-    public async System.Threading.Tasks.Task<GetDictionarySettingsResponse> GetDictionarySettingsAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetDictionarySettingsResponse> GetDictionarySettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse> localVarResponse = await GetDictionarySettingsWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse> localVarResponse = await GetDictionarySettingsWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7253,10 +6415,9 @@ namespace Org.OpenAPITools.Api
     /// Get stop word settings. Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetDictionarySettingsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse>> GetDictionarySettingsWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetDictionarySettingsResponse>> GetDictionarySettingsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -7269,21 +6430,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetDictionarySettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7297,15 +6450,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<GetDictionarySettingsResponse>("/1/dictionaries/*/settings", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetDictionarySettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7319,9 +6470,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetLogsResponse</returns>
-    public GetLogsResponse GetLogs(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0)
+    public GetLogsResponse GetLogs(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType))
     {
       Org.OpenAPITools.Client.ApiResponse<GetLogsResponse> localVarResponse = GetLogsWithHttpInfo(offset, length, indexName, type);
       return localVarResponse.Data;
@@ -7335,9 +6485,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetLogsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetLogsResponse> GetLogsWithHttpInfo(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetLogsResponse> GetLogsWithHttpInfo(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType))
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7350,16 +6499,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (offset != null)
       {
@@ -7377,9 +6520,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "type", type));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.GetLogs";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7394,13 +6534,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<GetLogsResponse>("/1/logs", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetLogs", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7414,12 +6552,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetLogsResponse</returns>
-    public async System.Threading.Tasks.Task<GetLogsResponse> GetLogsAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetLogsResponse> GetLogsAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetLogsResponse> localVarResponse = await GetLogsWithHttpInfoAsync(offset, length, indexName, type, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetLogsResponse> localVarResponse = await GetLogsWithHttpInfoAsync(offset, length, indexName, type, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7431,10 +6568,9 @@ namespace Org.OpenAPITools.Api
     /// <param name="length">Maximum number of entries to retrieve. (optional, default to 10)</param>
     /// <param name="indexName">Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)</param>
     /// <param name="type">Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetLogsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetLogsResponse>> GetLogsWithHttpInfoAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetLogsResponse>> GetLogsWithHttpInfoAsync(int? offset = default(int?), int? length = default(int?), string indexName = default(string), LogType type = default(LogType), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -7447,17 +6583,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (offset != null)
       {
@@ -7476,9 +6607,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "type", type));
       }
 
-      localVarRequestOptions.Operation = "SearchApi.GetLogs";
-      localVarRequestOptions.OperationIndex = operationIndex;
-
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
       {
@@ -7491,15 +6619,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<GetLogsResponse>("/1/logs", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetLogs", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7512,9 +6638,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Dictionary&lt;string, string&gt;</returns>
-    public Dictionary<string, string> GetObject(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0)
+    public Dictionary<string, string> GetObject(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>))
     {
       Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>> localVarResponse = GetObjectWithHttpInfo(indexName, objectID, attributesToRetrieve);
       return localVarResponse.Data;
@@ -7527,21 +6652,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Dictionary&lt;string, string&gt;</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>> GetObjectWithHttpInfo(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>> GetObjectWithHttpInfo(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetObject");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7554,16 +6674,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -7571,9 +6685,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("multi", "attributesToRetrieve", attributesToRetrieve));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.GetObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7588,13 +6699,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<Dictionary<string, string>>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7607,12 +6716,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Dictionary&lt;string, string&gt;</returns>
-    public async System.Threading.Tasks.Task<Dictionary<string, string>> GetObjectAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Dictionary<string, string>> GetObjectAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>> localVarResponse = await GetObjectWithHttpInfoAsync(indexName, objectID, attributesToRetrieve, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>> localVarResponse = await GetObjectWithHttpInfoAsync(indexName, objectID, attributesToRetrieve, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7623,22 +6731,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToRetrieve">Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Dictionary&lt;string, string&gt;)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>>> GetObjectWithHttpInfoAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Dictionary<string, string>>> GetObjectWithHttpInfoAsync(string indexName, string objectID, List<string> attributesToRetrieve = default(List<string>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetObject");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -7651,17 +6754,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -7669,9 +6767,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("multi", "attributesToRetrieve", attributesToRetrieve));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.GetObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7685,15 +6780,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<Dictionary<string, string>>("/1/indexes/{indexName}/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7704,9 +6797,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetObjectsResponse</returns>
-    public GetObjectsResponse GetObjects(GetObjectsParams getObjectsParams, int operationIndex = 0)
+    public GetObjectsResponse GetObjects(GetObjectsParams getObjectsParams)
     {
       Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse> localVarResponse = GetObjectsWithHttpInfo(getObjectsParams);
       return localVarResponse.Data;
@@ -7717,15 +6809,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetObjectsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse> GetObjectsWithHttpInfo(GetObjectsParams getObjectsParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse> GetObjectsWithHttpInfo(GetObjectsParams getObjectsParams)
     {
       // verify the required parameter 'getObjectsParams' is set
       if (getObjectsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'getObjectsParams' when calling SearchApi->GetObjects");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7739,21 +6828,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = getObjectsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.GetObjects";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7768,13 +6848,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<GetObjectsResponse>("/1/indexes/*/objects", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetObjects", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7785,12 +6863,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetObjectsResponse</returns>
-    public async System.Threading.Tasks.Task<GetObjectsResponse> GetObjectsAsync(GetObjectsParams getObjectsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetObjectsResponse> GetObjectsAsync(GetObjectsParams getObjectsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse> localVarResponse = await GetObjectsWithHttpInfoAsync(getObjectsParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse> localVarResponse = await GetObjectsWithHttpInfoAsync(getObjectsParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7799,16 +6876,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getObjectsParams">Request object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetObjectsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse>> GetObjectsWithHttpInfoAsync(GetObjectsParams getObjectsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetObjectsResponse>> GetObjectsWithHttpInfoAsync(GetObjectsParams getObjectsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'getObjectsParams' is set
       if (getObjectsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'getObjectsParams' when calling SearchApi->GetObjects");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -7822,22 +6896,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = getObjectsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.GetObjects";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7851,15 +6917,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<GetObjectsResponse>("/1/indexes/*/objects", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetObjects", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7871,9 +6935,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Rule</returns>
-    public Rule GetRule(string indexName, string objectID, int operationIndex = 0)
+    public Rule GetRule(string indexName, string objectID)
     {
       Org.OpenAPITools.Client.ApiResponse<Rule> localVarResponse = GetRuleWithHttpInfo(indexName, objectID);
       return localVarResponse.Data;
@@ -7885,21 +6948,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Rule</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Rule> GetRuleWithHttpInfo(string indexName, string objectID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Rule> GetRuleWithHttpInfo(string indexName, string objectID)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetRule");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -7912,22 +6970,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -7942,13 +6991,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<Rule>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -7960,12 +7007,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Rule</returns>
-    public async System.Threading.Tasks.Task<Rule> GetRuleAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Rule> GetRuleAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Rule> localVarResponse = await GetRuleWithHttpInfoAsync(indexName, objectID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Rule> localVarResponse = await GetRuleWithHttpInfoAsync(indexName, objectID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -7975,22 +7021,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a rule object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Rule)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Rule>> GetRuleWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Rule>> GetRuleWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetRule");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8003,23 +7044,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8033,15 +7066,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<Rule>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8052,9 +7083,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>IndexSettings</returns>
-    public IndexSettings GetSettings(string indexName, int operationIndex = 0)
+    public IndexSettings GetSettings(string indexName)
     {
       Org.OpenAPITools.Client.ApiResponse<IndexSettings> localVarResponse = GetSettingsWithHttpInfo(indexName);
       return localVarResponse.Data;
@@ -8065,15 +7095,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of IndexSettings</returns>
-    public Org.OpenAPITools.Client.ApiResponse<IndexSettings> GetSettingsWithHttpInfo(string indexName, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<IndexSettings> GetSettingsWithHttpInfo(string indexName)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetSettings");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8086,21 +7113,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetSettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8115,13 +7133,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<IndexSettings>("/1/indexes/{indexName}/settings", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8132,12 +7148,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of IndexSettings</returns>
-    public async System.Threading.Tasks.Task<IndexSettings> GetSettingsAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<IndexSettings> GetSettingsAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<IndexSettings> localVarResponse = await GetSettingsWithHttpInfoAsync(indexName, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<IndexSettings> localVarResponse = await GetSettingsWithHttpInfoAsync(indexName, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8146,16 +7161,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (IndexSettings)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<IndexSettings>> GetSettingsWithHttpInfoAsync(string indexName, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<IndexSettings>> GetSettingsWithHttpInfoAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetSettings");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8168,22 +7180,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetSettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8197,15 +7201,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<IndexSettings>("/1/indexes/{indexName}/settings", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8215,9 +7217,8 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed IP addresses. Get all allowed sources (IP addresses).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>List&lt;Source&gt;</returns>
-    public List<Source> GetSources(int operationIndex = 0)
+    public List<Source> GetSources()
     {
       Org.OpenAPITools.Client.ApiResponse<List<Source>> localVarResponse = GetSourcesWithHttpInfo();
       return localVarResponse.Data;
@@ -8227,9 +7228,8 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed IP addresses. Get all allowed sources (IP addresses).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of List&lt;Source&gt;</returns>
-    public Org.OpenAPITools.Client.ApiResponse<List<Source>> GetSourcesWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<List<Source>> GetSourcesWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8242,20 +7242,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetSources";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8270,13 +7261,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<List<Source>>("/1/security/sources", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSources", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8286,12 +7275,11 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed IP addresses. Get all allowed sources (IP addresses).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of List&lt;Source&gt;</returns>
-    public async System.Threading.Tasks.Task<List<Source>> GetSourcesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<List<Source>> GetSourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<List<Source>> localVarResponse = await GetSourcesWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<List<Source>> localVarResponse = await GetSourcesWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8299,10 +7287,9 @@ namespace Org.OpenAPITools.Api
     /// Get all allowed IP addresses. Get all allowed sources (IP addresses).
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (List&lt;Source&gt;)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<Source>>> GetSourcesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<Source>>> GetSourcesWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8315,21 +7302,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetSources";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8343,15 +7322,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<List<Source>>("/1/security/sources", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSources", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8363,9 +7340,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SynonymHit</returns>
-    public SynonymHit GetSynonym(string indexName, string objectID, int operationIndex = 0)
+    public SynonymHit GetSynonym(string indexName, string objectID)
     {
       Org.OpenAPITools.Client.ApiResponse<SynonymHit> localVarResponse = GetSynonymWithHttpInfo(indexName, objectID);
       return localVarResponse.Data;
@@ -8377,21 +7353,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SynonymHit</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SynonymHit> GetSynonymWithHttpInfo(string indexName, string objectID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SynonymHit> GetSynonymWithHttpInfo(string indexName, string objectID)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetSynonym");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8404,22 +7375,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8434,13 +7396,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<SynonymHit>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8452,12 +7412,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SynonymHit</returns>
-    public async System.Threading.Tasks.Task<SynonymHit> GetSynonymAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SynonymHit> GetSynonymAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SynonymHit> localVarResponse = await GetSynonymWithHttpInfoAsync(indexName, objectID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SynonymHit> localVarResponse = await GetSynonymWithHttpInfoAsync(indexName, objectID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8467,22 +7426,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="objectID">Unique identifier of a synonym object.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SynonymHit)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SynonymHit>> GetSynonymWithHttpInfoAsync(string indexName, string objectID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SynonymHit>> GetSynonymWithHttpInfoAsync(string indexName, string objectID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->GetSynonym");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8495,23 +7449,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8525,15 +7471,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<SynonymHit>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8545,9 +7489,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetTaskResponse</returns>
-    public GetTaskResponse GetTask(string indexName, long taskID, int operationIndex = 0)
+    public GetTaskResponse GetTask(string indexName, long taskID)
     {
       Org.OpenAPITools.Client.ApiResponse<GetTaskResponse> localVarResponse = GetTaskWithHttpInfo(indexName, taskID);
       return localVarResponse.Data;
@@ -8559,15 +7502,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetTaskResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetTaskResponse> GetTaskWithHttpInfo(string indexName, long taskID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetTaskResponse> GetTaskWithHttpInfo(string indexName, long taskID)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetTask");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8580,22 +7520,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("taskID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(taskID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetTask";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8610,13 +7541,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<GetTaskResponse>("/1/indexes/{indexName}/task/{taskID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetTask", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8628,12 +7557,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetTaskResponse</returns>
-    public async System.Threading.Tasks.Task<GetTaskResponse> GetTaskAsync(string indexName, long taskID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetTaskResponse> GetTaskAsync(string indexName, long taskID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetTaskResponse> localVarResponse = await GetTaskWithHttpInfoAsync(indexName, taskID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetTaskResponse> localVarResponse = await GetTaskWithHttpInfoAsync(indexName, taskID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8643,16 +7571,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="taskID">Unique task identifier.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetTaskResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetTaskResponse>> GetTaskWithHttpInfoAsync(string indexName, long taskID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetTaskResponse>> GetTaskWithHttpInfoAsync(string indexName, long taskID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->GetTask");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8665,23 +7590,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("taskID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(taskID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetTask";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8695,15 +7612,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<GetTaskResponse>("/1/indexes/{indexName}/task/{taskID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetTask", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8713,9 +7628,8 @@ namespace Org.OpenAPITools.Api
     /// Get top userID. Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>GetTopUserIdsResponse</returns>
-    public GetTopUserIdsResponse GetTopUserIds(int operationIndex = 0)
+    public GetTopUserIdsResponse GetTopUserIds()
     {
       Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse> localVarResponse = GetTopUserIdsWithHttpInfo();
       return localVarResponse.Data;
@@ -8725,9 +7639,8 @@ namespace Org.OpenAPITools.Api
     /// Get top userID. Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of GetTopUserIdsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse> GetTopUserIdsWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse> GetTopUserIdsWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8740,20 +7653,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetTopUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8768,13 +7672,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<GetTopUserIdsResponse>("/1/clusters/mapping/top", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetTopUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8784,12 +7686,11 @@ namespace Org.OpenAPITools.Api
     /// Get top userID. Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of GetTopUserIdsResponse</returns>
-    public async System.Threading.Tasks.Task<GetTopUserIdsResponse> GetTopUserIdsAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<GetTopUserIdsResponse> GetTopUserIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse> localVarResponse = await GetTopUserIdsWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse> localVarResponse = await GetTopUserIdsWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8797,10 +7698,9 @@ namespace Org.OpenAPITools.Api
     /// Get top userID. Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. 
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (GetTopUserIdsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse>> GetTopUserIdsWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<GetTopUserIdsResponse>> GetTopUserIdsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8813,21 +7713,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.GetTopUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8841,15 +7733,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<GetTopUserIdsResponse>("/1/clusters/mapping/top", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetTopUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8860,9 +7750,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UserId</returns>
-    public UserId GetUserId(string userID, int operationIndex = 0)
+    public UserId GetUserId(string userID)
     {
       Org.OpenAPITools.Client.ApiResponse<UserId> localVarResponse = GetUserIdWithHttpInfo(userID);
       return localVarResponse.Data;
@@ -8873,15 +7762,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UserId</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UserId> GetUserIdWithHttpInfo(string userID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UserId> GetUserIdWithHttpInfo(string userID)
     {
       // verify the required parameter 'userID' is set
       if (userID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'userID' when calling SearchApi->GetUserId");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -8894,21 +7780,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("userID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(userID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -8923,13 +7800,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<UserId>("/1/clusters/mapping/{userID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -8940,12 +7815,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UserId</returns>
-    public async System.Threading.Tasks.Task<UserId> GetUserIdAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UserId> GetUserIdAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UserId> localVarResponse = await GetUserIdWithHttpInfoAsync(userID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UserId> localVarResponse = await GetUserIdWithHttpInfoAsync(userID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -8954,16 +7828,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UserId)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UserId>> GetUserIdWithHttpInfoAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UserId>> GetUserIdWithHttpInfoAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'userID' is set
       if (userID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'userID' when calling SearchApi->GetUserId");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -8976,22 +7847,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("userID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(userID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.GetUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9005,15 +7868,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<UserId>("/1/clusters/mapping/{userID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("GetUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9024,9 +7885,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>HasPendingMappingsResponse</returns>
-    public HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default(bool?), int operationIndex = 0)
+    public HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse> localVarResponse = HasPendingMappingsWithHttpInfo(getClusters);
       return localVarResponse.Data;
@@ -9037,9 +7897,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of HasPendingMappingsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse> HasPendingMappingsWithHttpInfo(bool? getClusters = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse> HasPendingMappingsWithHttpInfo(bool? getClusters = default(bool?))
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9052,24 +7911,15 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (getClusters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "getClusters", getClusters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.HasPendingMappings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9084,13 +7934,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<HasPendingMappingsResponse>("/1/clusters/mapping/pending", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("HasPendingMappings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9101,12 +7949,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of HasPendingMappingsResponse</returns>
-    public async System.Threading.Tasks.Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse> localVarResponse = await HasPendingMappingsWithHttpInfoAsync(getClusters, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse> localVarResponse = await HasPendingMappingsWithHttpInfoAsync(getClusters, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9115,10 +7962,9 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="getClusters">Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (HasPendingMappingsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse>> HasPendingMappingsWithHttpInfoAsync(bool? getClusters = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<HasPendingMappingsResponse>> HasPendingMappingsWithHttpInfoAsync(bool? getClusters = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9131,25 +7977,17 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (getClusters != null)
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "getClusters", getClusters));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.HasPendingMappings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9163,15 +8001,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<HasPendingMappingsResponse>("/1/clusters/mapping/pending", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("HasPendingMappings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9181,9 +8017,8 @@ namespace Org.OpenAPITools.Api
     /// List API keys. List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListApiKeysResponse</returns>
-    public ListApiKeysResponse ListApiKeys(int operationIndex = 0)
+    public ListApiKeysResponse ListApiKeys()
     {
       Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse> localVarResponse = ListApiKeysWithHttpInfo();
       return localVarResponse.Data;
@@ -9193,9 +8028,8 @@ namespace Org.OpenAPITools.Api
     /// List API keys. List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListApiKeysResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse> ListApiKeysWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse> ListApiKeysWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9208,20 +8042,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.ListApiKeys";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9236,13 +8061,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<ListApiKeysResponse>("/1/keys", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListApiKeys", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9252,12 +8075,11 @@ namespace Org.OpenAPITools.Api
     /// List API keys. List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListApiKeysResponse</returns>
-    public async System.Threading.Tasks.Task<ListApiKeysResponse> ListApiKeysAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<ListApiKeysResponse> ListApiKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse> localVarResponse = await ListApiKeysWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse> localVarResponse = await ListApiKeysWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9265,10 +8087,9 @@ namespace Org.OpenAPITools.Api
     /// List API keys. List all API keys associated with your Algolia application, including their permissions and restrictions.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListApiKeysResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse>> ListApiKeysWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListApiKeysResponse>> ListApiKeysWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9281,21 +8102,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.ListApiKeys";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9309,15 +8122,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<ListApiKeysResponse>("/1/keys", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListApiKeys", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9327,9 +8138,8 @@ namespace Org.OpenAPITools.Api
     /// List clusters. List the available clusters in a multi-cluster setup.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListClustersResponse</returns>
-    public ListClustersResponse ListClusters(int operationIndex = 0)
+    public ListClustersResponse ListClusters()
     {
       Org.OpenAPITools.Client.ApiResponse<ListClustersResponse> localVarResponse = ListClustersWithHttpInfo();
       return localVarResponse.Data;
@@ -9339,9 +8149,8 @@ namespace Org.OpenAPITools.Api
     /// List clusters. List the available clusters in a multi-cluster setup.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListClustersResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<ListClustersResponse> ListClustersWithHttpInfo(int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<ListClustersResponse> ListClustersWithHttpInfo()
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9354,20 +8163,11 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.ListClusters";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9382,13 +8182,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<ListClustersResponse>("/1/clusters", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListClusters", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9398,12 +8196,11 @@ namespace Org.OpenAPITools.Api
     /// List clusters. List the available clusters in a multi-cluster setup.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListClustersResponse</returns>
-    public async System.Threading.Tasks.Task<ListClustersResponse> ListClustersAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<ListClustersResponse> ListClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<ListClustersResponse> localVarResponse = await ListClustersWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<ListClustersResponse> localVarResponse = await ListClustersWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9411,10 +8208,9 @@ namespace Org.OpenAPITools.Api
     /// List clusters. List the available clusters in a multi-cluster setup.
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListClustersResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListClustersResponse>> ListClustersWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListClustersResponse>> ListClustersWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9427,21 +8223,13 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-
-      localVarRequestOptions.Operation = "SearchApi.ListClusters";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9455,15 +8243,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<ListClustersResponse>("/1/clusters", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListClusters", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9475,9 +8261,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListIndicesResponse</returns>
-    public ListIndicesResponse ListIndices(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0)
+    public ListIndicesResponse ListIndices(int? page = default(int?), int? hitsPerPage = default(int?))
     {
       Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse> localVarResponse = ListIndicesWithHttpInfo(page, hitsPerPage);
       return localVarResponse.Data;
@@ -9489,9 +8274,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListIndicesResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse> ListIndicesWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse> ListIndicesWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?))
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9504,16 +8288,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (page != null)
       {
@@ -9523,9 +8301,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "hitsPerPage", hitsPerPage));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ListIndices";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9540,13 +8315,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<ListIndicesResponse>("/1/indexes", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListIndices", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9558,12 +8331,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListIndicesResponse</returns>
-    public async System.Threading.Tasks.Task<ListIndicesResponse> ListIndicesAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<ListIndicesResponse> ListIndicesAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse> localVarResponse = await ListIndicesWithHttpInfoAsync(page, hitsPerPage, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse> localVarResponse = await ListIndicesWithHttpInfoAsync(page, hitsPerPage, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9573,10 +8345,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListIndicesResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse>> ListIndicesWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListIndicesResponse>> ListIndicesWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9589,17 +8360,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (page != null)
       {
@@ -9609,9 +8375,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "hitsPerPage", hitsPerPage));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ListIndices";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9625,15 +8388,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<ListIndicesResponse>("/1/indexes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListIndices", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9645,9 +8406,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ListUserIdsResponse</returns>
-    public ListUserIdsResponse ListUserIds(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0)
+    public ListUserIdsResponse ListUserIds(int? page = default(int?), int? hitsPerPage = default(int?))
     {
       Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse> localVarResponse = ListUserIdsWithHttpInfo(page, hitsPerPage);
       return localVarResponse.Data;
@@ -9659,9 +8419,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ListUserIdsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse> ListUserIdsWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse> ListUserIdsWithHttpInfo(int? page = default(int?), int? hitsPerPage = default(int?))
     {
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9674,16 +8433,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (page != null)
       {
@@ -9693,9 +8446,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "hitsPerPage", hitsPerPage));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ListUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9710,13 +8460,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Get<ListUserIdsResponse>("/1/clusters/mapping", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9728,12 +8476,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ListUserIdsResponse</returns>
-    public async System.Threading.Tasks.Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse> localVarResponse = await ListUserIdsWithHttpInfoAsync(page, hitsPerPage, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse> localVarResponse = await ListUserIdsWithHttpInfoAsync(page, hitsPerPage, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9743,10 +8490,9 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ListUserIdsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse>> ListUserIdsWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ListUserIdsResponse>> ListUserIdsWithHttpInfoAsync(int? page = default(int?), int? hitsPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9759,17 +8505,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       if (page != null)
       {
@@ -9779,9 +8520,6 @@ namespace Org.OpenAPITools.Api
       {
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "hitsPerPage", hitsPerPage));
       }
-
-      localVarRequestOptions.Operation = "SearchApi.ListUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9795,15 +8533,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.GetAsync<ListUserIdsResponse>("/1/clusters/mapping", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ListUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9814,9 +8550,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>MultipleBatchResponse</returns>
-    public MultipleBatchResponse MultipleBatch(BatchParams batchParams, int operationIndex = 0)
+    public MultipleBatchResponse MultipleBatch(BatchParams batchParams)
     {
       Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse> localVarResponse = MultipleBatchWithHttpInfo(batchParams);
       return localVarResponse.Data;
@@ -9827,15 +8562,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of MultipleBatchResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse> MultipleBatchWithHttpInfo(BatchParams batchParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse> MultipleBatchWithHttpInfo(BatchParams batchParams)
     {
       // verify the required parameter 'batchParams' is set
       if (batchParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchParams' when calling SearchApi->MultipleBatch");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -9849,21 +8581,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = batchParams;
-
-      localVarRequestOptions.Operation = "SearchApi.MultipleBatch";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9878,13 +8601,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<MultipleBatchResponse>("/1/indexes/*/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("MultipleBatch", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9895,12 +8616,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of MultipleBatchResponse</returns>
-    public async System.Threading.Tasks.Task<MultipleBatchResponse> MultipleBatchAsync(BatchParams batchParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<MultipleBatchResponse> MultipleBatchAsync(BatchParams batchParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse> localVarResponse = await MultipleBatchWithHttpInfoAsync(batchParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse> localVarResponse = await MultipleBatchWithHttpInfoAsync(batchParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -9909,16 +8629,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="batchParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (MultipleBatchResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse>> MultipleBatchWithHttpInfoAsync(BatchParams batchParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<MultipleBatchResponse>> MultipleBatchWithHttpInfoAsync(BatchParams batchParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'batchParams' is set
       if (batchParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'batchParams' when calling SearchApi->MultipleBatch");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -9932,22 +8649,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = batchParams;
-
-      localVarRequestOptions.Operation = "SearchApi.MultipleBatch";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -9961,15 +8670,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<MultipleBatchResponse>("/1/indexes/*/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("MultipleBatch", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -9981,9 +8688,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse OperationIndex(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0)
+    public UpdatedAtResponse OperationIndex(string indexName, OperationIndexParams operationIndexParams)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = OperationIndexWithHttpInfo(indexName, operationIndexParams);
       return localVarResponse.Data;
@@ -9995,21 +8701,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> OperationIndexWithHttpInfo(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> OperationIndexWithHttpInfo(string indexName, OperationIndexParams operationIndexParams)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->OperationIndex");
-      }
 
       // verify the required parameter 'operationIndexParams' is set
       if (operationIndexParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'operationIndexParams' when calling SearchApi->OperationIndex");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10023,22 +8724,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = operationIndexParams;
-
-      localVarRequestOptions.Operation = "SearchApi.OperationIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10053,13 +8745,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/operation", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("OperationIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10071,12 +8761,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> OperationIndexAsync(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> OperationIndexAsync(string indexName, OperationIndexParams operationIndexParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await OperationIndexWithHttpInfoAsync(indexName, operationIndexParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await OperationIndexWithHttpInfoAsync(indexName, operationIndexParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -10086,22 +8775,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="operationIndexParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> OperationIndexWithHttpInfoAsync(string indexName, OperationIndexParams operationIndexParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> OperationIndexWithHttpInfoAsync(string indexName, OperationIndexParams operationIndexParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->OperationIndex");
-      }
 
       // verify the required parameter 'operationIndexParams' is set
       if (operationIndexParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'operationIndexParams' when calling SearchApi->OperationIndex");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -10115,23 +8799,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = operationIndexParams;
-
-      localVarRequestOptions.Operation = "SearchApi.OperationIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10145,15 +8821,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/operation", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("OperationIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10167,9 +8841,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtWithObjectIdResponse</returns>
-    public UpdatedAtWithObjectIdResponse PartialUpdateObject(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0)
+    public UpdatedAtWithObjectIdResponse PartialUpdateObject(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = PartialUpdateObjectWithHttpInfo(indexName, objectID, attributesToUpdate, createIfNotExists);
       return localVarResponse.Data;
@@ -10183,27 +8856,20 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtWithObjectIdResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> PartialUpdateObjectWithHttpInfo(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> PartialUpdateObjectWithHttpInfo(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->PartialUpdateObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->PartialUpdateObject");
-      }
 
       // verify the required parameter 'attributesToUpdate' is set
       if (attributesToUpdate == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'attributesToUpdate' when calling SearchApi->PartialUpdateObject");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10217,16 +8883,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -10235,9 +8895,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "createIfNotExists", createIfNotExists));
       }
       localVarRequestOptions.Data = attributesToUpdate;
-
-      localVarRequestOptions.Operation = "SearchApi.PartialUpdateObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10252,13 +8909,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtWithObjectIdResponse>("/1/indexes/{indexName}/{objectID}/partial", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("PartialUpdateObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10272,12 +8927,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtWithObjectIdResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> PartialUpdateObjectAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtWithObjectIdResponse> PartialUpdateObjectAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = await PartialUpdateObjectWithHttpInfoAsync(indexName, objectID, attributesToUpdate, createIfNotExists, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse> localVarResponse = await PartialUpdateObjectWithHttpInfoAsync(indexName, objectID, attributesToUpdate, createIfNotExists, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -10289,28 +8943,21 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique record (object) identifier.</param>
     /// <param name="attributesToUpdate">Object with attributes to update.</param>
     /// <param name="createIfNotExists">Indicates whether to create a new record if it doesn&#39;t exist yet.  (optional, default to true)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtWithObjectIdResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse>> PartialUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtWithObjectIdResponse>> PartialUpdateObjectWithHttpInfoAsync(string indexName, string objectID, Dictionary<string, AttributeToUpdate> attributesToUpdate, bool? createIfNotExists = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->PartialUpdateObject");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->PartialUpdateObject");
-      }
 
       // verify the required parameter 'attributesToUpdate' is set
       if (attributesToUpdate == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'attributesToUpdate' when calling SearchApi->PartialUpdateObject");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -10324,17 +8971,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -10343,9 +8985,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "createIfNotExists", createIfNotExists));
       }
       localVarRequestOptions.Data = attributesToUpdate;
-
-      localVarRequestOptions.Operation = "SearchApi.PartialUpdateObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10359,15 +8998,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtWithObjectIdResponse>("/1/indexes/{indexName}/{objectID}/partial", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("PartialUpdateObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10380,9 +9017,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    public Object Post(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0)
+    public Object Post(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object))
     {
       Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = PostWithHttpInfo(path, parameters, body);
       return localVarResponse.Data;
@@ -10395,15 +9031,12 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Object> PostWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Object> PostWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Post");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10417,16 +9050,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
@@ -10434,9 +9061,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.Post";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10451,13 +9075,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<Object>("/1{path}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Post", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10470,12 +9092,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    public async System.Threading.Tasks.Task<Object> PostAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Object> PostAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await PostWithHttpInfoAsync(path, parameters, body, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await PostWithHttpInfoAsync(path, parameters, body, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -10486,16 +9107,13 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> PostWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> PostWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Post");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -10509,17 +9127,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
@@ -10527,9 +9140,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.Post";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10543,15 +9153,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/1{path}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Post", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10564,9 +9172,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>Object</returns>
-    public Object Put(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0)
+    public Object Put(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object))
     {
       Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = PutWithHttpInfo(path, parameters, body);
       return localVarResponse.Data;
@@ -10579,15 +9186,12 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of Object</returns>
-    public Org.OpenAPITools.Client.ApiResponse<Object> PutWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<Object> PutWithHttpInfo(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Put");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10601,16 +9205,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
@@ -10618,9 +9216,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.Put";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10635,13 +9230,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<Object>("/1{path}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Put", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10654,12 +9247,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of Object</returns>
-    public async System.Threading.Tasks.Task<Object> PutAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Object> PutAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await PutWithHttpInfoAsync(path, parameters, body, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<Object> localVarResponse = await PutWithHttpInfoAsync(path, parameters, body, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -10670,16 +9262,13 @@ namespace Org.OpenAPITools.Api
     /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
     /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
     /// <param name="body">Parameters to send with the custom request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (Object)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> PutWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> PutWithHttpInfoAsync(string path, Dictionary<string, Object> parameters = default(Dictionary<string, Object>), Object body = default(Object), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'path' is set
       if (path == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'path' when calling SearchApi->Put");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -10693,17 +9282,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("path", Org.OpenAPITools.Client.ClientUtils.ParameterToString(path)); // path parameter
       if (parameters != null)
@@ -10711,9 +9295,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "parameters", parameters));
       }
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.Put";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10727,15 +9308,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/1{path}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Put", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10746,9 +9325,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>RemoveUserIdResponse</returns>
-    public RemoveUserIdResponse RemoveUserId(string userID, int operationIndex = 0)
+    public RemoveUserIdResponse RemoveUserId(string userID)
     {
       Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse> localVarResponse = RemoveUserIdWithHttpInfo(userID);
       return localVarResponse.Data;
@@ -10759,15 +9337,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of RemoveUserIdResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse> RemoveUserIdWithHttpInfo(string userID, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse> RemoveUserIdWithHttpInfo(string userID)
     {
       // verify the required parameter 'userID' is set
       if (userID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'userID' when calling SearchApi->RemoveUserId");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10780,21 +9355,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("userID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(userID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.RemoveUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10809,13 +9375,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Delete<RemoveUserIdResponse>("/1/clusters/mapping/{userID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("RemoveUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10826,12 +9390,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of RemoveUserIdResponse</returns>
-    public async System.Threading.Tasks.Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse> localVarResponse = await RemoveUserIdWithHttpInfoAsync(userID, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse> localVarResponse = await RemoveUserIdWithHttpInfoAsync(userID, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -10840,16 +9403,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="userID">userID to assign.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (RemoveUserIdResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse>> RemoveUserIdWithHttpInfoAsync(string userID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<RemoveUserIdResponse>> RemoveUserIdWithHttpInfoAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'userID' is set
       if (userID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'userID' when calling SearchApi->RemoveUserId");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -10862,22 +9422,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("userID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(userID)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.RemoveUserId";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10891,15 +9443,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.DeleteAsync<RemoveUserIdResponse>("/1/clusters/mapping/{userID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("RemoveUserId", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10910,9 +9460,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ReplaceSourceResponse</returns>
-    public ReplaceSourceResponse ReplaceSources(List<Source> source, int operationIndex = 0)
+    public ReplaceSourceResponse ReplaceSources(List<Source> source)
     {
       Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse> localVarResponse = ReplaceSourcesWithHttpInfo(source);
       return localVarResponse.Data;
@@ -10923,15 +9472,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of ReplaceSourceResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse> ReplaceSourcesWithHttpInfo(List<Source> source, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse> ReplaceSourcesWithHttpInfo(List<Source> source)
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->ReplaceSources");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -10945,21 +9491,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = source;
-
-      localVarRequestOptions.Operation = "SearchApi.ReplaceSources";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -10974,13 +9511,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<ReplaceSourceResponse>("/1/security/sources", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ReplaceSources", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -10991,12 +9526,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ReplaceSourceResponse</returns>
-    public async System.Threading.Tasks.Task<ReplaceSourceResponse> ReplaceSourcesAsync(List<Source> source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<ReplaceSourceResponse> ReplaceSourcesAsync(List<Source> source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse> localVarResponse = await ReplaceSourcesWithHttpInfoAsync(source, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse> localVarResponse = await ReplaceSourcesWithHttpInfoAsync(source, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11005,16 +9539,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="source">Allowed sources.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (ReplaceSourceResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse>> ReplaceSourcesWithHttpInfoAsync(List<Source> source, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ReplaceSourceResponse>> ReplaceSourcesWithHttpInfoAsync(List<Source> source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'source' is set
       if (source == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'source' when calling SearchApi->ReplaceSources");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -11028,22 +9559,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = source;
-
-      localVarRequestOptions.Operation = "SearchApi.ReplaceSources";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11057,15 +9580,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<ReplaceSourceResponse>("/1/security/sources", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("ReplaceSources", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11076,9 +9597,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>AddApiKeyResponse</returns>
-    public AddApiKeyResponse RestoreApiKey(string key, int operationIndex = 0)
+    public AddApiKeyResponse RestoreApiKey(string key)
     {
       Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = RestoreApiKeyWithHttpInfo(key);
       return localVarResponse.Data;
@@ -11089,15 +9609,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of AddApiKeyResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> RestoreApiKeyWithHttpInfo(string key, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> RestoreApiKeyWithHttpInfo(string key)
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->RestoreApiKey");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -11110,21 +9627,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.RestoreApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11139,13 +9647,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<AddApiKeyResponse>("/1/keys/{key}/restore", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("RestoreApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11156,12 +9662,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of AddApiKeyResponse</returns>
-    public async System.Threading.Tasks.Task<AddApiKeyResponse> RestoreApiKeyAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<AddApiKeyResponse> RestoreApiKeyAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = await RestoreApiKeyWithHttpInfoAsync(key, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse> localVarResponse = await RestoreApiKeyWithHttpInfoAsync(key, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11170,16 +9675,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (AddApiKeyResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse>> RestoreApiKeyWithHttpInfoAsync(string key, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AddApiKeyResponse>> RestoreApiKeyWithHttpInfoAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->RestoreApiKey");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -11192,22 +9694,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
-
-      localVarRequestOptions.Operation = "SearchApi.RestoreApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11221,15 +9715,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<AddApiKeyResponse>("/1/keys/{key}/restore", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("RestoreApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11241,9 +9733,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SaveObjectResponse</returns>
-    public SaveObjectResponse SaveObject(string indexName, Object body, int operationIndex = 0)
+    public SaveObjectResponse SaveObject(string indexName, Object body)
     {
       Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse> localVarResponse = SaveObjectWithHttpInfo(indexName, body);
       return localVarResponse.Data;
@@ -11255,21 +9746,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SaveObjectResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse> SaveObjectWithHttpInfo(string indexName, Object body, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse> SaveObjectWithHttpInfo(string indexName, Object body)
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveObject");
-      }
 
       // verify the required parameter 'body' is set
       if (body == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'body' when calling SearchApi->SaveObject");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -11283,22 +9769,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11313,13 +9790,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SaveObjectResponse>("/1/indexes/{indexName}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11331,12 +9806,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SaveObjectResponse</returns>
-    public async System.Threading.Tasks.Task<SaveObjectResponse> SaveObjectAsync(string indexName, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SaveObjectResponse> SaveObjectAsync(string indexName, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse> localVarResponse = await SaveObjectWithHttpInfoAsync(indexName, body, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse> localVarResponse = await SaveObjectWithHttpInfoAsync(indexName, body, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11346,22 +9820,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="body">The Algolia record.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SaveObjectResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse>> SaveObjectWithHttpInfoAsync(string indexName, Object body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SaveObjectResponse>> SaveObjectWithHttpInfoAsync(string indexName, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveObject");
-      }
 
       // verify the required parameter 'body' is set
       if (body == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'body' when calling SearchApi->SaveObject");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -11375,23 +9844,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = body;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveObject";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11405,15 +9866,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SaveObjectResponse>("/1/indexes/{indexName}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveObject", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11427,9 +9886,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedRuleResponse</returns>
-    public UpdatedRuleResponse SaveRule(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public UpdatedRuleResponse SaveRule(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse> localVarResponse = SaveRuleWithHttpInfo(indexName, objectID, rule, forwardToReplicas);
       return localVarResponse.Data;
@@ -11443,27 +9901,20 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedRuleResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse> SaveRuleWithHttpInfo(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse> SaveRuleWithHttpInfo(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->SaveRule");
-      }
 
       // verify the required parameter 'rule' is set
       if (rule == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'rule' when calling SearchApi->SaveRule");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -11477,16 +9928,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -11495,9 +9940,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = rule;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11512,13 +9954,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<UpdatedRuleResponse>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11532,12 +9972,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedRuleResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedRuleResponse> SaveRuleAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedRuleResponse> SaveRuleAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse> localVarResponse = await SaveRuleWithHttpInfoAsync(indexName, objectID, rule, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse> localVarResponse = await SaveRuleWithHttpInfoAsync(indexName, objectID, rule, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11549,28 +9988,21 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a rule object.</param>
     /// <param name="rule"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedRuleResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse>> SaveRuleWithHttpInfoAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedRuleResponse>> SaveRuleWithHttpInfoAsync(string indexName, string objectID, Rule rule, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveRule");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->SaveRule");
-      }
 
       // verify the required parameter 'rule' is set
       if (rule == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'rule' when calling SearchApi->SaveRule");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -11584,17 +10016,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -11603,9 +10030,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = rule;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveRule";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11619,15 +10043,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<UpdatedRuleResponse>("/1/indexes/{indexName}/rules/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveRule", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11641,9 +10063,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse SaveRules(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse SaveRules(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = SaveRulesWithHttpInfo(indexName, rules, forwardToReplicas, clearExistingRules);
       return localVarResponse.Data;
@@ -11657,21 +10078,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SaveRulesWithHttpInfo(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SaveRulesWithHttpInfo(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveRules");
-      }
 
       // verify the required parameter 'rules' is set
       if (rules == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'rules' when calling SearchApi->SaveRules");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -11685,16 +10101,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -11706,9 +10116,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "clearExistingRules", clearExistingRules));
       }
       localVarRequestOptions.Data = rules;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11723,13 +10130,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/rules/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11743,12 +10148,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> SaveRulesAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> SaveRulesAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SaveRulesWithHttpInfoAsync(indexName, rules, forwardToReplicas, clearExistingRules, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SaveRulesWithHttpInfoAsync(indexName, rules, forwardToReplicas, clearExistingRules, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11760,22 +10164,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="rules"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="clearExistingRules">Indicates whether existing rules should be deleted before adding this batch. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SaveRulesWithHttpInfoAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SaveRulesWithHttpInfoAsync(string indexName, List<Rule> rules, bool? forwardToReplicas = default(bool?), bool? clearExistingRules = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveRules");
-      }
 
       // verify the required parameter 'rules' is set
       if (rules == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'rules' when calling SearchApi->SaveRules");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -11789,17 +10188,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -11811,9 +10205,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "clearExistingRules", clearExistingRules));
       }
       localVarRequestOptions.Data = rules;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11827,15 +10218,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/rules/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11849,9 +10238,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SaveSynonymResponse</returns>
-    public SaveSynonymResponse SaveSynonym(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public SaveSynonymResponse SaveSynonym(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse> localVarResponse = SaveSynonymWithHttpInfo(indexName, objectID, synonymHit, forwardToReplicas);
       return localVarResponse.Data;
@@ -11865,27 +10253,20 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SaveSynonymResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse> SaveSynonymWithHttpInfo(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse> SaveSynonymWithHttpInfo(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->SaveSynonym");
-      }
 
       // verify the required parameter 'synonymHit' is set
       if (synonymHit == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'synonymHit' when calling SearchApi->SaveSynonym");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -11899,16 +10280,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -11917,9 +10292,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = synonymHit;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -11934,13 +10306,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<SaveSynonymResponse>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -11954,12 +10324,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SaveSynonymResponse</returns>
-    public async System.Threading.Tasks.Task<SaveSynonymResponse> SaveSynonymAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SaveSynonymResponse> SaveSynonymAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse> localVarResponse = await SaveSynonymWithHttpInfoAsync(indexName, objectID, synonymHit, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse> localVarResponse = await SaveSynonymWithHttpInfoAsync(indexName, objectID, synonymHit, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -11971,28 +10340,21 @@ namespace Org.OpenAPITools.Api
     /// <param name="objectID">Unique identifier of a synonym object.</param>
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SaveSynonymResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse>> SaveSynonymWithHttpInfoAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SaveSynonymResponse>> SaveSynonymWithHttpInfoAsync(string indexName, string objectID, SynonymHit synonymHit, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveSynonym");
-      }
 
       // verify the required parameter 'objectID' is set
       if (objectID == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'objectID' when calling SearchApi->SaveSynonym");
-      }
 
       // verify the required parameter 'synonymHit' is set
       if (synonymHit == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'synonymHit' when calling SearchApi->SaveSynonym");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12006,17 +10368,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("objectID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(objectID)); // path parameter
@@ -12025,9 +10382,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = synonymHit;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveSynonym";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12041,15 +10395,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<SaveSynonymResponse>("/1/indexes/{indexName}/synonyms/{objectID}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveSynonym", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12063,9 +10415,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse SaveSynonyms(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse SaveSynonyms(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = SaveSynonymsWithHttpInfo(indexName, synonymHit, forwardToReplicas, replaceExistingSynonyms);
       return localVarResponse.Data;
@@ -12079,21 +10430,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SaveSynonymsWithHttpInfo(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SaveSynonymsWithHttpInfo(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveSynonyms");
-      }
 
       // verify the required parameter 'synonymHit' is set
       if (synonymHit == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'synonymHit' when calling SearchApi->SaveSynonyms");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -12107,16 +10453,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -12128,9 +10468,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "replaceExistingSynonyms", replaceExistingSynonyms));
       }
       localVarRequestOptions.Data = synonymHit;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12145,13 +10482,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/indexes/{indexName}/synonyms/batch", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12165,12 +10500,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> SaveSynonymsAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> SaveSynonymsAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SaveSynonymsWithHttpInfoAsync(indexName, synonymHit, forwardToReplicas, replaceExistingSynonyms, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SaveSynonymsWithHttpInfoAsync(indexName, synonymHit, forwardToReplicas, replaceExistingSynonyms, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -12182,22 +10516,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="synonymHit"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
     /// <param name="replaceExistingSynonyms">Indicates whether to replace all synonyms in the index with the ones sent with this request. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SaveSynonymsWithHttpInfoAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SaveSynonymsWithHttpInfoAsync(string indexName, List<SynonymHit> synonymHit, bool? forwardToReplicas = default(bool?), bool? replaceExistingSynonyms = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SaveSynonyms");
-      }
 
       // verify the required parameter 'synonymHit' is set
       if (synonymHit == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'synonymHit' when calling SearchApi->SaveSynonyms");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12211,17 +10540,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -12233,9 +10557,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "replaceExistingSynonyms", replaceExistingSynonyms));
       }
       localVarRequestOptions.Data = synonymHit;
-
-      localVarRequestOptions.Operation = "SearchApi.SaveSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12249,15 +10570,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/indexes/{indexName}/synonyms/batch", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SaveSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12268,9 +10587,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchResponses</returns>
-    public SearchResponses Search(SearchMethodParams searchMethodParams, int operationIndex = 0)
+    public SearchResponses Search(SearchMethodParams searchMethodParams)
     {
       Org.OpenAPITools.Client.ApiResponse<SearchResponses> localVarResponse = SearchWithHttpInfo(searchMethodParams);
       return localVarResponse.Data;
@@ -12281,15 +10599,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchResponses</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchResponses> SearchWithHttpInfo(SearchMethodParams searchMethodParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchResponses> SearchWithHttpInfo(SearchMethodParams searchMethodParams)
     {
       // verify the required parameter 'searchMethodParams' is set
       if (searchMethodParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchMethodParams' when calling SearchApi->Search");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -12303,21 +10618,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = searchMethodParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Search";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12332,13 +10638,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchResponses>("/1/indexes/*/queries", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Search", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12349,12 +10653,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchResponses</returns>
-    public async System.Threading.Tasks.Task<SearchResponses> SearchAsync(SearchMethodParams searchMethodParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchResponses> SearchAsync(SearchMethodParams searchMethodParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchResponses> localVarResponse = await SearchWithHttpInfoAsync(searchMethodParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchResponses> localVarResponse = await SearchWithHttpInfoAsync(searchMethodParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -12363,16 +10666,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchMethodParams">Query requests and strategies. Results will be received in the same order as the queries.</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchResponses)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchResponses>> SearchWithHttpInfoAsync(SearchMethodParams searchMethodParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchResponses>> SearchWithHttpInfoAsync(SearchMethodParams searchMethodParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'searchMethodParams' is set
       if (searchMethodParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchMethodParams' when calling SearchApi->Search");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12386,22 +10686,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = searchMethodParams;
-
-      localVarRequestOptions.Operation = "SearchApi.Search";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12415,15 +10707,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchResponses>("/1/indexes/*/queries", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("Search", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12435,9 +10725,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse SearchDictionaryEntries(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0)
+    public UpdatedAtResponse SearchDictionaryEntries(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = SearchDictionaryEntriesWithHttpInfo(dictionaryName, searchDictionaryEntriesParams);
       return localVarResponse.Data;
@@ -12449,21 +10738,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SearchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SearchDictionaryEntriesWithHttpInfo(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams)
     {
       // verify the required parameter 'dictionaryName' is set
       if (dictionaryName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionaryName' when calling SearchApi->SearchDictionaryEntries");
-      }
 
       // verify the required parameter 'searchDictionaryEntriesParams' is set
       if (searchDictionaryEntriesParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchDictionaryEntriesParams' when calling SearchApi->SearchDictionaryEntries");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -12477,22 +10761,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("dictionaryName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(dictionaryName)); // path parameter
       localVarRequestOptions.Data = searchDictionaryEntriesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchDictionaryEntries";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12507,13 +10782,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<UpdatedAtResponse>("/1/dictionaries/{dictionaryName}/search", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchDictionaryEntries", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12525,12 +10798,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> SearchDictionaryEntriesAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> SearchDictionaryEntriesAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SearchDictionaryEntriesWithHttpInfoAsync(dictionaryName, searchDictionaryEntriesParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SearchDictionaryEntriesWithHttpInfoAsync(dictionaryName, searchDictionaryEntriesParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -12540,22 +10812,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionaryName">Dictionary to search in.</param>
     /// <param name="searchDictionaryEntriesParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SearchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SearchDictionaryEntriesWithHttpInfoAsync(DictionaryType dictionaryName, SearchDictionaryEntriesParams searchDictionaryEntriesParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'dictionaryName' is set
       if (dictionaryName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionaryName' when calling SearchApi->SearchDictionaryEntries");
-      }
 
       // verify the required parameter 'searchDictionaryEntriesParams' is set
       if (searchDictionaryEntriesParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchDictionaryEntriesParams' when calling SearchApi->SearchDictionaryEntries");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12569,23 +10836,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("dictionaryName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(dictionaryName)); // path parameter
       localVarRequestOptions.Data = searchDictionaryEntriesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchDictionaryEntries";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12599,15 +10858,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<UpdatedAtResponse>("/1/dictionaries/{dictionaryName}/search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchDictionaryEntries", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12620,9 +10877,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchForFacetValuesResponse</returns>
-    public SearchForFacetValuesResponse SearchForFacetValues(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0)
+    public SearchForFacetValuesResponse SearchForFacetValues(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest))
     {
       Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse> localVarResponse = SearchForFacetValuesWithHttpInfo(indexName, facetName, searchForFacetValuesRequest);
       return localVarResponse.Data;
@@ -12635,21 +10891,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchForFacetValuesResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse> SearchForFacetValuesWithHttpInfo(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse> SearchForFacetValuesWithHttpInfo(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchForFacetValues");
-      }
 
       // verify the required parameter 'facetName' is set
       if (facetName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'facetName' when calling SearchApi->SearchForFacetValues");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -12663,23 +10914,14 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("facetName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(facetName)); // path parameter
       localVarRequestOptions.Data = searchForFacetValuesRequest;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchForFacetValues";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12694,13 +10936,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchForFacetValuesResponse>("/1/indexes/{indexName}/facets/{facetName}/query", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchForFacetValues", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12713,12 +10953,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchForFacetValuesResponse</returns>
-    public async System.Threading.Tasks.Task<SearchForFacetValuesResponse> SearchForFacetValuesAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchForFacetValuesResponse> SearchForFacetValuesAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse> localVarResponse = await SearchForFacetValuesWithHttpInfoAsync(indexName, facetName, searchForFacetValuesRequest, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse> localVarResponse = await SearchForFacetValuesWithHttpInfoAsync(indexName, facetName, searchForFacetValuesRequest, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -12729,22 +10968,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="facetName">Facet name.</param>
     /// <param name="searchForFacetValuesRequest"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchForFacetValuesResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse>> SearchForFacetValuesWithHttpInfoAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchForFacetValuesResponse>> SearchForFacetValuesWithHttpInfoAsync(string indexName, string facetName, SearchForFacetValuesRequest searchForFacetValuesRequest = default(SearchForFacetValuesRequest), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchForFacetValues");
-      }
 
       // verify the required parameter 'facetName' is set
       if (facetName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'facetName' when calling SearchApi->SearchForFacetValues");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12758,24 +10992,16 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.PathParameters.Add("facetName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(facetName)); // path parameter
       localVarRequestOptions.Data = searchForFacetValuesRequest;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchForFacetValues";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12789,15 +11015,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchForFacetValuesResponse>("/1/indexes/{indexName}/facets/{facetName}/query", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchForFacetValues", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12809,9 +11033,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchRulesResponse</returns>
-    public SearchRulesResponse SearchRules(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0)
+    public SearchRulesResponse SearchRules(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams))
     {
       Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse> localVarResponse = SearchRulesWithHttpInfo(indexName, searchRulesParams);
       return localVarResponse.Data;
@@ -12823,15 +11046,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchRulesResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse> SearchRulesWithHttpInfo(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse> SearchRulesWithHttpInfo(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchRules");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -12845,22 +11065,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = searchRulesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12875,13 +11086,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchRulesResponse>("/1/indexes/{indexName}/rules/search", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12893,12 +11102,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchRulesResponse</returns>
-    public async System.Threading.Tasks.Task<SearchRulesResponse> SearchRulesAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchRulesResponse> SearchRulesAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse> localVarResponse = await SearchRulesWithHttpInfoAsync(indexName, searchRulesParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse> localVarResponse = await SearchRulesWithHttpInfoAsync(indexName, searchRulesParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -12908,16 +11116,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchRulesParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchRulesResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse>> SearchRulesWithHttpInfoAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchRulesResponse>> SearchRulesWithHttpInfoAsync(string indexName, SearchRulesParams searchRulesParams = default(SearchRulesParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchRules");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -12931,23 +11136,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = searchRulesParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchRules";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -12961,15 +11158,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchRulesResponse>("/1/indexes/{indexName}/rules/search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchRules", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -12981,9 +11176,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchResponse</returns>
-    public SearchResponse SearchSingleIndex(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0)
+    public SearchResponse SearchSingleIndex(string indexName, SearchParams searchParams = default(SearchParams))
     {
       Org.OpenAPITools.Client.ApiResponse<SearchResponse> localVarResponse = SearchSingleIndexWithHttpInfo(indexName, searchParams);
       return localVarResponse.Data;
@@ -12995,15 +11189,12 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchResponse> SearchSingleIndexWithHttpInfo(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchResponse> SearchSingleIndexWithHttpInfo(string indexName, SearchParams searchParams = default(SearchParams))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchSingleIndex");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13017,22 +11208,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = searchParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchSingleIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13047,13 +11229,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchResponse>("/1/indexes/{indexName}/query", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchSingleIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13065,12 +11245,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchResponse</returns>
-    public async System.Threading.Tasks.Task<SearchResponse> SearchSingleIndexAsync(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchResponse> SearchSingleIndexAsync(string indexName, SearchParams searchParams = default(SearchParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchResponse> localVarResponse = await SearchSingleIndexWithHttpInfoAsync(indexName, searchParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchResponse> localVarResponse = await SearchSingleIndexWithHttpInfoAsync(indexName, searchParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13080,16 +11259,13 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="searchParams"> (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchResponse>> SearchSingleIndexWithHttpInfoAsync(string indexName, SearchParams searchParams = default(SearchParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchResponse>> SearchSingleIndexWithHttpInfoAsync(string indexName, SearchParams searchParams = default(SearchParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchSingleIndex");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -13103,23 +11279,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       localVarRequestOptions.Data = searchParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchSingleIndex";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13133,15 +11301,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchResponse>("/1/indexes/{indexName}/query", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchSingleIndex", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13156,9 +11322,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchSynonymsResponse</returns>
-    public SearchSynonymsResponse SearchSynonyms(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0)
+    public SearchSynonymsResponse SearchSynonyms(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams))
     {
       Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse> localVarResponse = SearchSynonymsWithHttpInfo(indexName, type, page, hitsPerPage, searchSynonymsParams);
       return localVarResponse.Data;
@@ -13173,15 +11338,12 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchSynonymsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse> SearchSynonymsWithHttpInfo(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse> SearchSynonymsWithHttpInfo(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchSynonyms");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13195,16 +11357,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (type != null)
@@ -13220,9 +11376,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "hitsPerPage", hitsPerPage));
       }
       localVarRequestOptions.Data = searchSynonymsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13237,13 +11390,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchSynonymsResponse>("/1/indexes/{indexName}/synonyms/search", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13258,12 +11409,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchSynonymsResponse</returns>
-    public async System.Threading.Tasks.Task<SearchSynonymsResponse> SearchSynonymsAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchSynonymsResponse> SearchSynonymsAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse> localVarResponse = await SearchSynonymsWithHttpInfoAsync(indexName, type, page, hitsPerPage, searchSynonymsParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse> localVarResponse = await SearchSynonymsWithHttpInfoAsync(indexName, type, page, hitsPerPage, searchSynonymsParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13276,16 +11426,13 @@ namespace Org.OpenAPITools.Api
     /// <param name="page">Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (optional, default to 0)</param>
     /// <param name="hitsPerPage">Maximum number of hits per page. (optional, default to 100)</param>
     /// <param name="searchSynonymsParams">Body of the &#x60;searchSynonyms&#x60; operation. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchSynonymsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse>> SearchSynonymsWithHttpInfoAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchSynonymsResponse>> SearchSynonymsWithHttpInfoAsync(string indexName, SynonymType type = default(SynonymType), int? page = default(int?), int? hitsPerPage = default(int?), SearchSynonymsParams searchSynonymsParams = default(SearchSynonymsParams), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchSynonyms");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -13299,17 +11446,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (type != null)
@@ -13326,9 +11468,6 @@ namespace Org.OpenAPITools.Api
       }
       localVarRequestOptions.Data = searchSynonymsParams;
 
-      localVarRequestOptions.Operation = "SearchApi.SearchSynonyms";
-      localVarRequestOptions.OperationIndex = operationIndex;
-
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
       {
@@ -13341,15 +11480,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchSynonymsResponse>("/1/indexes/{indexName}/synonyms/search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchSynonyms", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13360,9 +11497,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>SearchUserIdsResponse</returns>
-    public SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0)
+    public SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams)
     {
       Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse> localVarResponse = SearchUserIdsWithHttpInfo(searchUserIdsParams);
       return localVarResponse.Data;
@@ -13373,15 +11509,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of SearchUserIdsResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse> SearchUserIdsWithHttpInfo(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse> SearchUserIdsWithHttpInfo(SearchUserIdsParams searchUserIdsParams)
     {
       // verify the required parameter 'searchUserIdsParams' is set
       if (searchUserIdsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchUserIdsParams' when calling SearchApi->SearchUserIds");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13395,21 +11528,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = searchUserIdsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13424,13 +11548,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Post<SearchUserIdsResponse>("/1/clusters/mapping/search", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13441,12 +11563,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of SearchUserIdsResponse</returns>
-    public async System.Threading.Tasks.Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse> localVarResponse = await SearchUserIdsWithHttpInfoAsync(searchUserIdsParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse> localVarResponse = await SearchUserIdsWithHttpInfoAsync(searchUserIdsParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13455,16 +11576,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="searchUserIdsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (SearchUserIdsResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse>> SearchUserIdsWithHttpInfoAsync(SearchUserIdsParams searchUserIdsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<SearchUserIdsResponse>> SearchUserIdsWithHttpInfoAsync(SearchUserIdsParams searchUserIdsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'searchUserIdsParams' is set
       if (searchUserIdsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'searchUserIdsParams' when calling SearchApi->SearchUserIds");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -13478,22 +11596,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = searchUserIdsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SearchUserIds";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13507,15 +11617,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PostAsync<SearchUserIdsResponse>("/1/clusters/mapping/search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SearchUserIds", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13526,9 +11634,8 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse SetDictionarySettings(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0)
+    public UpdatedAtResponse SetDictionarySettings(DictionarySettingsParams dictionarySettingsParams)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = SetDictionarySettingsWithHttpInfo(dictionarySettingsParams);
       return localVarResponse.Data;
@@ -13539,15 +11646,12 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SetDictionarySettingsWithHttpInfo(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SetDictionarySettingsWithHttpInfo(DictionarySettingsParams dictionarySettingsParams)
     {
       // verify the required parameter 'dictionarySettingsParams' is set
       if (dictionarySettingsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionarySettingsParams' when calling SearchApi->SetDictionarySettings");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13561,21 +11665,12 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = dictionarySettingsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SetDictionarySettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13590,13 +11685,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<UpdatedAtResponse>("/1/dictionaries/*/settings", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SetDictionarySettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13607,12 +11700,11 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> SetDictionarySettingsAsync(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> SetDictionarySettingsAsync(DictionarySettingsParams dictionarySettingsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SetDictionarySettingsWithHttpInfoAsync(dictionarySettingsParams, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SetDictionarySettingsWithHttpInfoAsync(dictionarySettingsParams, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13621,16 +11713,13 @@ namespace Org.OpenAPITools.Api
     /// </summary>
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="dictionarySettingsParams"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SetDictionarySettingsWithHttpInfoAsync(DictionarySettingsParams dictionarySettingsParams, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SetDictionarySettingsWithHttpInfoAsync(DictionarySettingsParams dictionarySettingsParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'dictionarySettingsParams' is set
       if (dictionarySettingsParams == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dictionarySettingsParams' when calling SearchApi->SetDictionarySettings");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -13644,22 +11733,14 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.Data = dictionarySettingsParams;
-
-      localVarRequestOptions.Operation = "SearchApi.SetDictionarySettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13673,15 +11754,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<UpdatedAtResponse>("/1/dictionaries/*/settings", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SetDictionarySettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13694,9 +11773,8 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdatedAtResponse</returns>
-    public UpdatedAtResponse SetSettings(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public UpdatedAtResponse SetSettings(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?))
     {
       Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = SetSettingsWithHttpInfo(indexName, indexSettings, forwardToReplicas);
       return localVarResponse.Data;
@@ -13709,21 +11787,16 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdatedAtResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SetSettingsWithHttpInfo(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> SetSettingsWithHttpInfo(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SetSettings");
-      }
 
       // verify the required parameter 'indexSettings' is set
       if (indexSettings == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexSettings' when calling SearchApi->SetSettings");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13737,16 +11810,10 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -13754,9 +11821,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = indexSettings;
-
-      localVarRequestOptions.Operation = "SearchApi.SetSettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13771,13 +11835,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<UpdatedAtResponse>("/1/indexes/{indexName}/settings", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SetSettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13790,12 +11852,11 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdatedAtResponse</returns>
-    public async System.Threading.Tasks.Task<UpdatedAtResponse> SetSettingsAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdatedAtResponse> SetSettingsAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SetSettingsWithHttpInfoAsync(indexName, indexSettings, forwardToReplicas, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse> localVarResponse = await SetSettingsWithHttpInfoAsync(indexName, indexSettings, forwardToReplicas, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13806,22 +11867,17 @@ namespace Org.OpenAPITools.Api
     /// <param name="indexName">Index on which to perform the request.</param>
     /// <param name="indexSettings"></param>
     /// <param name="forwardToReplicas">Indicates whether changed index settings are forwarded to the replica indices. (optional)</param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdatedAtResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SetSettingsWithHttpInfoAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdatedAtResponse>> SetSettingsWithHttpInfoAsync(string indexName, IndexSettings indexSettings, bool? forwardToReplicas = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'indexName' is set
       if (indexName == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SetSettings");
-      }
 
       // verify the required parameter 'indexSettings' is set
       if (indexSettings == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'indexSettings' when calling SearchApi->SetSettings");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -13835,17 +11891,12 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("indexName", Org.OpenAPITools.Client.ClientUtils.ParameterToString(indexName)); // path parameter
       if (forwardToReplicas != null)
@@ -13853,9 +11904,6 @@ namespace Org.OpenAPITools.Api
         localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "forwardToReplicas", forwardToReplicas));
       }
       localVarRequestOptions.Data = indexSettings;
-
-      localVarRequestOptions.Operation = "SearchApi.SetSettings";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13869,15 +11917,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<UpdatedAtResponse>("/1/indexes/{indexName}/settings", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("SetSettings", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13889,9 +11935,8 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>UpdateApiKeyResponse</returns>
-    public UpdateApiKeyResponse UpdateApiKey(string key, ApiKey apiKey, int operationIndex = 0)
+    public UpdateApiKeyResponse UpdateApiKey(string key, ApiKey apiKey)
     {
       Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse> localVarResponse = UpdateApiKeyWithHttpInfo(key, apiKey);
       return localVarResponse.Data;
@@ -13903,21 +11948,16 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of UpdateApiKeyResponse</returns>
-    public Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse> UpdateApiKeyWithHttpInfo(string key, ApiKey apiKey, int operationIndex = 0)
+    public Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse> UpdateApiKeyWithHttpInfo(string key, ApiKey apiKey)
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->UpdateApiKey");
-      }
 
       // verify the required parameter 'apiKey' is set
       if (apiKey == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'apiKey' when calling SearchApi->UpdateApiKey");
-      }
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -13931,22 +11971,13 @@ namespace Org.OpenAPITools.Api
             };
 
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
       localVarRequestOptions.Data = apiKey;
-
-      localVarRequestOptions.Operation = "SearchApi.UpdateApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -13961,13 +11992,11 @@ namespace Org.OpenAPITools.Api
 
       // make the HTTP request
       var localVarResponse = this.Client.Put<UpdateApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration);
+
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("UpdateApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;
@@ -13979,12 +12008,11 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of UpdateApiKeyResponse</returns>
-    public async System.Threading.Tasks.Task<UpdateApiKeyResponse> UpdateApiKeyAsync(string key, ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<UpdateApiKeyResponse> UpdateApiKeyAsync(string key, ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
-      Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse> localVarResponse = await UpdateApiKeyWithHttpInfoAsync(key, apiKey, operationIndex, cancellationToken).ConfigureAwait(false);
+      Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse> localVarResponse = await UpdateApiKeyWithHttpInfoAsync(key, apiKey, cancellationToken).ConfigureAwait(false);
       return localVarResponse.Data;
     }
 
@@ -13994,22 +12022,17 @@ namespace Org.OpenAPITools.Api
     /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="key">API key.</param>
     /// <param name="apiKey"></param>
-    /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (UpdateApiKeyResponse)</returns>
-    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse>> UpdateApiKeyWithHttpInfoAsync(string key, ApiKey apiKey, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+    public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<UpdateApiKeyResponse>> UpdateApiKeyWithHttpInfoAsync(string key, ApiKey apiKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
     {
       // verify the required parameter 'key' is set
       if (key == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'key' when calling SearchApi->UpdateApiKey");
-      }
 
       // verify the required parameter 'apiKey' is set
       if (apiKey == null)
-      {
         throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'apiKey' when calling SearchApi->UpdateApiKey");
-      }
 
 
       Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -14023,23 +12046,15 @@ namespace Org.OpenAPITools.Api
                 "application/json"
             };
 
+
       var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-      if (localVarContentType != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-      }
+      if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
       var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-      if (localVarAccept != null)
-      {
-        localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-      }
+      if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
       localVarRequestOptions.PathParameters.Add("key", Org.OpenAPITools.Client.ClientUtils.ParameterToString(key)); // path parameter
       localVarRequestOptions.Data = apiKey;
-
-      localVarRequestOptions.Operation = "SearchApi.UpdateApiKey";
-      localVarRequestOptions.OperationIndex = operationIndex;
 
       // authentication (apiKey) required
       if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-Algolia-API-Key")))
@@ -14053,15 +12068,13 @@ namespace Org.OpenAPITools.Api
       }
 
       // make the HTTP request
+
       var localVarResponse = await this.AsynchronousClient.PutAsync<UpdateApiKeyResponse>("/1/keys/{key}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
       if (this.ExceptionFactory != null)
       {
         Exception _exception = this.ExceptionFactory("UpdateApiKey", localVarResponse);
-        if (_exception != null)
-        {
-          throw _exception;
-        }
+        if (_exception != null) throw _exception;
       }
 
       return localVarResponse;

@@ -78,6 +78,7 @@ Add a new API key with specific permissions and restrictions. The request must b
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -99,7 +100,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var apiKey = new ApiKey(); // ApiKey | 
 
             try
@@ -182,6 +186,7 @@ If you use an existing `objectID`, the existing record will be replaced with the
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -203,7 +208,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = 123;  // string | Unique record (object) identifier.
             var body = null;  // Object | Algolia record.
@@ -290,6 +298,7 @@ Add a source to the list of allowed sources.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -311,7 +320,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var source = new Source(); // Source | Source to add.
 
             try
@@ -394,6 +406,7 @@ Assign or move a user ID to a cluster. The time it takes to move a user is propo
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -415,7 +428,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var xAlgoliaUserID = "xAlgoliaUserID_example";  // string | userID to assign.
             var assignUserIdParams = new AssignUserIdParams(); // AssignUserIdParams | 
 
@@ -500,6 +516,7 @@ To reduce the time spent on network round trips, you can perform several write a
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -521,7 +538,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var batchWriteParams = new BatchWriteParams(); // BatchWriteParams | 
 
@@ -606,6 +626,7 @@ Assign multiple user IDs to a cluster. **You can't _move_ users with this operat
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -627,7 +648,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var xAlgoliaUserID = "xAlgoliaUserID_example";  // string | userID to assign.
             var batchAssignUserIdsParams = new BatchAssignUserIdsParams(); // BatchAssignUserIdsParams | 
 
@@ -712,6 +736,7 @@ Add or remove a batch of dictionary entries.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -733,7 +758,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var dictionaryName = new DictionaryType(); // DictionaryType | Dictionary to search in.
             var batchDictionaryEntriesParams = new BatchDictionaryEntriesParams(); // BatchDictionaryEntriesParams | 
 
@@ -818,6 +846,7 @@ Retrieve up to 1,000 records per call. Supports full-text search and filters. Fo
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -839,7 +868,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var browseParams = new BrowseParams(); // BrowseParams |  (optional) 
 
@@ -924,6 +956,7 @@ Delete all synonyms in the index.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -945,7 +978,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
 
@@ -1030,6 +1066,7 @@ Delete the records but leave settings and index-specific API keys untouched.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1051,7 +1088,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
 
             try
@@ -1134,6 +1174,7 @@ Delete all rules in the index.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1155,7 +1196,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
 
@@ -1240,6 +1284,7 @@ This method allow you to send requests to the Algolia REST API.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1261,7 +1306,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var path = /keys;  // string | Path of the endpoint, anything after \"/1\" must be specified.
             var parameters = new Dictionary<string, Object>(); // Dictionary<string, Object> | Query parameters to apply to the current query. (optional) 
 
@@ -1346,6 +1394,7 @@ Delete an existing API key. The request must be authenticated with the admin API
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1367,7 +1416,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var key = YourAPIKey;  // string | API key.
 
             try
@@ -1450,6 +1502,7 @@ This operation doesn't support all the query options, only its filters (numeric,
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1471,7 +1524,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var deleteByParams = new DeleteByParams(); // DeleteByParams | 
 
@@ -1556,6 +1612,7 @@ Delete an existing index.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1577,7 +1634,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
 
             try
@@ -1660,6 +1720,7 @@ To delete a set of records matching a query, use the [`deleteByQuery` operation]
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1681,7 +1742,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = 123;  // string | Unique record (object) identifier.
 
@@ -1766,6 +1830,7 @@ Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`sea
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1787,7 +1852,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = a-rule-id;  // string | Unique identifier of a rule object.
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
@@ -1874,6 +1942,7 @@ Remove a source from the list of allowed sources.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1895,7 +1964,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var source = 10.0.0.1/32;  // string | IP address range of the source.
 
             try
@@ -1978,6 +2050,7 @@ Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -1999,7 +2072,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = synonymID;  // string | Unique identifier of a synonym object.
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
@@ -2086,6 +2162,7 @@ This method allow you to send requests to the Algolia REST API.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2107,7 +2184,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var path = /keys;  // string | Path of the endpoint, anything after \"/1\" must be specified.
             var parameters = new Dictionary<string, Object>(); // Dictionary<string, Object> | Query parameters to apply to the current query. (optional) 
 
@@ -2192,6 +2272,7 @@ Get the permissions and restrictions of a specific API key. When authenticating 
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2213,7 +2294,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var key = YourAPIKey;  // string | API key.
 
             try
@@ -2296,6 +2380,7 @@ Lists Algolia's [supported languages](https://www.algolia.com/doc/guides/managin
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2317,7 +2402,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -2395,6 +2483,7 @@ Get the languages for which [stop words are turned off](#tag/Dictionaries/operat
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2416,7 +2505,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -2494,6 +2586,7 @@ The request must be authenticated by an API key with the [`logs` ACL](https://ww
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2515,7 +2608,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var offset = 0;  // int? | First log entry to retrieve. Sorted by decreasing date with 0 being the most recent. (optional)  (default to 0)
             var length = 10;  // int? | Maximum number of entries to retrieve. (optional)  (default to 10)
             var indexName = products;  // string | Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional) 
@@ -2604,6 +2700,7 @@ To get more than one record, use the [`objects` operation](#tag/Records/operatio
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2625,7 +2722,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = 123;  // string | Unique record (object) identifier.
             var attributesToRetrieve = new List<string>(); // List<string> | Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won't be retrieved unless the request is authenticated with the admin API key.  (optional) 
@@ -2712,6 +2812,7 @@ Retrieve one or more records, potentially from different indices, in a single AP
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2733,7 +2834,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var getObjectsParams = new GetObjectsParams(); // GetObjectsParams | Request object.
 
             try
@@ -2816,6 +2920,7 @@ Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2837,7 +2942,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = a-rule-id;  // string | Unique identifier of a rule object.
 
@@ -2922,6 +3030,7 @@ Return an object containing an index's [configuration settings](https://www.algo
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -2943,7 +3052,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
 
             try
@@ -3026,6 +3138,7 @@ Get all allowed sources (IP addresses).
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3047,7 +3160,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -3125,6 +3241,7 @@ Get a syonym by its `objectID`. To find the object IDs for your synonyms, use th
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3146,7 +3263,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = synonymID;  // string | Unique identifier of a synonym object.
 
@@ -3231,6 +3351,7 @@ Some operations, such as copying an index, will respond with a `taskID` value. U
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3252,7 +3373,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var taskID = 1506303845001;  // long | Unique task identifier.
 
@@ -3337,6 +3461,7 @@ Get the IDs of the 10 users with the highest number of records per cluster. Sinc
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3358,7 +3483,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -3436,6 +3564,7 @@ Returns the userID data stored in the mapping. Since it can take up to a few sec
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3457,7 +3586,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var userID = "userID_example";  // string | userID to assign.
 
             try
@@ -3540,6 +3672,7 @@ To determine when the time-consuming process of creating a large batch of users 
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3561,7 +3694,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var getClusters = true;  // bool? | Indicates whether to include the cluster's pending mapping state in the response. (optional) 
 
             try
@@ -3644,6 +3780,7 @@ List all API keys associated with your Algolia application, including their perm
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3665,7 +3802,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -3743,6 +3883,7 @@ List the available clusters in a multi-cluster setup.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3764,7 +3905,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
 
             try
             {
@@ -3842,6 +3986,7 @@ List indices in an Algolia application.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3863,7 +4008,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var page = 56;  // int? | Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.  (optional) 
             var hitsPerPage = 100;  // int? | Maximum number of hits per page. (optional)  (default to 100)
 
@@ -3948,6 +4096,7 @@ List the userIDs assigned to a multi-cluster application. Since it can take up t
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -3969,7 +4118,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var page = 56;  // int? | Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.  (optional) 
             var hitsPerPage = 100;  // int? | Maximum number of hits per page. (optional)  (default to 100)
 
@@ -4054,6 +4206,7 @@ To reduce the time spent on network round trips, you can perform several write a
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4075,7 +4228,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var batchParams = new BatchParams(); // BatchParams | 
 
             try
@@ -4158,6 +4314,7 @@ This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexNa
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4179,7 +4336,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var operationIndexParams = new OperationIndexParams(); // OperationIndexParams | 
 
@@ -4264,6 +4424,7 @@ Add new attributes or update current ones in an existing record. You can use any
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4285,7 +4446,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = 123;  // string | Unique record (object) identifier.
             var attributesToUpdate = new Dictionary<string, AttributeToUpdate>(); // Dictionary<string, AttributeToUpdate> | Object with attributes to update.
@@ -4374,6 +4538,7 @@ This method allow you to send requests to the Algolia REST API.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4395,7 +4560,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var path = /keys;  // string | Path of the endpoint, anything after \"/1\" must be specified.
             var parameters = new Dictionary<string, Object>(); // Dictionary<string, Object> | Query parameters to apply to the current query. (optional) 
             var body = null;  // Object | Parameters to send with the custom request. (optional) 
@@ -4482,6 +4650,7 @@ This method allow you to send requests to the Algolia REST API.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4503,7 +4672,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var path = /keys;  // string | Path of the endpoint, anything after \"/1\" must be specified.
             var parameters = new Dictionary<string, Object>(); // Dictionary<string, Object> | Query parameters to apply to the current query. (optional) 
             var body = null;  // Object | Parameters to send with the custom request. (optional) 
@@ -4590,6 +4762,7 @@ Remove a userID and its associated data from the multi-clusters.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4611,7 +4784,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var userID = "userID_example";  // string | userID to assign.
 
             try
@@ -4694,6 +4870,7 @@ Replace all allowed sources.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4715,7 +4892,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var source = new List<Source>(); // List<Source> | Allowed sources.
 
             try
@@ -4798,6 +4978,7 @@ Restore a deleted API key, along with its associated permissions. The request mu
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4819,7 +5000,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var key = YourAPIKey;  // string | API key.
 
             try
@@ -4902,6 +5086,7 @@ Add a record (object) to an index or replace it. If the record doesn't contain a
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -4923,7 +5108,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var body = null;  // Object | The Algolia record.
 
@@ -5008,6 +5196,7 @@ To create or update more than one rule, use the [`batch` operation](#tag/Rules/o
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5029,7 +5218,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = a-rule-id;  // string | Unique identifier of a rule object.
             var rule = new Rule(); // Rule | 
@@ -5118,6 +5310,7 @@ Create or update multiple rules.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5139,7 +5332,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var rules = new List<Rule>(); // List<Rule> | 
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
@@ -5228,6 +5424,7 @@ Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-sea
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5249,7 +5446,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var objectID = synonymID;  // string | Unique identifier of a synonym object.
             var synonymHit = new SynonymHit(); // SynonymHit | 
@@ -5338,6 +5538,7 @@ Create or update multiple synonyms.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5359,7 +5560,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var synonymHit = new List<SynonymHit>(); // List<SynonymHit> | 
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
@@ -5448,6 +5652,7 @@ Send multiple search queries to one or more indices.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5469,7 +5674,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var searchMethodParams = new SearchMethodParams(); // SearchMethodParams | Query requests and strategies. Results will be received in the same order as the queries.
 
             try
@@ -5552,6 +5760,7 @@ Search for standard and [custom](https://www.algolia.com/doc/guides/managing-res
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5573,7 +5782,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var dictionaryName = new DictionaryType(); // DictionaryType | Dictionary to search in.
             var searchDictionaryEntriesParams = new SearchDictionaryEntriesParams(); // SearchDictionaryEntriesParams | 
 
@@ -5658,6 +5870,7 @@ Search for facet values.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5679,7 +5892,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var facetName = "facetName_example";  // string | Facet name.
             var searchForFacetValuesRequest = new SearchForFacetValuesRequest(); // SearchForFacetValuesRequest |  (optional) 
@@ -5766,6 +5982,7 @@ Search for rules in your index. You can control the search with parameters. To l
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5787,7 +6004,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var searchRulesParams = new SearchRulesParams(); // SearchRulesParams |  (optional) 
 
@@ -5872,6 +6092,7 @@ Return records that match the query.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5893,7 +6114,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var searchParams = new SearchParams(); // SearchParams |  (optional) 
 
@@ -5978,6 +6202,7 @@ Search for synonyms in your index. You can control and filter the search with pa
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -5999,7 +6224,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var type = new SynonymType(); // SynonymType | Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms). (optional) 
             var page = 0;  // int? | Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.  (optional)  (default to 0)
@@ -6090,6 +6318,7 @@ Since it can take up to a few seconds to get the data from the different cluster
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -6111,7 +6340,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var searchUserIdsParams = new SearchUserIdsParams(); // SearchUserIdsParams | 
 
             try
@@ -6194,6 +6426,7 @@ Set stop word settings for a specific language.
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -6215,7 +6448,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var dictionarySettingsParams = new DictionarySettingsParams(); // DictionarySettingsParams | 
 
             try
@@ -6298,6 +6534,7 @@ Update the specified [index settings](https://www.algolia.com/doc/api-reference/
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -6319,7 +6556,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var indexName = myIndexName;  // string | Index on which to perform the request.
             var indexSettings = new IndexSettings(); // IndexSettings | 
             var forwardToReplicas = true;  // bool? | Indicates whether changed index settings are forwarded to the replica indices. (optional) 
@@ -6406,6 +6646,7 @@ Replace the permissions of an existing API key. Any unspecified parameter resets
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
@@ -6427,7 +6668,10 @@ namespace Example
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("X-Algolia-Application-Id", "Bearer");
 
-            var apiInstance = new SearchApi(config);
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var key = YourAPIKey;  // string | API key.
             var apiKey = new ApiKey(); // ApiKey | 
 

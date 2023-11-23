@@ -16,7 +16,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   @Override
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
-    additionalProperties.put("library", "httpClient");
+    setLibrary("httpclient");
     additionalProperties.put("netCoreProjectFile", true);
     additionalProperties.put("targetFramework", "netstandard2.0");
     additionalProperties.put("isSearchClient", client.equals("search"));
@@ -25,6 +25,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     setOutputDir(getOutputDir() + File.separator + outputFolder);
 
     super.processOpts();
+
+    Utils.prettyPrint(supportingFiles);
 
     // Generation notice, added on every generated files
     Utils.setGenerationBanner(additionalProperties);
