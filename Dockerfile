@@ -3,8 +3,10 @@ ARG GO_VERSION
 ARG JAVA_VERSION
 ARG NODE_VERSION
 ARG PHP_VERSION
+ARG CSHARP_VERSION
 
 FROM dart:${DART_VERSION} AS dart-builder
+FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
 FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM openjdk:${JAVA_VERSION}-slim AS java-builder
 FROM php:${PHP_VERSION}-bullseye AS builder
@@ -42,6 +44,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY --from=java-builder /usr/local/openjdk-17 /usr/local/openjdk-17
 RUN echo "export PATH=$PATH:/usr/local/openjdk-17/bin" >> ~/.profile && source ~/.profile
 ADD https://github.com/google/google-java-format/releases/download/v1.18.1/google-java-format-1.18.1-all-deps.jar /tmp/java-formatter.jar
+
+# C#
+COPY --from=csharp-builder /usr/bin/dotnet /usr/bin/dotnet
 
 WORKDIR /app
 

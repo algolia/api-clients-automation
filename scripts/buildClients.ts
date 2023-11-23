@@ -17,6 +17,9 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       break;
     case 'php':
       break;
+    case 'csharp':
+      await run('dotnet build --configuration Release', { cwd });
+      break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
       const packageNames = gens.map(({ additionalProperties: { packageName } }) =>

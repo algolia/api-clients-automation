@@ -170,7 +170,7 @@
       "dart-recommend": {
         "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_recommend"
       },
-      "csharp-algoliasearch": {
+      "csharp-search": {
         "output": "#{cwd}/clients/algoliasearch-client-csharp/packages/algoliasearch"
       }
     }
