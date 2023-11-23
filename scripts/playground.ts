@@ -41,6 +41,9 @@ export async function playground({
       // eslint-disable-next-line no-console
       console.log(await run(`cd playground/go && /usr/local/go/bin/go run . --client ${client}`));
       break;
+    case 'python':
+      await run(`cd playground/python && poetry install && poetry run ${client}`);
+      break;
     default:
   }
 }
