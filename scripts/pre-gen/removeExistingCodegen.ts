@@ -13,8 +13,8 @@ export async function removeExistingCodegen({
   client,
   output,
 }: Generator): Promise<void> {
-  const baseModelFolder = getLanguageModelFolder(language);
-  const baseApiFolder = getLanguageApiFolder(language);
+  let baseModelFolder = getLanguageModelFolder(language);
+  let baseApiFolder = getLanguageApiFolder(language);
   const clientName = createClientName(client, language);
 
   let clientModel = '';
@@ -51,6 +51,12 @@ export async function removeExistingCodegen({
     case 'go':
       clientModel = clientName.toLowerCase();
       clientApi = clientName.toLowerCase();
+      break;
+    case 'python':
+      clientModel = clientName.toLowerCase();
+      clientApi = clientName.toLowerCase();
+      baseModelFolder = '';
+      baseApiFolder = '';
       break;
     default:
       break;
