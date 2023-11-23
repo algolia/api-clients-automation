@@ -1,0 +1,7 @@
+{{>partial_header}}
+
+{{#models}}
+{{#model}}
+from algoliasearch.{{modelPackage}}.{{classFilename}} import {{classname}}
+{{/model}}
+{{/models}}
