@@ -25,106 +25,106 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Ordering of facets (widgets).
+  /// </summary>
+  [DataContract(Name = "facets")]
+  public partial class Facets : IEquatable<Facets>, IValidatableObject
+  {
     /// <summary>
-    /// Ordering of facets (widgets).
+    /// Initializes a new instance of the <see cref="Facets" /> class.
     /// </summary>
-    [DataContract(Name = "facets")]
-    public partial class Facets : IEquatable<Facets>, IValidatableObject
+    /// <param name="order">Pinned order of facet lists..</param>
+    public Facets(List<string> order = default(List<string>))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Facets" /> class.
-        /// </summary>
-        /// <param name="order">Pinned order of facet lists..</param>
-        public Facets(List<string> order = default(List<string>))
-        {
-            this.Order = order;
-        }
-
-        /// <summary>
-        /// Pinned order of facet lists.
-        /// </summary>
-        /// <value>Pinned order of facet lists.</value>
-        [DataMember(Name = "order", EmitDefaultValue = false)]
-        public List<string> Order { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class Facets {\n");
-            sb.Append("  Order: ").Append(Order).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as Facets);
-        }
-
-        /// <summary>
-        /// Returns true if Facets instances are equal
-        /// </summary>
-        /// <param name="input">Instance of Facets to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(Facets input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Order == input.Order ||
-                    this.Order != null &&
-                    input.Order != null &&
-                    this.Order.SequenceEqual(input.Order)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Order != null)
-                {
-                    hashCode = (hashCode * 59) + this.Order.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      this.Order = order;
     }
+
+    /// <summary>
+    /// Pinned order of facet lists.
+    /// </summary>
+    /// <value>Pinned order of facet lists.</value>
+    [DataMember(Name = "order", EmitDefaultValue = false)]
+    public List<string> Order { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class Facets {\n");
+      sb.Append("  Order: ").Append(Order).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as Facets);
+    }
+
+    /// <summary>
+    /// Returns true if Facets instances are equal
+    /// </summary>
+    /// <param name="input">Instance of Facets to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(Facets input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Order == input.Order ||
+              this.Order != null &&
+              input.Order != null &&
+              this.Order.SequenceEqual(input.Order)
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.Order != null)
+        {
+          hashCode = (hashCode * 59) + this.Order.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

@@ -25,105 +25,105 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// GetTaskResponse
+  /// </summary>
+  [DataContract(Name = "getTaskResponse")]
+  public partial class GetTaskResponse : IEquatable<GetTaskResponse>, IValidatableObject
+  {
+
     /// <summary>
-    /// GetTaskResponse
+    /// Gets or Sets Status
     /// </summary>
-    [DataContract(Name = "getTaskResponse")]
-    public partial class GetTaskResponse : IEquatable<GetTaskResponse>, IValidatableObject
+    [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
+    public TaskStatus Status { get; set; }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetTaskResponse" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected GetTaskResponse() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetTaskResponse" /> class.
+    /// </summary>
+    /// <param name="status">status (required).</param>
+    public GetTaskResponse(TaskStatus status = default(TaskStatus))
     {
-
-        /// <summary>
-        /// Gets or Sets Status
-        /// </summary>
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
-        public TaskStatus Status { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetTaskResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected GetTaskResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetTaskResponse" /> class.
-        /// </summary>
-        /// <param name="status">status (required).</param>
-        public GetTaskResponse(TaskStatus status = default(TaskStatus))
-        {
-            this.Status = status;
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class GetTaskResponse {\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as GetTaskResponse);
-        }
-
-        /// <summary>
-        /// Returns true if GetTaskResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of GetTaskResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(GetTaskResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Status == input.Status ||
-                    this.Status.Equals(input.Status)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Status.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      this.Status = status;
     }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class GetTaskResponse {\n");
+      sb.Append("  Status: ").Append(Status).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as GetTaskResponse);
+    }
+
+    /// <summary>
+    /// Returns true if GetTaskResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of GetTaskResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(GetTaskResponse input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Status == input.Status ||
+              this.Status.Equals(input.Status)
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        hashCode = (hashCode * 59) + this.Status.GetHashCode();
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

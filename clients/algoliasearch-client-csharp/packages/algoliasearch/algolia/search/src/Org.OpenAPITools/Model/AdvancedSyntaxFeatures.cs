@@ -25,23 +25,23 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines advancedSyntaxFeatures
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum AdvancedSyntaxFeatures
+  {
     /// <summary>
-    /// Defines advancedSyntaxFeatures
+    /// Enum ExactPhrase for value: exactPhrase
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AdvancedSyntaxFeatures
-    {
-        /// <summary>
-        /// Enum ExactPhrase for value: exactPhrase
-        /// </summary>
-        [EnumMember(Value = "exactPhrase")]
-        ExactPhrase = 1,
+    [EnumMember(Value = "exactPhrase")]
+    ExactPhrase = 1,
 
-        /// <summary>
-        /// Enum ExcludeWords for value: excludeWords
-        /// </summary>
-        [EnumMember(Value = "excludeWords")]
-        ExcludeWords = 2
-    }
+    /// <summary>
+    /// Enum ExcludeWords for value: excludeWords
+    /// </summary>
+    [EnumMember(Value = "excludeWords")]
+    ExcludeWords = 2
+  }
 
 }

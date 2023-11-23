@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Indicates whether a dictionary entry is active (&#x60;enabled&#x60;) or inactive (&#x60;disabled&#x60;).
+  /// </summary>
+  /// <value>Indicates whether a dictionary entry is active (&#x60;enabled&#x60;) or inactive (&#x60;disabled&#x60;).</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum DictionaryEntryState
+  {
     /// <summary>
-    /// Indicates whether a dictionary entry is active (&#x60;enabled&#x60;) or inactive (&#x60;disabled&#x60;).
+    /// Enum Enabled for value: enabled
     /// </summary>
-    /// <value>Indicates whether a dictionary entry is active (&#x60;enabled&#x60;) or inactive (&#x60;disabled&#x60;).</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DictionaryEntryState
-    {
-        /// <summary>
-        /// Enum Enabled for value: enabled
-        /// </summary>
-        [EnumMember(Value = "enabled")]
-        Enabled = 1,
+    [EnumMember(Value = "enabled")]
+    Enabled = 1,
 
-        /// <summary>
-        /// Enum Disabled for value: disabled
-        /// </summary>
-        [EnumMember(Value = "disabled")]
-        Disabled = 2
-    }
+    /// <summary>
+    /// Enum Disabled for value: disabled
+    /// </summary>
+    [EnumMember(Value = "disabled")]
+    Disabled = 2
+  }
 
 }

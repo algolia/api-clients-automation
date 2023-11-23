@@ -25,18 +25,18 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// - &#x60;default&#x60;: perform a search query - &#x60;facet&#x60; [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values). 
+  /// </summary>
+  /// <value>- &#x60;default&#x60;: perform a search query - &#x60;facet&#x60; [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values). </value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum SearchTypeDefault
+  {
     /// <summary>
-    /// - &#x60;default&#x60;: perform a search query - &#x60;facet&#x60; [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values). 
+    /// Enum Default for value: default
     /// </summary>
-    /// <value>- &#x60;default&#x60;: perform a search query - &#x60;facet&#x60; [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values). </value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SearchTypeDefault
-    {
-        /// <summary>
-        /// Enum Default for value: default
-        /// </summary>
-        [EnumMember(Value = "default")]
-        Default = 1
-    }
+    [EnumMember(Value = "default")]
+    Default = 1
+  }
 
 }

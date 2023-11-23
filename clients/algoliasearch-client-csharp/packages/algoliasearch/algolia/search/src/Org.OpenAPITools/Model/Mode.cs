@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Search mode the index will use to query for results.
+  /// </summary>
+  /// <value>Search mode the index will use to query for results.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum Mode
+  {
     /// <summary>
-    /// Search mode the index will use to query for results.
+    /// Enum NeuralSearch for value: neuralSearch
     /// </summary>
-    /// <value>Search mode the index will use to query for results.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Mode
-    {
-        /// <summary>
-        /// Enum NeuralSearch for value: neuralSearch
-        /// </summary>
-        [EnumMember(Value = "neuralSearch")]
-        NeuralSearch = 1,
+    [EnumMember(Value = "neuralSearch")]
+    NeuralSearch = 1,
 
-        /// <summary>
-        /// Enum KeywordSearch for value: keywordSearch
-        /// </summary>
-        [EnumMember(Value = "keywordSearch")]
-        KeywordSearch = 2
-    }
+    /// <summary>
+    /// Enum KeywordSearch for value: keywordSearch
+    /// </summary>
+    [EnumMember(Value = "keywordSearch")]
+    KeywordSearch = 2
+  }
 
 }

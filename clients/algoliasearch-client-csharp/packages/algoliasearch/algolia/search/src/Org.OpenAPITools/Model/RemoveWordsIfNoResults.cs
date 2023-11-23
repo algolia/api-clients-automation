@@ -25,36 +25,36 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn&#39;t match any hits.
+  /// </summary>
+  /// <value>Strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn&#39;t match any hits.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum RemoveWordsIfNoResults
+  {
     /// <summary>
-    /// Strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn&#39;t match any hits.
+    /// Enum None for value: none
     /// </summary>
-    /// <value>Strategy to [remove words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/) from the query when it doesn&#39;t match any hits.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RemoveWordsIfNoResults
-    {
-        /// <summary>
-        /// Enum None for value: none
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None = 1,
+    [EnumMember(Value = "none")]
+    None = 1,
 
-        /// <summary>
-        /// Enum LastWords for value: lastWords
-        /// </summary>
-        [EnumMember(Value = "lastWords")]
-        LastWords = 2,
+    /// <summary>
+    /// Enum LastWords for value: lastWords
+    /// </summary>
+    [EnumMember(Value = "lastWords")]
+    LastWords = 2,
 
-        /// <summary>
-        /// Enum FirstWords for value: firstWords
-        /// </summary>
-        [EnumMember(Value = "firstWords")]
-        FirstWords = 3,
+    /// <summary>
+    /// Enum FirstWords for value: firstWords
+    /// </summary>
+    [EnumMember(Value = "firstWords")]
+    FirstWords = 3,
 
-        /// <summary>
-        /// Enum AllOptional for value: allOptional
-        /// </summary>
-        [EnumMember(Value = "allOptional")]
-        AllOptional = 4
-    }
+    /// <summary>
+    /// Enum AllOptional for value: allOptional
+    /// </summary>
+    [EnumMember(Value = "allOptional")]
+    AllOptional = 4
+  }
 
 }

@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Type of edit.
+  /// </summary>
+  /// <value>Type of edit.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum EditType
+  {
     /// <summary>
-    /// Type of edit.
+    /// Enum Remove for value: remove
     /// </summary>
-    /// <value>Type of edit.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EditType
-    {
-        /// <summary>
-        /// Enum Remove for value: remove
-        /// </summary>
-        [EnumMember(Value = "remove")]
-        Remove = 1,
+    [EnumMember(Value = "remove")]
+    Remove = 1,
 
-        /// <summary>
-        /// Enum Replace for value: replace
-        /// </summary>
-        [EnumMember(Value = "replace")]
-        Replace = 2
-    }
+    /// <summary>
+    /// Enum Replace for value: replace
+    /// </summary>
+    [EnumMember(Value = "replace")]
+    Replace = 2
+  }
 
 }

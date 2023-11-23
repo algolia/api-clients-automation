@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// _published_ if the task has been processed, _notPublished_ otherwise.
+  /// </summary>
+  /// <value>_published_ if the task has been processed, _notPublished_ otherwise.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum TaskStatus
+  {
     /// <summary>
-    /// _published_ if the task has been processed, _notPublished_ otherwise.
+    /// Enum Published for value: published
     /// </summary>
-    /// <value>_published_ if the task has been processed, _notPublished_ otherwise.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum TaskStatus
-    {
-        /// <summary>
-        /// Enum Published for value: published
-        /// </summary>
-        [EnumMember(Value = "published")]
-        Published = 1,
+    [EnumMember(Value = "published")]
+    Published = 1,
 
-        /// <summary>
-        /// Enum NotPublished for value: notPublished
-        /// </summary>
-        [EnumMember(Value = "notPublished")]
-        NotPublished = 2
-    }
+    /// <summary>
+    /// Enum NotPublished for value: notPublished
+    /// </summary>
+    [EnumMember(Value = "notPublished")]
+    NotPublished = 2
+  }
 
 }

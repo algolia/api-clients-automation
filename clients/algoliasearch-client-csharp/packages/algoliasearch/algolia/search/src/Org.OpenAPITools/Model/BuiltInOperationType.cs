@@ -25,54 +25,54 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Operation to apply to the attribute.
+  /// </summary>
+  /// <value>Operation to apply to the attribute.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum BuiltInOperationType
+  {
     /// <summary>
-    /// Operation to apply to the attribute.
+    /// Enum Increment for value: Increment
     /// </summary>
-    /// <value>Operation to apply to the attribute.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum BuiltInOperationType
-    {
-        /// <summary>
-        /// Enum Increment for value: Increment
-        /// </summary>
-        [EnumMember(Value = "Increment")]
-        Increment = 1,
+    [EnumMember(Value = "Increment")]
+    Increment = 1,
 
-        /// <summary>
-        /// Enum Decrement for value: Decrement
-        /// </summary>
-        [EnumMember(Value = "Decrement")]
-        Decrement = 2,
+    /// <summary>
+    /// Enum Decrement for value: Decrement
+    /// </summary>
+    [EnumMember(Value = "Decrement")]
+    Decrement = 2,
 
-        /// <summary>
-        /// Enum Add for value: Add
-        /// </summary>
-        [EnumMember(Value = "Add")]
-        Add = 3,
+    /// <summary>
+    /// Enum Add for value: Add
+    /// </summary>
+    [EnumMember(Value = "Add")]
+    Add = 3,
 
-        /// <summary>
-        /// Enum Remove for value: Remove
-        /// </summary>
-        [EnumMember(Value = "Remove")]
-        Remove = 4,
+    /// <summary>
+    /// Enum Remove for value: Remove
+    /// </summary>
+    [EnumMember(Value = "Remove")]
+    Remove = 4,
 
-        /// <summary>
-        /// Enum AddUnique for value: AddUnique
-        /// </summary>
-        [EnumMember(Value = "AddUnique")]
-        AddUnique = 5,
+    /// <summary>
+    /// Enum AddUnique for value: AddUnique
+    /// </summary>
+    [EnumMember(Value = "AddUnique")]
+    AddUnique = 5,
 
-        /// <summary>
-        /// Enum IncrementFrom for value: IncrementFrom
-        /// </summary>
-        [EnumMember(Value = "IncrementFrom")]
-        IncrementFrom = 6,
+    /// <summary>
+    /// Enum IncrementFrom for value: IncrementFrom
+    /// </summary>
+    [EnumMember(Value = "IncrementFrom")]
+    IncrementFrom = 6,
 
-        /// <summary>
-        /// Enum IncrementSet for value: IncrementSet
-        /// </summary>
-        [EnumMember(Value = "IncrementSet")]
-        IncrementSet = 7
-    }
+    /// <summary>
+    /// Enum IncrementSet for value: IncrementSet
+    /// </summary>
+    [EnumMember(Value = "IncrementSet")]
+    IncrementSet = 7
+  }
 
 }

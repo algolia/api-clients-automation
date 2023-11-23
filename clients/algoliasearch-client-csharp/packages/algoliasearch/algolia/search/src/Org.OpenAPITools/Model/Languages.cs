@@ -25,160 +25,160 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Dictionary language.
+  /// </summary>
+  [DataContract(Name = "languages")]
+  public partial class Languages : IEquatable<Languages>, IValidatableObject
+  {
     /// <summary>
-    /// Dictionary language.
+    /// Initializes a new instance of the <see cref="Languages" /> class.
     /// </summary>
-    [DataContract(Name = "languages")]
-    public partial class Languages : IEquatable<Languages>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected Languages() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Languages" /> class.
+    /// </summary>
+    /// <param name="plurals">plurals (required).</param>
+    /// <param name="stopwords">stopwords (required).</param>
+    /// <param name="compounds">compounds (required).</param>
+    public Languages(DictionaryLanguage plurals = default(DictionaryLanguage), DictionaryLanguage stopwords = default(DictionaryLanguage), DictionaryLanguage compounds = default(DictionaryLanguage))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Languages" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected Languages() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Languages" /> class.
-        /// </summary>
-        /// <param name="plurals">plurals (required).</param>
-        /// <param name="stopwords">stopwords (required).</param>
-        /// <param name="compounds">compounds (required).</param>
-        public Languages(DictionaryLanguage plurals = default(DictionaryLanguage), DictionaryLanguage stopwords = default(DictionaryLanguage), DictionaryLanguage compounds = default(DictionaryLanguage))
-        {
-            // to ensure "plurals" is required (not null)
-            if (plurals == null)
-            {
-                throw new ArgumentNullException("plurals is a required property for Languages and cannot be null");
-            }
-            this.Plurals = plurals;
-            // to ensure "stopwords" is required (not null)
-            if (stopwords == null)
-            {
-                throw new ArgumentNullException("stopwords is a required property for Languages and cannot be null");
-            }
-            this.Stopwords = stopwords;
-            // to ensure "compounds" is required (not null)
-            if (compounds == null)
-            {
-                throw new ArgumentNullException("compounds is a required property for Languages and cannot be null");
-            }
-            this.Compounds = compounds;
-        }
-
-        /// <summary>
-        /// Gets or Sets Plurals
-        /// </summary>
-        [DataMember(Name = "plurals", IsRequired = true, EmitDefaultValue = true)]
-        public DictionaryLanguage Plurals { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Stopwords
-        /// </summary>
-        [DataMember(Name = "stopwords", IsRequired = true, EmitDefaultValue = true)]
-        public DictionaryLanguage Stopwords { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Compounds
-        /// </summary>
-        [DataMember(Name = "compounds", IsRequired = true, EmitDefaultValue = true)]
-        public DictionaryLanguage Compounds { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class Languages {\n");
-            sb.Append("  Plurals: ").Append(Plurals).Append("\n");
-            sb.Append("  Stopwords: ").Append(Stopwords).Append("\n");
-            sb.Append("  Compounds: ").Append(Compounds).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as Languages);
-        }
-
-        /// <summary>
-        /// Returns true if Languages instances are equal
-        /// </summary>
-        /// <param name="input">Instance of Languages to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(Languages input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Plurals == input.Plurals ||
-                    (this.Plurals != null &&
-                    this.Plurals.Equals(input.Plurals))
-                ) && 
-                (
-                    this.Stopwords == input.Stopwords ||
-                    (this.Stopwords != null &&
-                    this.Stopwords.Equals(input.Stopwords))
-                ) && 
-                (
-                    this.Compounds == input.Compounds ||
-                    (this.Compounds != null &&
-                    this.Compounds.Equals(input.Compounds))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Plurals != null)
-                {
-                    hashCode = (hashCode * 59) + this.Plurals.GetHashCode();
-                }
-                if (this.Stopwords != null)
-                {
-                    hashCode = (hashCode * 59) + this.Stopwords.GetHashCode();
-                }
-                if (this.Compounds != null)
-                {
-                    hashCode = (hashCode * 59) + this.Compounds.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      // to ensure "plurals" is required (not null)
+      if (plurals == null)
+      {
+        throw new ArgumentNullException("plurals is a required property for Languages and cannot be null");
+      }
+      this.Plurals = plurals;
+      // to ensure "stopwords" is required (not null)
+      if (stopwords == null)
+      {
+        throw new ArgumentNullException("stopwords is a required property for Languages and cannot be null");
+      }
+      this.Stopwords = stopwords;
+      // to ensure "compounds" is required (not null)
+      if (compounds == null)
+      {
+        throw new ArgumentNullException("compounds is a required property for Languages and cannot be null");
+      }
+      this.Compounds = compounds;
     }
+
+    /// <summary>
+    /// Gets or Sets Plurals
+    /// </summary>
+    [DataMember(Name = "plurals", IsRequired = true, EmitDefaultValue = true)]
+    public DictionaryLanguage Plurals { get; set; }
+
+    /// <summary>
+    /// Gets or Sets Stopwords
+    /// </summary>
+    [DataMember(Name = "stopwords", IsRequired = true, EmitDefaultValue = true)]
+    public DictionaryLanguage Stopwords { get; set; }
+
+    /// <summary>
+    /// Gets or Sets Compounds
+    /// </summary>
+    [DataMember(Name = "compounds", IsRequired = true, EmitDefaultValue = true)]
+    public DictionaryLanguage Compounds { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class Languages {\n");
+      sb.Append("  Plurals: ").Append(Plurals).Append("\n");
+      sb.Append("  Stopwords: ").Append(Stopwords).Append("\n");
+      sb.Append("  Compounds: ").Append(Compounds).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as Languages);
+    }
+
+    /// <summary>
+    /// Returns true if Languages instances are equal
+    /// </summary>
+    /// <param name="input">Instance of Languages to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(Languages input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Plurals == input.Plurals ||
+              (this.Plurals != null &&
+              this.Plurals.Equals(input.Plurals))
+          ) &&
+          (
+              this.Stopwords == input.Stopwords ||
+              (this.Stopwords != null &&
+              this.Stopwords.Equals(input.Stopwords))
+          ) &&
+          (
+              this.Compounds == input.Compounds ||
+              (this.Compounds != null &&
+              this.Compounds.Equals(input.Compounds))
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.Plurals != null)
+        {
+          hashCode = (hashCode * 59) + this.Plurals.GetHashCode();
+        }
+        if (this.Stopwords != null)
+        {
+          hashCode = (hashCode * 59) + this.Stopwords.GetHashCode();
+        }
+        if (this.Compounds != null)
+        {
+          hashCode = (hashCode * 59) + this.Compounds.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

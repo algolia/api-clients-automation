@@ -25,30 +25,30 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// How to display the remaining items:    - &#x60;count&#x60;: facet count (descending).   - &#x60;alpha&#x60;: alphabetical (ascending).   - &#x60;hidden&#x60;: show only pinned values. 
+  /// </summary>
+  /// <value>How to display the remaining items:    - &#x60;count&#x60;: facet count (descending).   - &#x60;alpha&#x60;: alphabetical (ascending).   - &#x60;hidden&#x60;: show only pinned values. </value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum SortRemainingBy
+  {
     /// <summary>
-    /// How to display the remaining items:    - &#x60;count&#x60;: facet count (descending).   - &#x60;alpha&#x60;: alphabetical (ascending).   - &#x60;hidden&#x60;: show only pinned values. 
+    /// Enum Count for value: count
     /// </summary>
-    /// <value>How to display the remaining items:    - &#x60;count&#x60;: facet count (descending).   - &#x60;alpha&#x60;: alphabetical (ascending).   - &#x60;hidden&#x60;: show only pinned values. </value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SortRemainingBy
-    {
-        /// <summary>
-        /// Enum Count for value: count
-        /// </summary>
-        [EnumMember(Value = "count")]
-        Count = 1,
+    [EnumMember(Value = "count")]
+    Count = 1,
 
-        /// <summary>
-        /// Enum Alpha for value: alpha
-        /// </summary>
-        [EnumMember(Value = "alpha")]
-        Alpha = 2,
+    /// <summary>
+    /// Enum Alpha for value: alpha
+    /// </summary>
+    [EnumMember(Value = "alpha")]
+    Alpha = 2,
 
-        /// <summary>
-        /// Enum Hidden for value: hidden
-        /// </summary>
-        [EnumMember(Value = "hidden")]
-        Hidden = 3
-    }
+    /// <summary>
+    /// Enum Hidden for value: hidden
+    /// </summary>
+    [EnumMember(Value = "hidden")]
+    Hidden = 3
+  }
 
 }

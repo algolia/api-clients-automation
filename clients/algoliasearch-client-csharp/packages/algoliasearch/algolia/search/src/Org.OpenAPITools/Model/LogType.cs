@@ -25,35 +25,35 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines logType
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum LogType
+  {
     /// <summary>
-    /// Defines logType
+    /// Enum All for value: all
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LogType
-    {
-        /// <summary>
-        /// Enum All for value: all
-        /// </summary>
-        [EnumMember(Value = "all")]
-        All = 1,
+    [EnumMember(Value = "all")]
+    All = 1,
 
-        /// <summary>
-        /// Enum Query for value: query
-        /// </summary>
-        [EnumMember(Value = "query")]
-        Query = 2,
+    /// <summary>
+    /// Enum Query for value: query
+    /// </summary>
+    [EnumMember(Value = "query")]
+    Query = 2,
 
-        /// <summary>
-        /// Enum Build for value: build
-        /// </summary>
-        [EnumMember(Value = "build")]
-        Build = 3,
+    /// <summary>
+    /// Enum Build for value: build
+    /// </summary>
+    [EnumMember(Value = "build")]
+    Build = 3,
 
-        /// <summary>
-        /// Enum Error for value: error
-        /// </summary>
-        [EnumMember(Value = "error")]
-        Error = 4
-    }
+    /// <summary>
+    /// Enum Error for value: error
+    /// </summary>
+    [EnumMember(Value = "error")]
+    Error = 4
+  }
 
 }

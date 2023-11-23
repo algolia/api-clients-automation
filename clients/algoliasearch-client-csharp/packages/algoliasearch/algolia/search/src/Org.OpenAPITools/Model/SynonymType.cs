@@ -25,42 +25,42 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Synonym type.
+  /// </summary>
+  /// <value>Synonym type.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum SynonymType
+  {
     /// <summary>
-    /// Synonym type.
+    /// Enum Synonym for value: synonym
     /// </summary>
-    /// <value>Synonym type.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SynonymType
-    {
-        /// <summary>
-        /// Enum Synonym for value: synonym
-        /// </summary>
-        [EnumMember(Value = "synonym")]
-        Synonym = 1,
+    [EnumMember(Value = "synonym")]
+    Synonym = 1,
 
-        /// <summary>
-        /// Enum Onewaysynonym for value: onewaysynonym
-        /// </summary>
-        [EnumMember(Value = "onewaysynonym")]
-        Onewaysynonym = 2,
+    /// <summary>
+    /// Enum Onewaysynonym for value: onewaysynonym
+    /// </summary>
+    [EnumMember(Value = "onewaysynonym")]
+    Onewaysynonym = 2,
 
-        /// <summary>
-        /// Enum Altcorrection1 for value: altcorrection1
-        /// </summary>
-        [EnumMember(Value = "altcorrection1")]
-        Altcorrection1 = 3,
+    /// <summary>
+    /// Enum Altcorrection1 for value: altcorrection1
+    /// </summary>
+    [EnumMember(Value = "altcorrection1")]
+    Altcorrection1 = 3,
 
-        /// <summary>
-        /// Enum Altcorrection2 for value: altcorrection2
-        /// </summary>
-        [EnumMember(Value = "altcorrection2")]
-        Altcorrection2 = 4,
+    /// <summary>
+    /// Enum Altcorrection2 for value: altcorrection2
+    /// </summary>
+    [EnumMember(Value = "altcorrection2")]
+    Altcorrection2 = 4,
 
-        /// <summary>
-        /// Enum Placeholder for value: placeholder
-        /// </summary>
-        [EnumMember(Value = "placeholder")]
-        Placeholder = 5
-    }
+    /// <summary>
+    /// Enum Placeholder for value: placeholder
+    /// </summary>
+    [EnumMember(Value = "placeholder")]
+    Placeholder = 5
+  }
 
 }

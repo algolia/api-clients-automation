@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// - &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  
+  /// </summary>
+  /// <value>- &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  </value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum SearchStrategy
+  {
     /// <summary>
-    /// - &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  
+    /// Enum None for value: none
     /// </summary>
-    /// <value>- &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  </value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SearchStrategy
-    {
-        /// <summary>
-        /// Enum None for value: none
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None = 1,
+    [EnumMember(Value = "none")]
+    None = 1,
 
-        /// <summary>
-        /// Enum StopIfEnoughMatches for value: stopIfEnoughMatches
-        /// </summary>
-        [EnumMember(Value = "stopIfEnoughMatches")]
-        StopIfEnoughMatches = 2
-    }
+    /// <summary>
+    /// Enum StopIfEnoughMatches for value: stopIfEnoughMatches
+    /// </summary>
+    [EnumMember(Value = "stopIfEnoughMatches")]
+    StopIfEnoughMatches = 2
+  }
 
 }

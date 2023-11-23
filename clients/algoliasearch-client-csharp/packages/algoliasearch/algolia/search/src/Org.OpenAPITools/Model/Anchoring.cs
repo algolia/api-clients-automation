@@ -25,36 +25,36 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Whether the pattern parameter matches the beginning (&#x60;startsWith&#x60;) or end (&#x60;endsWith&#x60;) of the query string, is an exact match (&#x60;is&#x60;), or a partial match (&#x60;contains&#x60;).
+  /// </summary>
+  /// <value>Whether the pattern parameter matches the beginning (&#x60;startsWith&#x60;) or end (&#x60;endsWith&#x60;) of the query string, is an exact match (&#x60;is&#x60;), or a partial match (&#x60;contains&#x60;).</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum Anchoring
+  {
     /// <summary>
-    /// Whether the pattern parameter matches the beginning (&#x60;startsWith&#x60;) or end (&#x60;endsWith&#x60;) of the query string, is an exact match (&#x60;is&#x60;), or a partial match (&#x60;contains&#x60;).
+    /// Enum Is for value: is
     /// </summary>
-    /// <value>Whether the pattern parameter matches the beginning (&#x60;startsWith&#x60;) or end (&#x60;endsWith&#x60;) of the query string, is an exact match (&#x60;is&#x60;), or a partial match (&#x60;contains&#x60;).</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Anchoring
-    {
-        /// <summary>
-        /// Enum Is for value: is
-        /// </summary>
-        [EnumMember(Value = "is")]
-        Is = 1,
+    [EnumMember(Value = "is")]
+    Is = 1,
 
-        /// <summary>
-        /// Enum StartsWith for value: startsWith
-        /// </summary>
-        [EnumMember(Value = "startsWith")]
-        StartsWith = 2,
+    /// <summary>
+    /// Enum StartsWith for value: startsWith
+    /// </summary>
+    [EnumMember(Value = "startsWith")]
+    StartsWith = 2,
 
-        /// <summary>
-        /// Enum EndsWith for value: endsWith
-        /// </summary>
-        [EnumMember(Value = "endsWith")]
-        EndsWith = 3,
+    /// <summary>
+    /// Enum EndsWith for value: endsWith
+    /// </summary>
+    [EnumMember(Value = "endsWith")]
+    EndsWith = 3,
 
-        /// <summary>
-        /// Enum Contains for value: contains
-        /// </summary>
-        [EnumMember(Value = "contains")]
-        Contains = 4
-    }
+    /// <summary>
+    /// Enum Contains for value: contains
+    /// </summary>
+    [EnumMember(Value = "contains")]
+    Contains = 4
+  }
 
 }

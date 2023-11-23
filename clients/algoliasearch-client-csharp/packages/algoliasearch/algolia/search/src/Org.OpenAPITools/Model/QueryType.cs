@@ -25,30 +25,30 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Determines how query words are [interpreted as prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+  /// </summary>
+  /// <value>Determines how query words are [interpreted as prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum QueryType
+  {
     /// <summary>
-    /// Determines how query words are [interpreted as prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+    /// Enum PrefixLast for value: prefixLast
     /// </summary>
-    /// <value>Determines how query words are [interpreted as prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum QueryType
-    {
-        /// <summary>
-        /// Enum PrefixLast for value: prefixLast
-        /// </summary>
-        [EnumMember(Value = "prefixLast")]
-        PrefixLast = 1,
+    [EnumMember(Value = "prefixLast")]
+    PrefixLast = 1,
 
-        /// <summary>
-        /// Enum PrefixAll for value: prefixAll
-        /// </summary>
-        [EnumMember(Value = "prefixAll")]
-        PrefixAll = 2,
+    /// <summary>
+    /// Enum PrefixAll for value: prefixAll
+    /// </summary>
+    [EnumMember(Value = "prefixAll")]
+    PrefixAll = 2,
 
-        /// <summary>
-        /// Enum PrefixNone for value: prefixNone
-        /// </summary>
-        [EnumMember(Value = "prefixNone")]
-        PrefixNone = 3
-    }
+    /// <summary>
+    /// Enum PrefixNone for value: prefixNone
+    /// </summary>
+    [EnumMember(Value = "prefixNone")]
+    PrefixNone = 3
+  }
 
 }

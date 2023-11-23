@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and boolean values. 
+  /// </summary>
+  [DataContract(Name = "standardEntries")]
+  public partial class StandardEntries : IEquatable<StandardEntries>, IValidatableObject
+  {
     /// <summary>
-    /// Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and boolean values. 
+    /// Initializes a new instance of the <see cref="StandardEntries" /> class.
     /// </summary>
-    [DataContract(Name = "standardEntries")]
-    public partial class StandardEntries : IEquatable<StandardEntries>, IValidatableObject
+    /// <param name="plurals">Key-value pair of a language ISO code and a boolean value..</param>
+    /// <param name="stopwords">Key-value pair of a language ISO code and a boolean value..</param>
+    /// <param name="compounds">Key-value pair of a language ISO code and a boolean value..</param>
+    public StandardEntries(Dictionary<string, bool> plurals = default(Dictionary<string, bool>), Dictionary<string, bool> stopwords = default(Dictionary<string, bool>), Dictionary<string, bool> compounds = default(Dictionary<string, bool>))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StandardEntries" /> class.
-        /// </summary>
-        /// <param name="plurals">Key-value pair of a language ISO code and a boolean value..</param>
-        /// <param name="stopwords">Key-value pair of a language ISO code and a boolean value..</param>
-        /// <param name="compounds">Key-value pair of a language ISO code and a boolean value..</param>
-        public StandardEntries(Dictionary<string, bool> plurals = default(Dictionary<string, bool>), Dictionary<string, bool> stopwords = default(Dictionary<string, bool>), Dictionary<string, bool> compounds = default(Dictionary<string, bool>))
-        {
-            this.Plurals = plurals;
-            this.Stopwords = stopwords;
-            this.Compounds = compounds;
-        }
+      this.Plurals = plurals;
+      this.Stopwords = stopwords;
+      this.Compounds = compounds;
+    }
 
         /// <summary>
         /// Key-value pair of a language ISO code and a boolean value.
@@ -51,7 +51,7 @@ namespace Org.OpenAPITools.Model
         /// <example>{&#39;fr&#39;: false}
 </example>
         [DataMember(Name = "plurals", EmitDefaultValue = true)]
-        public Dictionary<string, bool> Plurals { get; set; }
+    public Dictionary<string, bool> Plurals { get; set; }
 
         /// <summary>
         /// Key-value pair of a language ISO code and a boolean value.
@@ -60,7 +60,7 @@ namespace Org.OpenAPITools.Model
         /// <example>{&#39;fr&#39;: false}
 </example>
         [DataMember(Name = "stopwords", EmitDefaultValue = true)]
-        public Dictionary<string, bool> Stopwords { get; set; }
+    public Dictionary<string, bool> Stopwords { get; set; }
 
         /// <summary>
         /// Key-value pair of a language ISO code and a boolean value.
@@ -69,108 +69,108 @@ namespace Org.OpenAPITools.Model
         /// <example>{&#39;fr&#39;: false}
 </example>
         [DataMember(Name = "compounds", EmitDefaultValue = true)]
-        public Dictionary<string, bool> Compounds { get; set; }
+    public Dictionary<string, bool> Compounds { get; set; }
 
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class StandardEntries {\n");
-            sb.Append("  Plurals: ").Append(Plurals).Append("\n");
-            sb.Append("  Stopwords: ").Append(Stopwords).Append("\n");
-            sb.Append("  Compounds: ").Append(Compounds).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as StandardEntries);
-        }
-
-        /// <summary>
-        /// Returns true if StandardEntries instances are equal
-        /// </summary>
-        /// <param name="input">Instance of StandardEntries to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(StandardEntries input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Plurals == input.Plurals ||
-                    this.Plurals != null &&
-                    input.Plurals != null &&
-                    this.Plurals.SequenceEqual(input.Plurals)
-                ) && 
-                (
-                    this.Stopwords == input.Stopwords ||
-                    this.Stopwords != null &&
-                    input.Stopwords != null &&
-                    this.Stopwords.SequenceEqual(input.Stopwords)
-                ) && 
-                (
-                    this.Compounds == input.Compounds ||
-                    this.Compounds != null &&
-                    input.Compounds != null &&
-                    this.Compounds.SequenceEqual(input.Compounds)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Plurals != null)
-                {
-                    hashCode = (hashCode * 59) + this.Plurals.GetHashCode();
-                }
-                if (this.Stopwords != null)
-                {
-                    hashCode = (hashCode * 59) + this.Stopwords.GetHashCode();
-                }
-                if (this.Compounds != null)
-                {
-                    hashCode = (hashCode * 59) + this.Compounds.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class StandardEntries {\n");
+      sb.Append("  Plurals: ").Append(Plurals).Append("\n");
+      sb.Append("  Stopwords: ").Append(Stopwords).Append("\n");
+      sb.Append("  Compounds: ").Append(Compounds).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
     }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as StandardEntries);
+    }
+
+    /// <summary>
+    /// Returns true if StandardEntries instances are equal
+    /// </summary>
+    /// <param name="input">Instance of StandardEntries to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(StandardEntries input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Plurals == input.Plurals ||
+              this.Plurals != null &&
+              input.Plurals != null &&
+              this.Plurals.SequenceEqual(input.Plurals)
+          ) &&
+          (
+              this.Stopwords == input.Stopwords ||
+              this.Stopwords != null &&
+              input.Stopwords != null &&
+              this.Stopwords.SequenceEqual(input.Stopwords)
+          ) &&
+          (
+              this.Compounds == input.Compounds ||
+              this.Compounds != null &&
+              input.Compounds != null &&
+              this.Compounds.SequenceEqual(input.Compounds)
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.Plurals != null)
+        {
+          hashCode = (hashCode * 59) + this.Plurals.GetHashCode();
+        }
+        if (this.Stopwords != null)
+        {
+          hashCode = (hashCode * 59) + this.Stopwords.GetHashCode();
+        }
+        if (this.Compounds != null)
+        {
+          hashCode = (hashCode * 59) + this.Compounds.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

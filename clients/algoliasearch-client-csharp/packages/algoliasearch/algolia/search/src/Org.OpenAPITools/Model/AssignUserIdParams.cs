@@ -25,116 +25,116 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Assign userID parameters.
+  /// </summary>
+  [DataContract(Name = "assignUserIdParams")]
+  public partial class AssignUserIdParams : IEquatable<AssignUserIdParams>, IValidatableObject
+  {
     /// <summary>
-    /// Assign userID parameters.
+    /// Initializes a new instance of the <see cref="AssignUserIdParams" /> class.
     /// </summary>
-    [DataContract(Name = "assignUserIdParams")]
-    public partial class AssignUserIdParams : IEquatable<AssignUserIdParams>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected AssignUserIdParams() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AssignUserIdParams" /> class.
+    /// </summary>
+    /// <param name="cluster">Cluster name. (required).</param>
+    public AssignUserIdParams(string cluster = default(string))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AssignUserIdParams" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected AssignUserIdParams() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AssignUserIdParams" /> class.
-        /// </summary>
-        /// <param name="cluster">Cluster name. (required).</param>
-        public AssignUserIdParams(string cluster = default(string))
-        {
-            // to ensure "cluster" is required (not null)
-            if (cluster == null)
-            {
-                throw new ArgumentNullException("cluster is a required property for AssignUserIdParams and cannot be null");
-            }
-            this.Cluster = cluster;
-        }
-
-        /// <summary>
-        /// Cluster name.
-        /// </summary>
-        /// <value>Cluster name.</value>
-        /// <example>c11-test</example>
-        [DataMember(Name = "cluster", IsRequired = true, EmitDefaultValue = true)]
-        public string Cluster { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class AssignUserIdParams {\n");
-            sb.Append("  Cluster: ").Append(Cluster).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as AssignUserIdParams);
-        }
-
-        /// <summary>
-        /// Returns true if AssignUserIdParams instances are equal
-        /// </summary>
-        /// <param name="input">Instance of AssignUserIdParams to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(AssignUserIdParams input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Cluster == input.Cluster ||
-                    (this.Cluster != null &&
-                    this.Cluster.Equals(input.Cluster))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Cluster != null)
-                {
-                    hashCode = (hashCode * 59) + this.Cluster.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      // to ensure "cluster" is required (not null)
+      if (cluster == null)
+      {
+        throw new ArgumentNullException("cluster is a required property for AssignUserIdParams and cannot be null");
+      }
+      this.Cluster = cluster;
     }
+
+    /// <summary>
+    /// Cluster name.
+    /// </summary>
+    /// <value>Cluster name.</value>
+    /// <example>c11-test</example>
+    [DataMember(Name = "cluster", IsRequired = true, EmitDefaultValue = true)]
+    public string Cluster { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class AssignUserIdParams {\n");
+      sb.Append("  Cluster: ").Append(Cluster).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as AssignUserIdParams);
+    }
+
+    /// <summary>
+    /// Returns true if AssignUserIdParams instances are equal
+    /// </summary>
+    /// <param name="input">Instance of AssignUserIdParams to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(AssignUserIdParams input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Cluster == input.Cluster ||
+              (this.Cluster != null &&
+              this.Cluster.Equals(input.Cluster))
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.Cluster != null)
+        {
+          hashCode = (hashCode * 59) + this.Cluster.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

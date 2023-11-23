@@ -25,162 +25,162 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Record retrieval operation.
+  /// </summary>
+  [DataContract(Name = "getObjectsRequest")]
+  public partial class GetObjectsRequest : IEquatable<GetObjectsRequest>, IValidatableObject
+  {
     /// <summary>
-    /// Record retrieval operation.
+    /// Initializes a new instance of the <see cref="GetObjectsRequest" /> class.
     /// </summary>
-    [DataContract(Name = "getObjectsRequest")]
-    public partial class GetObjectsRequest : IEquatable<GetObjectsRequest>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected GetObjectsRequest() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetObjectsRequest" /> class.
+    /// </summary>
+    /// <param name="attributesToRetrieve">Attributes to retrieve. If not specified, all retrievable attributes are returned..</param>
+    /// <param name="objectID">Record&#39;s objectID. (required).</param>
+    /// <param name="indexName">Name of the index containing the required records. (required).</param>
+    public GetObjectsRequest(List<string> attributesToRetrieve = default(List<string>), string objectID = default(string), string indexName = default(string))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetObjectsRequest" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected GetObjectsRequest() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetObjectsRequest" /> class.
-        /// </summary>
-        /// <param name="attributesToRetrieve">Attributes to retrieve. If not specified, all retrievable attributes are returned..</param>
-        /// <param name="objectID">Record&#39;s objectID. (required).</param>
-        /// <param name="indexName">Name of the index containing the required records. (required).</param>
-        public GetObjectsRequest(List<string> attributesToRetrieve = default(List<string>), string objectID = default(string), string indexName = default(string))
-        {
-            // to ensure "objectID" is required (not null)
-            if (objectID == null)
-            {
-                throw new ArgumentNullException("objectID is a required property for GetObjectsRequest and cannot be null");
-            }
-            this.ObjectID = objectID;
-            // to ensure "indexName" is required (not null)
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName is a required property for GetObjectsRequest and cannot be null");
-            }
-            this.IndexName = indexName;
-            this.AttributesToRetrieve = attributesToRetrieve;
-        }
-
-        /// <summary>
-        /// Attributes to retrieve. If not specified, all retrievable attributes are returned.
-        /// </summary>
-        /// <value>Attributes to retrieve. If not specified, all retrievable attributes are returned.</value>
-        /// <example>[&quot;author&quot;,&quot;title&quot;,&quot;content&quot;]</example>
-        [DataMember(Name = "attributesToRetrieve", EmitDefaultValue = false)]
-        public List<string> AttributesToRetrieve { get; set; }
-
-        /// <summary>
-        /// Record&#39;s objectID.
-        /// </summary>
-        /// <value>Record&#39;s objectID.</value>
-        /// <example>8b9b7619230b1950f653b962fb0dfd6b</example>
-        [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
-        public string ObjectID { get; set; }
-
-        /// <summary>
-        /// Name of the index containing the required records.
-        /// </summary>
-        /// <value>Name of the index containing the required records.</value>
-        /// <example>books</example>
-        [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
-        public string IndexName { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class GetObjectsRequest {\n");
-            sb.Append("  AttributesToRetrieve: ").Append(AttributesToRetrieve).Append("\n");
-            sb.Append("  ObjectID: ").Append(ObjectID).Append("\n");
-            sb.Append("  IndexName: ").Append(IndexName).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as GetObjectsRequest);
-        }
-
-        /// <summary>
-        /// Returns true if GetObjectsRequest instances are equal
-        /// </summary>
-        /// <param name="input">Instance of GetObjectsRequest to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(GetObjectsRequest input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.AttributesToRetrieve == input.AttributesToRetrieve ||
-                    this.AttributesToRetrieve != null &&
-                    input.AttributesToRetrieve != null &&
-                    this.AttributesToRetrieve.SequenceEqual(input.AttributesToRetrieve)
-                ) && 
-                (
-                    this.ObjectID == input.ObjectID ||
-                    (this.ObjectID != null &&
-                    this.ObjectID.Equals(input.ObjectID))
-                ) && 
-                (
-                    this.IndexName == input.IndexName ||
-                    (this.IndexName != null &&
-                    this.IndexName.Equals(input.IndexName))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.AttributesToRetrieve != null)
-                {
-                    hashCode = (hashCode * 59) + this.AttributesToRetrieve.GetHashCode();
-                }
-                if (this.ObjectID != null)
-                {
-                    hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
-                }
-                if (this.IndexName != null)
-                {
-                    hashCode = (hashCode * 59) + this.IndexName.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      // to ensure "objectID" is required (not null)
+      if (objectID == null)
+      {
+        throw new ArgumentNullException("objectID is a required property for GetObjectsRequest and cannot be null");
+      }
+      this.ObjectID = objectID;
+      // to ensure "indexName" is required (not null)
+      if (indexName == null)
+      {
+        throw new ArgumentNullException("indexName is a required property for GetObjectsRequest and cannot be null");
+      }
+      this.IndexName = indexName;
+      this.AttributesToRetrieve = attributesToRetrieve;
     }
+
+    /// <summary>
+    /// Attributes to retrieve. If not specified, all retrievable attributes are returned.
+    /// </summary>
+    /// <value>Attributes to retrieve. If not specified, all retrievable attributes are returned.</value>
+    /// <example>[&quot;author&quot;,&quot;title&quot;,&quot;content&quot;]</example>
+    [DataMember(Name = "attributesToRetrieve", EmitDefaultValue = false)]
+    public List<string> AttributesToRetrieve { get; set; }
+
+    /// <summary>
+    /// Record&#39;s objectID.
+    /// </summary>
+    /// <value>Record&#39;s objectID.</value>
+    /// <example>8b9b7619230b1950f653b962fb0dfd6b</example>
+    [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
+    public string ObjectID { get; set; }
+
+    /// <summary>
+    /// Name of the index containing the required records.
+    /// </summary>
+    /// <value>Name of the index containing the required records.</value>
+    /// <example>books</example>
+    [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
+    public string IndexName { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class GetObjectsRequest {\n");
+      sb.Append("  AttributesToRetrieve: ").Append(AttributesToRetrieve).Append("\n");
+      sb.Append("  ObjectID: ").Append(ObjectID).Append("\n");
+      sb.Append("  IndexName: ").Append(IndexName).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as GetObjectsRequest);
+    }
+
+    /// <summary>
+    /// Returns true if GetObjectsRequest instances are equal
+    /// </summary>
+    /// <param name="input">Instance of GetObjectsRequest to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(GetObjectsRequest input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.AttributesToRetrieve == input.AttributesToRetrieve ||
+              this.AttributesToRetrieve != null &&
+              input.AttributesToRetrieve != null &&
+              this.AttributesToRetrieve.SequenceEqual(input.AttributesToRetrieve)
+          ) &&
+          (
+              this.ObjectID == input.ObjectID ||
+              (this.ObjectID != null &&
+              this.ObjectID.Equals(input.ObjectID))
+          ) &&
+          (
+              this.IndexName == input.IndexName ||
+              (this.IndexName != null &&
+              this.IndexName.Equals(input.IndexName))
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.AttributesToRetrieve != null)
+        {
+          hashCode = (hashCode * 59) + this.AttributesToRetrieve.GetHashCode();
+        }
+        if (this.ObjectID != null)
+        {
+          hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
+        }
+        if (this.IndexName != null)
+        {
+          hashCode = (hashCode * 59) + this.IndexName.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

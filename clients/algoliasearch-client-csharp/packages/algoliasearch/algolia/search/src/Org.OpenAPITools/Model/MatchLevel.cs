@@ -25,30 +25,30 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Indicates how well the attribute matched the search query.
+  /// </summary>
+  /// <value>Indicates how well the attribute matched the search query.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum MatchLevel
+  {
     /// <summary>
-    /// Indicates how well the attribute matched the search query.
+    /// Enum None for value: none
     /// </summary>
-    /// <value>Indicates how well the attribute matched the search query.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MatchLevel
-    {
-        /// <summary>
-        /// Enum None for value: none
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None = 1,
+    [EnumMember(Value = "none")]
+    None = 1,
 
-        /// <summary>
-        /// Enum Partial for value: partial
-        /// </summary>
-        [EnumMember(Value = "partial")]
-        Partial = 2,
+    /// <summary>
+    /// Enum Partial for value: partial
+    /// </summary>
+    [EnumMember(Value = "partial")]
+    Partial = 2,
 
-        /// <summary>
-        /// Enum Full for value: full
-        /// </summary>
-        [EnumMember(Value = "full")]
-        Full = 3
-    }
+    /// <summary>
+    /// Enum Full for value: full
+    /// </summary>
+    [EnumMember(Value = "full")]
+    Full = 3
+  }
 
 }

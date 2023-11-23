@@ -25,29 +25,29 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines alternativesAsExact
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum AlternativesAsExact
+  {
     /// <summary>
-    /// Defines alternativesAsExact
+    /// Enum IgnorePlurals for value: ignorePlurals
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AlternativesAsExact
-    {
-        /// <summary>
-        /// Enum IgnorePlurals for value: ignorePlurals
-        /// </summary>
-        [EnumMember(Value = "ignorePlurals")]
-        IgnorePlurals = 1,
+    [EnumMember(Value = "ignorePlurals")]
+    IgnorePlurals = 1,
 
-        /// <summary>
-        /// Enum SingleWordSynonym for value: singleWordSynonym
-        /// </summary>
-        [EnumMember(Value = "singleWordSynonym")]
-        SingleWordSynonym = 2,
+    /// <summary>
+    /// Enum SingleWordSynonym for value: singleWordSynonym
+    /// </summary>
+    [EnumMember(Value = "singleWordSynonym")]
+    SingleWordSynonym = 2,
 
-        /// <summary>
-        /// Enum MultiWordsSynonym for value: multiWordsSynonym
-        /// </summary>
-        [EnumMember(Value = "multiWordsSynonym")]
-        MultiWordsSynonym = 3
-    }
+    /// <summary>
+    /// Enum MultiWordsSynonym for value: multiWordsSynonym
+    /// </summary>
+    [EnumMember(Value = "multiWordsSynonym")]
+    MultiWordsSynonym = 3
+  }
 
 }

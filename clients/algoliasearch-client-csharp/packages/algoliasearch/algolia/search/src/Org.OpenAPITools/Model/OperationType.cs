@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Operation to perform (_move_ or _copy_).
+  /// </summary>
+  /// <value>Operation to perform (_move_ or _copy_).</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum OperationType
+  {
     /// <summary>
-    /// Operation to perform (_move_ or _copy_).
+    /// Enum Move for value: move
     /// </summary>
-    /// <value>Operation to perform (_move_ or _copy_).</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OperationType
-    {
-        /// <summary>
-        /// Enum Move for value: move
-        /// </summary>
-        [EnumMember(Value = "move")]
-        Move = 1,
+    [EnumMember(Value = "move")]
+    Move = 1,
 
-        /// <summary>
-        /// Enum Copy for value: copy
-        /// </summary>
-        [EnumMember(Value = "copy")]
-        Copy = 2
-    }
+    /// <summary>
+    /// Enum Copy for value: copy
+    /// </summary>
+    [EnumMember(Value = "copy")]
+    Copy = 2
+  }
 
 }

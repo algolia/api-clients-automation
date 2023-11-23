@@ -25,17 +25,17 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines aroundRadiusAll
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum AroundRadiusAll
+  {
     /// <summary>
-    /// Defines aroundRadiusAll
+    /// Enum All for value: all
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AroundRadiusAll
-    {
-        /// <summary>
-        /// Enum All for value: all
-        /// </summary>
-        [EnumMember(Value = "all")]
-        All = 1
-    }
+    [EnumMember(Value = "all")]
+    All = 1
+  }
 
 }

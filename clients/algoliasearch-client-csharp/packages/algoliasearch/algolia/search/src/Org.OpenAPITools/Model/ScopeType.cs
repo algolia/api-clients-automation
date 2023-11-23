@@ -25,29 +25,29 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines scopeType
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum ScopeType
+  {
     /// <summary>
-    /// Defines scopeType
+    /// Enum Settings for value: settings
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ScopeType
-    {
-        /// <summary>
-        /// Enum Settings for value: settings
-        /// </summary>
-        [EnumMember(Value = "settings")]
-        Settings = 1,
+    [EnumMember(Value = "settings")]
+    Settings = 1,
 
-        /// <summary>
-        /// Enum Synonyms for value: synonyms
-        /// </summary>
-        [EnumMember(Value = "synonyms")]
-        Synonyms = 2,
+    /// <summary>
+    /// Enum Synonyms for value: synonyms
+    /// </summary>
+    [EnumMember(Value = "synonyms")]
+    Synonyms = 2,
 
-        /// <summary>
-        /// Enum Rules for value: rules
-        /// </summary>
-        [EnumMember(Value = "rules")]
-        Rules = 3
-    }
+    /// <summary>
+    /// Enum Rules for value: rules
+    /// </summary>
+    [EnumMember(Value = "rules")]
+    Rules = 3
+  }
 
 }

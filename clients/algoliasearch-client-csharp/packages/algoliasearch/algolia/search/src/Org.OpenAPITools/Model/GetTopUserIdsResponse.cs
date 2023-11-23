@@ -25,116 +25,116 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// User IDs and clusters.
+  /// </summary>
+  [DataContract(Name = "getTopUserIdsResponse")]
+  public partial class GetTopUserIdsResponse : IEquatable<GetTopUserIdsResponse>, IValidatableObject
+  {
     /// <summary>
-    /// User IDs and clusters.
+    /// Initializes a new instance of the <see cref="GetTopUserIdsResponse" /> class.
     /// </summary>
-    [DataContract(Name = "getTopUserIdsResponse")]
-    public partial class GetTopUserIdsResponse : IEquatable<GetTopUserIdsResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected GetTopUserIdsResponse() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetTopUserIdsResponse" /> class.
+    /// </summary>
+    /// <param name="topUsers">Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values. (required).</param>
+    public GetTopUserIdsResponse(List<Dictionary<string, List<UserId>>> topUsers = default(List<Dictionary<string, List<UserId>>>))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetTopUserIdsResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected GetTopUserIdsResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetTopUserIdsResponse" /> class.
-        /// </summary>
-        /// <param name="topUsers">Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values. (required).</param>
-        public GetTopUserIdsResponse(List<Dictionary<string, List<UserId>>> topUsers = default(List<Dictionary<string, List<UserId>>>))
-        {
-            // to ensure "topUsers" is required (not null)
-            if (topUsers == null)
-            {
-                throw new ArgumentNullException("topUsers is a required property for GetTopUserIdsResponse and cannot be null");
-            }
-            this.TopUsers = topUsers;
-        }
-
-        /// <summary>
-        /// Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.
-        /// </summary>
-        /// <value>Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.</value>
-        [DataMember(Name = "topUsers", IsRequired = true, EmitDefaultValue = true)]
-        public List<Dictionary<string, List<UserId>>> TopUsers { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class GetTopUserIdsResponse {\n");
-            sb.Append("  TopUsers: ").Append(TopUsers).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as GetTopUserIdsResponse);
-        }
-
-        /// <summary>
-        /// Returns true if GetTopUserIdsResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of GetTopUserIdsResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(GetTopUserIdsResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.TopUsers == input.TopUsers ||
-                    this.TopUsers != null &&
-                    input.TopUsers != null &&
-                    this.TopUsers.SequenceEqual(input.TopUsers)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.TopUsers != null)
-                {
-                    hashCode = (hashCode * 59) + this.TopUsers.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      // to ensure "topUsers" is required (not null)
+      if (topUsers == null)
+      {
+        throw new ArgumentNullException("topUsers is a required property for GetTopUserIdsResponse and cannot be null");
+      }
+      this.TopUsers = topUsers;
     }
+
+    /// <summary>
+    /// Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.
+    /// </summary>
+    /// <value>Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.</value>
+    [DataMember(Name = "topUsers", IsRequired = true, EmitDefaultValue = true)]
+    public List<Dictionary<string, List<UserId>>> TopUsers { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class GetTopUserIdsResponse {\n");
+      sb.Append("  TopUsers: ").Append(TopUsers).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as GetTopUserIdsResponse);
+    }
+
+    /// <summary>
+    /// Returns true if GetTopUserIdsResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of GetTopUserIdsResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(GetTopUserIdsResponse input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.TopUsers == input.TopUsers ||
+              this.TopUsers != null &&
+              input.TopUsers != null &&
+              this.TopUsers.SequenceEqual(input.TopUsers)
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.TopUsers != null)
+        {
+          hashCode = (hashCode * 59) + this.TopUsers.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

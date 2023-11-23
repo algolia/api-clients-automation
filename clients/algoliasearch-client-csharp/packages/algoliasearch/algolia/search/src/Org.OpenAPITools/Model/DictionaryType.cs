@@ -25,29 +25,29 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines dictionaryType
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum DictionaryType
+  {
     /// <summary>
-    /// Defines dictionaryType
+    /// Enum Plurals for value: plurals
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DictionaryType
-    {
-        /// <summary>
-        /// Enum Plurals for value: plurals
-        /// </summary>
-        [EnumMember(Value = "plurals")]
-        Plurals = 1,
+    [EnumMember(Value = "plurals")]
+    Plurals = 1,
 
-        /// <summary>
-        /// Enum Stopwords for value: stopwords
-        /// </summary>
-        [EnumMember(Value = "stopwords")]
-        Stopwords = 2,
+    /// <summary>
+    /// Enum Stopwords for value: stopwords
+    /// </summary>
+    [EnumMember(Value = "stopwords")]
+    Stopwords = 2,
 
-        /// <summary>
-        /// Enum Compounds for value: compounds
-        /// </summary>
-        [EnumMember(Value = "compounds")]
-        Compounds = 3
-    }
+    /// <summary>
+    /// Enum Compounds for value: compounds
+    /// </summary>
+    [EnumMember(Value = "compounds")]
+    Compounds = 3
+  }
 
 }

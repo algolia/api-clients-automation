@@ -25,107 +25,107 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// SearchParamsString
+  /// </summary>
+  [DataContract(Name = "searchParamsString")]
+  public partial class SearchParamsString : IEquatable<SearchParamsString>, IValidatableObject
+  {
     /// <summary>
-    /// SearchParamsString
+    /// Initializes a new instance of the <see cref="SearchParamsString" /> class.
     /// </summary>
-    [DataContract(Name = "searchParamsString")]
-    public partial class SearchParamsString : IEquatable<SearchParamsString>, IValidatableObject
+    /// <param name="varParams">Search parameters as a URL-encoded query string. (default to &quot;&quot;).</param>
+    public SearchParamsString(string varParams = @"")
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchParamsString" /> class.
-        /// </summary>
-        /// <param name="varParams">Search parameters as a URL-encoded query string. (default to &quot;&quot;).</param>
-        public SearchParamsString(string varParams = @"")
-        {
-            // use default value if no "varParams" provided
-            this.VarParams = varParams ?? @"";
-        }
-
-        /// <summary>
-        /// Search parameters as a URL-encoded query string.
-        /// </summary>
-        /// <value>Search parameters as a URL-encoded query string.</value>
-        /// <example>hitsPerPage&#x3D;2&amp;getRankingInfo&#x3D;1</example>
-        [DataMember(Name = "params", EmitDefaultValue = false)]
-        public string VarParams { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class SearchParamsString {\n");
-            sb.Append("  VarParams: ").Append(VarParams).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as SearchParamsString);
-        }
-
-        /// <summary>
-        /// Returns true if SearchParamsString instances are equal
-        /// </summary>
-        /// <param name="input">Instance of SearchParamsString to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(SearchParamsString input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.VarParams == input.VarParams ||
-                    (this.VarParams != null &&
-                    this.VarParams.Equals(input.VarParams))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.VarParams != null)
-                {
-                    hashCode = (hashCode * 59) + this.VarParams.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      // use default value if no "varParams" provided
+      this.VarParams = varParams ?? @"";
     }
+
+    /// <summary>
+    /// Search parameters as a URL-encoded query string.
+    /// </summary>
+    /// <value>Search parameters as a URL-encoded query string.</value>
+    /// <example>hitsPerPage&#x3D;2&amp;getRankingInfo&#x3D;1</example>
+    [DataMember(Name = "params", EmitDefaultValue = false)]
+    public string VarParams { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class SearchParamsString {\n");
+      sb.Append("  VarParams: ").Append(VarParams).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as SearchParamsString);
+    }
+
+    /// <summary>
+    /// Returns true if SearchParamsString instances are equal
+    /// </summary>
+    /// <param name="input">Instance of SearchParamsString to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(SearchParamsString input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.VarParams == input.VarParams ||
+              (this.VarParams != null &&
+              this.VarParams.Equals(input.VarParams))
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.VarParams != null)
+        {
+          hashCode = (hashCode * 59) + this.VarParams.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

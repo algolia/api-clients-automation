@@ -25,23 +25,23 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Defines typoToleranceEnum
+  /// </summary>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum TypoToleranceEnum
+  {
     /// <summary>
-    /// Defines typoToleranceEnum
+    /// Enum Min for value: min
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum TypoToleranceEnum
-    {
-        /// <summary>
-        /// Enum Min for value: min
-        /// </summary>
-        [EnumMember(Value = "min")]
-        Min = 1,
+    [EnumMember(Value = "min")]
+    Min = 1,
 
-        /// <summary>
-        /// Enum Strict for value: strict
-        /// </summary>
-        [EnumMember(Value = "strict")]
-        Strict = 2
-    }
+    /// <summary>
+    /// Enum Strict for value: strict
+    /// </summary>
+    [EnumMember(Value = "strict")]
+    Strict = 2
+  }
 
 }

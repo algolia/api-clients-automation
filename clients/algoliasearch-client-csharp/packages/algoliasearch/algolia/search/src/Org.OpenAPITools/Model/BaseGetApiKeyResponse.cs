@@ -25,127 +25,127 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// BaseGetApiKeyResponse
+  /// </summary>
+  [DataContract(Name = "baseGetApiKeyResponse")]
+  public partial class BaseGetApiKeyResponse : IEquatable<BaseGetApiKeyResponse>, IValidatableObject
+  {
     /// <summary>
-    /// BaseGetApiKeyResponse
+    /// Initializes a new instance of the <see cref="BaseGetApiKeyResponse" /> class.
     /// </summary>
-    [DataContract(Name = "baseGetApiKeyResponse")]
-    public partial class BaseGetApiKeyResponse : IEquatable<BaseGetApiKeyResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected BaseGetApiKeyResponse() { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BaseGetApiKeyResponse" /> class.
+    /// </summary>
+    /// <param name="value">API key..</param>
+    /// <param name="createdAt">Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). (required).</param>
+    public BaseGetApiKeyResponse(string value = default(string), long createdAt = default(long))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseGetApiKeyResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected BaseGetApiKeyResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseGetApiKeyResponse" /> class.
-        /// </summary>
-        /// <param name="value">API key..</param>
-        /// <param name="createdAt">Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). (required).</param>
-        public BaseGetApiKeyResponse(string value = default(string), long createdAt = default(long))
-        {
-            this.CreatedAt = createdAt;
-            this.Value = value;
-        }
-
-        /// <summary>
-        /// API key.
-        /// </summary>
-        /// <value>API key.</value>
-        /// <example>13ad45b4d0a2f6ea65ecbddf6aa260f2</example>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
-        public string Value { get; set; }
-
-        /// <summary>
-        /// Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
-        /// </summary>
-        /// <value>Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).</value>
-        /// <example>1656345570000</example>
-        [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
-        public long CreatedAt { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class BaseGetApiKeyResponse {\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
-            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as BaseGetApiKeyResponse);
-        }
-
-        /// <summary>
-        /// Returns true if BaseGetApiKeyResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of BaseGetApiKeyResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(BaseGetApiKeyResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
-                ) && 
-                (
-                    this.CreatedAt == input.CreatedAt ||
-                    this.CreatedAt.Equals(input.CreatedAt)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Value != null)
-                {
-                    hashCode = (hashCode * 59) + this.Value.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.CreatedAt.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      this.CreatedAt = createdAt;
+      this.Value = value;
     }
+
+    /// <summary>
+    /// API key.
+    /// </summary>
+    /// <value>API key.</value>
+    /// <example>13ad45b4d0a2f6ea65ecbddf6aa260f2</example>
+    [DataMember(Name = "value", EmitDefaultValue = false)]
+    public string Value { get; set; }
+
+    /// <summary>
+    /// Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+    /// </summary>
+    /// <value>Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).</value>
+    /// <example>1656345570000</example>
+    [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
+    public long CreatedAt { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class BaseGetApiKeyResponse {\n");
+      sb.Append("  Value: ").Append(Value).Append("\n");
+      sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as BaseGetApiKeyResponse);
+    }
+
+    /// <summary>
+    /// Returns true if BaseGetApiKeyResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of BaseGetApiKeyResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(BaseGetApiKeyResponse input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.Value == input.Value ||
+              (this.Value != null &&
+              this.Value.Equals(input.Value))
+          ) &&
+          (
+              this.CreatedAt == input.CreatedAt ||
+              this.CreatedAt.Equals(input.CreatedAt)
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.Value != null)
+        {
+          hashCode = (hashCode * 59) + this.Value.GetHashCode();
+        }
+        hashCode = (hashCode * 59) + this.CreatedAt.GetHashCode();
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

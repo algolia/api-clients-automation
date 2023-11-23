@@ -25,106 +25,106 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Cursor
+  /// </summary>
+  [DataContract(Name = "cursor")]
+  public partial class Cursor : IEquatable<Cursor>, IValidatableObject
+  {
     /// <summary>
-    /// Cursor
+    /// Initializes a new instance of the <see cref="Cursor" /> class.
     /// </summary>
-    [DataContract(Name = "cursor")]
-    public partial class Cursor : IEquatable<Cursor>, IValidatableObject
+    /// <param name="varCursor">Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. .</param>
+    public Cursor(string varCursor = default(string))
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Cursor" /> class.
-        /// </summary>
-        /// <param name="varCursor">Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. .</param>
-        public Cursor(string varCursor = default(string))
-        {
-            this.VarCursor = varCursor;
-        }
-
-        /// <summary>
-        /// Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. 
-        /// </summary>
-        /// <value>Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. </value>
-        /// <example>jMDY3M2MwM2QwMWUxMmQwYWI0ZTN</example>
-        [DataMember(Name = "cursor", EmitDefaultValue = false)]
-        public string VarCursor { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class Cursor {\n");
-            sb.Append("  VarCursor: ").Append(VarCursor).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as Cursor);
-        }
-
-        /// <summary>
-        /// Returns true if Cursor instances are equal
-        /// </summary>
-        /// <param name="input">Instance of Cursor to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(Cursor input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.VarCursor == input.VarCursor ||
-                    (this.VarCursor != null &&
-                    this.VarCursor.Equals(input.VarCursor))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.VarCursor != null)
-                {
-                    hashCode = (hashCode * 59) + this.VarCursor.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+      this.VarCursor = varCursor;
     }
+
+    /// <summary>
+    /// Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. 
+    /// </summary>
+    /// <value>Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. </value>
+    /// <example>jMDY3M2MwM2QwMWUxMmQwYWI0ZTN</example>
+    [DataMember(Name = "cursor", EmitDefaultValue = false)]
+    public string VarCursor { get; set; }
+
+    /// <summary>
+    /// Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append("class Cursor {\n");
+      sb.Append("  VarCursor: ").Append(VarCursor).Append("\n");
+      sb.Append("}\n");
+      return sb.ToString();
+    }
+
+    /// <summary>
+    /// Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+      return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    /// <summary>
+    /// Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+      return this.Equals(input as Cursor);
+    }
+
+    /// <summary>
+    /// Returns true if Cursor instances are equal
+    /// </summary>
+    /// <param name="input">Instance of Cursor to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(Cursor input)
+    {
+      if (input == null)
+      {
+        return false;
+      }
+      return
+          (
+              this.VarCursor == input.VarCursor ||
+              (this.VarCursor != null &&
+              this.VarCursor.Equals(input.VarCursor))
+          );
+    }
+
+    /// <summary>
+    /// Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+      unchecked // Overflow is fine, just wrap
+      {
+        int hashCode = 41;
+        if (this.VarCursor != null)
+        {
+          hashCode = (hashCode * 59) + this.VarCursor.GetHashCode();
+        }
+        return hashCode;
+      }
+    }
+
+    /// <summary>
+    /// To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+    {
+      yield break;
+    }
+  }
 
 }

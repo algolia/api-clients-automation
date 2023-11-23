@@ -25,30 +25,30 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the query contains only one word.
+  /// </summary>
+  /// <value>Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the query contains only one word.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum ExactOnSingleWordQuery
+  {
     /// <summary>
-    /// Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the query contains only one word.
+    /// Enum Attribute for value: attribute
     /// </summary>
-    /// <value>Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the query contains only one word.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ExactOnSingleWordQuery
-    {
-        /// <summary>
-        /// Enum Attribute for value: attribute
-        /// </summary>
-        [EnumMember(Value = "attribute")]
-        Attribute = 1,
+    [EnumMember(Value = "attribute")]
+    Attribute = 1,
 
-        /// <summary>
-        /// Enum None for value: none
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None = 2,
+    /// <summary>
+    /// Enum None for value: none
+    /// </summary>
+    [EnumMember(Value = "none")]
+    None = 2,
 
-        /// <summary>
-        /// Enum Word for value: word
-        /// </summary>
-        [EnumMember(Value = "word")]
-        Word = 3
-    }
+    /// <summary>
+    /// Enum Word for value: word
+    /// </summary>
+    [EnumMember(Value = "word")]
+    Word = 3
+  }
 
 }

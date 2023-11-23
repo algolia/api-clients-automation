@@ -25,24 +25,24 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Actions to perform.
+  /// </summary>
+  /// <value>Actions to perform.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum DictionaryAction
+  {
     /// <summary>
-    /// Actions to perform.
+    /// Enum AddEntry for value: addEntry
     /// </summary>
-    /// <value>Actions to perform.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DictionaryAction
-    {
-        /// <summary>
-        /// Enum AddEntry for value: addEntry
-        /// </summary>
-        [EnumMember(Value = "addEntry")]
-        AddEntry = 1,
+    [EnumMember(Value = "addEntry")]
+    AddEntry = 1,
 
-        /// <summary>
-        /// Enum DeleteEntry for value: deleteEntry
-        /// </summary>
-        [EnumMember(Value = "deleteEntry")]
-        DeleteEntry = 2
-    }
+    /// <summary>
+    /// Enum DeleteEntry for value: deleteEntry
+    /// </summary>
+    [EnumMember(Value = "deleteEntry")]
+    DeleteEntry = 2
+  }
 
 }

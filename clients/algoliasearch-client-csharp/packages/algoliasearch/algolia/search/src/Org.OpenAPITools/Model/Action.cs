@@ -25,54 +25,54 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 
 namespace Org.OpenAPITools.Model
 {
+  /// <summary>
+  /// Type of batch operation.
+  /// </summary>
+  /// <value>Type of batch operation.</value>
+  [JsonConverter(typeof(StringEnumConverter))]
+  public enum Action
+  {
     /// <summary>
-    /// Type of batch operation.
+    /// Enum AddObject for value: addObject
     /// </summary>
-    /// <value>Type of batch operation.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Action
-    {
-        /// <summary>
-        /// Enum AddObject for value: addObject
-        /// </summary>
-        [EnumMember(Value = "addObject")]
-        AddObject = 1,
+    [EnumMember(Value = "addObject")]
+    AddObject = 1,
 
-        /// <summary>
-        /// Enum UpdateObject for value: updateObject
-        /// </summary>
-        [EnumMember(Value = "updateObject")]
-        UpdateObject = 2,
+    /// <summary>
+    /// Enum UpdateObject for value: updateObject
+    /// </summary>
+    [EnumMember(Value = "updateObject")]
+    UpdateObject = 2,
 
-        /// <summary>
-        /// Enum PartialUpdateObject for value: partialUpdateObject
-        /// </summary>
-        [EnumMember(Value = "partialUpdateObject")]
-        PartialUpdateObject = 3,
+    /// <summary>
+    /// Enum PartialUpdateObject for value: partialUpdateObject
+    /// </summary>
+    [EnumMember(Value = "partialUpdateObject")]
+    PartialUpdateObject = 3,
 
-        /// <summary>
-        /// Enum PartialUpdateObjectNoCreate for value: partialUpdateObjectNoCreate
-        /// </summary>
-        [EnumMember(Value = "partialUpdateObjectNoCreate")]
-        PartialUpdateObjectNoCreate = 4,
+    /// <summary>
+    /// Enum PartialUpdateObjectNoCreate for value: partialUpdateObjectNoCreate
+    /// </summary>
+    [EnumMember(Value = "partialUpdateObjectNoCreate")]
+    PartialUpdateObjectNoCreate = 4,
 
-        /// <summary>
-        /// Enum DeleteObject for value: deleteObject
-        /// </summary>
-        [EnumMember(Value = "deleteObject")]
-        DeleteObject = 5,
+    /// <summary>
+    /// Enum DeleteObject for value: deleteObject
+    /// </summary>
+    [EnumMember(Value = "deleteObject")]
+    DeleteObject = 5,
 
-        /// <summary>
-        /// Enum Delete for value: delete
-        /// </summary>
-        [EnumMember(Value = "delete")]
-        Delete = 6,
+    /// <summary>
+    /// Enum Delete for value: delete
+    /// </summary>
+    [EnumMember(Value = "delete")]
+    Delete = 6,
 
-        /// <summary>
-        /// Enum Clear for value: clear
-        /// </summary>
-        [EnumMember(Value = "clear")]
-        Clear = 7
-    }
+    /// <summary>
+    /// Enum Clear for value: clear
+    /// </summary>
+    [EnumMember(Value = "clear")]
+    Clear = 7
+  }
 
 }
