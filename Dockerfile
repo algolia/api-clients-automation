@@ -46,7 +46,8 @@ RUN echo "export PATH=$PATH:/usr/local/openjdk-17/bin" >> ~/.profile && source ~
 ADD https://github.com/google/google-java-format/releases/download/v1.18.1/google-java-format-1.18.1-all-deps.jar /tmp/java-formatter.jar
 
 # C#
-COPY --from=csharp-builder /usr/bin/dotnet /usr/bin/dotnet
+COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
+RUN echo "export PATH=$PATH:/usr/share/dotnet" >> ~/.profile && source ~/.profile
 
 WORKDIR /app
 
