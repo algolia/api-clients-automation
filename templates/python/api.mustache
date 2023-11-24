@@ -117,7 +117,7 @@ class {{classname}}:
             _header_params['{{baseName}}'] = {{paramName}}
         {{/headerParams}}
 
-        {{#headerParams.0}}# process the body parameters{{/headerParams.0}}
+        {{#bodyParam.0}}# process the body parameters{{/bodyParam.0}}
         {{#bodyParam}}
         if {{paramName}} is not None:
             {{#isBinary}}
