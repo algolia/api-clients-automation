@@ -92,7 +92,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;AutomaticFacetFilter&gt;</returns>
-    public List<AutomaticFacetFilter> GetListAutomaticFacetFilter()
+    public List<AutomaticFacetFilter> GetList()
     {
       return (List<AutomaticFacetFilter>)this.ActualInstance;
     }

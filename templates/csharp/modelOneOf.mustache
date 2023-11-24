@@ -76,7 +76,7 @@
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of {{dataType}}</returns>
-        public {{{dataType}}} Get{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/isArray}}()
+        public {{{dataType}}} Get{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
         {
             return ({{{dataType}}})this.ActualInstance;
         }

@@ -27,9 +27,9 @@ using OpenAPIDateConverter = Algolia.Search.Client.OpenAPIDateConverter;
 namespace Algolia.Search.Model
 {
   /// <summary>
-  /// - &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results. 
+  /// - &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  
   /// </summary>
-  /// <value>- &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results. </value>
+  /// <value>- &#x60;none&#x60;: executes all queries. - &#x60;stopIfEnoughMatches&#x60;: executes queries one by one, stopping further query execution as soon as a query matches at least the &#x60;hitsPerPage&#x60; number of results.  </value>
   [JsonConverter(typeof(StringEnumConverter))]
   public enum SearchStrategy
   {

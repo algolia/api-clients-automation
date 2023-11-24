@@ -101,7 +101,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;MixedSearchFilters&gt;</returns>
-    public List<MixedSearchFilters> GetListMixedSearchFilters()
+    public List<MixedSearchFilters> GetList()
     {
       return (List<MixedSearchFilters>)this.ActualInstance;
     }
