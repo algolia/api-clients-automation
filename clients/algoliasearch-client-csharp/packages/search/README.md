@@ -1,4 +1,4 @@
-# Algolia.search - the C# library for the Search API
+# Algolia.Search - the C# library for the Search API
 
 Use the Search REST API  to manage your data (indices and records), implement search, and improve relevance (with Rules, synonyms, and language dictionaries).
 
@@ -36,9 +36,9 @@ Generate the DLL using your preferred tool (e.g. `dotnet build`)
 
 Then include the DLL (under the `bin` folder) in the C# project, and use the namespaces:
 ```csharp
-using Algolia.search.Api;
-using Algolia.search.Client;
-using Algolia.search.Model;
+using Algolia.Search.Api;
+using Algolia.Search.Client;
+using Algolia.Search.Model;
 ```
 <a id="usage"></a>
 ## Usage
@@ -85,9 +85,9 @@ services.AddHttpClient<YourApiClass>(httpClient =>
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
-using Algolia.search.Api;
-using Algolia.search.Client;
-using Algolia.search.Model;
+using Algolia.Search.Api;
+using Algolia.Search.Client;
+using Algolia.Search.Model;
 
 namespace Example
 {
@@ -110,7 +110,7 @@ namespace Example
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
-            var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
+            var apiInstance = new SearchClient(httpClient, config, httpClientHandler);
             var apiKey = new ApiKey(); // ApiKey | 
 
             try
@@ -121,7 +121,7 @@ namespace Example
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling SearchApi.AddApiKey: " + e.Message );
+                Debug.Print("Exception when calling SearchClient.AddApiKey: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -138,67 +138,67 @@ All URIs are relative to *https://myAppId.algolia.net*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*SearchApi* | [**AddApiKey**](docs/SearchApi.md#addapikey) | **POST** /1/keys | Add API key.
-*SearchApi* | [**AddOrUpdateObject**](docs/SearchApi.md#addorupdateobject) | **PUT** /1/indexes/{indexName}/{objectID} | Add or update a record (using objectID).
-*SearchApi* | [**AppendSource**](docs/SearchApi.md#appendsource) | **POST** /1/security/sources/append | Add a source.
-*SearchApi* | [**AssignUserId**](docs/SearchApi.md#assignuserid) | **POST** /1/clusters/mapping | Assign or move a user ID.
-*SearchApi* | [**Batch**](docs/SearchApi.md#batch) | **POST** /1/indexes/{indexName}/batch | Batch write operations on one index.
-*SearchApi* | [**BatchAssignUserIds**](docs/SearchApi.md#batchassignuserids) | **POST** /1/clusters/mapping/batch | Batch assign userIDs.
-*SearchApi* | [**BatchDictionaryEntries**](docs/SearchApi.md#batchdictionaryentries) | **POST** /1/dictionaries/{dictionaryName}/batch | Batch dictionary entries.
-*SearchApi* | [**Browse**](docs/SearchApi.md#browse) | **POST** /1/indexes/{indexName}/browse | Get all records from an index.
-*SearchApi* | [**ClearAllSynonyms**](docs/SearchApi.md#clearallsynonyms) | **POST** /1/indexes/{indexName}/synonyms/clear | Delete all synonyms.
-*SearchApi* | [**ClearObjects**](docs/SearchApi.md#clearobjects) | **POST** /1/indexes/{indexName}/clear | Delete all records from an index.
-*SearchApi* | [**ClearRules**](docs/SearchApi.md#clearrules) | **POST** /1/indexes/{indexName}/rules/clear | Delete all rules.
-*SearchApi* | [**Del**](docs/SearchApi.md#del) | **DELETE** /1{path} | Send requests to the Algolia REST API.
-*SearchApi* | [**DeleteApiKey**](docs/SearchApi.md#deleteapikey) | **DELETE** /1/keys/{key} | Delete API key.
-*SearchApi* | [**DeleteBy**](docs/SearchApi.md#deleteby) | **POST** /1/indexes/{indexName}/deleteByQuery | Delete all records matching a query.
-*SearchApi* | [**DeleteIndex**](docs/SearchApi.md#deleteindex) | **DELETE** /1/indexes/{indexName} | Delete index.
-*SearchApi* | [**DeleteObject**](docs/SearchApi.md#deleteobject) | **DELETE** /1/indexes/{indexName}/{objectID} | Delete a record.
-*SearchApi* | [**DeleteRule**](docs/SearchApi.md#deleterule) | **DELETE** /1/indexes/{indexName}/rules/{objectID} | Delete a rule.
-*SearchApi* | [**DeleteSource**](docs/SearchApi.md#deletesource) | **DELETE** /1/security/sources/{source} | Remove a source.
-*SearchApi* | [**DeleteSynonym**](docs/SearchApi.md#deletesynonym) | **DELETE** /1/indexes/{indexName}/synonyms/{objectID} | Delete a synonym.
-*SearchApi* | [**Get**](docs/SearchApi.md#get) | **GET** /1{path} | Send requests to the Algolia REST API.
-*SearchApi* | [**GetApiKey**](docs/SearchApi.md#getapikey) | **GET** /1/keys/{key} | Get API key permissions.
-*SearchApi* | [**GetDictionaryLanguages**](docs/SearchApi.md#getdictionarylanguages) | **GET** /1/dictionaries/*/languages | List available languages.
-*SearchApi* | [**GetDictionarySettings**](docs/SearchApi.md#getdictionarysettings) | **GET** /1/dictionaries/*/settings | Get stop word settings.
-*SearchApi* | [**GetLogs**](docs/SearchApi.md#getlogs) | **GET** /1/logs | Return the latest log entries.
-*SearchApi* | [**GetObject**](docs/SearchApi.md#getobject) | **GET** /1/indexes/{indexName}/{objectID} | Get a record.
-*SearchApi* | [**GetObjects**](docs/SearchApi.md#getobjects) | **POST** /1/indexes/*/objects | Get multiple records.
-*SearchApi* | [**GetRule**](docs/SearchApi.md#getrule) | **GET** /1/indexes/{indexName}/rules/{objectID} | Get a rule.
-*SearchApi* | [**GetSettings**](docs/SearchApi.md#getsettings) | **GET** /1/indexes/{indexName}/settings | Get index settings.
-*SearchApi* | [**GetSources**](docs/SearchApi.md#getsources) | **GET** /1/security/sources | Get all allowed IP addresses.
-*SearchApi* | [**GetSynonym**](docs/SearchApi.md#getsynonym) | **GET** /1/indexes/{indexName}/synonyms/{objectID} | Get a synonym object.
-*SearchApi* | [**GetTask**](docs/SearchApi.md#gettask) | **GET** /1/indexes/{indexName}/task/{taskID} | Check a task's status.
-*SearchApi* | [**GetTopUserIds**](docs/SearchApi.md#gettopuserids) | **GET** /1/clusters/mapping/top | Get top userID.
-*SearchApi* | [**GetUserId**](docs/SearchApi.md#getuserid) | **GET** /1/clusters/mapping/{userID} | Get userID.
-*SearchApi* | [**HasPendingMappings**](docs/SearchApi.md#haspendingmappings) | **GET** /1/clusters/mapping/pending | Get migration and user mapping status.
-*SearchApi* | [**ListApiKeys**](docs/SearchApi.md#listapikeys) | **GET** /1/keys | List API keys.
-*SearchApi* | [**ListClusters**](docs/SearchApi.md#listclusters) | **GET** /1/clusters | List clusters.
-*SearchApi* | [**ListIndices**](docs/SearchApi.md#listindices) | **GET** /1/indexes | List indices.
-*SearchApi* | [**ListUserIds**](docs/SearchApi.md#listuserids) | **GET** /1/clusters/mapping | List userIDs.
-*SearchApi* | [**MultipleBatch**](docs/SearchApi.md#multiplebatch) | **POST** /1/indexes/*/batch | Batch write operations on multiple indices.
-*SearchApi* | [**OperationIndex**](docs/SearchApi.md#operationindex) | **POST** /1/indexes/{indexName}/operation | Copy, move, or rename an index.
-*SearchApi* | [**PartialUpdateObject**](docs/SearchApi.md#partialupdateobject) | **POST** /1/indexes/{indexName}/{objectID}/partial | Update record attributes.
-*SearchApi* | [**Post**](docs/SearchApi.md#post) | **POST** /1{path} | Send requests to the Algolia REST API.
-*SearchApi* | [**Put**](docs/SearchApi.md#put) | **PUT** /1{path} | Send requests to the Algolia REST API.
-*SearchApi* | [**RemoveUserId**](docs/SearchApi.md#removeuserid) | **DELETE** /1/clusters/mapping/{userID} | Remove userID.
-*SearchApi* | [**ReplaceSources**](docs/SearchApi.md#replacesources) | **PUT** /1/security/sources | Replace all sources.
-*SearchApi* | [**RestoreApiKey**](docs/SearchApi.md#restoreapikey) | **POST** /1/keys/{key}/restore | Restore API key.
-*SearchApi* | [**SaveObject**](docs/SearchApi.md#saveobject) | **POST** /1/indexes/{indexName} | Add or update a record.
-*SearchApi* | [**SaveRule**](docs/SearchApi.md#saverule) | **PUT** /1/indexes/{indexName}/rules/{objectID} | Create or update a rule.
-*SearchApi* | [**SaveRules**](docs/SearchApi.md#saverules) | **POST** /1/indexes/{indexName}/rules/batch | Save a batch of rules.
-*SearchApi* | [**SaveSynonym**](docs/SearchApi.md#savesynonym) | **PUT** /1/indexes/{indexName}/synonyms/{objectID} | Save a synonym.
-*SearchApi* | [**SaveSynonyms**](docs/SearchApi.md#savesynonyms) | **POST** /1/indexes/{indexName}/synonyms/batch | Save a batch of synonyms.
-*SearchApi* | [**Search**](docs/SearchApi.md#search) | **POST** /1/indexes/*/queries | Search multiple indices.
-*SearchApi* | [**SearchDictionaryEntries**](docs/SearchApi.md#searchdictionaryentries) | **POST** /1/dictionaries/{dictionaryName}/search | Search dictionary entries.
-*SearchApi* | [**SearchForFacetValues**](docs/SearchApi.md#searchforfacetvalues) | **POST** /1/indexes/{indexName}/facets/{facetName}/query | Search for facet values.
-*SearchApi* | [**SearchRules**](docs/SearchApi.md#searchrules) | **POST** /1/indexes/{indexName}/rules/search | Search for rules.
-*SearchApi* | [**SearchSingleIndex**](docs/SearchApi.md#searchsingleindex) | **POST** /1/indexes/{indexName}/query | Search an index.
-*SearchApi* | [**SearchSynonyms**](docs/SearchApi.md#searchsynonyms) | **POST** /1/indexes/{indexName}/synonyms/search | Search for synonyms.
-*SearchApi* | [**SearchUserIds**](docs/SearchApi.md#searchuserids) | **POST** /1/clusters/mapping/search | Search for a user ID.
-*SearchApi* | [**SetDictionarySettings**](docs/SearchApi.md#setdictionarysettings) | **PUT** /1/dictionaries/*/settings | Set stop word settings.
-*SearchApi* | [**SetSettings**](docs/SearchApi.md#setsettings) | **PUT** /1/indexes/{indexName}/settings | Update index settings.
-*SearchApi* | [**UpdateApiKey**](docs/SearchApi.md#updateapikey) | **PUT** /1/keys/{key} | Update an API key.
+*SearchClient* | [**AddApiKey**](docs/SearchClient.md#addapikey) | **POST** /1/keys | Add API key.
+*SearchClient* | [**AddOrUpdateObject**](docs/SearchClient.md#addorupdateobject) | **PUT** /1/indexes/{indexName}/{objectID} | Add or update a record (using objectID).
+*SearchClient* | [**AppendSource**](docs/SearchClient.md#appendsource) | **POST** /1/security/sources/append | Add a source.
+*SearchClient* | [**AssignUserId**](docs/SearchClient.md#assignuserid) | **POST** /1/clusters/mapping | Assign or move a user ID.
+*SearchClient* | [**Batch**](docs/SearchClient.md#batch) | **POST** /1/indexes/{indexName}/batch | Batch write operations on one index.
+*SearchClient* | [**BatchAssignUserIds**](docs/SearchClient.md#batchassignuserids) | **POST** /1/clusters/mapping/batch | Batch assign userIDs.
+*SearchClient* | [**BatchDictionaryEntries**](docs/SearchClient.md#batchdictionaryentries) | **POST** /1/dictionaries/{dictionaryName}/batch | Batch dictionary entries.
+*SearchClient* | [**Browse**](docs/SearchClient.md#browse) | **POST** /1/indexes/{indexName}/browse | Get all records from an index.
+*SearchClient* | [**ClearAllSynonyms**](docs/SearchClient.md#clearallsynonyms) | **POST** /1/indexes/{indexName}/synonyms/clear | Delete all synonyms.
+*SearchClient* | [**ClearObjects**](docs/SearchClient.md#clearobjects) | **POST** /1/indexes/{indexName}/clear | Delete all records from an index.
+*SearchClient* | [**ClearRules**](docs/SearchClient.md#clearrules) | **POST** /1/indexes/{indexName}/rules/clear | Delete all rules.
+*SearchClient* | [**Del**](docs/SearchClient.md#del) | **DELETE** /1{path} | Send requests to the Algolia REST API.
+*SearchClient* | [**DeleteApiKey**](docs/SearchClient.md#deleteapikey) | **DELETE** /1/keys/{key} | Delete API key.
+*SearchClient* | [**DeleteBy**](docs/SearchClient.md#deleteby) | **POST** /1/indexes/{indexName}/deleteByQuery | Delete all records matching a query.
+*SearchClient* | [**DeleteIndex**](docs/SearchClient.md#deleteindex) | **DELETE** /1/indexes/{indexName} | Delete index.
+*SearchClient* | [**DeleteObject**](docs/SearchClient.md#deleteobject) | **DELETE** /1/indexes/{indexName}/{objectID} | Delete a record.
+*SearchClient* | [**DeleteRule**](docs/SearchClient.md#deleterule) | **DELETE** /1/indexes/{indexName}/rules/{objectID} | Delete a rule.
+*SearchClient* | [**DeleteSource**](docs/SearchClient.md#deletesource) | **DELETE** /1/security/sources/{source} | Remove a source.
+*SearchClient* | [**DeleteSynonym**](docs/SearchClient.md#deletesynonym) | **DELETE** /1/indexes/{indexName}/synonyms/{objectID} | Delete a synonym.
+*SearchClient* | [**Get**](docs/SearchClient.md#get) | **GET** /1{path} | Send requests to the Algolia REST API.
+*SearchClient* | [**GetApiKey**](docs/SearchClient.md#getapikey) | **GET** /1/keys/{key} | Get API key permissions.
+*SearchClient* | [**GetDictionaryLanguages**](docs/SearchClient.md#getdictionarylanguages) | **GET** /1/dictionaries/*/languages | List available languages.
+*SearchClient* | [**GetDictionarySettings**](docs/SearchClient.md#getdictionarysettings) | **GET** /1/dictionaries/*/settings | Get stop word settings.
+*SearchClient* | [**GetLogs**](docs/SearchClient.md#getlogs) | **GET** /1/logs | Return the latest log entries.
+*SearchClient* | [**GetObject**](docs/SearchClient.md#getobject) | **GET** /1/indexes/{indexName}/{objectID} | Get a record.
+*SearchClient* | [**GetObjects**](docs/SearchClient.md#getobjects) | **POST** /1/indexes/*/objects | Get multiple records.
+*SearchClient* | [**GetRule**](docs/SearchClient.md#getrule) | **GET** /1/indexes/{indexName}/rules/{objectID} | Get a rule.
+*SearchClient* | [**GetSettings**](docs/SearchClient.md#getsettings) | **GET** /1/indexes/{indexName}/settings | Get index settings.
+*SearchClient* | [**GetSources**](docs/SearchClient.md#getsources) | **GET** /1/security/sources | Get all allowed IP addresses.
+*SearchClient* | [**GetSynonym**](docs/SearchClient.md#getsynonym) | **GET** /1/indexes/{indexName}/synonyms/{objectID} | Get a synonym object.
+*SearchClient* | [**GetTask**](docs/SearchClient.md#gettask) | **GET** /1/indexes/{indexName}/task/{taskID} | Check a task's status.
+*SearchClient* | [**GetTopUserIds**](docs/SearchClient.md#gettopuserids) | **GET** /1/clusters/mapping/top | Get top userID.
+*SearchClient* | [**GetUserId**](docs/SearchClient.md#getuserid) | **GET** /1/clusters/mapping/{userID} | Get userID.
+*SearchClient* | [**HasPendingMappings**](docs/SearchClient.md#haspendingmappings) | **GET** /1/clusters/mapping/pending | Get migration and user mapping status.
+*SearchClient* | [**ListApiKeys**](docs/SearchClient.md#listapikeys) | **GET** /1/keys | List API keys.
+*SearchClient* | [**ListClusters**](docs/SearchClient.md#listclusters) | **GET** /1/clusters | List clusters.
+*SearchClient* | [**ListIndices**](docs/SearchClient.md#listindices) | **GET** /1/indexes | List indices.
+*SearchClient* | [**ListUserIds**](docs/SearchClient.md#listuserids) | **GET** /1/clusters/mapping | List userIDs.
+*SearchClient* | [**MultipleBatch**](docs/SearchClient.md#multiplebatch) | **POST** /1/indexes/*/batch | Batch write operations on multiple indices.
+*SearchClient* | [**OperationIndex**](docs/SearchClient.md#operationindex) | **POST** /1/indexes/{indexName}/operation | Copy, move, or rename an index.
+*SearchClient* | [**PartialUpdateObject**](docs/SearchClient.md#partialupdateobject) | **POST** /1/indexes/{indexName}/{objectID}/partial | Update record attributes.
+*SearchClient* | [**Post**](docs/SearchClient.md#post) | **POST** /1{path} | Send requests to the Algolia REST API.
+*SearchClient* | [**Put**](docs/SearchClient.md#put) | **PUT** /1{path} | Send requests to the Algolia REST API.
+*SearchClient* | [**RemoveUserId**](docs/SearchClient.md#removeuserid) | **DELETE** /1/clusters/mapping/{userID} | Remove userID.
+*SearchClient* | [**ReplaceSources**](docs/SearchClient.md#replacesources) | **PUT** /1/security/sources | Replace all sources.
+*SearchClient* | [**RestoreApiKey**](docs/SearchClient.md#restoreapikey) | **POST** /1/keys/{key}/restore | Restore API key.
+*SearchClient* | [**SaveObject**](docs/SearchClient.md#saveobject) | **POST** /1/indexes/{indexName} | Add or update a record.
+*SearchClient* | [**SaveRule**](docs/SearchClient.md#saverule) | **PUT** /1/indexes/{indexName}/rules/{objectID} | Create or update a rule.
+*SearchClient* | [**SaveRules**](docs/SearchClient.md#saverules) | **POST** /1/indexes/{indexName}/rules/batch | Save a batch of rules.
+*SearchClient* | [**SaveSynonym**](docs/SearchClient.md#savesynonym) | **PUT** /1/indexes/{indexName}/synonyms/{objectID} | Save a synonym.
+*SearchClient* | [**SaveSynonyms**](docs/SearchClient.md#savesynonyms) | **POST** /1/indexes/{indexName}/synonyms/batch | Save a batch of synonyms.
+*SearchClient* | [**Search**](docs/SearchClient.md#search) | **POST** /1/indexes/*/queries | Search multiple indices.
+*SearchClient* | [**SearchDictionaryEntries**](docs/SearchClient.md#searchdictionaryentries) | **POST** /1/dictionaries/{dictionaryName}/search | Search dictionary entries.
+*SearchClient* | [**SearchForFacetValues**](docs/SearchClient.md#searchforfacetvalues) | **POST** /1/indexes/{indexName}/facets/{facetName}/query | Search for facet values.
+*SearchClient* | [**SearchRules**](docs/SearchClient.md#searchrules) | **POST** /1/indexes/{indexName}/rules/search | Search for rules.
+*SearchClient* | [**SearchSingleIndex**](docs/SearchClient.md#searchsingleindex) | **POST** /1/indexes/{indexName}/query | Search an index.
+*SearchClient* | [**SearchSynonyms**](docs/SearchClient.md#searchsynonyms) | **POST** /1/indexes/{indexName}/synonyms/search | Search for synonyms.
+*SearchClient* | [**SearchUserIds**](docs/SearchClient.md#searchuserids) | **POST** /1/clusters/mapping/search | Search for a user ID.
+*SearchClient* | [**SetDictionarySettings**](docs/SearchClient.md#setdictionarysettings) | **PUT** /1/dictionaries/*/settings | Set stop word settings.
+*SearchClient* | [**SetSettings**](docs/SearchClient.md#setsettings) | **PUT** /1/indexes/{indexName}/settings | Update index settings.
+*SearchClient* | [**UpdateApiKey**](docs/SearchClient.md#updateapikey) | **PUT** /1/keys/{key} | Update an API key.
 
 
 <a id="documentation-for-models"></a>

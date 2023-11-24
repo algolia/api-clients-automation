@@ -76,8 +76,8 @@
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
     "packageVersion": "2.0.0-alpha.0",
-    "modelFolder": "lib/src/model",
-    "apiFolder": "lib/src/api",
+    "modelFolder": "Model",
+    "apiFolder": "Api",
     "customGenerator": "algolia-csharp",
     "tests": {
       "extension": ".test.cs",
