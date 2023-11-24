@@ -83,4 +83,5 @@ export const patterns = [
   'clients/algoliasearch-client-python/pyproject.toml',
   'clients/algoliasearch-client-python/poetry.lock',
   'clients/algoliasearch-client-python/requirements.txt',
+  'clients/algoliasearch-client-python/.gitignore',
 ];
