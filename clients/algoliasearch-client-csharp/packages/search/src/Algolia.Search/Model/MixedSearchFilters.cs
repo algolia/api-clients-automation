@@ -92,7 +92,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;string&gt;</returns>
-    public List<string> GetList()
+    public List<string> GetListString()
     {
       return (List<string>)this.ActualInstance;
     }

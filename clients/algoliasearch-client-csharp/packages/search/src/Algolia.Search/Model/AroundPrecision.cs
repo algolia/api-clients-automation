@@ -102,7 +102,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;AroundPrecisionFromValueInner&gt;</returns>
-    public List<AroundPrecisionFromValueInner> GetList()
+    public List<AroundPrecisionFromValueInner> GetListAroundPrecisionFromValueInner()
     {
       return (List<AroundPrecisionFromValueInner>)this.ActualInstance;
     }

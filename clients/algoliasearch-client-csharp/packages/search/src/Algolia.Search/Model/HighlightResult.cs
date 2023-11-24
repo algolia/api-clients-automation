@@ -102,7 +102,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;HighlightResultOption&gt;</returns>
-    public List<HighlightResultOption> GetList()
+    public List<HighlightResultOption> GetListHighlightResultOption()
     {
       return (List<HighlightResultOption>)this.ActualInstance;
     }

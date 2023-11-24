@@ -102,7 +102,7 @@ namespace Algolia.Search.Model
     /// the InvalidClassException will be thrown
     /// </summary>
     /// <returns>An instance of List&lt;SnippetResultOption&gt;</returns>
-    public List<SnippetResultOption> GetList()
+    public List<SnippetResultOption> GetListSnippetResultOption()
     {
       return (List<SnippetResultOption>)this.ActualInstance;
     }
