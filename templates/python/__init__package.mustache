@@ -8,12 +8,14 @@ __version__ = "{{{packageVersion}}}"
 from algoliasearch.{{packageName}}.api_response import ApiResponse
 from algoliasearch.{{packageName}}.api_client import ApiClient
 from algoliasearch.{{packageName}}.configuration import Configuration
-from algoliasearch.{{packageName}}.exceptions import OpenApiException
-from algoliasearch.{{packageName}}.exceptions import ApiTypeError
-from algoliasearch.{{packageName}}.exceptions import ApiValueError
-from algoliasearch.{{packageName}}.exceptions import ApiKeyError
-from algoliasearch.{{packageName}}.exceptions import ApiAttributeError
-from algoliasearch.{{packageName}}.exceptions import ApiException
+from algoliasearch.{{packageName}}.exceptions import (
+    OpenApiException,
+    ApiTypeError,
+    ApiValueError,
+    ApiKeyError,
+    ApiAttributeError,
+    ApiException,
+)
 
 {{#models}}
 {{#model}}
