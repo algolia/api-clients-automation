@@ -72,7 +72,6 @@ namespace Algolia.Search.Model
     /// Markup text with &#x60;facetQuery&#x60; matches highlighted.
     /// </summary>
     /// <value>Markup text with &#x60;facetQuery&#x60; matches highlighted.</value>
-    /// <example>&lt;em&gt;George&lt;/em&gt; &lt;em&gt;Clo&lt;/em&gt;oney</example>
     [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
     public string Value { get; set; }
 
@@ -80,7 +79,6 @@ namespace Algolia.Search.Model
     /// List of words from the query that matched the object.
     /// </summary>
     /// <value>List of words from the query that matched the object.</value>
-    /// <example>[&quot;action&quot;]</example>
     [DataMember(Name = "matchedWords", IsRequired = true, EmitDefaultValue = true)]
     public List<string> MatchedWords { get; set; }
 

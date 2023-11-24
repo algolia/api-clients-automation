@@ -75,7 +75,6 @@ namespace Algolia.Search.Model
     /// Unique identifier of a synonym object.
     /// </summary>
     /// <value>Unique identifier of a synonym object.</value>
-    /// <example>synonymID</example>
     [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
     public string ObjectID { get; set; }
 
@@ -83,7 +82,6 @@ namespace Algolia.Search.Model
     /// Words or phrases considered equivalent.
     /// </summary>
     /// <value>Words or phrases considered equivalent.</value>
-    /// <example>[&quot;vehicle&quot;,&quot;auto&quot;]</example>
     [DataMember(Name = "synonyms", EmitDefaultValue = false)]
     public List<string> Synonyms { get; set; }
 
@@ -91,7 +89,6 @@ namespace Algolia.Search.Model
     /// Word or phrase to appear in query strings (for [&#x60;onewaysynonym&#x60;s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
     /// </summary>
     /// <value>Word or phrase to appear in query strings (for [&#x60;onewaysynonym&#x60;s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).</value>
-    /// <example>car</example>
     [DataMember(Name = "input", EmitDefaultValue = false)]
     public string Input { get; set; }
 
@@ -99,7 +96,6 @@ namespace Algolia.Search.Model
     /// Word or phrase to appear in query strings (for [&#x60;altcorrection1&#x60; and &#x60;altcorrection2&#x60;](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
     /// </summary>
     /// <value>Word or phrase to appear in query strings (for [&#x60;altcorrection1&#x60; and &#x60;altcorrection2&#x60;](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).</value>
-    /// <example>car</example>
     [DataMember(Name = "word", EmitDefaultValue = false)]
     public string Word { get; set; }
 
@@ -107,7 +103,6 @@ namespace Algolia.Search.Model
     /// Words to be matched in records.
     /// </summary>
     /// <value>Words to be matched in records.</value>
-    /// <example>[&quot;vehicle&quot;,&quot;auto&quot;]</example>
     [DataMember(Name = "corrections", EmitDefaultValue = false)]
     public List<string> Corrections { get; set; }
 
@@ -115,7 +110,6 @@ namespace Algolia.Search.Model
     /// [Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records. 
     /// </summary>
     /// <value>[Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records. </value>
-    /// <example>&lt;Street&gt;</example>
     [DataMember(Name = "placeholder", EmitDefaultValue = false)]
     public string Placeholder { get; set; }
 
@@ -123,7 +117,6 @@ namespace Algolia.Search.Model
     /// Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
     /// </summary>
     /// <value>Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).</value>
-    /// <example>[&quot;street&quot;,&quot;st&quot;]</example>
     [DataMember(Name = "replacements", EmitDefaultValue = false)]
     public List<string> Replacements { get; set; }
 

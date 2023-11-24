@@ -55,7 +55,6 @@ namespace Algolia.Search.Model
     /// Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-07-04T12:49:15Z</example>
     [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
     public string CreatedAt { get; set; }
 

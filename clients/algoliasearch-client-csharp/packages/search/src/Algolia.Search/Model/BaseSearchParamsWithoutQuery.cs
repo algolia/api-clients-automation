@@ -117,7 +117,6 @@ namespace Algolia.Search.Model
     /// [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. 
     /// </summary>
     /// <value>[Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. </value>
-    /// <example>(category:Book OR category:Ebook) AND _tags:published</example>
     [DataMember(Name = "filters", EmitDefaultValue = false)]
     public string Filters { get; set; }
 
@@ -156,7 +155,6 @@ namespace Algolia.Search.Model
     /// Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
     /// </summary>
     /// <value>Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).</value>
-    /// <example>[&quot;title&quot;,&quot;author&quot;]</example>
     [DataMember(Name = "restrictSearchableAttributes", EmitDefaultValue = false)]
     public List<string> RestrictSearchableAttributes { get; set; }
 
@@ -199,7 +197,6 @@ namespace Algolia.Search.Model
     /// Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
     /// </summary>
     /// <value>Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.</value>
-    /// <example>40.71,-74.01</example>
     [DataMember(Name = "aroundLatLng", EmitDefaultValue = false)]
     public string AroundLatLng { get; set; }
 
@@ -233,7 +230,6 @@ namespace Algolia.Search.Model
     /// Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
     /// </summary>
     /// <value>Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).</value>
-    /// <example>[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]]</example>
     [DataMember(Name = "insideBoundingBox", EmitDefaultValue = false)]
     public List<List<double>> InsideBoundingBox { get; set; }
 
@@ -241,7 +237,6 @@ namespace Algolia.Search.Model
     /// Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
     /// </summary>
     /// <value>Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).</value>
-    /// <example>[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]]</example>
     [DataMember(Name = "insidePolygon", EmitDefaultValue = false)]
     public List<List<double>> InsidePolygon { get; set; }
 
@@ -270,7 +265,6 @@ namespace Algolia.Search.Model
     /// Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
     /// </summary>
     /// <value>Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.</value>
-    /// <example>123456</example>
     [DataMember(Name = "userToken", EmitDefaultValue = false)]
     public string UserToken { get; set; }
 

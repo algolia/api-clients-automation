@@ -59,7 +59,6 @@ namespace Algolia.Search.Model
     /// Date of creation (ISO-8601 format).
     /// </summary>
     /// <value>Date of creation (ISO-8601 format).</value>
-    /// <example>2023-06-29T15:15:40.747Z</example>
     [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
     public string CreatedAt { get; set; }
 
@@ -67,7 +66,6 @@ namespace Algolia.Search.Model
     /// Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task&#39;s progress with the &#x60;task&#x60; operation and this &#x60;taskID&#x60;. 
     /// </summary>
     /// <value>Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task&#39;s progress with the &#x60;task&#x60; operation and this &#x60;taskID&#x60;. </value>
-    /// <example>1514562690001</example>
     [DataMember(Name = "taskID", IsRequired = true, EmitDefaultValue = true)]
     public long TaskID { get; set; }
 
@@ -75,7 +73,6 @@ namespace Algolia.Search.Model
     /// Unique object identifier.
     /// </summary>
     /// <value>Unique object identifier.</value>
-    /// <example>product-1</example>
     [DataMember(Name = "objectID", EmitDefaultValue = false)]
     public string ObjectID { get; set; }
 

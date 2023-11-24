@@ -57,7 +57,6 @@ namespace Algolia.Search.Model
     /// Query pattern syntax.
     /// </summary>
     /// <value>Query pattern syntax.</value>
-    /// <example>{facet:brand}</example>
     [DataMember(Name = "pattern", EmitDefaultValue = false)]
     public string Pattern { get; set; }
 
@@ -72,7 +71,6 @@ namespace Algolia.Search.Model
     /// Rule context format: [A-Za-z0-9_-]+).
     /// </summary>
     /// <value>Rule context format: [A-Za-z0-9_-]+).</value>
-    /// <example>trackedFilters</example>
     [DataMember(Name = "context", EmitDefaultValue = false)]
     public string Context { get; set; }
 

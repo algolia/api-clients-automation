@@ -265,7 +265,6 @@ namespace Algolia.Search.Model
     /// Search parameters as a URL-encoded query string.
     /// </summary>
     /// <value>Search parameters as a URL-encoded query string.</value>
-    /// <example>hitsPerPage&#x3D;2&amp;getRankingInfo&#x3D;1</example>
     [DataMember(Name = "params", EmitDefaultValue = false)]
     public string VarParams { get; set; }
 
@@ -287,7 +286,6 @@ namespace Algolia.Search.Model
     /// [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. 
     /// </summary>
     /// <value>[Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. </value>
-    /// <example>(category:Book OR category:Ebook) AND _tags:published</example>
     [DataMember(Name = "filters", EmitDefaultValue = false)]
     public string Filters { get; set; }
 
@@ -326,7 +324,6 @@ namespace Algolia.Search.Model
     /// Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
     /// </summary>
     /// <value>Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).</value>
-    /// <example>[title, author]</example>
     [DataMember(Name = "restrictSearchableAttributes", EmitDefaultValue = false)]
     public List<string> RestrictSearchableAttributes { get; set; }
 
@@ -369,7 +366,6 @@ namespace Algolia.Search.Model
     /// Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
     /// </summary>
     /// <value>Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.</value>
-    /// <example>40.71,-74.01</example>
     [DataMember(Name = "aroundLatLng", EmitDefaultValue = false)]
     public string AroundLatLng { get; set; }
 
@@ -403,7 +399,6 @@ namespace Algolia.Search.Model
     /// Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
     /// </summary>
     /// <value>Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).</value>
-    /// <example>[[47.3165, 4.9665, 47.3424, 5.0201], [40.9234, 2.1185, 38.643, 1.9916]]</example>
     [DataMember(Name = "insideBoundingBox", EmitDefaultValue = false)]
     public List<List<double>> InsideBoundingBox { get; set; }
 
@@ -411,7 +406,6 @@ namespace Algolia.Search.Model
     /// Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
     /// </summary>
     /// <value>Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).</value>
-    /// <example>[[47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9], [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104]]</example>
     [DataMember(Name = "insidePolygon", EmitDefaultValue = false)]
     public List<List<double>> InsidePolygon { get; set; }
 
@@ -440,7 +434,6 @@ namespace Algolia.Search.Model
     /// Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
     /// </summary>
     /// <value>Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.</value>
-    /// <example>123456</example>
     [DataMember(Name = "userToken", EmitDefaultValue = false)]
     public string UserToken { get; set; }
 
@@ -504,7 +497,6 @@ namespace Algolia.Search.Model
     /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/) and the [modifiers](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) that can be applied: &#x60;filterOnly&#x60;, &#x60;searchable&#x60;, and &#x60;afterDistinct&#x60;. 
     /// </summary>
     /// <value>Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/) and the [modifiers](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) that can be applied: &#x60;filterOnly&#x60;, &#x60;searchable&#x60;, and &#x60;afterDistinct&#x60;. </value>
-    /// <example>[author, filterOnly(isbn), searchable(edition), afterDistinct(category), afterDistinct(searchable(publisher))]</example>
     [DataMember(Name = "attributesForFaceting", EmitDefaultValue = false)]
     public List<string> AttributesForFaceting { get; set; }
 
@@ -512,7 +504,6 @@ namespace Algolia.Search.Model
     /// Attributes to include in the API response. To reduce the size of your response, you can retrieve only some of the attributes. By default, the response includes all attributes.
     /// </summary>
     /// <value>Attributes to include in the API response. To reduce the size of your response, you can retrieve only some of the attributes. By default, the response includes all attributes.</value>
-    /// <example>[author, title, content]</example>
     [DataMember(Name = "attributesToRetrieve", EmitDefaultValue = false)]
     public List<string> AttributesToRetrieve { get; set; }
 
@@ -527,7 +518,6 @@ namespace Algolia.Search.Model
     /// Specifies the [Custom ranking criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Use the &#x60;asc&#x60; and &#x60;desc&#x60; modifiers to specify the ranking order: ascending or descending. 
     /// </summary>
     /// <value>Specifies the [Custom ranking criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Use the &#x60;asc&#x60; and &#x60;desc&#x60; modifiers to specify the ranking order: ascending or descending. </value>
-    /// <example>[desc(popularity), asc(price)]</example>
     [DataMember(Name = "customRanking", EmitDefaultValue = false)]
     public List<string> CustomRanking { get; set; }
 
@@ -535,7 +525,6 @@ namespace Algolia.Search.Model
     /// Relevancy threshold below which less relevant results aren&#39;t included in the results.
     /// </summary>
     /// <value>Relevancy threshold below which less relevant results aren&#39;t included in the results.</value>
-    /// <example>90</example>
     [DataMember(Name = "relevancyStrictness", EmitDefaultValue = false)]
     public int RelevancyStrictness { get; set; }
 
@@ -543,7 +532,6 @@ namespace Algolia.Search.Model
     /// Attributes to highlight. Strings that match the search query in the attributes are highlighted by surrounding them with HTML tags (&#x60;highlightPreTag&#x60; and &#x60;highlightPostTag&#x60;).
     /// </summary>
     /// <value>Attributes to highlight. Strings that match the search query in the attributes are highlighted by surrounding them with HTML tags (&#x60;highlightPreTag&#x60; and &#x60;highlightPostTag&#x60;).</value>
-    /// <example>[author, title, content]</example>
     [DataMember(Name = "attributesToHighlight", EmitDefaultValue = false)]
     public List<string> AttributesToHighlight { get; set; }
 
@@ -551,7 +539,6 @@ namespace Algolia.Search.Model
     /// Attributes to _snippet_. &#39;Snippeting&#39; is shortening the attribute to a certain number of words. If not specified, the attribute is shortened to the 10 words around the matching string but you can specify the number. For example: &#x60;body:20&#x60;. 
     /// </summary>
     /// <value>Attributes to _snippet_. &#39;Snippeting&#39; is shortening the attribute to a certain number of words. If not specified, the attribute is shortened to the 10 words around the matching string but you can specify the number. For example: &#x60;body:20&#x60;. </value>
-    /// <example>[content:80, description]</example>
     [DataMember(Name = "attributesToSnippet", EmitDefaultValue = false)]
     public List<string> AttributesToSnippet { get; set; }
 
@@ -621,7 +608,6 @@ namespace Algolia.Search.Model
     /// Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
     /// </summary>
     /// <value>Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).</value>
-    /// <example>[sku]</example>
     [DataMember(Name = "disableTypoToleranceOnAttributes", EmitDefaultValue = false)]
     public List<string> DisableTypoToleranceOnAttributes { get; set; }
 
@@ -641,7 +627,6 @@ namespace Algolia.Search.Model
     /// Characters that the engine shouldn&#39;t automatically [normalize](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
     /// </summary>
     /// <value>Characters that the engine shouldn&#39;t automatically [normalize](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).</value>
-    /// <example>øé</example>
     [DataMember(Name = "keepDiacriticsOnCharacters", EmitDefaultValue = false)]
     public string KeepDiacriticsOnCharacters { get; set; }
 
@@ -649,7 +634,6 @@ namespace Algolia.Search.Model
     /// Sets your user&#39;s search language. This adjusts language-specific settings and features such as &#x60;ignorePlurals&#x60;, &#x60;removeStopWords&#x60;, and [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) word detection.
     /// </summary>
     /// <value>Sets your user&#39;s search language. This adjusts language-specific settings and features such as &#x60;ignorePlurals&#x60;, &#x60;removeStopWords&#x60;, and [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) word detection.</value>
-    /// <example>[es]</example>
     [DataMember(Name = "queryLanguages", EmitDefaultValue = false)]
     public List<string> QueryLanguages { get; set; }
 
@@ -691,7 +675,6 @@ namespace Algolia.Search.Model
     /// Words which should be considered [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words) when found in a query.
     /// </summary>
     /// <value>Words which should be considered [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words) when found in a query.</value>
-    /// <example>[blue, iphone case]</example>
     [DataMember(Name = "optionalWords", EmitDefaultValue = false)]
     public List<string> OptionalWords { get; set; }
 
@@ -699,7 +682,6 @@ namespace Algolia.Search.Model
     /// Attributes for which you want to [turn off the exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
     /// </summary>
     /// <value>Attributes for which you want to [turn off the exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).</value>
-    /// <example>[description]</example>
     [DataMember(Name = "disableExactOnAttributes", EmitDefaultValue = false)]
     public List<string> DisableExactOnAttributes { get; set; }
 
@@ -802,7 +784,6 @@ namespace Algolia.Search.Model
     /// Algolia index name.
     /// </summary>
     /// <value>Algolia index name.</value>
-    /// <example>products</example>
     [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
     public string IndexName { get; set; }
 
@@ -810,7 +791,6 @@ namespace Algolia.Search.Model
     /// Text to search inside the facet&#39;s values.
     /// </summary>
     /// <value>Text to search inside the facet&#39;s values.</value>
-    /// <example>george</example>
     [DataMember(Name = "facetQuery", EmitDefaultValue = false)]
     public string FacetQuery { get; set; }
 

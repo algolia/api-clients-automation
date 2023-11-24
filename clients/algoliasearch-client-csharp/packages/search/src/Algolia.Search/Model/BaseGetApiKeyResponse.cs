@@ -52,7 +52,6 @@ namespace Algolia.Search.Model
     /// API key.
     /// </summary>
     /// <value>API key.</value>
-    /// <example>13ad45b4d0a2f6ea65ecbddf6aa260f2</example>
     [DataMember(Name = "value", EmitDefaultValue = false)]
     public string Value { get; set; }
 
@@ -60,7 +59,6 @@ namespace Algolia.Search.Model
     /// Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
     /// </summary>
     /// <value>Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).</value>
-    /// <example>1656345570000</example>
     [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
     public long CreatedAt { get; set; }
 

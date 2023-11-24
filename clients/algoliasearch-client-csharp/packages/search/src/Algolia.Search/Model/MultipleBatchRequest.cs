@@ -66,20 +66,17 @@ namespace Algolia.Search.Model
       this.IndexName = indexName;
     }
 
-        /// <summary>
-        /// Operation arguments (varies with specified &#x60;action&#x60;).
-        /// </summary>
-        /// <value>Operation arguments (varies with specified &#x60;action&#x60;).</value>
-        /// <example>{&#39;requests&#39;:[{&#39;action&#39;:&#39;addObject&#39;,&#39;indexName&#39;:&#39;contacts&#39;,&#39;body&#39;:{&#39;name&#39;:&#39;Betty Jane McCamey&#39;,&#39;company&#39;:&#39;Vita Foods Inc.&#39;,&#39;email&#39;:&#39;betty@mccamey.com&#39;}},{&#39;action&#39;:&#39;addObject&#39;,&#39;indexName&#39;:&#39;public_contacts&#39;,&#39;body&#39;:{&#39;name&#39;:&#39;Gayla Geimer&#39;,&#39;company&#39;: &quot;Ortman McCain Co&#39;,&#39;email&#39;:&#39;gayla@geimer.com&#39;}}]}
-</example>
-        [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = true)]
+    /// <summary>
+    /// Operation arguments (varies with specified &#x60;action&#x60;).
+    /// </summary>
+    /// <value>Operation arguments (varies with specified &#x60;action&#x60;).</value>
+    [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = true)]
     public Object Body { get; set; }
 
     /// <summary>
     /// Index to target for this operation.
     /// </summary>
     /// <value>Index to target for this operation.</value>
-    /// <example>index1</example>
     [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
     public string IndexName { get; set; }
 

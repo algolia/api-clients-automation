@@ -45,7 +45,6 @@ namespace Algolia.Search.Model
     /// <summary>
     /// Gets or Sets Message
     /// </summary>
-    /// <example>Invalid Application-Id or API-Key</example>
     [DataMember(Name = "message", EmitDefaultValue = false)]
     public string Message { get; set; }
 

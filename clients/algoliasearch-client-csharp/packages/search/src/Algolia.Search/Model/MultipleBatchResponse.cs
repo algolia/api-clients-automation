@@ -69,7 +69,6 @@ namespace Algolia.Search.Model
     /// Unique object (record) identifiers.
     /// </summary>
     /// <value>Unique object (record) identifiers.</value>
-    /// <example>[&quot;record-1&quot;,&quot;record-2&quot;]</example>
     [DataMember(Name = "objectIDs", IsRequired = true, EmitDefaultValue = true)]
     public List<string> ObjectIDs { get; set; }
 

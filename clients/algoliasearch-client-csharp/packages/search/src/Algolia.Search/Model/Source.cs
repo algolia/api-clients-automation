@@ -57,7 +57,6 @@ namespace Algolia.Search.Model
     /// IP address range of the source.
     /// </summary>
     /// <value>IP address range of the source.</value>
-    /// <example>10.0.0.1/32</example>
     [DataMember(Name = "source", IsRequired = true, EmitDefaultValue = true)]
     public string VarSource { get; set; }
 
@@ -65,7 +64,6 @@ namespace Algolia.Search.Model
     /// Source description.
     /// </summary>
     /// <value>Source description.</value>
-    /// <example>Server subnet</example>
     [DataMember(Name = "description", EmitDefaultValue = false)]
     public string Description { get; set; }
 

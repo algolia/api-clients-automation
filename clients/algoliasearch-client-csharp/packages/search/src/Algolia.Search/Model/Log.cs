@@ -133,7 +133,6 @@ namespace Algolia.Search.Model
     /// Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-03-08T12:34:56Z</example>
     [DataMember(Name = "timestamp", IsRequired = true, EmitDefaultValue = true)]
     public string Timestamp { get; set; }
 
@@ -141,7 +140,6 @@ namespace Algolia.Search.Model
     /// HTTP method of the performed request.
     /// </summary>
     /// <value>HTTP method of the performed request.</value>
-    /// <example>GET</example>
     [DataMember(Name = "method", IsRequired = true, EmitDefaultValue = true)]
     public string Method { get; set; }
 
@@ -149,7 +147,6 @@ namespace Algolia.Search.Model
     /// HTTP response code.
     /// </summary>
     /// <value>HTTP response code.</value>
-    /// <example>200</example>
     [DataMember(Name = "answer_code", IsRequired = true, EmitDefaultValue = true)]
     public string AnswerCode { get; set; }
 
@@ -157,24 +154,20 @@ namespace Algolia.Search.Model
     /// Request body. Truncated after 1,000 characters.
     /// </summary>
     /// <value>Request body. Truncated after 1,000 characters.</value>
-    /// <example>\n{\n \&quot;requests\&quot;: [\n  {\n   \&quot;indexName\&quot;: \&quot;best_buy\&quot;,\n   \&quot;params\&quot;: \&quot;query&#x3D;&amp;hitsPerPage&#x3D;10&amp;page&#x3D;0&amp;attributesToRetrieve&#x3D;*&amp;highlightPreTag&#x3D;%3Cais-highlight-0000000000%3E&amp;highlightPostTag&#x3D;%3C%2Fais-highlight-0000000000%3E&amp;getRankingInfo&#x3D;1&amp;facets&#x3D;%5B%22brand%22%2C%22categories%22%2C%22free_shipping%22%2C%22type%22%5D&amp;tagFilters&#x3D;\&quot;\n  }\n ]\n}\n</example>
     [DataMember(Name = "query_body", IsRequired = true, EmitDefaultValue = true)]
     public string QueryBody { get; set; }
 
-        /// <summary>
-        /// Answer body. Truncated after 1,000 characters.
-        /// </summary>
-        /// <value>Answer body. Truncated after 1,000 characters.</value>
-        /// <example>&#39;n{\n \&quot;results\&quot;: [\n  {\n   \&quot;hits\&quot;: [\n    {\n     \&quot;name\&quot;: \&quot;Amazon - Fire TV Stick\&quot;,\n     \&quot;description\&quot;: \&quot;Amazon Fire TV Stick connects to your TV&#39;s HDMI port. Just grab and go to enjoy Netflix, Prime Instant Video, Hulu Plus, YouTube.com, music, and much more.\&quot;,\n     \&quot;brand\&quot;: \&quot;Amazon\&quot;,\n     \&quot;categories\&quot;: [\n      \&quot;TV &amp; Home Theater\&quot;,\n      \&quot;Streaming Media Players\&quot;\n     ],\n     \&quot;hierarchicalCategories\&quot;: {\n      \&quot;lvl0\&quot;: \&quot;TV &amp; Home Theater\&quot;,\n      \&quot;lvl1\&quot;: \&quot;TV &amp; Home Theater &gt; Streaming Media Players\&quot;\n     },\n     \&quot;type\&quot;: \&quot;Streaming media plyr\&quot;,\n     \&quot;price\&quot;: 39.99,\n     \&quot;price_range\&quot;: \&quot;1 - 50\&quot;,\n     \&quot;image\&quot;: \&quot;https:\/\/cdn-demo.algolia.com\/bestbuy\/9999119_sb.jpg\&quot;,\n     \&quot;url\&quot;: \&quot;http:\/\/www.bestbuy.com\/site\/amazon-fire-tv-stick\/9999119.p?id&#x3D;1219460752591&amp;skuId&#x3D;9999119&amp;cmp&#x3D;RMX&amp;ky&#x3D;1uWSHMdQqBeVJB9cXgEke60s5EjfS6M1W\&quot;,\n     \&quot;free_shipping\&quot;: false,\n     \&quot;popularity\&quot;: 9843,\n     \&quot;rating\&quot;: 4,\n     \&quot;objectID\&quot;: \&quot;9999119\&quot;\n&#39;
-</example>
-        [DataMember(Name = "answer", IsRequired = true, EmitDefaultValue = true)]
+    /// <summary>
+    /// Answer body. Truncated after 1,000 characters.
+    /// </summary>
+    /// <value>Answer body. Truncated after 1,000 characters.</value>
+    [DataMember(Name = "answer", IsRequired = true, EmitDefaultValue = true)]
     public string Answer { get; set; }
 
     /// <summary>
     /// Request URL.
     /// </summary>
     /// <value>Request URL.</value>
-    /// <example>/1/indexes</example>
     [DataMember(Name = "url", IsRequired = true, EmitDefaultValue = true)]
     public string Url { get; set; }
 
@@ -182,7 +175,6 @@ namespace Algolia.Search.Model
     /// IP address of the client that performed the request.
     /// </summary>
     /// <value>IP address of the client that performed the request.</value>
-    /// <example>127.0.0.1</example>
     [DataMember(Name = "ip", IsRequired = true, EmitDefaultValue = true)]
     public string Ip { get; set; }
 
@@ -190,7 +182,6 @@ namespace Algolia.Search.Model
     /// Request headers (API key is obfuscated).
     /// </summary>
     /// <value>Request headers (API key is obfuscated).</value>
-    /// <example>User-Agent: curl/7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8x zlib/1.2.5\nHost: localhost.algolia.com:8080\nAccept: */*\nContent-Type: application/json; charset&#x3D;utf-8\nX-Algolia-API-Key: 20f***************************\nX-Algolia-Application-Id: MyApplicationID\n</example>
     [DataMember(Name = "query_headers", IsRequired = true, EmitDefaultValue = true)]
     public string QueryHeaders { get; set; }
 
@@ -198,7 +189,6 @@ namespace Algolia.Search.Model
     /// SHA1 signature of the log entry.
     /// </summary>
     /// <value>SHA1 signature of the log entry.</value>
-    /// <example>26c53bd7e38ca71f4741b71994cd94a600b7ac68</example>
     [DataMember(Name = "sha1", IsRequired = true, EmitDefaultValue = true)]
     public string Sha1 { get; set; }
 
@@ -206,7 +196,6 @@ namespace Algolia.Search.Model
     /// Number of API calls.
     /// </summary>
     /// <value>Number of API calls.</value>
-    /// <example>1</example>
     [DataMember(Name = "nb_api_calls", IsRequired = true, EmitDefaultValue = true)]
     public string NbApiCalls { get; set; }
 
@@ -214,7 +203,6 @@ namespace Algolia.Search.Model
     /// Processing time for the query. Doesn&#39;t include network time.
     /// </summary>
     /// <value>Processing time for the query. Doesn&#39;t include network time.</value>
-    /// <example>2</example>
     [DataMember(Name = "processing_time_ms", IsRequired = true, EmitDefaultValue = true)]
     public string ProcessingTimeMs { get; set; }
 
@@ -222,7 +210,6 @@ namespace Algolia.Search.Model
     /// Index targeted by the query.
     /// </summary>
     /// <value>Index targeted by the query.</value>
-    /// <example>best_buy</example>
     [DataMember(Name = "index", EmitDefaultValue = false)]
     public string Index { get; set; }
 
@@ -230,7 +217,6 @@ namespace Algolia.Search.Model
     /// Query parameters sent with the request.
     /// </summary>
     /// <value>Query parameters sent with the request.</value>
-    /// <example>query&#x3D;georgia&amp;attributesToRetrieve&#x3D;name,city,country</example>
     [DataMember(Name = "query_params", EmitDefaultValue = false)]
     public string QueryParams { get; set; }
 
@@ -238,7 +224,6 @@ namespace Algolia.Search.Model
     /// Number of hits returned for the query.
     /// </summary>
     /// <value>Number of hits returned for the query.</value>
-    /// <example>1</example>
     [DataMember(Name = "query_nb_hits", EmitDefaultValue = false)]
     public string QueryNbHits { get; set; }
 

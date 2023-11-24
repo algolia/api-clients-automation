@@ -63,7 +63,6 @@ namespace Algolia.Search.Model
     /// Algolia index name.
     /// </summary>
     /// <value>Algolia index name.</value>
-    /// <example>products</example>
     [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
     public string IndexName { get; set; }
 

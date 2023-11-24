@@ -49,7 +49,6 @@ namespace Algolia.Search.Model
     /// Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task&#39;s progress with the &#x60;task&#x60; operation and this &#x60;taskID&#x60;. 
     /// </summary>
     /// <value>Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task&#39;s progress with the &#x60;task&#x60; operation and this &#x60;taskID&#x60;. </value>
-    /// <example>1514562690001</example>
     [DataMember(Name = "taskID", EmitDefaultValue = false)]
     public long TaskID { get; set; }
 
@@ -57,7 +56,6 @@ namespace Algolia.Search.Model
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-07-04T12:49:15Z</example>
     [DataMember(Name = "updatedAt", EmitDefaultValue = false)]
     public string UpdatedAt { get; set; }
 
@@ -65,7 +63,6 @@ namespace Algolia.Search.Model
     /// Unique object identifier.
     /// </summary>
     /// <value>Unique object identifier.</value>
-    /// <example>product-1</example>
     [DataMember(Name = "objectID", EmitDefaultValue = false)]
     public string ObjectID { get; set; }
 

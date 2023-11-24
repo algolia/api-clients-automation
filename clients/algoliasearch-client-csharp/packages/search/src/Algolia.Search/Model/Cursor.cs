@@ -45,7 +45,6 @@ namespace Algolia.Search.Model
     /// Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. 
     /// </summary>
     /// <value>Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, &#x60;cursor&#x60; is absent from the response. </value>
-    /// <example>jMDY3M2MwM2QwMWUxMmQwYWI0ZTN</example>
     [DataMember(Name = "cursor", EmitDefaultValue = false)]
     public string VarCursor { get; set; }
 

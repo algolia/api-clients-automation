@@ -80,7 +80,6 @@ namespace Algolia.Search.Model
     /// Unique identifier for a dictionary object.
     /// </summary>
     /// <value>Unique identifier for a dictionary object.</value>
-    /// <example>under</example>
     [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
     public string ObjectID { get; set; }
 
@@ -88,7 +87,6 @@ namespace Algolia.Search.Model
     /// [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/). 
     /// </summary>
     /// <value>[Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/). </value>
-    /// <example>de</example>
     [DataMember(Name = "language", IsRequired = true, EmitDefaultValue = true)]
     public string Language { get; set; }
 
@@ -96,7 +94,6 @@ namespace Algolia.Search.Model
     /// Dictionary entry word. Usage depends on the type of dictionary entry. **&#x60;stopwordEntry&#x60;** The stop word you want to add or update. If the entry already exists in Algolia&#39;s standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its &#x60;state&#x60; to &#x60;disabled&#x60;. **&#x60;compoundEntry&#x60;** When &#x60;decomposition&#x60; is empty: adds &#x60;word&#x60; as a compound atom. For example, atom “kino” decomposes the query “kopfkino” into \&quot;kopf\&quot; and \&quot;kino\&quot;. When &#x60;decomposition&#x60; isn&#39;t empty: creates a decomposition exception. For example, when decomposition is set to the [\&quot;hund\&quot;, \&quot;hutte\&quot;] exception, \&quot;hundehutte\&quot; decomposes into “hund” and “hutte”, discarding the linking \&quot;e\&quot;. 
     /// </summary>
     /// <value>Dictionary entry word. Usage depends on the type of dictionary entry. **&#x60;stopwordEntry&#x60;** The stop word you want to add or update. If the entry already exists in Algolia&#39;s standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its &#x60;state&#x60; to &#x60;disabled&#x60;. **&#x60;compoundEntry&#x60;** When &#x60;decomposition&#x60; is empty: adds &#x60;word&#x60; as a compound atom. For example, atom “kino” decomposes the query “kopfkino” into \&quot;kopf\&quot; and \&quot;kino\&quot;. When &#x60;decomposition&#x60; isn&#39;t empty: creates a decomposition exception. For example, when decomposition is set to the [\&quot;hund\&quot;, \&quot;hutte\&quot;] exception, \&quot;hundehutte\&quot; decomposes into “hund” and “hutte”, discarding the linking \&quot;e\&quot;. </value>
-    /// <example>down</example>
     [DataMember(Name = "word", EmitDefaultValue = false)]
     public string Word { get; set; }
 
@@ -104,7 +101,6 @@ namespace Algolia.Search.Model
     /// Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia&#39;s standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its &#x60;state&#x60; to &#x60;disabled&#x60;. 
     /// </summary>
     /// <value>Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia&#39;s standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its &#x60;state&#x60; to &#x60;disabled&#x60;. </value>
-    /// <example>[&quot;cheval&quot;,&quot;chevaux&quot;]</example>
     [DataMember(Name = "words", EmitDefaultValue = false)]
     public List<string> Words { get; set; }
 
@@ -112,7 +108,6 @@ namespace Algolia.Search.Model
     /// For compound entries, governs the behavior of the &#x60;word&#x60; parameter.
     /// </summary>
     /// <value>For compound entries, governs the behavior of the &#x60;word&#x60; parameter.</value>
-    /// <example>[&quot;kopf&quot;,&quot;schmerz&quot;,&quot;tablette&quot;]</example>
     [DataMember(Name = "decomposition", EmitDefaultValue = false)]
     public List<string> Decomposition { get; set; }
 

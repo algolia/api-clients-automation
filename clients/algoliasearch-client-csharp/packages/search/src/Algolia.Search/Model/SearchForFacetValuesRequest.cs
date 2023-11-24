@@ -51,7 +51,6 @@ namespace Algolia.Search.Model
     /// Search parameters as a URL-encoded query string.
     /// </summary>
     /// <value>Search parameters as a URL-encoded query string.</value>
-    /// <example>hitsPerPage&#x3D;2&amp;getRankingInfo&#x3D;1</example>
     [DataMember(Name = "params", EmitDefaultValue = false)]
     public string VarParams { get; set; }
 
@@ -59,7 +58,6 @@ namespace Algolia.Search.Model
     /// Text to search inside the facet&#39;s values.
     /// </summary>
     /// <value>Text to search inside the facet&#39;s values.</value>
-    /// <example>george</example>
     [DataMember(Name = "facetQuery", EmitDefaultValue = false)]
     public string FacetQuery { get; set; }
 

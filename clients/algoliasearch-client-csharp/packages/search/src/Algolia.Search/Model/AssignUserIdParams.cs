@@ -55,7 +55,6 @@ namespace Algolia.Search.Model
     /// Cluster name.
     /// </summary>
     /// <value>Cluster name.</value>
-    /// <example>c11-test</example>
     [DataMember(Name = "cluster", IsRequired = true, EmitDefaultValue = true)]
     public string Cluster { get; set; }
 

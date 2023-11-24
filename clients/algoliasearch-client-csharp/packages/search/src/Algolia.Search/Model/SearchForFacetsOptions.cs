@@ -82,7 +82,6 @@ namespace Algolia.Search.Model
     /// Algolia index name.
     /// </summary>
     /// <value>Algolia index name.</value>
-    /// <example>products</example>
     [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
     public string IndexName { get; set; }
 
@@ -90,7 +89,6 @@ namespace Algolia.Search.Model
     /// Text to search inside the facet&#39;s values.
     /// </summary>
     /// <value>Text to search inside the facet&#39;s values.</value>
-    /// <example>george</example>
     [DataMember(Name = "facetQuery", EmitDefaultValue = false)]
     public string FacetQuery { get; set; }
 

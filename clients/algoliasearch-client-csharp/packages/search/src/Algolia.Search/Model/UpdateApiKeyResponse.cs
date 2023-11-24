@@ -62,7 +62,6 @@ namespace Algolia.Search.Model
     /// API key.
     /// </summary>
     /// <value>API key.</value>
-    /// <example>13ad45b4d0a2f6ea65ecbddf6aa260f2</example>
     [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
     public string Key { get; set; }
 
@@ -70,7 +69,6 @@ namespace Algolia.Search.Model
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-07-04T12:49:15Z</example>
     [DataMember(Name = "updatedAt", IsRequired = true, EmitDefaultValue = true)]
     public string UpdatedAt { get; set; }
 

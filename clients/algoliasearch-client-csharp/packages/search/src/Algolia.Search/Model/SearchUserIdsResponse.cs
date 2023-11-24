@@ -75,7 +75,6 @@ namespace Algolia.Search.Model
     /// Number of hits the search query matched.
     /// </summary>
     /// <value>Number of hits the search query matched.</value>
-    /// <example>20</example>
     [DataMember(Name = "nbHits", IsRequired = true, EmitDefaultValue = true)]
     public int NbHits { get; set; }
 
@@ -97,7 +96,6 @@ namespace Algolia.Search.Model
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-07-04T12:49:15Z</example>
     [DataMember(Name = "updatedAt", IsRequired = true, EmitDefaultValue = true)]
     public string UpdatedAt { get; set; }
 

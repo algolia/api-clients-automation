@@ -68,7 +68,6 @@ namespace Algolia.Search.Model
     /// Number of hits the search query matched.
     /// </summary>
     /// <value>Number of hits the search query matched.</value>
-    /// <example>20</example>
     [DataMember(Name = "nbHits", IsRequired = true, EmitDefaultValue = true)]
     public int NbHits { get; set; }
 

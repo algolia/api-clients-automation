@@ -85,7 +85,6 @@ namespace Algolia.Search.Model
     /// Index name.
     /// </summary>
     /// <value>Index name.</value>
-    /// <example>movies</example>
     [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
     public string Name { get; set; }
 
@@ -93,7 +92,6 @@ namespace Algolia.Search.Model
     /// Index creation date. An empty string means that the index has no records.
     /// </summary>
     /// <value>Index creation date. An empty string means that the index has no records.</value>
-    /// <example>2022-09-19T16:36:44.471Z</example>
     [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
     public string CreatedAt { get; set; }
 
@@ -101,7 +99,6 @@ namespace Algolia.Search.Model
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     /// </summary>
     /// <value>Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-    /// <example>2023-07-04T12:49:15Z</example>
     [DataMember(Name = "updatedAt", IsRequired = true, EmitDefaultValue = true)]
     public string UpdatedAt { get; set; }
 
@@ -109,7 +106,6 @@ namespace Algolia.Search.Model
     /// Number of records contained in the index.
     /// </summary>
     /// <value>Number of records contained in the index.</value>
-    /// <example>100</example>
     [DataMember(Name = "entries", IsRequired = true, EmitDefaultValue = true)]
     public int Entries { get; set; }
 
@@ -117,7 +113,6 @@ namespace Algolia.Search.Model
     /// Number of bytes of the index in minified format.
     /// </summary>
     /// <value>Number of bytes of the index in minified format.</value>
-    /// <example>48450</example>
     [DataMember(Name = "dataSize", IsRequired = true, EmitDefaultValue = true)]
     public int DataSize { get; set; }
 
@@ -125,7 +120,6 @@ namespace Algolia.Search.Model
     /// Number of bytes of the index binary file.
     /// </summary>
     /// <value>Number of bytes of the index binary file.</value>
-    /// <example>112927</example>
     [DataMember(Name = "fileSize", IsRequired = true, EmitDefaultValue = true)]
     public int FileSize { get; set; }
 
@@ -133,7 +127,6 @@ namespace Algolia.Search.Model
     /// Last build time.
     /// </summary>
     /// <value>Last build time.</value>
-    /// <example>3</example>
     [DataMember(Name = "lastBuildTimeS", IsRequired = true, EmitDefaultValue = true)]
     public int LastBuildTimeS { get; set; }
 
@@ -155,7 +148,6 @@ namespace Algolia.Search.Model
     /// Only present if the index is a replica. Contains the name of the related primary index.
     /// </summary>
     /// <value>Only present if the index is a replica. Contains the name of the related primary index.</value>
-    /// <example>T02</example>
     [DataMember(Name = "primary", EmitDefaultValue = false)]
     public string Primary { get; set; }
 
@@ -163,7 +155,6 @@ namespace Algolia.Search.Model
     /// Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
     /// </summary>
     /// <value>Only present if the index is a primary index with replicas. Contains the names of all linked replicas.</value>
-    /// <example>[&quot;T02_push&quot;,&quot;T2replica&quot;]</example>
     [DataMember(Name = "replicas", EmitDefaultValue = false)]
     public List<string> Replicas { get; set; }
 

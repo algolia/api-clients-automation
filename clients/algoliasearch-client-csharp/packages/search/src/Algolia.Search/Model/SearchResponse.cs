@@ -141,7 +141,6 @@ namespace Algolia.Search.Model
     /// Computed geographical location.
     /// </summary>
     /// <value>Computed geographical location.</value>
-    /// <example>40.71,-74.01</example>
     [DataMember(Name = "aroundLatLng", EmitDefaultValue = false)]
     public string AroundLatLng { get; set; }
 
@@ -186,7 +185,6 @@ namespace Algolia.Search.Model
     /// Mapping of each facet name to the corresponding facet counts.
     /// </summary>
     /// <value>Mapping of each facet name to the corresponding facet counts.</value>
-    /// <example>{category&#x3D;{food&#x3D;1, tech&#x3D;42}}</example>
     [DataMember(Name = "facets", EmitDefaultValue = false)]
     public Dictionary<string, Dictionary<string, int>> Facets { get; set; }
 
@@ -208,7 +206,6 @@ namespace Algolia.Search.Model
     /// Index name used for the query.
     /// </summary>
     /// <value>Index name used for the query.</value>
-    /// <example>indexName</example>
     [DataMember(Name = "index", EmitDefaultValue = false)]
     public string Index { get; set; }
 
@@ -216,7 +213,6 @@ namespace Algolia.Search.Model
     /// Index name used for the query. During A/B testing, the targeted index isn&#39;t always the index used by the query.
     /// </summary>
     /// <value>Index name used for the query. During A/B testing, the targeted index isn&#39;t always the index used by the query.</value>
-    /// <example>indexNameAlt</example>
     [DataMember(Name = "indexUsed", EmitDefaultValue = false)]
     public string IndexUsed { get; set; }
 
@@ -231,7 +227,6 @@ namespace Algolia.Search.Model
     /// Number of hits the search query matched.
     /// </summary>
     /// <value>Number of hits the search query matched.</value>
-    /// <example>20</example>
     [DataMember(Name = "nbHits", IsRequired = true, EmitDefaultValue = true)]
     public int NbHits { get; set; }
 
@@ -239,7 +234,6 @@ namespace Algolia.Search.Model
     /// Number of pages of results for the current query.
     /// </summary>
     /// <value>Number of pages of results for the current query.</value>
-    /// <example>1</example>
     [DataMember(Name = "nbPages", IsRequired = true, EmitDefaultValue = true)]
     public int NbPages { get; set; }
 
@@ -247,7 +241,6 @@ namespace Algolia.Search.Model
     /// Number of hits selected and sorted by the relevant sort algorithm.
     /// </summary>
     /// <value>Number of hits selected and sorted by the relevant sort algorithm.</value>
-    /// <example>20</example>
     [DataMember(Name = "nbSortedHits", EmitDefaultValue = false)]
     public int NbSortedHits { get; set; }
 
@@ -262,7 +255,6 @@ namespace Algolia.Search.Model
     /// Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
     /// </summary>
     /// <value>Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.</value>
-    /// <example>george clo</example>
     [DataMember(Name = "parsedQuery", EmitDefaultValue = false)]
     public string ParsedQuery { get; set; }
 
@@ -270,7 +262,6 @@ namespace Algolia.Search.Model
     /// Time the server took to process the request, in milliseconds.
     /// </summary>
     /// <value>Time the server took to process the request, in milliseconds.</value>
-    /// <example>20</example>
     [DataMember(Name = "processingTimeMS", IsRequired = true, EmitDefaultValue = true)]
     public int ProcessingTimeMS { get; set; }
 
@@ -304,7 +295,6 @@ namespace Algolia.Search.Model
     /// Time the server took to process the request, in milliseconds.
     /// </summary>
     /// <value>Time the server took to process the request, in milliseconds.</value>
-    /// <example>20</example>
     [DataMember(Name = "serverTimeMS", EmitDefaultValue = false)]
     public int ServerTimeMS { get; set; }
 
@@ -312,7 +302,6 @@ namespace Algolia.Search.Model
     /// Host name of the server that processed the request.
     /// </summary>
     /// <value>Host name of the server that processed the request.</value>
-    /// <example>c2-uk-3.algolia.net</example>
     [DataMember(Name = "serverUsed", EmitDefaultValue = false)]
     public string ServerUsed { get; set; }
 
@@ -320,7 +309,6 @@ namespace Algolia.Search.Model
     /// Lets you store custom data in your indices.
     /// </summary>
     /// <value>Lets you store custom data in your indices.</value>
-    /// <example>{settingID&#x3D;f2a7b51e3503acc6a39b3784ffb84300, pluginVersion&#x3D;1.6.0}</example>
     [DataMember(Name = "userData", EmitDefaultValue = false)]
     public Object UserData { get; set; }
 
@@ -341,7 +329,6 @@ namespace Algolia.Search.Model
     /// URL-encoded string of all search parameters.
     /// </summary>
     /// <value>URL-encoded string of all search parameters.</value>
-    /// <example>query&#x3D;a&amp;hitsPerPage&#x3D;20</example>
     [DataMember(Name = "params", IsRequired = true, EmitDefaultValue = true)]
     public string VarParams { get; set; }
 

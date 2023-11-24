@@ -82,7 +82,6 @@ namespace Algolia.Search.Model
     /// [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/). 
     /// </summary>
     /// <value>[Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/). </value>
-    /// <example>en</example>
     [DataMember(Name = "language", EmitDefaultValue = false)]
     public string Language { get; set; }
 

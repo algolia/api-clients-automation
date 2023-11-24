@@ -71,7 +71,6 @@ namespace Algolia.Search.Model
     /// Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
     /// </summary>
     /// <value>Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).</value>
-    /// <example>mobile</example>
     [DataMember(Name = "context", EmitDefaultValue = false)]
     public string Context { get; set; }
 
@@ -96,13 +95,11 @@ namespace Algolia.Search.Model
     [DataMember(Name = "enabled", EmitDefaultValue = true)]
     public bool? Enabled { get; set; }
 
-        /// <summary>
-        /// Request options to send with the API call.
-        /// </summary>
-        /// <value>Request options to send with the API call.</value>
-        /// <example>{timeouts:{read:20}}
-</example>
-        [DataMember(Name = "requestOptions", EmitDefaultValue = false)]
+    /// <summary>
+    /// Request options to send with the API call.
+    /// </summary>
+    /// <value>Request options to send with the API call.</value>
+    [DataMember(Name = "requestOptions", EmitDefaultValue = false)]
     public List<Object> RequestOptions { get; set; }
 
     /// <summary>

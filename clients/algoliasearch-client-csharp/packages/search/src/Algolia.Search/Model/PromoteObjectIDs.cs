@@ -57,7 +57,6 @@ namespace Algolia.Search.Model
     /// Unique identifiers of the records to promote.
     /// </summary>
     /// <value>Unique identifiers of the records to promote.</value>
-    /// <example>[&quot;3f31c087763a2ceec359b318fc3edef3&quot;,&quot;63c3c871e31a152d67df7720192fd752&quot;]</example>
     [DataMember(Name = "objectIDs", IsRequired = true, EmitDefaultValue = true)]
     public List<string> ObjectIDs { get; set; }
 
@@ -65,7 +64,6 @@ namespace Algolia.Search.Model
     /// The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
     /// </summary>
     /// <value>The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.</value>
-    /// <example>0</example>
     [DataMember(Name = "position", IsRequired = true, EmitDefaultValue = true)]
     public int Position { get; set; }
 

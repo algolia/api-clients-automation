@@ -80,7 +80,6 @@ namespace Algolia.Search.Model
     /// Custom JSON object that will be appended to the userData array in the response. This object isn&#39;t interpreted by the API. It&#39;s limited to 1kB of minified JSON.
     /// </summary>
     /// <value>Custom JSON object that will be appended to the userData array in the response. This object isn&#39;t interpreted by the API. It&#39;s limited to 1kB of minified JSON.</value>
-    /// <example>{&quot;settingID&quot;:&quot;f2a7b51e3503acc6a39b3784ffb84300&quot;,&quot;pluginVersion&quot;:&quot;1.6.0&quot;}</example>
     [DataMember(Name = "userData", EmitDefaultValue = true)]
     public Object UserData { get; set; }
 

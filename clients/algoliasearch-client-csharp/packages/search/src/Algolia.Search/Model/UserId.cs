@@ -66,7 +66,6 @@ namespace Algolia.Search.Model
     /// userID of the user.
     /// </summary>
     /// <value>userID of the user.</value>
-    /// <example>user1</example>
     [DataMember(Name = "userID", IsRequired = true, EmitDefaultValue = true)]
     public string VarUserID { get; set; }
 
@@ -74,7 +73,6 @@ namespace Algolia.Search.Model
     /// Cluster to which the user is assigned.
     /// </summary>
     /// <value>Cluster to which the user is assigned.</value>
-    /// <example>c1-test</example>
     [DataMember(Name = "clusterName", IsRequired = true, EmitDefaultValue = true)]
     public string ClusterName { get; set; }
 
@@ -82,7 +80,6 @@ namespace Algolia.Search.Model
     /// Number of records belonging to the user.
     /// </summary>
     /// <value>Number of records belonging to the user.</value>
-    /// <example>42</example>
     [DataMember(Name = "nbRecords", IsRequired = true, EmitDefaultValue = true)]
     public int NbRecords { get; set; }
 
@@ -90,7 +87,6 @@ namespace Algolia.Search.Model
     /// Data size used by the user.
     /// </summary>
     /// <value>Data size used by the user.</value>
-    /// <example>0</example>
     [DataMember(Name = "dataSize", IsRequired = true, EmitDefaultValue = true)]
     public int DataSize { get; set; }
 

@@ -64,7 +64,6 @@ namespace Algolia.Search.Model
     /// Number of pages.
     /// </summary>
     /// <value>Number of pages.</value>
-    /// <example>100</example>
     [DataMember(Name = "nbPages", EmitDefaultValue = false)]
     public int NbPages { get; set; }
 

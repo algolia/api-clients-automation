@@ -64,7 +64,6 @@ namespace Algolia.Search.Model
     /// Attributes to retrieve. If not specified, all retrievable attributes are returned.
     /// </summary>
     /// <value>Attributes to retrieve. If not specified, all retrievable attributes are returned.</value>
-    /// <example>[&quot;author&quot;,&quot;title&quot;,&quot;content&quot;]</example>
     [DataMember(Name = "attributesToRetrieve", EmitDefaultValue = false)]
     public List<string> AttributesToRetrieve { get; set; }
 
@@ -72,7 +71,6 @@ namespace Algolia.Search.Model
     /// Record&#39;s objectID.
     /// </summary>
     /// <value>Record&#39;s objectID.</value>
-    /// <example>8b9b7619230b1950f653b962fb0dfd6b</example>
     [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
     public string ObjectID { get; set; }
 
@@ -80,7 +78,6 @@ namespace Algolia.Search.Model
     /// Name of the index containing the required records.
     /// </summary>
     /// <value>Name of the index containing the required records.</value>
-    /// <example>books</example>
     [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = true)]
     public string IndexName { get; set; }
 

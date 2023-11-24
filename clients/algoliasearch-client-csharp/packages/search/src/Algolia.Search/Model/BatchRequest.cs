@@ -63,7 +63,6 @@ namespace Algolia.Search.Model
     /// Operation arguments (varies with specified &#x60;action&#x60;).
     /// </summary>
     /// <value>Operation arguments (varies with specified &#x60;action&#x60;).</value>
-    /// <example>{&quot;name&quot;:&quot;Betty Jane McCamey&quot;,&quot;company&quot;:&quot;Vita Foods Inc.&quot;,&quot;email&quot;:&quot;betty@mccamey.com&quot;}</example>
     [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = true)]
     public Object Body { get; set; }
 

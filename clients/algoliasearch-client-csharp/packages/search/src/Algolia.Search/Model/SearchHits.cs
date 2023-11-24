@@ -86,7 +86,6 @@ namespace Algolia.Search.Model
     /// URL-encoded string of all search parameters.
     /// </summary>
     /// <value>URL-encoded string of all search parameters.</value>
-    /// <example>query&#x3D;a&amp;hitsPerPage&#x3D;20</example>
     [DataMember(Name = "params", IsRequired = true, EmitDefaultValue = true)]
     public string VarParams { get; set; }
 

@@ -65,7 +65,6 @@ namespace Algolia.Search.Model
     /// Unique identifier for a rule object.
     /// </summary>
     /// <value>Unique identifier for a rule object.</value>
-    /// <example>hide-12345</example>
     [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
     public string ObjectID { get; set; }
 
@@ -86,7 +85,6 @@ namespace Algolia.Search.Model
     /// Description of the rule&#39;s purpose. This can be helpful for display in the Algolia dashboard.
     /// </summary>
     /// <value>Description of the rule&#39;s purpose. This can be helpful for display in the Algolia dashboard.</value>
-    /// <example>Display a promotional banner</example>
     [DataMember(Name = "description", EmitDefaultValue = false)]
     public string Description { get; set; }
 

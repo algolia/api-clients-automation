@@ -62,7 +62,6 @@ namespace Algolia.Search.Model
     /// Cluster name.
     /// </summary>
     /// <value>Cluster name.</value>
-    /// <example>c11-test</example>
     [DataMember(Name = "cluster", IsRequired = true, EmitDefaultValue = true)]
     public string Cluster { get; set; }
 
@@ -70,7 +69,6 @@ namespace Algolia.Search.Model
     /// User IDs to assign.
     /// </summary>
     /// <value>User IDs to assign.</value>
-    /// <example>[&quot;einstein&quot;,&quot;bohr&quot;,&quot;feynman&quot;]</example>
     [DataMember(Name = "users", IsRequired = true, EmitDefaultValue = true)]
     public List<string> Users { get; set; }
 

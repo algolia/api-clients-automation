@@ -55,7 +55,6 @@ namespace Algolia.Search.Model
     /// Unique object identifier.
     /// </summary>
     /// <value>Unique object identifier.</value>
-    /// <example>product-1</example>
     [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = true)]
     public string ObjectID { get; set; }
 

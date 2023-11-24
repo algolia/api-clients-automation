@@ -49,7 +49,6 @@ namespace Algolia.Search.Model
     /// Index targeted by the query.
     /// </summary>
     /// <value>Index targeted by the query.</value>
-    /// <example>best_buy</example>
     [DataMember(Name = "index_name", EmitDefaultValue = false)]
     public string IndexName { get; set; }
 
@@ -57,7 +56,6 @@ namespace Algolia.Search.Model
     /// User identifier.
     /// </summary>
     /// <value>User identifier.</value>
-    /// <example>93.189.166.128</example>
     [DataMember(Name = "user_token", EmitDefaultValue = false)]
     public string UserToken { get; set; }
 
@@ -65,7 +63,6 @@ namespace Algolia.Search.Model
     /// Unique query identifier.
     /// </summary>
     /// <value>Unique query identifier.</value>
-    /// <example>313453231</example>
     [DataMember(Name = "query_id", EmitDefaultValue = false)]
     public string QueryId { get; set; }
 
