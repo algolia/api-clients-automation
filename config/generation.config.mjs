@@ -80,4 +80,5 @@ export const patterns = [
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/*',
+  'clients/algoliasearch-client-python/pyproject.toml',
 ];
