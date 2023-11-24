@@ -171,7 +171,22 @@
         "output": "#{cwd}/clients/algoliasearch-client-dart/packages/client_recommend"
       },
       "csharp-search": {
-        "output": "#{cwd}/clients/algoliasearch-client-csharp/packages/algoliasearch"
+        "output": "#{cwd}/clients/algoliasearch-client-csharp",
+        "additionalProperties": {
+          "packageName": "search"
+        }
+      },
+      "csharp-insights": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp",
+        "additionalProperties": {
+          "packageName": "insights"
+        }
+      },
+      "csharp-recommend": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp",
+        "additionalProperties": {
+          "packageName": "recommend"
+        }
       }
     }
   }

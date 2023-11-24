@@ -17,14 +17,17 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     setLibrary("httpclient");
-    additionalProperties.put("netCoreProjectFile", true);
+
+    additionalProperties.put("netCoreProjectFile", 'true');
     additionalProperties.put("targetFramework", "netstandard2.0");
     additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("packageName", "Algolia." + Utils.camelize(client));
 
-    String outputFolder = "algolia" + File.separator + client;
+    String outputFolder = "packages" + File.separator + client;
     setOutputDir(getOutputDir() + File.separator + outputFolder);
 
     super.processOpts();
+
 
     Utils.prettyPrint(supportingFiles);
 
