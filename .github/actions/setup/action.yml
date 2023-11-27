@@ -186,7 +186,6 @@ runs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ steps.csharp-version.outputs.CSHARP_VERSION }}
-        cache: true
 
     # Computing jobs that should run
     - name: Setting diff outputs variables
