@@ -138,16 +138,31 @@ runs:
       run: |
         echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
 
-    - name: Install dart   
+    - name: Install dart
       if: ${{ inputs.language == 'dart' }}
-      uses: dart-lang/setup-dart@v1  
+      uses: dart-lang/setup-dart@v1
       with:
         sdk: ${{ steps.dart-version.outputs.DART_VERSION }}
 
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
       shell: bash
-      run: dart pub global activate melos    
+      run: dart pub global activate melos
+
+    # Csharp deps
+    - name: Get Csharp version
+      if: ${{ inputs.language == 'csharp' }}
+      id: csharp-version
+      shell: bash
+      run: |
+        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
+
+    - name: Install dotnet
+      if: ${{ inputs.language == 'csharp' }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ steps.csharp-version.outputs.CSHARP_VERSION }}
+        cache: true
 
     # Computing jobs that should run
     - name: Setting diff outputs variables
@@ -216,7 +231,10 @@ outputs:
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_KOTLIN }}
   RUN_GEN_DART:
     description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}  
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}
+  RUN_GEN_CSHARP:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_CSHARP }}
 
   RUN_JS_UTILS:
     description: Whether to build JS client common folders when RUN_JS is false

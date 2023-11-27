@@ -26,7 +26,10 @@ inputs:
     required: false
   dart:
     description: Whether this job ran or not
-    required: false     
+    required: false
+  csharp:
+    description: Whether this job ran or not
+    required: false
 
 runs:
   using: composite
@@ -80,6 +83,7 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-java
         unzip -q -o clients-java.zip && rm clients-java.zip
+
     # Go
     - name: Download clients-go artifact
       if: ${{ inputs.go == 'true' && inputs.type == 'all' }}
@@ -121,3 +125,17 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-dart
         unzip -q -o clients-dart.zip && rm clients-dart.zip
+
+    # CSharp
+    - name: Download clients-csharp artifact
+      if: ${{ inputs.csharp == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-csharp
+
+    - name: Unzip clients-csharp artifact
+      if: ${{ inputs.csharp == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-csharp
+        unzip -q -o clients-csharp.zip && rm clients-csharp.zip
