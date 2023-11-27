@@ -1,7 +1,4 @@
-# coding: utf-8
-
 {{>partial_header}}
-
 import atexit
 import datetime
 from dateutil.parser import parse
@@ -10,15 +7,13 @@ import mimetypes
 import os
 import re
 import tempfile
-
 from urllib.parse import quote
 from typing import Tuple, Optional, List
-
-from {{packageName}}.configuration import Configuration
-from {{packageName}}.api_response import ApiResponse
-import {{modelPackage}}
-from {{packageName}} import rest
-from {{packageName}}.exceptions import (
+from algoliasearch.{{packageName}}.configuration import Configuration
+from algoliasearch.{{packageName}}.api_response import ApiResponse
+import algoliasearch.{{modelPackage}}
+from algoliasearch.{{packageName}} import rest
+from algoliasearch.{{packageName}}.exceptions import (
     ApiValueError,
     ApiException,
     BadRequestException,
@@ -27,7 +22,6 @@ from {{packageName}}.exceptions import (
     NotFoundException,
     ServiceException
 )
-
 
 class ApiClient:
     """Generic API client for OpenAPI client library builds.
@@ -79,7 +73,7 @@ class ApiClient:
         self.user_agent = '{{{httpUserAgent}}}{{^httpUserAgent}}OpenAPI-Generator/{{{packageVersion}}}/python{{/httpUserAgent}}'
         self.client_side_validation = configuration.client_side_validation
 
-{{#asyncio}}
+
     async def __aenter__(self):
         return self
 
@@ -88,14 +82,14 @@ class ApiClient:
 
     async def close(self):
         await self.rest_client.close()
-{{/asyncio}}
-{{^asyncio}}
+
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         pass
-{{/asyncio}}
+
 
     @property
     def user_agent(self):
@@ -244,7 +238,7 @@ class ApiClient:
         return method, url, header_params, body, post_params
 
 
-    {{#asyncio}}async {{/asyncio}}def call_api(
+    async def call_api(
         self,
         method,
         url,
@@ -267,7 +261,7 @@ class ApiClient:
 
         try:
             # perform request and return response
-            response_data = {{#asyncio}}await {{/asyncio}}self.rest_client.request(
+            response_data = await self.rest_client.request(
                 method, url,
                 headers=header_params,
                 body=body, post_params=post_params,
@@ -427,7 +421,7 @@ class ApiClient:
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
             else:
-                klass = getattr({{modelPackage}}, klass)
+                klass = getattr(algoliasearch.{{modelPackage}}, klass)
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)
@@ -637,15 +631,6 @@ class ApiClient:
         elif auth_setting['in'] == 'header':
             if auth_setting['type'] != 'http-signature':
                 headers[auth_setting['key']] = auth_setting['value']
-            {{#hasHttpSignatureMethods}}
-            else:
-                # The HTTP signature scheme requires multiple HTTP headers
-                # that are calculated dynamically.
-                signing_info = self.configuration.signing_info
-                auth_headers = signing_info.get_http_signature_headers(
-                resource_path, method, headers, body, queries)
-                headers.update(auth_headers)
-            {{/hasHttpSignatureMethods}}
         elif auth_setting['in'] == 'query':
             queries.append((auth_setting['key'], auth_setting['value']))
         else:

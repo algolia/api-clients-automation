@@ -1,29 +1,24 @@
 {{>partial_header}}
 
-# coding: utf-8
+__version__ = "{{{packageVersion}}}"
 
-__version__ = "{{packageVersion}}"
-
-# import apis into sdk package
-{{#apiInfo}}{{#apis}}from {{apiPackage}}.{{classFilename}} import {{classname}}
+{{#apiInfo}}{{#apis}}from {{classFilename}} import {{classname}}
 {{/apis}}{{/apiInfo}}
-# import ApiClient
-from {{packageName}}.api_response import ApiResponse
-from {{packageName}}.api_client import ApiClient
-from {{packageName}}.configuration import Configuration
-from {{packageName}}.exceptions import OpenApiException
-from {{packageName}}.exceptions import ApiTypeError
-from {{packageName}}.exceptions import ApiValueError
-from {{packageName}}.exceptions import ApiKeyError
-from {{packageName}}.exceptions import ApiAttributeError
-from {{packageName}}.exceptions import ApiException
-{{#hasHttpSignatureMethods}}
-from {{packageName}}.signing import HttpSigningConfiguration
-{{/hasHttpSignatureMethods}}
 
-# import models into sdk package
+from algoliasearch.{{packageName}}.api_response import ApiResponse
+from algoliasearch.{{packageName}}.api_client import ApiClient
+from algoliasearch.{{packageName}}.configuration import Configuration
+from algoliasearch.{{packageName}}.exceptions import (
+    OpenApiException,
+    ApiTypeError,
+    ApiValueError,
+    ApiKeyError,
+    ApiAttributeError,
+    ApiException,
+)
+
 {{#models}}
 {{#model}}
-from {{modelPackage}}.{{classFilename}} import {{classname}}
+from algoliasearch.{{modelPackage}}.{{classFilename}} import {{classname}}
 {{/model}}
 {{/models}}
