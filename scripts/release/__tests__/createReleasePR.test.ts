@@ -78,6 +78,7 @@ describe('createReleasePR', () => {
       kotlin: { current: expect.any(String) },
       dart: { current: expect.any(String) },
       python: { current: expect.any(String) },
+      csharp: { current: expect.any(String) },
     });
   });
 
