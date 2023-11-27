@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Move to the root
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+cd ${DIR}/../../
+
+rm -rf .codesandbox \
+  .editorconfig \
+  .env \
+  .env.example \
+  .eslintignore \
+  .eslintrc.cjs \
+  .husky/ \
+  .lintstagedrc \
+  .nvmrc \
+  .prettierignore \
+  .prettierrc \
+  .redocly.yaml \
+  .yarn/ \
+  .yarnrc.yml \
+  Dockerfile \
+  clients/ \
+  config/ \
+  eslint/ \
+  generators/ \
+  netlify.toml \
+  node_modules/ \
+  openapitools.json \
+  package.json \
+  playground/ \
+  renovate.json \
+  scripts/ \
+  specs/ \
+  templates/ \
+  website/ \
+  git-mv-with-history \
+  yarn.lock
