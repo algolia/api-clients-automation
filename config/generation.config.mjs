@@ -88,6 +88,7 @@ export const patterns = [
   // Scala
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
-  'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/model/**',
-  'clients/algoliasearch-client-dart/src/main/scala/algoliasearch/api/**',
+  'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
 ];
