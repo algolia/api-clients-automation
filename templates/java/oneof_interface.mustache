@@ -67,18 +67,21 @@ public interface {{classname}} {
             {{#vendorExtensions.x-one-of-list}}
 
             // deserialize {{{type}}}
-            if (tree.{{#isObject}}isObject(){{/isObject}}{{#isList}}isArray(){{/isList}}{{^isObject}}{{^isList}}isValueNode(){{/isList}}{{/isObject}}{{#discriminators}} && tree.has("{{field}}"){{/discriminators}}) {
+            if (tree.{{#isObject}}isObject(){{#discriminators}} && tree.has("{{field}}"){{/discriminators}}{{/isObject}}{{#isEnum}}isTextual(){{/isEnum}}{{#isList}}isArray(){{/isList}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}){
                 try(JsonParser parser = tree.traverse(jp.getCodec())) {  
                     {{#isObject}}
                     return parser.readValueAs({{{type}}}.class);
                     {{/isObject}}
+                    {{#isEnum}}
+                    return parser.readValueAs({{{type}}}.class);
+                    {{/isEnum}}
                     {{#isList}}
                     return parser.readValueAs(new TypeReference<{{{type}}}>(){});
                     {{/isList}}
-                    {{^isObject}}{{^isList}}
+                    {{^isObject}}{{^isList}}{{^isEnum}}
                     {{{type}}} value = parser.readValueAs({{{type}}}.class);
                     return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value);
-                    {{/isList}}{{/isObject}}
+                    {{/isEnum}}{{/isList}}{{/isObject}}
                 } catch (Exception e) {
                     // deserialization failed, continue
                     LOGGER.finest("Failed to deserialize oneOf {{{type}}} (error: " + e.getMessage() + ") (type: {{{type}}})");

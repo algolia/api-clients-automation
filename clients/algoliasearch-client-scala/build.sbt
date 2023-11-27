@@ -36,13 +36,15 @@ lazy val root = project
   )
 
 // Project dependencies
-libraryDependencies += "com.squareup.okhttp3" % "okhttp" % "4.11.0"
-libraryDependencies += "com.squareup.okhttp3" % "logging-interceptor" % "4.11.0"
-libraryDependencies += "org.json4s" %% "json4s-ast" % "4.0.6"
-libraryDependencies += "org.json4s" %% "json4s-core" % "4.0.6"
-libraryDependencies += "org.json4s" %% "json4s-native" % "4.0.6"
-libraryDependencies += "org.json4s" %% "json4s-ext" % "4.0.6"
-libraryDependencies += "org.slf4j" % "slf4j-api" % "2.0.5"
+libraryDependencies ++= Seq(
+  "com.squareup.okhttp3" % "okhttp" % "4.11.0" % "provided",
+  "com.squareup.okhttp3" % "logging-interceptor" % "4.11.0",
+  "org.json4s" %% "json4s-ast" % "4.0.6",
+  "org.json4s" %% "json4s-core" % "4.0.6",
+  "org.json4s" %% "json4s-native" % "4.0.6",
+  "org.json4s" %% "json4s-ext" % "4.0.6",
+  "org.slf4j" % "slf4j-api" % "2.0.5"
+)
 
 scalacOptions := Seq(
   "-unchecked",

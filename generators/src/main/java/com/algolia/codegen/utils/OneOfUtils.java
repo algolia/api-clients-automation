@@ -41,7 +41,7 @@ public class OneOfUtils {
         newModel.setClassname(name + "Wrapper");
         newModel.setDescription(model.classname + " as " + oneOf);
         newModel.setIsNumber(isNumberType(oneOf));
-        newModel.isInteger = oneOf.equals("Int");
+        newModel.isInteger = oneOf.equals("Int") || oneOf.equals("Integer");
         newModel.isLong = oneOf.equals("Long");
         newModel.isFloat = oneOf.equals("Float");
         newModel.isDouble = oneOf.equals("Double");
@@ -93,7 +93,7 @@ public class OneOfUtils {
     oneOfModel.put("name", oneOf.replace("<", "Of").replace(">", "").replace("[", "Of").replace("]", ""));
     oneOfModel.put("listElementType", oneOf.replace("List<", "").replace(">", "").replace("Seq[", "").replace("]", ""));
     oneOfModel.put("isList", oneOf.contains("List") || oneOf.contains("Seq"));
-    oneOfModel.put("isInteger", oneOf.equals("Int"));
+    oneOfModel.put("isInteger", oneOf.equals("Int") || oneOf.equals("Integer"));
     oneOfModel.put("isLong", oneOf.equals("Long"));
     oneOfModel.put("isFloat", oneOf.equals("Float"));
     oneOfModel.put("isDouble", oneOf.equals("Double"));
