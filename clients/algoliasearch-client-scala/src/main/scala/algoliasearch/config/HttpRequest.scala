@@ -5,33 +5,33 @@ import algoliasearch.internal.util._
 import scala.collection.mutable
 
 /** Represents an HTTP request.
- *
- * @param method
- *   HTTP method
- * @param path
- *   HTTP path
- * @param read
- *   Whether this request is a read request
- * @param headers
- *   HTTP headers
- * @param queryParameters
- *   HTTP query parameters
- * @param body
- *   HTTP body
- */
+  *
+  * @param method
+  *   HTTP method
+  * @param path
+  *   HTTP path
+  * @param read
+  *   Whether this request is a read request
+  * @param headers
+  *   HTTP headers
+  * @param queryParameters
+  *   HTTP query parameters
+  * @param body
+  *   HTTP body
+  */
 case class HttpRequest(
-                        method: String,
-                        path: String,
-                        read: Boolean = false,
-                        headers: Map[String, String] = Map.empty,
-                        queryParameters: Map[String, String] = Map.empty,
-                        body: Option[Any] = None
-                      )
+    method: String,
+    path: String,
+    read: Boolean = false,
+    headers: Map[String, String] = Map.empty,
+    queryParameters: Map[String, String] = Map.empty,
+    body: Option[Any] = None
+)
 
 object HttpRequest {
 
   /** Builder for [[HttpRequest]].
-   */
+    */
   class Builder {
     private var method: String = _
     private var path: String = _
@@ -94,6 +94,6 @@ object HttpRequest {
   }
 
   /** Create a new [[HttpRequest]] builder.
-   */
+    */
   def builder() = new Builder
 }

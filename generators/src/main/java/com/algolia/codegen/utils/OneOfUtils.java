@@ -37,7 +37,7 @@ public class OneOfUtils {
         sealedChilds.add(compoundModel);
       } else {
         CodegenModel newModel = new CodegenModel();
-        String name = oneOf.replace("<", "Of").replace(">", "").replace("[", "Of").replace("]", "");
+        String name = oneOf.replace("<", "Of").replace(">", "");
         newModel.setClassname(name + "Wrapper");
         newModel.setDescription(model.classname + " as " + oneOf);
         newModel.setIsNumber(isNumberType(oneOf));
@@ -90,7 +90,7 @@ public class OneOfUtils {
   private static Map<String, Object> buildOneOfModel(String oneOf) {
     var oneOfModel = new HashMap<String, Object>();
     oneOfModel.put("type", oneOf);
-    oneOfModel.put("name", oneOf.replace("<", "Of").replace(">", "").replace("[", "Of").replace("]", ""));
+    oneOfModel.put("name", oneOf.replace("<", "Of").replace(">", ""));
     oneOfModel.put("listElementType", oneOf.replace("List<", "").replace(">", "").replace("Seq[", "").replace("]", ""));
     oneOfModel.put("isList", oneOf.contains("List") || oneOf.contains("Seq"));
     oneOfModel.put("isInteger", oneOf.equals("Int") || oneOf.equals("Integer"));

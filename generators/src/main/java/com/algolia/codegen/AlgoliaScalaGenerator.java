@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.OneOfUtils;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
@@ -33,6 +34,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     additionalProperties.put(CodegenConstants.MODEL_PACKAGE, "algoliasearch." + packageName);
     additionalProperties.put(CodegenConstants.API_PACKAGE, "algoliasearch.api");
     additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, "algoliasearch");
+    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     super.processOpts();
     setApiNameSuffix(Utils.API_SUFFIX);
     Utils.setGenerationBanner(additionalProperties);
@@ -58,6 +60,11 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
       logger.severe(e.getMessage());
       System.exit(1);
     }
+  }
+
+  /** Convert a Seq type to a valid class name. */
+  private String typeToName(String content) {
+    return content.trim().replace("[", "Of").replace("]", "");
   }
 
   @Override

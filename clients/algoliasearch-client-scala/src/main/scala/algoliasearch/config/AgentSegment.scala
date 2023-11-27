@@ -1,11 +1,11 @@
 package algoliasearch.config
 
 /** Represents a segment of algolia agent header.
- * @param value
- *   segment string value
- * @param version
- *   optional version
- */
+  * @param value
+  *   segment string value
+  * @param version
+  *   optional version
+  */
 case class AgentSegment(value: String, version: Option[String] = None) {
   override def toString: String = version match {
     case Some(ver) => s"$value ($ver)"

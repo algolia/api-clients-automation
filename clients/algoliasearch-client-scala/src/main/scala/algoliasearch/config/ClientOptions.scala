@@ -7,48 +7,48 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 
 /** Represents the configuration of an API client.
- *
- * @param agentSegments
- *   segments to add to the Algolia agent header
- * @param hosts
- *   hosts to use for requests
- * @param connectTimeout
- *   connection timeout
- * @param writeTimeout
- *   write timeout
- * @param readTimeout
- *   read timeout
- * @param defaultHeaders
- *   default headers to add to requests
- * @param compressionType
- *   compression type to use for requests
- * @param logging
- *   logging configuration
- * @param customFormats
- *   custom JSON formats
- * @param requesterConfig
- *   configuration for the HTTP requester
- * @param customRequester
- *   custom HTTP requester
- */
+  *
+  * @param agentSegments
+  *   segments to add to the Algolia agent header
+  * @param hosts
+  *   hosts to use for requests
+  * @param connectTimeout
+  *   connection timeout
+  * @param writeTimeout
+  *   write timeout
+  * @param readTimeout
+  *   read timeout
+  * @param defaultHeaders
+  *   default headers to add to requests
+  * @param compressionType
+  *   compression type to use for requests
+  * @param logging
+  *   logging configuration
+  * @param customFormats
+  *   custom JSON formats
+  * @param requesterConfig
+  *   configuration for the HTTP requester
+  * @param customRequester
+  *   custom HTTP requester
+  */
 case class ClientOptions(
-                          agentSegments: Seq[AgentSegment] = Seq.empty,
-                          hosts: Seq[Host] = Seq.empty,
-                          connectTimeout: Duration = Duration(2, TimeUnit.SECONDS),
-                          writeTimeout: Duration = Duration(30, TimeUnit.SECONDS),
-                          readTimeout: Duration = Duration(5, TimeUnit.SECONDS),
-                          defaultHeaders: Map[String, String] = Map.empty,
-                          compressionType: CompressionType = CompressionType.None,
-                          logging: Option[Logging] = None,
-                          customFormats: Option[Formats] = None,
-                          requesterConfig: Option[HttpRequester.Builder => _] = None,
-                          customRequester: Option[Requester] = None
-                        ) extends ClientConfig
+    agentSegments: Seq[AgentSegment] = Seq.empty,
+    hosts: Seq[Host] = Seq.empty,
+    connectTimeout: Duration = Duration(2, TimeUnit.SECONDS),
+    writeTimeout: Duration = Duration(30, TimeUnit.SECONDS),
+    readTimeout: Duration = Duration(5, TimeUnit.SECONDS),
+    defaultHeaders: Map[String, String] = Map.empty,
+    compressionType: CompressionType = CompressionType.None,
+    logging: Option[Logging] = None,
+    customFormats: Option[Formats] = None,
+    requesterConfig: Option[HttpRequester.Builder => _] = None,
+    customRequester: Option[Requester] = None
+) extends ClientConfig
 
 object ClientOptions {
 
   /** Builder for [[ClientOptions]].
-   */
+    */
   class Builder() {
     private var agentSegments: Seq[AgentSegment] = Seq.empty
     private var hosts: Seq[Host] = Seq.empty
@@ -138,6 +138,6 @@ object ClientOptions {
   }
 
   /** Create a new [[ClientOptions]] builder.
-   */
+    */
   def builder() = new Builder
 }

@@ -14,7 +14,7 @@ trait {{classname}}Trait extends {{classname}}
 
 {{#x-one-of-list}}
 {{^child}}
-case class {{classname}}{{name}}(value: {{{type}}}) extends {{classname}}
+case class {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}(value: {{{type}}}) extends {{classname}}
 {{/child}}
 {{/x-one-of-list}}
 
@@ -22,7 +22,7 @@ case class {{classname}}{{name}}(value: {{{type}}}) extends {{classname}}
 {{#x-one-of-list}}
 {{^child}}
 {{#isArray}}
-trait {{classname}}{{name}}Evidence
+trait {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence
 {{/isArray}}
 {{/child}}
 {{/x-one-of-list}}
@@ -36,7 +36,7 @@ object {{classname}} {
   {{#x-one-of-list}}
   {{^child}}
   {{#isArray}}
-  implicit object {{classname}}{{name}}Evidence extends {{classname}}{{name}}Evidence
+  implicit object {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence extends {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence
   {{/isArray}}
   {{/child}}
   {{/x-one-of-list}}
@@ -48,12 +48,12 @@ object {{classname}} {
 
   /** {{classname}} as {{{type}}} wrapper. */
   {{#x-one-of-multi-array}}
-  def apply(value: {{{type}}}){{#isArray}}(implicit ev: {{classname}}{{name}}Evidence){{/isArray}}: {{classname}} = {
+  def apply(value: {{{type}}}){{#isArray}}(implicit ev: {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence){{/isArray}}: {{classname}} = {
   {{/x-one-of-multi-array}}
   {{^x-one-of-multi-array}}
   def apply(value: {{{type}}}): {{classname}} = {
   {{/x-one-of-multi-array}}
-    {{classname}}{{name}}(value)
+    {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}(value)
   }
   {{/child}}    
   {{/x-one-of-list}}
