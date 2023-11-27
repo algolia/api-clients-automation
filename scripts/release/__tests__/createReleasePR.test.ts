@@ -69,9 +69,7 @@ describe('createReleasePR', () => {
 
   it('reads versions of the current language', () => {
     expect(readVersions()).toEqual({
-      java: {
-        current: expect.any(String),
-      },
+      java: {current: expect.any(String)},
       javascript: { current: expect.any(String) },
       php: { current: expect.any(String) },
       go: { current: expect.any(String) },
