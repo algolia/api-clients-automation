@@ -11,6 +11,7 @@
     "go": "next",
     "kotlin": "next",
     "dart": "main",
+    "python": "next",
     "csharp": "next"
   },
   "defaultTargetBranch": "next",

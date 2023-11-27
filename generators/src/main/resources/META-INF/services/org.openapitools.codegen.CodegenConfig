@@ -4,5 +4,6 @@ com.algolia.codegen.AlgoliaJavascriptGenerator
 com.algolia.codegen.AlgoliaPhpGenerator
 com.algolia.codegen.AlgoliaKotlinGenerator
 com.algolia.codegen.AlgoliaDartGenerator
+com.algolia.codegen.AlgoliaPythonGenerator
 com.algolia.codegen.AlgoliaCSharpGenerator
 com.algolia.codegen.cts.AlgoliaCTSGenerator

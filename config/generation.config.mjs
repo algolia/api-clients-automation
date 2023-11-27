@@ -77,6 +77,14 @@ export const patterns = [
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
 
+  // Python
+  'clients/algoliasearch-client-python/**',
+  '!clients/algoliasearch-client-python/*',
+  'clients/algoliasearch-client-python/pyproject.toml',
+  'clients/algoliasearch-client-python/poetry.lock',
+  'clients/algoliasearch-client-python/requirements.txt',
+  'clients/algoliasearch-client-python/.gitignore',
+
   // C#
   '!clients/algoliasearch-client-csharp/**',
 ];
