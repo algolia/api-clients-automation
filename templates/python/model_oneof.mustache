@@ -69,7 +69,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
         if not isinstance(v, {{{dataType}}}):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`") # noqa: E501
+            error_messages.append(
+              f"""Type '{type(v)}' is not '{{{dataType}}}'"""
+            )
         else:
             match += 1
         {{/isPrimitiveType}}

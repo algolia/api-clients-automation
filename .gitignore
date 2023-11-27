@@ -37,3 +37,6 @@ generators/bin
 .dart_tool/
 .packages
 pubspec.lock
+
+# Python
+**/__pycache__
