@@ -50,6 +50,7 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
         val obj = Extraction.extract[{{classname}}](jobject)(formats, mf)
         val properties = jobject.obj.toMap{{#vars}} - "{{{name}}}"{{/vars}}
         obj.copy(additionalProperties = properties)
+      case _ => throw new IllegalArgumentException(s"Can't deserialize $json as {{classname}}")  
     }
   }
 

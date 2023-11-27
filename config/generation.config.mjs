@@ -91,4 +91,5 @@ export const patterns = [
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
 ];
