@@ -1,12 +1,13 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
-import java.io.File;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
 
 public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
+
+  private String CLIENT;
 
   @Override
   public String getName() {
@@ -15,17 +16,22 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
   @Override
   public void processOpts() {
-    String client = (String) additionalProperties.get("client");
+    CLIENT = (String) additionalProperties.get("client");
     setLibrary("httpclient");
-    setApiNameSuffix(Utils.API_SUFFIX);
 
+    additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", "true");
     additionalProperties.put("targetFramework", "netstandard2.0");
-    additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageName", "Algolia." + Utils.capitalize(client));
+    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("packageName", "Algolia.Search");
+    additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
-    String outputFolder = "packages" + File.separator + client;
-    setOutputDir(getOutputDir() + File.separator + outputFolder);
+    setApiNameSuffix(Utils.API_SUFFIX);
+
+    String packageName = Utils.capitalize(CLIENT);
+    setPackageName(packageName);
+    setApiPackage("");
+    setModelPackage("Models");
 
     super.processOpts();
 
@@ -42,7 +48,17 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("git_push.sh.mustache") ||
       file.getTemplateFile().equals("openapi.mustache") ||
+      file.getTemplateFile().equals("Solution.mustache") ||
+      file.getTemplateFile().equals("README.mustache") ||
+      file.getTemplateFile().equals("netcore_project.mustache") ||
+      file.getTemplateFile().equals("netcore_testproject.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
+
+    // repository
+    supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
+    supportingFiles.add(new SupportingFile("netcore_project.mustache", "../", "Algolia.Search.csproj"));
+    supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
+    supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
   }
 }

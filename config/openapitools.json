@@ -198,22 +198,13 @@
         "output": "#{cwd}/clients/algoliasearch-client-python/algoliasearch"
       },
       "csharp-search": {
-        "output": "#{cwd}/clients/algoliasearch-client-csharp",
-        "additionalProperties": {
-          "packageName": "search"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
       },
       "csharp-insights": {
-        "output": "#{cwd}/clients/algoliasearch-client-csharp",
-        "additionalProperties": {
-          "packageName": "insights"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
       },
       "csharp-recommend": {
-        "output": "#{cwd}/clients/algoliasearch-client-csharp",
-        "additionalProperties": {
-          "packageName": "recommend"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
       }
     }
   }
