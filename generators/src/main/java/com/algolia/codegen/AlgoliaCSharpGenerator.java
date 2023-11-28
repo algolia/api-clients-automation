@@ -23,7 +23,6 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("netCoreProjectFile", "true");
     additionalProperties.put("targetFramework", "netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
-    additionalProperties.put("packageName", "Algolia.Search");
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     setApiNameSuffix(Utils.API_SUFFIX);
@@ -52,12 +51,13 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("README.mustache") ||
       file.getTemplateFile().equals("netcore_project.mustache") ||
       file.getTemplateFile().equals("netcore_testproject.mustache") ||
+      file.getTemplateFile().equals("gitignore.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
 
     // repository
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
-    supportingFiles.add(new SupportingFile("netcore_project.mustache", "../", "Algolia.Search.csproj"));
+    supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
   }

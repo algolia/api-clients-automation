@@ -66,10 +66,10 @@ namespace Algolia.Search.{{packageName}}.Client
         /// <returns>A JSON string.</returns>
         public string Serialize(object obj)
         {
-            if (obj != null && obj is {Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)
+            if (obj != null && obj is Algolia.Search.{{packageName}}.{{modelPackage}}.AbstractOpenAPISchema)
             {
                 // the object to be serialized is an oneOf/anyOf schema
-                return (({Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)obj).ToJson();
+                return ((Algolia.Search.{{packageName}}.{{modelPackage}}.AbstractOpenAPISchema)obj).ToJson();
             }
             else
             {
@@ -520,7 +520,7 @@ namespace Algolia.Search.{{packageName}}.Client
                 object responseData = await deserializer.Deserialize<T>(response).ConfigureAwait(false);
 
                 // if the response type is oneOf/anyOf, call FromJSON to deserialize the data
-                if (typeof({Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
+                if (typeof(Algolia.Search.{{packageName}}.{{modelPackage}}.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
                 {
                     responseData = (T) typeof(T).GetMethod("FromJson").Invoke(null, new object[] { response.Content });
                 }
