@@ -12,9 +12,7 @@ class Host(object):
         self.priority = cast(int, priority)
         self.accept = (CallType.WRITE | CallType.READ) if accept is None else accept
 
-        self.last_use = 0.0
-        self.retry_count = 0
-        self.up = True
+        self.reset()
 
     def reset(self) -> None:
         self.last_use = 0.0
