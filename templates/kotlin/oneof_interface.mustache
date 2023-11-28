@@ -25,59 +25,54 @@ import kotlin.jvm.JvmInline
 {{/additionalModelTypeAnnotations}}
 @Serializable({{classname}}Serializer::class)
 public sealed interface {{classname}} {
-    {{#vendorExtensions}}
-    {{#x-one-of-list}}
-    {{^child}}
-
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
     @Serializable
     @JvmInline
-    public value class {{name}}Value(public val value: {{{type}}}): {{classname}}
-    {{/child}}    
-    {{/x-one-of-list}}
+    public value class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(public val value: {{{datatypeWithEnum}}}): {{classname}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
 
     public companion object {
-    {{#x-one-of-list}}
-    {{^child}}
-
-    /** [{{classname}}] as [{{{type}}}] Value. */
-    public fun of{{#x-one-of-explicit-name}}{{name}}{{/x-one-of-explicit-name}}(value: {{{type}}}): {{classname}} {
-        return {{name}}Value(value);
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    public fun of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}(value: {{{datatypeWithEnum}}}): {{classname}} {
+        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
     }
-    {{/child}}    
-    {{/x-one-of-list}}
-    {{/vendorExtensions}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
     }
 }
 
 internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{classname}}>({{classname}}::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
         return when {
-            {{#vendorExtensions.x-one-of-list}}
-            {{#isObject}}
-            element is JsonObject{{#discriminators}} && element.containsKey("{{field}}"){{/discriminators}} -> {{{type}}}.serializer()
-            {{/isObject}}
-            {{#isList}}
-            element is JsonArray -> {{{classname}}}.{{name}}Value.serializer()
-            {{/isList}}
-            {{#isEnum}}
-            element is JsonPrimitive && element.isString -> {{{type}}}.serializer()
-            {{/isEnum}}
+            {{#composedSchemas.oneOf}}
+            {{#isModel}}
+            element is JsonObject{{#vendorExtensions.x-discriminator-fields}} && element.containsKey("{{field}}"){{/vendorExtensions.x-discriminator-fields}} -> {{{datatypeWithEnum}}}.serializer()
+            {{/isModel}}
+            {{#isArray}}
+            element{{#items}}{{#isModel}}.isJsonArrayOfObjects{{/isModel}}{{#isPrimitiveType}}.isJsonArrayOfPrimitives{{/isPrimitiveType}}{{#isModel}}{{#isPrimitiveType}} is JsonArray{{/isPrimitiveType}}{{/isModel}}{{/items}} -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
+            {{/isArray}}
+            {{#isEnumRef}}
+            element.isString -> {{{datatypeWithEnum}}}.serializer()
+            {{/isEnumRef}}
             {{#isInteger}}
-            element is JsonPrimitive && element.intOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            element.isInt -> {{{classname}}}.{{dataType}}Value.serializer()
             {{/isInteger}}
             {{#isLong}}
-            element is JsonPrimitive && element.longOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            element.isLong -> {{{classname}}}.{{dataType}}Value.serializer()
             {{/isLong}}
             {{#isDouble}}
-            element is JsonPrimitive && element.doubleOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            element.isDouble -> {{{classname}}}.{{dataType}}Value.serializer()
             {{/isDouble}}
             {{#isBoolean}}
-            element is JsonPrimitive && element.booleanOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            element.isBoolean -> {{{classname}}}.{{dataType}}Value.serializer()
             {{/isBoolean}}
             {{#isString}}
-            element is JsonPrimitive && element.isString != null -> {{{classname}}}.{{name}}Value.serializer()
+            element.isString -> {{{classname}}}.{{dataType}}Value.serializer()
             {{/isString}}
-            {{/vendorExtensions.x-one-of-list}}
+            {{/composedSchemas.oneOf}}
             else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
         }
     }

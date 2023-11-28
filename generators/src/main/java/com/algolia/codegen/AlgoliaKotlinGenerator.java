@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.OneOfUtils;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
@@ -35,6 +36,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     String client = (String) additionalProperties.get("client");
     setModelPackage("com.algolia.client.model." + Utils.camelize(client).toLowerCase());
     additionalProperties.put(CodegenConstants.SOURCE_FOLDER, "client/src/commonMain/kotlin");
+    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     super.processOpts();
 
@@ -118,6 +120,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  /** Convert a Seq type to a valid class name. */
+  private String typeToName(String content) {
+    return content.trim().replace("<", "Of").replace(">", "");
   }
 
   private void hostForKotlin() {

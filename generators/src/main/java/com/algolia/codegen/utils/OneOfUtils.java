@@ -64,6 +64,20 @@ public class OneOfUtils {
 
   private static void markOneOfChildren(Map<String, ModelsMap> models, CodegenModel model) {
     var oneOfList = new ArrayList<Map<String, Object>>();
+    for (CodegenProperty oneOf : model.getComposedSchemas().getOneOf()) {
+      oneOf.vendorExtensions.put("basetype-isInteger", true);
+      if (oneOf.isArray) {
+        switch (oneOf.baseType) {
+          case "Int", "Integer" -> oneOf.vendorExtensions.put("basetype-isInteger", true);
+          case "String" -> oneOf.vendorExtensions.put("basetype-isString", true);
+          case "Boolean" -> oneOf.vendorExtensions.put("basetype-isBoolean", true);
+          case "Long" -> oneOf.vendorExtensions.put("basetype-isLong", true);
+          case "Float" -> oneOf.vendorExtensions.put("basetype-isFloat", true);
+          case "Double" -> oneOf.vendorExtensions.put("basetype-isDouble", true);
+        }
+      }
+    }
+
     for (String oneOf : model.oneOf) {
       var oneOfModel = buildOneOfModel(oneOf);
       markCompounds(models, oneOf, oneOfModel, model);
