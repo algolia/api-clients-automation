@@ -6,11 +6,11 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 {{#useRestSharp}}
-{{#hasOAuthMethods}}using {{packageName}}.Client.Auth;
+{{#hasOAuthMethods}}using Algolia.Search.{{packageName}}.Client.Auth;
 {{/hasOAuthMethods}}
 {{/useRestSharp}}
 
-namespace {{packageName}}.Client
+namespace Algolia.Search.{{packageName}}.Client
 {
     /// <summary>
     /// Represents a readable-only configuration contract.

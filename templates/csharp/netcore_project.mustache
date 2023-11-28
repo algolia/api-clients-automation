@@ -4,17 +4,17 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo> <!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}{{^useGenericHost}}
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo><!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}
     <TargetFramework{{#multiTarget}}s{{/multiTarget}}>{{targetFramework}}</TargetFramework{{#multiTarget}}s{{/multiTarget}}>
-    <AssemblyName>{{packageName}}</AssemblyName>
-    <PackageId>{{packageName}}</PackageId>
+    <AssemblyName>Algolia.Search.{{packageName}}</AssemblyName>
+    <PackageId>Algolia.Search.{{packageName}}</PackageId>
     <OutputType>Library</OutputType>
     <Authors>{{packageAuthors}}</Authors>
     <Company>{{packageCompany}}</Company>
     <AssemblyTitle>{{packageTitle}}</AssemblyTitle>
     <Description>{{packageDescription}}</Description>
     <Copyright>{{packageCopyright}}</Copyright>
-    <RootNamespace>{{packageName}}</RootNamespace>
+    <RootNamespace>Algolia.Search.{{packageName}}</RootNamespace>
     <Version>{{packageVersion}}</Version>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\{{packageName}}.xml</DocumentationFile>{{#licenseId}}
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Algolia.Search.{{packageName}}.xml</DocumentationFile>{{#licenseId}}
     <PackageLicenseExpression>{{.}}</PackageLicenseExpression>{{/licenseId}}
     <RepositoryUrl>https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>{{#releaseNote}}

@@ -26,7 +26,7 @@ using System.Net.Http.Headers;
 using Polly;
 {{/supportsRetry}}
 
-namespace {{packageName}}.Client
+namespace Algolia.Search.{{packageName}}.Client
 {
     /// <summary>
     /// To Serialize/Deserialize JSON using our custom logic, but only when ContentType is JSON.
@@ -66,10 +66,10 @@ namespace {{packageName}}.Client
         /// <returns>A JSON string.</returns>
         public string Serialize(object obj)
         {
-            if (obj != null && obj is {{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)
+            if (obj != null && obj is {Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)
             {
                 // the object to be serialized is an oneOf/anyOf schema
-                return (({{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)obj).ToJson();
+                return (({Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema)obj).ToJson();
             }
             else
             {
@@ -196,7 +196,7 @@ namespace {{packageName}}.Client
         /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
         /// </summary>
         public ApiClient() :
-                 this({{packageName}}.Client.GlobalConfiguration.Instance.BasePath)
+                 this(Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance.BasePath)
         {
         }
 
@@ -228,7 +228,7 @@ namespace {{packageName}}.Client
         /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
         /// </remarks>
         public ApiClient(HttpClient client, HttpClientHandler handler = null) :
-                 this(client, {{packageName}}.Client.GlobalConfiguration.Instance.BasePath, handler)
+                 this(client, Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance.BasePath, handler)
         {
         }
 
@@ -520,7 +520,7 @@ namespace {{packageName}}.Client
                 object responseData = await deserializer.Deserialize<T>(response).ConfigureAwait(false);
 
                 // if the response type is oneOf/anyOf, call FromJSON to deserialize the data
-                if (typeof({{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
+                if (typeof({Algolia.Search.{{packageName}}}.{{modelPackage}}.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
                 {
                     responseData = (T) typeof(T).GetMethod("FromJson").Invoke(null, new object[] { response.Content });
                 }

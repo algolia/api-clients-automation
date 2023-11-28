@@ -25,10 +25,10 @@ using JsonSubTypes;
 {{#validatable}}
 using System.ComponentModel.DataAnnotations;
 {{/validatable}}
-using FileParameter = {{packageName}}.Client.FileParameter;
-using OpenAPIDateConverter = {{packageName}}.Client.OpenAPIDateConverter;
+using FileParameter = Algolia.Search.{{packageName}}.Client.FileParameter;
+using OpenAPIDateConverter = Algolia.Search.{{packageName}}.Client.OpenAPIDateConverter;
 {{#useCompareNetObjects}}
-using OpenAPIClientUtils = {{packageName}}.Client.ClientUtils;
+using OpenAPIClientUtils = Algolia.Search.{{packageName}}.Client.ClientUtils;
 {{/useCompareNetObjects}}
 {{#models}}
 {{#model}}
@@ -43,7 +43,7 @@ using System.Reflection;
 {{/-first}}
 {{/anyOf}}
 
-namespace {{packageName}}.{{modelPackage}}
+namespace Algolia.Search.{{packageName}}.{{modelPackage}}
 {
 {{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{#anyOf}}{{#-first}}{{>modelAnyOf}}{{/-first}}{{/anyOf}}{{^oneOf}}{{^anyOf}}{{>modelGeneric}}{{/anyOf}}{{/oneOf}}{{/isEnum}}
 {{/model}}

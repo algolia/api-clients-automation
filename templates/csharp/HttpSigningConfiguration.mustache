@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace {{packageName}}.Client
+namespace Algolia.Search.{{packageName}}.Client
 {
     /// <summary>
     /// Class for HttpSigning auth related parameter and methods
@@ -778,7 +778,7 @@ namespace {{packageName}}.Client
         private string ReadApiKeyFromFile(string apiKeyFilePath)
         {
             string apiKeyString = null;
-            
+
             if(File.Exists(apiKeyFilePath))
             {
                 apiKeyString = File.ReadAllText(apiKeyFilePath);

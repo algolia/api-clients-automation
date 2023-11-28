@@ -7,11 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
-using {{packageName}}.Client;
-{{#hasImport}}using {{packageName}}.{{modelPackage}};
+using Algolia.Search.{{packageName}}.Client;
+{{#hasImport}}using Algolia.Search.{{packageName}}.{{modelPackage}};
 {{/hasImport}}
 
-namespace {{packageName}}.{{apiPackage}}
+namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 {
     {{#operations}}
 
@@ -30,7 +30,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// {{.}}
         /// </remarks>
         {{/notes}}
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}/// <returns>{{returnType}}</returns>
         {{#isDeprecated}}
@@ -44,7 +44,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <remarks>
         /// {{notes}}
         /// </remarks>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}/// <returns>ApiResponse of {{returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
         {{#isDeprecated}}
@@ -69,7 +69,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <remarks>
         /// {{notes}}
         /// </remarks>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
@@ -86,7 +86,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <remarks>
         /// {{notes}}
         /// </remarks>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
@@ -114,7 +114,7 @@ namespace {{packageName}}.{{apiPackage}}
     /// </summary>
     {{>visibility}} partial class {{classname}} : IDisposable, {{interfacePrefix}}{{classname}}
     {
-        private {{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Algolia.Search.{{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class.
@@ -136,16 +136,16 @@ namespace {{packageName}}.{{apiPackage}}
         /// <returns></returns>
         public {{classname}}(string basePath)
         {
-            this.Configuration = {{packageName}}.Client.Configuration.MergeConfigurations(
-                {{packageName}}.Client.GlobalConfiguration.Instance,
-                new {{packageName}}.Client.Configuration { BasePath = basePath }
+            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
+                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
+                new Algolia.Search.{{packageName}}.Client.Configuration { BasePath = basePath }
             );
-            this.ApiClient = new {{packageName}}.Client.ApiClient(this.Configuration.BasePath);
+            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(this.Configuration.BasePath);
             this.Client =  this.ApiClient;
             {{#supportsAsync}}
             this.AsynchronousClient = this.ApiClient;
             {{/supportsAsync}}
-            this.ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -156,20 +156,20 @@ namespace {{packageName}}.{{apiPackage}}
         /// <param name="configuration">An instance of Configuration.</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public {{classname}}({{packageName}}.Client.Configuration configuration)
+        public {{classname}}(Algolia.Search.{{packageName}}.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = {{packageName}}.Client.Configuration.MergeConfigurations(
-                {{packageName}}.Client.GlobalConfiguration.Instance,
+            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
+                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.ApiClient = new {{packageName}}.Client.ApiClient(this.Configuration.BasePath);
+            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(this.Configuration.BasePath);
             this.Client = this.ApiClient;
             {{#supportsAsync}}
             this.AsynchronousClient = this.ApiClient;
             {{/supportsAsync}}
-            ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -204,16 +204,16 @@ namespace {{packageName}}.{{apiPackage}}
         {
             if (client == null) throw new ArgumentNullException("client");
 
-            this.Configuration = {{packageName}}.Client.Configuration.MergeConfigurations(
-                {{packageName}}.Client.GlobalConfiguration.Instance,
-                new {{packageName}}.Client.Configuration { BasePath = basePath }
+            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
+                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
+                new Algolia.Search.{{packageName}}.Client.Configuration { BasePath = basePath }
             );
-            this.ApiClient = new {{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
+            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
             this.Client =  this.ApiClient;
             {{#supportsAsync}}
             this.AsynchronousClient = this.ApiClient;
             {{/supportsAsync}}
-            this.ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -228,21 +228,21 @@ namespace {{packageName}}.{{apiPackage}}
         /// Some configuration settings will not be applied without passing an HttpClientHandler.
         /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
         /// </remarks>
-        public {{classname}}(HttpClient client, {{packageName}}.Client.Configuration configuration, HttpClientHandler handler = null)
+        public {{classname}}(HttpClient client, Algolia.Search.{{packageName}}.Client.Configuration configuration, HttpClientHandler handler = null)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
             if (client == null) throw new ArgumentNullException("client");
 
-            this.Configuration = {{packageName}}.Client.Configuration.MergeConfigurations(
-                {{packageName}}.Client.GlobalConfiguration.Instance,
+            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
+                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.ApiClient = new {{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
+            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
             this.Client = this.ApiClient;
             {{#supportsAsync}}
             this.AsynchronousClient = this.ApiClient;
             {{/supportsAsync}}
-            ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>{{/supportsAsync}}
         /// <param name="configuration">The configuration object.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public {{classname}}({{packageName}}.Client.ISynchronousClient client, {{#supportsAsync}}{{packageName}}.Client.IAsynchronousClient asyncClient, {{/supportsAsync}}{{packageName}}.Client.IReadableConfiguration configuration)
+        public {{classname}}(Algolia.Search.{{packageName}}.Client.ISynchronousClient client, {{#supportsAsync}}Algolia.Search.{{packageName}}.Client.IAsynchronousClient asyncClient, {{/supportsAsync}}Algolia.Search.{{packageName}}.Client.IReadableConfiguration configuration)
         {
             if (client == null) throw new ArgumentNullException("client");
             {{#supportsAsync}}
@@ -266,7 +266,7 @@ namespace {{packageName}}.{{apiPackage}}
             this.AsynchronousClient = asyncClient;
             {{/supportsAsync}}
             this.Configuration = configuration;
-            this.ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -280,19 +280,19 @@ namespace {{packageName}}.{{apiPackage}}
         /// <summary>
         /// Holds the ApiClient if created
         /// </summary>
-        public {{packageName}}.Client.ApiClient ApiClient { get; set; } = null;
+        public Algolia.Search.{{packageName}}.Client.ApiClient ApiClient { get; set; } = null;
 
         {{#supportsAsync}}
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public {{packageName}}.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        public Algolia.Search.{{packageName}}.Client.IAsynchronousClient AsynchronousClient { get; set; }
         {{/supportsAsync}}
 
         /// <summary>
         /// The client for accessing this underlying API synchronously.
         /// </summary>
-        public {{packageName}}.Client.ISynchronousClient Client { get; set; }
+        public Algolia.Search.{{packageName}}.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -307,12 +307,12 @@ namespace {{packageName}}.{{apiPackage}}
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public {{packageName}}.Client.IReadableConfiguration Configuration { get; set; }
+        public Algolia.Search.{{packageName}}.Client.IReadableConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public {{packageName}}.Client.ExceptionFactory ExceptionFactory
+        public Algolia.Search.{{packageName}}.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -329,7 +329,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}/// <returns>{{returnType}}</returns>
         {{#isDeprecated}}
@@ -337,32 +337,32 @@ namespace {{packageName}}.{{apiPackage}}
         {{/isDeprecated}}
         public {{{returnType}}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
         {
-            {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
+            {{#returnType}}Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
             return localVarResponse.Data;{{/returnType}}{{^returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{/returnType}}
         }
 
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}/// <returns>ApiResponse of {{returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public {{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
+        public Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
         {
             {{#allParams}}
             {{#required}}
             {{^vendorExtensions.x-csharp-value-type}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new {{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+                throw new Algolia.Search.{{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
 
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
-            {{packageName}}.Client.RequestOptions localVarRequestOptions = new {{packageName}}.Client.RequestOptions();
+            Algolia.Search.{{packageName}}.Client.RequestOptions localVarRequestOptions = new Algolia.Search.{{packageName}}.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
                 {{#consumes}}
@@ -377,20 +377,20 @@ namespace {{packageName}}.{{apiPackage}}
                 {{/produces}}
             };
 
-            var localVarContentType = {{packageName}}.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = {{packageName}}.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             {{#pathParams}}
             {{#required}}
-            localVarRequestOptions.PathParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
+            localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                localVarRequestOptions.PathParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
+                localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
             }
             {{/required}}
             {{/pathParams}}
@@ -398,14 +398,14 @@ namespace {{packageName}}.{{apiPackage}}
             {{#required}}
             {{#isDeepObject}}
             {{#items.vars}}
-            localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
+            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
             {{/items.vars}}
             {{^items}}
-            localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
+            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
             {{/items}}
             {{/isDeepObject}}
             {{^isDeepObject}}
-            localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
             {{/isDeepObject}}
             {{/required}}
             {{^required}}
@@ -415,27 +415,27 @@ namespace {{packageName}}.{{apiPackage}}
                     {{#items.vars}}
                 if ({{paramName}}.{{name}} != null)
                 {
-                    localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
+                    localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
                 }
                     {{/items.vars}}
                 {{^items}}
-                localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
+                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
                 {{/items}}
                 {{/isDeepObject}}
                 {{^isDeepObject}}
-                localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
                 {{/isDeepObject}}
             }
             {{/required}}
             {{/queryParams}}
             {{#headerParams}}
             {{#required}}
-            localVarRequestOptions.HeaderParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
+                localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
             }
             {{/required}}
             {{/headerParams}}
@@ -445,7 +445,7 @@ namespace {{packageName}}.{{apiPackage}}
             localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
             {{/isFile}}
             {{^isFile}}
-            localVarRequestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
+            localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
             {{/isFile}}
             {{/required}}
             {{^required}}
@@ -455,7 +455,7 @@ namespace {{packageName}}.{{apiPackage}}
                 localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
                 {{/isFile}}
                 {{^isFile}}
-                localVarRequestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
+                localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
                 {{/isFile}}
             }
             {{/required}}
@@ -483,7 +483,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#isKeyInQuery}}
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
             {
-                localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
+                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
@@ -491,7 +491,7 @@ namespace {{packageName}}.{{apiPackage}}
             // http basic authentication required
             if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + {{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Algolia.Search.{{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
             {{/isBasicBasic}}
             {{#isBasicBearer}}
@@ -543,7 +543,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
@@ -554,14 +554,14 @@ namespace {{packageName}}.{{apiPackage}}
         {{/isDeprecated}}
         {{#returnType}}public async System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);
+            {{#returnType}}Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;{{/returnType}}{{^returnType}}await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);{{/returnType}}
         }
 
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
@@ -570,20 +570,20 @@ namespace {{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}>> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}>> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             {{#allParams}}
             {{#required}}
             {{^vendorExtensions.x-csharp-value-type}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new {{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+                throw new Algolia.Search.{{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
 
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
 
-            {{packageName}}.Client.RequestOptions localVarRequestOptions = new {{packageName}}.Client.RequestOptions();
+            Algolia.Search.{{packageName}}.Client.RequestOptions localVarRequestOptions = new Algolia.Search.{{packageName}}.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
                 {{#consumes}}
@@ -599,42 +599,42 @@ namespace {{packageName}}.{{apiPackage}}
             };
 
 
-            var localVarContentType = {{packageName}}.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = {{packageName}}.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             {{#pathParams}}
             {{#required}}
-            localVarRequestOptions.PathParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
+            localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                localVarRequestOptions.PathParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
+                localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
             }
             {{/required}}
             {{/pathParams}}
             {{#queryParams}}
             {{#required}}
-            localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
             }
             {{/required}}
             {{/queryParams}}
             {{#headerParams}}
             {{#required}}
-            localVarRequestOptions.HeaderParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
+                localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
             }
             {{/required}}
             {{/headerParams}}
@@ -644,7 +644,7 @@ namespace {{packageName}}.{{apiPackage}}
             localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
             {{/isFile}}
             {{^isFile}}
-            localVarRequestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
+            localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
             {{/isFile}}
             {{/required}}
             {{^required}}
@@ -654,7 +654,7 @@ namespace {{packageName}}.{{apiPackage}}
                 localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
                 {{/isFile}}
                 {{^isFile}}
-                localVarRequestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
+                localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
                 {{/isFile}}
             }
             {{/required}}
@@ -682,7 +682,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#isKeyInQuery}}
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
             {
-                localVarRequestOptions.QueryParameters.Add({{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
+                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
@@ -691,7 +691,7 @@ namespace {{packageName}}.{{apiPackage}}
             // http basic authentication required
             if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + {{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Algolia.Search.{{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
             {{/isBasicBasic}}
             {{#isBasicBearer}}
