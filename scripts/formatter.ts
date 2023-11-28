@@ -28,7 +28,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       cmd = `./gradle/gradlew -p ${folder} spotlessApply`;
       break;
     case 'csharp':
-      cmd = `find ${folder} -type f -name "*.sln" | dotnet format`;
+      cmd = `find ${folder} -type f -name "*.sln" | xargs -I % sh -c 'echo Formatting %;dotnet format %'`;
       break;
     case 'dart':
       if (folder.includes('tests')) {
