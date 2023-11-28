@@ -1,192 +1,186 @@
 {{>partial_header}}
 import io
+import json
+import re
 import warnings
-from pydantic import validate_call, StrictFloat, StrictInt
+from pydantic import StrictFloat, StrictInt
 from typing import Tuple, List
 {{#imports}}
 {{import}}
 {{/imports}}
 from algoliasearch.{{packageName}}.api_client import ApiClient
-from algoliasearch.{{packageName}}.api_response import ApiResponse
+from algoliasearch.{{packageName}}.config import Config
+
+from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.transporter import Transporter
+from algoliasearch.http.verb import Verb
+from algoliasearch.http.request_options import RequestOptions
+
+import algoliasearch
+
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
+
 
 {{#operations}}
 class {{classname}}:
-    def __init__(self, api_client=None) -> None:
-        if api_client is None:
-            api_client = ApiClient.get_default()
-        self.api_client = api_client
+    PRIMITIVE_TYPES = (float, bool, bytes, str, int)
+    NATIVE_TYPES_MAPPING = {
+        "int": int,
+        "float": float,
+        "str": str,
+        "bool": bool,
+        "object": object,
+    }
+
+    def app_id(self) -> str:
+        return self._config.app_id
+
+    def __init__(self, transporter: Transporter, config: Config) -> None:
+        self._transporter = transporter
+        self._config = config
+
+    def create_with_config(config: Config) -> Self:
+        transporter = Transporter(config)
+
+        return {{classname}}(transporter, config)
+
+    def create(app_id: Optional[str] = None, api_key: Optional[str] = None) -> Self:
+        return {{classname}}.create_with_config(Config(app_id, api_key))
+
+    async def close(self) -> None:
+        return await self._transporter.close()
+
+    def __deserialize(self, data, klass) -> dict:
+        """Deserializes dict, list, str into an object.
+
+        :param data: dict, list or str.
+        :param klass: class literal, or string of class name.
+
+        :return: object.
+        """
+        if data is None:
+            return None
+
+        if isinstance(klass, str):
+            if klass.startswith("List["):
+                sub_kls = re.match(r"List\[(.*)]", klass).group(1)
+                return [self.__deserialize(sub_data, sub_kls) for sub_data in data]
+
+            if klass.startswith("Dict["):
+                sub_kls = re.match(r"Dict\[([^,]*), (.*)]", klass).group(2)
+                return {k: self.__deserialize(v, sub_kls) for k, v in data.items()}
+
+            # convert str to class
+            if klass in self.NATIVE_TYPES_MAPPING:
+                klass = self.NATIVE_TYPES_MAPPING[klass]
+            else:
+                klass = getattr(algoliasearch.search.models, klass)
+
+        if klass in self.PRIMITIVE_TYPES:
+            return self.__deserialize_primitive(data, klass)
+        elif klass == object:
+            return self.__deserialize_object(data)
+        else:
+            return self.__deserialize_model(data, klass)
+
     {{#operation}}
 
-    @validate_call
-    async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
-{{>partial_api}}
-        _response_types_map: Dict[str, Optional[str]] = {
-            {{#returnType}}{{#responses}}{{^isWildcard}}'{{code}}': {{#dataType}}"{{.}}"{{/dataType}}{{^dataType}}None{{/dataType}}{{/isWildcard}}{{^-last}},{{/-last}}
-            {{/responses}}{{/returnType}}
-        }
-        response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
+    async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
+        """
+        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}{{{summary}}}{{^summary}}{{operationId}}{{/summary}}
 
-    @validate_call
-    async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
-        return self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}_request_timeout, _request_auth, _content_type, _headers, _host_index).data
+        {{#notes}}
+        {{{.}}}
+        {{/notes}}
 
-    def _{{operationId}}_serialize(
-        self,
         {{#allParams}}
-        {{paramName}},
+        :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
         {{/allParams}}
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> Tuple:
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
 
-        {{#servers.0}}
-        _hosts = [{{#servers}}
-            '{{{url}}}'{{^-last}},{{/-last}}{{/servers}}
-        ]
-        _host = _hosts[_host_index]
-        {{/servers.0}}
-        {{^servers.0}}
-        _host = None
-        {{/servers.0}}
-
-        _collection_formats: Dict[str, str] = {
-            {{#allParams}}{{#isArray}}
-            '{{baseName}}': '{{collectionFormat}}',{{/isArray}}{{/allParams}}
-        }
+        {{#isDeprecated}}warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning){{/isDeprecated}}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
         _body_params: Optional[bytes] = None
 
-        {{#pathParams.0}}# process the path parameters{{/pathParams.0}}
         {{#pathParams}}
         if {{paramName}} is not None:
             _path_params['{{baseName}}'] = {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}
         {{/pathParams}}
 
-        {{#queryParams.0}}# process the query parameters{{/queryParams.0}}
         {{#queryParams}}
         if {{paramName}} is not None:
-            {{#isDateTime}}
-            if isinstance({{paramName}}, datetime):
-                _query_params.append(
-                    (
-                        '{{baseName}}',
-                        {{paramName}}.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('{{baseName}}', {{paramName}}))
-            {{/isDateTime}}
-            {{#isDate}}
-            if isinstance({{paramName}}, date):
-                _query_params.append(
-                    (
-                        '{{baseName}}',
-                        {{paramName}}.strftime(
-                            self.api_client.configuration.date_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('{{baseName}}', {{paramName}}))
-            {{/isDate}}
             {{^isDateTime}}{{^isDate}}
             _query_params.append(('{{baseName}}', {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}))
             {{/isDate}}{{/isDateTime}}
         {{/queryParams}}
 
-        {{#headerParams.0}}# process the headers parameters{{/headerParams.0}}
-        {{#headerParams}}
-        if {{paramName}} is not None:
-            _header_params['{{baseName}}'] = {{paramName}}
-        {{/headerParams}}
-
-        {{#bodyParam.0}}# process the body parameters{{/bodyParam.0}}
         {{#bodyParam}}
         if {{paramName}} is not None:
-            {{#isBinary}}
-            # convert to byte array if the input is a file name (str)
-            if isinstance({{paramName}}, str):
-                with io.open({{paramName}}, "rb") as _fp:
-                    _body_params = _fp.read()
-            else:
-                _body_params = {{paramName}}
-            {{/isBinary}}
             {{^isBinary}}
             _body_params = {{paramName}}
             {{/isBinary}}
         {{/bodyParam}}
 
-        {{#constantParams}}
-        {{#isQueryParam}}
-        # Set client side default value of Query Param "{{baseName}}".
-        _query_params['{{baseName}}'] = {{#_enum}}'{{{.}}}'{{/_enum}}
-        {{/isQueryParam}}
-        {{#isHeaderParam}}
-        # Set client side default value of Header Param "{{baseName}}".
-        _header_params['{{baseName}}'] = {{#_enum}}'{{{.}}}'{{/_enum}}
-        {{/isHeaderParam}}
-        {{/constantParams}}
-
-        {{#hasProduces}}
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [{{#produces}}
-                '{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}
-            ]
-        )
-        {{/hasProduces}}
-
-        {{#hasConsumes}}
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [{{#consumes}}
-                        '{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-        {{/hasConsumes}}
-
-        # authentication setting
-        _auth_settings: List[str] = [{{#authMethods}}
-            '{{name}}'{{^-last}}, {{/-last}}{{/authMethods}}
-        ]
-
-        return self.api_client.param_serialize(
-            method='{{httpMethod}}',
-            resource_path='{{{path}}}',
+        _param = self._transporter.param_serialize(
+            path='{{{path}}}',
             path_params=_path_params,
             query_params=_query_params,
-            header_params=_header_params,
             body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            request_options=request_options,
         )
+
+        response = await self._transporter.request(
+            verb=Verb.POST,
+            path=_param[0],
+            data=_param[1],
+            request_options=_param[2],
+            use_read_transporter=True,
+        )
+
+        response.data = response.raw_data
+
+        return response
+
+    async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+        """
+        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}{{{summary}}}{{^summary}}{{operationId}}{{/summary}}
+
+        {{#notes}}
+        {{{.}}}
+        {{/notes}}
+
+        {{#allParams}}
+        :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
+        {{/allParams}}
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        {{#returnType}}
+        :return: Returns the deserialized response in a '{{{returnType}}}' result object.
+        {{/returnType}}
+        """
+
+        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options).data
+
+        {{^returnType}}
+        return None
+        {{/returnType}}
+
+        {{#returnType}}
+        data = self.__deserialize(response.raw_data, "{{{returnType}}}")
+        try:
+            data = json.loads(response.raw_data)
+        except ValueError:
+            data = response.raw_data
+
+        return data
+        {{/returnType}}
 {{/operation}}
 {{/operations}}

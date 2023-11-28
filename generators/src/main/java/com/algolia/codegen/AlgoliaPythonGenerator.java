@@ -52,6 +52,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
       file.getTemplateFile().equals("setup_cfg.mustache") ||
       file.getTemplateFile().equals("setup.mustache") ||
       file.getTemplateFile().equals("pyproject.mustache") ||
+      file.getTemplateFile().equals("gitignore.mustache") ||
       file.getTemplateFile().equals("py.typed.mustache") ||
       file.getTemplateFile().equals("README.mustache") ||
       file.getTemplateFile().equals("api_test.mustache") ||
@@ -59,6 +60,11 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
       file.getTemplateFile().equals("github-workflow.mustache") ||
       file.getTemplateFile().equals("travis.mustache") ||
       file.getTemplateFile().equals("__init__api.mustache") ||
+      file.getTemplateFile().equals("api_response.mustache") ||
+      file.getTemplateFile().equals("exceptions.mustache") ||
+      file.getTemplateFile().equals("api_client.mustache") ||
+      file.getTemplateFile().equals("rest.mustache") ||
+      file.getTemplateFile().equals("configuration.mustache") ||
       file.getTemplateFile().equals("gitlab-ci.mustache")
     );
 
@@ -66,6 +72,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     supportingFiles.add(new SupportingFile("pyproject.mustache", "../", "pyproject.toml"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
     supportingFiles.add(new SupportingFile("__init__.mustache", "", "__init__.py"));
+    supportingFiles.add(new SupportingFile("config.mustache", packageName, "config.py"));
 
     try {
       Utils.generateServer(CLIENT, additionalProperties);

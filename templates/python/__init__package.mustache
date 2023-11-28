@@ -1,24 +1,3 @@
 {{>partial_header}}
 
 __version__ = "{{{packageVersion}}}"
-
-{{#apiInfo}}{{#apis}}from {{classFilename}} import {{classname}}
-{{/apis}}{{/apiInfo}}
-
-from algoliasearch.{{packageName}}.api_response import ApiResponse
-from algoliasearch.{{packageName}}.api_client import ApiClient
-from algoliasearch.{{packageName}}.configuration import Configuration
-from algoliasearch.{{packageName}}.exceptions import (
-    OpenApiException,
-    ApiTypeError,
-    ApiValueError,
-    ApiKeyError,
-    ApiAttributeError,
-    ApiException,
-)
-
-{{#models}}
-{{#model}}
-from algoliasearch.{{modelPackage}}.{{classFilename}} import {{classname}}
-{{/model}}
-{{/models}}
