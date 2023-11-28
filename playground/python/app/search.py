@@ -12,21 +12,9 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.search_with_http_info(search_method_params={
-            "requests": [{"query": "foo", "indexName": "nvim"}]
-        })
+        response = await client.get_settings(index_name="nvim")
 
-        print("-------------response with http info")
         print(response)
-        print("-------------response with http info")
-
-        # response = await client.search_with_http_info(search_method_params={
-        #     "requests": [{"query": "foo", "indexName": "nvim"}]
-        # })
-        #
-        # print("-------------response with http info")
-        # print(response)
-        # print("-------------response with http info")
     finally:
         await client.close()
 

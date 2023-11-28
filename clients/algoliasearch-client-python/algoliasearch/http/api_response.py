@@ -14,6 +14,7 @@ class ApiResponse(Generic[T]):
 
     def __init__(
         self,
+        url: str = "",
         status_code: int = None,
         headers: Optional[Dict[str, str]] = None,
         data: T = None,
@@ -23,6 +24,7 @@ class ApiResponse(Generic[T]):
         is_network_error: bool = False,
         model_config: Dict[str, Any] = {"arbitrary_types_allowed": True},
     ) -> None:
+        self.url = url
         self.status_code = status_code
         self.headers = headers
         self.data = data

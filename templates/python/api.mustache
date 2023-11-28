@@ -16,7 +16,7 @@ from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.verb import Verb
 from algoliasearch.http.request_options import RequestOptions
 
-import algoliasearch
+import algoliasearch.{{packageName}}.models
 
 try:
     from typing import Self
@@ -53,7 +53,7 @@ class {{classname}}:
     async def close(self) -> None:
         return await self._transporter.close()
 
-    def __deserialize(self, data, klass) -> dict:
+    def __deserialize(self, data: Optional[dict], klass: any = None) -> dict:
         """Deserializes dict, list, str into an object.
 
         :param data: dict, list or str.
@@ -73,18 +73,20 @@ class {{classname}}:
                 sub_kls = re.match(r"Dict\[([^,]*), (.*)]", klass).group(2)
                 return {k: self.__deserialize(v, sub_kls) for k, v in data.items()}
 
-            # convert str to class
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
-            else:
-                klass = getattr(algoliasearch.search.models, klass)
 
         if klass in self.PRIMITIVE_TYPES:
-            return self.__deserialize_primitive(data, klass)
+            try:
+                return klass(data)
+            except UnicodeEncodeError:
+                return str(data)
+            except TypeError:
+                return data
         elif klass == object:
-            return self.__deserialize_object(data)
+            return data
         else:
-            return self.__deserialize_model(data, klass)
+            return klass.from_dict(data)
 
     {{#operation}}
 
@@ -138,7 +140,7 @@ class {{classname}}:
         )
 
         response = await self._transporter.request(
-            verb=Verb.POST,
+            verb=Verb.{{httpMethod}},
             path=_param[0],
             data=_param[1],
             request_options=_param[2],
@@ -167,20 +169,19 @@ class {{classname}}:
         {{/returnType}}
         """
 
-        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options).data
+        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
         {{^returnType}}
         return None
         {{/returnType}}
 
         {{#returnType}}
-        data = self.__deserialize(response.raw_data, "{{{returnType}}}")
         try:
             data = json.loads(response.raw_data)
         except ValueError:
             data = response.raw_data
 
-        return data
+        return self.__deserialize(data, {{{returnType}}})
         {{/returnType}}
 {{/operation}}
 {{/operations}}

@@ -1,6 +1,6 @@
 from asyncio import TimeoutError
 from json import dumps
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from aiohttp import ClientSession, TCPConnector
@@ -84,10 +84,10 @@ class Transporter:
 
     def param_serialize(
         self,
-        path,
-        path_params=None,
-        query_params=None,
-        body=None,
+        path: str,
+        path_params: Dict[str, str],
+        query_params: List[Tuple[str, str]] = [],
+        body: Optional[bytes] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> Tuple:
         """Builds the HTTP request params needed by the request.
@@ -102,16 +102,14 @@ class Transporter:
         if request_options is None or isinstance(request_options, dict):
             request_options = RequestOptions.create(self._config, request_options)
 
-        if path_params:
-            for k, v in path_params:
-                path = path.replace("{%s}" % k, quote(str(v)))
+        for k, v in path_params.items():
+            path = path.replace("{%s}" % k, quote(str(v)))
 
-        if body:
+        if body is not None:
             body = dumps(self.sanitize_for_serialization(body))
 
-        if query_params:
-            for k, v in query_params:
-                request_options.query_parameters[k] = v
+        for k, v in query_params:
+            request_options.query_parameters[k] = v
 
         return path, body, request_options
 
@@ -144,6 +142,7 @@ class Transporter:
             ApiResponse(error_message=str(e), is_timed_out_error=True)
 
         return ApiResponse(
+            url=url,
             status_code=response.status,
             headers=response.headers,
             raw_data=raw_data,
