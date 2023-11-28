@@ -24,10 +24,10 @@ class Config:
         self.write_timeout = 30000
         self.connect_timeout = 2000
 
-        {{^hasRegionalHost}}
-        # In microseconds
+        {{#isSearchClient}}
+        # In microseconds - this parameter is used for the `wait` helper methods
         self.wait_task_time_before_retry = 100000
-        {{/hasRegionalHost}}
+        {{/isSearchClient}}
 
         self.headers = {
             "X-Algolia-Application-Id": app_id,
@@ -46,15 +46,15 @@ class Config:
             del self.proxies["https"]
 
         {{#hasRegionalHost}}
-        self._regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
-        self._region = {{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} region
+        _regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
+        _region = {{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} region
 
-        if {{^fallbackToAliasHost}}self._region == "" or {{/fallbackToAliasHost}}(self._region and self._region not in self._regions):
-            raise AlgoliaException(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(self._regions)}")
+        if {{^fallbackToAliasHost}}_region == "" or {{/fallbackToAliasHost}}(_region and _region not in _regions):
+            raise AlgoliaException(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
 
         self.hosts = HostsCollection(
             [
-                Host("{{{regionalHost}}}".replace("{region}", self._region))
+                Host("{{{regionalHost}}}".replace("{region}", _region))
             ]
         )
         {{/hasRegionalHost}}
