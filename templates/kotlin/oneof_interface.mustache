@@ -29,6 +29,7 @@ public sealed interface {{classname}} {
     {{#x-one-of-list}}
     {{^child}}
 
+    @Serializable
     @JvmInline
     public value class {{name}}Value(public val value: {{{type}}}): {{classname}}
     {{/child}}    
@@ -48,51 +49,36 @@ public sealed interface {{classname}} {
     }
 }
 
-internal class {{classname}}Serializer : KSerializer<{{classname}}> {
-
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("{{classname}}")
-
-    override fun serialize(encoder: Encoder, value: {{classname}}) {
-        when(value) {
-        {{#vendorExtensions}}
-        {{#x-one-of-list}}
-        {{#child}}
-          is {{{type}}} -> {{{type}}}.serializer().serialize(encoder, value)
-        {{/child}}
-        {{^child}}
-          is {{classname}}.{{name}}Value -> {{#isList}}ListSerializer({{{listElementType}}}.serializer()){{/isList}}{{^isList}}{{{type}}}.serializer(){{/isList}}.serialize(encoder, value.value)
-        {{/child}}  
-        {{/x-one-of-list}}
-        {{/vendorExtensions}}
+internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{classname}}>({{classname}}::class) {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
+        return when {
+            {{#vendorExtensions.x-one-of-list}}
+            {{#isObject}}
+            element is JsonObject{{#discriminators}} && element.containsKey("{{field}}"){{/discriminators}} -> {{{type}}}.serializer()
+            {{/isObject}}
+            {{#isList}}
+            element is JsonArray -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isList}}
+            {{#isEnum}}
+            element is JsonPrimitive && element.isString -> {{{type}}}.serializer()
+            {{/isEnum}}
+            {{#isInteger}}
+            element is JsonPrimitive && element.intOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isInteger}}
+            {{#isLong}}
+            element is JsonPrimitive && element.longOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isLong}}
+            {{#isDouble}}
+            element is JsonPrimitive && element.doubleOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isDouble}}
+            {{#isBoolean}}
+            element is JsonPrimitive && element.booleanOrNull != null -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isBoolean}}
+            {{#isString}}
+            element is JsonPrimitive && element.isString != null -> {{{classname}}}.{{name}}Value.serializer()
+            {{/isString}}
+            {{/vendorExtensions.x-one-of-list}}
+            else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
         }
-    }
-
-    override fun deserialize(decoder: Decoder): {{classname}} {
-        val codec = decoder.asJsonDecoder()
-        val tree = codec.decodeJsonElement()
-        {{#vendorExtensions.x-one-of-list}}
-
-        // deserialize {{{type}}}
-        if (tree is {{#isObject}}JsonObject{{/isObject}}{{#isList}}JsonArray{{/isList}}{{^isObject}}{{^isList}}JsonPrimitive{{/isList}}{{/isObject}}{{#discriminators}} && tree.containsKey("{{field}}"){{/discriminators}}) {
-            try {   
-                {{#isObject}}
-                return codec.json.decodeFromJsonElement({{{type}}}.serializer(), tree)
-                {{/isObject}}
-                {{#isList}}
-                val value = codec.json.decodeFromJsonElement(ListSerializer({{{listElementType}}}.serializer()), tree)
-                return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value)
-                {{/isList}}
-                {{^isObject}}{{^isList}}
-                val value = codec.json.decodeFromJsonElement({{{type}}}.serializer(), tree)
-                return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value)
-                {{/isList}}{{/isObject}}
-            } catch (e: Exception) {
-                // deserialization failed, continue
-                println("Failed to deserialize {{{type}}} (error: ${e.message})")
-            }    
-        }
-        {{/vendorExtensions.x-one-of-list}}
-
-        throw AlgoliaClientException("Failed to deserialize json element: $tree")
     }
 }
