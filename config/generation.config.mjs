@@ -86,5 +86,10 @@ export const patterns = [
   'clients/algoliasearch-client-python/.gitignore',
 
   // C#
-  '!clients/algoliasearch-client-csharp/**',
+  'clients/algoliasearch-client-csharp/**',
+  '!clients/algoliasearch-client-csharp/*',
+  '!clients/algoliasearch-client-csharp/algoliasearch/obj/**',
+  'clients/algoliasearch-client-csharp/Algolia.Search.sln',
+  'clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj',
+  'clients/algoliasearch-client-csharp/.gitignore',
 ];

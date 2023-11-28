@@ -14,20 +14,24 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     return "algolia-csharp";
   }
 
+  public String getClientName(String client) {
+    return Utils.createClientName(client, "csharp");
+  }
+
   @Override
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
     setLibrary("httpclient");
 
     additionalProperties.put("sourceFolder", "");
-    additionalProperties.put("netCoreProjectFile", "true");
+    additionalProperties.put("netCoreProjectFile", true);
     additionalProperties.put("targetFramework", "netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     setApiNameSuffix(Utils.API_SUFFIX);
 
-    String packageName = Utils.capitalize(CLIENT);
+    String packageName = getClientName(CLIENT);
     setPackageName(packageName);
     setApiPackage("");
     setModelPackage("Models");
