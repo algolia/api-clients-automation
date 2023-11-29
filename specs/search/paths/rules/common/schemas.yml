@@ -114,8 +114,6 @@ promoteObjectID:
   required:
     - position
     - objectID
-  x-discriminator-fields:
-    - objectID  
 
 promoteObjectIDs:
   description: Records to promote.
@@ -132,8 +130,6 @@ promoteObjectIDs:
       $ref: '#/promotePosition'
   required:
     - position
-    - objectIDs
-  x-discriminator-fields:
     - objectIDs
 
 promotePosition:
