@@ -27,18 +27,24 @@ import kotlin.jvm.JvmInline
 public sealed interface {{classname}} {
     {{#composedSchemas.oneOf}}
     {{^isModel}}
+    {{^isEnumRef}}
     @Serializable
     @JvmInline
     public value class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(public val value: {{{datatypeWithEnum}}}): {{classname}}
+    {{/isEnumRef}}
     {{/isModel}}
     {{/composedSchemas.oneOf}}
 
     public companion object {
     {{#vendorExtensions.x-is-multi-array}}
     {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
     public fun of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}(value: {{{datatypeWithEnum}}}): {{classname}} {
         return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
     }
+    {{/isEnumRef}}
+    {{/isModel}}
     {{/composedSchemas.oneOf}}
     {{/vendorExtensions.x-is-multi-array}}
 
@@ -61,7 +67,6 @@ internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{clas
         return when {
             {{#composedSchemas.oneOf}}
             {{#isModel}}
-            /** {{{vendorExtensions}}} */
             element is JsonObject{{#vendorExtensions.x-discriminator-fields}} && element.containsKey("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} -> {{{datatypeWithEnum}}}.serializer()
             {{/isModel}}
             {{#isArray}}

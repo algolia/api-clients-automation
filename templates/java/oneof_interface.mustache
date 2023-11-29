@@ -19,43 +19,59 @@ import java.util.logging.Logger;
 {{>additionalModelTypeAnnotations}}
 public interface {{classname}} {
 
-    {{#vendorExtensions}}
-    {{#x-one-of-list}}
-    {{^child}}
-    /** {{classname}} as {{{type}}} wrapper. */
-    static {{classname}} of{{#x-one-of-explicit-name}}{{name}}{{/x-one-of-explicit-name}}({{{type}}} value) {
-        return new {{name}}Wrapper(value);
+    {{#vendorExtensions.x-is-multi-array}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    static {{classname}} of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}({{{datatypeWithEnum}}} value) {
+        return new {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
     }
-    {{/child}}    
-    {{/x-one-of-list}}
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
 
-    {{#x-one-of-list}}
-    {{^child}}
+    {{^vendorExtensions.x-is-multi-array}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    static {{classname}} of({{{datatypeWithEnum}}} value) {
+        return new {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
+    }
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
 
-    /** {{classname}} as {{{type}}} wrapper. */
-    @JsonSerialize(using = {{name}}Wrapper.Serializer.class)
-    class {{name}}Wrapper implements {{classname}}{
-        private final {{{type}}} value;
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    @JsonSerialize(using = {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper.Serializer.class)
+    class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper implements {{classname}}{
+        private final {{{datatypeWithEnum}}} value;
 
-        {{name}}Wrapper({{{type}}} value) {
+        {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper({{{datatypeWithEnum}}} value) {
             this.value = value;
         }
 
-        public {{{type}}} getValue() {
+        public {{{datatypeWithEnum}}} getValue() {
             return value;
         }
 
-        static class Serializer extends JsonSerializer<{{name}}Wrapper> {
+        static class Serializer extends JsonSerializer<{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper> {
 
             @Override
-            public void serialize({{name}}Wrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+            public void serialize({{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
                 gen.writeObject(value.getValue());
             }
         }
     }
-    {{/child}}    
-    {{/x-one-of-list}}
-    {{/vendorExtensions}}
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
 
     class Deserializer extends JsonDeserializer<{{classname}}> {
 
@@ -64,30 +80,30 @@ public interface {{classname}} {
         @Override
         public {{classname}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             JsonNode tree = jp.readValueAsTree();
-            {{#vendorExtensions.x-one-of-list}}
-
-            // deserialize {{{type}}}
-            if (tree.{{#isObject}}isObject(){{#discriminators}} && tree.has("{{field}}"){{/discriminators}}{{/isObject}}{{#isEnum}}isTextual(){{/isEnum}}{{#isList}}isArray(){{/isList}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}){
+            {{#composedSchemas.oneOf}}
+            // deserialize {{{datatypeWithEnum}}}
+            if (tree.{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}){
                 try(JsonParser parser = tree.traverse(jp.getCodec())) {  
-                    {{#isObject}}
-                    return parser.readValueAs({{{type}}}.class);
-                    {{/isObject}}
-                    {{#isEnum}}
-                    return parser.readValueAs({{{type}}}.class);
-                    {{/isEnum}}
-                    {{#isList}}
-                    return parser.readValueAs(new TypeReference<{{{type}}}>(){});
-                    {{/isList}}
-                    {{^isObject}}{{^isList}}{{^isEnum}}
-                    {{{type}}} value = parser.readValueAs({{{type}}}.class);
-                    return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value);
-                    {{/isEnum}}{{/isList}}{{/isObject}}
+                    {{#isModel}}
+                    return parser.readValueAs({{{datatypeWithEnum}}}.class);
+                    {{/isModel}}
+                    {{#isEnumRef}}
+                    return parser.readValueAs({{{datatypeWithEnum}}}.class);
+                    {{/isEnumRef}}
+                    {{#isArray}}
+                    {{{datatypeWithEnum}}} value = parser.readValueAs(new TypeReference<{{{datatypeWithEnum}}}>(){});
+                    return new {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
+                    {{/isArray}}
+                    {{^isModel}}{{^isEnumRef}}{{^isArray}}
+                    {{{datatypeWithEnum}}} value = parser.readValueAs({{{datatypeWithEnum}}}.class);
+                    return new {{classname}}.{{{datatypeWithEnum}}}Wrapper(value);
+                    {{/isArray}}{{/isEnumRef}}{{/isModel}}
                 } catch (Exception e) {
                     // deserialization failed, continue
-                    LOGGER.finest("Failed to deserialize oneOf {{{type}}} (error: " + e.getMessage() + ") (type: {{{type}}})");
+                    LOGGER.finest("Failed to deserialize oneOf {{{datatypeWithEnum}}} (error: " + e.getMessage() + ") (type: {{{datatypeWithEnum}}})");
                 }    
             }
-            {{/vendorExtensions.x-one-of-list}}
+            {{/composedSchemas.oneOf}}
             throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
         }
 
