@@ -172,6 +172,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOfUtils.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOfUtils.addOneOfMetadata(models);
     jsonParent(models);
     return models;
   }

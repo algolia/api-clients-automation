@@ -294,9 +294,8 @@ public class ParametersWithDataType {
 
       boolean useExplicitName;
       CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
-      if (composedSchemas != null && composedSchemas.getOneOf() != null && composedSchemas.getOneOf().size() > 0) {
-        useExplicitName =
-          Utils.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(x -> getTypeName(x)).collect(Collectors.toList()));
+      if (composedSchemas != null && composedSchemas.getOneOf() != null && !composedSchemas.getOneOf().isEmpty()) {
+        useExplicitName = Utils.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
       } else {
         useExplicitName = Utils.shouldUseExplicitOneOfName(model.oneOf);
       }

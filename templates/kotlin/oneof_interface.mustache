@@ -34,13 +34,25 @@ public sealed interface {{classname}} {
     {{/composedSchemas.oneOf}}
 
     public companion object {
+    {{#vendorExtensions.x-is-multi-array}}
     {{#composedSchemas.oneOf}}
-    {{^isModel}}
     public fun of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}(value: {{{datatypeWithEnum}}}): {{classname}} {
         return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
     }
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
+
+    {{^vendorExtensions.x-is-multi-array}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    public fun of(value: {{{datatypeWithEnum}}}): {{classname}} {
+        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
+    }
+    {{/isEnumRef}}
     {{/isModel}}
     {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
     }
 }
 
