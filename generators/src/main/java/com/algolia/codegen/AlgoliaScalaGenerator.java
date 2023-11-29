@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import org.openapitools.codegen.CodegenConstants;
-import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.SupportingFile;
+import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.ScalaSttpClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
@@ -90,6 +88,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models);
     OneOfUtils.updateModelsOneOf(models, modelPackage);
+    OneOfUtils.addOneOfMetadata(models);
     return models;
   }
 

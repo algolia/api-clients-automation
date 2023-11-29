@@ -64,20 +64,6 @@ public class OneOfUtils {
 
   private static void markOneOfChildren(Map<String, ModelsMap> models, CodegenModel model) {
     var oneOfList = new ArrayList<Map<String, Object>>();
-    for (CodegenProperty oneOf : model.getComposedSchemas().getOneOf()) {
-      oneOf.vendorExtensions.put("basetype-isInteger", true);
-      if (oneOf.isArray) {
-        switch (oneOf.baseType) {
-          case "Int", "Integer" -> oneOf.vendorExtensions.put("basetype-isInteger", true);
-          case "String" -> oneOf.vendorExtensions.put("basetype-isString", true);
-          case "Boolean" -> oneOf.vendorExtensions.put("basetype-isBoolean", true);
-          case "Long" -> oneOf.vendorExtensions.put("basetype-isLong", true);
-          case "Float" -> oneOf.vendorExtensions.put("basetype-isFloat", true);
-          case "Double" -> oneOf.vendorExtensions.put("basetype-isDouble", true);
-        }
-      }
-    }
-
     for (String oneOf : model.oneOf) {
       var oneOfModel = buildOneOfModel(oneOf);
       markCompounds(models, oneOf, oneOfModel, model);
@@ -192,4 +178,59 @@ public class OneOfUtils {
       return 0;
     }
   };
+
+  /**
+   * Add metadata about oneOfs models (e.g., if it has at least one model, if it has more than one
+   * array-subtype, etc.)
+   */
+  public static void addOneOfMetadata(Map<String, ModelsMap> models) {
+    for (ModelsMap modelContainer : models.values()) {
+      // modelContainers always have 1 and only 1 model in our specs
+      var model = modelContainer.getModels().get(0).getModel();
+      var oneOfs = getCodegenProperties(model);
+      if (isMultiArrayOneOfs(oneOfs)) {
+        model.vendorExtensions.put("x-is-multi-array", true);
+      }
+
+      if (hasAtModelOrEnum(oneOfs)) {
+        model.vendorExtensions.put("x-has-model", true);
+      }
+
+      markOneOfModels(oneOfs);
+    }
+  }
+
+  private static List<CodegenProperty> getCodegenProperties(CodegenModel model) {
+    var schemas = model.getComposedSchemas();
+    if (schemas == null) return Collections.emptyList();
+    var oneOfs = schemas.getOneOf();
+    if (oneOfs == null || oneOfs.isEmpty()) return Collections.emptyList();
+    return oneOfs;
+  }
+
+  /** Get true if a composed type has more than a one array-subtype */
+  private static boolean isMultiArrayOneOfs(List<CodegenProperty> oneOfs) {
+    var arrays = 0;
+    for (var prop : oneOfs) {
+      if (prop.isArray) arrays++;
+    }
+    return arrays > 1;
+  }
+
+  /** Get true if a composed type has at least one model/enum. */
+  private static boolean hasAtModelOrEnum(List<CodegenProperty> oneOfs) {
+    for (var prop : oneOfs) {
+      if (prop.isModel || prop.isEnumRef) return true;
+    }
+    return false;
+  }
+
+  /** Mark oneOf models */
+  private static void markOneOfModels(List<CodegenProperty> oneOfs) {
+    for (var prop : oneOfs) {
+      if (prop.isModel) {
+        prop.vendorExtensions.put("x-one-of-element", true);
+      }
+    }
+  }
 }

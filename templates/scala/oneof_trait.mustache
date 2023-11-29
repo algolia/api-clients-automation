@@ -7,57 +7,55 @@ import org.json4s._
  */
 sealed trait {{classname}}
 
-{{#vendorExtensions}}
-{{#x-one-of-contains-object}}
+{{#vendorExtensions.x-has-model}}
 trait {{classname}}Trait extends {{classname}}
-{{/x-one-of-contains-object}}
+{{/vendorExtensions.x-has-model}}
 
-{{#x-one-of-list}}
-{{^child}}
-case class {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}(value: {{{type}}}) extends {{classname}}
-{{/child}}
-{{/x-one-of-list}}
+{{#vendorExtensions.x-is-multi-array}}
+trait {{classname}}Evidence 
 
-{{#x-one-of-multi-array}}
-{{#x-one-of-list}}
-{{^child}}
+object {{classname}}Evidence {
+{{#composedSchemas.oneOf}}
 {{#isArray}}
-trait {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence
+    implicit object {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence extends {{classname}}Evidence
 {{/isArray}}
-{{/child}}
-{{/x-one-of-list}}
-{{/x-one-of-multi-array}}
-
-{{/vendorExtensions}}
+{{/composedSchemas.oneOf}}
+}
+{{/vendorExtensions.x-is-multi-array}}
 
 object {{classname}} {
-  {{#vendorExtensions}}
-  {{#x-one-of-multi-array}}
-  {{#x-one-of-list}}
-  {{^child}}
-  {{#isArray}}
-  implicit object {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence extends {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence
-  {{/isArray}}
-  {{/child}}
-  {{/x-one-of-list}}
-  {{/x-one-of-multi-array}}
 
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  case class {{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value: {{{datatypeWithEnum}}}) extends {{classname}}
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
 
-  {{#x-one-of-list}}
-  {{^child}}
-
-  /** {{classname}} as {{{type}}} wrapper. */
-  {{#x-one-of-multi-array}}
-  def apply(value: {{{type}}}){{#isArray}}(implicit ev: {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}Evidence){{/isArray}}: {{classname}} = {
-  {{/x-one-of-multi-array}}
-  {{^x-one-of-multi-array}}
-  def apply(value: {{{type}}}): {{classname}} = {
-  {{/x-one-of-multi-array}}
-    {{classname}}{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}(value)
+  {{#vendorExtensions.x-is-multi-array}}
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  def apply(value: {{{datatypeWithEnum}}}){{#isArray}}(implicit ev: {{classname}}Evidence.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence.type){{/isArray}}: {{classname}} = {
+      {{classname}}.{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value)
   }
-  {{/child}}    
-  {{/x-one-of-list}}
-  {{/vendorExtensions}}
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+  {{/vendorExtensions.x-is-multi-array}}
+  
+  {{^vendorExtensions.x-is-multi-array}}
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  def apply(value: {{{datatypeWithEnum}}}): {{classname}} = {
+      {{classname}}.{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value)
+  }
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+  {{/vendorExtensions.x-is-multi-array}}
 }
 
 object {{classname}}Serializer extends Serializer[{{classname}}] {
@@ -65,34 +63,32 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => 
       json match {
-        {{#vendorExtensions}}
-        {{#x-one-of-list}}
-        {{#isObject}}
-        case value: JObject {{#discriminators}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.contains("{{field}}"){{/discriminators}} => Extraction.extract[{{{type}}}](value)
-        {{/isObject}}
-        {{#isEnum}}
-        case value: JString => Extraction.extract[{{{type}}}](value)
-        {{/isEnum}}
-        {{#isList}}
-        case JArray(value) => {{{classname}}}(value.map(_.extract[{{{listElementType}}}]))
-        {{/isList}}
+        {{#composedSchemas.oneOf}}
+        {{#isModel}}
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.contains("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isModel}}
+        {{#isEnumRef}}
+        case value: JString => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isEnumRef}}
+        {{#isArray}}
+        case JArray(value{{#items}}: List[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}]{{/items}}) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
+        {{/isArray}}
         {{#isInteger}}
-        case JInt(value) => {{{classname}}}(value.toInt)
+        case JInt(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toInt)
         {{/isInteger}}
         {{#isLong}}
-        case JLong(value) => {{{classname}}}(value.toLong)
+        case JLong(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toLong)
         {{/isLong}}
         {{#isDouble}}
-        case JDouble(value) => {{{classname}}}(value.toDouble)
+        case JDouble(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toDouble)
         {{/isDouble}}
         {{#isBoolean}}
-        case JBool(value) => {{{classname}}}(value)
+        case JBool(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value)
         {{/isBoolean}}
         {{#isString}}
-        case JString(value) => {{{classname}}}(value)
+        case JString(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value)
         {{/isString}}
-        {{/x-one-of-list}}
-        {{/vendorExtensions}} 
+        {{/composedSchemas.oneOf}}
         case _ => throw new MappingException("Can't convert " + json + " to {{classname}}")
       }
   }
