@@ -22,9 +22,6 @@ using Newtonsoft.Json.Serialization;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 using System.Net.Http;
 using System.Net.Http.Headers;
-{{#supportsRetry}}
-using Polly;
-{{/supportsRetry}}
 
 namespace Algolia.Search.{{packageName}}.Client
 {
@@ -470,12 +467,6 @@ namespace Algolia.Search.{{packageName}}.Client
                     _httpClientHandler.Proxy = configuration.Proxy;
                 }
 
-                if (configuration.ClientCertificates != null)
-                {
-                    if(_httpClientHandler == null) throw new InvalidOperationException("Configuration `ClientCertificates` not supported when the client is explicitly created without an HttpClientHandler, use the proper constructor.");
-                    _httpClientHandler.ClientCertificates.AddRange(configuration.ClientCertificates);
-                }
-
                 var cookieContainer = req.Properties.ContainsKey("CookieContainer") ? req.Properties["CookieContainer"] as List<Cookie> : null;
 
                 if (cookieContainer != null)
@@ -490,27 +481,7 @@ namespace Algolia.Search.{{packageName}}.Client
                 InterceptRequest(req);
 
                 HttpResponseMessage response;
-                {{#supportsRetry}}
-                if (RetryConfiguration.AsyncRetryPolicy != null)
-                {
-                    var policy = RetryConfiguration.AsyncRetryPolicy;
-                    var policyResult = await policy
-                        .ExecuteAndCaptureAsync(() => _httpClient.SendAsync(req, finalToken))
-                        .ConfigureAwait(false);
-                    response = (policyResult.Outcome == OutcomeType.Successful) ?
-                        policyResult.Result : new HttpResponseMessage()
-                        {
-                            ReasonPhrase = policyResult.FinalException.ToString(),
-                            RequestMessage = req
-                        };
-                }
-                else
-                {
-                {{/supportsRetry}}
-                    response = await _httpClient.SendAsync(req, finalToken).ConfigureAwait(false);
-                {{#supportsRetry}}
-                }
-                {{/supportsRetry}}
+                response = await _httpClient.SendAsync(req, finalToken).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {

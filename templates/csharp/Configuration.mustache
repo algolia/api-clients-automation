@@ -13,10 +13,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Net.Http;
 using System.Net.Security;
-{{#useRestSharp}}
-{{#hasOAuthMethods}}using Algolia.Search.{{packageName}}.Client.Auth;
-{{/hasOAuthMethods}}
-{{/useRestSharp}}
 
 namespace Algolia.Search.{{packageName}}.Client
 {
@@ -108,13 +104,6 @@ namespace Algolia.Search.{{packageName}}.Client
         /// <value>The operation servers</value>
         private IReadOnlyDictionary<string, List<IReadOnlyDictionary<string, object>>> _operationServers;
 
-        {{#hasHttpSignatureMethods}}
-
-        /// <summary>
-        /// HttpSigning configuration
-        /// </summary>
-        private HttpSigningConfiguration _HttpSigningConfiguration = null;
-        {{/hasHttpSignatureMethods}}
         #endregion Private Members
 
         #region Constructors
@@ -303,18 +292,6 @@ namespace Algolia.Search.{{packageName}}.Client
         public virtual string UserAgent { get; set; }
 
         /// <summary>
-        /// Gets or sets the username (HTTP basic authentication).
-        /// </summary>
-        /// <value>The username.</value>
-        public virtual string Username { get; set; }
-
-        /// <summary>
-        /// Gets or sets the password (HTTP basic authentication).
-        /// </summary>
-        /// <value>The password.</value>
-        public virtual string Password { get; set; }
-
-        /// <summary>
         /// Gets the API key with prefix.
         /// </summary>
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
@@ -332,48 +309,6 @@ namespace Algolia.Search.{{packageName}}.Client
             return apiKeyValue;
         }
 
-        /// <summary>
-        /// Gets or sets certificate collection to be sent with requests.
-        /// </summary>
-        /// <value>X509 Certificate collection.</value>
-        public X509CertificateCollection ClientCertificates { get; set; }
-
-        /// <summary>
-        /// Gets or sets the access token for OAuth2 authentication.
-        ///
-        /// This helper property simplifies code generation.
-        /// </summary>
-        /// <value>The access token.</value>
-        public virtual string AccessToken { get; set; }
-
-        {{#useRestSharp}}
-        {{#hasOAuthMethods}}
-        /// <summary>
-        /// Gets or sets the token URL for OAuth2 authentication.
-        /// </summary>
-        /// <value>The OAuth Token URL.</value>
-        public virtual string OAuthTokenUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client ID for OAuth2 authentication.
-        /// </summary>
-        /// <value>The OAuth Client ID.</value>
-        public virtual string OAuthClientId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client secret for OAuth2 authentication.
-        /// </summary>
-        /// <value>The OAuth Client Secret.</value>
-        public virtual string OAuthClientSecret { get; set; }
-
-        /// <summary>
-        /// Gets or sets the flow for OAuth2 authentication.
-        /// </summary>
-        /// <value>The OAuth Flow.</value>
-        public virtual OAuthFlow? OAuthFlow { get; set; }
-
-        {{/hasOAuthMethods}}
-        {{/useRestSharp}}
         /// <summary>
         /// Gets or sets the temporary folder path to store the files downloaded from the server.
         /// </summary>
@@ -617,17 +552,6 @@ namespace Algolia.Search.{{packageName}}.Client
             return url;
         }
         {{/servers.0}}
-        {{#hasHttpSignatureMethods}}
-
-        /// <summary>
-        /// Gets and Sets the HttpSigningConfiguration
-        /// </summary>
-        public HttpSigningConfiguration HttpSigningConfiguration
-        {
-            get { return _HttpSigningConfiguration; }
-            set { _HttpSigningConfiguration = value; }
-        }
-        {{/hasHttpSignatureMethods}}
 
         /// <summary>
         /// Gets and Sets the RemoteCertificateValidationCallback
@@ -703,23 +627,8 @@ namespace Algolia.Search.{{packageName}}.Client
                 Timeout = second.Timeout,
                 Proxy = second.Proxy ?? first.Proxy,
                 UserAgent = second.UserAgent ?? first.UserAgent,
-                Username = second.Username ?? first.Username,
-                Password = second.Password ?? first.Password,
-                AccessToken = second.AccessToken ?? first.AccessToken,
-                {{#useRestSharp}}
-                {{#hasOAuthMethods}}
-                OAuthTokenUrl = second.OAuthTokenUrl ?? first.OAuthTokenUrl,
-                OAuthClientId = second.OAuthClientId ?? first.OAuthClientId,
-                OAuthClientSecret = second.OAuthClientSecret ?? first.OAuthClientSecret,
-                OAuthFlow = second.OAuthFlow ?? first.OAuthFlow,
-                {{/hasOAuthMethods}}
-                {{/useRestSharp}}
-                {{#hasHttpSignatureMethods}}
-                HttpSigningConfiguration = second.HttpSigningConfiguration ?? first.HttpSigningConfiguration,
-                {{/hasHttpSignatureMethods}}
                 TempFolderPath = second.TempFolderPath ?? first.TempFolderPath,
                 DateTimeFormat = second.DateTimeFormat ?? first.DateTimeFormat,
-                ClientCertificates = second.ClientCertificates ?? first.ClientCertificates,
                 UseDefaultCredentials = second.UseDefaultCredentials,
                 RemoteCertificateValidationCallback = second.RemoteCertificateValidationCallback ?? first.RemoteCertificateValidationCallback,
             };

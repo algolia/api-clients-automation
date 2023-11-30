@@ -56,6 +56,9 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("netcore_project.mustache") ||
       file.getTemplateFile().equals("netcore_testproject.mustache") ||
       file.getTemplateFile().equals("gitignore.mustache") ||
+      file.getTemplateFile().equals("IApiAccessor.mustache") ||
+      file.getTemplateFile().equals("HttpSigningConfiguration.mustache") ||
+      file.getTemplateFile().equals("RetryConfiguration.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
 

@@ -28,7 +28,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       cmd = `./gradle/gradlew -p ${folder} spotlessApply`;
       break;
     case 'csharp':
-      cmd = `find ${folder} -type f -name "*.sln" | xargs -I % sh -c 'echo Formatting %;dotnet format %'`;
+      cmd = `cd ${folder} && dotnet format`;
       break;
     case 'dart':
       if (folder.includes('tests')) {
@@ -41,8 +41,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       cmd = `(cd ${folder} && poetry lock --no-update && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .)`;
       break;
     default:
-      spinner.text = `no formatter for '${language}'`;
-      spinner.warn();
+      spinner.warn(`no formatter for '${language}'`);
       return;
   }
   await run(cmd);

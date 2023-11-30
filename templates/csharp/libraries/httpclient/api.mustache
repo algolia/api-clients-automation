@@ -15,56 +15,15 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 {
     {{#operations}}
 
-    /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
-    /// </summary>
-    {{>visibility}} interface {{interfacePrefix}}{{classname}}Sync : IApiAccessor
-    {
-        #region Synchronous Operations
-        {{#operation}}
-        /// <summary>
-        /// {{summary}}
-        /// </summary>
-        {{#notes}}
-        /// <remarks>
-        /// {{.}}
-        /// </remarks>
-        {{/notes}}
-        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
-        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-        {{/allParams}}/// <returns>{{returnType}}</returns>
-        {{#isDeprecated}}
-        [Obsolete]
-        {{/isDeprecated}}
-        {{{returnType}}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}});
-
-        /// <summary>
-        /// {{summary}}
-        /// </summary>
-        /// <remarks>
-        /// {{notes}}
-        /// </remarks>
-        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
-        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-        {{/allParams}}/// <returns>ApiResponse of {{returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
-        {{#isDeprecated}}
-        [Obsolete]
-        {{/isDeprecated}}
-        ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}});
-        {{/operation}}
-        #endregion Synchronous Operations
-    }
-
     {{#supportsAsync}}
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    {{>visibility}} interface {{interfacePrefix}}{{classname}}Async : IApiAccessor
+    {{>visibility}} interface {{interfacePrefix}}{{classname}}
     {
-        #region Asynchronous Operations
         {{#operation}}
         /// <summary>
-        /// {{summary}}
+        /// {{{summary}}}
         /// </summary>
         /// <remarks>
         /// {{notes}}
@@ -81,7 +40,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#returnType}}System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// {{summary}}
+        /// {{{summary}}}
         /// </summary>
         /// <remarks>
         /// {{notes}}
@@ -97,17 +56,9 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{/isDeprecated}}
         System.Threading.Tasks.Task<ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}>> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         {{/operation}}
-        #endregion Asynchronous Operations
     }
     {{/supportsAsync}}
 
-    /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
-    /// </summary>
-    {{>visibility}} interface {{interfacePrefix}}{{classname}} : {{interfacePrefix}}{{classname}}Sync{{#supportsAsync}}, {{interfacePrefix}}{{classname}}Async{{/supportsAsync}}
-    {
-
-    }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
@@ -327,7 +278,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 
         {{#operation}}
         /// <summary>
-        /// {{summary}} {{notes}}
+        /// {{{summary}}} {{notes}}
         /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
@@ -342,7 +293,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         }
 
         /// <summary>
-        /// {{summary}} {{notes}}
+        /// {{{summary}}} {{notes}}
         /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
@@ -487,44 +438,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
-            {{#isBasicBasic}}
-            // http basic authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Algolia.Search.{{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
-            }
-            {{/isBasicBasic}}
-            {{#isBasicBearer}}
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-            {{/isBasicBearer}}
-            {{#isOAuth}}
-            // oauth required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-            {{/isOAuth}}
-            {{#isHttpSignature}}
-            if (this.Configuration.HttpSigningConfiguration != null)
-            {
-                var HttpSigningHeaders = this.Configuration.HttpSigningConfiguration.GetHttpSignedHeader(this.Configuration.BasePath, "{{{httpMethod}}}", "{{{path}}}", localVarRequestOptions);
-                foreach (var headerItem in HttpSigningHeaders)
-                {
-                    if (localVarRequestOptions.HeaderParameters.ContainsKey(headerItem.Key))
-                    {
-                        localVarRequestOptions.HeaderParameters[headerItem.Key] = new List<string>() { headerItem.Value };
-                    }
-                    else
-                    {
-                        localVarRequestOptions.HeaderParameters.Add(headerItem.Key, headerItem.Value);
-                    }
-                }
-            }
-            {{/isHttpSignature}}
+
             {{/authMethods}}
 
             // make the HTTP request
@@ -541,7 +455,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 
         {{#supportsAsync}}
         /// <summary>
-        /// {{summary}} {{notes}}
+        /// {{{summary}}} {{notes}}
         /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
@@ -559,7 +473,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         }
 
         /// <summary>
-        /// {{summary}} {{notes}}
+        /// {{{summary}}} {{notes}}
         /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
@@ -686,46 +600,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
-            {{#isBasic}}
-            {{#isBasicBasic}}
-            // http basic authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Algolia.Search.{{packageName}}.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
-            }
-            {{/isBasicBasic}}
-            {{#isBasicBearer}}
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-            {{/isBasicBearer}}
-            {{/isBasic}}
-            {{#isOAuth}}
-            // oauth required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-            {{/isOAuth}}
-            {{#isHttpSignature}}
-            if (this.Configuration.HttpSigningConfiguration != null)
-            {
-                var HttpSigningHeaders = this.Configuration.HttpSigningConfiguration.GetHttpSignedHeader(this.Configuration.BasePath, "{{{httpMethod}}}", "{{{path}}}", localVarRequestOptions);
-                foreach (var headerItem in HttpSigningHeaders)
-                {
-                    if (localVarRequestOptions.HeaderParameters.ContainsKey(headerItem.Key))
-                    {
-                        localVarRequestOptions.HeaderParameters[headerItem.Key] = new List<string>() { headerItem.Value };
-                    }
-                    else
-                    {
-                        localVarRequestOptions.HeaderParameters.Add(headerItem.Key, headerItem.Value);
-                    }
-                }
-            }
-            {{/isHttpSignature}}
+
             {{/authMethods}}
 
             // make the HTTP request
