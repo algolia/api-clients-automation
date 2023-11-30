@@ -42,7 +42,7 @@ export async function playground({
       console.log(await run(`cd playground/go && /usr/local/go/bin/go run . --client ${client}`));
       break;
     case 'python':
-      await run(`poetry install && poetry run ${client}`, { cwd: 'playground/python' });
+      await run(`poetry install --sync && poetry run ${client}`, { cwd: 'playground/python' });
       break;
     case 'scala':
       // run scala playground
