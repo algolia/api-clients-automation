@@ -39,7 +39,7 @@
   "go": {
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
-    "packageVersion": "4.0.0-alpha.36",
+    "packageVersion": "4.0.0-alpha.37",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
     "customGenerator": "algolia-go",
@@ -75,7 +75,7 @@
   "python": {
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.0.0-alpha.0",
+    "packageVersion": "4.0.0-alpha.1",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "customGenerator": "algolia-python",
