@@ -136,7 +136,6 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
         if (typing == null) continue;
 
         property.vendorExtensions.put("x-py-typing", typing.replaceAll("default=.*?, ", ""));
-        Utils.prettyPrint(property.vendorExtensions.get("x-py-typing"));
       }
     }
     return models;
