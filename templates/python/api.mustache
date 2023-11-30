@@ -1,6 +1,6 @@
 {{>partial_header}}
 import io
-import json
+from json import loads
 import re
 import warnings
 from pydantic import StrictFloat, StrictInt
@@ -175,7 +175,7 @@ class {{classname}}:
 
         {{#returnType}}
         try:
-            data = json.loads(response.raw_data)
+            data = loads(response.raw_data)
         except ValueError:
             data = response.raw_data
 

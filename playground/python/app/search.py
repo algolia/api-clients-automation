@@ -12,7 +12,9 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.get_settings(index_name="nvim")
+        response = await client.search(search_method_params={
+          "requests": [{"indexName": "nvim"}]
+        })
 
         print(response)
     finally:

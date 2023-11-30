@@ -88,7 +88,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
     @classmethod
     def from_dict(cls, obj: dict) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(dumps(obj))
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
@@ -107,7 +107,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#mappedModels}}
         {{#-first}}
         # use oneOf discriminator to lookup the data type
-        _data_type = json.loads(json_str).get("{{{propertyBaseName}}}")
+        _data_type = loads(json_str).get("{{{propertyBaseName}}}")
         if not _data_type:
             raise ValueError("Failed to lookup data type from the field `{{{propertyBaseName}}}` in the input.") 
 
@@ -125,7 +125,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # deserialize data into {{{dataType}}}
         try:
             # validation
-            instance.{{vendorExtensions.x-py-name}} = json.loads(json_str)
+            instance.{{vendorExtensions.x-py-name}} = loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
             match += 1
@@ -137,7 +137,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # deserialize data into {{{dataType}}}
         try:
             # validation
-            instance.{{vendorExtensions.x-py-name}} = json.loads(json_str)
+            instance.{{vendorExtensions.x-py-name}} = loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
             match += 1
@@ -173,7 +173,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if callable(to_json):
             return self.actual_instance.to_json()
         else:
-            return json.dumps(self.actual_instance)
+            return dumps(self.actual_instance)
 
     def to_dict(self) -> Dict:
         """Returns the dict representation of the actual instance"""
@@ -186,10 +186,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         else:
             # primitive type
             return self.actual_instance
-
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.model_dump())
 
 {{#vendorExtensions.x-py-postponed-model-imports.size}}
 {{#vendorExtensions.x-py-postponed-model-imports}}
