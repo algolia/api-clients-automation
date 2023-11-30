@@ -136,15 +136,10 @@ public class OneOfUtils {
       // modelContainers always have 1 and only 1 model in our specs
       var model = modelContainer.getModels().get(0).getModel();
       var oneOfs = getCodegenProperties(model);
-      if (isMultiArrayOneOfs(oneOfs)) {
-        model.vendorExtensions.put("x-is-multi-array", true);
-      }
-
-      if (hasAtModelOrEnum(oneOfs)) {
-        model.vendorExtensions.put("x-has-model", true);
-      }
-
+      if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
+      if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
       markOneOfModels(oneOfs);
+      sortOneOfs(oneOfs);
     }
   }
 
@@ -181,4 +176,25 @@ public class OneOfUtils {
       }
     }
   }
+
+  private static void sortOneOfs(List<CodegenProperty> oneOfs) {
+    if (oneOfs == null || oneOfs.isEmpty()) return;
+    oneOfs.sort(propertyComparator);
+  }
+
+  private static final Comparator<CodegenProperty> propertyComparator = (propA, propB) -> {
+    boolean hasDiscriminatorA = propA.vendorExtensions.containsKey("x-discriminator-fields");
+    boolean hasDiscriminatorB = propB.vendorExtensions.containsKey("x-discriminator-fields");
+    if (hasDiscriminatorA && !hasDiscriminatorB) {
+      return -1;
+    } else if (!hasDiscriminatorA && hasDiscriminatorB) {
+      return 1;
+    } else if (hasDiscriminatorA && hasDiscriminatorB) {
+      List<?> discriminatorsA = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
+      List<?> discriminatorsB = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
+      return discriminatorsB.size() - discriminatorsA.size();
+    } else {
+      return 0;
+    }
+  };
 }
