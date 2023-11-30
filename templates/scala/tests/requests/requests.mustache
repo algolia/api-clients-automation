@@ -1,0 +1,49 @@
+package algoliasearch.methods.requests
+
+import algoliasearch.EchoInterceptor
+import algoliasearch.api.{{client}}
+import algoliasearch.config.*
+import algoliasearch.{{import}}.*
+import org.json4s.*
+import org.scalatest.funsuite.AnyFunSuite
+
+class {{clientPrefix}}Test extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+
+  val echo: EchoInterceptor = EchoInterceptor()
+  val client: {{client}} = {{client}}(
+    appId = "appId",
+    apiKey = "apiKey",
+    {{#hasRegionalHost}}
+    region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}},
+    {{/hasRegionalHost}}
+    clientOptions = ClientOptions
+      .builder()
+      .withRequesterConfig(requester => requester.withInterceptor(echo))
+      .build()
+  )
+
+  {{#blocksRequests}}
+  {{#tests}}
+  
+  test("{{{testName}}}") {
+    client.{{method}}(
+    {{#parametersWithDataType}}
+    {{> request_param}}{{^-last}},{{/-last}}
+    {{/parametersWithDataType}}    
+    {{#hasRequestOptions}}
+    , requestOptions = RequestOptions.builder()
+    {{#requestOptions.queryParameters.parametersWithDataType}}
+      .withQueryParameter("{{{key}}}", {{> requests/requestOptionsParams}})
+    {{/requestOptions.queryParameters.parametersWithDataType}}
+    {{#requestOptions.headers.parametersWithDataType}}
+      .withHeader("{{{key}}}", "{{{value}}}")
+    {{/requestOptions.headers.parametersWithDataType}}
+      .build()
+    {{/hasRequestOptions}}
+    )
+  }
+  
+  {{/tests}}
+  {{/blocksRequests}}
+}

@@ -1,0 +1,1 @@
+{{^isAdditionalProperty}}{{#lambda.scalaEscapeReserved}}{{&key}}{{/lambda.scalaEscapeReserved}} = {{^isOptional}}{{> param_value}}{{/isOptional}}{{#isOptional}}Some({{> param_value}}){{/isOptional}}{{/isAdditionalProperty}}{{#isAdditionalProperty}}additionalProperties = Map("{{key}}" -> {{> param_json_element}}){{/isAdditionalProperty}}

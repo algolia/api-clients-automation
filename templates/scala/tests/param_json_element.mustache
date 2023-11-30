@@ -1,0 +1,27 @@
+{{#isNull}}
+JNull
+{{/isNull}}
+{{#isString}}
+JString("{{{value}}}")
+{{/isString}}
+{{#isInteger}}
+JInt({{{value}}})
+{{/isInteger}}
+{{#isLong}}
+JLong({{{value}}}L)
+{{/isLong}}
+{{#isDouble}}
+JDouble({{{value}}})
+{{/isDouble}}
+{{#isBoolean}}
+JBool({{{value}}})
+{{/isBoolean}}
+{{#isEnum}}
+JString("{{{value}}}")
+{{/isEnum}}
+{{#isArray}}
+JArray({{#value}}{{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
+{{/isArray}}
+{{#isFreeFormObject}}
+JObject({{#value}}"{{{key}}}" -> {{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
+{{/isFreeFormObject}}

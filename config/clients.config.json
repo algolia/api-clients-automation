@@ -105,7 +105,7 @@
     "customGenerator": "algolia-scala",
     "tests": {
       "extension": "Test.scala",
-      "outputFolder": "test"
+      "outputFolder": "src/test/scala/algoliasearch"
     }
   },
   "csharp": {

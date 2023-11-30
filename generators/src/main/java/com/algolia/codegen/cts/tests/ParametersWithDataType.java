@@ -140,6 +140,11 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
 
+    if (spec instanceof CodegenProperty property) {
+      testOutput.put("isRequired", property.required);
+      testOutput.put("isOptional", !property.required);
+    }
+
     if (param == null) {
       handleNull(testOutput);
     } else if (spec.getIsArray()) {
