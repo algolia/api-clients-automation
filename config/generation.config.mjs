@@ -86,6 +86,11 @@ export const patterns = [
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
+  // Ruby
+  '!clients/algoliasearch-client-ruby/**',
+  'clients/algoliasearch-client-ruby/Gemfile.lock',
+  'clients/algoliasearch-client-ruby/lib/algolia/**',
+
   // Scala
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',

@@ -26,13 +26,16 @@ inputs:
     required: false
   dart:
     description: Whether this job ran or not
-    required: false     
+    required: false
   python:
     description: Whether this job ran or not
-    required: false    
+    required: false
+  ruby:
+    description: Whether this job ran or not
+    required: false
   scala:
     description: Whether this job ran or not
-    required: false    
+    required: false
 
 runs:
   using: composite
@@ -141,6 +144,20 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-python
         unzip -q -o clients-python.zip && rm clients-python.zip
+
+    # Ruby
+    - name: Download clients-ruby artifact
+      if: ${{ inputs.ruby == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-ruby
+
+    - name: Unzip clients-ruby artifact
+      if: ${{ inputs.ruby == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-ruby
+        unzip -q -o clients-ruby.zip && rm clients-ruby.zip
 
     # Scala
     - name: Download clients-scala artifact
