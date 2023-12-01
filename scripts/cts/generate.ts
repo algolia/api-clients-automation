@@ -58,7 +58,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       });
     }
 
-    if (lang === 'python') {
+    if (lang === 'python' || lang === 'ruby') {
       continue;
     }
 
