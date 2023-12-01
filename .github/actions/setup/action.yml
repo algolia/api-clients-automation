@@ -183,7 +183,7 @@ runs:
 
     - name: Install Ruby
       if: ${{ inputs.language == 'ruby' }}
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
         bundler-cache: true
