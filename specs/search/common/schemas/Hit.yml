@@ -9,9 +9,9 @@ hit:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
     _highlightResult:
-      $ref: '#/highlightResultMap'
+      $ref: '#/highlightResult'
     _snippetResult:
-      $ref: '#/snippetResultMap'
+      $ref: '#/snippetResult'
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
@@ -21,10 +21,25 @@ hit:
 _distinctSeqID:
   type: integer
 
+highlightResultOptionMap:
+  type: object
+  description: Show highlighted section and words matched on a query.
+  additionalProperties:
+    $ref: '#/highlightResultOption'
+
+highlightResultOptionOneOf:
+  oneOf:
+    - $ref: '#/highlightResultOption'
+    - $ref: '#/highlightResultOptionMap'
+
 highlightResultOption:
   type: object
   description: Show highlighted section and words matched on a query.
   additionalProperties: false
+  x-discriminator-fields:
+    - matchLevel
+    - value
+    - matchedWords
   properties:
     value:
       $ref: '#/highlightedValue'
@@ -45,17 +60,10 @@ highlightResultOption:
     - matchedWords
 
 highlightResult:
-  oneOf:
-    - $ref: '#/highlightResultOption'
-    - type: array
-      items:
-        $ref: '#/highlightResultOption'
-
-highlightResultMap:
   type: object
   description: Show highlighted section and words matched on a query.
   additionalProperties:
-    $ref: '#/highlightResult'
+    $ref: '#/highlightResultOptionOneOf'
 
 snippetResultOption:
   type: object
@@ -70,18 +78,22 @@ snippetResultOption:
     - value
     - matchLevel
 
-snippetResult:
-  oneOf:
-    - $ref: '#/snippetResultOption'
-    - type: array
-      items:
-        $ref: '#/snippetResultOption'
-
-snippetResultMap:
+snippetResultOptionMap:
   type: object
   description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
   additionalProperties:
-    $ref: '#/snippetResult'
+    $ref: '#/snippetResultOption'
+
+snippetResultOptionOneOf:
+  oneOf:
+    - $ref: '#/snippetResultOption'
+    - $ref: '#/snippetResultOptionMap'
+
+snippetResult:
+  type: object
+  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  additionalProperties:
+    $ref: '#/snippetResultOptionOneOf'
 
 rankingInfo:
   type: object
