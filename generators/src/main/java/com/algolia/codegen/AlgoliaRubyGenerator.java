@@ -43,6 +43,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
       file.getTemplateFile().equals("Gemfile.mustache") ||
       file.getTemplateFile().equals("gem.mustache") ||
       file.getTemplateFile().equals("gemspec.mustache") ||
+      file.getTemplateFile().equals("README.mustache") ||
       file.getTemplateFile().equals("Rakefile.mustache") ||
       file.getTemplateFile().equals("api_client_spec.mustache") ||
       file.getTemplateFile().equals("git_push.sh.mustache") ||

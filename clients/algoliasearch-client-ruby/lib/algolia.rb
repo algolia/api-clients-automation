@@ -7,28 +7,7 @@ require 'algolia/version'
 require 'algolia/configuration'
 
 # Models
-require 'algolia/models/error_base'
-require 'algolia/models/get_inventory403_response'
-require 'algolia/models/incident'
-require 'algolia/models/incidents_inner'
-require 'algolia/models/incidents_response'
-require 'algolia/models/indexing_time_response'
-require 'algolia/models/indexing_time_response_metrics'
-require 'algolia/models/infrastructure_response'
-require 'algolia/models/infrastructure_response_metrics'
-require 'algolia/models/inventory_response'
-require 'algolia/models/latency_response'
-require 'algolia/models/latency_response_metrics'
-require 'algolia/models/metric'
-require 'algolia/models/period'
-require 'algolia/models/probes_metric'
-require 'algolia/models/region'
-require 'algolia/models/server'
-require 'algolia/models/server_status'
-require 'algolia/models/status'
-require 'algolia/models/status_response'
-require 'algolia/models/time_inner'
-require 'algolia/models/type'
+Dir["algolia/models/**/*.rb"].each { |file| require file }
 
 # APIs
 Dir["algolia/api/*.rb"].each { |file| require file }
