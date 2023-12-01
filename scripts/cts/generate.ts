@@ -39,7 +39,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
 
     if (gen.language === 'csharp') {
       const spinner = createSpinner('');
-      spinner.warn(`CTS not yet implemented for Python`);
+      spinner.warn(`CTS not yet implemented for Csharp`);
 
       continue;
     }
@@ -65,7 +65,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       });
     }
 
-    if (lang === 'python' || lang === 'ruby') {
+    if (lang === 'python' || lang === 'ruby' || lang === 'csharp') {
       continue;
     }
 
