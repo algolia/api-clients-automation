@@ -26,37 +26,14 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = IgnorePlurals.Deserializer.class)
 public interface IgnorePlurals {
-  /** IgnorePlurals as Boolean wrapper. */
-  static IgnorePlurals of(Boolean value) {
-    return new BooleanWrapper(value);
-  }
-
   /** IgnorePlurals as List<String> wrapper. */
   static IgnorePlurals of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
   /** IgnorePlurals as Boolean wrapper. */
-  @JsonSerialize(using = BooleanWrapper.Serializer.class)
-  class BooleanWrapper implements IgnorePlurals {
-
-    private final Boolean value;
-
-    BooleanWrapper(Boolean value) {
-      this.value = value;
-    }
-
-    public Boolean getValue() {
-      return value;
-    }
-
-    static class Serializer extends JsonSerializer<BooleanWrapper> {
-
-      @Override
-      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        gen.writeObject(value.getValue());
-      }
-    }
+  static IgnorePlurals of(Boolean value) {
+    return new BooleanWrapper(value);
   }
 
   /** IgnorePlurals as List<String> wrapper. */
@@ -82,6 +59,29 @@ public interface IgnorePlurals {
     }
   }
 
+  /** IgnorePlurals as Boolean wrapper. */
+  @JsonSerialize(using = BooleanWrapper.Serializer.class)
+  class BooleanWrapper implements IgnorePlurals {
+
+    private final Boolean value;
+
+    BooleanWrapper(Boolean value) {
+      this.value = value;
+    }
+
+    public Boolean getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<BooleanWrapper> {
+
+      @Override
+      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
   class Deserializer extends JsonDeserializer<IgnorePlurals> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
@@ -89,25 +89,24 @@ public interface IgnorePlurals {
     @Override
     public IgnorePlurals deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
-      // deserialize Boolean
-      if (tree.isValueNode()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(Boolean.class);
-          return IgnorePlurals.of(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
-        }
-      }
-
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<String>>() {});
+          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
+          return new IgnorePlurals.ListOfStringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
+        }
+      }
+      // deserialize Boolean
+      if (tree.isBoolean()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Boolean value = parser.readValueAs(Boolean.class);
+          return new IgnorePlurals.BooleanWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

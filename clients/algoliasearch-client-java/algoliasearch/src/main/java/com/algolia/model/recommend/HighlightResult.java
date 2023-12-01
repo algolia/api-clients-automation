@@ -51,7 +51,6 @@ public interface HighlightResult {
     @Override
     public HighlightResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize HighlightResultOption
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -61,11 +60,11 @@ public interface HighlightResult {
           LOGGER.finest("Failed to deserialize oneOf HighlightResultOption (error: " + e.getMessage() + ") (type: HighlightResultOption)");
         }
       }
-
       // deserialize List<HighlightResultOption>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
+          List<HighlightResultOption> value = parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
+          return new HighlightResult.ListOfHighlightResultOptionWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(

@@ -21,7 +21,6 @@ public interface SearchQuery {
     @Override
     public SearchQuery deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize SearchForFacets
       if (tree.isObject() && tree.has("facet") && tree.has("type")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -31,7 +30,6 @@ public interface SearchQuery {
           LOGGER.finest("Failed to deserialize oneOf SearchForFacets (error: " + e.getMessage() + ") (type: SearchForFacets)");
         }
       }
-
       // deserialize SearchForHits
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

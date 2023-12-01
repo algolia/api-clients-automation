@@ -21,7 +21,6 @@ public interface GetTopSearchesResponse {
     @Override
     public GetTopSearchesResponse deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize TopSearchesResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -31,7 +30,6 @@ public interface GetTopSearchesResponse {
           LOGGER.finest("Failed to deserialize oneOf TopSearchesResponse (error: " + e.getMessage() + ") (type: TopSearchesResponse)");
         }
       }
-
       // deserialize TopSearchesResponseWithAnalytics
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

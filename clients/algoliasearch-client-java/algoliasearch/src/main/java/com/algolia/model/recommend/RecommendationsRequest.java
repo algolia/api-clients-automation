@@ -21,17 +21,15 @@ public interface RecommendationsRequest {
     @Override
     public RecommendationsRequest deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
-      // deserialize RecommendationsQuery
+      // deserialize TrendingItemsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(RecommendationsQuery.class);
+          return parser.readValueAs(TrendingItemsQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf RecommendationsQuery (error: " + e.getMessage() + ") (type: RecommendationsQuery)");
+          LOGGER.finest("Failed to deserialize oneOf TrendingItemsQuery (error: " + e.getMessage() + ") (type: TrendingItemsQuery)");
         }
       }
-
       // deserialize TrendingFacetsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -41,14 +39,13 @@ public interface RecommendationsRequest {
           LOGGER.finest("Failed to deserialize oneOf TrendingFacetsQuery (error: " + e.getMessage() + ") (type: TrendingFacetsQuery)");
         }
       }
-
-      // deserialize TrendingItemsQuery
+      // deserialize RecommendationsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(TrendingItemsQuery.class);
+          return parser.readValueAs(RecommendationsQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf TrendingItemsQuery (error: " + e.getMessage() + ") (type: TrendingItemsQuery)");
+          LOGGER.finest("Failed to deserialize oneOf RecommendationsQuery (error: " + e.getMessage() + ") (type: RecommendationsQuery)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

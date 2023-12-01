@@ -52,7 +52,6 @@ public interface ConsequenceQuery {
     @Override
     public ConsequenceQuery deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize ConsequenceQueryObject
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -64,12 +63,11 @@ public interface ConsequenceQuery {
           );
         }
       }
-
       // deserialize String
-      if (tree.isValueNode()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           String value = parser.readValueAs(String.class);
-          return ConsequenceQuery.of(value);
+          return new ConsequenceQuery.StringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");

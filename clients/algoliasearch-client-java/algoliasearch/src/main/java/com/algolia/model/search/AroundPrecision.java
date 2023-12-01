@@ -84,22 +84,21 @@ public interface AroundPrecision {
     @Override
     public AroundPrecision deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize Integer
-      if (tree.isValueNode()) {
+      if (tree.isInt()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           Integer value = parser.readValueAs(Integer.class);
-          return AroundPrecision.of(value);
+          return new AroundPrecision.IntegerWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");
         }
       }
-
       // deserialize List<AroundPrecisionFromValueInner>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<AroundPrecisionFromValueInner>>() {});
+          List<AroundPrecisionFromValueInner> value = parser.readValueAs(new TypeReference<List<AroundPrecisionFromValueInner>>() {});
+          return new AroundPrecision.ListOfAroundPrecisionFromValueInnerWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(

@@ -21,7 +21,6 @@ public interface SearchParams {
     @Override
     public SearchParams deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize SearchParamsString
       if (tree.isObject() && tree.has("params")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -31,7 +30,6 @@ public interface SearchParams {
           LOGGER.finest("Failed to deserialize oneOf SearchParamsString (error: " + e.getMessage() + ") (type: SearchParamsString)");
         }
       }
-
       // deserialize SearchParamsObject
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

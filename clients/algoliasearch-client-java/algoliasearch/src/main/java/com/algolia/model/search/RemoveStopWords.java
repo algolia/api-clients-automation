@@ -25,37 +25,14 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = RemoveStopWords.Deserializer.class)
 public interface RemoveStopWords {
-  /** RemoveStopWords as Boolean wrapper. */
-  static RemoveStopWords of(Boolean value) {
-    return new BooleanWrapper(value);
-  }
-
   /** RemoveStopWords as List<String> wrapper. */
   static RemoveStopWords of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
   /** RemoveStopWords as Boolean wrapper. */
-  @JsonSerialize(using = BooleanWrapper.Serializer.class)
-  class BooleanWrapper implements RemoveStopWords {
-
-    private final Boolean value;
-
-    BooleanWrapper(Boolean value) {
-      this.value = value;
-    }
-
-    public Boolean getValue() {
-      return value;
-    }
-
-    static class Serializer extends JsonSerializer<BooleanWrapper> {
-
-      @Override
-      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        gen.writeObject(value.getValue());
-      }
-    }
+  static RemoveStopWords of(Boolean value) {
+    return new BooleanWrapper(value);
   }
 
   /** RemoveStopWords as List<String> wrapper. */
@@ -81,6 +58,29 @@ public interface RemoveStopWords {
     }
   }
 
+  /** RemoveStopWords as Boolean wrapper. */
+  @JsonSerialize(using = BooleanWrapper.Serializer.class)
+  class BooleanWrapper implements RemoveStopWords {
+
+    private final Boolean value;
+
+    BooleanWrapper(Boolean value) {
+      this.value = value;
+    }
+
+    public Boolean getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<BooleanWrapper> {
+
+      @Override
+      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
   class Deserializer extends JsonDeserializer<RemoveStopWords> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
@@ -88,25 +88,24 @@ public interface RemoveStopWords {
     @Override
     public RemoveStopWords deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
-      // deserialize Boolean
-      if (tree.isValueNode()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(Boolean.class);
-          return RemoveStopWords.of(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
-        }
-      }
-
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<String>>() {});
+          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
+          return new RemoveStopWords.ListOfStringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
+        }
+      }
+      // deserialize Boolean
+      if (tree.isBoolean()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Boolean value = parser.readValueAs(Boolean.class);
+          return new RemoveStopWords.BooleanWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

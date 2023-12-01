@@ -79,22 +79,21 @@ public interface MixedSearchFilters {
     @Override
     public MixedSearchFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<String>>() {});
+          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
+          return new MixedSearchFilters.ListOfStringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
         }
       }
-
       // deserialize String
-      if (tree.isValueNode()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           String value = parser.readValueAs(String.class);
-          return MixedSearchFilters.of(value);
+          return new MixedSearchFilters.StringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");

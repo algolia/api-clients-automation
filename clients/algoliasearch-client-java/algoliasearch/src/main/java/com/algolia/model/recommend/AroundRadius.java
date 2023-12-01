@@ -53,25 +53,23 @@ public interface AroundRadius {
     @Override
     public AroundRadius deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
+      // deserialize Integer
+      if (tree.isInt()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Integer value = parser.readValueAs(Integer.class);
+          return new AroundRadius.IntegerWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");
+        }
+      }
       // deserialize AroundRadiusAll
-      if (tree.isObject()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AroundRadiusAll.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf AroundRadiusAll (error: " + e.getMessage() + ") (type: AroundRadiusAll)");
-        }
-      }
-
-      // deserialize Integer
-      if (tree.isValueNode()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Integer value = parser.readValueAs(Integer.class);
-          return AroundRadius.of(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

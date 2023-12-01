@@ -53,20 +53,18 @@ public interface TypoTolerance {
     @Override
     public TypoTolerance deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize Boolean
-      if (tree.isValueNode()) {
+      if (tree.isBoolean()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           Boolean value = parser.readValueAs(Boolean.class);
-          return TypoTolerance.of(value);
+          return new TypoTolerance.BooleanWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
         }
       }
-
       // deserialize TypoToleranceEnum
-      if (tree.isObject()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(TypoToleranceEnum.class);
         } catch (Exception e) {

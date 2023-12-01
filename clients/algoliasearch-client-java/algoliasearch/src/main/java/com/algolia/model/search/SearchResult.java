@@ -21,7 +21,6 @@ public interface SearchResult {
     @Override
     public SearchResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize SearchForFacetValuesResponse
       if (tree.isObject() && tree.has("facetHits")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -33,7 +32,6 @@ public interface SearchResult {
           );
         }
       }
-
       // deserialize SearchResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
