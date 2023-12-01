@@ -37,6 +37,13 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       continue;
     }
 
+    if (gen.language === 'csharp') {
+      const spinner = createSpinner('');
+      spinner.warn(`CTS not yet implemented for Python`);
+
+      continue;
+    }
+
     await ctsGenerate(gen);
   }
 
