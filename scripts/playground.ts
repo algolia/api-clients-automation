@@ -44,6 +44,9 @@ export async function playground({
     case 'python':
       await run(`poetry install --sync && poetry run ${client}`, { cwd: 'playground/python' });
       break;
+    case 'scala':
+      // run scala playground
+      break;
     default:
   }
 }

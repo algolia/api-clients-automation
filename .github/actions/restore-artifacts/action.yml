@@ -29,7 +29,10 @@ inputs:
     required: false     
   python:
     description: Whether this job ran or not
-    required: false     
+    required: false    
+  scala:
+    description: Whether this job ran or not
+    required: false    
 
 runs:
   using: composite
@@ -138,3 +141,17 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-python
         unzip -q -o clients-python.zip && rm clients-python.zip
+
+    # Scala
+    - name: Download clients-scala artifact
+      if: ${{ inputs.scala == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-scala
+
+    - name: Unzip clients-scala artifact
+      if: ${{ inputs.scala == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-scala
+        unzip -q -o clients-scala.zip && rm clients-scala.zip

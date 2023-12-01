@@ -78,6 +78,7 @@ describe('createReleasePR', () => {
       kotlin: { current: expect.any(String) },
       dart: { current: expect.any(String) },
       python: { current: expect.any(String) },
+      scala: { current: expect.any(String)}
     });
   });
 
@@ -196,6 +197,12 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
+
+          scala: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
         })
       ).toMatchInlineSnapshot(`
               "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -204,7 +211,8 @@ describe('createReleasePR', () => {
               - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
               - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
               - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+              - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+              - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
           `);
     });
 
@@ -254,6 +262,12 @@ describe('createReleasePR', () => {
             noCommit: true,
             next: null,
           },
+
+          scala: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
         })
       ).toMatchInlineSnapshot(`
               "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -262,7 +276,8 @@ describe('createReleasePR', () => {
               - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
               - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
               - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - ~python: 0.0.1 (no commit)~"
+              - ~python: 0.0.1 (no commit)~
+              - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
           `);
     });
 
@@ -315,6 +330,13 @@ describe('createReleasePR', () => {
             skipRelease: true,
             next: getNextVersion('0.0.1', null),
           },
+
+          scala: {
+            current: '0.0.1',
+            releaseType: null,
+            skipRelease: true,
+            next: getNextVersion('0.0.1', null),
+          },
         })
       ).toMatchInlineSnapshot(`
               "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -328,7 +350,9 @@ describe('createReleasePR', () => {
               - ~dart: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
                 - No \`feat\` or \`fix\` commit, thus unchecked by default.
               - ~python: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default."
+                - No \`feat\` or \`fix\` commit, thus unchecked by default.
+              - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+                - No \`feat\` or \`fix\` commit, thus unchecked by default."  
           `);
     });
   });

@@ -37,6 +37,9 @@ export async function formatter(language: string, folder: string): Promise<void>
     case 'python':
       cmd = `(cd ${folder} && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .)`;
       break;
+    case 'scala':
+      cmd = `(cd ${folder} && sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt)`;
+      break;
     default:
       return;
   }

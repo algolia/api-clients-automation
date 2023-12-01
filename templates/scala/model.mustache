@@ -1,0 +1,97 @@
+{{>licenseInfo}}
+package {{package}}
+
+{{#imports}}
+import {{import}}
+{{/imports}}
+
+{{#models}}
+{{#model}}
+{{#vendorExtensions.x-has-child-generic}}
+import org.json4s.JObject
+{{/vendorExtensions.x-has-child-generic}}
+{{#additionalProperties}}
+import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+{{/additionalProperties}}
+
+{{^isEnum}}
+{{#vendorExtensions.x-is-one-of}}
+{{> oneof_trait}}
+{{/vendorExtensions.x-is-one-of}}
+{{^vendorExtensions.x-is-one-of}}
+/**
+* {{#description}}{{{.}}}{{/description}}{{^description}}{{classname}}{{/description}}
+*
+{{#vars}}
+{{#description}}
+* @param {{{name}}} 
+*   {{{.}}}
+{{/description}}
+{{/vars}}
+*/
+case class {{classname}}(
+  {{#vars}}
+  {{{name}}}: {{^required}}Option[{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}},
+  {{/vars}}
+  {{#additionalProperties}}
+  additionalProperties: Map[String, JValue] = Map.empty
+  {{/additionalProperties}}
+){{#vendorExtensions.x-one-of-element}}{{#vendorExtensions.x-one-of-element-parents}} {{#-first}}extends{{/-first}}{{^-first}}with{{/-first}} {{parent_classname}}Trait {{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}
+{{/vendorExtensions.x-is-one-of}}
+{{#additionalProperties.isAnyType}}
+
+class {{classname}}Serializer extends Serializer[{{classname}}] {
+  
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => json match {
+      case jobject: JObject =>
+        val formats = format - this
+        val mf = manifest[{{classname}}]
+        val obj = Extraction.extract[{{classname}}](jobject)(formats, mf)
+        val properties = jobject.obj.toMap{{#vars}} - "{{{name}}}"{{/vars}}
+        obj.copy(additionalProperties = properties)
+      case _ => throw new IllegalArgumentException(s"Can't deserialize $json as {{classname}}")  
+    }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value: {{classname}} =>
+      val formats = format - this // remove current serializer from formats to avoid stackoverflow
+      Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(value.additionalProperties)(formats)
+  }
+}
+{{/additionalProperties.isAnyType}}
+{{/isEnum}}
+
+{{#isEnum}}
+object {{classname}} extends Enumeration {
+    type {{classname}} = {{classname}}.Value {{#vendorExtensions.x-one-of-element}}{{#vendorExtensions.x-one-of-element-parents}}with {{parent_classname}} {{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}
+{{#allowableValues}}
+    {{#values}}
+    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
+    {{/values}}
+{{/allowableValues}}
+}
+{{/isEnum}}
+{{#hasEnums}}
+object {{classname}}Enums {
+
+  {{#vars}}
+  {{#isEnum}}
+  type {{datatypeWithEnum}} = {{datatypeWithEnum}}.Value
+  {{/isEnum}}
+  {{/vars}}
+  {{#vars}}
+  {{#isEnum}}
+  object {{datatypeWithEnum}} extends Enumeration {
+{{#_enum}}
+    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
+{{/_enum}}
+  }
+
+  {{/isEnum}}
+  {{/vars}}
+}
+{{/hasEnums}}
+{{/model}}
+{{/models}}

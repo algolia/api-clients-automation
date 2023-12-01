@@ -83,5 +83,17 @@
       "extension": "_test.py",
       "outputFolder": "tests"
     }
+  },
+  "scala": {
+    "folder": "clients/algoliasearch-client-scala",
+    "gitRepoId": "algoliasearch-client-scala",
+    "packageVersion": "2.0.0-alpha.1",
+    "modelFolder": "src/main/scala/algoliasearch/model",
+    "apiFolder": "src/main/scala/algoliasearch/api",
+    "customGenerator": "algolia-scala",
+    "tests": {
+      "extension": "Test.scala",
+      "outputFolder": "test"
+    }
   }
 }

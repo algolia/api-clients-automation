@@ -37,6 +37,9 @@ async function runCtsOne(language: string): Promise<void> {
     case 'python':
       spinner.warn(`CTS not yet implemented for Python`);
       return;
+    case 'scala':
+      spinner.warn(`CTS not yet implemented for Scala`);
+      break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;

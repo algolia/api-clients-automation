@@ -25,74 +25,73 @@ import kotlin.jvm.JvmInline
 {{/additionalModelTypeAnnotations}}
 @Serializable({{classname}}Serializer::class)
 public sealed interface {{classname}} {
-    {{#vendorExtensions}}
-    {{#x-one-of-list}}
-    {{^child}}
-
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    @Serializable
     @JvmInline
-    public value class {{name}}Value(public val value: {{{type}}}): {{classname}}
-    {{/child}}    
-    {{/x-one-of-list}}
+    public value class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(public val value: {{{datatypeWithEnum}}}): {{classname}}
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
 
     public companion object {
-    {{#x-one-of-list}}
-    {{^child}}
-
-    /** [{{classname}}] as [{{{type}}}] Value. */
-    public fun of{{#x-one-of-explicit-name}}{{name}}{{/x-one-of-explicit-name}}(value: {{{type}}}): {{classname}} {
-        return {{name}}Value(value);
+    {{#vendorExtensions.x-is-multi-array}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    public fun of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}(value: {{{datatypeWithEnum}}}): {{classname}} {
+        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
     }
-    {{/child}}    
-    {{/x-one-of-list}}
-    {{/vendorExtensions}}
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
+
+    {{^vendorExtensions.x-is-multi-array}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    public fun of(value: {{{datatypeWithEnum}}}): {{classname}} {
+        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
+    }
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-array}}
     }
 }
 
-internal class {{classname}}Serializer : KSerializer<{{classname}}> {
-
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("{{classname}}")
-
-    override fun serialize(encoder: Encoder, value: {{classname}}) {
-        when(value) {
-        {{#vendorExtensions}}
-        {{#x-one-of-list}}
-        {{#child}}
-          is {{{type}}} -> {{{type}}}.serializer().serialize(encoder, value)
-        {{/child}}
-        {{^child}}
-          is {{classname}}.{{name}}Value -> {{#isList}}ListSerializer({{{listElementType}}}.serializer()){{/isList}}{{^isList}}{{{type}}}.serializer(){{/isList}}.serialize(encoder, value.value)
-        {{/child}}  
-        {{/x-one-of-list}}
-        {{/vendorExtensions}}
+internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{classname}}>({{classname}}::class) {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
+        return when {
+            {{#composedSchemas.oneOf}}
+            {{#isModel}}
+            element is JsonObject{{#vendorExtensions.x-discriminator-fields}} && element.containsKey("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} -> {{{datatypeWithEnum}}}.serializer()
+            {{/isModel}}
+            {{#isArray}}
+            element{{#items}}{{#isModel}}.isJsonArrayOfObjects{{/isModel}}{{#isPrimitiveType}}.isJsonArrayOfPrimitives{{/isPrimitiveType}}{{#isModel}}{{#isPrimitiveType}} is JsonArray{{/isPrimitiveType}}{{/isModel}}{{/items}} -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
+            {{/isArray}}
+            {{#isEnumRef}}
+            element.isString -> {{{datatypeWithEnum}}}.serializer()
+            {{/isEnumRef}}
+            {{#isInteger}}
+            element.isInt -> {{{classname}}}.{{dataType}}Value.serializer()
+            {{/isInteger}}
+            {{#isLong}}
+            element.isLong -> {{{classname}}}.{{dataType}}Value.serializer()
+            {{/isLong}}
+            {{#isDouble}}
+            element.isDouble -> {{{classname}}}.{{dataType}}Value.serializer()
+            {{/isDouble}}
+            {{#isBoolean}}
+            element.isBoolean -> {{{classname}}}.{{dataType}}Value.serializer()
+            {{/isBoolean}}
+            {{#isString}}
+            element.isString -> {{{classname}}}.{{dataType}}Value.serializer()
+            {{/isString}}
+            {{/composedSchemas.oneOf}}
+            else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
         }
-    }
-
-    override fun deserialize(decoder: Decoder): {{classname}} {
-        val codec = decoder.asJsonDecoder()
-        val tree = codec.decodeJsonElement()
-        {{#vendorExtensions.x-one-of-list}}
-
-        // deserialize {{{type}}}
-        if (tree is {{#isObject}}JsonObject{{/isObject}}{{#isList}}JsonArray{{/isList}}{{^isObject}}{{^isList}}JsonPrimitive{{/isList}}{{/isObject}}{{#discriminators}} && tree.containsKey("{{field}}"){{/discriminators}}) {
-            try {   
-                {{#isObject}}
-                return codec.json.decodeFromJsonElement({{{type}}}.serializer(), tree)
-                {{/isObject}}
-                {{#isList}}
-                val value = codec.json.decodeFromJsonElement(ListSerializer({{{listElementType}}}.serializer()), tree)
-                return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value)
-                {{/isList}}
-                {{^isObject}}{{^isList}}
-                val value = codec.json.decodeFromJsonElement({{{type}}}.serializer(), tree)
-                return {{{classname}}}.of{{#vendorExtensions.x-one-of-explicit-name}}{{{name}}}{{/vendorExtensions.x-one-of-explicit-name}}(value)
-                {{/isList}}{{/isObject}}
-            } catch (e: Exception) {
-                // deserialization failed, continue
-                println("Failed to deserialize {{{type}}} (error: ${e.message})")
-            }    
-        }
-        {{/vendorExtensions.x-one-of-list}}
-
-        throw AlgoliaClientException("Failed to deserialize json element: $tree")
     }
 }
