@@ -12,6 +12,8 @@
     "kotlin": "next",
     "dart": "main",
     "python": "next",
+    "ruby": "next",
+    "scala": "next",
     "csharp": "next"
   },
   "defaultTargetBranch": "next",

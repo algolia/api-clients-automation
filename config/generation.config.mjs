@@ -79,11 +79,25 @@ export const patterns = [
 
   // Python
   'clients/algoliasearch-client-python/**',
+  '!clients/algoliasearch-client-python/algoliasearch/http/**',
   '!clients/algoliasearch-client-python/*',
   'clients/algoliasearch-client-python/pyproject.toml',
   'clients/algoliasearch-client-python/poetry.lock',
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
+
+  // Ruby
+  '!clients/algoliasearch-client-ruby/**',
+  'clients/algoliasearch-client-ruby/Gemfile.lock',
+  'clients/algoliasearch-client-ruby/lib/algolia/**',
+
+  // Scala
+  '!clients/algoliasearch-client-scala/**',
+  'clients/algoliasearch-client-scala/version.sbt',
+  'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
 
   // C#
   'clients/algoliasearch-client-csharp/**',

@@ -82,11 +82,11 @@ public interface AutomaticFacetFilters {
     @Override
     public AutomaticFacetFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize List<AutomaticFacetFilter>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<AutomaticFacetFilter>>() {});
+          List<AutomaticFacetFilter> value = parser.readValueAs(new TypeReference<List<AutomaticFacetFilter>>() {});
+          return new AutomaticFacetFilters.ListOfAutomaticFacetFilterWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -94,11 +94,11 @@ public interface AutomaticFacetFilters {
           );
         }
       }
-
       // deserialize List<String>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<String>>() {});
+          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
+          return new AutomaticFacetFilters.ListOfStringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");

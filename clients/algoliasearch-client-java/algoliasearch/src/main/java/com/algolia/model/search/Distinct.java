@@ -80,23 +80,21 @@ public interface Distinct {
     @Override
     public Distinct deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize Boolean
-      if (tree.isValueNode()) {
+      if (tree.isBoolean()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           Boolean value = parser.readValueAs(Boolean.class);
-          return Distinct.of(value);
+          return new Distinct.BooleanWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
         }
       }
-
       // deserialize Integer
-      if (tree.isValueNode()) {
+      if (tree.isInt()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           Integer value = parser.readValueAs(Integer.class);
-          return Distinct.of(value);
+          return new Distinct.IntegerWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");

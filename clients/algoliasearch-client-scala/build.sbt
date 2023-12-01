@@ -1,0 +1,53 @@
+organization := "com.algolia"
+name := "algoliasearch-scala"
+description := "Scala client for Algolia Search API"
+scalaVersion := "2.13.12"
+crossScalaVersions := Seq("2.13.12", "3.3.1")
+publishMavenStyle := true
+Test / publishArtifact := false
+licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
+homepage := Some(url("https://github.com/algolia/algoliasearch-client-scala/"))
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/algolia/algoliasearch-client-scala"),
+    "scm:git:git@github.com:algolia/algoliasearch-client-scala.git"
+  )
+)
+pomIncludeRepository := { _ =>
+  false
+}
+developers += Developer(
+  "algolia",
+  "Algolia",
+  "contact@algolia.com",
+  url("https://github.com/algolia/algoliasearch-client-scala/")
+)
+publishTo := sonatypePublishToBundle.value
+pgpSigningKey := Credentials
+  .forHost(credentials.value, "pgp")
+  .map(_.userName) // related to https://github.com/sbt/sbt-pgp/issues/170
+
+lazy val root = project
+  .in(file("."))
+  .enablePlugins(BuildInfoPlugin)
+  .settings(
+    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+    buildInfoPackage := "algoliasearch"
+  )
+
+// Project dependencies
+libraryDependencies ++= Seq(
+  "com.squareup.okhttp3" % "okhttp" % "4.11.0" % "provided",
+  "com.squareup.okhttp3" % "logging-interceptor" % "4.11.0",
+  "org.json4s" %% "json4s-ast" % "4.0.6",
+  "org.json4s" %% "json4s-core" % "4.0.6",
+  "org.json4s" %% "json4s-native" % "4.0.6",
+  "org.json4s" %% "json4s-ext" % "4.0.6",
+  "org.slf4j" % "slf4j-api" % "2.0.5"
+)
+
+scalacOptions := Seq(
+  "-unchecked",
+  "-deprecation",
+  "-feature"
+)

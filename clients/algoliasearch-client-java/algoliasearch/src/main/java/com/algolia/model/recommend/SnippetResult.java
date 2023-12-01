@@ -51,19 +51,6 @@ public interface SnippetResult {
     @Override
     public SnippetResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
-      // deserialize List<SnippetResultOption>
-      if (tree.isArray()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<SnippetResultOption>>() {});
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<SnippetResultOption> (error: " + e.getMessage() + ") (type: List<SnippetResultOption>)"
-          );
-        }
-      }
-
       // deserialize SnippetResultOption
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -71,6 +58,18 @@ public interface SnippetResult {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SnippetResultOption (error: " + e.getMessage() + ") (type: SnippetResultOption)");
+        }
+      }
+      // deserialize List<SnippetResultOption>
+      if (tree.isArray()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          List<SnippetResultOption> value = parser.readValueAs(new TypeReference<List<SnippetResultOption>>() {});
+          return new SnippetResult.ListOfSnippetResultOptionWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf List<SnippetResultOption> (error: " + e.getMessage() + ") (type: List<SnippetResultOption>)"
+          );
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

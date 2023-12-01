@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.OneOfUtils;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
@@ -47,6 +48,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.add(new SupportingFile("build_config.mustache", invokerFolder, "BuildConfig.java"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     try {
       Utils.generateServer(client, additionalProperties);
@@ -74,6 +76,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOfUtils.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOfUtils.addOneOfMetadata(models);
     return models;
   }
 
@@ -104,5 +107,10 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
 
     return super.toEnumVarName(value, datatype);
+  }
+
+  /** Convert a Seq type to a valid class name. */
+  private String typeToName(String content) {
+    return content.trim().replace("<", "Of").replace(">", "");
   }
 }

@@ -82,11 +82,11 @@ public interface FacetFilters {
     @Override
     public FacetFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize List<MixedSearchFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
+          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
+          return new FacetFilters.ListOfMixedSearchFiltersWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -94,12 +94,11 @@ public interface FacetFilters {
           );
         }
       }
-
       // deserialize String
-      if (tree.isValueNode()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           String value = parser.readValueAs(String.class);
-          return FacetFilters.of(value);
+          return new FacetFilters.StringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");

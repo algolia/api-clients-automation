@@ -58,6 +58,14 @@ export async function removeExistingCodegen({
       baseModelFolder = '';
       baseApiFolder = '';
       break;
+    case 'ruby':
+      clientModel = clientName.toLowerCase();
+      clientApi = `${clientName.toLowerCase()}_client.rb`;
+      break;
+    case 'scala':
+      clientModel = client.replace('-', '');
+      clientApi = `${clientName}*.scala`;
+      break;
     default:
       break;
   }

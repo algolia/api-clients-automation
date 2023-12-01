@@ -77,23 +77,21 @@ public interface Price {
     @Override
     public Price deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize Double
-      if (tree.isValueNode()) {
+      if (tree.isDouble()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           Double value = parser.readValueAs(Double.class);
-          return Price.of(value);
+          return new Price.DoubleWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Double (error: " + e.getMessage() + ") (type: Double)");
         }
       }
-
       // deserialize String
-      if (tree.isValueNode()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           String value = parser.readValueAs(String.class);
-          return Price.of(value);
+          return new Price.StringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");

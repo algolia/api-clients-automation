@@ -82,11 +82,11 @@ public interface ReRankingApplyFilter {
     @Override
     public ReRankingApplyFilter deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize List<MixedSearchFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
+          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
+          return new ReRankingApplyFilter.ListOfMixedSearchFiltersWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
@@ -94,12 +94,11 @@ public interface ReRankingApplyFilter {
           );
         }
       }
-
       // deserialize String
-      if (tree.isValueNode()) {
+      if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           String value = parser.readValueAs(String.class);
-          return ReRankingApplyFilter.of(value);
+          return new ReRankingApplyFilter.StringWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");

@@ -197,6 +197,60 @@
       "python-monitoring": {
         "output": "#{cwd}/clients/algoliasearch-client-python/algoliasearch"
       },
+      "ruby-search": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-recommend": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-personalization": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-analytics": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-insights": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-abtesting": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-query-suggestions": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "ruby-monitoring": {
+        "output": "#{cwd}/clients/algoliasearch-client-ruby"
+      },
+      "scala-search": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-recommend": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-personalization": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-analytics": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-insights": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-abtesting": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-query-suggestions": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "scala-monitoring": {
+        "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
       "csharp-search": {
         "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
       },

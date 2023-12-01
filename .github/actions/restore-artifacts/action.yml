@@ -30,6 +30,12 @@ inputs:
   python:
     description: Whether this job ran or not
     required: false
+  ruby:
+    description: Whether this job ran or not
+    required: false
+  scala:
+    description: Whether this job ran or not
+    required: false
   csharp:
     description: Whether this job ran or not
     required: false
@@ -142,6 +148,34 @@ runs:
       run: |
         rm -rf clients/algoliasearch-client-python
         unzip -q -o clients-python.zip && rm clients-python.zip
+
+    # Ruby
+    - name: Download clients-ruby artifact
+      if: ${{ inputs.ruby == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-ruby
+
+    - name: Unzip clients-ruby artifact
+      if: ${{ inputs.ruby == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-ruby
+        unzip -q -o clients-ruby.zip && rm clients-ruby.zip
+
+    # Scala
+    - name: Download clients-scala artifact
+      if: ${{ inputs.scala == 'true' && inputs.type == 'all' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: clients-scala
+
+    - name: Unzip clients-scala artifact
+      if: ${{ inputs.scala == 'true' && inputs.type == 'all' }}
+      shell: bash
+      run: |
+        rm -rf clients/algoliasearch-client-scala
+        unzip -q -o clients-scala.zip && rm clients-scala.zip
 
     # CSharp
     - name: Download clients-csharp artifact

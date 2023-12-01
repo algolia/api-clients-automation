@@ -39,7 +39,7 @@
   "go": {
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
-    "packageVersion": "4.0.0-alpha.36",
+    "packageVersion": "4.0.0-alpha.37",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
     "customGenerator": "algolia-go",
@@ -75,13 +75,37 @@
   "python": {
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.0.0-alpha.0",
+    "packageVersion": "4.0.0-alpha.1",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "customGenerator": "algolia-python",
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
+    }
+  },
+  "ruby": {
+    "folder": "clients/algoliasearch-client-ruby",
+    "gitRepoId": "algoliasearch-client-ruby",
+    "packageVersion": "3.0.0.alpha.0",
+    "modelFolder": "lib/algolia/models",
+    "apiFolder": "lib/algolia/api",
+    "customGenerator": "algolia-ruby",
+    "tests": {
+      "extension": "_test.rb",
+      "outputFolder": "test"
+    }
+  },
+  "scala": {
+    "folder": "clients/algoliasearch-client-scala",
+    "gitRepoId": "algoliasearch-client-scala",
+    "packageVersion": "2.0.0-alpha.1",
+    "modelFolder": "src/main/scala/algoliasearch/model",
+    "apiFolder": "src/main/scala/algoliasearch/api",
+    "customGenerator": "algolia-scala",
+    "tests": {
+      "extension": "Test.scala",
+      "outputFolder": "test"
     }
   },
   "csharp": {

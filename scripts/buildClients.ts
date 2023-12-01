@@ -34,6 +34,9 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
 
       break;
+    case 'scala':
+      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd });
+      break;
     default:
   }
   spinner.succeed();

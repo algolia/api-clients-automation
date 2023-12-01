@@ -21,17 +21,6 @@ public interface Promote {
     @Override
     public Promote deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
-      // deserialize PromoteObjectID
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(PromoteObjectID.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf PromoteObjectID (error: " + e.getMessage() + ") (type: PromoteObjectID)");
-        }
-      }
-
       // deserialize PromoteObjectIDs
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -39,6 +28,15 @@ public interface Promote {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf PromoteObjectIDs (error: " + e.getMessage() + ") (type: PromoteObjectIDs)");
+        }
+      }
+      // deserialize PromoteObjectID
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(PromoteObjectID.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf PromoteObjectID (error: " + e.getMessage() + ") (type: PromoteObjectID)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

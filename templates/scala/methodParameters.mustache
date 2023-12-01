@@ -1,0 +1,11 @@
+{{#requiredParams}}
+{{{paramName}}}: {{{dataType}}},
+{{/requiredParams}}
+{{#optionalParams}}
+{{#isContainer}}
+{{{paramName}}}: {{{dataType}}} = {{#isArray}}Seq.empty{{/isArray}}{{#isMap}}Map.empty{{/isMap}},
+{{/isContainer}}
+{{^isContainer}}
+{{{paramName}}}: Option[{{{dataType}}}] = None,
+{{/isContainer}}
+{{/optionalParams}}

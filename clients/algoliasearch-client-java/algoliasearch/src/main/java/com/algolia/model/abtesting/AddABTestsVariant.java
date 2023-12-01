@@ -21,7 +21,6 @@ public interface AddABTestsVariant {
     @Override
     public AddABTestsVariant deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-
       // deserialize AbTestsVariant
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -31,7 +30,6 @@ public interface AddABTestsVariant {
           LOGGER.finest("Failed to deserialize oneOf AbTestsVariant (error: " + e.getMessage() + ") (type: AbTestsVariant)");
         }
       }
-
       // deserialize AbTestsVariantSearchParams
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

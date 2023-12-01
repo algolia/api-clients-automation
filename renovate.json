@@ -16,7 +16,8 @@
     "gomod",
     "poetry",
     "pip_requirements",
-    "gradle-wrapper"
+    "gradle-wrapper",
+    "ruby"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"

@@ -1,0 +1,99 @@
+import org.json4s._
+{{#vendorExtensions.x-one-of-multi-array}}import {{package}}.{{classname}}._{{/vendorExtensions.x-one-of-multi-array}}
+
+/**
+ * {{{description}}}{{^description}}{{classname}}{{/description}}{{#isDeprecated}}
+ * @deprecated{{/isDeprecated}}
+ */
+sealed trait {{classname}}
+
+{{#vendorExtensions.x-has-model}}
+trait {{classname}}Trait extends {{classname}}
+{{/vendorExtensions.x-has-model}}
+
+{{#vendorExtensions.x-is-multi-array}}
+trait {{classname}}Evidence 
+
+object {{classname}}Evidence {
+{{#composedSchemas.oneOf}}
+{{#isArray}}
+    implicit object {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence extends {{classname}}Evidence
+{{/isArray}}
+{{/composedSchemas.oneOf}}
+}
+{{/vendorExtensions.x-is-multi-array}}
+
+object {{classname}} {
+
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  case class {{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value: {{{datatypeWithEnum}}}) extends {{classname}}
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+
+  {{#vendorExtensions.x-is-multi-array}}
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  def apply(value: {{{datatypeWithEnum}}}){{#isArray}}(implicit ev: {{classname}}Evidence.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence.type){{/isArray}}: {{classname}} = {
+      {{classname}}.{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value)
+  }
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+  {{/vendorExtensions.x-is-multi-array}}
+  
+  {{^vendorExtensions.x-is-multi-array}}
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  def apply(value: {{{datatypeWithEnum}}}): {{classname}} = {
+      {{classname}}.{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}(value)
+  }
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+  {{/vendorExtensions.x-is-multi-array}}
+}
+
+object {{classname}}Serializer extends Serializer[{{classname}}] {
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
+
+    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => 
+      json match {
+        {{#composedSchemas.oneOf}}
+        {{#isModel}}
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.contains("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isModel}}
+        {{#isEnumRef}}
+        case value: JString => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isEnumRef}}
+        {{#isArray}}
+        case JArray(value{{#items}}: List[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}]{{/items}}) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
+        {{/isArray}}
+        {{#isInteger}}
+        case JInt(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toInt)
+        {{/isInteger}}
+        {{#isLong}}
+        case JLong(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toLong)
+        {{/isLong}}
+        {{#isDouble}}
+        case JDouble(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toDouble)
+        {{/isDouble}}
+        {{#isBoolean}}
+        case JBool(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value)
+        {{/isBoolean}}
+        {{#isString}}
+        case JString(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value)
+        {{/isString}}
+        {{/composedSchemas.oneOf}}
+        case _ => throw new MappingException("Can't convert " + json + " to {{classname}}")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value => Extraction.decompose(value)(format - this)
+  }
+}

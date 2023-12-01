@@ -173,6 +173,21 @@ runs:
       working-directory: clients/algoliasearch-client-python
       shell: bash
 
+    # Ruby deps
+    - name: Get Ruby version
+      if: ${{ inputs.language == 'ruby' }}
+      id: ruby-version
+      shell: bash
+      run: |
+        echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
+
+    - name: Install Ruby
+      if: ${{ inputs.language == 'ruby' }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
+        bundler-cache: true
+
     # Csharp deps
     - name: Get Csharp version
       if: ${{ inputs.language == 'csharp' }}
@@ -258,6 +273,12 @@ outputs:
   RUN_GEN_PYTHON:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_PYTHON }}
+  RUN_GEN_RUBY:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_RUBY }}
+  RUN_GEN_SCALA:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_SCALA }}
   RUN_GEN_CSHARP:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_CSHARP }}
