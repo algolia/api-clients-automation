@@ -88,7 +88,7 @@
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
     "packageVersion": "2.0.0-alpha.1",
-    "modelFolder": "src/main/scala/algoliasearch/model",
+    "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
     "customGenerator": "algolia-scala",
     "tests": {

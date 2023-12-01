@@ -101,7 +101,7 @@ public interface {{classname}} {
                     return new {{classname}}.{{{datatypeWithEnum}}}Wrapper(value);
                     {{/isMap}}{{/isArray}}{{/isEnumRef}}{{/isModel}}
                     {{#isMap}}
-                    {{{datatypeWithEnum}}} value = parser.readValueAs({{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}.class);
+                    {{{datatypeWithEnum}}} value = parser.readValueAs(new TypeReference<{{{datatypeWithEnum}}}>(){});
                     return new {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
                     {{/isMap}}
                 } catch (Exception e) {
