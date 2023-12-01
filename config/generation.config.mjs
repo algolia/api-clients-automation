@@ -88,9 +88,7 @@ export const patterns = [
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',
-  'clients/algoliasearch-client-ruby/algolia.gemspec',
-  'clients/algolia-client-ruby/lib/algolia/Gemfile.lock',
-  'clients/algoliasearch-client-ruby/lib/**',
+  'clients/algoliasearch-client-ruby/lib/algolia/**',
 
   // Scala
   '!clients/algoliasearch-client-scala/**',
