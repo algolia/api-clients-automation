@@ -217,18 +217,17 @@ describe('createReleasePR', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-              "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
-              - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
-          `);
+        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+      `);
     });
 
     it('generates text for version changes with a language with no commit', () => {
@@ -305,7 +304,7 @@ describe('createReleasePR', () => {
         - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - ~python: 0.0.1 (no commit)~
         - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
       `);
     });
@@ -397,7 +396,7 @@ describe('createReleasePR', () => {
               - ~ruby: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
                 - No \`feat\` or \`fix\` commit, thus unchecked by default.
               - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default."
+                - No \`feat\` or \`fix\` commit, thus unchecked by default.
               - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
                 - No \`feat\` or \`fix\` commit, thus unchecked by default."
           `);
