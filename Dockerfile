@@ -58,6 +58,11 @@ ADD https://github.com/google/google-java-format/releases/download/v1.18.1/googl
 # Scala
 RUN sdk install sbt
 
+# Ruby with RVM, because it's too difficult with the image, dependencies are splattered everywhere
+ARG RUBY_VERSION
+RUN wget -O ruby.tar.gz https://github.com/postmodern/ruby-install/releases/download/v0.9.2/ruby-install-0.9.2.tar.gz \
+    && tar -xzvf ruby.tar.gz && cd ruby && make install && ruby-install ruby ${RUBY_VERSION} && gem install bundler
+
 WORKDIR /app
 
 CMD bash

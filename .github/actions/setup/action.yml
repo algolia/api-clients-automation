@@ -138,18 +138,18 @@ runs:
       run: |
         echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
 
-    - name: Install dart   
+    - name: Install dart
       if: ${{ inputs.language == 'dart' }}
-      uses: dart-lang/setup-dart@v1  
+      uses: dart-lang/setup-dart@v1
       with:
         sdk: ${{ steps.dart-version.outputs.DART_VERSION }}
 
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
       shell: bash
-      run: dart pub global activate melos    
+      run: dart pub global activate melos
 
-    # Python deps 
+    # Python deps
     - name: Get Python version
       if: ${{ inputs.language == 'python' }}
       id: python-version
@@ -172,6 +172,21 @@ runs:
       if: ${{ inputs.language == 'python' }}
       working-directory: clients/algoliasearch-client-python
       shell: bash
+
+    # Ruby deps
+    - name: Get Ruby version
+      if: ${{ inputs.language == 'ruby' }}
+      id: ruby-version
+      shell: bash
+      run: |
+        echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
+
+    - name: Install Ruby
+      if: ${{ inputs.language == 'ruby' }}
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
+        bundler-cache: true
 
     # Computing jobs that should run
     - name: Setting diff outputs variables
@@ -240,13 +255,16 @@ outputs:
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_KOTLIN }}
   RUN_GEN_DART:
     description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}  
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}
   RUN_GEN_PYTHON:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_PYTHON }}
+  RUN_GEN_RUBY:
+    description: Indicates if we plan to run the job for this language
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_RUBY }}
   RUN_GEN_SCALA:
     description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_SCALA }}    
+    value: ${{ steps.gen-matrix.outputs.RUN_GEN_SCALA }}
 
   RUN_JS_UTILS:
     description: Whether to build JS client common folders when RUN_JS is false
