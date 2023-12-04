@@ -42,10 +42,10 @@ namespace Algolia.Search.Recommend.Models
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HighlightResult" /> class
-    /// with the <see cref="List{HighlightResultOption}" /> class
+    /// with the <see cref="Dictionary{string, HighlightResultOption}" /> class
     /// </summary>
-    /// <param name="actualInstance">An instance of List&lt;HighlightResultOption&gt;.</param>
-    public HighlightResult(List<HighlightResultOption> actualInstance)
+    /// <param name="actualInstance">An instance of Dictionary&lt;string, HighlightResultOption&gt;.</param>
+    public HighlightResult(Dictionary<string, HighlightResultOption> actualInstance)
     {
       this.IsNullable = false;
       this.SchemaType = "oneOf";
@@ -66,17 +66,17 @@ namespace Algolia.Search.Recommend.Models
       }
       set
       {
-        if (value.GetType() == typeof(HighlightResultOption))
+        if (value.GetType() == typeof(Dictionary<string, HighlightResultOption>))
         {
           this._actualInstance = value;
         }
-        else if (value.GetType() == typeof(List<HighlightResultOption>))
+        else if (value.GetType() == typeof(HighlightResultOption))
         {
           this._actualInstance = value;
         }
         else
         {
-          throw new ArgumentException("Invalid instance found. Must be the following types: HighlightResultOption, List<HighlightResultOption>");
+          throw new ArgumentException("Invalid instance found. Must be the following types: Dictionary<string, HighlightResultOption>, HighlightResultOption");
         }
       }
     }
@@ -92,13 +92,13 @@ namespace Algolia.Search.Recommend.Models
     }
 
     /// <summary>
-    /// Get the actual instance of `List&lt;HighlightResultOption&gt;`. If the actual instance is not `List&lt;HighlightResultOption&gt;`,
+    /// Get the actual instance of `Dictionary&lt;string, HighlightResultOption&gt;`. If the actual instance is not `Dictionary&lt;string, HighlightResultOption&gt;`,
     /// the InvalidClassException will be thrown
     /// </summary>
-    /// <returns>An instance of List&lt;HighlightResultOption&gt;</returns>
-    public List<HighlightResultOption> GetterList()
+    /// <returns>An instance of Dictionary&lt;string, HighlightResultOption&gt;</returns>
+    public Dictionary<string, HighlightResultOption> GetterDictionary()
     {
-      return (List<HighlightResultOption>)this.ActualInstance;
+      return (Dictionary<string, HighlightResultOption>)this.ActualInstance;
     }
 
     /// <summary>
@@ -142,6 +142,26 @@ namespace Algolia.Search.Recommend.Models
       try
       {
         // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
+        if (typeof(Dictionary<string, HighlightResultOption>).GetProperty("AdditionalProperties") == null)
+        {
+          newHighlightResult = new HighlightResult(JsonConvert.DeserializeObject<Dictionary<string, HighlightResultOption>>(jsonString, HighlightResult.SerializerSettings));
+        }
+        else
+        {
+          newHighlightResult = new HighlightResult(JsonConvert.DeserializeObject<Dictionary<string, HighlightResultOption>>(jsonString, HighlightResult.AdditionalPropertiesSerializerSettings));
+        }
+        matchedTypes.Add("Dictionary<string, HighlightResultOption>");
+        match++;
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into Dictionary<string, HighlightResultOption>: {1}", jsonString, exception.ToString()));
+      }
+
+      try
+      {
+        // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
         if (typeof(HighlightResultOption).GetProperty("AdditionalProperties") == null)
         {
           newHighlightResult = new HighlightResult(JsonConvert.DeserializeObject<HighlightResultOption>(jsonString, HighlightResult.SerializerSettings));
@@ -157,26 +177,6 @@ namespace Algolia.Search.Recommend.Models
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into HighlightResultOption: {1}", jsonString, exception.ToString()));
-      }
-
-      try
-      {
-        // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
-        if (typeof(List<HighlightResultOption>).GetProperty("AdditionalProperties") == null)
-        {
-          newHighlightResult = new HighlightResult(JsonConvert.DeserializeObject<List<HighlightResultOption>>(jsonString, HighlightResult.SerializerSettings));
-        }
-        else
-        {
-          newHighlightResult = new HighlightResult(JsonConvert.DeserializeObject<List<HighlightResultOption>>(jsonString, HighlightResult.AdditionalPropertiesSerializerSettings));
-        }
-        matchedTypes.Add("List<HighlightResultOption>");
-        match++;
-      }
-      catch (Exception exception)
-      {
-        // deserialization failed, try the next one
-        System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into List<HighlightResultOption>: {1}", jsonString, exception.ToString()));
       }
 
       if (match == 0)

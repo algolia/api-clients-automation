@@ -34,9 +34,9 @@ namespace Algolia.Search.Search.Models
     /// <summary>
     /// Initializes a new instance of the <see cref="UserHighlightResult" /> class.
     /// </summary>
-    /// <param name="userID">Show highlighted section and words matched on a query. (required).</param>
-    /// <param name="clusterName">Show highlighted section and words matched on a query. (required).</param>
-    public UserHighlightResult(Dictionary<string, HighlightResult> userID = default(Dictionary<string, HighlightResult>), Dictionary<string, HighlightResult> clusterName = default(Dictionary<string, HighlightResult>))
+    /// <param name="userID">userID (required).</param>
+    /// <param name="clusterName">clusterName (required).</param>
+    public UserHighlightResult(HighlightResult userID = default(HighlightResult), HighlightResult clusterName = default(HighlightResult))
     {
       // to ensure "userID" is required (not null)
       if (userID == null)
@@ -53,18 +53,16 @@ namespace Algolia.Search.Search.Models
     }
 
     /// <summary>
-    /// Show highlighted section and words matched on a query.
+    /// Gets or Sets UserID
     /// </summary>
-    /// <value>Show highlighted section and words matched on a query.</value>
     [DataMember(Name = "userID", IsRequired = true, EmitDefaultValue = true)]
-    public Dictionary<string, HighlightResult> UserID { get; set; }
+    public HighlightResult UserID { get; set; }
 
     /// <summary>
-    /// Show highlighted section and words matched on a query.
+    /// Gets or Sets ClusterName
     /// </summary>
-    /// <value>Show highlighted section and words matched on a query.</value>
     [DataMember(Name = "clusterName", IsRequired = true, EmitDefaultValue = true)]
-    public Dictionary<string, HighlightResult> ClusterName { get; set; }
+    public HighlightResult ClusterName { get; set; }
 
     /// <summary>
     /// Returns the string presentation of the object
@@ -113,15 +111,13 @@ namespace Algolia.Search.Search.Models
       return
           (
               this.UserID == input.UserID ||
-              this.UserID != null &&
-              input.UserID != null &&
-              this.UserID.SequenceEqual(input.UserID)
+              (this.UserID != null &&
+              this.UserID.Equals(input.UserID))
           ) &&
           (
               this.ClusterName == input.ClusterName ||
-              this.ClusterName != null &&
-              input.ClusterName != null &&
-              this.ClusterName.SequenceEqual(input.ClusterName)
+              (this.ClusterName != null &&
+              this.ClusterName.Equals(input.ClusterName))
           );
     }
 

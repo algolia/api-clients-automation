@@ -1519,6 +1519,10 @@ components:
       type: object
       description: Show highlighted section and words matched on a query.
       additionalProperties: false
+      x-discriminator-fields:
+        - matchLevel
+        - value
+        - matchedWords
       properties:
         value:
           $ref: '#/components/schemas/highlightedValue'
@@ -1538,12 +1542,15 @@ components:
         - value
         - matchLevel
         - matchedWords
+    highlightResultOptionMap:
+      type: object
+      description: Show highlighted section and words matched on a query.
+      additionalProperties:
+        $ref: '#/components/schemas/highlightResultOption'
     highlightResult:
       oneOf:
         - $ref: '#/components/schemas/highlightResultOption'
-        - type: array
-          items:
-            $ref: '#/components/schemas/highlightResultOption'
+        - $ref: '#/components/schemas/highlightResultOptionMap'
     highlightResultMap:
       type: object
       description: Show highlighted section and words matched on a query.
@@ -1563,12 +1570,17 @@ components:
       required:
         - value
         - matchLevel
+    snippetResultOptionMap:
+      type: object
+      description: >-
+        Snippeted attributes show parts of the matched attributes. Only returned
+        when attributesToSnippet is non-empty.
+      additionalProperties:
+        $ref: '#/components/schemas/snippetResultOption'
     snippetResult:
       oneOf:
         - $ref: '#/components/schemas/snippetResultOption'
-        - type: array
-          items:
-            $ref: '#/components/schemas/snippetResultOption'
+        - $ref: '#/components/schemas/snippetResultOptionMap'
     snippetResultMap:
       type: object
       description: >-
@@ -5227,9 +5239,9 @@ paths:
                           type: object
                           properties:
                             userID:
-                              $ref: '#/components/schemas/highlightResultMap'
+                              $ref: '#/components/schemas/highlightResult'
                             clusterName:
-                              $ref: '#/components/schemas/highlightResultMap'
+                              $ref: '#/components/schemas/highlightResult'
                           required:
                             - userID
                             - clusterName

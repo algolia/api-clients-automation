@@ -5,48 +5,36 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /** UserHighlightResult */
 public class UserHighlightResult {
 
   @JsonProperty("userID")
-  private Map<String, HighlightResult> userID = new HashMap<>();
+  private HighlightResult userID;
 
   @JsonProperty("clusterName")
-  private Map<String, HighlightResult> clusterName = new HashMap<>();
+  private HighlightResult clusterName;
 
-  public UserHighlightResult setUserID(Map<String, HighlightResult> userID) {
+  public UserHighlightResult setUserID(HighlightResult userID) {
     this.userID = userID;
     return this;
   }
 
-  public UserHighlightResult putUserID(String key, HighlightResult userIDItem) {
-    this.userID.put(key, userIDItem);
-    return this;
-  }
-
-  /** Show highlighted section and words matched on a query. */
+  /** Get userID */
   @javax.annotation.Nonnull
-  public Map<String, HighlightResult> getUserID() {
+  public HighlightResult getUserID() {
     return userID;
   }
 
-  public UserHighlightResult setClusterName(Map<String, HighlightResult> clusterName) {
+  public UserHighlightResult setClusterName(HighlightResult clusterName) {
     this.clusterName = clusterName;
     return this;
   }
 
-  public UserHighlightResult putClusterName(String key, HighlightResult clusterNameItem) {
-    this.clusterName.put(key, clusterNameItem);
-    return this;
-  }
-
-  /** Show highlighted section and words matched on a query. */
+  /** Get clusterName */
   @javax.annotation.Nonnull
-  public Map<String, HighlightResult> getClusterName() {
+  public HighlightResult getClusterName() {
     return clusterName;
   }
 
