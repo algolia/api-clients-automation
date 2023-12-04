@@ -16,9 +16,10 @@ ENV DOCKER=true
 # use bash for subsequent commands
 SHELL ["/bin/bash", "--login", "-c"]
 
-# Global
+# Global (and librairies for ruby)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl zip unzip git openssh-server \
+    build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -62,8 +63,9 @@ RUN sdk install sbt
 
 # Ruby with RVM, because it's too difficult with the image, dependencies are splattered everywhere
 ARG RUBY_VERSION
-RUN wget -O ruby.tar.gz https://github.com/postmodern/ruby-install/releases/download/v0.9.2/ruby-install-0.9.2.tar.gz \
-    && tar -xzvf ruby.tar.gz && cd ruby && make install && ruby-install ruby ${RUBY_VERSION} && gem install bundler
+RUN echo "export PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin" >> ~/.profile && source ~/.profile
+RUN curl -L -o ruby.tar.gz https://github.com/postmodern/ruby-install/releases/download/v0.9.2/ruby-install-0.9.2.tar.gz \
+    && tar -xzvf ruby.tar.gz && cd ruby-install-0.9.2 && make install && ruby-install ruby ${RUBY_VERSION} && gem install bundler
 
 # C#
 COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
