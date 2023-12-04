@@ -16,7 +16,7 @@ async def main():
           "requests": [{"indexName": "nvim"}]
         })
 
-        print(response)
+        print(response.to_json())
     finally:
         await client.close()
 

@@ -6,7 +6,6 @@ import org.openapitools.codegen.*;
 import org.openapitools.codegen.CodegenConstants;
 import org.openapitools.codegen.languages.PythonClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
-import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaPythonGenerator extends PythonClientCodegen {
@@ -117,27 +116,5 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     operations.setImports(imports);
 
     return operations;
-  }
-
-  // we iterate over every models in order to remove the default values because we want to keep them
-  // on the API side
-  @Override
-  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
-    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    for (ModelsMap modelContainer : models.values()) {
-      // modelContainers always have 1 and only 1 model in our specs
-      var model = modelContainer.getModels().get(0).getModel();
-      if (model.vars.isEmpty()) continue;
-
-      for (CodegenProperty property : model.vars) {
-        if (property.vendorExtensions.isEmpty()) continue;
-
-        String typing = (String) property.vendorExtensions.get("x-py-typing");
-        if (typing == null) continue;
-
-        property.vendorExtensions.put("x-py-typing", typing.replaceAll("default=.*?, ", ""));
-      }
-    }
-    return models;
   }
 }

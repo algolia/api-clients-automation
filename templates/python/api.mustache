@@ -84,7 +84,7 @@ class {{classname}}:
         elif klass == object:
             return data
         else:
-            return klass.from_dict(data)
+            return klass.from_json(data)
 
     {{#operation}}
 
@@ -169,17 +169,6 @@ class {{classname}}:
 
         response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
-        {{^returnType}}
-        return None
-        {{/returnType}}
-
-        {{#returnType}}
-        try:
-            data = loads(response.raw_data)
-        except ValueError:
-            data = response.raw_data
-
-        return self.__deserialize(data, {{{returnType}}})
-        {{/returnType}}
+        return {{^returnType}}None{{/returnType}}{{#returnType}}self.__deserialize(response.raw_data, {{{returnType}}}){{/returnType}}
 {{/operation}}
 {{/operations}}
