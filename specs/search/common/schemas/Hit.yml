@@ -9,9 +9,9 @@ hit:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
     _highlightResult:
-      $ref: '#/highlightResult'
+      $ref: '../../../common/schemas/HighlightResult.yml#/highlightResultMap'
     _snippetResult:
-      $ref: '#/snippetResult'
+      $ref: '../../../common/schemas/SnippetResult.yml#/snippetResultMap'
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
@@ -20,80 +20,6 @@ hit:
 # Props
 _distinctSeqID:
   type: integer
-
-highlightResultOptionMap:
-  type: object
-  description: Show highlighted section and words matched on a query.
-  additionalProperties:
-    $ref: '#/highlightResultOption'
-
-highlightResultOptionOneOf:
-  oneOf:
-    - $ref: '#/highlightResultOption'
-    - $ref: '#/highlightResultOptionMap'
-
-highlightResultOption:
-  type: object
-  description: Show highlighted section and words matched on a query.
-  additionalProperties: false
-  x-discriminator-fields:
-    - matchLevel
-    - value
-    - matchedWords
-  properties:
-    value:
-      $ref: '#/highlightedValue'
-    matchLevel:
-      $ref: '#/matchLevel'
-    matchedWords:
-      type: array
-      description: List of words from the query that matched the object.
-      example: ['action']
-      items:
-        type: string
-    fullyHighlighted:
-      type: boolean
-      description: Whether the entire attribute value is highlighted.
-  required:
-    - value
-    - matchLevel
-    - matchedWords
-
-highlightResult:
-  type: object
-  description: Show highlighted section and words matched on a query.
-  additionalProperties:
-    $ref: '#/highlightResultOptionOneOf'
-
-snippetResultOption:
-  type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
-  additionalProperties: false
-  properties:
-    value:
-      $ref: '#/highlightedValue'
-    matchLevel:
-      $ref: '#/matchLevel'
-  required:
-    - value
-    - matchLevel
-
-snippetResultOptionMap:
-  type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
-  additionalProperties:
-    $ref: '#/snippetResultOption'
-
-snippetResultOptionOneOf:
-  oneOf:
-    - $ref: '#/snippetResultOption'
-    - $ref: '#/snippetResultOptionMap'
-
-snippetResult:
-  type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
-  additionalProperties:
-    $ref: '#/snippetResultOptionOneOf'
 
 rankingInfo:
   type: object
@@ -145,16 +71,6 @@ rankingInfo:
     - words
     - filters
     - userScore
-
-highlightedValue:
-  type: string
-  description: Markup text with `facetQuery` matches highlighted.
-  example: '<em>George</em> <em>Clo</em>oney'
-
-matchLevel:
-  type: string
-  description: Indicates how well the attribute matched the search query.
-  enum: [none, partial, full]
 
 matchedGeoLocation:
   type: object
