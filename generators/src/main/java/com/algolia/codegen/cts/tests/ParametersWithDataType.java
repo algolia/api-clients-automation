@@ -34,9 +34,6 @@ public class ParametersWithDataType {
    * @param parameters The object to traverse and annotate with type
    * @param bundle The output object
    * @param operation (optional) The model in which to look for spec
-   * @param spec (optional) (mutually exclusive with operation) If the parameter is a root param,
-   *     the spec must be provided, alongside it's paramName
-   * @param paramName (optional) (required if spec) the parameter name
    */
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
     throws CTSException, JsonMappingException, JsonProcessingException {
@@ -71,16 +68,12 @@ public class ParametersWithDataType {
             }
           }
           Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
-          addTypeInfo(paramWithType, specParam);
           parametersWithDataType.add(paramWithType);
           parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
         }
       }
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0);
-      if (spec instanceof CodegenParameter specParam) {
-        addTypeInfo(paramWithType, specParam);
-      }
       parametersWithDataType.add(paramWithType);
       parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
     }
@@ -90,13 +83,6 @@ public class ParametersWithDataType {
     bundle.put("parametersWithDataType", parametersWithDataType);
     // Also provide a map version for those who know which keys to look for
     bundle.put("parametersWithDataTypeMap", parametersWithDataTypeMap);
-  }
-
-  private void addTypeInfo(Map<String, Object> paramWithType, CodegenParameter parameter) {
-    if (parameter == null) return;
-    paramWithType.put("isRequired", parameter.required);
-    paramWithType.put("isOptional", !parameter.required);
-    paramWithType.put("isContainer", parameter.isContainer);
   }
 
   private Map<String, Object> traverseParams(
@@ -116,13 +102,12 @@ public class ParametersWithDataType {
 
     boolean isCodegenModel = spec instanceof CodegenModel;
 
-    boolean isRequired;
+    Map<String, Object> testOutput = createDefaultOutput();
+
     if (spec instanceof CodegenParameter parameter) {
-      isRequired = parameter.required;
+      testOutput.put("isOptional", !parameter.required);
     } else if (spec instanceof CodegenProperty property) {
-      isRequired = property.required;
-    } else {
-      isRequired = false;
+      testOutput.put("isOptional", !property.required);
     }
 
     if (!isCodegenModel) {
@@ -148,7 +133,6 @@ public class ParametersWithDataType {
       finalParamName = "type_";
     }
 
-    Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
@@ -156,8 +140,6 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
-    testOutput.put("isRequired", isRequired);
-    testOutput.put("isOptional", !isRequired);
 
     if (param == null) {
       handleNull(testOutput);
@@ -296,7 +278,6 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
-      testOutput.clear();
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();

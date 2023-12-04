@@ -23,5 +23,5 @@ JString("{{{value}}}")
 JArray({{#value}}{{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
 {{/isArray}}
 {{#isFreeFormObject}}
-JObject({{#value}}"{{{key}}}" -> {{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
+JObject(List({{#value}}JField("{{{key}}}", {{> param_json_element}}){{^-last}},{{/-last}}{{/value}}))
 {{/isFreeFormObject}}

@@ -1,7 +1,7 @@
-JObject(
+JObject(List(
   {{#value}}
   {{#entrySet}}
-  "{{{key}}}" -> "{{{value}}}"{{^-last}},{{/-last}}
+  JField("{{{key}}}", JString("{{{value}}}")){{^-last}},{{/-last}}
   {{/entrySet}}
 {{/value}}
-)
+))

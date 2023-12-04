@@ -1,1 +1,1 @@
-JObject({{#value}}"{{{key}}}" -> {{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
+JObject(List({{#value}}JField("{{{key}}}", {{> param_json_element}}){{^-last}},{{/-last}}{{/value}}))
