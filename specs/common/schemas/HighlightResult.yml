@@ -1,0 +1,53 @@
+highlightResultOption:
+  type: object
+  description: Show highlighted section and words matched on a query.
+  additionalProperties: false
+  x-discriminator-fields:
+    - matchLevel
+    - value
+    - matchedWords
+  properties:
+    value:
+      $ref: '#/highlightedValue'
+    matchLevel:
+      $ref: '#/matchLevel'
+    matchedWords:
+      type: array
+      description: List of words from the query that matched the object.
+      example: ['action']
+      items:
+        type: string
+    fullyHighlighted:
+      type: boolean
+      description: Whether the entire attribute value is highlighted.
+  required:
+    - value
+    - matchLevel
+    - matchedWords
+
+highlightedValue:
+  type: string
+  description: Markup text with `facetQuery` matches highlighted.
+  example: '<em>George</em> <em>Clo</em>oney'
+
+matchLevel:
+  type: string
+  description: Indicates how well the attribute matched the search query.
+  enum: [none, partial, full]
+
+highlightResultOptionMap:
+  type: object
+  description: Show highlighted section and words matched on a query.
+  additionalProperties:
+    $ref: '#/highlightResultOption'
+
+highlightResult:
+  oneOf:
+    - $ref: '#/highlightResultOption'
+    - $ref: '#/highlightResultOptionMap'
+
+highlightResultMap:
+  type: object
+  description: Show highlighted section and words matched on a query.
+  additionalProperties:
+    $ref: '#/highlightResult'
