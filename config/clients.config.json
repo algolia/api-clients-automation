@@ -84,6 +84,18 @@
       "outputFolder": "tests"
     }
   },
+  "ruby": {
+    "folder": "clients/algoliasearch-client-ruby",
+    "gitRepoId": "algoliasearch-client-ruby",
+    "packageVersion": "3.0.0.alpha.0",
+    "modelFolder": "lib/algolia/models",
+    "apiFolder": "lib/algolia/api",
+    "customGenerator": "algolia-ruby",
+    "tests": {
+      "extension": "_test.rb",
+      "outputFolder": "test"
+    }
+  },
   "scala": {
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
