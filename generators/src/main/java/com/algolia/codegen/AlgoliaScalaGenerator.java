@@ -20,6 +20,11 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   final Logger logger = Logger.getLogger(AlgoliaScalaGenerator.class.getName());
 
+  /** Convert a text to a valid scala identifier. */
+  public static String formatIdentifier(String text) {
+    return new AlgoliaScalaGenerator().formatIdentifier(text, false);
+  }
+
   @Override
   public String getName() {
     return "algolia-scala";

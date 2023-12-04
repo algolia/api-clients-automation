@@ -1,0 +1,36 @@
+import org.json4s._
+
+sealed trait {{classname}}{{#vendorExtensions}}{{#x-one-of-element}}{{#x-one-of-element-parents}} {{^-first}}with{{/-first}}extends{{#-first}}{{/-first}} {{parent_classname}}Trait{{/x-one-of-element-parents}}{{/x-one-of-element}}{{/vendorExtensions}}
+
+/**
+* {{#description}}{{{.}}}{{/description}}{{^description}}{{classname}} enumeration{{/description}}
+*/
+object {{classname}} {
+    {{#allowableValues}}
+    {{#values}}
+    case object {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} extends {{classname}} {
+        override def toString = "{{.}}"
+    }
+    {{/values}}
+    {{/allowableValues}}
+    {{#allowableValues}}
+    val values: Seq[{{classname}}]  = Seq({{#values}}{{#fnEnumEntry}}{{.}}{{/fnEnumEntry}}{{^-last}},{{/-last}}{{/values}})
+    {{/allowableValues}}
+
+    def withName(name: String): {{classname}} = {{classname}}.values
+        .find(_.toString == name)
+        .getOrElse(throw new MappingException(s"Unknown {{classname}} value: $name"))
+}
+
+class {{classname}}Serializer
+    extends CustomSerializer[{{classname}}](_ =>
+      (
+        {
+          case JString(value) => {{classname}}.withName(value)
+          case JNull => null
+        },
+        { case value: {{classname}} =>
+          JString(value.toString)
+        }
+      )
+    )

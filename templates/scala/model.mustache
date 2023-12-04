@@ -64,34 +64,7 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
 {{/isEnum}}
 
 {{#isEnum}}
-object {{classname}} extends Enumeration {
-    protected case class Val(value: String) extends super.Val(value){{#vendorExtensions}}{{#x-one-of-element}}{{#x-one-of-element-parents}} with {{parent_classname}}Trait{{/x-one-of-element-parents}}{{/x-one-of-element}}{{/vendorExtensions}}
-{{#allowableValues}}
-    {{#values}}
-    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Val("{{.}}")
-    {{/values}}
-{{/allowableValues}}
-}
+{{> enum}}
 {{/isEnum}}
-{{#hasEnums}}
-object {{classname}}Enums {
-
-  {{#vars}}
-  {{#isEnum}}
-  type {{datatypeWithEnum}} = {{datatypeWithEnum}}.Value
-  {{/isEnum}}
-  {{/vars}}
-  {{#vars}}
-  {{#isEnum}}
-  object {{datatypeWithEnum}} extends Enumeration {
-{{#_enum}}
-    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
-{{/_enum}}
-  }
-
-  {{/isEnum}}
-  {{/vars}}
-}
-{{/hasEnums}}
 {{/model}}
 {{/models}}

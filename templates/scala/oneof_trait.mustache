@@ -71,7 +71,7 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         case value: JString => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/isEnumRef}}
         {{#isArray}}
-        case JArray(value{{#items}}: List[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}]{{/items}}) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
+        case JArray(value) if value.forall(_.isInstanceOf[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}{{#isArray}}JArray{{/isArray}}]) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
         {{/isArray}}
         {{#isInteger}}
         case JInt(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toInt)
