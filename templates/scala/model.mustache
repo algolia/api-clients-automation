@@ -65,10 +65,10 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
 
 {{#isEnum}}
 object {{classname}} extends Enumeration {
-    type {{classname}} = {{classname}}.Value {{#vendorExtensions.x-one-of-element}}{{#vendorExtensions.x-one-of-element-parents}}with {{parent_classname}} {{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}
+    protected case class Val(value: String) extends super.Val(value){{#vendorExtensions}}{{#x-one-of-element}}{{#x-one-of-element-parents}} with {{parent_classname}}Trait{{/x-one-of-element-parents}}{{/x-one-of-element}}{{/vendorExtensions}}
 {{#allowableValues}}
     {{#values}}
-    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
+    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Val("{{.}}")
     {{/values}}
 {{/allowableValues}}
 }

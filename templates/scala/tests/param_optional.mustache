@@ -1,0 +1,6 @@
+{{^isOptional}}
+{{> param_value}}
+{{/isOptional}}
+{{#isOptional}}
+Some({{> param_value}})
+{{/isOptional}}

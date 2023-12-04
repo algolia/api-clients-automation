@@ -2,7 +2,6 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.Sets;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +17,7 @@ public class Utils {
   /** The suffix of our client names. */
   public static final String API_SUFFIX = "Client";
 
-  public static final Set<String> CUSTOM_METHOD = Sets.newHashSet("del", "get", "post", "put");
+  public static final Set<String> CUSTOM_METHODS = Set.of("del", "get", "post", "put");
 
   private static JsonNode cacheConfig;
   private static JsonNode cacheOpenApiToolsConfig;
@@ -43,7 +42,7 @@ public class Utils {
    * escape '/' in the path variable
    */
   public static CodegenOperation specifyCustomRequest(CodegenOperation ope) {
-    if (CUSTOM_METHOD.contains(ope.operationIdOriginal)) {
+    if (CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
       ope.vendorExtensions.put("x-is-custom-request", true);
     }
     return ope;

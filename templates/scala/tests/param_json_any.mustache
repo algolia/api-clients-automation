@@ -1,7 +1,7 @@
-buildJsonObject {
-{{#value}}
+JObject(
+  {{#value}}
   {{#entrySet}}
-  put("{{{key}}}", "{{{value}}}")
+  "{{{key}}}" -> "{{{value}}}"{{^-last}},{{/-last}}
   {{/entrySet}}
 {{/value}}
-}
+)

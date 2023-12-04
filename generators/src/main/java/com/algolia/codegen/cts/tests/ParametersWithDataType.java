@@ -1,21 +1,18 @@
 package com.algolia.codegen.cts.tests;
 
 import com.algolia.codegen.Utils;
-import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.exceptions.CTSException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
-import org.openapitools.codegen.CodegenComposedSchemas;
-import org.openapitools.codegen.CodegenModel;
-import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenParameter;
-import org.openapitools.codegen.CodegenProperty;
-import org.openapitools.codegen.CodegenResponse;
-import org.openapitools.codegen.IJsonSchemaValidationProperties;
+import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
 public class ParametersWithDataType {
@@ -74,12 +71,16 @@ public class ParametersWithDataType {
             }
           }
           Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
+          addTypeInfo(paramWithType, specParam);
           parametersWithDataType.add(paramWithType);
           parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
         }
       }
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0);
+      if (spec instanceof CodegenParameter specParam) {
+        addTypeInfo(paramWithType, specParam);
+      }
       parametersWithDataType.add(paramWithType);
       parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
     }
@@ -89,6 +90,13 @@ public class ParametersWithDataType {
     bundle.put("parametersWithDataType", parametersWithDataType);
     // Also provide a map version for those who know which keys to look for
     bundle.put("parametersWithDataTypeMap", parametersWithDataTypeMap);
+  }
+
+  private void addTypeInfo(Map<String, Object> paramWithType, CodegenParameter parameter) {
+    if (parameter == null) return;
+    paramWithType.put("isRequired", parameter.required);
+    paramWithType.put("isOptional", !parameter.required);
+    paramWithType.put("isContainer", parameter.isContainer);
   }
 
   private Map<String, Object> traverseParams(
@@ -107,6 +115,15 @@ public class ParametersWithDataType {
     }
 
     boolean isCodegenModel = spec instanceof CodegenModel;
+
+    boolean isRequired;
+    if (spec instanceof CodegenParameter parameter) {
+      isRequired = parameter.required;
+    } else if (spec instanceof CodegenProperty property) {
+      isRequired = property.required;
+    } else {
+      isRequired = false;
+    }
 
     if (!isCodegenModel) {
       // don't overwrite it if it's already a model sometimes it's in lowercase for some reason
@@ -139,11 +156,8 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("objectName", Utils.capitalize(baseType));
-
-    if (spec instanceof CodegenProperty property) {
-      testOutput.put("isRequired", property.required);
-      testOutput.put("isOptional", !property.required);
-    }
+    testOutput.put("isRequired", isRequired);
+    testOutput.put("isOptional", !isRequired);
 
     if (param == null) {
       handleNull(testOutput);
