@@ -58,6 +58,8 @@ public class Utils {
         return client;
       case "dart":
         return StringUtils.lowerCase(client);
+      case "csharp":
+        return capitalize(camelize(client));
       default:
         return capitalize(camelize(client));
     }

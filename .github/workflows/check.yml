@@ -73,6 +73,7 @@ jobs:
       RUN_GEN_PYTHON: ${{ steps.setup.outputs.RUN_GEN_PYTHON }}
       RUN_GEN_RUBY: ${{ steps.setup.outputs.RUN_GEN_RUBY }}
       RUN_GEN_SCALA: ${{ steps.setup.outputs.RUN_GEN_SCALA }}
+      RUN_GEN_CSHARP: ${{ steps.setup.outputs.RUN_GEN_CSHARP }}
 
       RUN_JS_UTILS: ${{ steps.setup.outputs.RUN_JS_UTILS }}
 
@@ -326,6 +327,7 @@ jobs:
           python: ${{ needs.setup.outputs.RUN_GEN_PYTHON }}
           ruby: ${{ needs.setup.outputs.RUN_GEN_RUBY }}
           scala: ${{ needs.setup.outputs.RUN_GEN_SCALA }}
+          csharp: ${{ needs.setup.outputs.RUN_GEN_CSHARP }}
 
       - name: Setup
         uses: ./.github/actions/setup
