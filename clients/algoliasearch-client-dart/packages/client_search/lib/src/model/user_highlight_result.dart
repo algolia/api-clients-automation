@@ -13,19 +13,17 @@ final class UserHighlightResult {
     required this.clusterName,
   });
 
-  /// Show highlighted section and words matched on a query.
   /// One of types:
-  /// - [List<HighlightResultOption>]
+  /// - [Map<String, HighlightResultOption>]
   /// - [HighlightResultOption]
   @JsonKey(name: r'userID')
-  final Map<String, dynamic> userID;
+  final dynamic userID;
 
-  /// Show highlighted section and words matched on a query.
   /// One of types:
-  /// - [List<HighlightResultOption>]
+  /// - [Map<String, HighlightResultOption>]
   /// - [HighlightResultOption]
   @JsonKey(name: r'clusterName')
-  final Map<String, dynamic> clusterName;
+  final dynamic clusterName;
 
   @override
   bool operator ==(Object other) =>

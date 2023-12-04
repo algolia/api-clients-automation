@@ -12,13 +12,8 @@
 package algoliasearch.search
 
 /** UserHighlightResult
-  *
-  * @param userID
-  *   Show highlighted section and words matched on a query.
-  * @param clusterName
-  *   Show highlighted section and words matched on a query.
   */
 case class UserHighlightResult(
-    userID: Map[String, HighlightResult],
-    clusterName: Map[String, HighlightResult]
+    userID: HighlightResult,
+    clusterName: HighlightResult
 )
