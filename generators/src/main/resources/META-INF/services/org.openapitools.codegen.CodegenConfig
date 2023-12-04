@@ -7,4 +7,5 @@ com.algolia.codegen.AlgoliaDartGenerator
 com.algolia.codegen.AlgoliaPythonGenerator
 com.algolia.codegen.AlgoliaRubyGenerator
 com.algolia.codegen.AlgoliaScalaGenerator
+com.algolia.codegen.AlgoliaCSharpGenerator
 com.algolia.codegen.cts.AlgoliaCTSGenerator

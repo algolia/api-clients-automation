@@ -69,15 +69,14 @@ describe('createReleasePR', () => {
 
   it('reads versions of the current language', () => {
     expect(readVersions()).toEqual({
-      java: {
-        current: expect.any(String),
-      },
+      java: {current: expect.any(String)},
       javascript: { current: expect.any(String) },
       php: { current: expect.any(String) },
       go: { current: expect.any(String) },
       kotlin: { current: expect.any(String) },
       dart: { current: expect.any(String) },
       python: { current: expect.any(String) },
+      csharp: { current: expect.any(String) },
       ruby: { current: expect.any(String) },
       scala: { current: expect.any(String)}
     });
@@ -210,18 +209,25 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
+
+          csharp: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
         })
       ).toMatchInlineSnapshot(`
-              "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
-          `);
+        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+      `);
     });
 
     it('generates text for version changes with a language with no commit', () => {
@@ -276,8 +282,14 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
-          
+
           scala: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
+
+          csharp: {
             current: '0.0.1',
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
@@ -292,7 +304,8 @@ describe('createReleasePR', () => {
         - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - ~python: 0.0.1 (no commit)~
         - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
       `);
     });
 
@@ -345,7 +358,7 @@ describe('createReleasePR', () => {
             skipRelease: true,
             next: getNextVersion('0.0.1', null),
           },
-          
+
           ruby: {
             current: '0.0.1',
             releaseType: null,
@@ -354,6 +367,13 @@ describe('createReleasePR', () => {
           },
 
           scala: {
+            current: '0.0.1',
+            releaseType: null,
+            skipRelease: true,
+            next: getNextVersion('0.0.1', null),
+          },
+
+          csharp: {
             current: '0.0.1',
             releaseType: null,
             skipRelease: true,
@@ -376,7 +396,9 @@ describe('createReleasePR', () => {
               - ~ruby: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
                 - No \`feat\` or \`fix\` commit, thus unchecked by default.
               - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default."  
+                - No \`feat\` or \`fix\` commit, thus unchecked by default.
+              - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+                - No \`feat\` or \`fix\` commit, thus unchecked by default."
           `);
     });
   });

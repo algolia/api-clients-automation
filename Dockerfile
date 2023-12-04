@@ -3,8 +3,10 @@ ARG GO_VERSION
 ARG NODE_VERSION
 ARG PHP_VERSION
 ARG PYTHON_VERSION
+ARG CSHARP_VERSION
 
 FROM dart:${DART_VERSION} AS dart-builder
+FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
 FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM python:${PYTHON_VERSION}-bullseye AS python-builder
 FROM php:${PHP_VERSION}-bullseye AS builder
@@ -62,6 +64,10 @@ RUN sdk install sbt
 ARG RUBY_VERSION
 RUN wget -O ruby.tar.gz https://github.com/postmodern/ruby-install/releases/download/v0.9.2/ruby-install-0.9.2.tar.gz \
     && tar -xzvf ruby.tar.gz && cd ruby && make install && ruby-install ruby ${RUBY_VERSION} && gem install bundler
+
+# C#
+COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
+RUN echo "export PATH=$PATH:/usr/share/dotnet" >> ~/.profile && source ~/.profile
 
 WORKDIR /app
 

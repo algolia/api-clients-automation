@@ -250,6 +250,33 @@
       },
       "scala-monitoring": {
         "output": "#{cwd}/clients/algoliasearch-client-scala"
+      },
+      "csharp-search": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-insights": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-recommend": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-personalization": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-analytics": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-abtesting": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-query-suggestions": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "csharp-monitoring": {
+        "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
       }
     }
   }
