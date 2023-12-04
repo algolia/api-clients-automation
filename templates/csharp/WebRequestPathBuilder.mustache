@@ -26,14 +26,11 @@ namespace Algolia.Search.{{packageName}}.Client
                 }
             }
 
-            public void AddQueryParameters(Multimap<string, string> parameters)
+            public void AddQueryParameters(Dictionary<string, string> parameters)
             {
                 foreach (var parameter in parameters)
                 {
-                    foreach (var value in parameter.Value)
-                    {
-                        _query = _query + parameter.Key + "=" + Uri.EscapeDataString(value) + "&";
-                    }
+                    _query = _query + parameter.Key + "=" + Uri.EscapeDataString(parameter.Value) + "&";
                 }
             }
 

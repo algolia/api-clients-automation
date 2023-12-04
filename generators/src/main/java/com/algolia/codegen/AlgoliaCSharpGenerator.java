@@ -38,6 +38,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
     super.processOpts();
 
+    modelNameMapping.put("Task", "IngestionTask");
+
     // Generation notice, added on every generated files
     Utils.setGenerationBanner(additionalProperties);
 
@@ -58,6 +60,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("gitignore.mustache") ||
       file.getTemplateFile().equals("IApiAccessor.mustache") ||
       file.getTemplateFile().equals("HttpSigningConfiguration.mustache") ||
+      file.getTemplateFile().equals("IAsynchronousClient.mustache") ||
+      file.getTemplateFile().equals("FileParameter.mustache") ||
       file.getTemplateFile().equals("RetryConfiguration.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
@@ -67,5 +71,12 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
+
+    try {
+      Utils.generateServer(CLIENT, additionalProperties);
+    } catch (GeneratorException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 }

@@ -22,23 +22,18 @@ namespace Algolia.Search.{{packageName}}.Client
         /// Query parameters to be applied to the request.
         /// Keys may have 1 or more values associated.
         /// </summary>
-        public Multimap<string, string> QueryParameters { get; set; }
+        public Dictionary<string, string> QueryParameters { get; set; }
 
         /// <summary>
         /// Header parameters to be applied to the request.
         /// Keys may have 1 or more values associated.
         /// </summary>
-        public Multimap<string, string> HeaderParameters { get; set; }
+        public Dictionary<string, string> HeaderParameters { get; set; }
 
         /// <summary>
         /// Form parameters to be sent along with the request.
         /// </summary>
         public Dictionary<string, string> FormParameters { get; set; }
-
-        /// <summary>
-        /// File parameters to be sent along with the request.
-        /// </summary>
-        public Multimap<string, FileParameter> FileParameters { get; set; }
 
         /// <summary>
         /// Cookies to be sent along with the request.
@@ -50,16 +45,20 @@ namespace Algolia.Search.{{packageName}}.Client
         /// </summary>
         public Object Data { get; set; }
 
+        // <summary>
+        /// Request timeout in seconds
+        /// </summary>
+        public int? Timeout { get; set; }
+
         /// <summary>
         /// Constructs a new instance of <see cref="RequestOptions"/>
         /// </summary>
         public RequestOptions()
         {
             PathParameters = new Dictionary<string, string>();
-            QueryParameters = new Multimap<string, string>();
-            HeaderParameters = new Multimap<string, string>();
+            QueryParameters = new Dictionary<string, string>();
+            HeaderParameters = new Dictionary<string, string>();
             FormParameters = new Dictionary<string, string>();
-            FileParameters = new Multimap<string, FileParameter>();
             Cookies = new List<Cookie>();
         }
     }

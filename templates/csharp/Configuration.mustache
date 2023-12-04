@@ -1,4 +1,4 @@
-{{>partial_header}}
+  {{>partial_header}}
 
 using System;
 {{^net35}}
@@ -13,9 +13,91 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Net.Http;
 using System.Net.Security;
+using Algolia.Search.Client;
+using Algolia.Search.Transport;
 
 namespace Algolia.Search.{{packageName}}.Client
 {
+  /// <summary>
+  /// {{packageName}} client configuration
+  /// </summary>
+  public sealed class {{packageName}}Config : AlgoliaConfig
+  {
+    /// <summary>
+    /// The configuration of the {{packageName}} client
+    /// A client should have it's own configuration ie on configuration per client instance
+    /// </summary>
+    /// <param name="applicationId">Your application ID</param>
+    /// <param name="apiKey">Your API Key</param>
+  {{#hasRegionalHost}}/// <param name="region">The region</param>{{/hasRegionalHost}}
+    public {{packageName}}Config(string applicationId, string apiKey{{#hasRegionalHost}},string region = null{{/hasRegionalHost}}) : base(applicationId, apiKey)
+    {
+      {{#hasRegionalHost}}
+      var regions = new List<string> { {{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}} };
+      if (region != null && !regions.Contains(region))
+      {
+        throw new ArgumentException($"`region` must be one of the following {regions}");
+      }
+
+      var selectedRegion = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".Replace("{region}", region);
+
+      List<StatefulHost> hosts = new List<StatefulHost>
+      {
+        new StatefulHost
+        {
+          Url = selectedRegion, Accept = CallType.Read | CallType.Write
+        }
+      };
+      {{/hasRegionalHost}}
+      {{^hasRegionalHost}}
+      List<StatefulHost> hosts = new List<StatefulHost>
+      {
+        new StatefulHost
+        {
+          Url = $"{applicationId}-dsn.algolia.net",
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read
+        },
+        new StatefulHost
+        {
+          Url = $"{applicationId}.algolia.net", Up = true, LastUse = DateTime.UtcNow, Accept = CallType.Write,
+        }
+      };
+
+      var commonHosts = new List<StatefulHost>
+      {
+        new StatefulHost
+        {
+          Url = $"{applicationId}-1.algolianet.com",
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new StatefulHost
+        {
+          Url = $"{applicationId}-2.algolianet.com",
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new StatefulHost
+        {
+          Url = $"{applicationId}-3.algolianet.com",
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }.Shuffle();
+
+      hosts.AddRange(commonHosts);
+      {{/hasRegionalHost}}
+
+      DefaultHosts = hosts;
+      Compression = CompressionType.NONE;
+    }
+  }
+
     /// <summary>
     /// Represents a set of configuration settings
     /// </summary>
@@ -111,6 +193,8 @@ namespace Algolia.Search.{{packageName}}.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="Configuration" /> class
         /// </summary>
+        /// <param name="applicationId">Your application ID</param>
+        /// <param name="apiKey">Your API Key</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration()
         {
