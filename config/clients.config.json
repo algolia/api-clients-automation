@@ -107,5 +107,17 @@
       "extension": "Test.scala",
       "outputFolder": "test"
     }
+  },
+  "csharp": {
+    "folder": "clients/algoliasearch-client-csharp",
+    "gitRepoId": "algoliasearch-client-csharp",
+    "packageVersion": "7.0.0-alpha.0",
+    "modelFolder": "algoliasearch",
+    "apiFolder": "algoliasearch",
+    "customGenerator": "algolia-csharp",
+    "tests": {
+      "extension": ".test.cs",
+      "outputFolder": "test"
+    }
   }
 }

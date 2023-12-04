@@ -15,6 +15,7 @@ GO_VERSION=$(cat config/.go-version)
 DART_VERSION=$(cat config/.dart-version)
 PYTHON_VERSION=$(cat config/.python-version)
 RUBY_VERSION=$(cat config/.ruby-version)
+CSHARP_VERSION=$(cat config/.csharp-version)
 
 docker build \
   --build-arg JAVA_VERSION=$JAVA_VERSION \
@@ -24,4 +25,5 @@ docker build \
   --build-arg DART_VERSION=$DART_VERSION \
   --build-arg PYTHON_VERSION=$PYTHON_VERSION \
   --build-arg RUBY_VERSION=$RUBY_VERSION \
+  --build-arg CSHARP_VERSION=$CSHARP_VERSION \
   -t api-clients-automation .

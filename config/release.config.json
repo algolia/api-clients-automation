@@ -13,7 +13,8 @@
     "dart": "main",
     "python": "next",
     "ruby": "next",
-    "scala": "next"
+    "scala": "next",
+    "csharp": "next"
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {

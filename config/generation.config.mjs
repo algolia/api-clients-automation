@@ -98,4 +98,12 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
+
+  // C#
+  'clients/algoliasearch-client-csharp/**',
+  '!clients/algoliasearch-client-csharp/*',
+  '!clients/algoliasearch-client-csharp/algoliasearch/obj/**',
+  'clients/algoliasearch-client-csharp/Algolia.Search.sln',
+  'clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj',
+  'clients/algoliasearch-client-csharp/.gitignore',
 ];

@@ -20,6 +20,10 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
     case 'python':
       await run('poetry build', { cwd });
       break;
+    case 'csharp':
+      const cmd = `find ${cwd} -type f -name "*.sln" | xargs -I % sh -c 'echo Building %;dotnet build % --configuration Release'`;
+      await run(cmd, { cwd });
+      break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
       const packageNames = gens.map(({ additionalProperties: { packageName } }) =>

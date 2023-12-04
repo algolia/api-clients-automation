@@ -27,6 +27,9 @@ export async function formatter(language: string, folder: string): Promise<void>
     case 'kotlin':
       cmd = `./gradle/gradlew -p ${folder} spotlessApply`;
       break;
+    case 'csharp':
+      cmd = `cd ${folder} && dotnet format`;
+      break;
     case 'dart':
       if (folder.includes('tests')) {
         cmd = `(cd ${folder} && dart pub get && dart fix --apply && dart format .)`;
@@ -44,6 +47,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       cmd = `(cd ${folder} && sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt)`;
       break;
     default:
+      spinner.warn(`no formatter for '${language}'`);
       return;
   }
   await run(cmd);
