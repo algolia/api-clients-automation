@@ -17,7 +17,7 @@
     "poetry",
     "pip_requirements",
     "gradle-wrapper",
-    "ruby"
+    "bundler"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"
