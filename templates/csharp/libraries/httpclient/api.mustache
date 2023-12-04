@@ -67,171 +67,56 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
     {
         private Algolia.Search.{{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
+        private readonly HttpTransport _transport;
+        private readonly AlgoliaConfig _config;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
-        /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
-        /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
+        /// Create a new {{packageName}} client for the given appID and apiKey.
         /// </summary>
-        /// <returns></returns>
-        public {{classname}}() : this((string)null)
+        /// <param name="applicationId">Your application</param>
+        /// <param name="apiKey">Your API key</param>
+        public {{classname}}(string applicationId, string apiKey) : this(new Algolia.Search.Client.{{packageName}}Config(applicationId, apiKey), new AlgoliaHttpRequester())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
-        /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
-        /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
+        /// Initialize a client with custom config
         /// </summary>
-        /// <param name="basePath">The target service's base path in URL format.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <returns></returns>
-        public {{classname}}(string basePath)
-        {
-            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
-                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
-                new Algolia.Search.{{packageName}}.Client.Configuration { BasePath = basePath }
-            );
-            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(this.Configuration.BasePath);
-            this.Client =  this.ApiClient;
-            {{#supportsAsync}}
-            this.AsynchronousClient = this.ApiClient;
-            {{/supportsAsync}}
-            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class using Configuration object.
-        /// **IMPORTANT** This will also create an instance of HttpClient, which is less than ideal.
-        /// It's better to reuse the <see href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#issues-with-the-original-httpclient-class-available-in-net">HttpClient and HttpClientHandler</see>.
-        /// </summary>
-        /// <param name="configuration">An instance of Configuration.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <returns></returns>
-        public {{classname}}(Algolia.Search.{{packageName}}.Client.Configuration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
-
-            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
-                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(this.Configuration.BasePath);
-            this.Client = this.ApiClient;
-            {{#supportsAsync}}
-            this.AsynchronousClient = this.ApiClient;
-            {{/supportsAsync}}
-            ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
-        /// </summary>
-        /// <param name="client">An instance of HttpClient.</param>
-        /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <returns></returns>
-        /// <remarks>
-        /// Some configuration settings will not be applied without passing an HttpClientHandler.
-        /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
-        /// </remarks>
-        public {{classname}}(HttpClient client, HttpClientHandler handler = null) : this(client, (string)null, handler)
+        /// <param name="config">Algolia configuration</param>
+        public SearchClient(new Algolia.Search.Client.{{packageName}}Config config) : this(config, new AlgoliaHttpRequester())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// Initialize the client with custom config and custom Requester
         /// </summary>
-        /// <param name="client">An instance of HttpClient.</param>
-        /// <param name="basePath">The target service's base path in URL format.</param>
-        /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
-        /// <returns></returns>
-        /// <remarks>
-        /// Some configuration settings will not be applied without passing an HttpClientHandler.
-        /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
-        /// </remarks>
-        public {{classname}}(HttpClient client, string basePath, HttpClientHandler handler = null)
+        /// <param name="config">Algolia Config</param>
+        /// <param name="httpRequester">Your Http requester implementation of <see cref="IHttpRequester"/></param>
+        public SearchClient(Algolia.Search.Client.{{packageName}}Config config, IHttpRequester httpRequester)
         {
-            if (client == null) throw new ArgumentNullException("client");
+          if (httpRequester == null)
+          {
+            throw new ArgumentNullException(nameof(httpRequester), "An httpRequester is required");
+          }
 
-            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
-                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
-                new Algolia.Search.{{packageName}}.Client.Configuration { BasePath = basePath }
-            );
-            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
-            this.Client =  this.ApiClient;
-            {{#supportsAsync}}
-            this.AsynchronousClient = this.ApiClient;
-            {{/supportsAsync}}
-            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
+          if (config == null)
+          {
+            throw new ArgumentNullException(nameof(config), "A config is required");
+          }
+
+          if (string.IsNullOrWhiteSpace(config.AppId))
+          {
+            throw new ArgumentNullException(nameof(config.AppId), "Application ID is required");
+          }
+
+          if (string.IsNullOrWhiteSpace(config.ApiKey))
+          {
+            throw new ArgumentNullException(nameof(config.ApiKey), "An API key is required");
+          }
+
+          _config = config;
+          _transport = new HttpTransport(config, httpRequester);
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class using Configuration object.
-        /// </summary>
-        /// <param name="client">An instance of HttpClient.</param>
-        /// <param name="configuration">An instance of Configuration.</param>
-        /// <param name="handler">An optional instance of HttpClientHandler that is used by HttpClient.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <returns></returns>
-        /// <remarks>
-        /// Some configuration settings will not be applied without passing an HttpClientHandler.
-        /// The features affected are: Setting and Retrieving Cookies, Client Certificates, Proxy settings.
-        /// </remarks>
-        public {{classname}}(HttpClient client, Algolia.Search.{{packageName}}.Client.Configuration configuration, HttpClientHandler handler = null)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
-            if (client == null) throw new ArgumentNullException("client");
-
-            this.Configuration = Algolia.Search.{{packageName}}.Client.Configuration.MergeConfigurations(
-                Algolia.Search.{{packageName}}.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.ApiClient = new Algolia.Search.{{packageName}}.Client.ApiClient(client, this.Configuration.BasePath, handler);
-            this.Client = this.ApiClient;
-            {{#supportsAsync}}
-            this.AsynchronousClient = this.ApiClient;
-            {{/supportsAsync}}
-            ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class
-        /// using a Configuration object and client instance.
-        /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>{{#supportsAsync}}
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>{{/supportsAsync}}
-        /// <param name="configuration">The configuration object.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public {{classname}}(Algolia.Search.{{packageName}}.Client.ISynchronousClient client, {{#supportsAsync}}Algolia.Search.{{packageName}}.Client.IAsynchronousClient asyncClient, {{/supportsAsync}}Algolia.Search.{{packageName}}.Client.IReadableConfiguration configuration)
-        {
-            if (client == null) throw new ArgumentNullException("client");
-            {{#supportsAsync}}
-            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
-            {{/supportsAsync}}
-            if (configuration == null) throw new ArgumentNullException("configuration");
-
-            this.Client = client;
-            {{#supportsAsync}}
-            this.AsynchronousClient = asyncClient;
-            {{/supportsAsync}}
-            this.Configuration = configuration;
-            this.ExceptionFactory = Algolia.Search.{{packageName}}.Client.Configuration.DefaultExceptionFactory;
-        }
-
-        /// <summary>
-        /// Disposes resources if they were created by us
-        /// </summary>
-        public void Dispose()
-        {
-            this.ApiClient?.Dispose();
-        }
-
-        /// <summary>
-        /// Holds the ApiClient if created
-        /// </summary>
-        public Algolia.Search.{{packageName}}.Client.ApiClient ApiClient { get; set; } = null;
 
         {{#supportsAsync}}
         /// <summary>
@@ -239,11 +124,6 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         public Algolia.Search.{{packageName}}.Client.IAsynchronousClient AsynchronousClient { get; set; }
         {{/supportsAsync}}
-
-        /// <summary>
-        /// The client for accessing this underlying API synchronously.
-        /// </summary>
-        public Algolia.Search.{{packageName}}.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -258,7 +138,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Algolia.Search.{{packageName}}.Client.IReadableConfiguration Configuration { get; set; }
+        public Algolia.Search.Client.{{packageName}}Config Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -277,182 +157,6 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         }
 
         {{#operation}}
-        /// <summary>
-        /// {{{summary}}} {{notes}}
-        /// </summary>
-        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
-        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-        {{/allParams}}/// <returns>{{returnType}}</returns>
-        {{#isDeprecated}}
-        [Obsolete]
-        {{/isDeprecated}}
-        public {{{returnType}}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
-        {
-            {{#returnType}}Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
-            return localVarResponse.Data;{{/returnType}}{{^returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{/returnType}}
-        }
-
-        /// <summary>
-        /// {{{summary}}} {{notes}}
-        /// </summary>
-        /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
-        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-        {{/allParams}}/// <returns>ApiResponse of {{returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
-        {{#isDeprecated}}
-        [Obsolete]
-        {{/isDeprecated}}
-        public Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
-        {
-            {{#allParams}}
-            {{#required}}
-            {{^vendorExtensions.x-csharp-value-type}}
-            // verify the required parameter '{{paramName}}' is set
-            if ({{paramName}} == null)
-                throw new Algolia.Search.{{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
-
-            {{/vendorExtensions.x-csharp-value-type}}
-            {{/required}}
-            {{/allParams}}
-            Algolia.Search.{{packageName}}.Client.RequestOptions localVarRequestOptions = new Algolia.Search.{{packageName}}.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-                {{#consumes}}
-                "{{{mediaType}}}"{{^-last}},{{/-last}}
-                {{/consumes}}
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                {{#produces}}
-                "{{{mediaType}}}"{{^-last}},{{/-last}}
-                {{/produces}}
-            };
-
-            var localVarContentType = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Algolia.Search.{{packageName}}.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            {{#pathParams}}
-            {{#required}}
-            localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                localVarRequestOptions.PathParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // path parameter
-            }
-            {{/required}}
-            {{/pathParams}}
-            {{#queryParams}}
-            {{#required}}
-            {{#isDeepObject}}
-            {{#items.vars}}
-            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
-            {{/items.vars}}
-            {{^items}}
-            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
-            {{/items}}
-            {{/isDeepObject}}
-            {{^isDeepObject}}
-            localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
-            {{/isDeepObject}}
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                {{#isDeepObject}}
-                    {{#items.vars}}
-                if ({{paramName}}.{{name}} != null)
-                {
-                    localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}.{{name}}));
-                }
-                    {{/items.vars}}
-                {{^items}}
-                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("deepObject", "{{baseName}}", {{paramName}}));
-                {{/items}}
-                {{/isDeepObject}}
-                {{^isDeepObject}}
-                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
-                {{/isDeepObject}}
-            }
-            {{/required}}
-            {{/queryParams}}
-            {{#headerParams}}
-            {{#required}}
-            localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // header parameter
-            }
-            {{/required}}
-            {{/headerParams}}
-            {{#formParams}}
-            {{#required}}
-            {{#isFile}}
-            localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
-            {{/isFile}}
-            {{^isFile}}
-            localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
-            {{/isFile}}
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                {{#isFile}}
-                localVarRequestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
-                {{/isFile}}
-                {{^isFile}}
-                localVarRequestOptions.FormParameters.Add("{{baseName}}", Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
-                {{/isFile}}
-            }
-            {{/required}}
-            {{/formParams}}
-            {{#bodyParam}}
-            localVarRequestOptions.Data = {{paramName}};
-            {{/bodyParam}}
-
-            {{#authMethods}}
-            // authentication ({{name}}) required
-            {{#isApiKey}}
-            {{#isKeyInCookie}}
-            // cookie parameter support
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.Cookies.Add(new Cookie("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
-            }
-            {{/isKeyInCookie}}
-            {{#isKeyInHeader}}
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}"));
-            }
-            {{/isKeyInHeader}}
-            {{#isKeyInQuery}}
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
-            }
-            {{/isKeyInQuery}}
-            {{/isApiKey}}
-
-            {{/authMethods}}
-
-            // make the HTTP request
-            var localVarResponse = this.Client.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}<{{{returnType}}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("{{operationId}}", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
         {{#supportsAsync}}
         /// <summary>
         /// {{{summary}}} {{notes}}
