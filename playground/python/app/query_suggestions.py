@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.query_suggestions import __version__
-from algoliasearch.query_suggestions.client import QuerySuggestionsClient
+from algoliasearch.query_suggestions import __version__, QuerySuggestionsClient
 
 
 async def main():

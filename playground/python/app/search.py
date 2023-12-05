@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.search import __version__
-from algoliasearch.search import SearchClient
+from algoliasearch.search import __version__, SearchClient
 
 
 async def main():

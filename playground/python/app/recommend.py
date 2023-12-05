@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.recommend import __version__
-from algoliasearch.recommend.client import RecommendClient
+from algoliasearch.recommend import __version__, RecommendClient
 
 
 async def main():
