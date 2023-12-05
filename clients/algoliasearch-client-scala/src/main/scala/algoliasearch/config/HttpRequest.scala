@@ -65,6 +65,13 @@ object HttpRequest {
       this
     }
 
+    def withQueryParameter(key: String, value: Option[Any]): Builder = {
+      value match {
+        case Some(param) => withQueryParameter(key, param)
+        case None        => this
+      }
+    }
+
     def withQueryParameters(queryParameters: Option[Map[String, Any]]): Builder = {
       queryParameters match {
         case Some(parameters) => withQueryParameters(parameters)
@@ -89,7 +96,7 @@ object HttpRequest {
     }
 
     def withHeader(key: String, value: Any): HttpRequest.Builder = {
-      this.headers += key -> paramToString(value)
+      this.headers += key.toLowerCase -> paramToString(value)
       this
     }
 

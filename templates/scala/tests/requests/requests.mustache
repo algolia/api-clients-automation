@@ -15,23 +15,29 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = org.json4s.DefaultFormats
 
-  val echo: EchoInterceptor = EchoInterceptor()
-  val client: {{client}} = {{client}}(
-    appId = "appId",
-    apiKey = "apiKey",
-    {{#hasRegionalHost}}
-    region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}},
-    {{/hasRegionalHost}}
-    clientOptions = ClientOptions
-      .builder()
-      .withRequesterConfig(requester => requester.withInterceptor(echo))
-      .build()
-  )
+  def testClient(): ({{client}}, EchoInterceptor) = {
+    val echo = EchoInterceptor()
+    (
+      {{client}}(
+        appId = "appId",
+        apiKey = "apiKey",
+        {{#hasRegionalHost}}
+        region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}},
+        {{/hasRegionalHost}}
+        clientOptions = ClientOptions
+          .builder()
+          .withRequesterConfig(requester => requester.withInterceptor(echo))
+          .build()
+      ),
+      echo
+    )
+  }
 
   {{#blocksRequests}}
   {{#tests}}
   
   test("{{{testName}}}") {
+    val (client, echo) = testClient()
     val future = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
     {{#parametersWithDataType}}
     {{> request_param}}{{^-last}},{{/-last}}
@@ -64,9 +70,26 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     assert(res.body.isEmpty)
     {{/assertNullBody}}
     {{^assertNullBody}}
-    assert(Some("{}") == res.body)
+    assert(res.body.contains("{}"))
     {{/assertNullBody}}
     {{/body}}
+    {{#queryParameters}}
+    val expectedQuery = parse("""{{{queryParameters}}}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    {{/queryParameters}}
+    {{#headers}}
+    val expectedHeaders = parse("""{{{headers}}}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+    {{/headers}}
     {{/request}}
   }
   
