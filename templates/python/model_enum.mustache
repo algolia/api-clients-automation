@@ -1,9 +1,3 @@
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
-
-
 class {{classname}}({{vendorExtensions.x-py-enum-type}}, Enum):
     """
     {{{description}}}{{^description}}{{{classname}}}{{/description}}

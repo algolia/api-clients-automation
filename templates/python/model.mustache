@@ -1,28 +1,16 @@
 {{>partial_header}}
-from __future__ import annotations
-from json import loads, dumps
-import re
-from enum import Enum
-from typing_extensions import Literal
-{{#models}}
-{{#model}}
-{{#vendorExtensions.x-py-datetime-imports}}{{#-first}}from datetime import (
-{{/-first}}{{{.}}}{{^-last}},
-{{/-last}}{{#-last}}
-){{/-last}}{{/vendorExtensions.x-py-datetime-imports}}
-{{#vendorExtensions.x-py-typing-imports}}{{#-first}}from typing import (
-Dict,Union,Annotated,{{/-first}}{{{.}}}{{^-last}},
-{{/-last}}{{#-last}}
-){{/-last}}{{/vendorExtensions.x-py-typing-imports}}
-{{#vendorExtensions.x-py-pydantic-imports}}{{#-first}}from pydantic import (
-Field, {{/-first}}{{{.}}}{{^-last}},
-{{/-last}}{{#-last}}
-){{/-last}}{{/vendorExtensions.x-py-pydantic-imports}}
-{{/model}}
-{{/models}}
+{{>imports}}
+
+{{#models}}{{#model}}
 {{#imports}}
-{{import}}
+from algoliasearch.{{packageName}}.models import ({{{.}}})
 {{/imports}}
+{{/model}}{{/models}}
+
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 {{#models}}
 {{#model}}

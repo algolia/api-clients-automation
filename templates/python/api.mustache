@@ -1,20 +1,7 @@
 {{>partial_header}}
-import io
-from json import loads
-import re
-import warnings
-from pydantic import StrictFloat, StrictInt
-from typing import Tuple, List
-{{#imports}}
-{{import}}
-{{/imports}}
-from algoliasearch.{{packageName}}.api_client import ApiClient
-from algoliasearch.{{packageName}}.config import Config
+{{>imports}}
 
-from algoliasearch.http.api_response import ApiResponse
-from algoliasearch.http.transporter import Transporter
-from algoliasearch.http.verb import Verb
-from algoliasearch.http.request_options import RequestOptions
+from algoliasearch.{{packageName}}.models import ({{#operations}}{{#operation}}{{#imports}}{{{.}}},{{/imports}}{{/operation}}{{/operations}})
 
 try:
     from typing import Self
