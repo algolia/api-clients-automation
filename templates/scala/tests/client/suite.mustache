@@ -1,0 +1,73 @@
+package algoliasearch.client
+
+import algoliasearch.api.{{client}}
+import algoliasearch.config.*
+import algoliasearch.{EchoInterceptor, assertError}
+import algoliasearch.{{import}}.*
+import algoliasearch.exception.*
+import org.json4s.*
+import org.json4s.native.JsonParser.*
+import org.scalatest.funsuite.AnyFunSuite
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+class {{clientPrefix}}Test extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = org.json4s.DefaultFormats
+
+  def testClient(): ({{client}}, EchoInterceptor) = {
+    val echo = EchoInterceptor()
+    (
+      {{client}}(
+        appId = "appId",
+        apiKey = "apiKey",
+        {{#hasRegionalHost}}
+        region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}},
+        {{/hasRegionalHost}}
+        clientOptions = ClientOptions
+          .builder()
+          .withRequesterConfig(requester => requester.withInterceptor(echo))
+          .build()
+      ),
+      echo
+    )
+  }
+
+  {{#blocksClient}}
+  {{#tests}}
+
+  test("{{{testName}}}") {
+    {{#autoCreateClient}}
+    val (client, echo) = testClient();
+    {{/autoCreateClient}}
+
+    {{#steps}}
+
+    {{#isError}}
+    assertError("{{{expectedError}}}") {
+      {{> client/step}}
+    }
+    {{/isError}}
+    {{^isError}}
+    {{#isCreateClient}}
+    {{> client/createClient}}
+    {{/isCreateClient}}
+    {{> client/step}}
+    {{#match}}
+    {{#testUserAgent}}
+      // test user agent
+    {{/testUserAgent}}
+    {{#testTimeouts}}
+      // test timeout
+    {{/testTimeouts}}
+    {{#testHost}}
+      // Test host
+    {{/testHost}}        
+    {{/match}}
+    {{/isError}}
+    {{/steps}}
+  }
+  {{/tests}}
+  {{/blocksClient}}
+}
