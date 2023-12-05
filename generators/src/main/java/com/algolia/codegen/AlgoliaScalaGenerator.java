@@ -30,8 +30,18 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     return INSTANCE.formatIdentifier(text, false);
   }
 
-  /** Custom mapping for field names */
-  static final Map<String, String> NAME_MAPPING = Map.of("_operation", "_operation");
+  /**
+   * Custom mapping for field names This a workaround; a better solution would be to use json4s'
+   * FieldSerializer for all fields with special cases.
+   */
+  static final Map<String, String> NAME_MAPPING = Map.of(
+    "_operation",
+    "_operation",
+    "client_id",
+    "client_id",
+    "client_secret",
+    "client_secret"
+  );
 
   @Override
   public String getName() {
