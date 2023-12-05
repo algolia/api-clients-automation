@@ -1,13 +1,13 @@
 from os import environ
 from typing import Optional
 
-from algoliasearch.http import (
-  AlgoliaException,
+from algoliasearch.http.hosts import (
   CallType,
   Host,
   HostsCollection,
-  UserAgent,
 )
+from algoliasearch.http.user_agent import UserAgent
+from algoliasearch.http.exceptions import AlgoliaException
 
 
 class Config:

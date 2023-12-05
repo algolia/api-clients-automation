@@ -1,11 +1,9 @@
 {{>partial_header}}
 {{>imports}}
 
-{{#models}}{{#model}}
 {{#imports}}
-from algoliasearch.{{packageName}}.models import ({{{.}}})
+{{import}}
 {{/imports}}
-{{/model}}{{/models}}
 
 try:
     from typing import Self
