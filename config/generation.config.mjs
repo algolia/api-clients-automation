@@ -102,8 +102,13 @@ export const patterns = [
   // C#
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
-  '!clients/algoliasearch-client-csharp/algoliasearch/obj/**',
-  'clients/algoliasearch-client-csharp/Algolia.Search.sln',
-  'clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj',
-  'clients/algoliasearch-client-csharp/.gitignore',
+  '!clients/algoliasearch-client-csharp/Algolia.Search.sln',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Client/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj',
+  '!clients/algoliasearch-client-csharp/.gitignore',
 ];

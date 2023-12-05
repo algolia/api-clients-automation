@@ -10,6 +10,9 @@ using System.Net.Mime;
 using Algolia.Search.{{packageName}}.Client;
 {{#hasImport}}using Algolia.Search.{{packageName}}.{{modelPackage}};
 {{/hasImport}}
+using Algolia.Search.Transport;
+using Algolia.Search.Http;
+using Algolia.Search.Client;
 
 namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 {
@@ -50,11 +53,11 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse{{#returnType}} ({{.}}){{/returnType}}</returns>
+        /// <returns>Task of {{#returnType}} ({{.}}){{/returnType}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        System.Threading.Tasks.Task<ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}>> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -63,7 +66,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    {{>visibility}} partial class {{classname}} : IDisposable, {{interfacePrefix}}{{classname}}
+    {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
     {
         private Algolia.Search.{{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
@@ -75,7 +78,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="applicationId">Your application</param>
         /// <param name="apiKey">Your API key</param>
-        public {{classname}}(string applicationId, string apiKey) : this(new Algolia.Search.Client.{{packageName}}Config(applicationId, apiKey), new AlgoliaHttpRequester())
+        public {{classname}}(string applicationId, string apiKey) : this(new {{packageName}}Config(applicationId, apiKey), new AlgoliaHttpRequester())
         {
         }
 
@@ -83,7 +86,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// Initialize a client with custom config
         /// </summary>
         /// <param name="config">Algolia configuration</param>
-        public SearchClient(new Algolia.Search.Client.{{packageName}}Config config) : this(config, new AlgoliaHttpRequester())
+        public SearchClient({{packageName}}Config config) : this(config, new AlgoliaHttpRequester())
         {
         }
 
@@ -92,7 +95,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="config">Algolia Config</param>
         /// <param name="httpRequester">Your Http requester implementation of <see cref="IHttpRequester"/></param>
-        public SearchClient(Algolia.Search.Client.{{packageName}}Config config, IHttpRequester httpRequester)
+        public SearchClient({{packageName}}Config config, IHttpRequester httpRequester)
         {
           if (httpRequester == null)
           {
@@ -125,20 +128,12 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         public Algolia.Search.{{packageName}}.Client.IAsynchronousClient AsynchronousClient { get; set; }
         {{/supportsAsync}}
 
-        /// <summary>
-        /// Gets the base path of the API client.
-        /// </summary>
-        /// <value>The base path</value>
-        public string GetBasePath()
-        {
-            return this.Configuration.BasePath;
-        }
 
         /// <summary>
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Algolia.Search.Client.{{packageName}}Config Configuration { get; set; }
+        public {{packageName}}Config Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -172,8 +167,8 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{/isDeprecated}}
         {{#returnType}}public async System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            {{#returnType}}Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;{{/returnType}}{{^returnType}}await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);{{/returnType}}
+            {{#returnType}}{{{returnType}}} localVarResponse = await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);
+            return localVarResponse;{{/returnType}}{{^returnType}}await {{operationId}}WithHttpInfoAsync({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}cancellationToken).ConfigureAwait(false);{{/returnType}}
         }
 
         /// <summary>
@@ -184,11 +179,11 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse{{#returnType}} ({{.}}){{/returnType}}</returns>
+        /// <returns>Task of {{#returnType}} ({{.}}){{/returnType}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async System.Threading.Tasks.Task<Algolia.Search.{{packageName}}.Client.ApiResponse<{{{returnType}}}{{^returnType}}Object{{/returnType}}>> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             {{#allParams}}
             {{#required}}
@@ -286,38 +281,28 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{#isApiKey}}
             {{#isKeyInCookie}}
             // cookie parameter support
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.Cookies.Add(new Cookie("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
-            }
+            //if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
+            //{
+             //   localVarRequestOptions.Cookies.Add(new Cookie("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
+            //}
             {{/isKeyInCookie}}
             {{#isKeyInHeader}}
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}"));
-            }
+            //if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
+            //{
+            //    localVarRequestOptions.HeaderParameters.Add("{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}"));
+            //}
             {{/isKeyInHeader}}
             {{#isKeyInQuery}}
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
-            {
-                localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
-            }
+            //if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
+            //{
+            //    localVarRequestOptions.QueryParameters.Add(Algolia.Search.{{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")));
+            //}
             {{/isKeyInQuery}}
             {{/isApiKey}}
 
             {{/authMethods}}
 
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{{returnType}}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("{{operationId}}", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
+            return await this._transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(HttpMethod.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}},"{{{path}}}", CallType.Read, null, cancellationToken).ConfigureAwait(false);
         }
 
         {{/supportsAsync}}
