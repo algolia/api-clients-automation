@@ -93,7 +93,34 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
-    case value => Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: {{classname}} => 
+    value match {
+      {{#composedSchemas.oneOf}}
+      {{#isArray}}
+      case {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value) => JArray(value.map(Extraction.decompose).toList)
+      {{/isArray}}
+      {{#isInteger}}
+      case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JInt(value)
+      {{/isInteger}}
+      {{#isLong}}
+      case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JLong(value)
+      {{/isLong}}
+      {{#isDouble}}
+      case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JDouble(value)
+      {{/isDouble}}
+      {{#isBoolean}}
+      case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JBool(value)
+      {{/isBoolean}}
+      {{#isString}}
+      case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JString(value)
+      {{/isString}}
+      {{#isModel}}
+      case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
+      {{/isModel}}
+      {{#isEnumRef}}
+      case value: {{{datatypeWithEnum}}} => JString(value.toString)
+      {{/isEnumRef}}
+      {{/composedSchemas.oneOf}}
+    }
   }
 }

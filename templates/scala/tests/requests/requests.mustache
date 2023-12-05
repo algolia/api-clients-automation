@@ -5,6 +5,7 @@ import algoliasearch.api.{{client}}
 import algoliasearch.config.*
 import algoliasearch.{{import}}.*
 import org.json4s.*
+import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 
 import scala.concurrent.duration.Duration
@@ -12,6 +13,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = org.json4s.DefaultFormats
 
   val echo: EchoInterceptor = EchoInterceptor()
   val client: {{client}} = {{client}}(
@@ -53,14 +55,16 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     assert(res.path == "{{{path}}}")
     assert(res.method == "{{{method}}}")
     {{#body}}
-    // TODO: Body test
+    val expectedBody = parse("""{{{body}}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
     {{/body}}
     {{^body}}
     {{#assertNullBody}}
-    assert(res.body == None)
+    assert(res.body.isEmpty)
     {{/assertNullBody}}
     {{^assertNullBody}}
-    assert(res.body == Some("{}"))
+    assert(Some("{}") == res.body)
     {{/assertNullBody}}
     {{/body}}
     {{/request}}

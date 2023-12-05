@@ -21,10 +21,17 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   final Logger logger = Logger.getLogger(AlgoliaScalaGenerator.class.getName());
 
+  // This is used for the CTS generation
+  private static final AlgoliaScalaGenerator INSTANCE = new AlgoliaScalaGenerator();
+
   /** Convert a text to a valid scala identifier. */
   public static String formatIdentifier(String text) {
-    return new AlgoliaScalaGenerator().formatIdentifier(text, false);
+    if (NAME_MAPPING.containsKey(text)) return NAME_MAPPING.get(text);
+    return INSTANCE.formatIdentifier(text, false);
   }
+
+  /** Custom mapping for field names */
+  static final Map<String, String> NAME_MAPPING = Map.of("_operation", "_operation");
 
   @Override
   public String getName() {
@@ -55,8 +62,9 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     supportingFiles.add(new SupportingFile("version.mustache", "", "version.sbt"));
     supportingFiles.add(new SupportingFile("jsonSupport.mustache", modelFolder, "JsonSupport.scala"));
     additionalProperties.put("isSearchClient", client.equals("search"));
-
     typeMapping.put("AnyType", "Any");
+
+    nameMapping.putAll(NAME_MAPPING);
 
     try {
       Utils.generateServer(client, additionalProperties);

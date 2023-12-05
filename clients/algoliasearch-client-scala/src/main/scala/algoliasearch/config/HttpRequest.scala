@@ -83,6 +83,11 @@ object HttpRequest {
       this
     }
 
+    def withBody(body: Option[Any]): Builder = {
+      this.body = body
+      this
+    }
+
     def withHeader(key: String, value: Any): HttpRequest.Builder = {
       this.headers += key -> paramToString(value)
       this

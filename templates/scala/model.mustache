@@ -11,7 +11,7 @@ import {{import}}
 import org.json4s.JObject
 {{/vendorExtensions.x-has-child-generic}}
 {{#additionalProperties}}
-import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 {{/additionalProperties}}
 
 {{^isEnum}}
@@ -34,7 +34,7 @@ case class {{classname}}(
   {{{name}}}: {{^required}}Option[{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}},
   {{/vars}}
   {{#additionalProperties}}
-  additionalProperties: Map[String, JValue] = Map.empty
+  additionalProperties: Option[List[JField]] = None
   {{/additionalProperties}}
 ){{#vendorExtensions.x-one-of-element}}{{#vendorExtensions.x-one-of-element-parents}} {{#-first}}extends{{/-first}}{{^-first}}with{{/-first}} {{parent_classname}}Trait {{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}
 {{/vendorExtensions.x-is-one-of}}
@@ -48,16 +48,26 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
         val formats = format - this
         val mf = manifest[{{classname}}]
         val obj = Extraction.extract[{{classname}}](jobject)(formats, mf)
-        val properties = jobject.obj.toMap{{#vars}} - "{{{name}}}"{{/vars}}
-        obj.copy(additionalProperties = properties)
+
+        val fields = Set({{#vars}}"{{{name}}}"{{^-last}}, {{/-last}}{{/vars}})
+        val additionalProperties = jobject removeField {
+          case (name, _) if fields.contains(name) => true
+          case _                                  => false
+        }
+        additionalProperties.values match {
+          case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          case _                   => obj
+        }
       case _ => throw new IllegalArgumentException(s"Can't deserialize $json as {{classname}}")  
     }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
-    case value: {{classname}} =>
-      val formats = format - this // remove current serializer from formats to avoid stackoverflow
-      Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(value.additionalProperties)(formats)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: {{classname}} =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
   }
 }
 {{/additionalProperties.isAnyType}}
