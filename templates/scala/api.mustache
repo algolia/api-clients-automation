@@ -108,7 +108,7 @@ class {{classname}}(
 
     val request = HttpRequest.builder()
       .withMethod("{{httpMethod}}")
-      .withPath(s"{{{path}}}")      
+      .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})      
       {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
       {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}   
       {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}

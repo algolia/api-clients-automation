@@ -50,6 +50,11 @@ object HttpRequest {
       this
     }
 
+    def withPathEncoded(path: String): Builder = {
+      this.path = path
+      this
+    }
+
     def withRead(read: Boolean): Builder = {
       this.read = read
       this

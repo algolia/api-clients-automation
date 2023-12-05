@@ -7,7 +7,8 @@ import algoliasearch.{{import}}.*
 import org.json4s.*
 import org.scalatest.funsuite.AnyFunSuite
 
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
@@ -29,7 +30,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   {{#tests}}
   
   test("{{{testName}}}") {
-    client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
+    val future = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
     {{#parametersWithDataType}}
     {{> request_param}}{{^-last}},{{/-last}}
     {{/parametersWithDataType}}    
@@ -44,6 +45,25 @@ class {{clientPrefix}}Test extends AnyFunSuite {
       .build())
     {{/hasRequestOptions}}
     )
+
+    {{#request}}
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "{{{path}}}")
+    assert(res.method == "{{{method}}}")
+    {{#body}}
+    // TODO: Body test
+    {{/body}}
+    {{^body}}
+    {{#assertNullBody}}
+    assert(res.body == None)
+    {{/assertNullBody}}
+    {{^assertNullBody}}
+    assert(res.body == Some("{}"))
+    {{/assertNullBody}}
+    {{/body}}
+    {{/request}}
   }
   
   {{/tests}}
