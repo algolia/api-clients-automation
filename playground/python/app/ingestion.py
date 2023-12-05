@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.ingestion import __version__
-from algoliasearch.ingestion.client import IngestionClient
+from algoliasearch.ingestion import __version__, IngestionClient
 
 
 async def main():
