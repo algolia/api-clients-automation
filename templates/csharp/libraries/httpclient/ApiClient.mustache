@@ -94,10 +94,6 @@ namespace Algolia.Search.{{packageName}}.Client
             {
                 return await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
-            else if (type == typeof(FileParameter))
-            {
-                return new FileParameter(await response.Content.ReadAsStreamAsync().ConfigureAwait(false));
-            }
 
             // TODO: ? if (type.IsAssignableFrom(typeof(Stream)))
             if (type == typeof(Stream))
@@ -162,7 +158,7 @@ namespace Algolia.Search.{{packageName}}.Client
     /// <remarks>
     /// The Dispose method will manage the HttpClient lifecycle when not passed by constructor.
     /// </remarks>
-    {{>visibility}} partial class ApiClient : IDisposable, ISynchronousClient{{#supportsAsync}}, IAsynchronousClient{{/supportsAsync}}
+    {{>visibility}} partial class ApiClient : IDisposable, ISynchronousClient
     {
         private readonly string _baseUrl;
 
@@ -272,18 +268,6 @@ namespace Algolia.Search.{{packageName}}.Client
                 multipartContent.Add(new StringContent(formParameter.Value), formParameter.Key);
             }
 
-            if (options.FileParameters != null && options.FileParameters.Count > 0)
-            {
-                foreach (var fileParam in options.FileParameters)
-                {
-                    foreach (var file in fileParam.Value)
-                    {
-                        var content = new StreamContent(file.Content);
-                        content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-                        multipartContent.Add(content, fileParam.Key, file.Name);
-                    }
-                }
-            }
             return multipartContent;
         }
 
@@ -364,20 +348,10 @@ namespace Algolia.Search.{{packageName}}.Client
             {
                 if (options.Data != null)
                 {
-                    if (options.Data is FileParameter fp)
-                    {
-                        contentType = contentType ?? "application/octet-stream";
-
-                        var streamContent = new StreamContent(fp.Content);
-                        streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
-                        request.Content = streamContent;
-                    }
-                    else
-                    {
                         var serializer = new CustomJsonCodec(SerializerSettings, configuration);
                         request.Content = new StringContent(serializer.Serialize(options.Data), new UTF8Encoding(),
                             "application/json");
-                    }
+
                 }
             }
 

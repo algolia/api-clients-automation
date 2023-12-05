@@ -5,12 +5,6 @@ using Algolia.Search.Search.Client;
 
 Console.WriteLine("Algolia Search Client Playground for C#");
 
-
-var configuration = new Configuration();
-configuration.AddApiKey("apiKey", "6af80f5e321fb3de2a848ff74ba81546");
-configuration.AddApiKey("appId", "NIOXZRNMTV");
-
-
-var searchClient = new SearchClient(configuration);
+var searchClient = new SearchClient("NIOXZRNMTV", "6af80f5e321fb3de2a848ff74ba81546");
 
 var resp = await searchClient.AddOrUpdateObjectAsync("playground-csharp", "myobjectid", new { name = "John Doe" });
