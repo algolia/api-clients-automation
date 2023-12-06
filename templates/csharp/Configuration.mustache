@@ -39,7 +39,7 @@ namespace Algolia.Search.{{packageName}}.Client
         throw new ArgumentException($"`region` must be one of the following {regions}");
       }
 
-      var selectedRegion = region == null ? "{{{regionalHost}}}".Replace("{region}", region) : {{#fallbackToAliasHost}}{{{hostWithFallback}}}{{/fallbackToAliasHost}};
+      var selectedRegion = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".Replace("{region}", region);
 
       List<StatefulHost> hosts = new List<StatefulHost>
       {

@@ -38,7 +38,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+        {{#returnType}}System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -65,7 +65,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// Initialize a client with custom config
         /// </summary>
         /// <param name="config">Algolia configuration</param>
-        public SearchClient({{packageName}}Config config) : this(config, new AlgoliaHttpRequester())
+        public {{classname}}({{packageName}}Config config) : this(config, new AlgoliaHttpRequester())
         {
         }
 
@@ -74,7 +74,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="config">Algolia Config</param>
         /// <param name="httpRequester">Your Http requester implementation of <see cref="IHttpRequester"/></param>
-        public SearchClient({{packageName}}Config config, IHttpRequester httpRequester)
+        public {{classname}}({{packageName}}Config config, IHttpRequester httpRequester)
         {
           if (httpRequester == null)
           {
@@ -115,7 +115,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+        {{#returnType}}public async System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}
