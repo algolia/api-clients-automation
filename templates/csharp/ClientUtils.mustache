@@ -58,9 +58,9 @@ namespace Algolia.Search.{{packageName}}.Client
         /// <param name="name">Key name.</param>
         /// <param name="value">Value object.</param>
         /// <returns>A multimap of keys with 1..n associated values.</returns>
-        public static Multimap<string, string> ParameterToMultiMap(string collectionFormat, string name, object value)
+        public static Dictionary<string, string> ParameterToMultiMap(string collectionFormat, string name, object value)
         {
-            var parameters = new Multimap<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             if (value is ICollection collection && collectionFormat == "multi")
             {

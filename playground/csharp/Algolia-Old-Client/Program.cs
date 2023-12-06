@@ -8,4 +8,6 @@ var searchClient = new SearchClient("myApp", "myKey");
 
 var index = searchClient.InitIndex("test");
 
-index.SaveObject()
+var ruleAsync = await index.GetRuleAsync("");
+
+ruleAsync.Consequence.Params.AutomaticFacetFilters.First().Facet = "test";

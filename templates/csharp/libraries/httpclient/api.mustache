@@ -38,7 +38,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}CancellationToken cancellationToken = default);
+        Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -115,7 +115,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}CancellationToken cancellationToken = default)
+        public async Task<{{{returnType}}}{{^returnType}}Object{{/returnType}}> {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}
@@ -162,12 +162,12 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/pathParams}}
             {{#queryParams}}
             {{#required}}
-            requestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+            requestOptions.QueryParameters = ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}});
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                requestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+                requestOptions.QueryParameters = ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}});
             }
             {{/required}}
             {{/queryParams}}

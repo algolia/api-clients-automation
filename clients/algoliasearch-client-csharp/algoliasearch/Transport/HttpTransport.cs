@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using Algolia.Search.Client;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
+using Algolia.Search.Search.Client;
 using Algolia.Search.Serializer;
 using Algolia.Search.Utils;
 
@@ -107,7 +108,7 @@ namespace Algolia.Search.Transport
       var request = new Request
       {
         Method = method,
-        Headers = GenerateHeaders(requestOptions?.Headers),
+        Headers = GenerateHeaders(requestOptions?.HeaderParameters),
         Compression = _algoliaConfig.Compression
       };
 

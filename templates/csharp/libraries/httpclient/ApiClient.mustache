@@ -318,11 +318,8 @@ namespace Algolia.Search.{{packageName}}.Client
             {
                 foreach (var headerParam in options.HeaderParameters)
                 {
-                    foreach (var value in headerParam.Value)
-                    {
-                        // Todo make content headers actually content headers
-                        request.Headers.TryAddWithoutValidation(headerParam.Key, value);
-                    }
+                  // Todo make content headers actually content headers
+                  request.Headers.TryAddWithoutValidation(headerParam.Key, headerParam.Value);
                 }
             }
 
@@ -331,8 +328,7 @@ namespace Algolia.Search.{{packageName}}.Client
             string contentType = null;
             if (options.HeaderParameters != null && options.HeaderParameters.ContainsKey("Content-Type"))
             {
-                var contentTypes = options.HeaderParameters["Content-Type"];
-                contentType = contentTypes.FirstOrDefault();
+              contentType = options.HeaderParameters["Content-Type"];
             }
 
             {{!// TODO Add error handling in case of improper usage}}
