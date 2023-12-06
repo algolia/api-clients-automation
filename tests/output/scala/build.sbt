@@ -8,4 +8,3 @@ val algoliasearch = ProjectRef(file("../../../clients/algoliasearch-client-scala
 dependsOn(algoliasearch)
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
-libraryDependencies += "org.json4s" %% "json4s-native" % "4.0.6" % Test
