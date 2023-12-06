@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: zulu
-          java-version-file: 11
+          java-version: 11
           cache: sbt
 
       - name: Compile
@@ -29,7 +29,7 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.SIGNING_PRIVATE_KEY }}
           passphrase: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-          fingerprint: ${{ secrets.SIGNING_PRIVATE_KEY_ID }}
+          fingerprint: "${{ secrets.SIGNING_PRIVATE_KEY_FINGERPRINT }}"
 
       - name: Release to Sonatype
         env:
