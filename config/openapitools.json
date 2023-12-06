@@ -277,6 +277,33 @@
       },
       "csharp-monitoring": {
         "output": "#{cwd}/clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      "swift-search": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-insights": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-recommend": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-personalization": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-analytics": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-abtesting": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-query-suggestions": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
+      },
+      "swift-monitoring": {
+        "output": "#{cwd}/clients/algoliasearch-client-swift"
       }
     }
   }

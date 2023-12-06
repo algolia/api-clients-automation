@@ -178,3 +178,10 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
+
+    # Swift deps
+    - name: Install swift
+      if: ${{ inputs.language == 'swift' }}
+      uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}

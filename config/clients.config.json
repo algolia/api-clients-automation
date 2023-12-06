@@ -119,5 +119,17 @@
       "extension": ".test.cs",
       "outputFolder": "test"
     }
+  },
+  "swift": {
+    "folder": "clients/algoliasearch-client-swift",
+    "gitRepoId": "algoliasearch-client-swift",
+    "packageVersion": "9.0.0-alpha.0",
+    "modelFolder": "Sources/AlgoliaSearchClient/Models",
+    "apiFolder": "Sources/AlgoliaSearchClient",
+    "customGenerator": "algolia-swift",
+    "tests": {
+      "extension": ".swift",
+      "outputFolder": "Tests/AlgoliaSearchClientTests"
+    }
   }
 }

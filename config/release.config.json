@@ -14,7 +14,8 @@
     "python": "next",
     "ruby": "next",
     "scala": "next",
-    "csharp": "next"
+    "csharp": "next",
+    "swift": "next"
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {
