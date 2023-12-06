@@ -12,17 +12,23 @@ UserHighlightResult _$UserHighlightResultFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = UserHighlightResult(
-          userID: $checkedConvert('userID', (v) => v as Map<String, dynamic>),
-          clusterName:
-              $checkedConvert('clusterName', (v) => v as Map<String, dynamic>),
+          userID: $checkedConvert('userID', (v) => v),
+          clusterName: $checkedConvert('clusterName', (v) => v),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$UserHighlightResultToJson(
-        UserHighlightResult instance) =>
-    <String, dynamic>{
-      'userID': instance.userID,
-      'clusterName': instance.clusterName,
-    };
+Map<String, dynamic> _$UserHighlightResultToJson(UserHighlightResult instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('userID', instance.userID);
+  writeNotNull('clusterName', instance.clusterName);
+  return val;
+}

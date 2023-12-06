@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.search import __version__
-from algoliasearch.search.client import SearchClient
+from algoliasearch.search import __version__, SearchClient
 
 
 async def main():
@@ -12,9 +11,11 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.get_settings(index_name="nvim")
+        response = await client.search(search_method_params={
+          "requests": [{"indexName": "nvim"}]
+        })
 
-        print(response)
+        print(response.to_json())
     finally:
         await client.close()
 

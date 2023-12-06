@@ -87,7 +87,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   /** Convert a Seq type to a valid class name. */
   private String typeToName(String content) {
-    return content.trim().replace("[", "Of").replace("]", "");
+    return content.trim().replace("[", "Of").replace("]", "").replace(".", "").replace(", ", "");
   }
 
   @Override

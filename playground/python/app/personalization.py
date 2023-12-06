@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.personalization import __version__
-from algoliasearch.personalization.client import PersonalizationClient
+from algoliasearch.personalization import __version__, PersonalizationClient
 
 
 async def main():

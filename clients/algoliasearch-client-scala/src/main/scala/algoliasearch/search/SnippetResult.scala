@@ -23,10 +23,10 @@ trait SnippetResultTrait extends SnippetResult
 
 object SnippetResult {
 
-  case class SeqOfSnippetResultOption(value: Seq[SnippetResultOption]) extends SnippetResult
+  case class MapOfStringSnippetResultOption(value: Map[String, SnippetResultOption]) extends SnippetResult
 
-  def apply(value: Seq[SnippetResultOption]): SnippetResult = {
-    SnippetResult.SeqOfSnippetResultOption(value)
+  def apply(value: Map[String, SnippetResultOption]): SnippetResult = {
+    SnippetResult.MapOfStringSnippetResultOption(value)
   }
 }
 
@@ -35,9 +35,9 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SnippetResult] =>
       json match {
-        case value: JObject               => Extraction.extract[SnippetResultOption](value)
-        case JArray(value: List[JObject]) => SnippetResult.SeqOfSnippetResultOption(value.map(_.extract))
-        case _                            => throw new MappingException("Can't convert " + json + " to SnippetResult")
+        case value: JObject => Extraction.extract[SnippetResultOption](value)
+        case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to SnippetResult")
       }
   }
 

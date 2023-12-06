@@ -10,35 +10,36 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /** HighlightResult */
 @JsonDeserialize(using = HighlightResult.Deserializer.class)
 public interface HighlightResult {
-  /** HighlightResult as List<HighlightResultOption> wrapper. */
-  static HighlightResult of(List<HighlightResultOption> value) {
-    return new ListOfHighlightResultOptionWrapper(value);
+  /** HighlightResult as Map<String, HighlightResultOption> wrapper. */
+  static HighlightResult of(Map<String, HighlightResultOption> value) {
+    return new MapOfStringHighlightResultOptionWrapper(value);
   }
 
-  /** HighlightResult as List<HighlightResultOption> wrapper. */
-  @JsonSerialize(using = ListOfHighlightResultOptionWrapper.Serializer.class)
-  class ListOfHighlightResultOptionWrapper implements HighlightResult {
+  /** HighlightResult as Map<String, HighlightResultOption> wrapper. */
+  @JsonSerialize(using = MapOfStringHighlightResultOptionWrapper.Serializer.class)
+  class MapOfStringHighlightResultOptionWrapper implements HighlightResult {
 
-    private final List<HighlightResultOption> value;
+    private final Map<String, HighlightResultOption> value;
 
-    ListOfHighlightResultOptionWrapper(List<HighlightResultOption> value) {
+    MapOfStringHighlightResultOptionWrapper(Map<String, HighlightResultOption> value) {
       this.value = value;
     }
 
-    public List<HighlightResultOption> getValue() {
+    public Map<String, HighlightResultOption> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfHighlightResultOptionWrapper> {
+    static class Serializer extends JsonSerializer<MapOfStringHighlightResultOptionWrapper> {
 
       @Override
-      public void serialize(ListOfHighlightResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(MapOfStringHighlightResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider)
+        throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -52,7 +53,7 @@ public interface HighlightResult {
     public HighlightResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize HighlightResultOption
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("matchLevel") && tree.has("value") && tree.has("matchedWords")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(HighlightResultOption.class);
         } catch (Exception e) {
@@ -60,15 +61,17 @@ public interface HighlightResult {
           LOGGER.finest("Failed to deserialize oneOf HighlightResultOption (error: " + e.getMessage() + ") (type: HighlightResultOption)");
         }
       }
-      // deserialize List<HighlightResultOption>
-      if (tree.isArray()) {
+      // deserialize Map<String, HighlightResultOption>
+      if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<HighlightResultOption> value = parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
-          return new HighlightResult.ListOfHighlightResultOptionWrapper(value);
+          Map<String, HighlightResultOption> value = parser.readValueAs(new TypeReference<Map<String, HighlightResultOption>>() {});
+          return new HighlightResult.MapOfStringHighlightResultOptionWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
-            "Failed to deserialize oneOf List<HighlightResultOption> (error: " + e.getMessage() + ") (type: List<HighlightResultOption>)"
+            "Failed to deserialize oneOf Map<String, HighlightResultOption> (error: " +
+            e.getMessage() +
+            ") (type: Map<String, HighlightResultOption>)"
           );
         }
       }

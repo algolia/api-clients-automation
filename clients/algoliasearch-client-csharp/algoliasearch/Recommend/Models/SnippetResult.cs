@@ -42,10 +42,10 @@ namespace Algolia.Search.Recommend.Models
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SnippetResult" /> class
-    /// with the <see cref="List{SnippetResultOption}" /> class
+    /// with the <see cref="Dictionary{string, SnippetResultOption}" /> class
     /// </summary>
-    /// <param name="actualInstance">An instance of List&lt;SnippetResultOption&gt;.</param>
-    public SnippetResult(List<SnippetResultOption> actualInstance)
+    /// <param name="actualInstance">An instance of Dictionary&lt;string, SnippetResultOption&gt;.</param>
+    public SnippetResult(Dictionary<string, SnippetResultOption> actualInstance)
     {
       this.IsNullable = false;
       this.SchemaType = "oneOf";
@@ -66,7 +66,7 @@ namespace Algolia.Search.Recommend.Models
       }
       set
       {
-        if (value.GetType() == typeof(List<SnippetResultOption>))
+        if (value.GetType() == typeof(Dictionary<string, SnippetResultOption>))
         {
           this._actualInstance = value;
         }
@@ -76,7 +76,7 @@ namespace Algolia.Search.Recommend.Models
         }
         else
         {
-          throw new ArgumentException("Invalid instance found. Must be the following types: List<SnippetResultOption>, SnippetResultOption");
+          throw new ArgumentException("Invalid instance found. Must be the following types: Dictionary<string, SnippetResultOption>, SnippetResultOption");
         }
       }
     }
@@ -92,13 +92,13 @@ namespace Algolia.Search.Recommend.Models
     }
 
     /// <summary>
-    /// Get the actual instance of `List&lt;SnippetResultOption&gt;`. If the actual instance is not `List&lt;SnippetResultOption&gt;`,
+    /// Get the actual instance of `Dictionary&lt;string, SnippetResultOption&gt;`. If the actual instance is not `Dictionary&lt;string, SnippetResultOption&gt;`,
     /// the InvalidClassException will be thrown
     /// </summary>
-    /// <returns>An instance of List&lt;SnippetResultOption&gt;</returns>
-    public List<SnippetResultOption> GetterList()
+    /// <returns>An instance of Dictionary&lt;string, SnippetResultOption&gt;</returns>
+    public Dictionary<string, SnippetResultOption> GetterDictionary()
     {
-      return (List<SnippetResultOption>)this.ActualInstance;
+      return (Dictionary<string, SnippetResultOption>)this.ActualInstance;
     }
 
     /// <summary>
@@ -142,21 +142,21 @@ namespace Algolia.Search.Recommend.Models
       try
       {
         // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
-        if (typeof(List<SnippetResultOption>).GetProperty("AdditionalProperties") == null)
+        if (typeof(Dictionary<string, SnippetResultOption>).GetProperty("AdditionalProperties") == null)
         {
-          newSnippetResult = new SnippetResult(JsonConvert.DeserializeObject<List<SnippetResultOption>>(jsonString, SnippetResult.SerializerSettings));
+          newSnippetResult = new SnippetResult(JsonConvert.DeserializeObject<Dictionary<string, SnippetResultOption>>(jsonString, SnippetResult.SerializerSettings));
         }
         else
         {
-          newSnippetResult = new SnippetResult(JsonConvert.DeserializeObject<List<SnippetResultOption>>(jsonString, SnippetResult.AdditionalPropertiesSerializerSettings));
+          newSnippetResult = new SnippetResult(JsonConvert.DeserializeObject<Dictionary<string, SnippetResultOption>>(jsonString, SnippetResult.AdditionalPropertiesSerializerSettings));
         }
-        matchedTypes.Add("List<SnippetResultOption>");
+        matchedTypes.Add("Dictionary<string, SnippetResultOption>");
         match++;
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
-        System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into List<SnippetResultOption>: {1}", jsonString, exception.ToString()));
+        System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into Dictionary<string, SnippetResultOption>: {1}", jsonString, exception.ToString()));
       }
 
       try
