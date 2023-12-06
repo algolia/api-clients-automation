@@ -52,7 +52,7 @@ object {{classname}} {
     }
     {{/fallbackToAliasHost}}
     {{#fallbackToAliasHost}}
-    if (region.isEmpty || !allowedRegions.contains(region.get)) {
+    if (region.isDefined && !allowedRegions.contains(region.get)) {
       throw new IllegalArgumentException(s"`region` must be one of the following: ${allowedRegions.mkString(", ")}")
     }
     {{/fallbackToAliasHost}}

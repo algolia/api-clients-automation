@@ -16,14 +16,14 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = org.json4s.DefaultFormats
 
-  def testClient(): ({{client}}, EchoInterceptor) = {
+  def testClient(appId: String = "appId", apiKey: String = "apiKey"{{#hasRegionalHost}}, region: String = {{#fallbackToAliasHost}}null{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}{{/hasRegionalHost}}): ({{client}}, EchoInterceptor) = {
     val echo = EchoInterceptor()
     (
       {{client}}(
-        appId = "appId",
-        apiKey = "apiKey",
+        appId = appId,
+        apiKey = apiKey,
         {{#hasRegionalHost}}
-        region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}},
+        region = {{#fallbackToAliasHost}}Option(region){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}region{{/fallbackToAliasHost}},
         {{/hasRegionalHost}}
         clientOptions = ClientOptions
           .builder()
@@ -39,7 +39,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
 
   test("{{{testName}}}") {
     {{#autoCreateClient}}
-    val (client, echo) = testClient();
+    val (client, echo) = testClient()
     {{/autoCreateClient}}
 
     {{#steps}}
@@ -50,19 +50,19 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     }
     {{/isError}}
     {{^isError}}
-    {{#isCreateClient}}
-    {{> client/createClient}}
-    {{/isCreateClient}}
     {{> client/step}}
     {{#match}}
     {{#testUserAgent}}
-      // test user agent
+    val regexp = """{{{match}}}""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
     {{/testUserAgent}}
     {{#testTimeouts}}
-      // test timeout
+    assert(echo.lastResponse.get.connectTimeout == {{{match.parametersWithDataTypeMap.connectTimeout.value}}})
+    assert(echo.lastResponse.get.responseTimeout == {{{match.parametersWithDataTypeMap.responseTimeout.value}}})
     {{/testTimeouts}}
     {{#testHost}}
-      // Test host
+    assert(echo.lastResponse.get.host == "{{{match}}}")
     {{/testHost}}        
     {{/match}}
     {{/isError}}

@@ -14,7 +14,7 @@ import scala.collection.mutable
   */
 class AlgoliaAgent(clientVersion: String) {
   private val segs = mutable.LinkedHashSet[AgentSegment](
-    AgentSegment("Algolia for Scala", clientVersion),
+    AgentSegment("Algolia for scala", clientVersion),
     AgentSegment("JVM", System.getProperty("java.version"))
   )
 

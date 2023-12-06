@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 package object algoliasearch {
 
   def assertError(message: String)(call: => Unit)(implicit ec: ExecutionContextExecutor): Unit = {
-    val error = intercept[AlgoliaClientException](call)
+    val error = intercept[Exception](call)
     assert(error.getMessage == message)
   }
 
