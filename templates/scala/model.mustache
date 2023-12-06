@@ -11,6 +11,7 @@ import {{import}}
 import org.json4s.JObject
 {{/vendorExtensions.x-has-child-generic}}
 {{#additionalProperties}}
+import org.json4s.MonadicJValue.jvalueToMonadic
 import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 {{/additionalProperties}}
 
