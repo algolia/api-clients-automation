@@ -58,8 +58,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     additionalProperties.put("lambda.escape-path", (Mustache.Lambda) (fragment, writer) -> writer.write(escapePath(fragment.execute())));
     super.processOpts();
-    setApiNameSuffix(Utils.API_SUFFIX);
-    Utils.setGenerationBanner(additionalProperties);
+    setApiNameSuffix(Helpers.API_SUFFIX);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent non-apis files generation
     apiTestTemplateFiles.clear();
@@ -77,8 +77,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     nameMapping.putAll(NAME_MAPPING);
 
     try {
-      Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("scala", "packageVersion"));
+      Helpers.generateServer(client, additionalProperties);
+      additionalProperties.put("packageVersion", Helpers.getClientConfigField("scala", "packageVersion"));
     } catch (GeneratorException e) {
       logger.severe(e.getMessage());
       System.exit(1);
@@ -93,7 +93,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     CodegenOperation ope = super.fromOperation(path, httpMethod, operation, servers);
-    return Utils.specifyCustomRequest(ope);
+    return Helpers.specifyCustomRequest(ope);
   }
 
   @Override
@@ -123,8 +123,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models);
-    OneOfUtils.updateModelsOneOf(models, modelPackage);
-    OneOfUtils.addOneOfMetadata(models);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    OneOf.addOneOfMetadata(models);
     return models;
   }
 

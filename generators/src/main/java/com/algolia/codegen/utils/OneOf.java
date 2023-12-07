@@ -5,9 +5,9 @@ import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.model.ModelsMap;
 
-public class OneOfUtils {
+public class OneOf {
 
-  private OneOfUtils() {
+  private OneOf() {
     // Empty.
   }
 
@@ -19,7 +19,7 @@ public class OneOfUtils {
       markOneOfChildren(models, model);
       generateSealedChildren(models, modelPackage, model);
       model.vendorExtensions.put("x-is-one-of", true);
-      model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
+      model.vendorExtensions.put("x-one-of-explicit-name", Helpers.shouldUseExplicitOneOfName(model.oneOf));
     }
   }
 

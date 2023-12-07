@@ -139,7 +139,7 @@ public class ParametersWithDataType {
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
-    testOutput.put("objectName", Utils.capitalize(baseType));
+    testOutput.put("objectName", Helpers.capitalize(baseType));
 
     if (param == null) {
       handleNull(testOutput);
@@ -176,7 +176,7 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     // cannot determine objectName with inference
-    // testOutput.put("objectName", Utils.capitalize(baseType));
+    // testOutput.put("objectName", Helpers.capitalize(baseType));
 
     if (param == null) {
       handleNull(testOutput);
@@ -295,12 +295,12 @@ public class ParametersWithDataType {
       boolean useExplicitName;
       CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
       if (composedSchemas != null && composedSchemas.getOneOf() != null && !composedSchemas.getOneOf().isEmpty()) {
-        useExplicitName = Utils.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
+        useExplicitName = Helpers.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
       } else {
-        useExplicitName = Utils.shouldUseExplicitOneOfName(model.oneOf);
+        useExplicitName = Helpers.shouldUseExplicitOneOfName(model.oneOf);
       }
 
-      oneOfModel.put("parentClassName", Utils.capitalize(baseType));
+      oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
       oneOfModel.put("type", typeName);
       oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);

@@ -17,14 +17,14 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   }
 
   public String getClientName(String client) {
-    return Utils.createClientName(client, "php");
+    return Helpers.createClientName(client, "php");
   }
 
   @Override
   public void processOpts() {
     // generator specific options
     String client = (String) additionalProperties.get("client");
-    setApiNameSuffix(Utils.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
     setParameterNamingConvention("camelCase");
     additionalProperties.put("modelPackage", "Model\\" + getClientName(client));
     additionalProperties.put("invokerPackage", "Algolia\\AlgoliaSearch");
@@ -33,7 +33,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     super.processOpts();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Remove base template as we want to change its path
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("Configuration.mustache"));
@@ -49,8 +49,8 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
     setDefaultGeneratorOptions(client);
     try {
-      Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("php", "packageVersion"));
+      Helpers.generateServer(client, additionalProperties);
+      additionalProperties.put("packageVersion", Helpers.getClientConfigField("php", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -59,7 +59,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   /** Set default generator options */

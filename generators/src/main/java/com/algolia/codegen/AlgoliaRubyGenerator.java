@@ -20,15 +20,15 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     CLIENT = (String) additionalProperties.get("client");
 
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("ruby", "packageVersion"));
+    additionalProperties.put("packageVersion", Helpers.getClientConfigField("ruby", "packageVersion"));
     setGemName("algolia");
 
-    setApiNameSuffix(Utils.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
 
     super.processOpts();
 
     // // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent all useless file to generate
     apiDocTemplateFiles.clear();
@@ -58,7 +58,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     // repository
 
     try {
-      Utils.generateServer(CLIENT, additionalProperties);
+      Helpers.generateServer(CLIENT, additionalProperties);
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

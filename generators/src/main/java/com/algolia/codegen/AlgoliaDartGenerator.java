@@ -31,7 +31,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
     isAlgoliasearchClient = client.equals("algoliasearch");
-    String version = Utils.getClientConfigField("dart", "packageVersion");
+    String version = Helpers.getClientConfigField("dart", "packageVersion");
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
 
     // pubspec.yaml
@@ -51,7 +51,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       String packageName = client.replace("-", "_");
       libName = "algolia_client_" + packageName;
       packageFolder = "client_" + packageName;
-      setApiNameSuffix(Utils.API_SUFFIX);
+      setApiNameSuffix(Helpers.API_SUFFIX);
       setPubDescription(
         "A sub-package of the AlgoliaSearch library, offering " +
         client.replace("-", " ") +
@@ -88,7 +88,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     modelDocTemplateFiles.clear();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Cleanup supporting files
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("auth"));
@@ -104,7 +104,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("packageVersion", version);
 
     // Generate server info
-    Utils.generateServer(client, additionalProperties);
+    Helpers.generateServer(client, additionalProperties);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     CodegenOperation op = super.fromOperation(path, httpMethod, operation, servers);
-    CodegenOperation codegenOperation = Utils.specifyCustomRequest(op);
+    CodegenOperation codegenOperation = Helpers.specifyCustomRequest(op);
     return support.clearOneOfFromOperation(codegenOperation);
   }
 

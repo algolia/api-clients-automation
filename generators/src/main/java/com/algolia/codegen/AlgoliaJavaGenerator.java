@@ -2,7 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
-import com.algolia.codegen.utils.OneOfUtils;
+import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
@@ -28,15 +28,15 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     String client = (String) additionalProperties.get("client");
     setSourceFolder("algoliasearch/src/main/java");
     setGroupId("com.algolia");
-    setModelPackage("com.algolia.model." + Utils.camelize(client).toLowerCase());
+    setModelPackage("com.algolia.model." + Helpers.camelize(client).toLowerCase());
     additionalProperties.put("invokerPackage", "com.algolia");
     setApiPackage("com.algolia.api");
-    setApiNameSuffix(Utils.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
 
     super.processOpts();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
@@ -52,9 +52,9 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     try {
-      Utils.generateServer(client, additionalProperties);
+      Helpers.generateServer(client, additionalProperties);
 
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("java", "packageVersion"));
+      additionalProperties.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -69,15 +69,15 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    OneOfUtils.updateModelsOneOf(models, modelPackage);
+    OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
-    OneOfUtils.addOneOfMetadata(models);
+    OneOf.addOneOfMetadata(models);
     return models;
   }
 

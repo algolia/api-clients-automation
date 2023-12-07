@@ -74,6 +74,8 @@ public abstract class TestsGenerator {
   }
 
   private String injectVariables(String json) {
-    return json.replace("${{languageCased}}", languageCased()).replace("${{clientPascalCase}}", Utils.capitalize(Utils.camelize(client)));
+    return json
+      .replace("${{languageCased}}", languageCased())
+      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)));
   }
 }

@@ -39,7 +39,7 @@ public class TestsRequest extends TestsGenerator {
       new SupportingFile(
         "requests/requests.mustache",
         outputFolder + "/methods/requests",
-        Utils.createClientName(client, language) + extension
+        Helpers.createClientName(client, language) + extension
       )
     );
   }
@@ -80,7 +80,7 @@ public class TestsRequest extends TestsGenerator {
         try {
           CodegenOperation ope = entry.getValue();
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
-          if (Utils.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
+          if (Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
             test.put("isCustomRequest", true);
           }
 

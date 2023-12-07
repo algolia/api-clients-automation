@@ -29,7 +29,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    CLIENT = Utils.camelize((String) additionalProperties.get("client"));
+    CLIENT = Helpers.camelize((String) additionalProperties.get("client"));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
 
     // generator specific options
@@ -38,7 +38,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setApiPackage("src");
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     languageSpecificPrimitives.add("Record");
     instantiationTypes.put("map", "Record");
@@ -110,13 +110,13 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   /** Get the packageName from the output field in the `config/openapitools.json` file */
   public String getPackageName(String client) throws ConfigException {
     if (cacheOpenApiToolsConfig == null) {
-      cacheOpenApiToolsConfig = Utils.readJsonFile("config/openapitools.json");
+      cacheOpenApiToolsConfig = Helpers.readJsonFile("config/openapitools.json");
     }
 
     String output = cacheOpenApiToolsConfig
@@ -131,30 +131,30 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
-    String apiName = CLIENT + Utils.API_SUFFIX;
+    String apiName = CLIENT + Helpers.API_SUFFIX;
     String packageName = getPackageName(CLIENT);
 
     additionalProperties.put("apiName", apiName);
-    additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
-    additionalProperties.put("algoliaAgent", Utils.capitalize(CLIENT));
+    additionalProperties.put("capitalizedApiName", Helpers.capitalize(apiName));
+    additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
     additionalProperties.put("gitRepoId", "algoliasearch-client-javascript");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
-    additionalProperties.put("packageVersion", Utils.getPackageJsonVersion(packageName));
+    additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
 
     if (isAlgoliasearchClient) {
       // Files used to create the package.json of the algoliasearch package
-      additionalProperties.put("analyticsVersion", Utils.getPackageJsonVersion("client-analytics"));
-      additionalProperties.put("abtestingVersion", Utils.getPackageJsonVersion("client-abtesting"));
-      additionalProperties.put("personalizationVersion", Utils.getPackageJsonVersion("client-personalization"));
-      additionalProperties.put("searchVersion", Utils.getPackageJsonVersion("client-search"));
+      additionalProperties.put("analyticsVersion", Helpers.getPackageJsonVersion("client-analytics"));
+      additionalProperties.put("abtestingVersion", Helpers.getPackageJsonVersion("client-abtesting"));
+      additionalProperties.put("personalizationVersion", Helpers.getPackageJsonVersion("client-personalization"));
+      additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
 
       // Files used to generate the `lite` client
-      apiName = "lite" + Utils.API_SUFFIX;
+      apiName = "lite" + Helpers.API_SUFFIX;
       additionalProperties.put("apiName", apiName);
-      additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
+      additionalProperties.put("capitalizedApiName", Helpers.capitalize(apiName));
       additionalProperties.put("algoliaAgent", "Lite");
     }
   }
@@ -173,9 +173,9 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     setDefaultGeneratorOptions();
     try {
-      Utils.generateServer((String) additionalProperties.get("client"), additionalProperties);
-      additionalProperties.put("utilsPackageVersion", Utils.getPackageJsonVersion("client-common"));
-      additionalProperties.put("npmNamespace", Utils.getClientConfigField("javascript", "npmNamespace"));
+      Helpers.generateServer((String) additionalProperties.get("client"), additionalProperties);
+      additionalProperties.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
+      additionalProperties.put("npmNamespace", Helpers.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -224,24 +224,24 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   @Override
   public String toApiName(String name) {
     if (name.length() == 0) {
-      return "Default" + Utils.API_SUFFIX;
+      return "Default" + Helpers.API_SUFFIX;
     }
 
     String endClient = isAlgoliasearchClient ? "lite" : CLIENT;
 
-    return Utils.capitalize(endClient + Utils.API_SUFFIX);
+    return Helpers.capitalize(endClient + Helpers.API_SUFFIX);
   }
 
   /** The `apiFileName` is in camelCase. */
   @Override
   public String toApiFilename(String name) {
     if (name.length() == 0) {
-      return "default" + Utils.API_SUFFIX;
+      return "default" + Helpers.API_SUFFIX;
     }
 
     String endClient = isAlgoliasearchClient ? "lite" : CLIENT;
 
-    return endClient + Utils.API_SUFFIX;
+    return endClient + Helpers.API_SUFFIX;
   }
 
   /** The `apiFileName` is in camelCase. */

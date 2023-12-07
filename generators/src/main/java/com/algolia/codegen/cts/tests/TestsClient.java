@@ -1,6 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
-import static com.algolia.codegen.utils.Utils.CUSTOM_METHODS;
+import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
 
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
@@ -36,7 +36,7 @@ public class TestsClient extends TestsGenerator {
       return;
     }
     supportingFiles.add(
-      new SupportingFile("client/suite.mustache", outputFolder + "/client", Utils.createClientName(client, language) + extension)
+      new SupportingFile("client/suite.mustache", outputFolder + "/client", Helpers.createClientName(client, language) + extension)
     );
   }
 
