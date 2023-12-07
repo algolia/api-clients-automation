@@ -22,7 +22,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    const bundledSpec = client === 'algoliasearch' ? 'search' : client;
+    const isJavaScript = language === 'javascript';
+    const bundledSpec = isJavaScript && client === 'algoliasearch' ? 'search' : client;
 
     if (!commonDependenciesChanged) {
       const key = `${language.toUpperCase()}_CLIENT_CHANGED`;
@@ -31,7 +32,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       };
 
       // only JS have other dependencies for its utils packages
-      if (language === 'javascript') {
+      if (isJavaScript) {
         languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
       }
 
@@ -58,7 +59,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         'tests/CTS',
         `templates/${language}`,
         'generators/src',
-        `config/.${language}-version`,
+        isJavaScript ? '.nvmrc' : `config/.${language}-version`,
       ];
 
       for (const [, dependency] of Object.entries(COMMON_DEPENDENCIES)) {
