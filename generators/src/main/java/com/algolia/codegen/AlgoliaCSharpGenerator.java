@@ -1,6 +1,7 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;

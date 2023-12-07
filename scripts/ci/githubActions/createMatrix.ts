@@ -18,43 +18,57 @@ const EMPTY_MATRIX = { client: ['no-run'] };
 
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
+  const commonDependenciesChanged = await isBaseChanged(baseBranch, COMMON_DEPENDENCIES);
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    const key = `${language.toUpperCase()}_CLIENT_CHANGED`;
-
-    const languageDependencies = {
-      [key]: DEPENDENCIES[key],
-    };
-
-    // only JS have other dependencies for its utils packages
-    if (language === 'javascript') {
-      languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
-    }
-
-    // We will check if dependencies have changed for each clients of each languages:
-    //   - language specific dependencies
-    //   - common dependencies of every clients
-    //   - output of the client
-    //   - specs that generated the client
     const bundledSpec = client === 'algoliasearch' ? 'search' : client;
-    const dependenciesChanged = await isBaseChanged(baseBranch, {
-      ...COMMON_DEPENDENCIES,
-      ...languageDependencies,
-      output: [output],
-      specs: [`specs/${bundledSpec}`],
-    });
 
-    // No changes found, we don't put this job in the matrix
-    if (!dependenciesChanged) {
-      continue;
+    if (!commonDependenciesChanged) {
+      const key = `${language.toUpperCase()}_CLIENT_CHANGED`;
+      const languageDependencies = {
+        [key]: DEPENDENCIES[key],
+      };
+
+      // only JS have other dependencies for its utils packages
+      if (language === 'javascript') {
+        languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
+      }
+
+      // We will check if dependencies have changed for each clients of each languages:
+      //   - language specific dependencies
+      //   - common dependencies of every clients
+      //   - output of the client
+      //   - specs that generated the client
+      const dependenciesChanged = await isBaseChanged(baseBranch, {
+        ...languageDependencies,
+        output: [output],
+        specs: [`specs/${bundledSpec}`],
+      });
+
+      // No changes found, we don't put this job in the matrix
+      if (!dependenciesChanged) {
+        continue;
+      }
     }
 
+    // if this language is not yet in the matrix, we initialize it with the client-specific files
     if (!(language in matrix)) {
+      const cacheToCompute: string[] = [
+        'tests/CTS',
+        `templates/${language}`,
+        'generators/src',
+        `config/.${language}-version`,
+      ];
+
+      for (const [, dependency] of Object.entries(COMMON_DEPENDENCIES)) {
+        cacheToCompute.push(...dependency);
+      }
+
       matrix[language] = {
         path: getLanguageFolder(language),
         toRun: [],
-        cacheToCompute: ['specs/common', `templates/${language}`, `generators/src`],
+        cacheToCompute,
       };
     }
 
@@ -172,10 +186,10 @@ async function createMatrix(opts: CreateMatrix): Promise<void> {
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
-  const args = process.argv.slice(2);
+  // const args = process.argv.slice(2);
 
   createMatrix({
-    baseBranch: args[0],
-    forClients: args[1] === 'clients',
+    baseBranch: 'origin/main',
+    forClients: true,
   });
 }

@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;

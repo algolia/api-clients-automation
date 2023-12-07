@@ -1,4 +1,4 @@
-package com.algolia.codegen;
+package com.algolia.codegen.utils;
 
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.JsonNode;

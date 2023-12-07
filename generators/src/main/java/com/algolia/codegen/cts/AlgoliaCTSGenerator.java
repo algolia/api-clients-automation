@@ -1,12 +1,11 @@
 package com.algolia.codegen.cts;
 
-import com.algolia.codegen.GenericPropagator;
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
 import java.util.*;

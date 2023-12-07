@@ -1,4 +1,4 @@
-package com.algolia.codegen;
+package com.algolia.codegen.utils;
 
 import java.util.*;
 import org.openapitools.codegen.*;

@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;

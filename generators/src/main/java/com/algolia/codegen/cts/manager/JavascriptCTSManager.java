@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;

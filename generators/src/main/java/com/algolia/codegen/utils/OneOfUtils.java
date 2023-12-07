@@ -1,6 +1,5 @@
 package com.algolia.codegen.utils;
 
-import com.algolia.codegen.Utils;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;

@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+import com.algolia.codegen.utils.*;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;

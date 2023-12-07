@@ -8,7 +8,16 @@ import { isBaseChanged } from './utils.js';
 
 export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows', '.github/.cache_version'],
-  SCRIPTS_CHANGED: ['scripts', 'eslint', 'yarn.lock', '.eslintrc.js'],
+  SCRIPTS_CHANGED: [
+    'scripts',
+    'eslint',
+    'yarn.lock',
+    '.eslintrc.js',
+    'config/generation.config.mjs',
+    'config/openapitools.json',
+    'config/clients.config.json',
+    'config/release.config.json',
+  ],
   COMMON_SPECS_CHANGED: ['specs/common'],
 };
 
@@ -34,13 +43,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     return {
       ...finalDependencies,
       [key]: [
-        // Files that are common to every clients, this is used to determine if we should generate the matrix for this job.
-        'config/generation.config.mjs',
-        'config/openapitools.json',
-        'config/clients.config.json',
-        'generators/src/main/java/com/algolia/codegen/Utils.java',
-        'generators/src/main/java/com/algolia/codegen/GenericPropagator.java',
-        'generators/src/main/java/com/algolia/codegen/cts',
+        'generators/src/main/java/com/algolia/codegen/*/**',
         'tests/CTS',
         '.nvmrc',
         ':!**node_modules',

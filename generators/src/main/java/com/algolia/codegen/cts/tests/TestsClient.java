@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.CTSException;
+import com.algolia.codegen.utils.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

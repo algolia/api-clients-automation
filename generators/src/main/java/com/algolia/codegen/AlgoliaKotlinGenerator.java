@@ -1,6 +1,7 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOfUtils;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
