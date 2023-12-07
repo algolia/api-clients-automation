@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.Utils;
 import java.util.Map;
 
 public class ScalaCTSManager implements CTSManager {

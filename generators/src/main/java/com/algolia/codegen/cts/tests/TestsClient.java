@@ -1,6 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
-import static com.algolia.codegen.Utils.CUSTOM_METHODS;
+import static com.algolia.codegen.utils.Utils.CUSTOM_METHODS;
 
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
