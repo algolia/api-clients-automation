@@ -1,5 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
+import static com.algolia.codegen.Utils.CUSTOM_METHODS;
+
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
@@ -72,6 +74,9 @@ public class TestsClient extends TestsGenerator {
 
             stepOut.put("object", step.object);
             stepOut.put("path", step.path);
+            if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
+              stepOut.put("isCustom", true);
+            }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
             if (step.expected.type != null) {

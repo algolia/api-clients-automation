@@ -57,8 +57,9 @@ private[algoliasearch] class HttpRequester private (
       .encodedPath(request.path)
     for ((key, value) <- request.queryParameters)
       urlBuilder.addQueryParameter(key, value)
+
     if (requestOptions.isDefined) {
-      for ((key, value) <- requestOptions.get.headers)
+      for ((key, value) <- requestOptions.get.queryParameters)
         urlBuilder.addQueryParameter(key, value)
     }
     urlBuilder.build

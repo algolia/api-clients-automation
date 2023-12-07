@@ -5,7 +5,11 @@ import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
 public interface CTSManager {
-  public void addSupportingFiles(List<SupportingFile> supportingFiles);
+  public default void addSupportingFiles(List<SupportingFile> supportingFiles) {
+    // NO-OP
+  }
 
-  public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException;
+  public default void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
+    // NO-OP
+  }
 }

@@ -27,13 +27,13 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
 
   override def intercept(chain: Interceptor.Chain): Response = {
     val request = chain.request()
-    val useReadTransporter = request.tag().asInstanceOf[UseReadTransporter]
+    val useReadTransporter = request.tag().asInstanceOf[UseReadTransporter.type]
     val callType =
       if (useReadTransporter != null || request.method() == "GET") CallType.Read
       else CallType.Write
     val errors = new ListBuffer[Throwable]()
 
-    callableHosts(callType).foreach { currentHost =>
+    for (currentHost <- callableHosts(callType)) {
       try {
         return processRequest(chain, request, currentHost)
       } catch {
@@ -42,7 +42,6 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
           handleException(currentHost, exception)
       }
     }
-
     throw AlgoliaRetryException(errors.toList)
   }
 

@@ -1,0 +1,40 @@
+name: Publish jar
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  release:
+    name: Publish to Sonatype
+    runs-on: ubuntu-22.04
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 11
+          cache: sbt
+
+      - name: Compile
+        run: sbt +compile
+
+      - name: Import GPG Key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
+          fingerprint: "${{ secrets.SIGNING_PRIVATE_KEY_FINGERPRINT }}"
+
+      - name: Release to Sonatype
+        env:
+          SONATYPE_USERNAME: '${{ secrets.SONATYPE_NEXUS_USERNAME }}'
+          SONATYPE_PASSWORD: '${{ secrets.SONATYPE_NEXUS_PASSWORD }}'
+          PGP_PASSPHRASE: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: sbt +publishSigned +sonatypeBundleRelease
+  

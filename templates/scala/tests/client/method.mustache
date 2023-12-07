@@ -1,0 +1,8 @@
+Await.ready(
+    client.{{path}}{{#isCustom}}[Any]{{/isCustom}}(
+    {{#parametersWithDataType}}
+    {{> request_param}}{{^-last}},{{/-last}}
+    {{/parametersWithDataType}}
+    ),
+    Duration.Inf
+)
