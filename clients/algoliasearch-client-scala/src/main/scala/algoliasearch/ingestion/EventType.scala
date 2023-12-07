@@ -7,10 +7,41 @@
   */
 package algoliasearch.ingestion
 
-object EventType extends Enumeration {
-  type EventType = EventType.Value
-  val Fetch = Value("fetch")
-  val Record = Value("record")
-  val Log = Value("log")
-  val Transform = Value("transform")
+import org.json4s._
+
+sealed trait EventType
+
+/** EventType enumeration
+  */
+object EventType {
+  case object Fetch extends EventType {
+    override def toString = "fetch"
+  }
+  case object Record extends EventType {
+    override def toString = "record"
+  }
+  case object Log extends EventType {
+    override def toString = "log"
+  }
+  case object Transform extends EventType {
+    override def toString = "transform"
+  }
+  val values: Seq[EventType] = Seq(Fetch, Record, Log, Transform)
+
+  def withName(name: String): EventType = EventType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown EventType value: $name"))
 }
+
+class EventTypeSerializer
+    extends CustomSerializer[EventType](_ =>
+      (
+        {
+          case JString(value) => EventType.withName(value)
+          case JNull          => null
+        },
+        { case value: EventType =>
+          JString(value.toString)
+        }
+      )
+    )

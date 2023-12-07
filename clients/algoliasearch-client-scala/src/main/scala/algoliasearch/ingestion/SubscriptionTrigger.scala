@@ -15,5 +15,3 @@ case class SubscriptionTrigger(
     `type`: SubscriptionTriggerType
 ) extends TriggerTrait
     with TaskCreateTriggerTrait
-
-object SubscriptionTriggerEnums {}

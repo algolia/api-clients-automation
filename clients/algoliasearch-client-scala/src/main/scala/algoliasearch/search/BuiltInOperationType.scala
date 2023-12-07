@@ -11,13 +11,50 @@
   */
 package algoliasearch.search
 
-object BuiltInOperationType extends Enumeration {
-  type BuiltInOperationType = BuiltInOperationType.Value
-  val Increment = Value("Increment")
-  val Decrement = Value("Decrement")
-  val Add = Value("Add")
-  val Remove = Value("Remove")
-  val AddUnique = Value("AddUnique")
-  val IncrementFrom = Value("IncrementFrom")
-  val IncrementSet = Value("IncrementSet")
+import org.json4s._
+
+sealed trait BuiltInOperationType
+
+/** Operation to apply to the attribute.
+  */
+object BuiltInOperationType {
+  case object Increment extends BuiltInOperationType {
+    override def toString = "Increment"
+  }
+  case object Decrement extends BuiltInOperationType {
+    override def toString = "Decrement"
+  }
+  case object Add extends BuiltInOperationType {
+    override def toString = "Add"
+  }
+  case object Remove extends BuiltInOperationType {
+    override def toString = "Remove"
+  }
+  case object AddUnique extends BuiltInOperationType {
+    override def toString = "AddUnique"
+  }
+  case object IncrementFrom extends BuiltInOperationType {
+    override def toString = "IncrementFrom"
+  }
+  case object IncrementSet extends BuiltInOperationType {
+    override def toString = "IncrementSet"
+  }
+  val values: Seq[BuiltInOperationType] = Seq(Increment, Decrement, Add, Remove, AddUnique, IncrementFrom, IncrementSet)
+
+  def withName(name: String): BuiltInOperationType = BuiltInOperationType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown BuiltInOperationType value: $name"))
 }
+
+class BuiltInOperationTypeSerializer
+    extends CustomSerializer[BuiltInOperationType](_ =>
+      (
+        {
+          case JString(value) => BuiltInOperationType.withName(value)
+          case JNull          => null
+        },
+        { case value: BuiltInOperationType =>
+          JString(value.toString)
+        }
+      )
+    )

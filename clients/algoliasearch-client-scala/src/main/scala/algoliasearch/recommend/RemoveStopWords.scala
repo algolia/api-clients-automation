@@ -41,13 +41,16 @@ object RemoveStopWordsSerializer extends Serializer[RemoveStopWords] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RemoveStopWords] =>
       json match {
-        case JArray(value: List[JString]) => RemoveStopWords.SeqOfString(value.map(_.extract))
-        case JBool(value)                 => RemoveStopWords.BooleanValue(value)
-        case _                            => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => RemoveStopWords.SeqOfString(value.map(_.extract))
+        case JBool(value)                                          => RemoveStopWords.BooleanValue(value)
+        case _ => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: RemoveStopWords =>
+    value match {
+      case RemoveStopWords.SeqOfString(value)  => JArray(value.map(Extraction.decompose).toList)
+      case RemoveStopWords.BooleanValue(value) => JBool(value)
+    }
   }
 }

@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object DockerRegistry extends Enumeration {
-  type DockerRegistry = DockerRegistry.Value
-  val Dockerhub = Value("dockerhub")
-  val Ghcr = Value("ghcr")
+import org.json4s._
+
+sealed trait DockerRegistry
+
+/** The registry where the image is stored.
+  */
+object DockerRegistry {
+  case object Dockerhub extends DockerRegistry {
+    override def toString = "dockerhub"
+  }
+  case object Ghcr extends DockerRegistry {
+    override def toString = "ghcr"
+  }
+  val values: Seq[DockerRegistry] = Seq(Dockerhub, Ghcr)
+
+  def withName(name: String): DockerRegistry = DockerRegistry.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DockerRegistry value: $name"))
 }
+
+class DockerRegistrySerializer
+    extends CustomSerializer[DockerRegistry](_ =>
+      (
+        {
+          case JString(value) => DockerRegistry.withName(value)
+          case JNull          => null
+        },
+        { case value: DockerRegistry =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object EditType extends Enumeration {
-  type EditType = EditType.Value
-  val Remove = Value("remove")
-  val Replace = Value("replace")
+import org.json4s._
+
+sealed trait EditType
+
+/** Type of edit.
+  */
+object EditType {
+  case object Remove extends EditType {
+    override def toString = "remove"
+  }
+  case object Replace extends EditType {
+    override def toString = "replace"
+  }
+  val values: Seq[EditType] = Seq(Remove, Replace)
+
+  def withName(name: String): EditType = EditType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown EditType value: $name"))
 }
+
+class EditTypeSerializer
+    extends CustomSerializer[EditType](_ =>
+      (
+        {
+          case JString(value) => EditType.withName(value)
+          case JNull          => null
+        },
+        { case value: EditType =>
+          JString(value.toString)
+        }
+      )
+    )

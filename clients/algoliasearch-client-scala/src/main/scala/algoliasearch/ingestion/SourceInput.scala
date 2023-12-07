@@ -38,9 +38,14 @@ object SourceInputSerializer extends Serializer[SourceInput] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SourceInput =>
+    value match {
+      case value: SourceCommercetools => Extraction.decompose(value)(format - this)
+      case value: SourceBigCommerce   => Extraction.decompose(value)(format - this)
+      case value: SourceJSON          => Extraction.decompose(value)(format - this)
+      case value: SourceCSV           => Extraction.decompose(value)(format - this)
+      case value: SourceBigQuery      => Extraction.decompose(value)(format - this)
+      case value: SourceDocker        => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object SourceInputEnums {}

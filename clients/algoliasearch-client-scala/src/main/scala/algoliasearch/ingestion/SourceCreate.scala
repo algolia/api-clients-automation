@@ -20,5 +20,3 @@ case class SourceCreate(
     input: SourceInput,
     authenticationID: Option[String] = scala.None
 )
-
-object SourceCreateEnums {}

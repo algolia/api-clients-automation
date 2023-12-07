@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object DictionaryEntryState extends Enumeration {
-  type DictionaryEntryState = DictionaryEntryState.Value
-  val Enabled = Value("enabled")
-  val Disabled = Value("disabled")
+import org.json4s._
+
+sealed trait DictionaryEntryState
+
+/** Indicates whether a dictionary entry is active (`enabled`) or inactive (`disabled`).
+  */
+object DictionaryEntryState {
+  case object Enabled extends DictionaryEntryState {
+    override def toString = "enabled"
+  }
+  case object Disabled extends DictionaryEntryState {
+    override def toString = "disabled"
+  }
+  val values: Seq[DictionaryEntryState] = Seq(Enabled, Disabled)
+
+  def withName(name: String): DictionaryEntryState = DictionaryEntryState.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DictionaryEntryState value: $name"))
 }
+
+class DictionaryEntryStateSerializer
+    extends CustomSerializer[DictionaryEntryState](_ =>
+      (
+        {
+          case JString(value) => DictionaryEntryState.withName(value)
+          case JNull          => null
+        },
+        { case value: DictionaryEntryState =>
+          JString(value.toString)
+        }
+      )
+    )

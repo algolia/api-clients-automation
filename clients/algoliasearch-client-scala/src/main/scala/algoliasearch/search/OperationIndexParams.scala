@@ -27,5 +27,3 @@ case class OperationIndexParams(
     destination: String,
     scope: Option[Seq[ScopeType]] = scala.None
 )
-
-object OperationIndexParamsEnums {}

@@ -11,7 +11,33 @@
   */
 package algoliasearch.search
 
-object SearchTypeDefault extends Enumeration {
-  type SearchTypeDefault = SearchTypeDefault.Value
-  val Default = Value("default")
+import org.json4s._
+
+sealed trait SearchTypeDefault
+
+/**   - `default`: perform a search query - `facet` [searches for facet
+  *     values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+  */
+object SearchTypeDefault {
+  case object Default extends SearchTypeDefault {
+    override def toString = "default"
+  }
+  val values: Seq[SearchTypeDefault] = Seq(Default)
+
+  def withName(name: String): SearchTypeDefault = SearchTypeDefault.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SearchTypeDefault value: $name"))
 }
+
+class SearchTypeDefaultSerializer
+    extends CustomSerializer[SearchTypeDefault](_ =>
+      (
+        {
+          case JString(value) => SearchTypeDefault.withName(value)
+          case JNull          => null
+        },
+        { case value: SearchTypeDefault =>
+          JString(value.toString)
+        }
+      )
+    )

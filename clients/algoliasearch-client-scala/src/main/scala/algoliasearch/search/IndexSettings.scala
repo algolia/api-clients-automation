@@ -233,5 +233,3 @@ case class IndexSettings(
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None
 )
-
-object IndexSettingsEnums {}

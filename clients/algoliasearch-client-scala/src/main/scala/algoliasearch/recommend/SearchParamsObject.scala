@@ -289,5 +289,3 @@ case class SearchParamsObject(
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None
 )
-
-object SearchParamsObjectEnums {}

@@ -19,5 +19,3 @@ case class SearchMethodParams(
     requests: Seq[SearchQuery],
     strategy: Option[SearchStrategy] = scala.None
 )
-
-object SearchMethodParamsEnums {}

@@ -24,5 +24,3 @@ case class ScheduleTrigger(
     lastRun: Option[String] = scala.None,
     nextRun: String
 ) extends TriggerTrait
-
-object ScheduleTriggerEnums {}

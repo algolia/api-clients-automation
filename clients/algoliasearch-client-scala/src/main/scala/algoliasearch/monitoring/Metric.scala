@@ -9,12 +9,47 @@
   */
 package algoliasearch.monitoring
 
-object Metric extends Enumeration {
-  type Metric = Metric.Value
-  val AvgBuildTime = Value("avg_build_time")
-  val SsdUsage = Value("ssd_usage")
-  val RamSearchUsage = Value("ram_search_usage")
-  val RamIndexingUsage = Value("ram_indexing_usage")
-  val CpuUsage = Value("cpu_usage")
-  val Star = Value("*")
+import org.json4s._
+
+sealed trait Metric
+
+/** Metric enumeration
+  */
+object Metric {
+  case object AvgBuildTime extends Metric {
+    override def toString = "avg_build_time"
+  }
+  case object SsdUsage extends Metric {
+    override def toString = "ssd_usage"
+  }
+  case object RamSearchUsage extends Metric {
+    override def toString = "ram_search_usage"
+  }
+  case object RamIndexingUsage extends Metric {
+    override def toString = "ram_indexing_usage"
+  }
+  case object CpuUsage extends Metric {
+    override def toString = "cpu_usage"
+  }
+  case object Star extends Metric {
+    override def toString = "*"
+  }
+  val values: Seq[Metric] = Seq(AvgBuildTime, SsdUsage, RamSearchUsage, RamIndexingUsage, CpuUsage, Star)
+
+  def withName(name: String): Metric = Metric.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Metric value: $name"))
 }
+
+class MetricSerializer
+    extends CustomSerializer[Metric](_ =>
+      (
+        {
+          case JString(value) => Metric.withName(value)
+          case JNull          => null
+        },
+        { case value: Metric =>
+          JString(value.toString)
+        }
+      )
+    )

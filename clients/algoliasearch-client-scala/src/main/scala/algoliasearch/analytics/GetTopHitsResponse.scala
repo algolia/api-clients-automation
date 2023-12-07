@@ -30,7 +30,10 @@ object GetTopHitsResponseSerializer extends Serializer[GetTopHitsResponse] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: GetTopHitsResponse =>
+    value match {
+      case value: TopHitsResponse              => Extraction.decompose(value)(format - this)
+      case value: TopHitsResponseWithAnalytics => Extraction.decompose(value)(format - this)
+    }
   }
 }

@@ -11,10 +11,43 @@
   */
 package algoliasearch.search
 
-object RemoveWordsIfNoResults extends Enumeration {
-  type RemoveWordsIfNoResults = RemoveWordsIfNoResults.Value
-  val None = Value("none")
-  val LastWords = Value("lastWords")
-  val FirstWords = Value("firstWords")
-  val AllOptional = Value("allOptional")
+import org.json4s._
+
+sealed trait RemoveWordsIfNoResults
+
+/** Strategy to [remove
+  * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/)
+  * from the query when it doesn't match any hits.
+  */
+object RemoveWordsIfNoResults {
+  case object None extends RemoveWordsIfNoResults {
+    override def toString = "none"
+  }
+  case object LastWords extends RemoveWordsIfNoResults {
+    override def toString = "lastWords"
+  }
+  case object FirstWords extends RemoveWordsIfNoResults {
+    override def toString = "firstWords"
+  }
+  case object AllOptional extends RemoveWordsIfNoResults {
+    override def toString = "allOptional"
+  }
+  val values: Seq[RemoveWordsIfNoResults] = Seq(None, LastWords, FirstWords, AllOptional)
+
+  def withName(name: String): RemoveWordsIfNoResults = RemoveWordsIfNoResults.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RemoveWordsIfNoResults value: $name"))
 }
+
+class RemoveWordsIfNoResultsSerializer
+    extends CustomSerializer[RemoveWordsIfNoResults](_ =>
+      (
+        {
+          case JString(value) => RemoveWordsIfNoResults.withName(value)
+          case JNull          => null
+        },
+        { case value: RemoveWordsIfNoResults =>
+          JString(value.toString)
+        }
+      )
+    )

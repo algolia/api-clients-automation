@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object DestinationType extends Enumeration {
-  type DestinationType = DestinationType.Value
-  val Search = Value("search")
-  val Insights = Value("insights")
-  val Flow = Value("flow")
+import org.json4s._
+
+sealed trait DestinationType
+
+/** Type of the Destination, defines in which Algolia product the data will be stored.
+  */
+object DestinationType {
+  case object Search extends DestinationType {
+    override def toString = "search"
+  }
+  case object Insights extends DestinationType {
+    override def toString = "insights"
+  }
+  case object Flow extends DestinationType {
+    override def toString = "flow"
+  }
+  val values: Seq[DestinationType] = Seq(Search, Insights, Flow)
+
+  def withName(name: String): DestinationType = DestinationType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DestinationType value: $name"))
 }
+
+class DestinationTypeSerializer
+    extends CustomSerializer[DestinationType](_ =>
+      (
+        {
+          case JString(value) => DestinationType.withName(value)
+          case JNull          => null
+        },
+        { case value: DestinationType =>
+          JString(value.toString)
+        }
+      )
+    )

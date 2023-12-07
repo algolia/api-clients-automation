@@ -9,7 +9,32 @@
   */
 package algoliasearch.insights
 
-object ClickEvent extends Enumeration {
-  type ClickEvent = ClickEvent.Value
-  val Click = Value("click")
+import org.json4s._
+
+sealed trait ClickEvent
+
+/** ClickEvent enumeration
+  */
+object ClickEvent {
+  case object Click extends ClickEvent {
+    override def toString = "click"
+  }
+  val values: Seq[ClickEvent] = Seq(Click)
+
+  def withName(name: String): ClickEvent = ClickEvent.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ClickEvent value: $name"))
 }
+
+class ClickEventSerializer
+    extends CustomSerializer[ClickEvent](_ =>
+      (
+        {
+          case JString(value) => ClickEvent.withName(value)
+          case JNull          => null
+        },
+        { case value: ClickEvent =>
+          JString(value.toString)
+        }
+      )
+    )

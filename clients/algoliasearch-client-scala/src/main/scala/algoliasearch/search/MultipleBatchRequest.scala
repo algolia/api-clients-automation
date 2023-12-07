@@ -25,5 +25,3 @@ case class MultipleBatchRequest(
     body: Any,
     indexName: String
 )
-
-object MultipleBatchRequestEnums {}

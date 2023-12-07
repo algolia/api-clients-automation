@@ -42,13 +42,16 @@ object IgnorePluralsSerializer extends Serializer[IgnorePlurals] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[IgnorePlurals] =>
       json match {
-        case JArray(value: List[JString]) => IgnorePlurals.SeqOfString(value.map(_.extract))
-        case JBool(value)                 => IgnorePlurals.BooleanValue(value)
-        case _                            => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => IgnorePlurals.SeqOfString(value.map(_.extract))
+        case JBool(value)                                          => IgnorePlurals.BooleanValue(value)
+        case _ => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: IgnorePlurals =>
+    value match {
+      case IgnorePlurals.SeqOfString(value)  => JArray(value.map(Extraction.decompose).toList)
+      case IgnorePlurals.BooleanValue(value) => JBool(value)
+    }
   }
 }

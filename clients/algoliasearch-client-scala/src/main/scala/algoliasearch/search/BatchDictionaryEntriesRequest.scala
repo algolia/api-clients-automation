@@ -19,5 +19,3 @@ case class BatchDictionaryEntriesRequest(
     action: DictionaryAction,
     body: DictionaryEntry
 )
-
-object BatchDictionaryEntriesRequestEnums {}

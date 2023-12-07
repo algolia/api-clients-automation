@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object DictionaryAction extends Enumeration {
-  type DictionaryAction = DictionaryAction.Value
-  val AddEntry = Value("addEntry")
-  val DeleteEntry = Value("deleteEntry")
+import org.json4s._
+
+sealed trait DictionaryAction
+
+/** Actions to perform.
+  */
+object DictionaryAction {
+  case object AddEntry extends DictionaryAction {
+    override def toString = "addEntry"
+  }
+  case object DeleteEntry extends DictionaryAction {
+    override def toString = "deleteEntry"
+  }
+  val values: Seq[DictionaryAction] = Seq(AddEntry, DeleteEntry)
+
+  def withName(name: String): DictionaryAction = DictionaryAction.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DictionaryAction value: $name"))
 }
+
+class DictionaryActionSerializer
+    extends CustomSerializer[DictionaryAction](_ =>
+      (
+        {
+          case JString(value) => DictionaryAction.withName(value)
+          case JNull          => null
+        },
+        { case value: DictionaryAction =>
+          JString(value.toString)
+        }
+      )
+    )

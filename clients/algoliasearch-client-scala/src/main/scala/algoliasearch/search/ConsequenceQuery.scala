@@ -40,7 +40,10 @@ object ConsequenceQuerySerializer extends Serializer[ConsequenceQuery] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ConsequenceQuery =>
+    value match {
+      case value: ConsequenceQueryObject       => Extraction.decompose(value)(format - this)
+      case ConsequenceQuery.StringValue(value) => JString(value)
+    }
   }
 }

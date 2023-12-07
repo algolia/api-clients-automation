@@ -35,13 +35,17 @@ object FacetFiltersSerializer extends Serializer[FacetFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[FacetFilters] =>
       json match {
-        case JArray(value: List[JObject]) => FacetFilters.SeqOfMixedSearchFilters(value.map(_.extract))
-        case JString(value)               => FacetFilters.StringValue(value)
-        case _                            => throw new MappingException("Can't convert " + json + " to FacetFilters")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          FacetFilters.SeqOfMixedSearchFilters(value.map(_.extract))
+        case JString(value) => FacetFilters.StringValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to FacetFilters")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: FacetFilters =>
+    value match {
+      case FacetFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case FacetFilters.StringValue(value)             => JString(value)
+    }
   }
 }

@@ -31,9 +31,11 @@ object TaskCreateTriggerSerializer extends Serializer[TaskCreateTrigger] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TaskCreateTrigger =>
+    value match {
+      case value: OnDemandTriggerInput => Extraction.decompose(value)(format - this)
+      case value: ScheduleTriggerInput => Extraction.decompose(value)(format - this)
+      case value: SubscriptionTrigger  => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object TaskCreateTriggerEnums {}

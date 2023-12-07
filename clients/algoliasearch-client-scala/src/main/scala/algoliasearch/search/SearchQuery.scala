@@ -41,9 +41,10 @@ object SearchQuerySerializer extends Serializer[SearchQuery] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchQuery =>
+    value match {
+      case value: SearchForFacets => Extraction.decompose(value)(format - this)
+      case value: SearchForHits   => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object SearchQueryEnums {}

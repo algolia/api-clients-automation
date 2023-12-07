@@ -22,5 +22,3 @@ case class Value(
     order: Option[Seq[String]] = scala.None,
     sortRemainingBy: Option[SortRemainingBy] = scala.None
 )
-
-object ValueEnums {}

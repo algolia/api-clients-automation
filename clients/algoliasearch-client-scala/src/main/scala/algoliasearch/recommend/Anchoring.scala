@@ -11,10 +11,42 @@
   */
 package algoliasearch.recommend
 
-object Anchoring extends Enumeration {
-  type Anchoring = Anchoring.Value
-  val Is = Value("is")
-  val StartsWith = Value("startsWith")
-  val EndsWith = Value("endsWith")
-  val Contains = Value("contains")
+import org.json4s._
+
+sealed trait Anchoring
+
+/** Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an
+  * exact match (`is`), or a partial match (`contains`).
+  */
+object Anchoring {
+  case object Is extends Anchoring {
+    override def toString = "is"
+  }
+  case object StartsWith extends Anchoring {
+    override def toString = "startsWith"
+  }
+  case object EndsWith extends Anchoring {
+    override def toString = "endsWith"
+  }
+  case object Contains extends Anchoring {
+    override def toString = "contains"
+  }
+  val values: Seq[Anchoring] = Seq(Is, StartsWith, EndsWith, Contains)
+
+  def withName(name: String): Anchoring = Anchoring.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Anchoring value: $name"))
 }
+
+class AnchoringSerializer
+    extends CustomSerializer[Anchoring](_ =>
+      (
+        {
+          case JString(value) => Anchoring.withName(value)
+          case JNull          => null
+        },
+        { case value: Anchoring =>
+          JString(value.toString)
+        }
+      )
+    )

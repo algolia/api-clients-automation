@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object DockerImageType extends Enumeration {
-  type DockerImageType = DockerImageType.Value
-  val Singer = Value("singer")
-  val Custom = Value("custom")
-  val Airbyte = Value("airbyte")
+import org.json4s._
+
+sealed trait DockerImageType
+
+/** The type of the image.
+  */
+object DockerImageType {
+  case object Singer extends DockerImageType {
+    override def toString = "singer"
+  }
+  case object Custom extends DockerImageType {
+    override def toString = "custom"
+  }
+  case object Airbyte extends DockerImageType {
+    override def toString = "airbyte"
+  }
+  val values: Seq[DockerImageType] = Seq(Singer, Custom, Airbyte)
+
+  def withName(name: String): DockerImageType = DockerImageType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DockerImageType value: $name"))
 }
+
+class DockerImageTypeSerializer
+    extends CustomSerializer[DockerImageType](_ =>
+      (
+        {
+          case JString(value) => DockerImageType.withName(value)
+          case JNull          => null
+        },
+        { case value: DockerImageType =>
+          JString(value.toString)
+        }
+      )
+    )

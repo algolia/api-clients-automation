@@ -11,9 +11,38 @@
   */
 package algoliasearch.search
 
-object AlternativesAsExact extends Enumeration {
-  type AlternativesAsExact = AlternativesAsExact.Value
-  val IgnorePlurals = Value("ignorePlurals")
-  val SingleWordSynonym = Value("singleWordSynonym")
-  val MultiWordsSynonym = Value("multiWordsSynonym")
+import org.json4s._
+
+sealed trait AlternativesAsExact
+
+/** AlternativesAsExact enumeration
+  */
+object AlternativesAsExact {
+  case object IgnorePlurals extends AlternativesAsExact {
+    override def toString = "ignorePlurals"
+  }
+  case object SingleWordSynonym extends AlternativesAsExact {
+    override def toString = "singleWordSynonym"
+  }
+  case object MultiWordsSynonym extends AlternativesAsExact {
+    override def toString = "multiWordsSynonym"
+  }
+  val values: Seq[AlternativesAsExact] = Seq(IgnorePlurals, SingleWordSynonym, MultiWordsSynonym)
+
+  def withName(name: String): AlternativesAsExact = AlternativesAsExact.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown AlternativesAsExact value: $name"))
 }
+
+class AlternativesAsExactSerializer
+    extends CustomSerializer[AlternativesAsExact](_ =>
+      (
+        {
+          case JString(value) => AlternativesAsExact.withName(value)
+          case JNull          => null
+        },
+        { case value: AlternativesAsExact =>
+          JString(value.toString)
+        }
+      )
+    )

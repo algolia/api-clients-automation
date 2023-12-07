@@ -20,5 +20,3 @@ case class Incident(
     title: Option[String] = scala.None,
     status: Option[Status] = scala.None
 )
-
-object IncidentEnums {}

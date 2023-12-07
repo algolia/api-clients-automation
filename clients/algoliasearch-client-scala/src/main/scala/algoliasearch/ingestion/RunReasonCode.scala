@@ -7,13 +7,50 @@
   */
 package algoliasearch.ingestion
 
-object RunReasonCode extends Enumeration {
-  type RunReasonCode = RunReasonCode.Value
-  val Internal = Value("internal")
-  val Critical = Value("critical")
-  val NoEvents = Value("no_events")
-  val TooManyErrors = Value("too_many_errors")
-  val Ok = Value("ok")
-  val Discarded = Value("discarded")
-  val Blocking = Value("blocking")
+import org.json4s._
+
+sealed trait RunReasonCode
+
+/** An identifier that pairs with the outcome reason.
+  */
+object RunReasonCode {
+  case object Internal extends RunReasonCode {
+    override def toString = "internal"
+  }
+  case object Critical extends RunReasonCode {
+    override def toString = "critical"
+  }
+  case object NoEvents extends RunReasonCode {
+    override def toString = "no_events"
+  }
+  case object TooManyErrors extends RunReasonCode {
+    override def toString = "too_many_errors"
+  }
+  case object Ok extends RunReasonCode {
+    override def toString = "ok"
+  }
+  case object Discarded extends RunReasonCode {
+    override def toString = "discarded"
+  }
+  case object Blocking extends RunReasonCode {
+    override def toString = "blocking"
+  }
+  val values: Seq[RunReasonCode] = Seq(Internal, Critical, NoEvents, TooManyErrors, Ok, Discarded, Blocking)
+
+  def withName(name: String): RunReasonCode = RunReasonCode.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RunReasonCode value: $name"))
 }
+
+class RunReasonCodeSerializer
+    extends CustomSerializer[RunReasonCode](_ =>
+      (
+        {
+          case JString(value) => RunReasonCode.withName(value)
+          case JNull          => null
+        },
+        { case value: RunReasonCode =>
+          JString(value.toString)
+        }
+      )
+    )

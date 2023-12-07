@@ -29,5 +29,3 @@ case class TaskCreate(
     failureThreshold: Option[Int] = scala.None,
     input: Option[TaskInput] = scala.None
 )
-
-object TaskCreateEnums {}

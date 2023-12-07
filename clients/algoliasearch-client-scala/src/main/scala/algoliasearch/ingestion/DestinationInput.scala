@@ -30,9 +30,10 @@ object DestinationInputSerializer extends Serializer[DestinationInput] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: DestinationInput =>
+    value match {
+      case value: DestinationIndexPrefix => Extraction.decompose(value)(format - this)
+      case value: DestinationIndexName   => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object DestinationInputEnums {}

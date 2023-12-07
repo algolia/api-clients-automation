@@ -20,5 +20,3 @@ case class DestinationUpdate(
     input: Option[DestinationInput] = scala.None,
     authenticationID: Option[String] = scala.None
 )
-
-object DestinationUpdateEnums {}

@@ -41,9 +41,10 @@ object AttributeToUpdateSerializer extends Serializer[AttributeToUpdate] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AttributeToUpdate =>
+    value match {
+      case AttributeToUpdate.StringValue(value) => JString(value)
+      case value: BuiltInOperation              => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object AttributeToUpdateEnums {}

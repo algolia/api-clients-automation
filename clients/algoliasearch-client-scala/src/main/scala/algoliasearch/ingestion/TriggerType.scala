@@ -7,9 +7,40 @@
   */
 package algoliasearch.ingestion
 
-object TriggerType extends Enumeration {
-  type TriggerType = TriggerType.Value
-  val OnDemand = Value("onDemand")
-  val Schedule = Value("schedule")
-  val Subscription = Value("subscription")
+import org.json4s._
+
+sealed trait TriggerType
+
+/** The type of the task reflect how it can be used: - onDemand: a task that runs manually - schedule: a task that runs
+  * regularly, following a given cron expression - subscription: a task that runs after a subscription event is received
+  * from an integration (e.g. Webhook).
+  */
+object TriggerType {
+  case object OnDemand extends TriggerType {
+    override def toString = "onDemand"
+  }
+  case object Schedule extends TriggerType {
+    override def toString = "schedule"
+  }
+  case object Subscription extends TriggerType {
+    override def toString = "subscription"
+  }
+  val values: Seq[TriggerType] = Seq(OnDemand, Schedule, Subscription)
+
+  def withName(name: String): TriggerType = TriggerType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown TriggerType value: $name"))
 }
+
+class TriggerTypeSerializer
+    extends CustomSerializer[TriggerType](_ =>
+      (
+        {
+          case JString(value) => TriggerType.withName(value)
+          case JNull          => null
+        },
+        { case value: TriggerType =>
+          JString(value.toString)
+        }
+      )
+    )

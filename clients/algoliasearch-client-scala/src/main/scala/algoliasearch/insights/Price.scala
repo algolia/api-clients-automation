@@ -39,7 +39,10 @@ object PriceSerializer extends Serializer[Price] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Price =>
+    value match {
+      case Price.DoubleValue(value) => JDouble(value)
+      case Price.StringValue(value) => JString(value)
+    }
   }
 }

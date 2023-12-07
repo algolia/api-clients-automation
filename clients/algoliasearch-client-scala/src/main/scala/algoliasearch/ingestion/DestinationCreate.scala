@@ -22,5 +22,3 @@ case class DestinationCreate(
     input: DestinationInput,
     authenticationID: Option[String] = scala.None
 )
-
-object DestinationCreateEnums {}

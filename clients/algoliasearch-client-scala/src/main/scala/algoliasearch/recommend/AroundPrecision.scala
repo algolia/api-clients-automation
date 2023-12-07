@@ -37,13 +37,17 @@ object AroundPrecisionSerializer extends Serializer[AroundPrecision] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AroundPrecision] =>
       json match {
-        case JInt(value)                  => AroundPrecision.IntValue(value.toInt)
-        case JArray(value: List[JObject]) => AroundPrecision.SeqOfAroundPrecisionFromValueInner(value.map(_.extract))
-        case _                            => throw new MappingException("Can't convert " + json + " to AroundPrecision")
+        case JInt(value) => AroundPrecision.IntValue(value.toInt)
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          AroundPrecision.SeqOfAroundPrecisionFromValueInner(value.map(_.extract))
+        case _ => throw new MappingException("Can't convert " + json + " to AroundPrecision")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AroundPrecision =>
+    value match {
+      case AroundPrecision.IntValue(value)                           => JInt(value)
+      case AroundPrecision.SeqOfAroundPrecisionFromValueInner(value) => JArray(value.map(Extraction.decompose).toList)
+    }
   }
 }

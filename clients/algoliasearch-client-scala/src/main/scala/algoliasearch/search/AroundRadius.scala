@@ -43,7 +43,10 @@ object AroundRadiusSerializer extends Serializer[AroundRadius] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AroundRadius =>
+    value match {
+      case AroundRadius.IntValue(value) => JInt(value)
+      case value: AroundRadiusAll       => JString(value.toString)
+    }
   }
 }

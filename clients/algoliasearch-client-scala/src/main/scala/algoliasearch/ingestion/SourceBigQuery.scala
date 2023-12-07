@@ -34,5 +34,3 @@ case class SourceBigQuery(
     uniqueIDColumn: Option[String] = scala.None
 ) extends SourceUpdateInputTrait
     with SourceInputTrait
-
-object SourceBigQueryEnums {}

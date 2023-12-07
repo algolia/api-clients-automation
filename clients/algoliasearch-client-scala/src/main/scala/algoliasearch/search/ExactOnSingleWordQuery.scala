@@ -11,9 +11,40 @@
   */
 package algoliasearch.search
 
-object ExactOnSingleWordQuery extends Enumeration {
-  type ExactOnSingleWordQuery = ExactOnSingleWordQuery.Value
-  val Attribute = Value("attribute")
-  val None = Value("none")
-  val Word = Value("word")
+import org.json4s._
+
+sealed trait ExactOnSingleWordQuery
+
+/** Determines how the [Exact ranking
+  * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes)
+  * is computed when the query contains only one word.
+  */
+object ExactOnSingleWordQuery {
+  case object Attribute extends ExactOnSingleWordQuery {
+    override def toString = "attribute"
+  }
+  case object None extends ExactOnSingleWordQuery {
+    override def toString = "none"
+  }
+  case object Word extends ExactOnSingleWordQuery {
+    override def toString = "word"
+  }
+  val values: Seq[ExactOnSingleWordQuery] = Seq(Attribute, None, Word)
+
+  def withName(name: String): ExactOnSingleWordQuery = ExactOnSingleWordQuery.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ExactOnSingleWordQuery value: $name"))
 }
+
+class ExactOnSingleWordQuerySerializer
+    extends CustomSerializer[ExactOnSingleWordQuery](_ =>
+      (
+        {
+          case JString(value) => ExactOnSingleWordQuery.withName(value)
+          case JNull          => null
+        },
+        { case value: ExactOnSingleWordQuery =>
+          JString(value.toString)
+        }
+      )
+    )

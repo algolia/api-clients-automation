@@ -22,5 +22,3 @@ case class BatchRequest(
     action: Action,
     body: Any
 )
-
-object BatchRequestEnums {}

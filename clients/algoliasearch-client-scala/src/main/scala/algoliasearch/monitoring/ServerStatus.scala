@@ -9,7 +9,32 @@
   */
 package algoliasearch.monitoring
 
-object ServerStatus extends Enumeration {
-  type ServerStatus = ServerStatus.Value
-  val PRODUCTION = Value("PRODUCTION")
+import org.json4s._
+
+sealed trait ServerStatus
+
+/** ServerStatus enumeration
+  */
+object ServerStatus {
+  case object PRODUCTION extends ServerStatus {
+    override def toString = "PRODUCTION"
+  }
+  val values: Seq[ServerStatus] = Seq(PRODUCTION)
+
+  def withName(name: String): ServerStatus = ServerStatus.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ServerStatus value: $name"))
 }
+
+class ServerStatusSerializer
+    extends CustomSerializer[ServerStatus](_ =>
+      (
+        {
+          case JString(value) => ServerStatus.withName(value)
+          case JNull          => null
+        },
+        { case value: ServerStatus =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -9,8 +9,35 @@
   */
 package algoliasearch.analytics
 
-object Direction extends Enumeration {
-  type Direction = Direction.Value
-  val Asc = Value("asc")
-  val Desc = Value("desc")
+import org.json4s._
+
+sealed trait Direction
+
+/** Direction enumeration
+  */
+object Direction {
+  case object Asc extends Direction {
+    override def toString = "asc"
+  }
+  case object Desc extends Direction {
+    override def toString = "desc"
+  }
+  val values: Seq[Direction] = Seq(Asc, Desc)
+
+  def withName(name: String): Direction = Direction.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Direction value: $name"))
 }
+
+class DirectionSerializer
+    extends CustomSerializer[Direction](_ =>
+      (
+        {
+          case JString(value) => Direction.withName(value)
+          case JNull          => null
+        },
+        { case value: Direction =>
+          JString(value.toString)
+        }
+      )
+    )

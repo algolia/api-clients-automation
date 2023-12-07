@@ -11,10 +11,41 @@
   */
 package algoliasearch.recommend
 
-object RecommendModels extends Enumeration {
-  type RecommendModels = RecommendModels.Value
-  val RelatedProducts = Value("related-products")
-  val BoughtTogether = Value("bought-together")
-  val TrendingFacets = Value("trending-facets")
-  val TrendingItems = Value("trending-items")
+import org.json4s._
+
+sealed trait RecommendModels
+
+/** RecommendModels enumeration
+  */
+object RecommendModels {
+  case object RelatedProducts extends RecommendModels {
+    override def toString = "related-products"
+  }
+  case object BoughtTogether extends RecommendModels {
+    override def toString = "bought-together"
+  }
+  case object TrendingFacets extends RecommendModels {
+    override def toString = "trending-facets"
+  }
+  case object TrendingItems extends RecommendModels {
+    override def toString = "trending-items"
+  }
+  val values: Seq[RecommendModels] = Seq(RelatedProducts, BoughtTogether, TrendingFacets, TrendingItems)
+
+  def withName(name: String): RecommendModels = RecommendModels.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RecommendModels value: $name"))
 }
+
+class RecommendModelsSerializer
+    extends CustomSerializer[RecommendModels](_ =>
+      (
+        {
+          case JString(value) => RecommendModels.withName(value)
+          case JNull          => null
+        },
+        { case value: RecommendModels =>
+          JString(value.toString)
+        }
+      )
+    )

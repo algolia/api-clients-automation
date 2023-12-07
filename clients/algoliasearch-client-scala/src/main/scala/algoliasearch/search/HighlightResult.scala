@@ -43,9 +43,9 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: HighlightResult =>
+    value match {
+      case value: HighlightResultOption => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object HighlightResultEnums {}

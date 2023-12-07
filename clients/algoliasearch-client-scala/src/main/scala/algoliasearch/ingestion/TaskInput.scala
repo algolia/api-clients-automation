@@ -28,7 +28,10 @@ object TaskInputSerializer extends Serializer[TaskInput] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TaskInput =>
+    value match {
+      case value: OnDemandDateUtilsInput => Extraction.decompose(value)(format - this)
+      case value: ScheduleDateUtilsInput => Extraction.decompose(value)(format - this)
+    }
   }
 }

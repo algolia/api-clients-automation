@@ -26,5 +26,3 @@ case class SourceDocker(
     version: Option[String] = scala.None,
     configuration: Any
 ) extends SourceInputTrait
-
-object SourceDockerEnums {}

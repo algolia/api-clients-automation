@@ -38,5 +38,3 @@ case class Task(
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
-
-object TaskEnums {}

@@ -59,7 +59,7 @@ object AnalyticsClient {
 
   private def hosts(region: Option[String] = None): Seq[Host] = {
     val allowedRegions = Seq("de", "us")
-    if (region.isEmpty || !allowedRegions.contains(region.get)) {
+    if (region.isDefined && !allowedRegions.contains(region.get)) {
       throw new IllegalArgumentException(s"`region` must be one of the following: ${allowedRegions.mkString(", ")}")
     }
     val url =
@@ -91,7 +91,7 @@ class AnalyticsClient(
     */
   def del[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `del`.")
@@ -99,7 +99,7 @@ class AnalyticsClient(
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -114,7 +114,7 @@ class AnalyticsClient(
     */
   def get[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `get`.")
@@ -122,7 +122,7 @@ class AnalyticsClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -831,7 +831,7 @@ class AnalyticsClient(
     */
   def post[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -840,7 +840,7 @@ class AnalyticsClient(
     val request = HttpRequest
       .builder()
       .withMethod("POST")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
@@ -858,7 +858,7 @@ class AnalyticsClient(
     */
   def put[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -867,7 +867,7 @@ class AnalyticsClient(
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()

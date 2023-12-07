@@ -36,13 +36,17 @@ object ReRankingApplyFilterSerializer extends Serializer[ReRankingApplyFilter] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[ReRankingApplyFilter] =>
       json match {
-        case JArray(value: List[JObject]) => ReRankingApplyFilter.SeqOfMixedSearchFilters(value.map(_.extract))
-        case JString(value)               => ReRankingApplyFilter.StringValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to ReRankingApplyFilter")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          ReRankingApplyFilter.SeqOfMixedSearchFilters(value.map(_.extract))
+        case JString(value) => ReRankingApplyFilter.StringValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to ReRankingApplyFilter")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ReRankingApplyFilter =>
+    value match {
+      case ReRankingApplyFilter.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case ReRankingApplyFilter.StringValue(value)             => JString(value)
+    }
   }
 }

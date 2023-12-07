@@ -11,9 +11,38 @@
   */
 package algoliasearch.search
 
-object DictionaryType extends Enumeration {
-  type DictionaryType = DictionaryType.Value
-  val Plurals = Value("plurals")
-  val Stopwords = Value("stopwords")
-  val Compounds = Value("compounds")
+import org.json4s._
+
+sealed trait DictionaryType
+
+/** DictionaryType enumeration
+  */
+object DictionaryType {
+  case object Plurals extends DictionaryType {
+    override def toString = "plurals"
+  }
+  case object Stopwords extends DictionaryType {
+    override def toString = "stopwords"
+  }
+  case object Compounds extends DictionaryType {
+    override def toString = "compounds"
+  }
+  val values: Seq[DictionaryType] = Seq(Plurals, Stopwords, Compounds)
+
+  def withName(name: String): DictionaryType = DictionaryType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DictionaryType value: $name"))
 }
+
+class DictionaryTypeSerializer
+    extends CustomSerializer[DictionaryType](_ =>
+      (
+        {
+          case JString(value) => DictionaryType.withName(value)
+          case JNull          => null
+        },
+        { case value: DictionaryType =>
+          JString(value.toString)
+        }
+      )
+    )

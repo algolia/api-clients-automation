@@ -32,7 +32,10 @@ object PromoteSerializer extends Serializer[Promote] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Promote =>
+    value match {
+      case value: PromoteObjectIDs => Extraction.decompose(value)(format - this)
+      case value: PromoteObjectID  => Extraction.decompose(value)(format - this)
+    }
   }
 }

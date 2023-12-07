@@ -14,5 +14,3 @@ import algoliasearch.ingestion.OnDemandTriggerType._
 case class OnDemandTriggerInput(
     `type`: OnDemandTriggerType
 ) extends TaskCreateTriggerTrait
-
-object OnDemandTriggerInputEnums {}

@@ -19,8 +19,6 @@ import algoliasearch.search.BuiltInOperationType._
   *   Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add` or `Remove` value.
   */
 case class BuiltInOperation(
-    operation: BuiltInOperationType,
+    _operation: BuiltInOperationType,
     value: String
 ) extends AttributeToUpdateTrait
-
-object BuiltInOperationEnums {}

@@ -18,5 +18,3 @@ case class OnDemandTrigger(
     `type`: OnDemandTriggerType,
     lastRun: Option[String] = scala.None
 ) extends TriggerTrait
-
-object OnDemandTriggerEnums {}

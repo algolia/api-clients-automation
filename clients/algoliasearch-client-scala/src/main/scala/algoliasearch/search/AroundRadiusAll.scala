@@ -11,7 +11,32 @@
   */
 package algoliasearch.search
 
-object AroundRadiusAll extends Enumeration {
-  type AroundRadiusAll = AroundRadiusAll.Value with AroundRadius
-  val All = Value("all")
+import org.json4s._
+
+sealed trait AroundRadiusAll extends AroundRadiusTrait
+
+/** AroundRadiusAll enumeration
+  */
+object AroundRadiusAll {
+  case object All extends AroundRadiusAll {
+    override def toString = "all"
+  }
+  val values: Seq[AroundRadiusAll] = Seq(All)
+
+  def withName(name: String): AroundRadiusAll = AroundRadiusAll.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown AroundRadiusAll value: $name"))
 }
+
+class AroundRadiusAllSerializer
+    extends CustomSerializer[AroundRadiusAll](_ =>
+      (
+        {
+          case JString(value) => AroundRadiusAll.withName(value)
+          case JNull          => null
+        },
+        { case value: AroundRadiusAll =>
+          JString(value.toString)
+        }
+      )
+    )

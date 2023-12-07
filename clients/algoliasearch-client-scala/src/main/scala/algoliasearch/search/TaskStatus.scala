@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object TaskStatus extends Enumeration {
-  type TaskStatus = TaskStatus.Value
-  val Published = Value("published")
-  val NotPublished = Value("notPublished")
+import org.json4s._
+
+sealed trait TaskStatus
+
+/** _published_ if the task has been processed, _notPublished_ otherwise.
+  */
+object TaskStatus {
+  case object Published extends TaskStatus {
+    override def toString = "published"
+  }
+  case object NotPublished extends TaskStatus {
+    override def toString = "notPublished"
+  }
+  val values: Seq[TaskStatus] = Seq(Published, NotPublished)
+
+  def withName(name: String): TaskStatus = TaskStatus.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown TaskStatus value: $name"))
 }
+
+class TaskStatusSerializer
+    extends CustomSerializer[TaskStatus](_ =>
+      (
+        {
+          case JString(value) => TaskStatus.withName(value)
+          case JNull          => null
+        },
+        { case value: TaskStatus =>
+          JString(value.toString)
+        }
+      )
+    )

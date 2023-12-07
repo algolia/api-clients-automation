@@ -64,9 +64,20 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: EventsItems =>
+    value match {
+      case value: ClickedObjectIDsAfterSearch     => Extraction.decompose(value)(format - this)
+      case value: ConvertedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
+      case value: ClickedObjectIDs                => Extraction.decompose(value)(format - this)
+      case value: ConvertedObjectIDs              => Extraction.decompose(value)(format - this)
+      case value: ClickedFilters                  => Extraction.decompose(value)(format - this)
+      case value: ConvertedFilters                => Extraction.decompose(value)(format - this)
+      case value: ViewedObjectIDs                 => Extraction.decompose(value)(format - this)
+      case value: ViewedFilters                   => Extraction.decompose(value)(format - this)
+      case value: AddedToCartObjectIDsAfterSearch => Extraction.decompose(value)(format - this)
+      case value: AddedToCartObjectIDs            => Extraction.decompose(value)(format - this)
+      case value: PurchasedObjectIDs              => Extraction.decompose(value)(format - this)
+      case value: PurchasedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object EventsItemsEnums {}

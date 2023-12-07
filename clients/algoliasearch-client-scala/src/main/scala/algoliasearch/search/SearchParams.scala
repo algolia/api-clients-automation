@@ -39,9 +39,10 @@ object SearchParamsSerializer extends Serializer[SearchParams] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchParams =>
+    value match {
+      case value: SearchParamsString => Extraction.decompose(value)(format - this)
+      case value: SearchParamsObject => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object SearchParamsEnums {}

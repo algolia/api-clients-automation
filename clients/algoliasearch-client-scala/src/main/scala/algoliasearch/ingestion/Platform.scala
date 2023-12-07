@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object Platform extends Enumeration {
-  type Platform = Platform.Value with PlatformWithNone
-  val Bigcommerce = Value("bigcommerce")
-  val Commercetools = Value("commercetools")
+import org.json4s._
+
+sealed trait Platform extends PlatformWithNoneTrait
+
+/** Describe which platform the Authentication is used for.
+  */
+object Platform {
+  case object Bigcommerce extends Platform {
+    override def toString = "bigcommerce"
+  }
+  case object Commercetools extends Platform {
+    override def toString = "commercetools"
+  }
+  val values: Seq[Platform] = Seq(Bigcommerce, Commercetools)
+
+  def withName(name: String): Platform = Platform.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Platform value: $name"))
 }
+
+class PlatformSerializer
+    extends CustomSerializer[Platform](_ =>
+      (
+        {
+          case JString(value) => Platform.withName(value)
+          case JNull          => null
+        },
+        { case value: Platform =>
+          JString(value.toString)
+        }
+      )
+    )

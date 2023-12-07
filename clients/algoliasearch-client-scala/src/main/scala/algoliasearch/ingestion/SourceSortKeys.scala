@@ -7,10 +7,41 @@
   */
 package algoliasearch.ingestion
 
-object SourceSortKeys extends Enumeration {
-  type SourceSortKeys = SourceSortKeys.Value
-  val Name = Value("name")
-  val `Type` = Value("type")
-  val UpdatedAt = Value("updatedAt")
-  val CreatedAt = Value("createdAt")
+import org.json4s._
+
+sealed trait SourceSortKeys
+
+/** Used to sort the Source list endpoint.
+  */
+object SourceSortKeys {
+  case object Name extends SourceSortKeys {
+    override def toString = "name"
+  }
+  case object `Type` extends SourceSortKeys {
+    override def toString = "type"
+  }
+  case object UpdatedAt extends SourceSortKeys {
+    override def toString = "updatedAt"
+  }
+  case object CreatedAt extends SourceSortKeys {
+    override def toString = "createdAt"
+  }
+  val values: Seq[SourceSortKeys] = Seq(Name, `Type`, UpdatedAt, CreatedAt)
+
+  def withName(name: String): SourceSortKeys = SourceSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SourceSortKeys value: $name"))
 }
+
+class SourceSortKeysSerializer
+    extends CustomSerializer[SourceSortKeys](_ =>
+      (
+        {
+          case JString(value) => SourceSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: SourceSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

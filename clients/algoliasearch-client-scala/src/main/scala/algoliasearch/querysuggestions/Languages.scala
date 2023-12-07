@@ -36,13 +36,16 @@ object LanguagesSerializer extends Serializer[Languages] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[Languages] =>
       json match {
-        case JArray(value: List[JString]) => Languages.SeqOfString(value.map(_.extract))
-        case JBool(value)                 => Languages.BooleanValue(value)
-        case _                            => throw new MappingException("Can't convert " + json + " to Languages")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => Languages.SeqOfString(value.map(_.extract))
+        case JBool(value)                                          => Languages.BooleanValue(value)
+        case _ => throw new MappingException("Can't convert " + json + " to Languages")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Languages =>
+    value match {
+      case Languages.SeqOfString(value)  => JArray(value.map(Extraction.decompose).toList)
+      case Languages.BooleanValue(value) => JBool(value)
+    }
   }
 }

@@ -29,5 +29,3 @@ case class Source(
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
-
-object SourceEnums {}

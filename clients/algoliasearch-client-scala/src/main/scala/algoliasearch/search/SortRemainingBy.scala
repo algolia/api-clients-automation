@@ -11,9 +11,39 @@
   */
 package algoliasearch.search
 
-object SortRemainingBy extends Enumeration {
-  type SortRemainingBy = SortRemainingBy.Value
-  val Count = Value("count")
-  val Alpha = Value("alpha")
-  val Hidden = Value("hidden")
+import org.json4s._
+
+sealed trait SortRemainingBy
+
+/** How to display the remaining items: - `count`: facet count (descending). - `alpha`: alphabetical (ascending). -
+  * `hidden`: show only pinned values.
+  */
+object SortRemainingBy {
+  case object Count extends SortRemainingBy {
+    override def toString = "count"
+  }
+  case object Alpha extends SortRemainingBy {
+    override def toString = "alpha"
+  }
+  case object Hidden extends SortRemainingBy {
+    override def toString = "hidden"
+  }
+  val values: Seq[SortRemainingBy] = Seq(Count, Alpha, Hidden)
+
+  def withName(name: String): SortRemainingBy = SortRemainingBy.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SortRemainingBy value: $name"))
 }
+
+class SortRemainingBySerializer
+    extends CustomSerializer[SortRemainingBy](_ =>
+      (
+        {
+          case JString(value) => SortRemainingBy.withName(value)
+          case JNull          => null
+        },
+        { case value: SortRemainingBy =>
+          JString(value.toString)
+        }
+      )
+    )

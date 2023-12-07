@@ -21,5 +21,3 @@ case class AuthenticationUpdate(
     platform: Option[Platform] = scala.None,
     input: Option[AuthInputPartial] = scala.None
 )
-
-object AuthenticationUpdateEnums {}

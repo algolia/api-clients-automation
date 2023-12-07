@@ -10,16 +10,15 @@
 package algoliasearch.monitoring
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(Metric) :+
-    new EnumNameSerializer(ModelType) :+
-    new EnumNameSerializer(Period) :+
-    new EnumNameSerializer(Region) :+
-    new EnumNameSerializer(ServerStatus) :+
-    new EnumNameSerializer(Status)
+    new MetricSerializer() :+
+    new ModelTypeSerializer() :+
+    new PeriodSerializer() :+
+    new RegionSerializer() :+
+    new ServerStatusSerializer() :+
+    new StatusSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]()
 

@@ -33,5 +33,3 @@ case class TrendingFacetsQuery(
     threshold: Option[Int] = scala.None,
     maxRecommendations: Option[Int] = scala.None
 ) extends RecommendationsRequestTrait
-
-object TrendingFacetsQueryEnums {}

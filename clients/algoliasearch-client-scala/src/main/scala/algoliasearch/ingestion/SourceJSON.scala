@@ -22,5 +22,3 @@ case class SourceJSON(
     method: Option[MethodType] = scala.None
 ) extends SourceUpdateInputTrait
     with SourceInputTrait
-
-object SourceJSONEnums {}

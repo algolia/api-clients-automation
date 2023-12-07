@@ -11,7 +11,8 @@
   */
 package algoliasearch.recommend
 
-import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 
 /** Recommend hit.
   *
@@ -31,7 +32,7 @@ case class RecommendHit(
     rankingInfo: Option[RankingInfo] = scala.None,
     distinctSeqID: Option[Int] = scala.None,
     score: Double,
-    additionalProperties: Map[String, JValue] = Map.empty
+    additionalProperties: Option[List[JField]] = None
 )
 
 class RecommendHitSerializer extends Serializer[RecommendHit] {
@@ -43,17 +44,25 @@ class RecommendHitSerializer extends Serializer[RecommendHit] {
           val formats = format - this
           val mf = manifest[RecommendHit]
           val obj = Extraction.extract[RecommendHit](jobject)(formats, mf)
-          val properties =
-            jobject.obj.toMap - "objectID" - "highlightResult" - "snippetResult" - "rankingInfo" - "distinctSeqID" - "score"
-          obj.copy(additionalProperties = properties)
+
+          val fields = Set("objectID", "highlightResult", "snippetResult", "rankingInfo", "distinctSeqID", "score")
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties.values match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as RecommendHit")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: RecommendHit =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(
-      value.additionalProperties
-    )(formats)
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
   }
 }

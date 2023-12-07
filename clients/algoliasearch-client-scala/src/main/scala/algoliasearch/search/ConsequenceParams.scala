@@ -289,5 +289,3 @@ case class ConsequenceParams(
     automaticFacetFilters: Option[AutomaticFacetFilters] = scala.None,
     automaticOptionalFacetFilters: Option[AutomaticFacetFilters] = scala.None
 )
-
-object ConsequenceParamsEnums {}

@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object RunType extends Enumeration {
-  type RunType = RunType.Value
-  val Reindex = Value("reindex")
-  val Update = Value("update")
-  val Discover = Value("discover")
+import org.json4s._
+
+sealed trait RunType
+
+/** RunType enumeration
+  */
+object RunType {
+  case object Reindex extends RunType {
+    override def toString = "reindex"
+  }
+  case object Update extends RunType {
+    override def toString = "update"
+  }
+  case object Discover extends RunType {
+    override def toString = "discover"
+  }
+  val values: Seq[RunType] = Seq(Reindex, Update, Discover)
+
+  def withName(name: String): RunType = RunType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RunType value: $name"))
 }
+
+class RunTypeSerializer
+    extends CustomSerializer[RunType](_ =>
+      (
+        {
+          case JString(value) => RunType.withName(value)
+          case JNull          => null
+        },
+        { case value: RunType =>
+          JString(value.toString)
+        }
+      )
+    )

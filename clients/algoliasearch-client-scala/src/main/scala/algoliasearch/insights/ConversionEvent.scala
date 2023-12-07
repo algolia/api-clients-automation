@@ -9,7 +9,32 @@
   */
 package algoliasearch.insights
 
-object ConversionEvent extends Enumeration {
-  type ConversionEvent = ConversionEvent.Value
-  val Conversion = Value("conversion")
+import org.json4s._
+
+sealed trait ConversionEvent
+
+/** ConversionEvent enumeration
+  */
+object ConversionEvent {
+  case object Conversion extends ConversionEvent {
+    override def toString = "conversion"
+  }
+  val values: Seq[ConversionEvent] = Seq(Conversion)
+
+  def withName(name: String): ConversionEvent = ConversionEvent.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ConversionEvent value: $name"))
 }
+
+class ConversionEventSerializer
+    extends CustomSerializer[ConversionEvent](_ =>
+      (
+        {
+          case JString(value) => ConversionEvent.withName(value)
+          case JNull          => null
+        },
+        { case value: ConversionEvent =>
+          JString(value.toString)
+        }
+      )
+    )

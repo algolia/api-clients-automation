@@ -12,7 +12,8 @@
 package algoliasearch.search
 
 import org.json4s.JObject
-import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 
 /** SearchHits
   *
@@ -25,7 +26,7 @@ case class SearchHits(
     hits: Seq[JObject],
     query: String,
     params: String,
-    additionalProperties: Map[String, JValue] = Map.empty
+    additionalProperties: Option[List[JField]] = None
 )
 
 class SearchHitsSerializer extends Serializer[SearchHits] {
@@ -37,16 +38,25 @@ class SearchHitsSerializer extends Serializer[SearchHits] {
           val formats = format - this
           val mf = manifest[SearchHits]
           val obj = Extraction.extract[SearchHits](jobject)(formats, mf)
-          val properties = jobject.obj.toMap - "hits" - "query" - "params"
-          obj.copy(additionalProperties = properties)
+
+          val fields = Set("hits", "query", "params")
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties.values match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as SearchHits")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchHits =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(
-      value.additionalProperties
-    )(formats)
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
   }
 }
