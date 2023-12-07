@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,7 @@ public class DartCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Utils.getClientConfigField("dart", "packageVersion"));
+    bundle.put("packageVersion", Helpers.getClientConfigField("dart", "packageVersion"));
     if (clientName.equals("algoliasearch")) {
       bundle.put("import", "package:algoliasearch/algoliasearch_lite.dart");
       bundle.put("client", "SearchClient");

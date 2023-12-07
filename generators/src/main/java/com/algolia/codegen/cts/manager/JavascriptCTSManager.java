@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
@@ -21,12 +21,12 @@ public class JavascriptCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    String npmNamespace = Utils.getClientConfigField("javascript", "npmNamespace");
+    String npmNamespace = Helpers.getClientConfigField("javascript", "npmNamespace");
 
-    bundle.put("utilsPackageVersion", Utils.getPackageJsonVersion("client-common"));
+    bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
     bundle.put("npmNamespace", npmNamespace);
 
-    JsonNode openApiToolsConfig = Utils.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
+    JsonNode openApiToolsConfig = Helpers.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
     Iterator<Map.Entry<String, JsonNode>> fields = openApiToolsConfig.fields();
     List<Map<String, String>> clients = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.CodegenConstants;
@@ -22,12 +23,12 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     CLIENT = (String) additionalProperties.get("client");
 
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("python", "packageVersion"));
+    additionalProperties.put("packageVersion", Helpers.getClientConfigField("python", "packageVersion"));
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
-    setApiNameSuffix(Utils.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
 
-    String packageName = Utils.toSnakeCase(CLIENT);
+    String packageName = Helpers.toSnakeCase(CLIENT);
     setPackageName(packageName);
     setApiPackage("");
     setModelPackage("models");
@@ -35,7 +36,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     super.processOpts();
 
     // // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent all useless file to generate
     apiDocTemplateFiles.clear();
@@ -80,7 +81,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     supportingFiles.add(new SupportingFile("config.mustache", packageName, "config.py"));
 
     try {
-      Utils.generateServer(CLIENT, additionalProperties);
+      Helpers.generateServer(CLIENT, additionalProperties);
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
