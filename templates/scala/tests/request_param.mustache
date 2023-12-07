@@ -1,0 +1,1 @@
+{{^isAdditionalProperty}}{{#lambda.scalaIdentifier}}{{&key}}{{/lambda.scalaIdentifier}} = {{> param_optional}}{{/isAdditionalProperty}}{{#isAdditionalProperty}}additionalProperties = Some(List(JField("{{key}}", {{> param_json_element}}))){{/isAdditionalProperty}}

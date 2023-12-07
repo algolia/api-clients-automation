@@ -37,12 +37,9 @@ lazy val root = project
 
 // Project dependencies
 libraryDependencies ++= Seq(
-  "com.squareup.okhttp3" % "okhttp" % "4.11.0" % "provided",
+  "com.squareup.okhttp3" % "okhttp" % "4.11.0" % "compile",
+  "org.json4s" %% "json4s-native" % "4.0.6" % "compile",
   "com.squareup.okhttp3" % "logging-interceptor" % "4.11.0",
-  "org.json4s" %% "json4s-ast" % "4.0.6",
-  "org.json4s" %% "json4s-core" % "4.0.6",
-  "org.json4s" %% "json4s-native" % "4.0.6",
-  "org.json4s" %% "json4s-ext" % "4.0.6",
   "org.slf4j" % "slf4j-api" % "2.0.5"
 )
 

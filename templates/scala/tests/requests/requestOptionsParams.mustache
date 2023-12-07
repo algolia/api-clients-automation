@@ -1,0 +1,21 @@
+{{#isNull}}
+  null
+{{/isNull}}
+{{#isString}}
+  "{{{value}}}"
+{{/isString}}
+{{#isInteger}}
+  {{{value}}}
+{{/isInteger}}
+{{#isLong}}
+  {{{value}}}L
+{{/isLong}}
+{{#isDouble}}
+  {{{value}}}
+{{/isDouble}}
+{{#isBoolean}}
+  {{{value}}}
+{{/isBoolean}}
+{{#isArray}}
+  Seq({{#value}}{{> requests/requestOptionsParams}}{{^-last}},{{/-last}}{{/value}})
+{{/isArray}}

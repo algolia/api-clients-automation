@@ -41,7 +41,7 @@ async function runCtsOne(language: string): Promise<void> {
       spinner.warn(`CTS not yet implemented for Ruby`);
       return;
     case 'scala':
-      spinner.warn(`CTS not yet implemented for Scala`);
+      await run('sbt test', { cwd: 'tests/output/scala' });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

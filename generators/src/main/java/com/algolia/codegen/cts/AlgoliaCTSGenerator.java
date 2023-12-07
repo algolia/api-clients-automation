@@ -87,6 +87,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeQuotes", new EscapeQuotesLambda());
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
+    lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
     return lambdas;
   }
 
@@ -99,17 +100,25 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
       CodegenServerVariable regionVariable = null;
       outerLoop:for (CodegenServer server : servers) {
-        for (CodegenServerVariable var : server.variables) {
-          if (var.name.equals("region")) {
-            regionVariable = var;
+        for (CodegenServerVariable variable : server.variables) {
+          if (variable.name.equals("region")) {
+            regionVariable = variable;
             break outerLoop;
           }
         }
       }
+
       boolean hasRegionalHost = regionVariable != null;
 
       Map<String, Object> bundle = objs;
       bundle.clear();
+
+      for (CodegenServer server : servers) {
+        if (server.variables.isEmpty()) {
+          bundle.put("fallbackToAliasHost", server.url);
+          break;
+        }
+      }
 
       // This only exists for the `javascript-algoliasearch` combo, because the `lite` client is
       // nested inside `algoliasearch`.

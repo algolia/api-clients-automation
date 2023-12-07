@@ -13,7 +13,7 @@ class EchoInterceptor(private val httpCode: Int = 200) extends Interceptor {
   def intercept(chain: Chain): Response = {
     val request = chain.request
     try {
-      val useReadTransporter = request.tag.asInstanceOf[Nothing]
+      val useReadTransporter = request.tag
 
       val echo = EchoResponse(
         path = request.url.encodedPath,

@@ -80,6 +80,9 @@ public class TestsRequest extends TestsGenerator {
         try {
           CodegenOperation ope = entry.getValue();
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+          if (Utils.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
+            test.put("isCustomRequest", true);
+          }
 
           // We check on the spec if body parameters should be present in the CTS
           // If so, we change the `null` default to an empty object, so we know if

@@ -1,21 +1,18 @@
 package com.algolia.codegen.cts.tests;
 
 import com.algolia.codegen.Utils;
-import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.exceptions.CTSException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
-import org.openapitools.codegen.CodegenComposedSchemas;
-import org.openapitools.codegen.CodegenModel;
-import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenParameter;
-import org.openapitools.codegen.CodegenProperty;
-import org.openapitools.codegen.CodegenResponse;
-import org.openapitools.codegen.IJsonSchemaValidationProperties;
+import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
 public class ParametersWithDataType {
@@ -37,9 +34,6 @@ public class ParametersWithDataType {
    * @param parameters The object to traverse and annotate with type
    * @param bundle The output object
    * @param operation (optional) The model in which to look for spec
-   * @param spec (optional) (mutually exclusive with operation) If the parameter is a root param,
-   *     the spec must be provided, alongside it's paramName
-   * @param paramName (optional) (required if spec) the parameter name
    */
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
     throws CTSException, JsonMappingException, JsonProcessingException {
@@ -108,6 +102,14 @@ public class ParametersWithDataType {
 
     boolean isCodegenModel = spec instanceof CodegenModel;
 
+    Map<String, Object> testOutput = createDefaultOutput();
+
+    if (spec instanceof CodegenParameter parameter) {
+      testOutput.put("isOptional", !parameter.required);
+    } else if (spec instanceof CodegenProperty property) {
+      testOutput.put("isOptional", !property.required);
+    }
+
     if (!isCodegenModel) {
       // don't overwrite it if it's already a model sometimes it's in lowercase for some reason
       String lowerBaseType = baseType.substring(0, 1).toLowerCase() + baseType.substring(1);
@@ -131,7 +133,6 @@ public class ParametersWithDataType {
       finalParamName = "type_";
     }
 
-    Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
@@ -277,7 +278,6 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
-      testOutput.clear();
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();

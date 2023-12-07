@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.ScalaSttpClientCodegen;
@@ -19,6 +20,28 @@ import org.openapitools.codegen.model.OperationsMap;
 public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   final Logger logger = Logger.getLogger(AlgoliaScalaGenerator.class.getName());
+
+  // This is used for the CTS generation
+  private static final AlgoliaScalaGenerator INSTANCE = new AlgoliaScalaGenerator();
+
+  /** Convert a text to a valid scala identifier. */
+  public static String formatIdentifier(String text) {
+    if (NAME_MAPPING.containsKey(text)) return NAME_MAPPING.get(text);
+    return INSTANCE.formatIdentifier(text, false);
+  }
+
+  /**
+   * Custom mapping for field names This a workaround; a better solution would be to use json4s'
+   * FieldSerializer for all fields with special cases.
+   */
+  static final Map<String, String> NAME_MAPPING = Map.of(
+    "_operation",
+    "_operation",
+    "client_id",
+    "client_id",
+    "client_secret",
+    "client_secret"
+  );
 
   @Override
   public String getName() {
@@ -33,6 +56,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     additionalProperties.put(CodegenConstants.API_PACKAGE, "algoliasearch.api");
     additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, "algoliasearch");
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    additionalProperties.put("lambda.escape-path", (Mustache.Lambda) (fragment, writer) -> writer.write(escapePath(fragment.execute())));
     super.processOpts();
     setApiNameSuffix(Utils.API_SUFFIX);
     Utils.setGenerationBanner(additionalProperties);
@@ -48,8 +72,9 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     supportingFiles.add(new SupportingFile("version.mustache", "", "version.sbt"));
     supportingFiles.add(new SupportingFile("jsonSupport.mustache", modelFolder, "JsonSupport.scala"));
     additionalProperties.put("isSearchClient", client.equals("search"));
-
     typeMapping.put("AnyType", "Any");
+
+    nameMapping.putAll(NAME_MAPPING);
 
     try {
       Utils.generateServer(client, additionalProperties);
@@ -68,16 +93,27 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     CodegenOperation ope = super.fromOperation(path, httpMethod, operation, servers);
-    ope.path = encodedPath(path); // override "path" to fix incorrectly skipped paths
     return Utils.specifyCustomRequest(ope);
   }
 
-  private String encodedPath(String path) {
+  @Override
+  public String encodePath(String input) {
+    StringBuffer buf = new StringBuffer(input.length());
+    Matcher matcher = Pattern.compile("[{](.*?)[}]").matcher(input);
+    while (matcher.find()) {
+      matcher.appendReplacement(buf, "\\${" + toParamName(matcher.group(0)) + "}");
+    }
+    matcher.appendTail(buf);
+    return buf.toString();
+  }
+
+  /** Escape path variables in the path. */
+  private String escapePath(String path) {
     var sanitized = path.replaceAll("\"", "%22");
     var buf = new StringBuilder(sanitized.length());
     var matcher = Pattern.compile("[{](.*?)[}]").matcher(sanitized);
     while (matcher.find()) {
-      matcher.appendReplacement(buf, "\\${escape(" + toParamName(matcher.group(0)) + ")}");
+      matcher.appendReplacement(buf, "{escape(" + toParamName(matcher.group(0)) + ")}");
     }
     matcher.appendTail(buf);
     return buf.toString();

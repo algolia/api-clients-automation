@@ -40,39 +40,63 @@ object HttpRequest {
     private val queryParameters: mutable.Map[String, String] = mutable.Map()
     private var body: Option[Any] = None
 
-    def withMethod(method: String) = {
+    def withMethod(method: String): Builder = {
       this.method = method
       this
     }
 
-    def withPath(path: String) = {
+    def withPath(path: String): Builder = {
       this.path = path
       this
     }
 
-    def withRead(read: Boolean) = {
+    def withPathEncoded(path: String): Builder = {
+      this.path = path
+      this
+    }
+
+    def withRead(read: Boolean): Builder = {
       this.read = read
       this
     }
 
-    def withQueryParameter(key: String, value: Any) = {
+    def withQueryParameter(key: String, value: Any): Builder = {
       this.queryParameters += key -> paramToString(value)
       this
     }
 
-    def withQueryParameters(queryParameters: Map[String, Any]) = {
+    def withQueryParameter(key: String, value: Option[Any]): Builder = {
+      value match {
+        case Some(param) => withQueryParameter(key, param)
+        case None        => this
+      }
+    }
+
+    def withQueryParameters(queryParameters: Option[Map[String, Any]]): Builder = {
+      queryParameters match {
+        case Some(parameters) => withQueryParameters(parameters)
+        case None             => this
+      }
+    }
+
+    def withQueryParameters(queryParameters: Map[String, Any]): Builder = {
       for ((key, value) <- queryParameters)
         withQueryParameter(key, value)
       this
     }
 
-    def withBody(body: Any) = {
+    def withBody(body: Any): Builder = {
       this.body = Some(body)
       this
     }
 
+    def withBody(body: Option[Any]): Builder = {
+      this.body = body
+      this
+    }
+
     def withHeader(key: String, value: Any): HttpRequest.Builder = {
-      this.headers += key -> paramToString(value)
+      this.headers += key.toLowerCase -> paramToString(value)
       this
     }
 
@@ -82,7 +106,7 @@ object HttpRequest {
       this
     }
 
-    def build() =
+    def build(): HttpRequest =
       HttpRequest(
         method,
         path,
