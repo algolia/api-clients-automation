@@ -9,7 +9,7 @@ import {
   getTestOutputFolder,
 } from '../../config.js';
 
-import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
+import { getVersionFileForLanguage, COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, Matrix, SpecMatrix, ToRunMatrix } from './types.js';
 import { computeCacheKey, isBaseChanged } from './utils.js';
 
@@ -22,8 +22,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    const isJavaScript = language === 'javascript';
-    const bundledSpec = isJavaScript && client === 'algoliasearch' ? 'search' : client;
+    const bundledSpec = client === 'algoliasearch' ? 'search' : client;
 
     if (!commonDependenciesChanged) {
       const key = `${language.toUpperCase()}_CLIENT_CHANGED`;
@@ -32,7 +31,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       };
 
       // only JS have other dependencies for its utils packages
-      if (isJavaScript) {
+      if (language === 'javascript') {
         languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
       }
 
@@ -59,7 +58,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         'tests/CTS',
         `templates/${language}`,
         'generators/src',
-        isJavaScript ? '.nvmrc' : `config/.${language}-version`,
+        getVersionFileForLanguage(language),
       ];
 
       for (const [, dependency] of Object.entries(COMMON_DEPENDENCIES)) {

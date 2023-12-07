@@ -3,6 +3,7 @@ import * as core from '@actions/core';
 
 import { CLIENTS_JS_UTILS, LANGUAGES, capitalize } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
+import type { Language } from '../../types.js';
 
 import { isBaseChanged } from './utils.js';
 
@@ -20,6 +21,20 @@ export const COMMON_DEPENDENCIES = {
   ],
   COMMON_SPECS_CHANGED: ['specs/common'],
 };
+
+export function getVersionFileForLanguage(lang: Language): string {
+  // js rely on the nvmrc of the repo
+  if (lang === 'javascript') {
+    return '.nvmrc';
+  }
+
+  // jvm lang rely on the same java version
+  if (lang === 'kotlin' || lang === 'java' || lang === 'scala') {
+    return 'config/.java-version';
+  }
+
+  return `config/.${lang}-version`;
+}
 
 /**
  * This dependency array is generated to match the "external" dependencies of a generated client.
@@ -51,7 +66,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
         langFolder,
         `templates/${lang}`,
         `generators/src/main/java/com/algolia/codegen/Algolia${langGenerator}Generator.java`,
-        `config/.${lang}-version`,
+        getVersionFileForLanguage(lang),
         `:!${langFolder}/.github`,
         `:!${langFolder}/README.md`,
       ],
