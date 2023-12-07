@@ -80,6 +80,7 @@ export const patterns = [
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
+  'clients/algoliasearch-client-python/algoliasearch/http/__init__.py',
   '!clients/algoliasearch-client-python/*',
   'clients/algoliasearch-client-python/pyproject.toml',
   'clients/algoliasearch-client-python/poetry.lock',

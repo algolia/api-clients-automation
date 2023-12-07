@@ -1,7 +1,6 @@
 from asyncio import run
 
-from algoliasearch.insights import __version__
-from algoliasearch.insights.client import InsightsClient
+from algoliasearch.insights import __version__, InsightsClient
 
 
 async def main():

@@ -1,0 +1,12 @@
+{{>partial_header}}
+
+{{>version}}
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+from .config import Config
+from .client import {{classname}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}

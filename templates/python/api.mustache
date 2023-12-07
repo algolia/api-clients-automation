@@ -1,20 +1,7 @@
 {{>partial_header}}
-import io
-import json
-import re
-import warnings
-from pydantic import StrictFloat, StrictInt
-from typing import Tuple, List
-{{#imports}}
-{{import}}
-{{/imports}}
-from algoliasearch.{{packageName}}.api_client import ApiClient
-from algoliasearch.{{packageName}}.config import Config
+{{>imports}}
 
-from algoliasearch.http.api_response import ApiResponse
-from algoliasearch.http.transporter import Transporter
-from algoliasearch.http.verb import Verb
-from algoliasearch.http.request_options import RequestOptions
+from algoliasearch.{{packageName}}.models import ({{#operations}}{{#operation}}{{#imports}}{{{.}}},{{/imports}}{{/operation}}{{/operations}})
 
 try:
     from typing import Self
@@ -64,11 +51,11 @@ class {{classname}}:
 
         if isinstance(klass, str):
             if klass.startswith("List["):
-                sub_kls = re.match(r"List\[(.*)]", klass).group(1)
+                sub_kls = match(r"List\[(.*)]", klass).group(1)
                 return [self.__deserialize(sub_data, sub_kls) for sub_data in data]
 
             if klass.startswith("Dict["):
-                sub_kls = re.match(r"Dict\[([^,]*), (.*)]", klass).group(2)
+                sub_kls = match(r"Dict\[([^,]*), (.*)]", klass).group(2)
                 return {k: self.__deserialize(v, sub_kls) for k, v in data.items()}
 
             if klass in self.NATIVE_TYPES_MAPPING:
@@ -84,7 +71,7 @@ class {{classname}}:
         elif klass == object:
             return data
         else:
-            return klass.from_dict(data)
+            return klass.from_json(data)
 
     {{#operation}}
 
@@ -169,17 +156,6 @@ class {{classname}}:
 
         response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
-        {{^returnType}}
-        return None
-        {{/returnType}}
-
-        {{#returnType}}
-        try:
-            data = json.loads(response.raw_data)
-        except ValueError:
-            data = response.raw_data
-
-        return self.__deserialize(data, {{{returnType}}})
-        {{/returnType}}
+        return {{^returnType}}None{{/returnType}}{{#returnType}}self.__deserialize(response.raw_data, {{{returnType}}}){{/returnType}}
 {{/operation}}
 {{/operations}}

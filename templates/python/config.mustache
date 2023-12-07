@@ -1,9 +1,13 @@
 from os import environ
 from typing import Optional
 
-from algoliasearch.http.exceptions import AlgoliaException
-from algoliasearch.http.hosts import CallType, Host, HostsCollection
+from algoliasearch.http.hosts import (
+  CallType,
+  Host,
+  HostsCollection,
+)
 from algoliasearch.http.user_agent import UserAgent
+from algoliasearch.http.exceptions import AlgoliaException
 
 
 class Config:
@@ -47,16 +51,11 @@ class Config:
 
         {{#hasRegionalHost}}
         _regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
-        _region = {{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} region
 
-        if {{^fallbackToAliasHost}}_region == "" or {{/fallbackToAliasHost}}(_region and _region not in _regions):
+        if {{^fallbackToAliasHost}}not region or {{/fallbackToAliasHost}}(region is not None and region not in _regions):
             raise AlgoliaException(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
 
-        self.hosts = HostsCollection(
-            [
-                Host("{{{regionalHost}}}".replace("{region}", _region))
-            ]
-        )
+        self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region))])
         {{/hasRegionalHost}}
 
         {{^hasRegionalHost}}
