@@ -4,10 +4,10 @@ using Algolia.Search.Clients;
 
 Console.WriteLine("Hello, World!");
 
-var searchClient = new SearchClient("myApp", "myKey");
+var searchClient = new SearchClient("NIOXZRNMTV", "XXX");
 
-var index = searchClient.InitIndex("test");
+var index = searchClient.InitIndex("test-csharp-legacy-client");
 
-var ruleAsync = await index.GetRuleAsync("");
+var saved = await index.SaveObjectAsync(new { ObjectID = "test", value = "test" });
 
-ruleAsync.Consequence.Params.AutomaticFacetFilters.First().Facet = "test";
+Console.WriteLine(saved);

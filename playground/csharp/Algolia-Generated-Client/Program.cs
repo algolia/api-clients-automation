@@ -1,14 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Algolia.Search.Search.Api;
-using Algolia.Search.Search.Client;
 
-Console.WriteLine("Algolia Search Client Playground for C#");
+Console.WriteLine("Hello, World!");
 
-var searchClient = new SearchClient("NIOXZRNMTV", "6af80f5e321fb3de2a848ff74ba81546");
+var searchClient = new SearchClient("NIOXZRNMTV", "XXX");
 
-var resp = await searchClient.AddOrUpdateObjectAsync("playground-csharp", "myobjectid", new { name = "John Doe" });
 
-var ruleAsync = await searchClient.GetRuleAsync("ddd", "ddd");
+var saved = await searchClient.SaveObjectAsync("test-csharp-new-client",new { ObjectID = "test", value = "test" });
 
-ruleAsync.Consequence.VarParams.AutomaticFacetFilters.GetterListString();
+Console.WriteLine(saved);

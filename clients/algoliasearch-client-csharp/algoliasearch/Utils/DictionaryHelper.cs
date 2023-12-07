@@ -53,8 +53,9 @@ namespace Algolia.Search.Utils
         return a;
       }
 
-      return a?.Concat(b.Where(kvp => !a.ContainsKey(kvp.Key) && kvp.Value != null))
-          .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+      var mergeWith = a?.Concat(b.Where(kvp => !a.ContainsKey(kvp.Key) && kvp.Value != null))
+        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+      return mergeWith;
     }
   }
 }

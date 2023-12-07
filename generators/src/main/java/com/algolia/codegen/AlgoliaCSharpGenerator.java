@@ -25,8 +25,9 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
-    additionalProperties.put("targetFramework", "netstandard2.0");
+    additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("validatable", false);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     setApiNameSuffix(Utils.API_SUFFIX);
@@ -63,13 +64,27 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("IAsynchronousClient.mustache") ||
       file.getTemplateFile().equals("FileParameter.mustache") ||
       file.getTemplateFile().equals("RetryConfiguration.mustache") ||
+      file.getTemplateFile().equals("ApiClient.mustache") ||
+      file.getTemplateFile().equals("OpenAPIDateConverter.mustache") ||
+      file.getTemplateFile().equals("ExceptionFactory.mustache") ||
+      file.getTemplateFile().equals("ISynchronousClient.mustache") ||
+      file.getTemplateFile().equals("ReadOnlyDictionary.mustache") ||
+      file.getTemplateFile().equals("WebRequestPathBuilder.mustache") ||
+      file.getTemplateFile().equals("RequestOptions.mustache") ||
+      file.getTemplateFile().equals("AbstractOpenAPISchema.mustache") ||
+      file.getTemplateFile().equals("ApiResponse.mustache") ||
+      file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
+      file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
+      file.getTemplateFile().equals("ClientUtils.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
 
     // repository
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
-    supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
+    supportingFiles.add(new SupportingFile("RequestOptions.mustache", "Http", "RequestOptions.cs"));
+    supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
+    supportingFiles.add(new SupportingFile("ClientUtils.mustache", "Client", "ClientUtils.cs"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
 
     try {

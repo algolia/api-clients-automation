@@ -29,7 +29,8 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Body of the request
     /// </summary>
-    public Stream Body { get; set; }
+    public string Body { get; set; }
+    // public Stream Body { get; set; }
 
     /// <summary>
     /// Compression type of the request <see cref="CompressionType"/>

@@ -70,11 +70,12 @@ namespace Algolia.Search.Http
       {
         Method = request.Method,
         RequestUri = request.Uri,
-        Content = request.Body != null ? new StreamContent(request.Body) : null
+        Content = request.Body != null ? new StringContent(request.Body) : null
       };
 
       if (request.Body != null)
       {
+        httpRequestMessage.Content.Headers.Clear();
         httpRequestMessage.Content.Headers.Fill(request);
       }
 

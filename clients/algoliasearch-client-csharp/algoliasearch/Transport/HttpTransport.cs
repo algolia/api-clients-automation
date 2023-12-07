@@ -44,7 +44,7 @@ namespace Algolia.Search.Transport
   internal class HttpTransport
   {
     private readonly IHttpRequester _httpClient;
-    private readonly ISerializer _serializer;
+    private readonly CustomJsonCodec _serializer;
     private readonly RetryStrategy _retryStrategy;
     private readonly AlgoliaConfig _algoliaConfig;
     private string errorMessage;
@@ -58,7 +58,11 @@ namespace Algolia.Search.Transport
     {
       _algoliaConfig = config ?? throw new ArgumentNullException(nameof(config));
       _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-      _serializer = new DefaultSerializer();
+      //_serializer = new DefaultSerializer();
+      _serializer = new CustomJsonCodec(JsonConfig.AlgoliaJsonSerializerSettings);
+
+
+
       _retryStrategy = new RetryStrategy(config);
     }
 
@@ -75,7 +79,7 @@ namespace Algolia.Search.Transport
         RequestOptions requestOptions = null,
         CancellationToken ct = default)
         where TResult : class =>
-        await ExecuteRequestAsync<TResult, string>(method, uri, callType, requestOptions: requestOptions, ct: ct)
+        await ExecuteRequestAsync<TResult, object>(method, uri, callType, requestOptions, ct)
             .ConfigureAwait(false);
 
     /// <summary>
@@ -89,8 +93,7 @@ namespace Algolia.Search.Transport
     /// <param name="data">Your data</param>
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
-    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri, CallType callType,
-        TData data = default, RequestOptions requestOptions = null,
+    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri, CallType callType, RequestOptions requestOptions = null,
         CancellationToken ct = default)
         where TResult : class
         where TData : class
@@ -114,9 +117,9 @@ namespace Algolia.Search.Transport
 
       foreach (var host in _retryStrategy.GetTryableHost(callType))
       {
-        request.Body = CreateRequestContent(data, request.CanCompress);
-        request.Uri = BuildUri(host.Url, uri, requestOptions?.QueryParameters);
-        int requestTimeout = (requestOptions?.Timeout ?? GetTimeOut(callType)) * (host.RetryCount + 1);
+        request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress);
+        request.Uri = BuildUri(host.Url, uri, requestOptions?.PathParameters, requestOptions?.QueryParameters);
+        var requestTimeout = (requestOptions?.Timeout ?? GetTimeOut(callType)) * (host.RetryCount + 1);
 
         AlgoliaHttpResponse response = await _httpClient
             .SendRequestAsync(request, requestTimeout, ct)
@@ -127,7 +130,7 @@ namespace Algolia.Search.Transport
         switch (_retryStrategy.Decide(host, response))
         {
           case RetryOutcomeType.Success:
-            return _serializer.Deserialize<TResult>(response.Body);
+            return await _serializer.Deserialize<TResult>(response.Body);
           case RetryOutcomeType.Retry:
             continue;
           case RetryOutcomeType.Failure:
@@ -145,18 +148,18 @@ namespace Algolia.Search.Transport
     /// <param name="compress">Whether the stream should be compressed or not</param>
     /// <typeparam name="T">Type of the data to send/retrieve</typeparam>
     /// <returns></returns>
-    private MemoryStream CreateRequestContent<T>(T data, bool compress)
+    private string CreateRequestContent<T>(T data, bool compress)
     {
       if (data == null)
         return null;
 
-      MemoryStream ms = new MemoryStream();
+      // MemoryStream ms = new MemoryStream();
 
-      CompressionType compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
-      _serializer.Serialize(data, ms, compressionType);
+      // CompressionType compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
+      return _serializer.Serialize(data);
 
-      ms.Seek(0, SeekOrigin.Begin);
-      return ms;
+      // ms.Seek(0, SeekOrigin.Begin);
+      // return ms;
     }
 
     /// <summary>
@@ -176,17 +179,27 @@ namespace Algolia.Search.Transport
     /// </summary>
     /// <param name="url"></param>
     /// <param name="baseUri"></param>
+    /// <param name="pathParameters"></param>
     /// <param name="optionalQueryParameters"></param>
     /// <returns></returns>
-    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> optionalQueryParameters = null)
+    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> pathParameters = null, Dictionary<string, string> optionalQueryParameters = null)
     {
+      var path = $"{baseUri}";
+      if (pathParameters != null)
+      {
+        foreach (var parameter in pathParameters)
+        {
+          path = path.Replace("{" + parameter.Key + "}", Uri.EscapeDataString(parameter.Value));
+        }
+      }
+
       if (optionalQueryParameters != null)
       {
         var queryParams = optionalQueryParameters.ToQueryString();
-        return new UriBuilder { Scheme = "https", Host = url, Path = $"{baseUri}", Query = queryParams }.Uri;
+        return new UriBuilder { Scheme = "https", Host = url, Path = path, Query = queryParams }.Uri;
       }
 
-      return new UriBuilder { Scheme = "https", Host = url, Path = baseUri }.Uri;
+      return new UriBuilder { Scheme = "https", Host = url, Path = path }.Uri;
     }
 
     /// <summary>

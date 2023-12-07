@@ -33,12 +33,13 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
+        /// <param name="options">Add extra http header or query parameters to Algolia.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of {{#returnType}} ({{.}}){{/returnType}}</returns>
+        /// <returns>Task of {{#returnType}}{{.}}{{/returnType}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        {{#returnType}}System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+        {{#returnType}}Task<{{{.}}}>{{/returnType}}{{^returnType}}Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -110,12 +111,13 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
+        /// <param name="options">Add extra http header or query parameters to Algolia.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of {{#returnType}} ({{.}}){{/returnType}}</returns>
+        /// <returns>Task of {{#returnType}}{{.}}{{/returnType}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        {{#returnType}}public async System.Threading.Tasks.Task<{{{.}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+        {{#returnType}}public async Task<{{{.}}}>{{/returnType}}{{^returnType}}public async Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}
@@ -128,35 +130,15 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/required}}
             {{/allParams}}
 
-            Client.RequestOptions requestOptions = new Client.RequestOptions();
-
-            string[] _contentTypes = {
-                {{#consumes}}
-                "{{{mediaType}}}"{{^-last}}, {{/-last}}
-                {{/consumes}}
-            };
-
-            // to determine the Accept header
-            string[] _accepts = {
-                {{#produces}}
-                "{{{mediaType}}}"{{^-last}},{{/-last}}
-                {{/produces}}
-            };
-
-            var contentTypeHeaderValue = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (contentTypeHeaderValue != null) requestOptions.HeaderParameters.Add("Content-Type", contentTypeHeaderValue);
-
-            var acceptHeaderValue = ClientUtils.SelectHeaderAccept(_accepts);
-            if (acceptHeaderValue != null) requestOptions.HeaderParameters.Add("Accept", acceptHeaderValue);
-
+            RequestOptions requestOptions = new RequestOptions();
             {{#pathParams}}
             {{#required}}
-            requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // path parameter
+            requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // path parameter
+                requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
             }
             {{/required}}
             {{/pathParams}}
@@ -197,7 +179,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             requestOptions.Data = {{paramName}};
             {{/bodyParam}}
 
-            return await _transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", CallType.Read, null, cancellationToken).ConfigureAwait(false);
+            return await _transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", {{#vendorExtensions}}{{#x-use-read-transporter}}CallType.Read{{/x-use-read-transporter}}{{^x-use-read-transporter}}CallType.Write{{/x-use-read-transporter}}{{/vendorExtensions}}, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         {{/supportsAsync}}
