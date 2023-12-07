@@ -12,7 +12,7 @@ export const COMMON_DEPENDENCIES = {
     'scripts',
     'eslint',
     'yarn.lock',
-    '.eslintrc.js',
+    '.eslintrc.cjs',
     'config/generation.config.mjs',
     'config/openapitools.json',
     'config/clients.config.json',
