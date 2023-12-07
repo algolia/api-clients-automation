@@ -77,7 +77,7 @@ class PersonalizationClient(
     */
   def del[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `del`.")
@@ -85,7 +85,7 @@ class PersonalizationClient(
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -121,7 +121,7 @@ class PersonalizationClient(
     */
   def get[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `get`.")
@@ -129,7 +129,7 @@ class PersonalizationClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -182,7 +182,7 @@ class PersonalizationClient(
     */
   def post[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -191,7 +191,7 @@ class PersonalizationClient(
     val request = HttpRequest
       .builder()
       .withMethod("POST")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
@@ -209,7 +209,7 @@ class PersonalizationClient(
     */
   def put[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -218,7 +218,7 @@ class PersonalizationClient(
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()

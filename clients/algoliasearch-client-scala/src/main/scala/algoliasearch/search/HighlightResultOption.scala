@@ -28,5 +28,3 @@ case class HighlightResultOption(
     matchedWords: Seq[String],
     fullyHighlighted: Option[Boolean] = scala.None
 ) extends HighlightResultTrait
-
-object HighlightResultOptionEnums {}

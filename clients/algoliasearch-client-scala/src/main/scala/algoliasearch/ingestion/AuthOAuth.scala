@@ -11,13 +11,13 @@ package algoliasearch.ingestion
   *
   * @param url
   *   The OAuth endpoint URL.
-  * @param clientId
+  * @param client_id
   *   The clientID.
-  * @param clientSecret
+  * @param client_secret
   *   The secret.
   */
 case class AuthOAuth(
     url: String,
-    clientId: String,
-    clientSecret: String
+    client_id: String,
+    client_secret: String
 ) extends AuthInputTrait

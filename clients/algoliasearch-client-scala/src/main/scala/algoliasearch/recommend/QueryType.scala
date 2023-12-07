@@ -11,9 +11,39 @@
   */
 package algoliasearch.recommend
 
-object QueryType extends Enumeration {
-  type QueryType = QueryType.Value
-  val PrefixLast = Value("prefixLast")
-  val PrefixAll = Value("prefixAll")
-  val PrefixNone = Value("prefixNone")
+import org.json4s._
+
+sealed trait QueryType
+
+/** Determines how query words are [interpreted as
+  * prefixes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+  */
+object QueryType {
+  case object PrefixLast extends QueryType {
+    override def toString = "prefixLast"
+  }
+  case object PrefixAll extends QueryType {
+    override def toString = "prefixAll"
+  }
+  case object PrefixNone extends QueryType {
+    override def toString = "prefixNone"
+  }
+  val values: Seq[QueryType] = Seq(PrefixLast, PrefixAll, PrefixNone)
+
+  def withName(name: String): QueryType = QueryType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown QueryType value: $name"))
 }
+
+class QueryTypeSerializer
+    extends CustomSerializer[QueryType](_ =>
+      (
+        {
+          case JString(value) => QueryType.withName(value)
+          case JNull          => null
+        },
+        { case value: QueryType =>
+          JString(value.toString)
+        }
+      )
+    )

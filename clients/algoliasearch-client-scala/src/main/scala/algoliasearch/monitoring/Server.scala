@@ -34,5 +34,3 @@ case class Server(
     status: Option[ServerStatus] = scala.None,
     `type`: Option[ModelType] = scala.None
 )
-
-object ServerEnums {}

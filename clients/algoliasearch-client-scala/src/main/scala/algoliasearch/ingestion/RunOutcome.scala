@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object RunOutcome extends Enumeration {
-  type RunOutcome = RunOutcome.Value
-  val Success = Value("success")
-  val Failure = Value("failure")
-  val Processing = Value("processing")
+import org.json4s._
+
+sealed trait RunOutcome
+
+/** RunOutcome enumeration
+  */
+object RunOutcome {
+  case object Success extends RunOutcome {
+    override def toString = "success"
+  }
+  case object Failure extends RunOutcome {
+    override def toString = "failure"
+  }
+  case object Processing extends RunOutcome {
+    override def toString = "processing"
+  }
+  val values: Seq[RunOutcome] = Seq(Success, Failure, Processing)
+
+  def withName(name: String): RunOutcome = RunOutcome.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RunOutcome value: $name"))
 }
+
+class RunOutcomeSerializer
+    extends CustomSerializer[RunOutcome](_ =>
+      (
+        {
+          case JString(value) => RunOutcome.withName(value)
+          case JNull          => null
+        },
+        { case value: RunOutcome =>
+          JString(value.toString)
+        }
+      )
+    )

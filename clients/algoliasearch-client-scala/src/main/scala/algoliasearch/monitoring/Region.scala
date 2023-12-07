@@ -9,21 +9,74 @@
   */
 package algoliasearch.monitoring
 
-object Region extends Enumeration {
-  type Region = Region.Value
-  val Au = Value("au")
-  val Br = Value("br")
-  val Ca = Value("ca")
-  val De = Value("de")
-  val Eu = Value("eu")
-  val Hk = Value("hk")
-  val In = Value("in")
-  val Jp = Value("jp")
-  val Sg = Value("sg")
-  val Uae = Value("uae")
-  val Uk = Value("uk")
-  val Usc = Value("usc")
-  val Use = Value("use")
-  val Usw = Value("usw")
-  val Za = Value("za")
+import org.json4s._
+
+sealed trait Region
+
+/** The region where the cluster is located.
+  */
+object Region {
+  case object Au extends Region {
+    override def toString = "au"
+  }
+  case object Br extends Region {
+    override def toString = "br"
+  }
+  case object Ca extends Region {
+    override def toString = "ca"
+  }
+  case object De extends Region {
+    override def toString = "de"
+  }
+  case object Eu extends Region {
+    override def toString = "eu"
+  }
+  case object Hk extends Region {
+    override def toString = "hk"
+  }
+  case object In extends Region {
+    override def toString = "in"
+  }
+  case object Jp extends Region {
+    override def toString = "jp"
+  }
+  case object Sg extends Region {
+    override def toString = "sg"
+  }
+  case object Uae extends Region {
+    override def toString = "uae"
+  }
+  case object Uk extends Region {
+    override def toString = "uk"
+  }
+  case object Usc extends Region {
+    override def toString = "usc"
+  }
+  case object Use extends Region {
+    override def toString = "use"
+  }
+  case object Usw extends Region {
+    override def toString = "usw"
+  }
+  case object Za extends Region {
+    override def toString = "za"
+  }
+  val values: Seq[Region] = Seq(Au, Br, Ca, De, Eu, Hk, In, Jp, Sg, Uae, Uk, Usc, Use, Usw, Za)
+
+  def withName(name: String): Region = Region.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Region value: $name"))
 }
+
+class RegionSerializer
+    extends CustomSerializer[Region](_ =>
+      (
+        {
+          case JString(value) => Region.withName(value)
+          case JNull          => null
+        },
+        { case value: Region =>
+          JString(value.toString)
+        }
+      )
+    )

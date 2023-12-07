@@ -8,7 +8,6 @@
 package algoliasearch.abtesting
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]()

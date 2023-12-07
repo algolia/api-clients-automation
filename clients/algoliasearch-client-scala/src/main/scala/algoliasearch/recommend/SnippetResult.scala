@@ -41,9 +41,9 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SnippetResult =>
+    value match {
+      case value: SnippetResultOption => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object SnippetResultEnums {}

@@ -10,15 +10,14 @@
 package algoliasearch.insights
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(AddToCartEvent) :+
-    new EnumNameSerializer(ClickEvent) :+
-    new EnumNameSerializer(ConversionEvent) :+
-    new EnumNameSerializer(PurchaseEvent) :+
-    new EnumNameSerializer(ViewEvent)
+    new AddToCartEventSerializer() :+
+    new ClickEventSerializer() :+
+    new ConversionEventSerializer() :+
+    new PurchaseEventSerializer() :+
+    new ViewEventSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     DiscountSerializer :+

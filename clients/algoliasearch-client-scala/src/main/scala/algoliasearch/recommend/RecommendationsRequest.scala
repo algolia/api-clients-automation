@@ -35,9 +35,12 @@ object RecommendationsRequestSerializer extends Serializer[RecommendationsReques
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value: RecommendationsRequest =>
+      value match {
+        case value: TrendingItemsQuery   => Extraction.decompose(value)(format - this)
+        case value: TrendingFacetsQuery  => Extraction.decompose(value)(format - this)
+        case value: RecommendationsQuery => Extraction.decompose(value)(format - this)
+      }
   }
 }
-
-object RecommendationsRequestEnums {}

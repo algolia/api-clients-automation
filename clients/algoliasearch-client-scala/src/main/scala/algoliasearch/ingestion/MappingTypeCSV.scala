@@ -7,11 +7,44 @@
   */
 package algoliasearch.ingestion
 
-object MappingTypeCSV extends Enumeration {
-  type MappingTypeCSV = MappingTypeCSV.Value
-  val String = Value("string")
-  val Integer = Value("integer")
-  val Float = Value("float")
-  val Boolean = Value("boolean")
-  val Json = Value("json")
+import org.json4s._
+
+sealed trait MappingTypeCSV
+
+/** MappingTypeCSV enumeration
+  */
+object MappingTypeCSV {
+  case object String extends MappingTypeCSV {
+    override def toString = "string"
+  }
+  case object Integer extends MappingTypeCSV {
+    override def toString = "integer"
+  }
+  case object Float extends MappingTypeCSV {
+    override def toString = "float"
+  }
+  case object Boolean extends MappingTypeCSV {
+    override def toString = "boolean"
+  }
+  case object Json extends MappingTypeCSV {
+    override def toString = "json"
+  }
+  val values: Seq[MappingTypeCSV] = Seq(String, Integer, Float, Boolean, Json)
+
+  def withName(name: String): MappingTypeCSV = MappingTypeCSV.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown MappingTypeCSV value: $name"))
 }
+
+class MappingTypeCSVSerializer
+    extends CustomSerializer[MappingTypeCSV](_ =>
+      (
+        {
+          case JString(value) => MappingTypeCSV.withName(value)
+          case JNull          => null
+        },
+        { case value: MappingTypeCSV =>
+          JString(value.toString)
+        }
+      )
+    )

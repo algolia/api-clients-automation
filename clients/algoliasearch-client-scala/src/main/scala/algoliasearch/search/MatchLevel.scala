@@ -11,9 +11,38 @@
   */
 package algoliasearch.search
 
-object MatchLevel extends Enumeration {
-  type MatchLevel = MatchLevel.Value
-  val None = Value("none")
-  val Partial = Value("partial")
-  val Full = Value("full")
+import org.json4s._
+
+sealed trait MatchLevel
+
+/** Indicates how well the attribute matched the search query.
+  */
+object MatchLevel {
+  case object None extends MatchLevel {
+    override def toString = "none"
+  }
+  case object Partial extends MatchLevel {
+    override def toString = "partial"
+  }
+  case object Full extends MatchLevel {
+    override def toString = "full"
+  }
+  val values: Seq[MatchLevel] = Seq(None, Partial, Full)
+
+  def withName(name: String): MatchLevel = MatchLevel.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown MatchLevel value: $name"))
 }
+
+class MatchLevelSerializer
+    extends CustomSerializer[MatchLevel](_ =>
+      (
+        {
+          case JString(value) => MatchLevel.withName(value)
+          case JNull          => null
+        },
+        { case value: MatchLevel =>
+          JString(value.toString)
+        }
+      )
+    )

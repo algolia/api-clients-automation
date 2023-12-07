@@ -9,7 +9,32 @@
   */
 package algoliasearch.monitoring
 
-object ModelType extends Enumeration {
-  type ModelType = ModelType.Value
-  val Cluster = Value("cluster")
+import org.json4s._
+
+sealed trait ModelType
+
+/** ModelType enumeration
+  */
+object ModelType {
+  case object Cluster extends ModelType {
+    override def toString = "cluster"
+  }
+  val values: Seq[ModelType] = Seq(Cluster)
+
+  def withName(name: String): ModelType = ModelType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ModelType value: $name"))
 }
+
+class ModelTypeSerializer
+    extends CustomSerializer[ModelType](_ =>
+      (
+        {
+          case JString(value) => ModelType.withName(value)
+          case JNull          => null
+        },
+        { case value: ModelType =>
+          JString(value.toString)
+        }
+      )
+    )

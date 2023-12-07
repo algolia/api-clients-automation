@@ -27,5 +27,3 @@ case class BaseTrendingItemsQuery(
     queryParameters: Option[SearchParamsObject] = scala.None,
     fallbackParameters: Option[SearchParamsObject] = scala.None
 )
-
-object BaseTrendingItemsQueryEnums {}

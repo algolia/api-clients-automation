@@ -11,9 +11,40 @@
   */
 package algoliasearch.querysuggestions
 
-object LogLevel extends Enumeration {
-  type LogLevel = LogLevel.Value
-  val SKIP = Value("SKIP")
-  val INFO = Value("INFO")
-  val ERROR = Value("ERROR")
+import org.json4s._
+
+sealed trait LogLevel
+
+/** The type of log entry. - `SKIP`. A query is skipped because it doesn't match the conditions for successful
+  * inclusion. For example, when a query doesn't generate enough search results. - `INFO`. An informative log entry. -
+  * `ERROR`. The Query Suggestions process encountered an error.
+  */
+object LogLevel {
+  case object SKIP extends LogLevel {
+    override def toString = "SKIP"
+  }
+  case object INFO extends LogLevel {
+    override def toString = "INFO"
+  }
+  case object ERROR extends LogLevel {
+    override def toString = "ERROR"
+  }
+  val values: Seq[LogLevel] = Seq(SKIP, INFO, ERROR)
+
+  def withName(name: String): LogLevel = LogLevel.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown LogLevel value: $name"))
 }
+
+class LogLevelSerializer
+    extends CustomSerializer[LogLevel](_ =>
+      (
+        {
+          case JString(value) => LogLevel.withName(value)
+          case JNull          => null
+        },
+        { case value: LogLevel =>
+          JString(value.toString)
+        }
+      )
+    )

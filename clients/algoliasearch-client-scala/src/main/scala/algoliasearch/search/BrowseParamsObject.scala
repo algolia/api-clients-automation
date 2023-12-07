@@ -294,5 +294,3 @@ case class BrowseParamsObject(
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
     cursor: Option[String] = scala.None
 ) extends BrowseParamsTrait
-
-object BrowseParamsObjectEnums {}

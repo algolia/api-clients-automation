@@ -7,11 +7,44 @@
   */
 package algoliasearch.ingestion
 
-object RunStatus extends Enumeration {
-  type RunStatus = RunStatus.Value
-  val Created = Value("created")
-  val Started = Value("started")
-  val Idled = Value("idled")
-  val Finished = Value("finished")
-  val Skipped = Value("skipped")
+import org.json4s._
+
+sealed trait RunStatus
+
+/** RunStatus enumeration
+  */
+object RunStatus {
+  case object Created extends RunStatus {
+    override def toString = "created"
+  }
+  case object Started extends RunStatus {
+    override def toString = "started"
+  }
+  case object Idled extends RunStatus {
+    override def toString = "idled"
+  }
+  case object Finished extends RunStatus {
+    override def toString = "finished"
+  }
+  case object Skipped extends RunStatus {
+    override def toString = "skipped"
+  }
+  val values: Seq[RunStatus] = Seq(Created, Started, Idled, Finished, Skipped)
+
+  def withName(name: String): RunStatus = RunStatus.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RunStatus value: $name"))
 }
+
+class RunStatusSerializer
+    extends CustomSerializer[RunStatus](_ =>
+      (
+        {
+          case JString(value) => RunStatus.withName(value)
+          case JNull          => null
+        },
+        { case value: RunStatus =>
+          JString(value.toString)
+        }
+      )
+    )

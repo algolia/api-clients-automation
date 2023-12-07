@@ -9,11 +9,44 @@
   */
 package algoliasearch.monitoring
 
-object Period extends Enumeration {
-  type Period = Period.Value
-  val Minute = Value("minute")
-  val Hour = Value("hour")
-  val Day = Value("day")
-  val Week = Value("week")
-  val Month = Value("month")
+import org.json4s._
+
+sealed trait Period
+
+/** Period enumeration
+  */
+object Period {
+  case object Minute extends Period {
+    override def toString = "minute"
+  }
+  case object Hour extends Period {
+    override def toString = "hour"
+  }
+  case object Day extends Period {
+    override def toString = "day"
+  }
+  case object Week extends Period {
+    override def toString = "week"
+  }
+  case object Month extends Period {
+    override def toString = "month"
+  }
+  val values: Seq[Period] = Seq(Minute, Hour, Day, Week, Month)
+
+  def withName(name: String): Period = Period.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Period value: $name"))
 }
+
+class PeriodSerializer
+    extends CustomSerializer[Period](_ =>
+      (
+        {
+          case JString(value) => Period.withName(value)
+          case JNull          => null
+        },
+        { case value: Period =>
+          JString(value.toString)
+        }
+      )
+    )

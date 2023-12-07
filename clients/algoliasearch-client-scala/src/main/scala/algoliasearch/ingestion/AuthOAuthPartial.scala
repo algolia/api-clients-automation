@@ -11,13 +11,13 @@ package algoliasearch.ingestion
   *
   * @param url
   *   The OAuth endpoint URL.
-  * @param clientId
+  * @param client_id
   *   The clientID.
-  * @param clientSecret
+  * @param client_secret
   *   The secret.
   */
 case class AuthOAuthPartial(
     url: Option[String] = scala.None,
-    clientId: Option[String] = scala.None,
-    clientSecret: Option[String] = scala.None
+    client_id: Option[String] = scala.None,
+    client_secret: Option[String] = scala.None
 ) extends AuthInputPartialTrait

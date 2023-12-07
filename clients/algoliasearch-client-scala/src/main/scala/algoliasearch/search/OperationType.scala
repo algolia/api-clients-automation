@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object OperationType extends Enumeration {
-  type OperationType = OperationType.Value
-  val Move = Value("move")
-  val Copy = Value("copy")
+import org.json4s._
+
+sealed trait OperationType
+
+/** Operation to perform (_move_ or _copy_).
+  */
+object OperationType {
+  case object Move extends OperationType {
+    override def toString = "move"
+  }
+  case object Copy extends OperationType {
+    override def toString = "copy"
+  }
+  val values: Seq[OperationType] = Seq(Move, Copy)
+
+  def withName(name: String): OperationType = OperationType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown OperationType value: $name"))
 }
+
+class OperationTypeSerializer
+    extends CustomSerializer[OperationType](_ =>
+      (
+        {
+          case JString(value) => OperationType.withName(value)
+          case JNull          => null
+        },
+        { case value: OperationType =>
+          JString(value.toString)
+        }
+      )
+    )

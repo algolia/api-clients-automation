@@ -45,5 +45,3 @@ case class SynonymHit(
     placeholder: Option[String] = scala.None,
     replacements: Option[Seq[String]] = scala.None
 )
-
-object SynonymHitEnums {}

@@ -48,13 +48,19 @@ object AutomaticFacetFiltersSerializer extends Serializer[AutomaticFacetFilters]
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AutomaticFacetFilters] =>
       json match {
-        case JArray(value: List[JObject]) => AutomaticFacetFilters.SeqOfAutomaticFacetFilter(value.map(_.extract))
-        case JArray(value: List[JString]) => AutomaticFacetFilters.SeqOfString(value.map(_.extract))
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          AutomaticFacetFilters.SeqOfAutomaticFacetFilter(value.map(_.extract))
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          AutomaticFacetFilters.SeqOfString(value.map(_.extract))
         case _ => throw new MappingException("Can't convert " + json + " to AutomaticFacetFilters")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value: AutomaticFacetFilters =>
+      value match {
+        case AutomaticFacetFilters.SeqOfAutomaticFacetFilter(value) => JArray(value.map(Extraction.decompose).toList)
+        case AutomaticFacetFilters.SeqOfString(value)               => JArray(value.map(Extraction.decompose).toList)
+      }
   }
 }

@@ -7,7 +7,32 @@
   */
 package algoliasearch.ingestion
 
-object SubscriptionTriggerType extends Enumeration {
-  type SubscriptionTriggerType = SubscriptionTriggerType.Value
-  val Subscription = Value("subscription")
+import org.json4s._
+
+sealed trait SubscriptionTriggerType
+
+/** A task which is triggered by an external subscription (e.g. Webhook).
+  */
+object SubscriptionTriggerType {
+  case object Subscription extends SubscriptionTriggerType {
+    override def toString = "subscription"
+  }
+  val values: Seq[SubscriptionTriggerType] = Seq(Subscription)
+
+  def withName(name: String): SubscriptionTriggerType = SubscriptionTriggerType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SubscriptionTriggerType value: $name"))
 }
+
+class SubscriptionTriggerTypeSerializer
+    extends CustomSerializer[SubscriptionTriggerType](_ =>
+      (
+        {
+          case JString(value) => SubscriptionTriggerType.withName(value)
+          case JNull          => null
+        },
+        { case value: SubscriptionTriggerType =>
+          JString(value.toString)
+        }
+      )
+    )

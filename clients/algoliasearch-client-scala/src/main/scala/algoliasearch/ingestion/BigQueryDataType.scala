@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object BigQueryDataType extends Enumeration {
-  type BigQueryDataType = BigQueryDataType.Value
-  val Ga4 = Value("ga4")
-  val Ga360 = Value("ga360")
+import org.json4s._
+
+sealed trait BigQueryDataType
+
+/** BigQueryDataType enumeration
+  */
+object BigQueryDataType {
+  case object Ga4 extends BigQueryDataType {
+    override def toString = "ga4"
+  }
+  case object Ga360 extends BigQueryDataType {
+    override def toString = "ga360"
+  }
+  val values: Seq[BigQueryDataType] = Seq(Ga4, Ga360)
+
+  def withName(name: String): BigQueryDataType = BigQueryDataType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown BigQueryDataType value: $name"))
 }
+
+class BigQueryDataTypeSerializer
+    extends CustomSerializer[BigQueryDataType](_ =>
+      (
+        {
+          case JString(value) => BigQueryDataType.withName(value)
+          case JNull          => null
+        },
+        { case value: BigQueryDataType =>
+          JString(value.toString)
+        }
+      )
+    )

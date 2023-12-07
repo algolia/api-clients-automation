@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object EventSortKeys extends Enumeration {
-  type EventSortKeys = EventSortKeys.Value
-  val Status = Value("status")
-  val `Type` = Value("type")
-  val PublishedAt = Value("publishedAt")
+import org.json4s._
+
+sealed trait EventSortKeys
+
+/** Used to sort the Event list endpoint.
+  */
+object EventSortKeys {
+  case object Status extends EventSortKeys {
+    override def toString = "status"
+  }
+  case object `Type` extends EventSortKeys {
+    override def toString = "type"
+  }
+  case object PublishedAt extends EventSortKeys {
+    override def toString = "publishedAt"
+  }
+  val values: Seq[EventSortKeys] = Seq(Status, `Type`, PublishedAt)
+
+  def withName(name: String): EventSortKeys = EventSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown EventSortKeys value: $name"))
 }
+
+class EventSortKeysSerializer
+    extends CustomSerializer[EventSortKeys](_ =>
+      (
+        {
+          case JString(value) => EventSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: EventSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

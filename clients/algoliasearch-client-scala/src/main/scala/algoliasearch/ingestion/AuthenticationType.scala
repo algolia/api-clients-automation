@@ -7,11 +7,44 @@
   */
 package algoliasearch.ingestion
 
-object AuthenticationType extends Enumeration {
-  type AuthenticationType = AuthenticationType.Value
-  val GoogleServiceAccount = Value("googleServiceAccount")
-  val Basic = Value("basic")
-  val ApiKey = Value("apiKey")
-  val Oauth = Value("oauth")
-  val Algolia = Value("algolia")
+import org.json4s._
+
+sealed trait AuthenticationType
+
+/** Type of the Authentication, defines what kind of object is stored in the input.
+  */
+object AuthenticationType {
+  case object GoogleServiceAccount extends AuthenticationType {
+    override def toString = "googleServiceAccount"
+  }
+  case object Basic extends AuthenticationType {
+    override def toString = "basic"
+  }
+  case object ApiKey extends AuthenticationType {
+    override def toString = "apiKey"
+  }
+  case object Oauth extends AuthenticationType {
+    override def toString = "oauth"
+  }
+  case object Algolia extends AuthenticationType {
+    override def toString = "algolia"
+  }
+  val values: Seq[AuthenticationType] = Seq(GoogleServiceAccount, Basic, ApiKey, Oauth, Algolia)
+
+  def withName(name: String): AuthenticationType = AuthenticationType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown AuthenticationType value: $name"))
 }
+
+class AuthenticationTypeSerializer
+    extends CustomSerializer[AuthenticationType](_ =>
+      (
+        {
+          case JString(value) => AuthenticationType.withName(value)
+          case JNull          => null
+        },
+        { case value: AuthenticationType =>
+          JString(value.toString)
+        }
+      )
+    )

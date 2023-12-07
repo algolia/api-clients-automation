@@ -24,5 +24,3 @@ case class BaseRecommendationsQuery(
     queryParameters: Option[SearchParamsObject] = scala.None,
     fallbackParameters: Option[SearchParamsObject] = scala.None
 )
-
-object BaseRecommendationsQueryEnums {}

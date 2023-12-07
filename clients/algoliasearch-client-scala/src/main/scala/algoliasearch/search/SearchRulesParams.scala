@@ -38,5 +38,3 @@ case class SearchRulesParams(
     enabled: Option[Boolean] = scala.None,
     requestOptions: Option[Seq[Any]] = scala.None
 )
-
-object SearchRulesParamsEnums {}

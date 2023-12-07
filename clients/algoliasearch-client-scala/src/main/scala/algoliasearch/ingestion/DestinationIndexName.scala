@@ -24,5 +24,3 @@ case class DestinationIndexName(
     recordType: Option[RecordType] = scala.None,
     attributesToExclude: Option[Seq[String]] = scala.None
 ) extends DestinationInputTrait
-
-object DestinationIndexNameEnums {}

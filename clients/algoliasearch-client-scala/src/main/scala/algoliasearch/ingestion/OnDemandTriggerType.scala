@@ -7,7 +7,32 @@
   */
 package algoliasearch.ingestion
 
-object OnDemandTriggerType extends Enumeration {
-  type OnDemandTriggerType = OnDemandTriggerType.Value
-  val OnDemand = Value("onDemand")
+import org.json4s._
+
+sealed trait OnDemandTriggerType
+
+/** A task which is manually executed via the run task endpoint.
+  */
+object OnDemandTriggerType {
+  case object OnDemand extends OnDemandTriggerType {
+    override def toString = "onDemand"
+  }
+  val values: Seq[OnDemandTriggerType] = Seq(OnDemand)
+
+  def withName(name: String): OnDemandTriggerType = OnDemandTriggerType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown OnDemandTriggerType value: $name"))
 }
+
+class OnDemandTriggerTypeSerializer
+    extends CustomSerializer[OnDemandTriggerType](_ =>
+      (
+        {
+          case JString(value) => OnDemandTriggerType.withName(value)
+          case JNull          => null
+        },
+        { case value: OnDemandTriggerType =>
+          JString(value.toString)
+        }
+      )
+    )

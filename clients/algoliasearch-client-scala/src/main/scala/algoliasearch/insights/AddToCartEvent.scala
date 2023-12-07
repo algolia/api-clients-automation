@@ -9,7 +9,32 @@
   */
 package algoliasearch.insights
 
-object AddToCartEvent extends Enumeration {
-  type AddToCartEvent = AddToCartEvent.Value
-  val AddToCart = Value("addToCart")
+import org.json4s._
+
+sealed trait AddToCartEvent
+
+/** AddToCartEvent enumeration
+  */
+object AddToCartEvent {
+  case object AddToCart extends AddToCartEvent {
+    override def toString = "addToCart"
+  }
+  val values: Seq[AddToCartEvent] = Seq(AddToCart)
+
+  def withName(name: String): AddToCartEvent = AddToCartEvent.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown AddToCartEvent value: $name"))
 }
+
+class AddToCartEventSerializer
+    extends CustomSerializer[AddToCartEvent](_ =>
+      (
+        {
+          case JString(value) => AddToCartEvent.withName(value)
+          case JNull          => null
+        },
+        { case value: AddToCartEvent =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -7,7 +7,32 @@
   */
 package algoliasearch.ingestion
 
-object PlatformNone extends Enumeration {
-  type PlatformNone = PlatformNone.Value with PlatformWithNone
-  val None = Value("none")
+import org.json4s._
+
+sealed trait PlatformNone extends PlatformWithNoneTrait
+
+/** Used to filter Authentication without platform property.
+  */
+object PlatformNone {
+  case object None extends PlatformNone {
+    override def toString = "none"
+  }
+  val values: Seq[PlatformNone] = Seq(None)
+
+  def withName(name: String): PlatformNone = PlatformNone.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown PlatformNone value: $name"))
 }
+
+class PlatformNoneSerializer
+    extends CustomSerializer[PlatformNone](_ =>
+      (
+        {
+          case JString(value) => PlatformNone.withName(value)
+          case JNull          => null
+        },
+        { case value: PlatformNone =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -9,10 +9,42 @@
   */
 package algoliasearch.analytics
 
-object OrderBy extends Enumeration {
-  type OrderBy = OrderBy.Value
-  val SearchCount = Value("searchCount")
-  val ClickThroughRate = Value("clickThroughRate")
-  val ConversionRate = Value("conversionRate")
-  val AverageClickPosition = Value("averageClickPosition")
+import org.json4s._
+
+sealed trait OrderBy
+
+/** Method for ordering results. `clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if
+  * the `clickAnalytics` parameter is `true`.
+  */
+object OrderBy {
+  case object SearchCount extends OrderBy {
+    override def toString = "searchCount"
+  }
+  case object ClickThroughRate extends OrderBy {
+    override def toString = "clickThroughRate"
+  }
+  case object ConversionRate extends OrderBy {
+    override def toString = "conversionRate"
+  }
+  case object AverageClickPosition extends OrderBy {
+    override def toString = "averageClickPosition"
+  }
+  val values: Seq[OrderBy] = Seq(SearchCount, ClickThroughRate, ConversionRate, AverageClickPosition)
+
+  def withName(name: String): OrderBy = OrderBy.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown OrderBy value: $name"))
 }
+
+class OrderBySerializer
+    extends CustomSerializer[OrderBy](_ =>
+      (
+        {
+          case JString(value) => OrderBy.withName(value)
+          case JNull          => null
+        },
+        { case value: OrderBy =>
+          JString(value.toString)
+        }
+      )
+    )

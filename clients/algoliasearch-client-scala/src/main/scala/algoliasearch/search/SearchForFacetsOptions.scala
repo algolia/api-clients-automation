@@ -32,5 +32,3 @@ case class SearchForFacetsOptions(
     maxFacetHits: Option[Int] = scala.None,
     `type`: SearchTypeFacet
 )
-
-object SearchForFacetsOptionsEnums {}

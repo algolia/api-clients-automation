@@ -31,7 +31,10 @@ object PlatformWithNoneSerializer extends Serializer[PlatformWithNone] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: PlatformWithNone =>
+    value match {
+      case value: Platform     => JString(value.toString)
+      case value: PlatformNone => JString(value.toString)
+    }
   }
 }

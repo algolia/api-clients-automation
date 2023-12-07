@@ -51,5 +51,3 @@ case class PurchasedObjectIDs(
     timestamp: Option[Long] = scala.None,
     authenticatedUserToken: Option[String] = scala.None
 ) extends EventsItemsTrait
-
-object PurchasedObjectIDsEnums {}

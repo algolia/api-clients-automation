@@ -11,7 +11,8 @@
   */
 package algoliasearch.recommend
 
-import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 
 /** BaseSearchResponse
   *
@@ -94,7 +95,7 @@ case class BaseSearchResponse(
     serverTimeMS: Option[Int] = scala.None,
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
-    additionalProperties: Map[String, JValue] = Map.empty
+    additionalProperties: Option[List[JField]] = None
 )
 
 class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
@@ -106,17 +107,53 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
           val formats = format - this
           val mf = manifest[BaseSearchResponse]
           val obj = Extraction.extract[BaseSearchResponse](jobject)(formats, mf)
-          val properties =
-            jobject.obj.toMap - "abTestID" - "abTestVariantID" - "aroundLatLng" - "automaticRadius" - "exhaustive" - "exhaustiveFacetsCount" - "exhaustiveNbHits" - "exhaustiveTypo" - "facets" - "facetsStats" - "hitsPerPage" - "index" - "indexUsed" - "message" - "nbHits" - "nbPages" - "nbSortedHits" - "page" - "parsedQuery" - "processingTimeMS" - "processingTimingsMS" - "queryAfterRemoval" - "redirect" - "renderingContent" - "serverTimeMS" - "serverUsed" - "userData"
-          obj.copy(additionalProperties = properties)
+
+          val fields = Set(
+            "abTestID",
+            "abTestVariantID",
+            "aroundLatLng",
+            "automaticRadius",
+            "exhaustive",
+            "exhaustiveFacetsCount",
+            "exhaustiveNbHits",
+            "exhaustiveTypo",
+            "facets",
+            "facetsStats",
+            "hitsPerPage",
+            "index",
+            "indexUsed",
+            "message",
+            "nbHits",
+            "nbPages",
+            "nbSortedHits",
+            "page",
+            "parsedQuery",
+            "processingTimeMS",
+            "processingTimingsMS",
+            "queryAfterRemoval",
+            "redirect",
+            "renderingContent",
+            "serverTimeMS",
+            "serverUsed",
+            "userData"
+          )
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties.values match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as BaseSearchResponse")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: BaseSearchResponse =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(
-      value.additionalProperties
-    )(formats)
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
   }
 }

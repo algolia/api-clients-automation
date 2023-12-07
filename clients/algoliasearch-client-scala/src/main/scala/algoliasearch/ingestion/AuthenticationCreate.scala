@@ -21,5 +21,3 @@ case class AuthenticationCreate(
     platform: Option[Platform] = scala.None,
     input: AuthInput
 )
-
-object AuthenticationCreateEnums {}

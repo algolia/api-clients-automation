@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object ActionType extends Enumeration {
-  type ActionType = ActionType.Value
-  val Replace = Value("replace")
-  val Save = Value("save")
-  val Partial = Value("partial")
+import org.json4s._
+
+sealed trait ActionType
+
+/** The action to perform on the Algolia index.
+  */
+object ActionType {
+  case object Replace extends ActionType {
+    override def toString = "replace"
+  }
+  case object Save extends ActionType {
+    override def toString = "save"
+  }
+  case object Partial extends ActionType {
+    override def toString = "partial"
+  }
+  val values: Seq[ActionType] = Seq(Replace, Save, Partial)
+
+  def withName(name: String): ActionType = ActionType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ActionType value: $name"))
 }
+
+class ActionTypeSerializer
+    extends CustomSerializer[ActionType](_ =>
+      (
+        {
+          case JString(value) => ActionType.withName(value)
+          case JNull          => null
+        },
+        { case value: ActionType =>
+          JString(value.toString)
+        }
+      )
+    )

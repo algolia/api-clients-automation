@@ -11,8 +11,35 @@
   */
 package algoliasearch.search
 
-object TypoToleranceEnum extends Enumeration {
-  type TypoToleranceEnum = TypoToleranceEnum.Value with TypoTolerance
-  val Min = Value("min")
-  val Strict = Value("strict")
+import org.json4s._
+
+sealed trait TypoToleranceEnum extends TypoToleranceTrait
+
+/** TypoToleranceEnum enumeration
+  */
+object TypoToleranceEnum {
+  case object Min extends TypoToleranceEnum {
+    override def toString = "min"
+  }
+  case object Strict extends TypoToleranceEnum {
+    override def toString = "strict"
+  }
+  val values: Seq[TypoToleranceEnum] = Seq(Min, Strict)
+
+  def withName(name: String): TypoToleranceEnum = TypoToleranceEnum.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown TypoToleranceEnum value: $name"))
 }
+
+class TypoToleranceEnumSerializer
+    extends CustomSerializer[TypoToleranceEnum](_ =>
+      (
+        {
+          case JString(value) => TypoToleranceEnum.withName(value)
+          case JNull          => null
+        },
+        { case value: TypoToleranceEnum =>
+          JString(value.toString)
+        }
+      )
+    )

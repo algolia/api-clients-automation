@@ -28,5 +28,3 @@ case class Condition(
     alternatives: Option[Boolean] = scala.None,
     context: Option[String] = scala.None
 )
-
-object ConditionEnums {}

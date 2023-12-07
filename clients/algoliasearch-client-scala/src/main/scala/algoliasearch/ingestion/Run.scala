@@ -44,5 +44,3 @@ case class Run(
     startedAt: Option[String] = scala.None,
     finishedAt: Option[String] = scala.None
 )
-
-object RunEnums {}

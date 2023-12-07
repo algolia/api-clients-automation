@@ -200,7 +200,7 @@ class IngestionClient(
     */
   def del[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `del`.")
@@ -208,7 +208,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -331,7 +331,7 @@ class IngestionClient(
     */
   def get[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `get`.")
@@ -339,7 +339,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -381,8 +381,8 @@ class IngestionClient(
   def getAuthentications(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      `type`: Seq[AuthenticationType] = Seq.empty,
-      platform: Seq[PlatformWithNone] = Seq.empty,
+      `type`: Option[Seq[AuthenticationType]] = None,
+      platform: Option[Seq[PlatformWithNone]] = None,
       sort: Option[AuthenticationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -438,8 +438,8 @@ class IngestionClient(
   def getDestinations(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      `type`: Seq[DestinationType] = Seq.empty,
-      authenticationID: Seq[String] = Seq.empty,
+      `type`: Option[Seq[DestinationType]] = None,
+      authenticationID: Option[Seq[String]] = None,
       sort: Option[DestinationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -523,8 +523,8 @@ class IngestionClient(
       runID: String,
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      status: Seq[EventStatus] = Seq.empty,
-      `type`: Seq[EventType] = Seq.empty,
+      status: Option[Seq[EventStatus]] = None,
+      `type`: Option[Seq[EventType]] = None,
       sort: Option[EventSortKeys] = None,
       order: Option[OrderKeys] = None,
       startDate: Option[String] = None,
@@ -588,7 +588,7 @@ class IngestionClient(
   def getRuns(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      status: Seq[RunStatus] = Seq.empty,
+      status: Option[Seq[RunStatus]] = None,
       taskID: Option[String] = None,
       sort: Option[RunSortKeys] = None,
       order: Option[OrderKeys] = None,
@@ -649,8 +649,8 @@ class IngestionClient(
   def getSources(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      `type`: Seq[SourceType] = Seq.empty,
-      authenticationID: Seq[String] = Seq.empty,
+      `type`: Option[Seq[SourceType]] = None,
+      authenticationID: Option[Seq[String]] = None,
       sort: Option[SourceSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -712,11 +712,11 @@ class IngestionClient(
   def getTasks(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      action: Seq[ActionType] = Seq.empty,
+      action: Option[Seq[ActionType]] = None,
       enabled: Option[Boolean] = None,
-      sourceID: Seq[String] = Seq.empty,
-      destinationID: Seq[String] = Seq.empty,
-      triggerType: Seq[TriggerType] = Seq.empty,
+      sourceID: Option[Seq[String]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
       sort: Option[TaskSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -750,7 +750,7 @@ class IngestionClient(
     */
   def post[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -759,7 +759,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("POST")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
@@ -777,7 +777,7 @@ class IngestionClient(
     */
   def put[T: Manifest](
       path: String,
-      parameters: Map[String, Any] = Map.empty,
+      parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
@@ -786,7 +786,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
-      .withPath(s"/1${escape(path)}")
+      .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()

@@ -38,5 +38,3 @@ case class ClickedObjectIDs(
     userToken: String,
     timestamp: Option[Long] = scala.None
 ) extends EventsItemsTrait
-
-object ClickedObjectIDsEnums {}

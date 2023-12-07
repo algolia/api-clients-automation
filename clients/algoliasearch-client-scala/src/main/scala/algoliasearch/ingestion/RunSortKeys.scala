@@ -7,9 +7,38 @@
   */
 package algoliasearch.ingestion
 
-object RunSortKeys extends Enumeration {
-  type RunSortKeys = RunSortKeys.Value
-  val Status = Value("status")
-  val UpdatedAt = Value("updatedAt")
-  val CreatedAt = Value("createdAt")
+import org.json4s._
+
+sealed trait RunSortKeys
+
+/** Used to sort the Run list endpoint.
+  */
+object RunSortKeys {
+  case object Status extends RunSortKeys {
+    override def toString = "status"
+  }
+  case object UpdatedAt extends RunSortKeys {
+    override def toString = "updatedAt"
+  }
+  case object CreatedAt extends RunSortKeys {
+    override def toString = "createdAt"
+  }
+  val values: Seq[RunSortKeys] = Seq(Status, UpdatedAt, CreatedAt)
+
+  def withName(name: String): RunSortKeys = RunSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RunSortKeys value: $name"))
 }
+
+class RunSortKeysSerializer
+    extends CustomSerializer[RunSortKeys](_ =>
+      (
+        {
+          case JString(value) => RunSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: RunSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -35,5 +35,3 @@ case class RecommendationsQuery(
     threshold: Option[Int] = scala.None,
     maxRecommendations: Option[Int] = scala.None
 ) extends RecommendationsRequestTrait
-
-object RecommendationsQueryEnums {}

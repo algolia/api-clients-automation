@@ -297,5 +297,3 @@ case class SearchForHits(
     indexName: String,
     `type`: Option[SearchTypeDefault] = scala.None
 ) extends SearchQueryTrait
-
-object SearchForHitsEnums {}

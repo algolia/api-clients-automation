@@ -28,7 +28,10 @@ object AddABTestsVariantSerializer extends Serializer[AddABTestsVariant] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AddABTestsVariant =>
+    value match {
+      case value: AbTestsVariant             => Extraction.decompose(value)(format - this)
+      case value: AbTestsVariantSearchParams => Extraction.decompose(value)(format - this)
+    }
   }
 }

@@ -12,27 +12,26 @@
 package algoliasearch.recommend
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(AdvancedSyntaxFeatures) :+
-    new EnumNameSerializer(AlternativesAsExact) :+
-    new EnumNameSerializer(Anchoring) :+
-    new EnumNameSerializer(AroundRadiusAll) :+
-    new EnumNameSerializer(EditType) :+
-    new EnumNameSerializer(ExactOnSingleWordQuery) :+
-    new EnumNameSerializer(MatchLevel) :+
-    new EnumNameSerializer(Mode) :+
-    new EnumNameSerializer(QueryType) :+
-    new EnumNameSerializer(RecommendModels) :+
-    new EnumNameSerializer(RecommendationModels) :+
-    new EnumNameSerializer(RemoveWordsIfNoResults) :+
-    new EnumNameSerializer(SortRemainingBy) :+
-    new EnumNameSerializer(TaskStatus) :+
-    new EnumNameSerializer(TrendingFacetsModel) :+
-    new EnumNameSerializer(TrendingItemsModel) :+
-    new EnumNameSerializer(TypoToleranceEnum)
+    new AdvancedSyntaxFeaturesSerializer() :+
+    new AlternativesAsExactSerializer() :+
+    new AnchoringSerializer() :+
+    new AroundRadiusAllSerializer() :+
+    new EditTypeSerializer() :+
+    new ExactOnSingleWordQuerySerializer() :+
+    new MatchLevelSerializer() :+
+    new ModeSerializer() :+
+    new QueryTypeSerializer() :+
+    new RecommendModelsSerializer() :+
+    new RecommendationModelsSerializer() :+
+    new RemoveWordsIfNoResultsSerializer() :+
+    new SortRemainingBySerializer() :+
+    new TaskStatusSerializer() :+
+    new TrendingFacetsModelSerializer() :+
+    new TrendingItemsModelSerializer() :+
+    new TypoToleranceEnumSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     AroundPrecisionSerializer :+

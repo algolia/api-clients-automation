@@ -7,12 +7,47 @@
   */
 package algoliasearch.ingestion
 
-object EventStatus extends Enumeration {
-  type EventStatus = EventStatus.Value
-  val Created = Value("created")
-  val Started = Value("started")
-  val Retried = Value("retried")
-  val Failed = Value("failed")
-  val Succeeded = Value("succeeded")
-  val Critical = Value("critical")
+import org.json4s._
+
+sealed trait EventStatus
+
+/** EventStatus enumeration
+  */
+object EventStatus {
+  case object Created extends EventStatus {
+    override def toString = "created"
+  }
+  case object Started extends EventStatus {
+    override def toString = "started"
+  }
+  case object Retried extends EventStatus {
+    override def toString = "retried"
+  }
+  case object Failed extends EventStatus {
+    override def toString = "failed"
+  }
+  case object Succeeded extends EventStatus {
+    override def toString = "succeeded"
+  }
+  case object Critical extends EventStatus {
+    override def toString = "critical"
+  }
+  val values: Seq[EventStatus] = Seq(Created, Started, Retried, Failed, Succeeded, Critical)
+
+  def withName(name: String): EventStatus = EventStatus.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown EventStatus value: $name"))
 }
+
+class EventStatusSerializer
+    extends CustomSerializer[EventStatus](_ =>
+      (
+        {
+          case JString(value) => EventStatus.withName(value)
+          case JNull          => null
+        },
+        { case value: EventStatus =>
+          JString(value.toString)
+        }
+      )
+    )

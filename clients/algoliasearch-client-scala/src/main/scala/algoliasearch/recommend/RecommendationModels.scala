@@ -11,8 +11,35 @@
   */
 package algoliasearch.recommend
 
-object RecommendationModels extends Enumeration {
-  type RecommendationModels = RecommendationModels.Value
-  val RelatedProducts = Value("related-products")
-  val BoughtTogether = Value("bought-together")
+import org.json4s._
+
+sealed trait RecommendationModels
+
+/** Recommendation model.
+  */
+object RecommendationModels {
+  case object RelatedProducts extends RecommendationModels {
+    override def toString = "related-products"
+  }
+  case object BoughtTogether extends RecommendationModels {
+    override def toString = "bought-together"
+  }
+  val values: Seq[RecommendationModels] = Seq(RelatedProducts, BoughtTogether)
+
+  def withName(name: String): RecommendationModels = RecommendationModels.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RecommendationModels value: $name"))
 }
+
+class RecommendationModelsSerializer
+    extends CustomSerializer[RecommendationModels](_ =>
+      (
+        {
+          case JString(value) => RecommendationModels.withName(value)
+          case JNull          => null
+        },
+        { case value: RecommendationModels =>
+          JString(value.toString)
+        }
+      )
+    )

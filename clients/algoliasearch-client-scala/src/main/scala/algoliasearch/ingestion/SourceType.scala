@@ -7,12 +7,47 @@
   */
 package algoliasearch.ingestion
 
-object SourceType extends Enumeration {
-  type SourceType = SourceType.Value
-  val Bigcommerce = Value("bigcommerce")
-  val Commercetools = Value("commercetools")
-  val Json = Value("json")
-  val Csv = Value("csv")
-  val Bigquery = Value("bigquery")
-  val Docker = Value("docker")
+import org.json4s._
+
+sealed trait SourceType
+
+/** SourceType enumeration
+  */
+object SourceType {
+  case object Bigcommerce extends SourceType {
+    override def toString = "bigcommerce"
+  }
+  case object Commercetools extends SourceType {
+    override def toString = "commercetools"
+  }
+  case object Json extends SourceType {
+    override def toString = "json"
+  }
+  case object Csv extends SourceType {
+    override def toString = "csv"
+  }
+  case object Bigquery extends SourceType {
+    override def toString = "bigquery"
+  }
+  case object Docker extends SourceType {
+    override def toString = "docker"
+  }
+  val values: Seq[SourceType] = Seq(Bigcommerce, Commercetools, Json, Csv, Bigquery, Docker)
+
+  def withName(name: String): SourceType = SourceType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SourceType value: $name"))
 }
+
+class SourceTypeSerializer
+    extends CustomSerializer[SourceType](_ =>
+      (
+        {
+          case JString(value) => SourceType.withName(value)
+          case JNull          => null
+        },
+        { case value: SourceType =>
+          JString(value.toString)
+        }
+      )
+    )

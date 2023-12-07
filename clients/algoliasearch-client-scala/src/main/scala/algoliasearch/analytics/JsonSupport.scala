@@ -10,12 +10,11 @@
 package algoliasearch.analytics
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(Direction) :+
-    new EnumNameSerializer(OrderBy)
+    new DirectionSerializer() :+
+    new OrderBySerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     GetTopHitsResponseSerializer :+

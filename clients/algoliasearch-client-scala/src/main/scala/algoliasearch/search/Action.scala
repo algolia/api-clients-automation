@@ -11,13 +11,51 @@
   */
 package algoliasearch.search
 
-object Action extends Enumeration {
-  type Action = Action.Value
-  val AddObject = Value("addObject")
-  val UpdateObject = Value("updateObject")
-  val PartialUpdateObject = Value("partialUpdateObject")
-  val PartialUpdateObjectNoCreate = Value("partialUpdateObjectNoCreate")
-  val DeleteObject = Value("deleteObject")
-  val Delete = Value("delete")
-  val Clear = Value("clear")
+import org.json4s._
+
+sealed trait Action
+
+/** Type of batch operation.
+  */
+object Action {
+  case object AddObject extends Action {
+    override def toString = "addObject"
+  }
+  case object UpdateObject extends Action {
+    override def toString = "updateObject"
+  }
+  case object PartialUpdateObject extends Action {
+    override def toString = "partialUpdateObject"
+  }
+  case object PartialUpdateObjectNoCreate extends Action {
+    override def toString = "partialUpdateObjectNoCreate"
+  }
+  case object DeleteObject extends Action {
+    override def toString = "deleteObject"
+  }
+  case object Delete extends Action {
+    override def toString = "delete"
+  }
+  case object Clear extends Action {
+    override def toString = "clear"
+  }
+  val values: Seq[Action] =
+    Seq(AddObject, UpdateObject, PartialUpdateObject, PartialUpdateObjectNoCreate, DeleteObject, Delete, Clear)
+
+  def withName(name: String): Action = Action.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Action value: $name"))
 }
+
+class ActionSerializer
+    extends CustomSerializer[Action](_ =>
+      (
+        {
+          case JString(value) => Action.withName(value)
+          case JNull          => null
+        },
+        { case value: Action =>
+          JString(value.toString)
+        }
+      )
+    )

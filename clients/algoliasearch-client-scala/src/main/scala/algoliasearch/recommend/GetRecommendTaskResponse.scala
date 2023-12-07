@@ -18,5 +18,3 @@ import algoliasearch.recommend.TaskStatus._
 case class GetRecommendTaskResponse(
     status: TaskStatus
 )
-
-object GetRecommendTaskResponseEnums {}

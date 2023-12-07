@@ -11,7 +11,33 @@
   */
 package algoliasearch.search
 
-object SearchTypeFacet extends Enumeration {
-  type SearchTypeFacet = SearchTypeFacet.Value
-  val Facet = Value("facet")
+import org.json4s._
+
+sealed trait SearchTypeFacet
+
+/**   - `default`: perform a search query - `facet` [searches for facet
+  *     values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+  */
+object SearchTypeFacet {
+  case object Facet extends SearchTypeFacet {
+    override def toString = "facet"
+  }
+  val values: Seq[SearchTypeFacet] = Seq(Facet)
+
+  def withName(name: String): SearchTypeFacet = SearchTypeFacet.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SearchTypeFacet value: $name"))
 }
+
+class SearchTypeFacetSerializer
+    extends CustomSerializer[SearchTypeFacet](_ =>
+      (
+        {
+          case JString(value) => SearchTypeFacet.withName(value)
+          case JNull          => null
+        },
+        { case value: SearchTypeFacet =>
+          JString(value.toString)
+        }
+      )
+    )

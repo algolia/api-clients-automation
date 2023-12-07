@@ -25,5 +25,3 @@ case class Edit(
     delete: Option[String] = scala.None,
     insert: Option[String] = scala.None
 )
-
-object EditEnums {}

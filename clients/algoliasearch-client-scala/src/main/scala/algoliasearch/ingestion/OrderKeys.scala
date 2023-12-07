@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object OrderKeys extends Enumeration {
-  type OrderKeys = OrderKeys.Value
-  val Asc = Value("asc")
-  val Desc = Value("desc")
+import org.json4s._
+
+sealed trait OrderKeys
+
+/** Used to order a sorted request.
+  */
+object OrderKeys {
+  case object Asc extends OrderKeys {
+    override def toString = "asc"
+  }
+  case object Desc extends OrderKeys {
+    override def toString = "desc"
+  }
+  val values: Seq[OrderKeys] = Seq(Asc, Desc)
+
+  def withName(name: String): OrderKeys = OrderKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown OrderKeys value: $name"))
 }
+
+class OrderKeysSerializer
+    extends CustomSerializer[OrderKeys](_ =>
+      (
+        {
+          case JString(value) => OrderKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: OrderKeys =>
+          JString(value.toString)
+        }
+      )
+    )

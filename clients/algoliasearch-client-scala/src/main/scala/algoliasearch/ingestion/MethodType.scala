@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object MethodType extends Enumeration {
-  type MethodType = MethodType.Value
-  val GET = Value("GET")
-  val POST = Value("POST")
+import org.json4s._
+
+sealed trait MethodType
+
+/** MethodType enumeration
+  */
+object MethodType {
+  case object GET extends MethodType {
+    override def toString = "GET"
+  }
+  case object POST extends MethodType {
+    override def toString = "POST"
+  }
+  val values: Seq[MethodType] = Seq(GET, POST)
+
+  def withName(name: String): MethodType = MethodType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown MethodType value: $name"))
 }
+
+class MethodTypeSerializer
+    extends CustomSerializer[MethodType](_ =>
+      (
+        {
+          case JString(value) => MethodType.withName(value)
+          case JNull          => null
+        },
+        { case value: MethodType =>
+          JString(value.toString)
+        }
+      )
+    )

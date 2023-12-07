@@ -30,5 +30,3 @@ case class Authentication(
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
-
-object AuthenticationEnums {}

@@ -7,11 +7,44 @@
   */
 package algoliasearch.ingestion
 
-object AuthenticationSortKeys extends Enumeration {
-  type AuthenticationSortKeys = AuthenticationSortKeys.Value
-  val Name = Value("name")
-  val AuthType = Value("auth_type")
-  val Platform = Value("platform")
-  val UpdatedAt = Value("updatedAt")
-  val CreatedAt = Value("createdAt")
+import org.json4s._
+
+sealed trait AuthenticationSortKeys
+
+/** Used to sort the Authentication list endpoint.
+  */
+object AuthenticationSortKeys {
+  case object Name extends AuthenticationSortKeys {
+    override def toString = "name"
+  }
+  case object AuthType extends AuthenticationSortKeys {
+    override def toString = "auth_type"
+  }
+  case object Platform extends AuthenticationSortKeys {
+    override def toString = "platform"
+  }
+  case object UpdatedAt extends AuthenticationSortKeys {
+    override def toString = "updatedAt"
+  }
+  case object CreatedAt extends AuthenticationSortKeys {
+    override def toString = "createdAt"
+  }
+  val values: Seq[AuthenticationSortKeys] = Seq(Name, AuthType, Platform, UpdatedAt, CreatedAt)
+
+  def withName(name: String): AuthenticationSortKeys = AuthenticationSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown AuthenticationSortKeys value: $name"))
 }
+
+class AuthenticationSortKeysSerializer
+    extends CustomSerializer[AuthenticationSortKeys](_ =>
+      (
+        {
+          case JString(value) => AuthenticationSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: AuthenticationSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

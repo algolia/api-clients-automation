@@ -31,9 +31,11 @@ object TriggerSerializer extends Serializer[Trigger] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Trigger =>
+    value match {
+      case value: OnDemandTrigger     => Extraction.decompose(value)(format - this)
+      case value: ScheduleTrigger     => Extraction.decompose(value)(format - this)
+      case value: SubscriptionTrigger => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object TriggerEnums {}

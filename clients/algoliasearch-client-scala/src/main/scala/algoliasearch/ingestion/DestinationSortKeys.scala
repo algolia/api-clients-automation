@@ -7,10 +7,41 @@
   */
 package algoliasearch.ingestion
 
-object DestinationSortKeys extends Enumeration {
-  type DestinationSortKeys = DestinationSortKeys.Value
-  val Name = Value("name")
-  val `Type` = Value("type")
-  val UpdatedAt = Value("updatedAt")
-  val CreatedAt = Value("createdAt")
+import org.json4s._
+
+sealed trait DestinationSortKeys
+
+/** Used to sort the Destination list endpoint.
+  */
+object DestinationSortKeys {
+  case object Name extends DestinationSortKeys {
+    override def toString = "name"
+  }
+  case object `Type` extends DestinationSortKeys {
+    override def toString = "type"
+  }
+  case object UpdatedAt extends DestinationSortKeys {
+    override def toString = "updatedAt"
+  }
+  case object CreatedAt extends DestinationSortKeys {
+    override def toString = "createdAt"
+  }
+  val values: Seq[DestinationSortKeys] = Seq(Name, `Type`, UpdatedAt, CreatedAt)
+
+  def withName(name: String): DestinationSortKeys = DestinationSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DestinationSortKeys value: $name"))
 }
+
+class DestinationSortKeysSerializer
+    extends CustomSerializer[DestinationSortKeys](_ =>
+      (
+        {
+          case JString(value) => DestinationSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: DestinationSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

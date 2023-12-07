@@ -9,7 +9,32 @@
   */
 package algoliasearch.insights
 
-object PurchaseEvent extends Enumeration {
-  type PurchaseEvent = PurchaseEvent.Value
-  val Purchase = Value("purchase")
+import org.json4s._
+
+sealed trait PurchaseEvent
+
+/** PurchaseEvent enumeration
+  */
+object PurchaseEvent {
+  case object Purchase extends PurchaseEvent {
+    override def toString = "purchase"
+  }
+  val values: Seq[PurchaseEvent] = Seq(Purchase)
+
+  def withName(name: String): PurchaseEvent = PurchaseEvent.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown PurchaseEvent value: $name"))
 }
+
+class PurchaseEventSerializer
+    extends CustomSerializer[PurchaseEvent](_ =>
+      (
+        {
+          case JString(value) => PurchaseEvent.withName(value)
+          case JNull          => null
+        },
+        { case value: PurchaseEvent =>
+          JString(value.toString)
+        }
+      )
+    )

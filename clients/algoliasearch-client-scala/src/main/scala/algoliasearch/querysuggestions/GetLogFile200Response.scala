@@ -29,5 +29,3 @@ case class GetLogFile200Response(
     message: Option[String] = scala.None,
     contextLevel: Option[Int] = scala.None
 )
-
-object GetLogFile200ResponseEnums {}

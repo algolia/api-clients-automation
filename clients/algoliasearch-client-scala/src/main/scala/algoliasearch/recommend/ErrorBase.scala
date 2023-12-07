@@ -11,13 +11,14 @@
   */
 package algoliasearch.recommend
 
-import org.json4s.{Extraction, Formats, JObject, JValue, Serializer, TypeInfo}
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 
 /** Error.
   */
 case class ErrorBase(
     message: Option[String] = scala.None,
-    additionalProperties: Map[String, JValue] = Map.empty
+    additionalProperties: Option[List[JField]] = None
 )
 
 class ErrorBaseSerializer extends Serializer[ErrorBase] {
@@ -29,16 +30,25 @@ class ErrorBaseSerializer extends Serializer[ErrorBase] {
           val formats = format - this
           val mf = manifest[ErrorBase]
           val obj = Extraction.extract[ErrorBase](jobject)(formats, mf)
-          val properties = jobject.obj.toMap - "message"
-          obj.copy(additionalProperties = properties)
+
+          val fields = Set("message")
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties.values match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as ErrorBase")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ErrorBase =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    Extraction.decompose(value.copy(additionalProperties = Map.empty))(formats) merge Extraction.decompose(
-      value.additionalProperties
-    )(formats)
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
   }
 }

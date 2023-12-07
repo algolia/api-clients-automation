@@ -7,8 +7,35 @@
   */
 package algoliasearch.ingestion
 
-object RecordType extends Enumeration {
-  type RecordType = RecordType.Value
-  val Product = Value("product")
-  val Variant = Value("variant")
+import org.json4s._
+
+sealed trait RecordType
+
+/** Determines the indexing strategy to use for a given e-commerce source.
+  */
+object RecordType {
+  case object Product extends RecordType {
+    override def toString = "product"
+  }
+  case object Variant extends RecordType {
+    override def toString = "variant"
+  }
+  val values: Seq[RecordType] = Seq(Product, Variant)
+
+  def withName(name: String): RecordType = RecordType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown RecordType value: $name"))
 }
+
+class RecordTypeSerializer
+    extends CustomSerializer[RecordType](_ =>
+      (
+        {
+          case JString(value) => RecordType.withName(value)
+          case JNull          => null
+        },
+        { case value: RecordType =>
+          JString(value.toString)
+        }
+      )
+    )

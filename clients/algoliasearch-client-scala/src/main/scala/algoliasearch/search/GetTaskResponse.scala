@@ -18,5 +18,3 @@ import algoliasearch.search.TaskStatus._
 case class GetTaskResponse(
     status: TaskStatus
 )
-
-object GetTaskResponseEnums {}

@@ -303,5 +303,3 @@ case class SearchForFacets(
     facetQuery: Option[String] = scala.None,
     `type`: SearchTypeFacet
 ) extends SearchQueryTrait
-
-object SearchForFacetsEnums {}

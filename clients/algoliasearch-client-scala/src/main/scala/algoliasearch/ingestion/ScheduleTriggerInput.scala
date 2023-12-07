@@ -18,5 +18,3 @@ case class ScheduleTriggerInput(
     `type`: ScheduleTriggerType,
     cron: String
 ) extends TaskCreateTriggerTrait
-
-object ScheduleTriggerInputEnums {}

@@ -11,10 +11,41 @@
   */
 package algoliasearch.search
 
-object LogType extends Enumeration {
-  type LogType = LogType.Value
-  val All = Value("all")
-  val Query = Value("query")
-  val Build = Value("build")
-  val Error = Value("error")
+import org.json4s._
+
+sealed trait LogType
+
+/** LogType enumeration
+  */
+object LogType {
+  case object All extends LogType {
+    override def toString = "all"
+  }
+  case object Query extends LogType {
+    override def toString = "query"
+  }
+  case object Build extends LogType {
+    override def toString = "build"
+  }
+  case object Error extends LogType {
+    override def toString = "error"
+  }
+  val values: Seq[LogType] = Seq(All, Query, Build, Error)
+
+  def withName(name: String): LogType = LogType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown LogType value: $name"))
 }
+
+class LogTypeSerializer
+    extends CustomSerializer[LogType](_ =>
+      (
+        {
+          case JString(value) => LogType.withName(value)
+          case JNull          => null
+        },
+        { case value: LogType =>
+          JString(value.toString)
+        }
+      )
+    )

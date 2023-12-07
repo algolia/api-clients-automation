@@ -11,11 +11,44 @@
   */
 package algoliasearch.search
 
-object SynonymType extends Enumeration {
-  type SynonymType = SynonymType.Value
-  val Synonym = Value("synonym")
-  val Onewaysynonym = Value("onewaysynonym")
-  val Altcorrection1 = Value("altcorrection1")
-  val Altcorrection2 = Value("altcorrection2")
-  val Placeholder = Value("placeholder")
+import org.json4s._
+
+sealed trait SynonymType
+
+/** Synonym type.
+  */
+object SynonymType {
+  case object Synonym extends SynonymType {
+    override def toString = "synonym"
+  }
+  case object Onewaysynonym extends SynonymType {
+    override def toString = "onewaysynonym"
+  }
+  case object Altcorrection1 extends SynonymType {
+    override def toString = "altcorrection1"
+  }
+  case object Altcorrection2 extends SynonymType {
+    override def toString = "altcorrection2"
+  }
+  case object Placeholder extends SynonymType {
+    override def toString = "placeholder"
+  }
+  val values: Seq[SynonymType] = Seq(Synonym, Onewaysynonym, Altcorrection1, Altcorrection2, Placeholder)
+
+  def withName(name: String): SynonymType = SynonymType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SynonymType value: $name"))
 }
+
+class SynonymTypeSerializer
+    extends CustomSerializer[SynonymType](_ =>
+      (
+        {
+          case JString(value) => SynonymType.withName(value)
+          case JNull          => null
+        },
+        { case value: SynonymType =>
+          JString(value.toString)
+        }
+      )
+    )

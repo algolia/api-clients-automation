@@ -11,21 +11,97 @@
   */
 package algoliasearch.search
 
-object Acl extends Enumeration {
-  type Acl = Acl.Value
-  val AddObject = Value("addObject")
-  val Analytics = Value("analytics")
-  val Browse = Value("browse")
-  val DeleteObject = Value("deleteObject")
-  val DeleteIndex = Value("deleteIndex")
-  val EditSettings = Value("editSettings")
-  val Inference = Value("inference")
-  val ListIndexes = Value("listIndexes")
-  val Logs = Value("logs")
-  val Personalization = Value("personalization")
-  val Recommendation = Value("recommendation")
-  val Search = Value("search")
-  val SeeUnretrievableAttributes = Value("seeUnretrievableAttributes")
-  val Settings = Value("settings")
-  val Usage = Value("usage")
+import org.json4s._
+
+sealed trait Acl
+
+/** API key permissions: `addObject`: required to add or update records, copy or move an index. `analytics`: required to
+  * access the Analytics API. `browse`: required to view records `deleteIndex`: required to delete indices.
+  * `deleteObject`: required to delete records. `editSettings`: required to change index settings. `inference`: required
+  * to access the Inference API. `listIndexes`: required to list indices. `logs`: required to access logs of search and
+  * indexing operations. `recommendation`: required to access the Personalization and Recommend APIs. `search`: required
+  * to search records `seeUnretrievableAttributes`: required to retrieve
+  * [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) for
+  * all operations that return records. `settings`: required to examine index settings.
+  */
+object Acl {
+  case object AddObject extends Acl {
+    override def toString = "addObject"
+  }
+  case object Analytics extends Acl {
+    override def toString = "analytics"
+  }
+  case object Browse extends Acl {
+    override def toString = "browse"
+  }
+  case object DeleteObject extends Acl {
+    override def toString = "deleteObject"
+  }
+  case object DeleteIndex extends Acl {
+    override def toString = "deleteIndex"
+  }
+  case object EditSettings extends Acl {
+    override def toString = "editSettings"
+  }
+  case object Inference extends Acl {
+    override def toString = "inference"
+  }
+  case object ListIndexes extends Acl {
+    override def toString = "listIndexes"
+  }
+  case object Logs extends Acl {
+    override def toString = "logs"
+  }
+  case object Personalization extends Acl {
+    override def toString = "personalization"
+  }
+  case object Recommendation extends Acl {
+    override def toString = "recommendation"
+  }
+  case object Search extends Acl {
+    override def toString = "search"
+  }
+  case object SeeUnretrievableAttributes extends Acl {
+    override def toString = "seeUnretrievableAttributes"
+  }
+  case object Settings extends Acl {
+    override def toString = "settings"
+  }
+  case object Usage extends Acl {
+    override def toString = "usage"
+  }
+  val values: Seq[Acl] = Seq(
+    AddObject,
+    Analytics,
+    Browse,
+    DeleteObject,
+    DeleteIndex,
+    EditSettings,
+    Inference,
+    ListIndexes,
+    Logs,
+    Personalization,
+    Recommendation,
+    Search,
+    SeeUnretrievableAttributes,
+    Settings,
+    Usage
+  )
+
+  def withName(name: String): Acl = Acl.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Acl value: $name"))
 }
+
+class AclSerializer
+    extends CustomSerializer[Acl](_ =>
+      (
+        {
+          case JString(value) => Acl.withName(value)
+          case JNull          => null
+        },
+        { case value: Acl =>
+          JString(value.toString)
+        }
+      )
+    )

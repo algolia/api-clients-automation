@@ -12,36 +12,35 @@
 package algoliasearch.search
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(Acl) :+
-    new EnumNameSerializer(Action) :+
-    new EnumNameSerializer(AdvancedSyntaxFeatures) :+
-    new EnumNameSerializer(AlternativesAsExact) :+
-    new EnumNameSerializer(Anchoring) :+
-    new EnumNameSerializer(AroundRadiusAll) :+
-    new EnumNameSerializer(BuiltInOperationType) :+
-    new EnumNameSerializer(DictionaryAction) :+
-    new EnumNameSerializer(DictionaryEntryState) :+
-    new EnumNameSerializer(DictionaryType) :+
-    new EnumNameSerializer(EditType) :+
-    new EnumNameSerializer(ExactOnSingleWordQuery) :+
-    new EnumNameSerializer(LogType) :+
-    new EnumNameSerializer(MatchLevel) :+
-    new EnumNameSerializer(Mode) :+
-    new EnumNameSerializer(OperationType) :+
-    new EnumNameSerializer(QueryType) :+
-    new EnumNameSerializer(RemoveWordsIfNoResults) :+
-    new EnumNameSerializer(ScopeType) :+
-    new EnumNameSerializer(SearchStrategy) :+
-    new EnumNameSerializer(SearchTypeDefault) :+
-    new EnumNameSerializer(SearchTypeFacet) :+
-    new EnumNameSerializer(SortRemainingBy) :+
-    new EnumNameSerializer(SynonymType) :+
-    new EnumNameSerializer(TaskStatus) :+
-    new EnumNameSerializer(TypoToleranceEnum)
+    new AclSerializer() :+
+    new ActionSerializer() :+
+    new AdvancedSyntaxFeaturesSerializer() :+
+    new AlternativesAsExactSerializer() :+
+    new AnchoringSerializer() :+
+    new AroundRadiusAllSerializer() :+
+    new BuiltInOperationTypeSerializer() :+
+    new DictionaryActionSerializer() :+
+    new DictionaryEntryStateSerializer() :+
+    new DictionaryTypeSerializer() :+
+    new EditTypeSerializer() :+
+    new ExactOnSingleWordQuerySerializer() :+
+    new LogTypeSerializer() :+
+    new MatchLevelSerializer() :+
+    new ModeSerializer() :+
+    new OperationTypeSerializer() :+
+    new QueryTypeSerializer() :+
+    new RemoveWordsIfNoResultsSerializer() :+
+    new ScopeTypeSerializer() :+
+    new SearchStrategySerializer() :+
+    new SearchTypeDefaultSerializer() :+
+    new SearchTypeFacetSerializer() :+
+    new SortRemainingBySerializer() :+
+    new SynonymTypeSerializer() :+
+    new TaskStatusSerializer() :+
+    new TypoToleranceEnumSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     AroundPrecisionSerializer :+

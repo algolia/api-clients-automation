@@ -7,11 +7,44 @@
   */
 package algoliasearch.ingestion
 
-object TaskSortKeys extends Enumeration {
-  type TaskSortKeys = TaskSortKeys.Value
-  val Enabled = Value("enabled")
-  val TriggerType = Value("triggerType")
-  val Action = Value("action")
-  val UpdatedAt = Value("updatedAt")
-  val CreatedAt = Value("createdAt")
+import org.json4s._
+
+sealed trait TaskSortKeys
+
+/** Used to sort the Task list endpoint.
+  */
+object TaskSortKeys {
+  case object Enabled extends TaskSortKeys {
+    override def toString = "enabled"
+  }
+  case object TriggerType extends TaskSortKeys {
+    override def toString = "triggerType"
+  }
+  case object Action extends TaskSortKeys {
+    override def toString = "action"
+  }
+  case object UpdatedAt extends TaskSortKeys {
+    override def toString = "updatedAt"
+  }
+  case object CreatedAt extends TaskSortKeys {
+    override def toString = "createdAt"
+  }
+  val values: Seq[TaskSortKeys] = Seq(Enabled, TriggerType, Action, UpdatedAt, CreatedAt)
+
+  def withName(name: String): TaskSortKeys = TaskSortKeys.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown TaskSortKeys value: $name"))
 }
+
+class TaskSortKeysSerializer
+    extends CustomSerializer[TaskSortKeys](_ =>
+      (
+        {
+          case JString(value) => TaskSortKeys.withName(value)
+          case JNull          => null
+        },
+        { case value: TaskSortKeys =>
+          JString(value.toString)
+        }
+      )
+    )

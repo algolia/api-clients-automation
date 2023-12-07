@@ -42,7 +42,10 @@ object DistinctSerializer extends Serializer[Distinct] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Distinct =>
+    value match {
+      case Distinct.BooleanValue(value) => JBool(value)
+      case Distinct.IntValue(value)     => JInt(value)
+    }
   }
 }

@@ -43,7 +43,10 @@ object TypoToleranceSerializer extends Serializer[TypoTolerance] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TypoTolerance =>
+    value match {
+      case TypoTolerance.BooleanValue(value) => JBool(value)
+      case value: TypoToleranceEnum          => JString(value.toString)
+    }
   }
 }

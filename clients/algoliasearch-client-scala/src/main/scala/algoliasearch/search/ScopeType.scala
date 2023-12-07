@@ -11,9 +11,38 @@
   */
 package algoliasearch.search
 
-object ScopeType extends Enumeration {
-  type ScopeType = ScopeType.Value
-  val Settings = Value("settings")
-  val Synonyms = Value("synonyms")
-  val Rules = Value("rules")
+import org.json4s._
+
+sealed trait ScopeType
+
+/** ScopeType enumeration
+  */
+object ScopeType {
+  case object Settings extends ScopeType {
+    override def toString = "settings"
+  }
+  case object Synonyms extends ScopeType {
+    override def toString = "synonyms"
+  }
+  case object Rules extends ScopeType {
+    override def toString = "rules"
+  }
+  val values: Seq[ScopeType] = Seq(Settings, Synonyms, Rules)
+
+  def withName(name: String): ScopeType = ScopeType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ScopeType value: $name"))
 }
+
+class ScopeTypeSerializer
+    extends CustomSerializer[ScopeType](_ =>
+      (
+        {
+          case JString(value) => ScopeType.withName(value)
+          case JNull          => null
+        },
+        { case value: ScopeType =>
+          JString(value.toString)
+        }
+      )
+    )

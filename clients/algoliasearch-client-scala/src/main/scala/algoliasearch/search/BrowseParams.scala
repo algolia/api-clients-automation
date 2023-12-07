@@ -39,9 +39,10 @@ object BrowseParamsSerializer extends Serializer[BrowseParams] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: BrowseParams =>
+    value match {
+      case value: SearchParamsString => Extraction.decompose(value)(format - this)
+      case value: BrowseParamsObject => Extraction.decompose(value)(format - this)
+    }
   }
 }
-
-object BrowseParamsEnums {}

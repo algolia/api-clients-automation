@@ -11,8 +11,35 @@
   */
 package algoliasearch.recommend
 
-object Mode extends Enumeration {
-  type Mode = Mode.Value
-  val NeuralSearch = Value("neuralSearch")
-  val KeywordSearch = Value("keywordSearch")
+import org.json4s._
+
+sealed trait Mode
+
+/** Search mode the index will use to query for results.
+  */
+object Mode {
+  case object NeuralSearch extends Mode {
+    override def toString = "neuralSearch"
+  }
+  case object KeywordSearch extends Mode {
+    override def toString = "keywordSearch"
+  }
+  val values: Seq[Mode] = Seq(NeuralSearch, KeywordSearch)
+
+  def withName(name: String): Mode = Mode.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown Mode value: $name"))
 }
+
+class ModeSerializer
+    extends CustomSerializer[Mode](_ =>
+      (
+        {
+          case JString(value) => Mode.withName(value)
+          case JNull          => null
+        },
+        { case value: Mode =>
+          JString(value.toString)
+        }
+      )
+    )

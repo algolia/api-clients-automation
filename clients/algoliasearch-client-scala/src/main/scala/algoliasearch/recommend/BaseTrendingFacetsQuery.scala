@@ -22,5 +22,3 @@ case class BaseTrendingFacetsQuery(
     facetName: String,
     model: Option[TrendingFacetsModel] = scala.None
 )
-
-object BaseTrendingFacetsQueryEnums {}

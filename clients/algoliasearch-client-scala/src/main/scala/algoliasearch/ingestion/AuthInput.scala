@@ -31,7 +31,13 @@ object AuthInputSerializer extends Serializer[AuthInput] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AuthInput =>
+    value match {
+      case value: AuthGoogleServiceAccount => Extraction.decompose(value)(format - this)
+      case value: AuthBasic                => Extraction.decompose(value)(format - this)
+      case value: AuthAPIKey               => Extraction.decompose(value)(format - this)
+      case value: AuthOAuth                => Extraction.decompose(value)(format - this)
+      case value: AuthAlgolia              => Extraction.decompose(value)(format - this)
+    }
   }
 }

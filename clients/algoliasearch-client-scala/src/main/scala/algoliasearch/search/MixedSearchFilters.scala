@@ -35,13 +35,17 @@ object MixedSearchFiltersSerializer extends Serializer[MixedSearchFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[MixedSearchFilters] =>
       json match {
-        case JArray(value: List[JString]) => MixedSearchFilters.SeqOfString(value.map(_.extract))
-        case JString(value)               => MixedSearchFilters.StringValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to MixedSearchFilters")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          MixedSearchFilters.SeqOfString(value.map(_.extract))
+        case JString(value) => MixedSearchFilters.StringValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to MixedSearchFilters")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: MixedSearchFilters =>
+    value match {
+      case MixedSearchFilters.SeqOfString(value) => JArray(value.map(Extraction.decompose).toList)
+      case MixedSearchFilters.StringValue(value) => JString(value)
+    }
   }
 }

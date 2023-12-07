@@ -11,7 +11,32 @@
   */
 package algoliasearch.recommend
 
-object TrendingItemsModel extends Enumeration {
-  type TrendingItemsModel = TrendingItemsModel.Value
-  val TrendingItems = Value("trending-items")
+import org.json4s._
+
+sealed trait TrendingItemsModel
+
+/** Trending items model.
+  */
+object TrendingItemsModel {
+  case object TrendingItems extends TrendingItemsModel {
+    override def toString = "trending-items"
+  }
+  val values: Seq[TrendingItemsModel] = Seq(TrendingItems)
+
+  def withName(name: String): TrendingItemsModel = TrendingItemsModel.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown TrendingItemsModel value: $name"))
 }
+
+class TrendingItemsModelSerializer
+    extends CustomSerializer[TrendingItemsModel](_ =>
+      (
+        {
+          case JString(value) => TrendingItemsModel.withName(value)
+          case JNull          => null
+        },
+        { case value: TrendingItemsModel =>
+          JString(value.toString)
+        }
+      )
+    )

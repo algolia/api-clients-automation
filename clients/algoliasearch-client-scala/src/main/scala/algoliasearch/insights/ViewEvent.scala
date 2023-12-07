@@ -9,7 +9,32 @@
   */
 package algoliasearch.insights
 
-object ViewEvent extends Enumeration {
-  type ViewEvent = ViewEvent.Value
-  val View = Value("view")
+import org.json4s._
+
+sealed trait ViewEvent
+
+/** ViewEvent enumeration
+  */
+object ViewEvent {
+  case object View extends ViewEvent {
+    override def toString = "view"
+  }
+  val values: Seq[ViewEvent] = Seq(View)
+
+  def withName(name: String): ViewEvent = ViewEvent.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown ViewEvent value: $name"))
 }
+
+class ViewEventSerializer
+    extends CustomSerializer[ViewEvent](_ =>
+      (
+        {
+          case JString(value) => ViewEvent.withName(value)
+          case JNull          => null
+        },
+        { case value: ViewEvent =>
+          JString(value.toString)
+        }
+      )
+    )

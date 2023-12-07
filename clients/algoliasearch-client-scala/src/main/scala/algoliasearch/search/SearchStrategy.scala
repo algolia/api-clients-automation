@@ -11,8 +11,36 @@
   */
 package algoliasearch.search
 
-object SearchStrategy extends Enumeration {
-  type SearchStrategy = SearchStrategy.Value
-  val None = Value("none")
-  val StopIfEnoughMatches = Value("stopIfEnoughMatches")
+import org.json4s._
+
+sealed trait SearchStrategy
+
+/**   - `none`: executes all queries. - `stopIfEnoughMatches`: executes queries one by one, stopping further query
+  *     execution as soon as a query matches at least the `hitsPerPage` number of results.
+  */
+object SearchStrategy {
+  case object None extends SearchStrategy {
+    override def toString = "none"
+  }
+  case object StopIfEnoughMatches extends SearchStrategy {
+    override def toString = "stopIfEnoughMatches"
+  }
+  val values: Seq[SearchStrategy] = Seq(None, StopIfEnoughMatches)
+
+  def withName(name: String): SearchStrategy = SearchStrategy.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown SearchStrategy value: $name"))
 }
+
+class SearchStrategySerializer
+    extends CustomSerializer[SearchStrategy](_ =>
+      (
+        {
+          case JString(value) => SearchStrategy.withName(value)
+          case JNull          => null
+        },
+        { case value: SearchStrategy =>
+          JString(value.toString)
+        }
+      )
+    )

@@ -22,5 +22,3 @@ case class SnippetResultOption(
     value: String,
     matchLevel: MatchLevel
 ) extends SnippetResultTrait
-
-object SnippetResultOptionEnums {}

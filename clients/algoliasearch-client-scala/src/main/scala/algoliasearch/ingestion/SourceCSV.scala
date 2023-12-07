@@ -30,5 +30,3 @@ case class SourceCSV(
     delimiter: Option[String] = scala.None
 ) extends SourceUpdateInputTrait
     with SourceInputTrait
-
-object SourceCSVEnums {}

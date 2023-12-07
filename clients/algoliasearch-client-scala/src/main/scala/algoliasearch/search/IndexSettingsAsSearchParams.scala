@@ -166,5 +166,3 @@ case class IndexSettingsAsSearchParams(
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None
 )
-
-object IndexSettingsAsSearchParamsEnums {}

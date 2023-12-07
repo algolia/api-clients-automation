@@ -33,5 +33,3 @@ case class Event(
     data: Option[Map[String, Any]] = scala.None,
     publishedAt: String
 )
-
-object EventEnums {}

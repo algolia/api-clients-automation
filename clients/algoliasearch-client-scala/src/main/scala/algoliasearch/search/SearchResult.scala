@@ -33,7 +33,10 @@ object SearchResultSerializer extends Serializer[SearchResult] {
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchResult =>
+    value match {
+      case value: SearchForFacetValuesResponse => Extraction.decompose(value)(format - this)
+      case value: SearchResponse               => Extraction.decompose(value)(format - this)
+    }
   }
 }

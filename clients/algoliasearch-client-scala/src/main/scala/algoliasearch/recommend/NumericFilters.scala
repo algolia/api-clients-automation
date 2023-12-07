@@ -35,13 +35,17 @@ object NumericFiltersSerializer extends Serializer[NumericFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[NumericFilters] =>
       json match {
-        case JArray(value: List[JObject]) => NumericFilters.SeqOfMixedSearchFilters(value.map(_.extract))
-        case JString(value)               => NumericFilters.StringValue(value)
-        case _                            => throw new MappingException("Can't convert " + json + " to NumericFilters")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          NumericFilters.SeqOfMixedSearchFilters(value.map(_.extract))
+        case JString(value) => NumericFilters.StringValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to NumericFilters")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value =>
-    Extraction.decompose(value)(format - this)
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: NumericFilters =>
+    value match {
+      case NumericFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case NumericFilters.StringValue(value)             => JString(value)
+    }
   }
 }

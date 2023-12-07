@@ -22,5 +22,3 @@ case class SearchForHitsOptions(
     indexName: String,
     `type`: Option[SearchTypeDefault] = scala.None
 )
-
-object SearchForHitsOptionsEnums {}

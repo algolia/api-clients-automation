@@ -8,39 +8,38 @@
 package algoliasearch.ingestion
 
 import org.json4s._
-import org.json4s.ext.EnumNameSerializer
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(ActionType) :+
-    new EnumNameSerializer(AuthenticationSortKeys) :+
-    new EnumNameSerializer(AuthenticationType) :+
-    new EnumNameSerializer(BigQueryDataType) :+
-    new EnumNameSerializer(DestinationSortKeys) :+
-    new EnumNameSerializer(DestinationType) :+
-    new EnumNameSerializer(DockerImageType) :+
-    new EnumNameSerializer(DockerRegistry) :+
-    new EnumNameSerializer(EventSortKeys) :+
-    new EnumNameSerializer(EventStatus) :+
-    new EnumNameSerializer(EventType) :+
-    new EnumNameSerializer(MappingTypeCSV) :+
-    new EnumNameSerializer(MethodType) :+
-    new EnumNameSerializer(OnDemandTriggerType) :+
-    new EnumNameSerializer(OrderKeys) :+
-    new EnumNameSerializer(Platform) :+
-    new EnumNameSerializer(PlatformNone) :+
-    new EnumNameSerializer(RecordType) :+
-    new EnumNameSerializer(RunOutcome) :+
-    new EnumNameSerializer(RunReasonCode) :+
-    new EnumNameSerializer(RunSortKeys) :+
-    new EnumNameSerializer(RunStatus) :+
-    new EnumNameSerializer(RunType) :+
-    new EnumNameSerializer(ScheduleTriggerType) :+
-    new EnumNameSerializer(SourceSortKeys) :+
-    new EnumNameSerializer(SourceType) :+
-    new EnumNameSerializer(SubscriptionTriggerType) :+
-    new EnumNameSerializer(TaskSortKeys) :+
-    new EnumNameSerializer(TriggerType)
+    new ActionTypeSerializer() :+
+    new AuthenticationSortKeysSerializer() :+
+    new AuthenticationTypeSerializer() :+
+    new BigQueryDataTypeSerializer() :+
+    new DestinationSortKeysSerializer() :+
+    new DestinationTypeSerializer() :+
+    new DockerImageTypeSerializer() :+
+    new DockerRegistrySerializer() :+
+    new EventSortKeysSerializer() :+
+    new EventStatusSerializer() :+
+    new EventTypeSerializer() :+
+    new MappingTypeCSVSerializer() :+
+    new MethodTypeSerializer() :+
+    new OnDemandTriggerTypeSerializer() :+
+    new OrderKeysSerializer() :+
+    new PlatformSerializer() :+
+    new PlatformNoneSerializer() :+
+    new RecordTypeSerializer() :+
+    new RunOutcomeSerializer() :+
+    new RunReasonCodeSerializer() :+
+    new RunSortKeysSerializer() :+
+    new RunStatusSerializer() :+
+    new RunTypeSerializer() :+
+    new ScheduleTriggerTypeSerializer() :+
+    new SourceSortKeysSerializer() :+
+    new SourceTypeSerializer() :+
+    new SubscriptionTriggerTypeSerializer() :+
+    new TaskSortKeysSerializer() :+
+    new TriggerTypeSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     AuthInputSerializer :+
