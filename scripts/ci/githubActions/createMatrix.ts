@@ -186,10 +186,10 @@ async function createMatrix(opts: CreateMatrix): Promise<void> {
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
-  // const args = process.argv.slice(2);
+  const args = process.argv.slice(2);
 
   createMatrix({
-    baseBranch: 'origin/main',
-    forClients: true,
+    baseBranch: args[0],
+    forClients: args[1] === 'clients',
   });
 }

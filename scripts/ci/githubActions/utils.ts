@@ -53,8 +53,6 @@ const commonCacheKey = (async function (): Promise<string> {
 export async function computeCacheKey(baseName: string, paths: string[]): Promise<string> {
   let hash = '';
 
-  console.log(baseName, paths);
-
   for (const path of paths) {
     const pathHash = await hashElement(toAbsolutePath(path), {
       encoding: 'hex',
