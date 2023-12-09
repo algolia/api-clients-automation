@@ -38,7 +38,7 @@ __metadata:
     "@babel/preset-env": "npm:7.23.5"
     "@babel/preset-typescript": "npm:7.23.3"
     "@types/jest": "npm:29.5.11"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     ts-jest: "npm:29.1.1"
@@ -118,7 +118,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.92"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.92"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.92"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     rollup: "npm:4.6.1"
     typescript: "npm:5.3.2"
   languageName: unknown
@@ -145,7 +145,7 @@ __metadata:
     "@babel/preset-env": "npm:7.23.5"
     "@babel/preset-typescript": "npm:7.23.3"
     "@types/jest": "npm:29.5.11"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     ts-jest: "npm:29.1.1"
@@ -162,7 +162,7 @@ __metadata:
     "@babel/preset-env": "npm:7.23.5"
     "@babel/preset-typescript": "npm:7.23.3"
     "@types/jest": "npm:29.5.11"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     cross-fetch: "npm:4.0.0"
     jest: "npm:29.7.0"
     nock: "npm:13.4.0"
@@ -179,7 +179,7 @@ __metadata:
     "@babel/preset-env": "npm:7.23.5"
     "@babel/preset-typescript": "npm:7.23.3"
     "@types/jest": "npm:29.5.11"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     jest: "npm:29.7.0"
     nock: "npm:13.4.0"
     ts-jest: "npm:29.1.1"
@@ -2786,6 +2786,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:20.10.4":
+  version: 20.10.4
+  resolution: "@types/node@npm:20.10.4"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 2c8b70cba731eb2ae3ae046daa74903bfcbb0e7b9196da767e5895054f6d252296ae7a04fb1dbbcb53bb004c4c658c05eaea2731bc9e2dd9e08f7e88d672f563
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -3000,7 +3009,7 @@ __metadata:
     "@rollup/plugin-node-resolve": "npm:15.2.3"
     "@rollup/plugin-terser": "npm:0.4.4"
     "@types/jest": "npm:29.5.11"
-    "@types/node": "npm:20.10.3"
+    "@types/node": "npm:20.10.4"
     "@types/rollup-plugin-node-globals": "npm:1.4.4"
     "@types/semver": "npm:7.5.6"
     bundlesize2: "npm:0.0.31"
