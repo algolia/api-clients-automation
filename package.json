@@ -57,7 +57,7 @@
     "prettier": "3.1.0",
     "prettier-plugin-java": "2.5.0",
     "renovate-config-algolia": "2.1.10",
-    "typescript": "5.3.2"
+    "typescript": "5.3.3"
   },
   "engines": {
     "node": "^20.0.0",
