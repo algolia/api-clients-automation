@@ -375,16 +375,10 @@ extension {{projectName}}API {
     /**
      {{#summary}}
      {{{.}}}
-     {{/summary}}
-     - {{httpMethod}} {{{path}}}{{#notes}}
-     - {{{.}}}{{/notes}}{{#subresourceOperation}}
-     - subresourceOperation: {{.}}{{/subresourceOperation}}{{#defaultResponse}}
-     - defaultResponse: {{.}}{{/defaultResponse}}
-     {{#authMethods}}
-     - {{#isBasicBasic}}BASIC{{/isBasicBasic}}{{#isBasicBearer}}Bearer Token{{/isBasicBearer}}{{#isOAuth}}OAuth{{/isOAuth}}{{#isApiKey}}API Key{{/isApiKey}}:
-       - type: {{type}}{{#keyParamName}} {{keyParamName}} {{#isKeyInQuery}}(QUERY){{/isKeyInQuery}}{{#isKeyInHeader}}(HEADER){{/isKeyInHeader}}{{/keyParamName}}
-       - name: {{name}}
-       {{/authMethods}}
+     {{/summary}}{{#notes}}
+     {{{.}}}{{/notes}}{{#subresourceOperation}}
+     subresourceOperation: {{.}}{{/subresourceOperation}}{{#defaultResponse}}
+     defaultResponse: {{.}}{{/defaultResponse}}
      {{#hasResponseHeaders}}
      - responseHeaders: [{{#responseHeaders}}{{{baseName}}}({{{dataType}}}){{^-last}}, {{/-last}}{{/responseHeaders}}]
      {{/hasResponseHeaders}}

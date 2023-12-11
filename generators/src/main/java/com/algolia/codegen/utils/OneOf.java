@@ -1,6 +1,7 @@
 package com.algolia.codegen.utils;
 
 import java.util.*;
+import java.util.logging.Logger;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.model.ModelsMap;
@@ -20,6 +21,18 @@ public class OneOf {
       generateSealedChildren(models, modelPackage, model);
       model.vendorExtensions.put("x-is-one-of", true);
       model.vendorExtensions.put("x-one-of-explicit-name", Helpers.shouldUseExplicitOneOfName(model.oneOf));
+    }
+  }
+
+  public static void updateModelsOneOfForSwift(Map<String, ModelsMap> models, String modelPackage) {
+    for (ModelsMap modelContainer : models.values()) {
+      // modelContainers always have 1 and only 1 model in our specs
+      var model = modelContainer.getModels().get(0).getModel();
+      if (model.oneOf.isEmpty()) continue;
+      markOneOfChildrenForSwift(models, model);
+      generateSealedChildren(models, modelPackage, model);
+      model.vendorExtensions.put("x-is-one-of", true);
+      model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
     }
   }
 
@@ -62,6 +75,36 @@ public class OneOf {
       oneOfModel.put("isList", oneOf.contains("List"));
       markCompounds(models, oneOf, oneOfModel, model);
       oneOfList.add(oneOfModel);
+    }
+    oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
+    model.vendorExtensions.put("x-one-of-list", oneOfList);
+  }
+
+  private static void markOneOfChildrenForSwift(Map<String, ModelsMap> models, CodegenModel model) {
+    var oneOfList = new ArrayList<Map<String, Object>>();
+    for (String oneOf : model.oneOf) {
+      Logger.getGlobal().severe(oneOf);
+      var oneOfModel = new HashMap<String, Object>();
+      oneOfModel.put("type", oneOf);
+      var isList = oneOf.charAt(0) == '[' && oneOf.charAt(oneOf.length() - 1) == ']';
+      Logger.getGlobal().severe("isList: " + isList);
+      var isDictionary = isList && oneOf.contains(": ");
+      Logger.getGlobal().severe("isDictionary: " + isDictionary);
+      var name = oneOf;
+      if (isDictionary) {
+        isList = false;
+        name = oneOf.replace("[", "DictionaryOf").replace(": ", "To").replace("]", "");
+        oneOfModel.put("listElementType", oneOf.replace("[", "").replace("]", ""));
+      }
+      if (isList) {
+        name = oneOf.replace("[", "ArrayOf").replace("]", "");
+      }
+      oneOfModel.put("name", name);
+      oneOfModel.put("isList", isList);
+      oneOfModel.put("isDictionary", isDictionary);
+      markCompounds(models, oneOf, oneOfModel, model);
+      oneOfList.add(oneOfModel);
+      Logger.getGlobal().severe(name);
     }
     oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
     model.vendorExtensions.put("x-one-of-list", oneOfList);

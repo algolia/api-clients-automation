@@ -1,10 +1,15 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.OneOfUtils;
+import com.samskivert.mustache.Mustache;
 import java.io.File;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.Swift5ClientCodegen;
+import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
@@ -38,25 +43,67 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(POD_AUTHORS, "{ 'Algolia' => 'contact@algolia.com' }");
     additionalProperties.put(CodegenConstants.POD_VERSION, "9.0.0-alpha.0");
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
-    //    additionalProperties.put(SWIFT_USE_API_NAMESPACE, false);
+    additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
+    additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + "AlgoliaSearchClient");
 
-    setSwiftPackagePath("");
+    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+
     setObjcCompatible(true);
     setProjectName("AlgoliaSearchClient");
     setUseSPMFileStructure(true);
 
-    setApiPackage("Sources" + File.separator + projectName);
-    setModelPackage("Sources" + File.separator + projectName + "Models");
+    setApiNamePrefix("");
+    setModelNamePrefix("");
+    setApiPackage(File.separator + "Client");
+    setModelPackage(File.separator + "Models");
 
     super.processOpts();
 
     // Generation notice, added on every generated files
     Utils.setGenerationBanner(additionalProperties);
 
+    try {
+      Utils.generateServer(CLIENT, additionalProperties);
+    } catch (GeneratorException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+
     // Prevent all useless file to generate
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
+  }
+
+  private String typeToName(String content) {
+    var trimmedContent = content.trim();
+    var isList = trimmedContent.charAt(0) == '[' && trimmedContent.charAt(trimmedContent.length() - 1) == ']';
+    var isDictionary = isList && trimmedContent.contains(": ");
+    var name = trimmedContent;
+    if (isDictionary) {
+      isList = false;
+      name = trimmedContent.replace("[", "DictionaryOf").replace(": ", "To").replace("]", "");
+    }
+    if (isList) {
+      name = trimmedContent.replace("[", "ArrayOf").replace("]", "");
+    }
+
+    return name;
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    OneOfUtils.updateModelsOneOfForSwift(models, modelPackage);
+    GenericPropagator.propagateGenericsToModels(models);
+    return models;
+  }
+
+  @Override
+  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
+    OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    GenericPropagator.propagateGenericsToOperations(operations, models);
+    return operations;
   }
 }

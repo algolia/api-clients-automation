@@ -1,13 +1,13 @@
 {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: {{#useVapor}}Content{{/useVapor}}{{^useVapor}}Codable, JSONEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}}{{/useVapor}} {
     {{#oneOf}}
-    case type{{.}}({{.}})
+    case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{.}})
     {{/oneOf}}
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         {{#oneOf}}
-        case .type{{.}}(let value):
+        case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
             try container.encode(value)
         {{/oneOf}}
         }
@@ -22,7 +22,7 @@
         {{^-first}}
         } else if let value = try? container.decode({{.}}.self) {
         {{/-first}}
-            self = .type{{.}}(value)
+            self = .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(value)
         {{/oneOf}}
         } else {
             throw DecodingError.typeMismatch(Self.Type.self, .init(codingPath: decoder.codingPath, debugDescription: "Unable to decode instance of {{classname}}"))
