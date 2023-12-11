@@ -41,7 +41,7 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "del",
+        "path": "customDel",
         "parameters": {
           "path": "/test"
         },
