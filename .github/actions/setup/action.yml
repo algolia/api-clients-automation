@@ -198,7 +198,7 @@ runs:
 
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.csharp-version.outputs.CSHARP_VERSION }}
 
