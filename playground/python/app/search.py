@@ -1,7 +1,7 @@
 from asyncio import run
 
-from algoliasearch.search import __version__, SearchClient
-from algoliasearch.http import RequestOptions
+from algoliasearch.search import SearchClient, __version__
+from algoliasearch.search.models import SearchMethodParams, SearchQuery
 
 
 async def main():
@@ -12,9 +12,15 @@ async def main():
     print("client initialized", client)
 
     try:
+        # response = await client.search(
+        #     search_method_params={"requests": [{"indexName": "nvim"}]},
+        #     request_options=RequestOptions({"foo": "bar"}, {}, {"readTimeout": 1, "writeTimeout": 2}, {})
+        # )
+
         response = await client.search(
-            search_method_params={"requests": [{"indexName": "nvim"}]},
-            request_options=RequestOptions({"foo": "bar"}, {}, {"readTimeout": 1, "writeTimeout": 2}, {})
+            search_method_params=SearchMethodParams(
+                requests=[SearchQuery(index_name="nvim", query="foo")]
+            )
         )
 
         print(response.to_json())
@@ -22,5 +28,6 @@ async def main():
         await client.close()
 
         print("client closed", client)
+
 
 run(main())

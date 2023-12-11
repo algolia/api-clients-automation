@@ -11,6 +11,11 @@ repository = "https://github.com/algolia/api-clients-automation"
 [tool.poetry.dependencies]
 python = "3.11.6"
 algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
+flake8 = "6.1.0"
+autoflake = "2.2.1"
+autopep8 = "2.0.4"
+black = "23.11.0"
+isort = "5.13.0"
 
 [tool.poetry.scripts]
 search = "app.search:main"

@@ -98,13 +98,6 @@ class {{classname}}:
         if {{paramName}} is None:
             raise ValueError("'{{paramName}}' is required when calling '{{nickname}}'")
 
-        {{#vars}}
-        {{#required}}
-        if {{paramName}}.get("{{baseName}}") is None:
-            raise ValueError("Parameter '{{paramName}}.{{baseName}}' is required when calling '{{nickname}}'")
-        {{/required}}
-        {{/vars}}
-
         {{/required}}
         {{/allParams}}
 
