@@ -75,11 +75,11 @@ namespace Algolia.Search.Transport
     /// <param name="callType">The method Algolia's call type <see cref="CallType"/> </param>
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
-    public async Task<TResult> ExecuteRequestAsync<TResult>(HttpMethod method, string uri, CallType callType,
+    public async Task<TResult> ExecuteRequestAsync<TResult>(HttpMethod method, string uri,
         RequestOptions requestOptions = null,
         CancellationToken ct = default)
         where TResult : class =>
-        await ExecuteRequestAsync<TResult, object>(method, uri, callType, requestOptions, ct)
+        await ExecuteRequestAsync<TResult, object>(method, uri, requestOptions, ct)
             .ConfigureAwait(false);
 
     /// <summary>
@@ -93,7 +93,7 @@ namespace Algolia.Search.Transport
     /// <param name="data">Your data</param>
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
-    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri, CallType callType, RequestOptions requestOptions = null,
+    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri, RequestOptions requestOptions = null,
         CancellationToken ct = default)
         where TResult : class
         where TData : class
@@ -114,6 +114,8 @@ namespace Algolia.Search.Transport
         Headers = GenerateHeaders(requestOptions?.HeaderParameters),
         Compression = _algoliaConfig.Compression
       };
+
+      var callType = (requestOptions?.UseReadTransporter != null && requestOptions.UseReadTransporter.Value) || method == HttpMethod.Get ? CallType.Read : CallType.Write;
 
       foreach (var host in _retryStrategy.GetTryableHost(callType))
       {

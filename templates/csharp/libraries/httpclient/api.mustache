@@ -179,7 +179,13 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             requestOptions.Data = {{paramName}};
             {{/bodyParam}}
 
-            return await _transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", {{#vendorExtensions}}{{#x-use-read-transporter}}CallType.Read{{/x-use-read-transporter}}{{^x-use-read-transporter}}CallType.Write{{/x-use-read-transporter}}{{/vendorExtensions}}, requestOptions, cancellationToken).ConfigureAwait(false);
+            {{#vendorExtensions}}
+            {{#x-use-read-transporter}}
+            requestOptions.UseReadTransporter = true;
+            {{/x-use-read-transporter}}
+            {{/vendorExtensions}}
+
+            return await _transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         {{/supportsAsync}}

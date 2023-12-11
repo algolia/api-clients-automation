@@ -47,10 +47,15 @@ namespace Algolia.Search.Http
     /// </summary>
     public Object Data { get; set; }
 
-    // <summary>
+    /// <summary>
     /// Request timeout in seconds
     /// </summary>
     public int? Timeout { get; set; }
+
+    /// <summary>
+    /// Enforce the Read Transporter
+    /// </summary>
+    public bool? UseReadTransporter { get; set; }
 
     /// <summary>
     /// Constructs a new instance of <see cref="RequestOptions"/>
