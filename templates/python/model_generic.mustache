@@ -1,7 +1,5 @@
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
-    """
-    {{#description}}{{{description}}}{{/description}}{{^description}}{{{classname}}}{{/description}}
-    """ 
+{{>model_description}}
 
 {{#vars}}
     {{name}}: {{{vendorExtensions.x-py-typing}}}
@@ -62,10 +60,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{/isEnum}}
 {{/vars}}
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = { "populate_by_name": True, "validate_assignment": True }
 
 
 {{#hasChildren}}

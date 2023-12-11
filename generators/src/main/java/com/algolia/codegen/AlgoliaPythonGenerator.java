@@ -70,6 +70,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
       file.getTemplateFile().equals("configuration.mustache") ||
       file.getTemplateFile().equals("__init__.model.mustache") ||
       file.getTemplateFile().equals("__init__.package.mustache") ||
+      file.getTemplateFile().equals("model_anyof.mustache") ||
       file.getTemplateFile().equals("gitlab-ci.mustache")
     );
 
