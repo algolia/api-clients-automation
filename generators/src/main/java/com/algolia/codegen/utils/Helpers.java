@@ -1,4 +1,4 @@
-package com.algolia.codegen;
+package com.algolia.codegen.utils;
 
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
 import org.yaml.snakeyaml.Yaml;
 
-public class Utils {
+public class Helpers {
 
   /** The suffix of our client names. */
   public static final String API_SUFFIX = "Client";
@@ -22,7 +22,7 @@ public class Utils {
   private static JsonNode cacheConfig;
   private static JsonNode cacheOpenApiToolsConfig;
 
-  private Utils() {}
+  private Helpers() {}
 
   public static String capitalize(String str) {
     return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -144,7 +144,7 @@ public class Utils {
    */
   public static String getPackageJsonVersion(String client) throws ConfigException {
     try {
-      JsonNode packageJson = Utils.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
+      JsonNode packageJson = Helpers.readJsonFile("clients/algoliasearch-client-javascript/packages/" + client + "/package.json");
       String value = packageJson.get("version").asText();
 
       if (value.isEmpty()) {

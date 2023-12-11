@@ -1,12 +1,11 @@
 package com.algolia.codegen.cts;
 
-import com.algolia.codegen.GenericPropagator;
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
 import java.util.*;
@@ -51,8 +50,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       System.exit(0);
     }
 
-    String outputFolder = Utils.getClientConfigField(language, "tests", "outputFolder");
-    String extension = Utils.getClientConfigField(language, "tests", "extension");
+    String outputFolder = Helpers.getClientConfigField(language, "tests", "outputFolder");
+    String extension = Helpers.getClientConfigField(language, "tests", "extension");
 
     setTemplateDir("templates/" + language + "/tests");
     setOutputDir("tests/output/" + language);
@@ -128,8 +127,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       }
 
       // We can put whatever we want in the bundle, and it will be accessible in the template
-      bundle.put("client", Utils.createClientName(importClientName, language) + "Client");
-      bundle.put("clientPrefix", Utils.createClientName(importClientName, language));
+      bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
+      bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
       bundle.put("hasRegionalHost", hasRegionalHost);
       if (hasRegionalHost) {
         bundle.put("defaultRegion", regionVariable.defaultValue);

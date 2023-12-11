@@ -3,14 +3,38 @@ import * as core from '@actions/core';
 
 import { CLIENTS_JS_UTILS, LANGUAGES, capitalize } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
+import type { Language } from '../../types.js';
 
 import { isBaseChanged } from './utils.js';
 
 export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows', '.github/.cache_version'],
-  SCRIPTS_CHANGED: ['scripts', 'eslint', 'yarn.lock', '.eslintrc.js'],
+  SCRIPTS_CHANGED: [
+    'scripts',
+    'eslint',
+    'yarn.lock',
+    '.eslintrc.cjs',
+    'config/generation.config.mjs',
+    'config/openapitools.json',
+    'config/clients.config.json',
+    'config/release.config.json',
+  ],
   COMMON_SPECS_CHANGED: ['specs/common'],
 };
+
+export function getVersionFileForLanguage(lang: Language): string {
+  // js rely on the nvmrc of the repo
+  if (lang === 'javascript') {
+    return '.nvmrc';
+  }
+
+  // jvm lang rely on the same java version
+  if (lang === 'kotlin' || lang === 'java' || lang === 'scala') {
+    return 'config/.java-version';
+  }
+
+  return `config/.${lang}-version`;
+}
 
 /**
  * This dependency array is generated to match the "external" dependencies of a generated client.
@@ -34,13 +58,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     return {
       ...finalDependencies,
       [key]: [
-        // Files that are common to every clients, this is used to determine if we should generate the matrix for this job.
-        'config/generation.config.mjs',
-        'config/openapitools.json',
-        'config/clients.config.json',
-        'generators/src/main/java/com/algolia/codegen/Utils.java',
-        'generators/src/main/java/com/algolia/codegen/GenericPropagator.java',
-        'generators/src/main/java/com/algolia/codegen/cts',
+        'generators/src/main/java/com/algolia/codegen/*/**',
         'tests/CTS',
         '.nvmrc',
         ':!**node_modules',
@@ -48,7 +66,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
         langFolder,
         `templates/${lang}`,
         `generators/src/main/java/com/algolia/codegen/Algolia${langGenerator}Generator.java`,
-        `config/.${lang}-version`,
+        getVersionFileForLanguage(lang),
         `:!${langFolder}/.github`,
         `:!${langFolder}/README.md`,
       ],

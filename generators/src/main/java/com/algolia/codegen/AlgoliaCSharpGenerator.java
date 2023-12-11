@@ -1,6 +1,7 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.utils.*;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
@@ -15,7 +16,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   }
 
   public String getClientName(String client) {
-    return Utils.createClientName(client, "csharp");
+    return Helpers.createClientName(client, "csharp");
   }
 
   @Override
@@ -30,7 +31,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("validatable", false);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
-    setApiNameSuffix(Utils.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
 
     String packageName = getClientName(CLIENT);
     setPackageName(packageName);
@@ -42,7 +43,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     modelNameMapping.put("Task", "IngestionTask");
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent all useless file to generate
     apiDocTemplateFiles.clear();

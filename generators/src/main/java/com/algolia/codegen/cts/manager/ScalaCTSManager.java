@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.Helpers;
 import java.util.Map;
 
 public class ScalaCTSManager implements CTSManager {
@@ -14,6 +14,6 @@ public class ScalaCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("import", Utils.camelize(this.client).toLowerCase());
+    bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

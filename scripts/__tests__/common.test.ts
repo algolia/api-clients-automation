@@ -62,7 +62,7 @@ describe('config', () => {
       expect(() => {
         getClientsConfigField('javascript', 'foofoo');
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Unable to find 'foofoo' for 'javascript'"`
+        `[Error: Unable to find 'foofoo' for 'javascript']`
       );
     });
 

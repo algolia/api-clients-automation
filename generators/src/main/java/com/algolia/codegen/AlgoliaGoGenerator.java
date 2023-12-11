@@ -1,7 +1,8 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.utils.OneOfUtils;
+import com.algolia.codegen.utils.*;
+import com.algolia.codegen.utils.OneOf;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
@@ -31,7 +32,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     super.processOpts();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
@@ -45,8 +46,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.add(new SupportingFile("utils.mustache", "", "utils.go"));
 
     try {
-      Utils.generateServer(client, additionalProperties);
-      additionalProperties.put("packageVersion", Utils.getClientConfigField("go", "packageVersion"));
+      Helpers.generateServer(client, additionalProperties);
+      additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -55,13 +56,13 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    OneOfUtils.updateModelsOneOf(models, modelPackage);
+    OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
     return models;
   }

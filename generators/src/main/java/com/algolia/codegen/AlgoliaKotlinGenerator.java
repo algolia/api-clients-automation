@@ -1,7 +1,8 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
-import com.algolia.codegen.utils.OneOfUtils;
+import com.algolia.codegen.utils.*;
+import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -28,20 +29,20 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     // generator specific options
     setLibrary("multiplatform");
     setApiPackage("api");
-    setApiSuffix(Utils.API_SUFFIX);
+    setApiSuffix(Helpers.API_SUFFIX);
     setGroupId("com.algolia");
     setArtifactId("algoliasearch-client-kotlin");
     setApiPackage("com.algolia.client.api");
     setPackageName("com.algolia.client");
     String client = (String) additionalProperties.get("client");
-    setModelPackage("com.algolia.client.model." + Utils.camelize(client).toLowerCase());
+    setModelPackage("com.algolia.client.model." + Helpers.camelize(client).toLowerCase());
     additionalProperties.put(CodegenConstants.SOURCE_FOLDER, "client/src/commonMain/kotlin");
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     super.processOpts();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     // Remove auth files
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("auth"));
@@ -111,10 +112,10 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
-    additionalProperties.put("packageVersion", Utils.getClientConfigField("kotlin", "packageVersion"));
+    additionalProperties.put("packageVersion", Helpers.getClientConfigField("kotlin", "packageVersion"));
 
     try {
-      Utils.generateServer(client, additionalProperties);
+      Helpers.generateServer(client, additionalProperties);
       hostForKotlin();
     } catch (GeneratorException e) {
       e.printStackTrace();
@@ -137,7 +138,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    CodegenOperation codegenOperation = Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+    CodegenOperation codegenOperation = Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
     // Set pathForKotlin by replacing the path variables with Kotlin's string
     // interpolation syntax
     List<String> segments = extractSegments(path);
@@ -170,9 +171,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    OneOfUtils.updateModelsOneOf(models, modelPackage);
+    OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
-    OneOfUtils.addOneOfMetadata(models);
+    OneOf.addOneOfMetadata(models);
     jsonParent(models);
     return models;
   }

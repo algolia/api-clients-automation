@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.CTSException;
+import com.algolia.codegen.utils.*;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.nio.file.Files;
@@ -74,6 +74,8 @@ public abstract class TestsGenerator {
   }
 
   private String injectVariables(String json) {
-    return json.replace("${{languageCased}}", languageCased()).replace("${{clientPascalCase}}", Utils.capitalize(Utils.camelize(client)));
+    return json
+      .replace("${{languageCased}}", languageCased())
+      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)));
   }
 }

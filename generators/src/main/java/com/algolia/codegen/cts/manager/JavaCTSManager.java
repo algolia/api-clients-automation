@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
-import com.algolia.codegen.Utils;
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.utils.*;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
@@ -20,7 +20,7 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Utils.getClientConfigField("java", "packageVersion"));
-    bundle.put("import", Utils.camelize(this.client).toLowerCase());
+    bundle.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
+    bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

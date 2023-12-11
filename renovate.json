@@ -52,6 +52,17 @@
       "datasourceTemplate": "maven"
     },
     {
+      "description": "Update poetry.toml mustache devDeps",
+      "fileMatch": [
+        "poetry.mustache"
+      ],
+      "matchStrings": [
+        ".*=\\s*\"(?<currentValue>.*?)\""
+      ],
+      "matchStringsStrategy": "recursive",
+      "datasourceTemplate": "poetry"
+    },
+    {
       "description": "Update package.json mustache devDeps",
       "fileMatch": [
         "package.mustache"
