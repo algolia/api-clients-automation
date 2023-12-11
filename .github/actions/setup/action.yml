@@ -162,7 +162,7 @@ runs:
       shell: bash
       run: pipx install poetry
 
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       if: ${{ inputs.language == 'python' }}
       with:
         python-version: ${{ steps.python-version.outputs.PYTHON_VERSION }}
