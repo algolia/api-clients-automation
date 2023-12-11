@@ -37,49 +37,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         else:
             super().__init__(**kwargs)
 
-    @field_validator('actual_instance')
-    def actual_instance_must_validate_anyof(cls, v):
-        {{#isNullable}}
-        if v is None:
-            return v
-
-        {{/isNullable}}
-        instance = {{{classname}}}.model_construct()
-        error_messages = []
-        {{#composedSchemas.anyOf}}
-        # validate data type: {{{dataType}}}
-        {{#isContainer}}
-        try:
-            instance.{{vendorExtensions.x-py-name}} = v
-            return v
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        {{/isContainer}}
-        {{^isContainer}}
-        {{#isPrimitiveType}}
-        try:
-            instance.{{vendorExtensions.x-py-name}} = v
-            return v
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        {{/isPrimitiveType}}
-        {{^isPrimitiveType}}
-        if not isinstance(v, {{{dataType}}}):
-            error_messages.append(
-              f"""Type '{type(v)}' is not '{{{dataType}}}'"""
-            )
-        else:
-            return v
-
-        {{/isPrimitiveType}}
-        {{/isContainer}}
-        {{/composedSchemas.anyOf}}
-        if error_messages:
-            # no match
-            raise ValueError("No match found when setting the actual_instance in {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))  
-        else:
-            return v
-
     @classmethod
     def from_dict(cls, obj: dict) -> Self:
         return cls.from_json(dumps(obj))
@@ -96,24 +53,20 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         error_messages = []
         {{#composedSchemas.anyOf}}
         {{#isContainer}}
-        # deserialize data into {{{dataType}}}
         try:
-            # validation
             instance.{{vendorExtensions.x-py-name}} = loads(json_str)
-            # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
+
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         {{/isContainer}}
         {{^isContainer}}
         {{#isPrimitiveType}}
-        # deserialize data into {{{dataType}}}
         try:
-            # validation
             instance.{{vendorExtensions.x-py-name}} = loads(json_str)
-            # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
+
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -122,6 +75,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}
         try:
             instance.actual_instance = {{{dataType}}}.from_json(json_str)
+
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
@@ -129,11 +83,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/isContainer}}
         {{/composedSchemas.anyOf}}
 
-        if error_messages:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with anyOf schemas: {{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}. Details: " + ", ".join(error_messages))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""
@@ -156,11 +106,3 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             return self.actual_instance.to_dict()
         else:
             return dumps(self.actual_instance)
-
-{{#vendorExtensions.x-py-postponed-model-imports.size}}
-{{#vendorExtensions.x-py-postponed-model-imports}}
-{{{.}}}
-{{/vendorExtensions.x-py-postponed-model-imports}}
-# TODO: Rewrite to not use raise_errors
-{{classname}}.model_rebuild(raise_errors=False)
-{{/vendorExtensions.x-py-postponed-model-imports.size}}
