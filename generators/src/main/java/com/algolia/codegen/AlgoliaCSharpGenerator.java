@@ -89,7 +89,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
 
     try {
-      Utils.generateServer(CLIENT, additionalProperties);
+      Helpers.generateServer(CLIENT, additionalProperties);
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
