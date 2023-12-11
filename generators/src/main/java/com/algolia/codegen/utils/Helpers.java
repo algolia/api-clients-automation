@@ -17,7 +17,7 @@ public class Helpers {
   /** The suffix of our client names. */
   public static final String API_SUFFIX = "Client";
 
-  public static final Set<String> CUSTOM_METHODS = Set.of("del", "get", "post", "put");
+  public static final Set<String> CUSTOM_METHODS = Set.of("customDelete", "customGet", "customPost", "customPut");
 
   private static JsonNode cacheConfig;
   private static JsonNode cacheOpenApiToolsConfig;

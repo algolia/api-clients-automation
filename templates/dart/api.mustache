@@ -157,6 +157,44 @@ final class {{classname}} implements ApiClient {
   }  
   {{/operation}}
 
+  {{^isAlgoliasearchClient}}
+  @Deprecated('This operation has been deprecated, use `customPut` instead')
+  Future<Object> put({
+    required  String path,
+    Map<String, Object>? parameters, Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customPut(path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customGet` instead')
+  Future<Object> get({
+    required  String path,
+    Map<String, Object>? parameters, Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return this.customGet(path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customPost` instead')
+  Future<Object> post({
+    required  String path,
+    Map<String, Object>? parameters, Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return this.customPost(path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customDelete` instead')
+  Future<Object> del({
+    required  String path,
+    Map<String, Object>? parameters, Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return this.customDelete(path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+  {{/isAlgoliasearchClient}}
+
   @override
   void dispose() => _retryStrategy.dispose(); 
 }
