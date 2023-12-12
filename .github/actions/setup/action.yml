@@ -185,8 +185,3 @@ runs:
       uses: swift-actions/setup-swift@v1
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
-
-    - name: Install swift-format
-      if: ${{ inputs.language == 'swift' }}
-      shell: bash
-      run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-format

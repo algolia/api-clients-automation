@@ -337,9 +337,10 @@ jobs:
         with:
           language: ${{ matrix.client.language }}
 
-      - name: Update path
+      - name: Install Swift formatter
         if: ${{ matrix.client.language == 'swift' }}
-        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        shell: bash
+        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swiftformat
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
