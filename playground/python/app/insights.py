@@ -1,6 +1,6 @@
 from asyncio import run
 
-from algoliasearch.insights import __version__, InsightsClient
+from algoliasearch.insights import InsightsClient, __version__
 
 
 async def main():
@@ -18,5 +18,6 @@ async def main():
         await client.close()
 
         print("client closed", client)
+
 
 run(main())

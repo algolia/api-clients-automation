@@ -2,6 +2,8 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.CodegenConstants;
@@ -68,6 +70,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
       file.getTemplateFile().equals("configuration.mustache") ||
       file.getTemplateFile().equals("__init__.model.mustache") ||
       file.getTemplateFile().equals("__init__.package.mustache") ||
+      file.getTemplateFile().equals("model_anyof.mustache") ||
       file.getTemplateFile().equals("gitlab-ci.mustache")
     );
 
@@ -101,6 +104,11 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   @Override
   public String toModelImport(String name) {
     return super.toModelImport(name).replace("from ", "from algoliasearch.");
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   // we need to override imports of all operations because somehow the methods `toModelImport` and
