@@ -50,7 +50,7 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Request timeout in seconds
     /// </summary>
-    public int? Timeout { get; set; }
+    public TimeSpan? Timeout { get; set; }
 
     /// <summary>
     /// Enforce the Read Transporter

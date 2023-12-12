@@ -209,7 +209,7 @@ namespace Algolia.Search.Transport
     /// </summary>
     /// <param name="callType"></param>
     /// <returns></returns>
-    private int GetTimeOut(CallType callType)
+    private TimeSpan GetTimeOut(CallType callType)
     {
       switch (callType)
       {

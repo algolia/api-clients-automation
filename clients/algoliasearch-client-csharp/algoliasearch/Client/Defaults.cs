@@ -1,3 +1,5 @@
+using System;
+
 namespace Algolia.Search.Client
 {
   /// <summary>
@@ -6,19 +8,14 @@ namespace Algolia.Search.Client
   internal class Defaults
   {
     /// <summary>
-    /// Maximum time to wait for wait task in milliseconds
+    /// Read timeout
     /// </summary>
-    public const int MaxTimeToWait = 10000;
+    public static TimeSpan ReadTimeout = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// Read timeout in seconds
+    /// Write timeout
     /// </summary>
-    public const int ReadTimeout = 5;
-
-    /// <summary>
-    /// Write timeout in seconds
-    /// </summary>
-    public const int WriteTimeout = 30;
+    public static TimeSpan WriteTimeout = TimeSpan.FromSeconds(30);
 
     public const string AcceptHeader = "Accept";
     public const string AlgoliaApplicationHeader = "X-Algolia-Application-Id";

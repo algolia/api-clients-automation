@@ -31,24 +31,14 @@ namespace Algolia.Search.Http
         public Dictionary<string, string> HeaderParameters { get; set; }
 
         /// <summary>
-        /// Form parameters to be sent along with the request.
-        /// </summary>
-        public Dictionary<string, string> FormParameters { get; set; }
-
-        /// <summary>
-        /// Cookies to be sent along with the request.
-        /// </summary>
-        public List<Cookie> Cookies { get; set; }
-
-        /// <summary>
         /// Any data associated with a request body.
         /// </summary>
         public Object Data { get; set; }
 
         /// <summary>
-        /// Request timeout in seconds
+        /// Request timeout
         /// </summary>
-        public int? Timeout { get; set; }
+        public TimeSpan? Timeout { get; set; }
 
         /// <summary>
         /// Enforce the Read Transporter
@@ -63,8 +53,6 @@ namespace Algolia.Search.Http
             PathParameters = new Dictionary<string, string>();
             QueryParameters = new Dictionary<string, string>();
             HeaderParameters = new Dictionary<string, string>();
-            FormParameters = new Dictionary<string, string>();
-            Cookies = new List<Cookie>();
         }
     }
 }

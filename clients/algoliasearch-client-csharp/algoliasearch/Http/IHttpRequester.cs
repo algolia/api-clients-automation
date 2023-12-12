@@ -1,4 +1,5 @@
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +15,10 @@ namespace Algolia.Search.Http
     /// Sends the HTTP request
     /// </summary>
     /// <param name="request">Request object</param>
-    /// <param name="totalTimeout">Timeout in seconds</param>
+    /// <param name="totalTimeout">Timeout</param>
     /// <param name="ct">Optional cancellation token</param>
     /// <returns></returns>
-    Task<AlgoliaHttpResponse> SendRequestAsync(Request request, int totalTimeout,
+    Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan totalTimeout,
         CancellationToken ct = default);
   }
 }
