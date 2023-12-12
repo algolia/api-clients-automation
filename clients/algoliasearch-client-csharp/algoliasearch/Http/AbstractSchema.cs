@@ -11,7 +11,7 @@ namespace Algolia.Search.Monitoring.Models
   /// <summary>
   ///  Abstract base class for oneOf, anyOf schemas in the OpenAPI specification
   /// </summary>
-  public abstract partial class AbstractOpenAPISchema
+  public abstract partial class AbstractSchema
   {
     /// <summary>
     ///  Custom JSON serializer
