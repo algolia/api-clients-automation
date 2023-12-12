@@ -337,14 +337,11 @@ jobs:
         with:
           language: ${{ matrix.client.language }}
 
-      - name: Install Swift formatter
-        if: ${{ matrix.client.language == 'swift' }}
-        shell: bash
-        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swiftformat
-
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: |
+          ${{ matrix.client.language == 'swift' }} && /home/linuxbrew/.linuxbrew/bin/brew install swiftformat
+          yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}
