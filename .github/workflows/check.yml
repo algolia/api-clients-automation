@@ -340,7 +340,7 @@ jobs:
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: |
-          ${{ matrix.client.language == 'swift' }} && /home/linuxbrew/.linuxbrew/bin/brew install swiftformat
+          ${{ matrix.client.language == 'swift' }} && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swiftformat
           yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Build clients
