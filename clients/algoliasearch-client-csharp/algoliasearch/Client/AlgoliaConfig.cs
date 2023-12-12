@@ -29,6 +29,7 @@ namespace Algolia.Search.Client
         { Defaults.AlgoliaApiKeyHeader, ApiKey },
         { Defaults.UserAgentHeader, $"Algolia For Csharp {ClientVersion}" },
         { Defaults.Connection, Defaults.KeepAlive },
+        { Defaults.AcceptHeader, JsonConfig.JsonContentType }
       };
     }
 

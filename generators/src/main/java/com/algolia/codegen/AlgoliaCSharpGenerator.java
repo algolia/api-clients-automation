@@ -83,9 +83,9 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     // repository
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
-    supportingFiles.add(new SupportingFile("RequestOptions.mustache", "Http", "RequestOptions.cs"));
+    supportingFiles.add(new SupportingFile("RequestOptions.mustache", "Lib", "RequestOptions.cs"));
     supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
-    supportingFiles.add(new SupportingFile("ClientUtils.mustache", "Client", "ClientUtils.cs"));
+    supportingFiles.add(new SupportingFile("ClientUtils.mustache", "Lib", "ClientUtils.cs"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
 
     try {

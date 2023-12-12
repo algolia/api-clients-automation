@@ -53,7 +53,7 @@ namespace Algolia.Search.Http
     /// <param name="totalTimeout">Timeout in seconds</param>
     /// <param name="ct">Optional cancellation token</param>
     /// <returns></returns>
-    public async Task<AlgoliaHttpResponse> SendRequestAsync(Request request, int totalTimeout,
+    public async Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan totalTimeout,
         CancellationToken ct = default)
     {
       if (request.Method == null)
@@ -80,7 +80,7 @@ namespace Algolia.Search.Http
       }
 
       httpRequestMessage.Headers.Fill(request.Headers);
-      httpRequestMessage.SetTimeout(TimeSpan.FromSeconds(totalTimeout));
+      httpRequestMessage.SetTimeout(totalTimeout);
 
       try
       {

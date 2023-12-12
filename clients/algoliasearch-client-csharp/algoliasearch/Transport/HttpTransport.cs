@@ -121,7 +121,7 @@ namespace Algolia.Search.Transport
       {
         request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress);
         request.Uri = BuildUri(host.Url, uri, requestOptions?.PathParameters, requestOptions?.QueryParameters);
-        var requestTimeout = (requestOptions?.Timeout ?? GetTimeOut(callType)) * (host.RetryCount + 1);
+        var requestTimeout = TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
 
         AlgoliaHttpResponse response = await _httpClient
             .SendRequestAsync(request, requestTimeout, ct)
@@ -155,13 +155,7 @@ namespace Algolia.Search.Transport
       if (data == null)
         return null;
 
-      // MemoryStream ms = new MemoryStream();
-
-      // CompressionType compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
       return _serializer.Serialize(data);
-
-      // ms.Seek(0, SeekOrigin.Begin);
-      // return ms;
     }
 
     /// <summary>
