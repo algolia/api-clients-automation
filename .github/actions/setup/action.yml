@@ -189,4 +189,4 @@ runs:
     - name: Install swift-format
       if: ${{ inputs.language == 'swift' }}
       shell: bash
-      run: /home/linuxbrew/.linuxbrew/bin/brew install swift-format
+      run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-format
