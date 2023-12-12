@@ -1,7 +1,9 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.utils.OneOfUtils;
+import com.algolia.codegen.utils.GenericPropagator;
+import com.algolia.codegen.utils.Helpers;
+import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
 import java.io.File;
 import java.util.*;
@@ -21,7 +23,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   public String getClientName(String client) {
-    return Utils.createClientName(client, "swift");
+    return Helpers.createClientName(client, "swift");
   }
 
   @Override
@@ -60,10 +62,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     super.processOpts();
 
     // Generation notice, added on every generated files
-    Utils.setGenerationBanner(additionalProperties);
+    Helpers.setGenerationBanner(additionalProperties);
 
     try {
-      Utils.generateServer(CLIENT, additionalProperties);
+      Helpers.generateServer(CLIENT, additionalProperties);
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
@@ -95,7 +97,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    OneOfUtils.updateModelsOneOfForSwift(models, modelPackage);
+    OneOf.updateModelsOneOfForSwift(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
     return models;
   }

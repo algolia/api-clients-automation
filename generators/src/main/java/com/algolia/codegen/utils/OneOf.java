@@ -32,7 +32,7 @@ public class OneOf {
       markOneOfChildrenForSwift(models, model);
       generateSealedChildren(models, modelPackage, model);
       model.vendorExtensions.put("x-is-one-of", true);
-      model.vendorExtensions.put("x-one-of-explicit-name", Utils.shouldUseExplicitOneOfName(model.oneOf));
+      model.vendorExtensions.put("x-one-of-explicit-name", Helpers.shouldUseExplicitOneOfName(model.oneOf));
     }
   }
 
