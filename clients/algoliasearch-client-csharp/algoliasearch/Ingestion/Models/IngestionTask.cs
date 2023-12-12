@@ -14,17 +14,15 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
   /// <summary>
-  /// Task
+  /// IngestionTask
   /// </summary>
   [DataContract(Name = "Task")]
-  public partial class Task : IEquatable<Task>, IValidatableObject
+  public partial class IngestionTask : IEquatable<IngestionTask>
   {
 
     /// <summary>
@@ -33,12 +31,12 @@ namespace Algolia.Search.Ingestion.Models
     [DataMember(Name = "action", IsRequired = true, EmitDefaultValue = true)]
     public ActionType Action { get; set; }
     /// <summary>
-    /// Initializes a new instance of the <see cref="Task" /> class.
+    /// Initializes a new instance of the <see cref="IngestionTask" /> class.
     /// </summary>
     [JsonConstructorAttribute]
-    protected Task() { }
+    protected IngestionTask() { }
     /// <summary>
-    /// Initializes a new instance of the <see cref="Task" /> class.
+    /// Initializes a new instance of the <see cref="IngestionTask" /> class.
     /// </summary>
     /// <param name="taskID">The task UUID. (required).</param>
     /// <param name="sourceID">The source UUID. (required).</param>
@@ -50,30 +48,30 @@ namespace Algolia.Search.Ingestion.Models
     /// <param name="action">action (required).</param>
     /// <param name="createdAt">Date of creation (RFC3339 format). (required).</param>
     /// <param name="updatedAt">Date of last update (RFC3339 format)..</param>
-    public Task(string taskID = default(string), string sourceID = default(string), string destinationID = default(string), Trigger trigger = default(Trigger), TaskInput input = default(TaskInput), bool enabled = true, int failureThreshold = default(int), ActionType action = default(ActionType), string createdAt = default(string), string updatedAt = default(string))
+    public IngestionTask(string taskID = default(string), string sourceID = default(string), string destinationID = default(string), Trigger trigger = default(Trigger), TaskInput input = default(TaskInput), bool enabled = true, int failureThreshold = default(int), ActionType action = default(ActionType), string createdAt = default(string), string updatedAt = default(string))
     {
       // to ensure "taskID" is required (not null)
       if (taskID == null)
       {
-        throw new ArgumentNullException("taskID is a required property for Task and cannot be null");
+        throw new ArgumentNullException("taskID is a required property for IngestionTask and cannot be null");
       }
       this.TaskID = taskID;
       // to ensure "sourceID" is required (not null)
       if (sourceID == null)
       {
-        throw new ArgumentNullException("sourceID is a required property for Task and cannot be null");
+        throw new ArgumentNullException("sourceID is a required property for IngestionTask and cannot be null");
       }
       this.SourceID = sourceID;
       // to ensure "destinationID" is required (not null)
       if (destinationID == null)
       {
-        throw new ArgumentNullException("destinationID is a required property for Task and cannot be null");
+        throw new ArgumentNullException("destinationID is a required property for IngestionTask and cannot be null");
       }
       this.DestinationID = destinationID;
       // to ensure "trigger" is required (not null)
       if (trigger == null)
       {
-        throw new ArgumentNullException("trigger is a required property for Task and cannot be null");
+        throw new ArgumentNullException("trigger is a required property for IngestionTask and cannot be null");
       }
       this.Trigger = trigger;
       this.Enabled = enabled;
@@ -81,7 +79,7 @@ namespace Algolia.Search.Ingestion.Models
       // to ensure "createdAt" is required (not null)
       if (createdAt == null)
       {
-        throw new ArgumentNullException("createdAt is a required property for Task and cannot be null");
+        throw new ArgumentNullException("createdAt is a required property for IngestionTask and cannot be null");
       }
       this.CreatedAt = createdAt;
       this.Input = input;
@@ -157,7 +155,7 @@ namespace Algolia.Search.Ingestion.Models
     public override string ToString()
     {
       StringBuilder sb = new StringBuilder();
-      sb.Append("class Task {\n");
+      sb.Append("class IngestionTask {\n");
       sb.Append("  TaskID: ").Append(TaskID).Append("\n");
       sb.Append("  SourceID: ").Append(SourceID).Append("\n");
       sb.Append("  DestinationID: ").Append(DestinationID).Append("\n");
@@ -188,15 +186,15 @@ namespace Algolia.Search.Ingestion.Models
     /// <returns>Boolean</returns>
     public override bool Equals(object input)
     {
-      return this.Equals(input as Task);
+      return this.Equals(input as IngestionTask);
     }
 
     /// <summary>
-    /// Returns true if Task instances are equal
+    /// Returns true if IngestionTask instances are equal
     /// </summary>
-    /// <param name="input">Instance of Task to be compared</param>
+    /// <param name="input">Instance of IngestionTask to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(Task input)
+    public bool Equals(IngestionTask input)
     {
       if (input == null)
       {
@@ -296,27 +294,6 @@ namespace Algolia.Search.Ingestion.Models
       }
     }
 
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // FailureThreshold (int) maximum
-      if (this.FailureThreshold > (int)100)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FailureThreshold, must be a value less than or equal to 100.", new[] { "FailureThreshold" });
-      }
-
-      // FailureThreshold (int) minimum
-      if (this.FailureThreshold < (int)0)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FailureThreshold, must be a value greater than or equal to 0.", new[] { "FailureThreshold" });
-      }
-
-      yield break;
-    }
   }
 
 }

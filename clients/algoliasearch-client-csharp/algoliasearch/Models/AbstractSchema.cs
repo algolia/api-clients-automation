@@ -6,12 +6,12 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Algolia.Search.Search.Models
+namespace Algolia.Search.Models
 {
   /// <summary>
   ///  Abstract base class for oneOf, anyOf schemas in the OpenAPI specification
   /// </summary>
-  public abstract partial class AbstractOpenAPISchema
+  public abstract partial class AbstractSchema
   {
     /// <summary>
     ///  Custom JSON serializer
