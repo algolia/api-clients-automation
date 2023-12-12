@@ -33,7 +33,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
-    val future = client.del[JObject](
+    val future = client.customDelete[JObject](
       path = "/test/minimal"
     )
 
@@ -47,7 +47,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow del method for a custom path with all parameters") {
     val (client, echo) = testClient()
-    val future = client.del[JObject](
+    val future = client.customDelete[JObject](
       path = "/test/all",
       parameters = Some(Map("query" -> "parameters"))
     )
@@ -69,7 +69,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow get method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
-    val future = client.get[JObject](
+    val future = client.customGet[JObject](
       path = "/test/minimal"
     )
 
@@ -83,7 +83,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow get method for a custom path with all parameters") {
     val (client, echo) = testClient()
-    val future = client.get[JObject](
+    val future = client.customGet[JObject](
       path = "/test/all",
       parameters = Some(Map("query" -> "parameters"))
     )
@@ -105,7 +105,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow post method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/minimal"
     )
 
@@ -121,7 +121,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("allow post method for a custom path with all parameters") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/all",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("body", JString("parameters")))))
@@ -146,7 +146,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions can override default query parameters") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -177,7 +177,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions merges query parameters with default ones") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -208,7 +208,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions can override default headers") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -245,7 +245,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions merges headers with default ones") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -282,7 +282,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions queryParameters accepts booleans") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -313,7 +313,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions queryParameters accepts integers") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -344,7 +344,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions queryParameters accepts list of string") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -375,7 +375,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions queryParameters accepts list of booleans") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -406,7 +406,7 @@ class InsightsTest extends AnyFunSuite {
 
   test("requestOptions queryParameters accepts list of integers") {
     val (client, echo) = testClient()
-    val future = client.post[JObject](
+    val future = client.customPost[JObject](
       path = "/test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
@@ -427,6 +427,47 @@ class InsightsTest extends AnyFunSuite {
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery = parse("""{"query":"parameters","myParam":"1,2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow put method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "/test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/minimal")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("allow put method for a custom path with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("body", JString("parameters")))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"body":"parameters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -613,47 +654,6 @@ class InsightsTest extends AnyFunSuite {
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-  }
-
-  test("allow put method for a custom path with minimal parameters") {
-    val (client, echo) = testClient()
-    val future = client.put[JObject](
-      path = "/test/minimal"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/test/minimal")
-    assert(res.method == "PUT")
-    val expectedBody = parse("""{}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("allow put method for a custom path with all parameters") {
-    val (client, echo) = testClient()
-    val future = client.put[JObject](
-      path = "/test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/test/all")
-    assert(res.method == "PUT")
-    val expectedBody = parse("""{"body":"parameters"}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
-    val actualQuery = res.queryParameters
-    assert(actualQuery.size == expectedQuery.size)
-    for ((k, v) <- actualQuery) {
-      assert(expectedQuery.contains(k))
-      assert(expectedQuery(k).values == v)
-    }
   }
 
 }

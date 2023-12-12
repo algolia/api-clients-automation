@@ -72,12 +72,12 @@ class InsightsClient(
     * @param parameters
     *   Query parameters to apply to the current query.
     */
-  def del[T: Manifest](
+  def customDelete[T: Manifest](
       path: String,
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `del`.")
+    requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -95,12 +95,12 @@ class InsightsClient(
     * @param parameters
     *   Query parameters to apply to the current query.
     */
-  def get[T: Manifest](
+  def customGet[T: Manifest](
       path: String,
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `get`.")
+    requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -120,17 +120,44 @@ class InsightsClient(
     * @param body
     *   Parameters to send with the custom request.
     */
-  def post[T: Manifest](
+  def customPost[T: Manifest](
       path: String,
       parameters: Option[Map[String, Any]] = None,
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `post`.")
+    requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
+      .withPath(s"/1${path}")
+      .withBody(body)
+      .withQueryParameters(parameters)
+      .build()
+    execute[T](request, requestOptions)
+  }
+
+  /** This method allow you to send requests to the Algolia REST API.
+    *
+    * @param path
+    *   Path of the endpoint, anything after \"/1\" must be specified.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPut[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[T] = Future {
+    requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
       .withPath(s"/1${path}")
       .withBody(body)
       .withQueryParameters(parameters)
@@ -153,33 +180,6 @@ class InsightsClient(
       .withBody(insightsEvents)
       .build()
     execute[EventsResponse](request, requestOptions)
-  }
-
-  /** This method allow you to send requests to the Algolia REST API.
-    *
-    * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
-    * @param parameters
-    *   Query parameters to apply to the current query.
-    * @param body
-    *   Parameters to send with the custom request.
-    */
-  def put[T: Manifest](
-      path: String,
-      parameters: Option[Map[String, Any]] = None,
-      body: Option[Any] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `put`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("PUT")
-      .withPath(s"/1${path}")
-      .withBody(body)
-      .withQueryParameters(parameters)
-      .build()
-    execute[T](request, requestOptions)
   }
 
 }

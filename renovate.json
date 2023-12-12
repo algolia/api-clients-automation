@@ -60,7 +60,7 @@
         ".*=\\s*\"(?<currentValue>.*?)\""
       ],
       "matchStringsStrategy": "recursive",
-      "datasourceTemplate": "poetry"
+      "datasourceTemplate": "pypi"
     },
     {
       "description": "Update package.json mustache devDeps",

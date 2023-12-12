@@ -17,7 +17,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -34,7 +34,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -50,7 +50,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -81,7 +81,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key", "de")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },

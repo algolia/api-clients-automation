@@ -17,7 +17,7 @@ class InsightsTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -34,7 +34,7 @@ class InsightsTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -50,7 +50,7 @@ class InsightsTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -83,7 +83,7 @@ class InsightsTest {
     val client = InsightsClient(appId = "my-app-id", apiKey = "my-api-key", "us")
     client.runTest(
       call = {
-        del(
+        customDelete(
           path = "/test",
         )
       },

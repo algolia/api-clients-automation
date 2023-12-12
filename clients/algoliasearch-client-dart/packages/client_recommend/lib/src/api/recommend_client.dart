@@ -56,14 +56,14 @@ final class RecommendClient implements ApiClient {
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
   /// * [parameters] Query parameters to apply to the current query.
   /// * [requestOptions] additional request configuration.
-  Future<Object> del({
+  Future<Object> customDelete({
     required String path,
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
     assert(
       path.isNotEmpty,
-      'Parameter `path` is required when calling `del`.',
+      'Parameter `path` is required when calling `customDelete`.',
     );
     final request = ApiRequest(
       method: RequestMethod.delete,
@@ -71,6 +71,114 @@ final class RecommendClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// Send requests to the Algolia REST API.
+  /// This method allow you to send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customGet({
+    required String path,
+    Map<String, Object>? parameters,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customGet`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// Send requests to the Algolia REST API.
+  /// This method allow you to send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [body] Parameters to send with the custom request.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customPost({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customPost`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+      body: body,
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// Send requests to the Algolia REST API.
+  /// This method allow you to send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [body] Parameters to send with the custom request.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customPut({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customPut`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.put,
+      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+      body: body,
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -121,40 +229,6 @@ final class RecommendClient implements ApiClient {
     return deserialize<DeletedAtResponse, DeletedAtResponse>(
       response,
       'DeletedAtResponse',
-      growable: true,
-    );
-  }
-
-  /// Send requests to the Algolia REST API.
-  /// This method allow you to send requests to the Algolia REST API.
-  ///
-  /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
-  /// * [parameters] Query parameters to apply to the current query.
-  /// * [requestOptions] additional request configuration.
-  Future<Object> get({
-    required String path,
-    Map<String, Object>? parameters,
-    RequestOptions? requestOptions,
-  }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `get`.',
-    );
-    final request = ApiRequest(
-      method: RequestMethod.get,
-      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
-      queryParams: {
-        ...?parameters,
-      },
-    );
-    final response = await _retryStrategy.execute(
-      request: request,
-      options: requestOptions,
-    );
-    return deserialize<Object, Object>(
-      response,
-      'Object',
       growable: true,
     );
   }
@@ -266,80 +340,6 @@ final class RecommendClient implements ApiClient {
     );
   }
 
-  /// Send requests to the Algolia REST API.
-  /// This method allow you to send requests to the Algolia REST API.
-  ///
-  /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
-  /// * [parameters] Query parameters to apply to the current query.
-  /// * [body] Parameters to send with the custom request.
-  /// * [requestOptions] additional request configuration.
-  Future<Object> post({
-    required String path,
-    Map<String, Object>? parameters,
-    Object? body,
-    RequestOptions? requestOptions,
-  }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `post`.',
-    );
-    final request = ApiRequest(
-      method: RequestMethod.post,
-      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
-      queryParams: {
-        ...?parameters,
-      },
-      body: body,
-    );
-    final response = await _retryStrategy.execute(
-      request: request,
-      options: requestOptions,
-    );
-    return deserialize<Object, Object>(
-      response,
-      'Object',
-      growable: true,
-    );
-  }
-
-  /// Send requests to the Algolia REST API.
-  /// This method allow you to send requests to the Algolia REST API.
-  ///
-  /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
-  /// * [parameters] Query parameters to apply to the current query.
-  /// * [body] Parameters to send with the custom request.
-  /// * [requestOptions] additional request configuration.
-  Future<Object> put({
-    required String path,
-    Map<String, Object>? parameters,
-    Object? body,
-    RequestOptions? requestOptions,
-  }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `put`.',
-    );
-    final request = ApiRequest(
-      method: RequestMethod.put,
-      path: r'/1{path}'.replaceAll('{' r'path' '}', path),
-      queryParams: {
-        ...?parameters,
-      },
-      body: body,
-    );
-    final response = await _retryStrategy.execute(
-      request: request,
-      options: requestOptions,
-    );
-    return deserialize<Object, Object>(
-      response,
-      'Object',
-      growable: true,
-    );
-  }
-
   /// List Recommend rules.
   /// List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
   ///
@@ -377,6 +377,50 @@ final class RecommendClient implements ApiClient {
       'SearchRecommendRulesResponse',
       growable: true,
     );
+  }
+
+  @Deprecated('This operation has been deprecated, use `customPost` instead')
+  Future<Object> post({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customPost(
+        path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customPut` instead')
+  Future<Object> put({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customPut(
+        path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customGet` instead')
+  Future<Object> get({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customGet(
+        path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
+  @Deprecated('This operation has been deprecated, use `customDelete` instead')
+  Future<Object> del({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customDelete(
+        path: path, parameters: parameters, requestOptions: requestOptions);
   }
 
   @override

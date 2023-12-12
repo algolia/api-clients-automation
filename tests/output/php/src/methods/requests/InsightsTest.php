@@ -36,13 +36,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Del
+     * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testDel0()
+    public function testCustomDelete0()
     {
         $client = $this->getClient();
-        $client->del(
+        $client->customDelete(
             '/test/minimal',
         );
 
@@ -56,13 +56,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Del
+     * Test case for CustomDelete
      * allow del method for a custom path with all parameters.
      */
-    public function testDel1()
+    public function testCustomDelete1()
     {
         $client = $this->getClient();
-        $client->del(
+        $client->customDelete(
             '/test/all',
             ['query' => 'parameters',
             ],
@@ -79,13 +79,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Get
+     * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testGet0()
+    public function testCustomGet0()
     {
         $client = $this->getClient();
-        $client->get(
+        $client->customGet(
             '/test/minimal',
         );
 
@@ -99,13 +99,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Get
+     * Test case for CustomGet
      * allow get method for a custom path with all parameters.
      */
-    public function testGet1()
+    public function testCustomGet1()
     {
         $client = $this->getClient();
-        $client->get(
+        $client->customGet(
             '/test/all',
             ['query' => 'parameters',
             ],
@@ -122,13 +122,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testPost0()
+    public function testCustomPost0()
     {
         $client = $this->getClient();
-        $client->post(
+        $client->customPost(
             '/test/minimal',
         );
 
@@ -142,13 +142,13 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * allow post method for a custom path with all parameters.
      */
-    public function testPost1()
+    public function testCustomPost1()
     {
         $client = $this->getClient();
-        $client->post(
+        $client->customPost(
             '/test/all',
             ['query' => 'parameters',
             ],
@@ -167,10 +167,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions can override default query parameters.
      */
-    public function testPost2()
+    public function testCustomPost2()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -180,7 +180,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -200,10 +200,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions merges query parameters with default ones.
      */
-    public function testPost3()
+    public function testCustomPost3()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -213,7 +213,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -233,10 +233,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions can override default headers.
      */
-    public function testPost4()
+    public function testCustomPost4()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -246,7 +246,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                 'x-algolia-api-key' => 'myApiKey',
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -267,10 +267,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions merges headers with default ones.
      */
-    public function testPost5()
+    public function testCustomPost5()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -280,7 +280,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                 'x-algolia-api-key' => 'myApiKey',
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -301,10 +301,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions queryParameters accepts booleans.
      */
-    public function testPost6()
+    public function testCustomPost6()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -314,7 +314,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -334,10 +334,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions queryParameters accepts integers.
      */
-    public function testPost7()
+    public function testCustomPost7()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -347,7 +347,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -367,10 +367,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions queryParameters accepts list of string.
      */
-    public function testPost8()
+    public function testCustomPost8()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -381,7 +381,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -401,10 +401,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions queryParameters accepts list of booleans.
      */
-    public function testPost9()
+    public function testCustomPost9()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -415,7 +415,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -435,10 +435,10 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for Post
+     * Test case for CustomPost
      * requestOptions queryParameters accepts list of integers.
      */
-    public function testPost10()
+    public function testCustomPost10()
     {
         $client = $this->getClient();
         $requestOptions = [
@@ -449,7 +449,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'headers' => [
             ],
         ];
-        $client->post(
+        $client->customPost(
             '/test/requestOptions',
             ['query' => 'parameters',
             ],
@@ -464,6 +464,51 @@ class InsightsTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","myParam":"1,2"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for CustomPut
+     * allow put method for a custom path with minimal parameters.
+     */
+    public function testCustomPut0()
+    {
+        $client = $this->getClient();
+        $client->customPut(
+            '/test/minimal',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/minimal',
+                'method' => 'PUT',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for CustomPut
+     * allow put method for a custom path with all parameters.
+     */
+    public function testCustomPut1()
+    {
+        $client = $this->getClient();
+        $client->customPut(
+            '/test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'PUT',
+                'body' => json_decode('{"body":"parameters"}'),
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
     }
@@ -669,51 +714,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
                 'path' => '/1/events',
                 'method' => 'POST',
                 'body' => json_decode('{"events":[{"eventType":"conversion","eventSubtype":"addToCart","eventName":"Product Added To Cart","index":"products","queryID":"43b15df305339e827f0ac0bdc5ebcaa7","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"objectData":[{"price":19.99,"quantity":10,"discount":2.5},{"price":"8$","quantity":7,"discount":"30%"}],"currency":"USD"}]}'),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Put
-     * allow put method for a custom path with minimal parameters.
-     */
-    public function testPut0()
-    {
-        $client = $this->getClient();
-        $client->put(
-            '/test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/minimal',
-                'method' => 'PUT',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    /**
-     * Test case for Put
-     * allow put method for a custom path with all parameters.
-     */
-    public function testPut1()
-    {
-        $client = $this->getClient();
-        $client->put(
-            '/test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/test/all',
-                'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
     }

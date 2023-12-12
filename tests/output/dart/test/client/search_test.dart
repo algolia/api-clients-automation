@@ -15,7 +15,7 @@ void main() {
         apiKey: client.apiKey,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.get(
+      call: (client) => client.customGet(
         path: "/test",
       ),
       intercept: (request) {
@@ -34,7 +34,7 @@ void main() {
         apiKey: client.apiKey,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test",
       ),
       intercept: (request) {
@@ -54,7 +54,7 @@ void main() {
         apiKey: client.apiKey,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test",
       ),
       intercept: (request) {
@@ -73,7 +73,7 @@ void main() {
         apiKey: client.apiKey,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.get(
+      call: (client) => client.customGet(
         path: "/test",
       ),
       intercept: (request) {
@@ -92,7 +92,7 @@ void main() {
         apiKey: client.apiKey,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test",
       ),
       intercept: (request) {

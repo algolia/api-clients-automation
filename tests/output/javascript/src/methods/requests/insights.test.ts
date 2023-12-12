@@ -9,9 +9,9 @@ const client = insightsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
 
-describe('del', () => {
+describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
-    const req = (await client.del({
+    const req = (await client.customDelete({
       path: '/test/minimal',
     })) as unknown as EchoResponse;
 
@@ -22,7 +22,7 @@ describe('del', () => {
   });
 
   test('allow del method for a custom path with all parameters', async () => {
-    const req = (await client.del({
+    const req = (await client.customDelete({
       path: '/test/all',
       parameters: { query: 'parameters' },
     })) as unknown as EchoResponse;
@@ -34,9 +34,9 @@ describe('del', () => {
   });
 });
 
-describe('get', () => {
+describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
-    const req = (await client.get({
+    const req = (await client.customGet({
       path: '/test/minimal',
     })) as unknown as EchoResponse;
 
@@ -47,7 +47,7 @@ describe('get', () => {
   });
 
   test('allow get method for a custom path with all parameters', async () => {
-    const req = (await client.get({
+    const req = (await client.customGet({
       path: '/test/all',
       parameters: { query: 'parameters' },
     })) as unknown as EchoResponse;
@@ -59,9 +59,9 @@ describe('get', () => {
   });
 });
 
-describe('post', () => {
+describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.post({
+    const req = (await client.customPost({
       path: '/test/minimal',
     })) as unknown as EchoResponse;
 
@@ -72,7 +72,7 @@ describe('post', () => {
   });
 
   test('allow post method for a custom path with all parameters', async () => {
-    const req = (await client.post({
+    const req = (await client.customPost({
       path: '/test/all',
       parameters: { query: 'parameters' },
       body: { body: 'parameters' },
@@ -89,7 +89,7 @@ describe('post', () => {
       queryParameters: { query: 'myQueryParameter' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -109,7 +109,7 @@ describe('post', () => {
       queryParameters: { query2: 'myQueryParameter' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -132,7 +132,7 @@ describe('post', () => {
       headers: { 'x-algolia-api-key': 'myApiKey' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -155,7 +155,7 @@ describe('post', () => {
       headers: { 'x-algolia-api-key': 'myApiKey' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -178,7 +178,7 @@ describe('post', () => {
       queryParameters: { isItWorking: true },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -201,7 +201,7 @@ describe('post', () => {
       queryParameters: { myParam: 2 },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -224,7 +224,7 @@ describe('post', () => {
       queryParameters: { myParam: ['c', 'd'] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -247,7 +247,7 @@ describe('post', () => {
       queryParameters: { myParam: [true, true, false] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -270,7 +270,7 @@ describe('post', () => {
       queryParameters: { myParam: [1, 2] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -286,6 +286,32 @@ describe('post', () => {
       query: 'parameters',
       myParam: '1,2',
     });
+  });
+});
+
+describe('customPut', () => {
+  test('allow put method for a custom path with minimal parameters', async () => {
+    const req = (await client.customPut({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('allow put method for a custom path with all parameters', async () => {
+    const req = (await client.customPut({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });
 
@@ -493,31 +519,5 @@ describe('pushEvents', () => {
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
-describe('put', () => {
-  test('allow put method for a custom path with minimal parameters', async () => {
-    const req = (await client.put({
-      path: '/test/minimal',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/test/minimal');
-    expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({});
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('allow put method for a custom path with all parameters', async () => {
-    const req = (await client.put({
-      path: '/test/all',
-      parameters: { query: 'parameters' },
-      body: { body: 'parameters' },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/test/all');
-    expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ body: 'parameters' });
-    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
   });
 });

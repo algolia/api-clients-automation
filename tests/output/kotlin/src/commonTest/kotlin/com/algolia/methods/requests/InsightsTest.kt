@@ -18,13 +18,13 @@ class InsightsTest {
     region = "us",
   )
 
-  // del
+  // customDelete
 
   @Test
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        del(
+        customDelete(
           path = "/test/minimal",
         )
       },
@@ -40,7 +40,7 @@ class InsightsTest {
   fun `allow del method for a custom path with all parameters`() = runTest {
     client.runTest(
       call = {
-        del(
+        customDelete(
           path = "/test/all",
           parameters = mapOf("query" to "parameters"),
         )
@@ -54,13 +54,13 @@ class InsightsTest {
     )
   }
 
-  // get
+  // customGet
 
   @Test
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test/minimal",
         )
       },
@@ -76,7 +76,7 @@ class InsightsTest {
   fun `allow get method for a custom path with all parameters`() = runTest {
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test/all",
           parameters = mapOf("query" to "parameters"),
         )
@@ -90,13 +90,13 @@ class InsightsTest {
     )
   }
 
-  // post
+  // customPost
 
   @Test
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/minimal",
         )
       },
@@ -112,7 +112,7 @@ class InsightsTest {
   fun `allow post method for a custom path with all parameters`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -136,7 +136,7 @@ class InsightsTest {
   fun `requestOptions can override default query parameters`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -165,7 +165,7 @@ class InsightsTest {
   fun `requestOptions merges query parameters with default ones`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -194,7 +194,7 @@ class InsightsTest {
   fun `requestOptions can override default headers`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -224,7 +224,7 @@ class InsightsTest {
   fun `requestOptions merges headers with default ones`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -254,7 +254,7 @@ class InsightsTest {
   fun `requestOptions queryParameters accepts booleans`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -283,7 +283,7 @@ class InsightsTest {
   fun `requestOptions queryParameters accepts integers`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -312,7 +312,7 @@ class InsightsTest {
   fun `requestOptions queryParameters accepts list of string`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -341,7 +341,7 @@ class InsightsTest {
   fun `requestOptions queryParameters accepts list of booleans`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -370,7 +370,7 @@ class InsightsTest {
   fun `requestOptions queryParameters accepts list of integers`() = runTest {
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
@@ -391,6 +391,48 @@ class InsightsTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"query":"parameters","myParam":"1,2"}""", it.url.parameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  // customPut
+
+  @Test
+  fun `allow put method for a custom path with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        customPut(
+          path = "/test/minimal",
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `allow put method for a custom path with all parameters`() = runTest {
+    client.runTest(
+      call = {
+        customPut(
+          path = "/test/all",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "body",
+              JsonPrimitive("parameters"),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
   }
@@ -561,48 +603,6 @@ class InsightsTest {
         assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"events":[{"eventType":"conversion","eventSubtype":"addToCart","eventName":"Product Added To Cart","index":"products","queryID":"43b15df305339e827f0ac0bdc5ebcaa7","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"objectData":[{"price":19.99,"quantity":10,"discount":2.5},{"price":"8$","quantity":7,"discount":"30%"}],"currency":"USD"}]}""", it.body)
-      },
-    )
-  }
-
-  // put
-
-  @Test
-  fun `allow put method for a custom path with minimal parameters`() = runTest {
-    client.runTest(
-      call = {
-        put(
-          path = "/test/minimal",
-        )
-      },
-      intercept = {
-        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{}""", it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `allow put method for a custom path with all parameters`() = runTest {
-    client.runTest(
-      call = {
-        put(
-          path = "/test/all",
-          parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
-          },
-        )
-      },
-      intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
-        assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
   }

@@ -36,7 +36,7 @@ class RecommendTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.get[Any](
+      client.customGet[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -50,7 +50,7 @@ class RecommendTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -63,7 +63,7 @@ class RecommendTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -79,7 +79,7 @@ class RecommendTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.get[Any](
+      client.customGet[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -93,7 +93,7 @@ class RecommendTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
