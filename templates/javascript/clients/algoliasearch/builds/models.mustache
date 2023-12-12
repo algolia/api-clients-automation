@@ -7,10 +7,10 @@ import type {
 } from '{{{npmNamespace}}}/client-common';
 import {
   ErrorBase,
-  PutProps,
-  PostProps,
-  DelProps,
-  GetProps,
+  CustomPutProps,
+  CustomPostProps,
+  CustomDeleteProps,
+  CustomGetProps,
 } from '{{{npmNamespace}}}/client-search/model';
 
 export * from '{{{npmNamespace}}}/client-search/model';
@@ -23,7 +23,13 @@ export { PersonalizationClient } from '{{{npmNamespace}}}/client-personalization
 export { AnalyticsClient } from '{{{npmNamespace}}}/client-analytics';
 export { AbtestingClient } from '{{{npmNamespace}}}/client-abtesting';
 
-export { ErrorBase, PutProps, PostProps, DelProps, GetProps };
+export {
+  ErrorBase,
+  CustomPutProps,
+  CustomPostProps,
+  CustomDeleteProps,
+  CustomGetProps,
+};
 
 /**
  * Options forwarded to the client initialized via the `init` method.

@@ -1,9 +1,9 @@
 get:
-  operationId: get
+  operationId: customGet
   $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 post:
-  operationId: post
+  operationId: customPost
   requestBody:
     description: Parameters to send with the custom request.
     content:
@@ -13,7 +13,7 @@ post:
   $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 put:
-  operationId: put
+  operationId: customPut
   requestBody:
     description: Parameters to send with the custom request.
     content:
@@ -23,5 +23,5 @@ put:
   $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 delete:
-  operationId: del
+  operationId: customDelete
   $ref: '../schemas/CustomRequest.yml#/customRequest'
