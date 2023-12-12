@@ -62,7 +62,7 @@ namespace Algolia.Search.Client
     public TimeSpan? ReadTimeout { get; set; }
 
     /// <summary>
-    /// Set the read timeout in seconds for all requests
+    /// Set the read timeout for all requests
     /// </summary>
     public TimeSpan? WriteTimeout { get; set; }
 
