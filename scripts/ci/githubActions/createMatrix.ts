@@ -54,12 +54,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     // if this language is not yet in the matrix, we initialize it with the client-specific files
     if (!(language in matrix)) {
-      const cacheToCompute: string[] = [
-        'tests/CTS',
-        `templates/${language}`,
-        'generators/src',
-        getVersionFileForLanguage(language),
-      ];
+      const cacheToCompute: string[] = [getVersionFileForLanguage(language)];
 
       for (const [, dependency] of Object.entries(COMMON_DEPENDENCIES)) {
         cacheToCompute.push(...dependency);
