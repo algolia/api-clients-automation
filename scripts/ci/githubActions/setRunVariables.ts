@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { CLIENTS_JS_UTILS, LANGUAGES, capitalize } from '../../common.js';
+import { CLIENTS_JS_UTILS, LANGUAGES } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
 import type { Language } from '../../types.js';
 
@@ -18,6 +18,10 @@ export const COMMON_DEPENDENCIES = {
     'config/openapitools.json',
     'config/clients.config.json',
     'config/release.config.json',
+    'generators',
+    'templates',
+    'tests/CTS',
+    '.nvmrc',
   ],
   COMMON_SPECS_CHANGED: ['specs/common'],
 };
@@ -53,24 +57,18 @@ export const DEPENDENCIES = LANGUAGES.reduce(
   (finalDependencies, lang) => {
     const key = `${lang.toUpperCase()}_CLIENT_CHANGED`;
     const langFolder = getLanguageFolder(lang);
-    const langGenerator = capitalize(lang);
 
-    return {
-      ...finalDependencies,
-      [key]: [
-        'generators/src/main/java/com/algolia/codegen/*/**',
-        'tests/CTS',
-        '.nvmrc',
-        ':!**node_modules',
-        // language related files
-        langFolder,
-        `templates/${lang}`,
-        `generators/src/main/java/com/algolia/codegen/Algolia${langGenerator}Generator.java`,
-        getVersionFileForLanguage(lang),
-        `:!${langFolder}/.github`,
-        `:!${langFolder}/README.md`,
-      ],
-    };
+    // eslint-disable-next-line no-param-reassign
+    finalDependencies[key] = [
+      ':!**node_modules',
+      // language related files
+      langFolder,
+      getVersionFileForLanguage(lang),
+      `:!${langFolder}/.github`,
+      `:!${langFolder}/README.md`,
+    ];
+
+    return finalDependencies;
   },
   {
     ...COMMON_DEPENDENCIES,
