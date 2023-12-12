@@ -29,5 +29,8 @@ jobs:
       run: poetry install
       shell: bash
 
+    - run: poetry build
+      shell: bash
+
     - name: Publish algoliasearch package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
