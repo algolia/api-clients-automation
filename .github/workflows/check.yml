@@ -337,6 +337,10 @@ jobs:
         with:
           language: ${{ matrix.client.language }}
 
+      - name: Update path
+        if: ${{ matrix.client.language == 'swift' }}
+        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
