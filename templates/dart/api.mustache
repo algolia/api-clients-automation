@@ -157,6 +157,15 @@ final class {{classname}} implements ApiClient {
   }  
   {{/operation}}
 
+  @Deprecated('This operation has been deprecated, use `customPost` instead')
+  Future<Object> post({
+    required  String path,
+    Map<String, Object>? parameters, Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return this.customPost(path: path, parameters: parameters, requestOptions: requestOptions);
+  }
+
   {{^isAlgoliasearchClient}}
   @Deprecated('This operation has been deprecated, use `customPut` instead')
   Future<Object> put({
@@ -174,15 +183,6 @@ final class {{classname}} implements ApiClient {
     RequestOptions? requestOptions,
   }) async {
     return this.customGet(path: path, parameters: parameters, requestOptions: requestOptions);
-  }
-
-  @Deprecated('This operation has been deprecated, use `customPost` instead')
-  Future<Object> post({
-    required  String path,
-    Map<String, Object>? parameters, Object? body,
-    RequestOptions? requestOptions,
-  }) async {
-    return this.customPost(path: path, parameters: parameters, requestOptions: requestOptions);
   }
 
   @Deprecated('This operation has been deprecated, use `customDelete` instead')
