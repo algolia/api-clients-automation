@@ -93,43 +93,46 @@ class {{classname}}:
 
         {{#isDeprecated}}warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning){{/isDeprecated}}
 
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _body_params: Optional[bytes] = None
+        {{#allParams}}
+        {{#required}}
+        if {{paramName}} is None:
+            raise ValueError("'{{paramName}}' is required when calling '{{nickname}}'")
 
-        {{#pathParams}}
-        if {{paramName}} is not None:
-            _path_params['{{baseName}}'] = {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}
-        {{/pathParams}}
+        {{/required}}
+        {{/allParams}}
+
+        _query_params: List[Tuple[str, str]] = []
+        _body: Optional[bytes] = None
+        {{#vendorExtensions}}
+        _path = '{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+        {{/vendorExtensions}}
 
         {{#queryParams}}
         if {{paramName}} is not None:
-            {{^isDateTime}}{{^isDate}}
             _query_params.append(('{{baseName}}', {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}))
-            {{/isDate}}{{/isDateTime}}
         {{/queryParams}}
 
         {{#bodyParam}}
         if {{paramName}} is not None:
-            {{^isBinary}}
-            _body_params = {{paramName}}
-            {{/isBinary}}
+            _body = {{paramName}}
         {{/bodyParam}}
 
         _param = self._transporter.param_serialize(
-            path='{{{path}}}',
-            path_params=_path_params,
             query_params=_query_params,
-            body=_body_params,
+            body=_body,
             request_options=request_options,
         )
 
         response = await self._transporter.request(
             verb=Verb.{{httpMethod}},
-            path=_param[0],
-            data=_param[1],
-            request_options=_param[2],
+            path=_path,
+            data=_param[0],
+            request_options=_param[1],
+            {{#vendorExtensions}}
+              {{#x-use-read-transporter}}
             use_read_transporter=True,
+              {{/x-use-read-transporter}}
+            {{/vendorExtensions}}
         )
 
         response.data = response.raw_data
