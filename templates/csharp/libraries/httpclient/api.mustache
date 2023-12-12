@@ -144,12 +144,12 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/pathParams}}
             {{#queryParams}}
             {{#required}}
-            requestOptions.QueryParameters = ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}});
+            requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                requestOptions.QueryParameters = ClientUtils.ParameterToMultiMap("{{collectionFormat}}", "{{baseName}}", {{paramName}});
+                requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
             }
             {{/required}}
             {{/queryParams}}
