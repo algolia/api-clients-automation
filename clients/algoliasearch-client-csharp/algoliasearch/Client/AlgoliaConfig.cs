@@ -55,11 +55,6 @@ namespace Algolia.Search.Client
     public Dictionary<string, string> DefaultHeaders { get; set; }
 
     /// <summary>
-    /// Save methods batch size
-    /// </summary>
-    public int BatchSize { get; set; } = 1000;
-
-    /// <summary>
     /// Set the read timeout in seconds for all requests
     /// </summary>
     public int? ReadTimeout { get; set; }
