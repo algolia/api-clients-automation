@@ -3242,7 +3242,7 @@ x-tagGroups:
 paths:
   /1{path}:
     post:
-      operationId: post
+      operationId: customPost
       requestBody:
         description: Parameters to send with the custom request.
         content:

@@ -34,7 +34,7 @@ class InsightsClientClientTests {
 
     String path0 = "/test";
 
-    client.post(path0);
+    client.customPost(path0);
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -57,7 +57,7 @@ class InsightsClientClientTests {
 
     String path0 = "/test";
 
-    client.get(path0);
+    client.customGet(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -71,7 +71,7 @@ class InsightsClientClientTests {
 
     String path0 = "/test";
 
-    client.post(path0);
+    client.customPost(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -103,7 +103,7 @@ class InsightsClientClientTests {
 
     String path0 = "/test";
 
-    client.del(path0);
+    client.customDelete(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("insights.us.algolia.io", result.host);

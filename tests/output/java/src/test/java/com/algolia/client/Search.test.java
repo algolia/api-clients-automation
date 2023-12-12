@@ -34,7 +34,7 @@ class SearchClientClientTests {
 
     String path0 = "/test";
 
-    client.get(path0);
+    client.customGet(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -47,7 +47,7 @@ class SearchClientClientTests {
 
     String path0 = "/test";
 
-    client.post(path0);
+    client.customPost(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
@@ -60,7 +60,7 @@ class SearchClientClientTests {
 
     String path0 = "/test";
 
-    client.post(path0);
+    client.customPost(path0);
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -83,7 +83,7 @@ class SearchClientClientTests {
 
     String path0 = "/test";
 
-    client.get(path0);
+    client.customGet(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -97,7 +97,7 @@ class SearchClientClientTests {
 
     String path0 = "/test";
 
-    client.post(path0);
+    client.customPost(path0);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

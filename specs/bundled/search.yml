@@ -3242,7 +3242,7 @@ x-tagGroups:
 paths:
   /1{path}:
     get:
-      operationId: get
+      operationId: customGet
       summary: Send requests to the Algolia REST API.
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
@@ -3266,7 +3266,7 @@ paths:
       tags:
         - search
     post:
-      operationId: post
+      operationId: customPost
       requestBody:
         description: Parameters to send with the custom request.
         content:
@@ -3296,7 +3296,7 @@ paths:
       tags:
         - search
     put:
-      operationId: put
+      operationId: customPut
       requestBody:
         description: Parameters to send with the custom request.
         content:
@@ -3326,7 +3326,7 @@ paths:
       tags:
         - search
     delete:
-      operationId: del
+      operationId: customDelete
       summary: Send requests to the Algolia REST API.
       description: This method allow you to send requests to the Algolia REST API.
       parameters:

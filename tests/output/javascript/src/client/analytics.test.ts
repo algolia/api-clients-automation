@@ -16,7 +16,7 @@ describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
     const $client = createClient();
 
-    const result = (await $client.post({
+    const result = (await $client.customPost({
       path: '/test',
     })) as unknown as EchoResponse;
 
@@ -28,7 +28,7 @@ describe('commonApi', () => {
   test('calls api with default read timeouts', async () => {
     const $client = createClient();
 
-    const result = (await $client.get({
+    const result = (await $client.customGet({
       path: '/test',
     })) as unknown as EchoResponse;
 
@@ -40,7 +40,7 @@ describe('commonApi', () => {
   test('calls api with default write timeouts', async () => {
     const $client = createClient();
 
-    const result = (await $client.post({
+    const result = (await $client.customPost({
       path: '/test',
     })) as unknown as EchoResponse;
 
@@ -68,7 +68,7 @@ describe('parameters', () => {
       requester: echoRequester(),
     });
 
-    const result = (await $client.post({
+    const result = (await $client.customPost({
       path: '/test',
     })) as unknown as EchoResponse;
 

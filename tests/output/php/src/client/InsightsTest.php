@@ -44,7 +44,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->post(
+        $client->customPost(
             '/test',
         );
 
@@ -62,7 +62,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->get(
+        $client->customGet(
             '/test',
         );
 
@@ -83,7 +83,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->post(
+        $client->customPost(
             '/test',
         );
 
@@ -135,7 +135,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
         // Make sure everything went fine without errors
         $this->assertIsObject($client);
-        $client->del(
+        $client->customDelete(
             '/test',
         );
 

@@ -52,7 +52,7 @@ final class SearchClient implements ApiClient {
   /// * [parameters] Query parameters to apply to the current query.
   /// * [body] Parameters to send with the custom request.
   /// * [requestOptions] additional request configuration.
-  Future<Object> post({
+  Future<Object> customPost({
     required String path,
     Map<String, Object>? parameters,
     Object? body,
@@ -60,7 +60,7 @@ final class SearchClient implements ApiClient {
   }) async {
     assert(
       path.isNotEmpty,
-      'Parameter `path` is required when calling `post`.',
+      'Parameter `path` is required when calling `customPost`.',
     );
     final request = ApiRequest(
       method: RequestMethod.post,
@@ -106,6 +106,17 @@ final class SearchClient implements ApiClient {
       'SearchResponses',
       growable: true,
     );
+  }
+
+  @Deprecated('This operation has been deprecated, use `customPost` instead')
+  Future<Object> post({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    return customPost(
+        path: path, parameters: parameters, requestOptions: requestOptions);
   }
 
   @override

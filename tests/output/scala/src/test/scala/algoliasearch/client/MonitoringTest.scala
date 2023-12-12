@@ -35,7 +35,7 @@ class MonitoringTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -51,7 +51,7 @@ class MonitoringTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.get[Any](
+      client.customGet[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -65,7 +65,7 @@ class MonitoringTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf

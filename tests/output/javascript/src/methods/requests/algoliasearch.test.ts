@@ -7,9 +7,9 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = liteClient(appId, apiKey, { requester: echoRequester() });
 
-describe('post', () => {
+describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.post({
+    const req = (await client.customPost({
       path: '/test/minimal',
     })) as unknown as EchoResponse;
 
@@ -20,7 +20,7 @@ describe('post', () => {
   });
 
   test('allow post method for a custom path with all parameters', async () => {
-    const req = (await client.post({
+    const req = (await client.customPost({
       path: '/test/all',
       parameters: { query: 'parameters' },
       body: { body: 'parameters' },
@@ -37,7 +37,7 @@ describe('post', () => {
       queryParameters: { query: 'myQueryParameter' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -57,7 +57,7 @@ describe('post', () => {
       queryParameters: { query2: 'myQueryParameter' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -80,7 +80,7 @@ describe('post', () => {
       headers: { 'x-algolia-api-key': 'myApiKey' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -103,7 +103,7 @@ describe('post', () => {
       headers: { 'x-algolia-api-key': 'myApiKey' },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -126,7 +126,7 @@ describe('post', () => {
       queryParameters: { isItWorking: true },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -149,7 +149,7 @@ describe('post', () => {
       queryParameters: { myParam: 2 },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -172,7 +172,7 @@ describe('post', () => {
       queryParameters: { myParam: ['c', 'd'] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -195,7 +195,7 @@ describe('post', () => {
       queryParameters: { myParam: [true, true, false] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },
@@ -218,7 +218,7 @@ describe('post', () => {
       queryParameters: { myParam: [1, 2] },
     };
 
-    const req = (await client.post(
+    const req = (await client.customPost(
       {
         path: '/test/requestOptions',
         parameters: { query: 'parameters' },

@@ -27,7 +27,7 @@ func createInsightsClient() (*insights.APIClient, *echoRequester) {
 	return client, echo
 }
 
-func TestInsights_Del(t *testing.T) {
+func TestInsights_CustomDelete(t *testing.T) {
 	client, echo := createInsightsClient()
 
 	tests := []struct {
@@ -38,9 +38,9 @@ func TestInsights_Del(t *testing.T) {
 			name: "allow del method for a custom path with minimal parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/minimal"}`
-				req := insights.ApiDelRequest{}
+				req := insights.ApiCustomDeleteRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Del(req)
+				_, err := client.CustomDelete(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/minimal")
@@ -55,9 +55,9 @@ func TestInsights_Del(t *testing.T) {
 			name: "allow del method for a custom path with all parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := insights.ApiDelRequest{}
+				req := insights.ApiCustomDeleteRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Del(req)
+				_, err := client.CustomDelete(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/all")
@@ -82,7 +82,7 @@ func TestInsights_Del(t *testing.T) {
 	}
 }
 
-func TestInsights_Get(t *testing.T) {
+func TestInsights_CustomGet(t *testing.T) {
 	client, echo := createInsightsClient()
 
 	tests := []struct {
@@ -93,9 +93,9 @@ func TestInsights_Get(t *testing.T) {
 			name: "allow get method for a custom path with minimal parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/minimal"}`
-				req := insights.ApiGetRequest{}
+				req := insights.ApiCustomGetRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Get(req)
+				_, err := client.CustomGet(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/minimal")
@@ -110,9 +110,9 @@ func TestInsights_Get(t *testing.T) {
 			name: "allow get method for a custom path with all parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := insights.ApiGetRequest{}
+				req := insights.ApiCustomGetRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Get(req)
+				_, err := client.CustomGet(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/all")
@@ -137,7 +137,7 @@ func TestInsights_Get(t *testing.T) {
 	}
 }
 
-func TestInsights_Post(t *testing.T) {
+func TestInsights_CustomPost(t *testing.T) {
 	client, echo := createInsightsClient()
 
 	tests := []struct {
@@ -148,9 +148,9 @@ func TestInsights_Post(t *testing.T) {
 			name: "allow post method for a custom path with minimal parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/minimal"}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Post(req)
+				_, err := client.CustomPost(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/minimal")
@@ -166,9 +166,9 @@ func TestInsights_Post(t *testing.T) {
 			name: "allow post method for a custom path with all parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Post(req)
+				_, err := client.CustomPost(req)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/all")
@@ -189,7 +189,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions can override default query parameters",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -197,7 +197,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -218,7 +218,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions merges query parameters with default ones",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -226,7 +226,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -247,7 +247,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions can override default headers",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionHeaders := map[string]any{}
@@ -255,7 +255,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionHeaders {
 					opts = append(opts, insights.HeaderParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -281,7 +281,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions merges headers with default ones",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionHeaders := map[string]any{}
@@ -289,7 +289,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionHeaders {
 					opts = append(opts, insights.HeaderParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -315,7 +315,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions queryParameters accepts booleans",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -323,7 +323,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -344,7 +344,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions queryParameters accepts integers",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -352,7 +352,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -373,7 +373,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions queryParameters accepts list of string",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -381,7 +381,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -402,7 +402,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions queryParameters accepts list of booleans",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -410,7 +410,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -431,7 +431,7 @@ func TestInsights_Post(t *testing.T) {
 			name: "requestOptions queryParameters accepts list of integers",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := insights.ApiPostRequest{}
+				req := insights.ApiCustomPostRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				var opts []insights.Option
 				requestOptionParameters := map[string]any{}
@@ -439,7 +439,7 @@ func TestInsights_Post(t *testing.T) {
 				for k, v := range requestOptionParameters {
 					opts = append(opts, insights.QueryParamOption(k, v))
 				}
-				_, err := client.Post(req, opts...)
+				_, err := client.CustomPost(req, opts...)
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
@@ -451,6 +451,63 @@ func TestInsights_Post(t *testing.T) {
 				ja.Assertf(*echo.body, `{"facet":"filters"}`)
 				queryParams := map[string]string{}
 				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
+				for k, v := range queryParams {
+					require.Equal(t, v, echo.query.Get(k))
+				}
+			},
+		},
+	}
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			test.testFunc(t)
+		})
+	}
+}
+
+func TestInsights_CustomPut(t *testing.T) {
+	client, echo := createInsightsClient()
+
+	tests := []struct {
+		name     string
+		testFunc func(t *testing.T)
+	}{
+		{
+			name: "allow put method for a custom path with minimal parameters",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"path":"/test/minimal"}`
+				req := insights.ApiCustomPutRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				_, err := client.CustomPut(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/test/minimal")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "PUT", echo.method)
+
+				ja := jsonassert.New(t)
+				ja.Assertf(*echo.body, `{}`)
+			},
+		},
+		{
+			name: "allow put method for a custom path with all parameters",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
+				req := insights.ApiCustomPutRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				_, err := client.CustomPut(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/test/all")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "PUT", echo.method)
+
+				ja := jsonassert.New(t)
+				ja.Assertf(*echo.body, `{"body":"parameters"}`)
+				queryParams := map[string]string{}
+				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 				for k, v := range queryParams {
 					require.Equal(t, v, echo.query.Get(k))
 				}
@@ -560,63 +617,6 @@ func TestInsights_PushEvents(t *testing.T) {
 
 				ja := jsonassert.New(t)
 				ja.Assertf(*echo.body, `{"events":[{"eventType":"conversion","eventSubtype":"addToCart","eventName":"Product Added To Cart","index":"products","queryID":"43b15df305339e827f0ac0bdc5ebcaa7","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"objectData":[{"price":19.99,"quantity":10,"discount":2.5},{"price":"8$","quantity":7,"discount":"30%%"}],"currency":"USD"}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
-}
-
-func TestInsights_Put(t *testing.T) {
-	client, echo := createInsightsClient()
-
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow put method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := insights.ApiPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Put(req)
-				require.NoError(t, err)
-
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
-
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "allow put method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := insights.ApiPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Put(req)
-				require.NoError(t, err)
-
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
-
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"body":"parameters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
 			},
 		},
 	}

@@ -17,7 +17,7 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -34,7 +34,7 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -50,7 +50,7 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
