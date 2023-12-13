@@ -6,9 +6,9 @@ post:
     Add a record (object) to an index or replace it.
 
     If the record doesn't contain an `objectID`, Algolia automatically adds it.
-    
+
     If you use an existing `objectID`, the existing record is replaced with the new one.
-    
+
     To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
   summary: Add or update a record.
   parameters:
@@ -21,8 +21,8 @@ post:
         schema:
           type: object
   responses:
-    '200':
-      description: OK
+    '201':
+      description: Created
       content:
         application/json:
           schema:
