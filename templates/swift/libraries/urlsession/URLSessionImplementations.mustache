@@ -5,7 +5,7 @@
 //
 
 import Foundation
-#if !os(macOS)
+#if !os(macOS) && !os(Linux)
 import MobileCoreServices
 #endif
 
