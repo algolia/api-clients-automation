@@ -191,6 +191,11 @@ runs:
       id: set-up-homebrew
       uses: Homebrew/actions/setup-homebrew@master
 
+    - name: Install swift-format
+      if: ${{ inputs.language == 'swift' && steps.cache.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: brew install swift-format
+
     - name: Cache Homebrew Bundler RubyGems
       if: ${{ inputs.language == 'swift' }}
       id: cache
@@ -199,8 +204,3 @@ runs:
         path: ${{ steps.set-up-homebrew.outputs.gems-path }}
         key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
         restore-keys: ${{ runner.os }}-rubygems-
-
-    - name: Install swift-format
-      if: ${{ inputs.language == 'swift' && steps.cache.outputs.cache-hit != 'true' }}
-      shell: bash
-      run: brew install swift-format

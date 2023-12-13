@@ -56,15 +56,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + "AlgoliaSearchClient");
-    //    additionalProperties.put(GENERATE_MODEL_ADDITIONAL_PROPERTIES, true);
-    //    additionalProperties.put(GENERATE_ALIAS_AS_MODEL, true);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     reservedWords.add("Task");
     reservedWordsMappings.put("Task", "IngestionTask");
 
-    setObjcCompatible(true);
+    setObjcCompatible(false);
     setProjectName("AlgoliaSearchClient");
     setUseSPMFileStructure(true);
 
