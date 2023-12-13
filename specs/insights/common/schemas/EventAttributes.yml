@@ -179,7 +179,6 @@ currency:
   example: EUR
 
 value:
-  type: string
   description: Total monetary value of this event in units of `currency`.
   oneOf:
     - type: number
