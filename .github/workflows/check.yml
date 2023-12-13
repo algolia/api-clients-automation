@@ -300,7 +300,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 15
-    runs-on: ubuntu-22.04
+    runs-on: macos-12
     needs:
       - setup
       - specs
@@ -377,7 +377,7 @@ jobs:
           path: clients-${{matrix.client.language }}.zip
 
   codegen:
-    runs-on: ubuntu-22.04
+    runs-on: macos-12
     timeout-minutes: 10
     needs:
       - setup
