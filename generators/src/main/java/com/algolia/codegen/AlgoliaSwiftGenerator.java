@@ -1,17 +1,26 @@
 package com.algolia.codegen;
 
+import static org.openapitools.codegen.utils.StringUtils.camelize;
+
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.GenericPropagator;
 import com.algolia.codegen.utils.Helpers;
 import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
+import io.swagger.v3.oas.models.media.ArraySchema;
+import io.swagger.v3.oas.models.media.ComposedSchema;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
 import java.io.File;
 import java.util.*;
+import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.Swift5ClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.utils.ModelUtils;
 
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
@@ -47,8 +56,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + "AlgoliaSearchClient");
+    //    additionalProperties.put(GENERATE_MODEL_ADDITIONAL_PROPERTIES, true);
+    //    additionalProperties.put(GENERATE_ALIAS_AS_MODEL, true);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+
+    reservedWords.add("Task");
+    reservedWordsMappings.put("Task", "IngestionTask");
 
     setObjcCompatible(true);
     setProjectName("AlgoliaSearchClient");
@@ -112,5 +126,83 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public String toRegularExpression(String pattern) {
     return escapeText(pattern);
+  }
+
+  private Boolean isLanguageSpecificType(String name) {
+    return languageSpecificPrimitives.contains(name);
+  }
+
+  @Override
+  public String toModelName(String name) {
+    // FIXME (in the super) parameter should not be assigned. Also declare it as "final"
+    name = sanitizeName(name);
+
+    if (!StringUtils.isEmpty(modelNameSuffix) && !isLanguageSpecificType(name)) { // set model suffix
+      name = name + "_" + modelNameSuffix;
+    }
+
+    if (!StringUtils.isEmpty(modelNamePrefix) && !isLanguageSpecificType(name)) { // set model prefix
+      name = modelNamePrefix + "_" + name;
+    }
+
+    // camelize the model name
+    // phone_number => PhoneNumber
+    name = camelize(name);
+
+    // model name cannot use reserved keyword, e.g. return
+    if (isReservedWord(name)) {
+      String modelName;
+      if (reservedWordsMappings.containsKey(name)) {
+        modelName = reservedWordsMappings.get(name);
+      } else {
+        modelName = "Model" + name;
+      }
+      Logger.getGlobal().warning(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+
+      return modelName;
+    }
+
+    // model name starts with number
+    if (name.matches("^\\d.*")) {
+      // e.g. 200Response => Model200Response (after camelize)
+      String modelName = "Model" + name;
+      Logger.getGlobal().warning(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+      return modelName;
+    }
+
+    return name;
+  }
+
+  // Stolen from the SwiftCombineGenerator, as it works way better
+  @Override
+  public String getTypeDeclaration(Schema p) {
+    Schema<?> schema = ModelUtils.unaliasSchema(this.openAPI, p, importMapping);
+    Schema<?> target = ModelUtils.isGenerateAliasAsModel() ? p : schema;
+    if (ModelUtils.isArraySchema(target)) {
+      Schema<?> items = getSchemaItems((ArraySchema) schema);
+      return ModelUtils.isSet(target) && ModelUtils.isObjectSchema(items)
+        ? "Set<" + getTypeDeclaration(items) + ">"
+        : "[" + getTypeDeclaration(items) + "]";
+    } else if (ModelUtils.isMapSchema(target)) {
+      // Note: ModelUtils.isMapSchema(p) returns true when p is a composed schema that also defines
+      // additionalproperties: true
+      Schema<?> inner = ModelUtils.getAdditionalProperties(target);
+      if (inner == null) {
+        Logger
+          .getGlobal()
+          .warning("`" + p.getName() + "` (map property) does not have a proper inner type defined. Default to" + " type:string");
+        inner = new StringSchema().description("TODO default missing map inner type to string");
+        p.setAdditionalProperties(inner);
+      }
+      return "[String: " + getTypeDeclaration(inner) + "]";
+    } else if (ModelUtils.isComposedSchema(target)) {
+      List<Schema> schemas = ModelUtils.getInterfaces((ComposedSchema) target);
+      if (schemas.size() == 1) {
+        return getTypeDeclaration(schemas.get(0));
+      } else {
+        super.getTypeDeclaration(target);
+      }
+    }
+    return super.getTypeDeclaration(target);
   }
 }
