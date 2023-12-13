@@ -108,4 +108,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
   }
+
+  @Override
+  public String toRegularExpression(String pattern) {
+    return escapeText(pattern);
+  }
 }
