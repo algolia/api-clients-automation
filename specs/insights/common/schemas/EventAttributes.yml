@@ -4,17 +4,16 @@ eventName:
   maxLength: 64
   pattern: '[\x20-\x7E]{1,64}'
   description: |
-    Can contain up to 64 ASCII characters. 
+    The name of the event, up to 64 ASCII characters.
 
-    Consider naming events consistently—for example,
-    by adopting Segment's
+    Consider naming events consistently—for example, by adopting Segment's
     [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     framework.
   example: Product Clicked
 
 index:
   type: string
-  description: Name of the Algolia index.
+  description: The name of an Algolia index.
   example: YourIndexName
 
 userToken:
@@ -23,21 +22,27 @@ userToken:
   maxLength: 129
   pattern: '[a-zA-Z0-9_=/+-]{1,129}'
   description: |
-    Anonymous or pseudonymous user identifier. 
+    An anonymous or pseudonymous user identifier.
 
     > **Note**: Never include personally identifiable information in user tokens.
   example: test-user-1
 
 authenticatedUserToken:
   type: string
-  description: User token for authenticated users.
+  minLength: 1
+  maxLength: 129
+  pattern: '[a-zA-Z0-9_=/+-]{1,129}'
+  description: |
+    An identifier for authenticated users.
+
+    > **Note**: Never include personally identifiable information in user tokens.
   example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
 
 timestamp:
   type: integer
   format: int64
   description: |
-    Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+    The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
     By default, the Insights API uses the time it receives an event as its timestamp.
   example: 1687193127
 
@@ -55,7 +60,7 @@ queryID:
 
 objectIDs:
   type: array
-  description: List of object identifiers for items of an Algolia index.
+  description: The object IDs of the records that are part of the event.
   items:
     type: string
   minItems: 1
@@ -82,25 +87,39 @@ positions:
   minItems: 1
   maxItems: 20
   description: |
-    Position of the clicked objects in the search results.
+    The position of the clicked item the search results.
 
     The first search result has a position of 1 (not 0).
     You must provide 1 `position` for each `objectID`.
   example: [1, 2, 5]
 
 price:
-  description: The price of the item. This should be the final price, inclusive of any discounts in effect.
+  description: |
+    The total price of a product, including any discounts, in units of `currency`.
   oneOf:
     - type: number
       format: double
+      example: 9.99
     - type: string
+      example: '9.99'
 
 discount:
-  description: Absolute value of the discount in effect for this object, measured in `currency`.
+  description: |
+    The absolute value of the discount for this product, in units of `currency`.
   oneOf:
     - type: number
       format: double
+      example: 20
     - type: string
+      example: '20'
+
+quantity:
+  type: integer
+  format: int32
+  example: 2
+  description: |
+    The quantity of a product that has been purchased or added to the cart.
+    The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
 
 objectData:
   type: object
@@ -109,20 +128,20 @@ objectData:
     price:
       $ref: '#/price'
     quantity:
-      type: integer
-      format: int32
-      description: The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+      $ref: '#/quantity'
     discount:
       $ref: '#/discount'
 
 objectDataList:
   type: array
   description: |
-    Extra information about the records involved in the event—for example, to add price and quantities of purchased products.
+    Extra information about the records involved in a purchase or add-to-cart event.
 
-    If provided, must be the same length as `objectIDs`.
+    If specified, it must have the same length as `objectIDs`.
   items:
     $ref: '#/objectData'
+  minItems: 1
+  maxItems: 20
 
 objectDataAfterSearch:
   type: object
@@ -130,25 +149,41 @@ objectDataAfterSearch:
   properties:
     queryID:
       type: string
-      description: ID of the query that this specific record is attributable to. Used to track purchase events with multiple items originating from different searches.
+      pattern: '[0-9a-f]{32}'
+      minLength: 32
+      maxLength: 32
+      description: Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
+      example: 3e48cd0616e466948dd85abf5c3fbbe2
     price:
       $ref: '#/price'
     quantity:
-      type: integer
-      format: int32
-      description: The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+      $ref: '#/quantity'
     discount:
       $ref: '#/discount'
 
 objectDataAfterSearchList:
   type: array
   description: |
-    Extra information about the records involved in the event—for example, to add price and quantities of purchased products.
+    Extra information about the records involved in a purchase or add-to-cart events.
 
-    If provided, must be the same length as `objectIDs`.
+    If provided, it must be the same length as `objectIDs`.
   items:
     $ref: '#/objectDataAfterSearch'
+  minItems: 1
+  maxItems: 20
 
 currency:
   type: string
-  description: If you include pricing information in the `objectData` parameter, you must also specify the currency as ISO-4217 currency code, such as USD or EUR.
+  format: ISO 4217
+  description: Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+  example: EUR
+
+value:
+  type: string
+  description: Total monetary value of this event in units of `currency`.
+  oneOf:
+    - type: number
+      format: double
+      example: 1000.00
+    - type: string
+      example: '1000.00'
