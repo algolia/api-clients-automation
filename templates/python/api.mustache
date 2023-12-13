@@ -11,15 +11,6 @@ except ImportError:
 
 {{#operations}}
 class {{classname}}:
-    PRIMITIVE_TYPES = (float, bool, bytes, str, int)
-    NATIVE_TYPES_MAPPING = {
-        "int": int,
-        "float": float,
-        "str": str,
-        "bool": bool,
-        "object": object,
-    }
-
     def app_id(self) -> str:
         return self._config.app_id
 
@@ -37,42 +28,6 @@ class {{classname}}:
 
     async def close(self) -> None:
         return await self._transporter.close()
-
-    def __deserialize(self, data: Optional[dict], klass: any = None) -> dict:
-        """Deserializes dict, list, str into an object.
-
-        :param data: dict, list or str.
-        :param klass: class literal, or string of class name.
-
-        :return: object.
-        """
-        if data is None:
-            return None
-
-        if isinstance(klass, str):
-            if klass.startswith("List["):
-                sub_kls = match(r"List\[(.*)]", klass).group(1)
-                return [self.__deserialize(sub_data, sub_kls) for sub_data in data]
-
-            if klass.startswith("Dict["):
-                sub_kls = match(r"Dict\[([^,]*), (.*)]", klass).group(2)
-                return {k: self.__deserialize(v, sub_kls) for k, v in data.items()}
-
-            if klass in self.NATIVE_TYPES_MAPPING:
-                klass = self.NATIVE_TYPES_MAPPING[klass]
-
-        if klass in self.PRIMITIVE_TYPES:
-            try:
-                return klass(data)
-            except UnicodeEncodeError:
-                return str(data)
-            except TypeError:
-                return data
-        elif klass == object:
-            return data
-        else:
-            return klass.from_json(data)
-
     {{#operation}}
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
@@ -159,6 +114,6 @@ class {{classname}}:
 
         response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
-        return {{^returnType}}None{{/returnType}}{{#returnType}}self.__deserialize(response.raw_data, {{{returnType}}}){{/returnType}}
+        return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
 {{/operation}}
 {{/operations}}
