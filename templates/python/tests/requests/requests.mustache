@@ -4,7 +4,7 @@ from json import loads
 from algoliasearch.{{{import}}} import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 
 
-class Test{{client}}:
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"
