@@ -84,9 +84,7 @@ class {{classname}}:
             data=_param[0],
             request_options=_param[1],
             {{#vendorExtensions}}
-              {{#x-use-read-transporter}}
-            use_read_transporter=True,
-              {{/x-use-read-transporter}}
+            use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
         )
 
