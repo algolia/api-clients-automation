@@ -14,13 +14,6 @@ class ApiResponse(Generic[T]):
     """
 
     PRIMITIVE_TYPES = (float, bool, bytes, str, int)
-    NATIVE_TYPES_MAPPING = {
-        "int": int,
-        "float": float,
-        "str": str,
-        "bool": bool,
-        "object": object,
-    }
 
     def __init__(
         self,
@@ -67,9 +60,6 @@ class ApiResponse(Generic[T]):
                 return {
                     k: self.__deserialize(v, sub_kls) for k, v in self.raw_data.items()
                 }
-
-            if klass in self.NATIVE_TYPES_MAPPING:
-                klass = self.NATIVE_TYPES_MAPPING[klass]
 
         if klass in self.PRIMITIVE_TYPES:
             try:
