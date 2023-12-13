@@ -1,8 +1,7 @@
 from os import environ
 from json import loads
 
-from algoliasearch.{{{import}}} import {{client}}
-from algoliasearch.http import RequestOptions
+from algoliasearch.{{{import}}} import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 
 
 class Test{{client}}:
@@ -14,32 +13,21 @@ class Test{{client}}:
     if api_key is None:
         api_key = "test_api_key"
 
-    _client = {{client}}.create(app_id, api_key)
+    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(app_id, api_key)
 
     {{#blocksRequests}}
     {{#tests}}
-    """
-    {{{testName}}}
-    """
     async def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
-        {{#hasRequestOptions}}
-        _request_options = {
-          {{#requestOptions.queryParameters.parameters}}"query_parameters": {{{.}}},{{/requestOptions.queryParameters.parameters}}
-          {{#requestOptions.headers.parameters}}"headers": {{{.}}}{{/requestOptions.headers.parameters}}
-        }
-        {{/hasRequestOptions}}
+        """
+        {{{testName}}}
+        """
+        _req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
-        {{#hasParameters}}
-        _payload = loads("""{{{parameters}}}""")
-        {{/hasParameters}}
-
-        req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#hasParameters}}_payload{{/hasParameters}}{{#hasRequestOptions}}, request_options=_request_options{{/hasRequestOptions}})
-
-        assert req.get("path") == "{{{request.path}}}"
-        assert req.get("method") == "{{{request.method}}}"
-        assert req.get("data") == {{#request.body}}== """{{{.}}}"""{{/request.body}}{{^request.body}}is None{{/request.body}}
-        assert req.get("query_params") {{#request.queryParameters}}== {{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}is None{{/request.queryParameters}}
-        assert req.get("headers") {{#request.headers}}== {{{.}}}{{/request.headers}}{{^request.headers}}is None{{/request.headers}}
+        assert _req.get("path") == "{{{request.path}}}"
+        assert _req.get("method") == "{{{request.method}}}"
+        assert _req.get("data") {{#request.body}}== """{{{.}}}"""{{/request.body}}{{^request.body}}is None{{/request.body}}
+        assert _req.get("query_params") {{#request.queryParameters}}== {{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}is None{{/request.queryParameters}}
+        assert _req.get("headers") {{#request.headers}}== {{{.}}}{{/request.headers}}{{^request.headers}}is None{{/request.headers}}
 
     {{/tests}}
     {{/blocksRequests}}

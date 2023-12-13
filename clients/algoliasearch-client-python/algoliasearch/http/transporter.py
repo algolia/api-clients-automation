@@ -118,7 +118,7 @@ class Transporter:
             proxy = self._config.proxies.get("http")
 
         try:
-            with timeout(self._timeout):
+            async with timeout(self._timeout):
                 response = await self._session.request(
                     method=verb,
                     url=url,
