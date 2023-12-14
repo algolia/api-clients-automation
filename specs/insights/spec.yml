@@ -51,4 +51,4 @@ paths:
     $ref: 'paths/pushEvents.yml'
 
   /1/usertokens/{userToken}:
-    $ref: 'paths/deleteUsertoken.yml'
+    $ref: 'paths/deleteUserToken.yml'
