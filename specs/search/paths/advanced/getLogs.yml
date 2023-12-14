@@ -2,6 +2,8 @@ get:
   tags:
     - Advanced
   operationId: getLogs
+  x-acl:
+    - logs
   description: >
     The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
 

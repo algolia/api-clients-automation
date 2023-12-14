@@ -2,6 +2,8 @@ get:
   tags:
     - Records
   operationId: getObject
+  x-acl:
+    - search
   summary: Get a record.
   description: To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
   parameters:
@@ -45,10 +47,12 @@ put:
   tags:
     - Records
   operationId: addOrUpdateObject
+  x-acl:
+    - addObject
   summary: Add or update a record (using objectID).
   description: |
     If you use an existing `objectID`, the existing record will be replaced with the new one.
-    
+
     To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.
 
     To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
@@ -78,6 +82,8 @@ delete:
   tags:
     - Records
   operationId: deleteObject
+  x-acl:
+    - deleteObject
   summary: Delete a record.
   description: To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
   parameters:

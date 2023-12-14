@@ -4,6 +4,10 @@ post:
   summary: Search among destinations.
   description: Search among destinations with a defined set of parameters.
   operationId: searchDestinations
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     content:
       application/json:

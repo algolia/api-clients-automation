@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getSearchesNoResults
+  x-acl:
+    - analytics
   summary: Get top searches with no results.
   description: Returns the most popular of the latest 1,000 searches that didn't return any results.
   parameters:

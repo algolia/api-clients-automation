@@ -2,6 +2,8 @@ get:
   tags:
     - Indices
   operationId: listIndices
+  x-acl:
+    - listIndexes
   summary: List indices.
   description: List indices in an Algolia application.
   parameters:

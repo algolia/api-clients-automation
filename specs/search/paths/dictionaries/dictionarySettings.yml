@@ -2,6 +2,8 @@ get:
   tags:
     - Dictionaries
   operationId: getDictionarySettings
+  x-acl:
+    - settings
   description: Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
   summary: Get stop word settings.
   responses:
@@ -31,6 +33,8 @@ put:
   tags:
     - Dictionaries
   operationId: setDictionarySettings
+  x-acl:
+    - editSettings
   description: Set stop word settings for a specific language.
   summary: Set stop word settings.
   requestBody:

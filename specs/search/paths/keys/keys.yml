@@ -2,6 +2,8 @@ get:
   tags:
     - Api Keys
   operationId: listApiKeys
+  x-acl:
+    - admin
   summary: List API keys.
   description: List all API keys associated with your Algolia application, including their permissions and restrictions.
   responses:
@@ -34,6 +36,8 @@ post:
   tags:
     - Api Keys
   operationId: addApiKey
+  x-acl:
+    - admin
   summary: Add API key.
   description: >
     Add a new API key with specific permissions and restrictions.

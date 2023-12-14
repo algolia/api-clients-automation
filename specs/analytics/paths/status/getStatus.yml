@@ -2,6 +2,8 @@ get:
   tags:
     - advanced
   operationId: getStatus
+  x-acl:
+    - analytics
   summary: Get Analytics API status.
   description: >
     Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`.

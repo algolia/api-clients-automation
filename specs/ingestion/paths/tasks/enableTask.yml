@@ -4,6 +4,10 @@ put:
   summary: Enable a task.
   description: Enable the task of the given taskID.
   operationId: enableTask
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathTaskID'
   responses:

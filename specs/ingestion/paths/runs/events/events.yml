@@ -4,6 +4,10 @@ get:
   summary: Get a list of events.
   description: Get a list of events associated to the given runID, for the given query parameters.
   operationId: getEvents
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../../common/parameters.yml#/pathRunID'
     - $ref: '../../../common/parameters.yml#/itemsPerPage'

@@ -2,6 +2,8 @@ get:
   tags:
     - click
   operationId: getAverageClickPosition
+  x-acl:
+    - analytics
   summary: Get average click position.
   description: >
     Return the average click position for the complete time range and for individual days.

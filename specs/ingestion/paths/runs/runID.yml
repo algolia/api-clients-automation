@@ -4,6 +4,10 @@ get:
   summary: Get a run.
   description: Get a single run for the given ID.
   operationId: getRun
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathRunID'
   responses:

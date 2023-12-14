@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getSearchesCount
+  x-acl:
+    - analytics
   summary: Get number of searches.
   description: Returns the number of searches within a time range.
   parameters:

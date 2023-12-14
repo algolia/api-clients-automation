@@ -2,6 +2,8 @@ post:
   tags:
     - Synonyms
   operationId: clearSynonyms
+  x-acl:
+    - editSettings
   summary: Delete all synonyms.
   description: Delete all synonyms in the index.
   parameters:

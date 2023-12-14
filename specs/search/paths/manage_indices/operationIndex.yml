@@ -2,6 +2,8 @@ post:
   tags:
     - Indices
   operationId: operationIndex
+  x-acl:
+    - addObject
   summary: Copy, move, or rename an index.
   description: |-
     This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index.
@@ -35,9 +37,9 @@ post:
                 $ref: '../../common/enums.yml#/scopeType'
               description: |-
                 **This only applies to the _copy_ operation.**
-                
+
                 If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.
-                
+
                 If you specify `scope`, only the specified scopes are copied.
           required:
             - operation

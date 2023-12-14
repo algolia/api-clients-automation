@@ -2,6 +2,8 @@ post:
   tags:
     - Dictionaries
   operationId: batchDictionaryEntries
+  x-acl:
+    - editSettings
   description: Add or remove a batch of dictionary entries.
   summary: Batch dictionary entries.
   parameters:

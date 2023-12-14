@@ -4,6 +4,10 @@ post:
   summary: Search among tasks.
   description: Search among tasks with a defined set of parameters.
   operationId: searchTasks
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     content:
       application/json:

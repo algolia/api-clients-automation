@@ -2,6 +2,8 @@ post:
   tags:
     - Rules
   operationId: clearRules
+  x-acl:
+    - editSettings
   summary: Delete all rules.
   description: Delete all rules in the index.
   parameters:

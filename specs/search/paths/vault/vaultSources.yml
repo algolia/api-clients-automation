@@ -2,6 +2,8 @@ get:
   tags:
     - Vaults
   operationId: getSources
+  x-acl:
+    - admin
   description: Get all allowed sources (IP addresses).
   summary: Get all allowed IP addresses.
   responses:
@@ -24,6 +26,8 @@ put:
   tags:
     - Vaults
   operationId: replaceSources
+  x-acl:
+    - admin
   description: Replace all allowed sources.
   summary: Replace all sources.
   requestBody:

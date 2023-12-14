@@ -2,6 +2,8 @@ post:
   tags:
     - Api Keys
   operationId: restoreApiKey
+  x-acl:
+    - admin
   summary: Restore API key.
   description: >
     Restore a deleted API key, along with its associated permissions.

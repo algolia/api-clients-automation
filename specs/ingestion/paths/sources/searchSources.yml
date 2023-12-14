@@ -4,6 +4,10 @@ post:
   summary: Search among sources.
   description: Search among sources with a defined set of parameters.
   operationId: searchSources
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     content:
       application/json:

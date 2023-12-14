@@ -2,6 +2,8 @@ post:
   tags:
     - Rules
   operationId: saveRules
+  x-acl:
+    - editSettings
   summary: Save a batch of rules.
   description: Create or update multiple rules.
   x-codegen-request-body-name: rules

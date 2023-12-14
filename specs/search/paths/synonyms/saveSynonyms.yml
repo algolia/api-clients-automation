@@ -2,6 +2,8 @@ post:
   tags:
     - Synonyms
   operationId: saveSynonyms
+  x-acl:
+    - editSettings
   summary: Save a batch of synonyms.
   description: Create or update multiple synonyms.
   parameters:

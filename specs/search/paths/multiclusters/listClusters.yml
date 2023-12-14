@@ -2,6 +2,8 @@ get:
   tags:
     - Clusters
   operationId: listClusters
+  x-acl:
+    - admin
   summary: List clusters.
   description: List the available clusters in a multi-cluster setup.
   responses:

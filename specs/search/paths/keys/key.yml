@@ -30,6 +30,8 @@ put:
   tags:
     - Api Keys
   operationId: updateApiKey
+  x-acl:
+    - admin
   summary: Update an API key.
   description: >
     Replace the permissions of an existing API key.
@@ -75,6 +77,8 @@ delete:
   tags:
     - Api Keys
   operationId: deleteApiKey
+  x-acl:
+    - admin
   summary: Delete API key.
   description: >
     Delete an existing API key.

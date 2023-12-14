@@ -4,6 +4,10 @@ post:
   summary: Search among authentications.
   description: Search among authentications with a defined set of parameters.
   operationId: searchAuthentications
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     content:
       application/json:

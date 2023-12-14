@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getTopCountries
+  x-acl:
+    - analytics
   summary: Get top countries.
   description: Returns top countries. Limited to the 1,000 most frequent ones.
   parameters:

@@ -4,6 +4,10 @@ get:
   summary: Get a destination.
   description: Get the destination of the given destinationID.
   operationId: getDestination
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathDestinationID'
   responses:
@@ -22,6 +26,10 @@ patch:
   summary: Update a destination.
   description: Update the destination of the given destinationID.
   operationId: updateDestination
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathDestinationID'
   requestBody:
@@ -46,6 +54,10 @@ delete:
   summary: Delete a destination.
   description: Soft delete the destination of the given destinationID.
   operationId: deleteDestination
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathDestinationID'
   responses:

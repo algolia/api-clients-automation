@@ -2,6 +2,8 @@ get:
   tags:
     - Indices
   operationId: getTask
+  x-acl:
+    - addObject
   description: Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
   summary: Check a task's status.
   parameters:

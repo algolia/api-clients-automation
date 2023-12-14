@@ -4,6 +4,10 @@ get:
   summary: Get a list of tasks.
   description: Get a list of tasks for the given query parameters, with pagination details.
   operationId: getTasks
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
