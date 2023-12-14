@@ -7,7 +7,7 @@ post:
     Send a list of events to the Insights API.
 
     You can include up to 1,000 events in a single request,
-    but the request body must be smaller than 2&nbspMB.
+    but the request body must be smaller than 2&nbsp;MB.
   requestBody:
     required: true
     content:
