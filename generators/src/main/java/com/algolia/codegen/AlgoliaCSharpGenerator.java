@@ -5,6 +5,9 @@ import com.algolia.codegen.utils.*;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
+import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
@@ -94,5 +97,21 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
+    OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    GenericPropagator.propagateGenericsToOperations(operations, models);
+    return operations;
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    GenericPropagator.propagateGenericsToModels(models);
+    OneOf.addOneOfMetadata(models);
+    return models;
   }
 }
