@@ -1,7 +1,7 @@
 delete:
   tags:
     - usertokens
-  operationId: deleteUsertoken
+  operationId: deleteUserToken
   summary: Delete user token.
   description: |
     Delete all events related to a certain user token from events metrics and analytics.

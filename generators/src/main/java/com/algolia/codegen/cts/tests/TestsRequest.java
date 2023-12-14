@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
@@ -127,6 +128,16 @@ public class TestsRequest extends TestsGenerator {
               requestOptions.put("headers", headers);
             }
             test.put("requestOptions", requestOptions);
+          }
+
+          // Determines whether the endpoint is expected to return a response payload deserialized
+          // and therefore a variable to store it into.
+          test.put("hasResponsePayload", true);
+
+          for (CodegenResponse response : ope.responses) {
+            if (response.code.equals("204")) {
+              test.put("hasResponsePayload", false);
+            }
           }
 
           paramsType.enhanceParameters(req.parameters, test, ope);
