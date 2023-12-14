@@ -299,8 +299,8 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    timeout-minutes: 15
-    runs-on: macos-12
+    timeout-minutes: 20
+    runs-on: ${{ matrix.client.language == 'swift' && 'macos-12' || 'ubuntu-22.04' }}
     needs:
       - setup
       - specs
