@@ -91,6 +91,10 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
+  '!clients/algoliasearch-client-ruby/lib/algolia/api_client.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/api_error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   // Scala
   '!clients/algoliasearch-client-scala/**',
