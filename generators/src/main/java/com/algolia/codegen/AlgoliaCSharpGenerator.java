@@ -32,6 +32,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("validatable", false);
+    additionalProperties.put("equatable", false);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     setApiNameSuffix(Helpers.API_SUFFIX);
