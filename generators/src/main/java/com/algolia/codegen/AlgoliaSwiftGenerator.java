@@ -14,7 +14,6 @@ import io.swagger.v3.oas.models.media.StringSchema;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
-import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.Swift5ClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -55,23 +54,112 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(CodegenConstants.POD_VERSION, "9.0.0-alpha.0");
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
+    additionalProperties.put(CodegenConstants.API_NAME_SUFFIX, Helpers.API_SUFFIX);
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + "AlgoliaSearchClient");
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    additionalProperties.put(
+      "lambda.client-to-name",
+      (Mustache.Lambda) (fragment, writer) -> writer.write(getClientName(fragment.execute()))
+    );
+
+    super.processOpts();
+
+    supportingFiles.add(
+      new SupportingFile(
+        "networking/client_configuration.mustache",
+        sourceFolder + File.separator + "Models" + File.separator + getClientName(CLIENT),
+        "ClientConfiguration.swift"
+      )
+    );
+
+    supportingFiles.removeIf(file ->
+      file.getTemplateFile().equals("gitignore.mustache") ||
+      file.getTemplateFile().equals("Package.swift.mustache") ||
+      file.getTemplateFile().equals("CodableHelper.mustache") ||
+      file.getTemplateFile().equals("JSONDataEncoding.mustache") ||
+      file.getTemplateFile().equals("JSONEncodingHelper.mustache") ||
+      file.getTemplateFile().equals("SynchronizedDictionary.mustache") ||
+      file.getTemplateFile().equals("APIHelper.mustache") ||
+      file.getTemplateFile().equals("Models.mustache") ||
+      file.getTemplateFile().equals("Configuration.mustache") ||
+      file.getTemplateFile().equals("Extensions.mustache") ||
+      file.getTemplateFile().equals("OpenISO8601DateFormatter.mustache") ||
+      file.getTemplateFile().equals("OpenAPIDateWithoutTime.mustache") ||
+      file.getTemplateFile().equals("APIs.mustache") ||
+      file.getTemplateFile().equals("Validation.mustache") ||
+      file.getTemplateFile().equals("AlamofireImplementations.mustache") ||
+      file.getTemplateFile().equals("URLSessionImplementations.mustache")
+    );
+
+    if (!getLibrary().equals(LIBRARY_VAPOR)) {
+      supportingFiles.add(new SupportingFile("CodableHelper.mustache", sourceFolder + File.separator + "Helpers", "CodableHelper.swift"));
+      supportingFiles.add(
+        new SupportingFile("JSONDataEncoding.mustache", sourceFolder + File.separator + "Helpers", "JSONDataEncoding.swift")
+      );
+      supportingFiles.add(
+        new SupportingFile("JSONEncodingHelper.mustache", sourceFolder + File.separator + "Helpers", "JSONEncodingHelper.swift")
+      );
+      supportingFiles.add(
+        new SupportingFile("SynchronizedDictionary.mustache", sourceFolder + File.separator + "Helpers", "SynchronizedDictionary.swift")
+      );
+      supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder + File.separator + "Helpers", "APIHelper.swift"));
+      supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder + File.separator + "Helpers", "Models.swift"));
+    }
+    supportingFiles.add(new SupportingFile("Configuration.mustache", sourceFolder + File.separator + "Helpers", "Configuration.swift"));
+    supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder + File.separator + "Helpers", "Extensions.swift"));
+    supportingFiles.add(
+      new SupportingFile("OpenISO8601DateFormatter.mustache", sourceFolder + File.separator + "Helpers", "OpenISO8601DateFormatter.swift")
+    );
+    if (useCustomDateWithoutTime) {
+      supportingFiles.add(
+        new SupportingFile("OpenAPIDateWithoutTime.mustache", sourceFolder + File.separator + "Helpers", "OpenAPIDateWithoutTime.swift")
+      );
+    }
+    supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder + File.separator + "Helpers", "APIs.swift"));
+    if (validatable) {
+      supportingFiles.add(new SupportingFile("Validation.mustache", sourceFolder + File.separator + "Helpers", "Validation.swift"));
+    }
+
+    switch (getLibrary()) {
+      case LIBRARY_ALAMOFIRE:
+        supportingFiles.add(
+          new SupportingFile(
+            "AlamofireImplementations.mustache",
+            sourceFolder + File.separator + "Networking",
+            "AlamofireImplementations.swift"
+          )
+        );
+        break;
+      case LIBRARY_URLSESSION:
+        supportingFiles.add(
+          new SupportingFile(
+            "URLSessionImplementations.mustache",
+            sourceFolder + File.separator + "Networking",
+            "URLSessionImplementations.swift"
+          )
+        );
+        break;
+      default:
+        break;
+    }
 
     reservedWords.add("Task");
-    reservedWordsMappings.put("Task", "IngestionTask");
+    reservedWords.add("Source");
+    reservedWords.add("Region");
+    reservedWords.add("ConsequenceQueryObject");
+    reservedWords.add("Edit");
+    reservedWords.add("LogLevel");
 
     setObjcCompatible(false);
     setProjectName("AlgoliaSearchClient");
     setUseSPMFileStructure(true);
 
     setApiNamePrefix("");
+    setApiNameSuffix(Helpers.API_SUFFIX);
     setModelNamePrefix("");
-    setApiPackage(File.separator + "Client");
-    setModelPackage(File.separator + "Models");
-
-    super.processOpts();
+    setApiPackage(File.separator + "Clients");
+    setModelPackage(File.separator + "Models" + File.separator + getClientName(CLIENT));
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
@@ -126,49 +214,15 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return escapeText(pattern);
   }
 
-  private Boolean isLanguageSpecificType(String name) {
-    return languageSpecificPrimitives.contains(name);
-  }
-
   @Override
   public String toModelName(String name) {
-    // FIXME (in the super) parameter should not be assigned. Also declare it as "final"
     name = sanitizeName(name);
 
-    if (!StringUtils.isEmpty(modelNameSuffix) && !isLanguageSpecificType(name)) { // set model suffix
-      name = name + "_" + modelNameSuffix;
+    if (isReservedWord(name) || name.matches("^\\d.*")) {
+      return getClientName(CLIENT) + name;
     }
 
-    if (!StringUtils.isEmpty(modelNamePrefix) && !isLanguageSpecificType(name)) { // set model prefix
-      name = modelNamePrefix + "_" + name;
-    }
-
-    // camelize the model name
-    // phone_number => PhoneNumber
-    name = camelize(name);
-
-    // model name cannot use reserved keyword, e.g. return
-    if (isReservedWord(name)) {
-      String modelName;
-      if (reservedWordsMappings.containsKey(name)) {
-        modelName = reservedWordsMappings.get(name);
-      } else {
-        modelName = "Model" + name;
-      }
-      Logger.getGlobal().warning(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
-
-      return modelName;
-    }
-
-    // model name starts with number
-    if (name.matches("^\\d.*")) {
-      // e.g. 200Response => Model200Response (after camelize)
-      String modelName = "Model" + name;
-      Logger.getGlobal().warning(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
-      return modelName;
-    }
-
-    return name;
+    return super.toModelName(name);
   }
 
   // Stolen from the SwiftCombineGenerator, as it works way better
@@ -203,4 +257,19 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
     return super.getTypeDeclaration(target);
   }
+
+  @Override
+  public String toApiName(String name) {
+    return camelize(getApiNamePrefix() + name + getApiNameSuffix());
+  }
+  //  @Override
+  //  public String apiFileFolder() {
+  //    return outputFolder + File.separator + sourceFolder;
+  //  }
+
+  //  @Override
+  //  public String apiFilename(String templateName, String tag) {
+  //    String suffix = apiTemplateFiles().get(templateName);
+  //    return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
+  //  }
 }

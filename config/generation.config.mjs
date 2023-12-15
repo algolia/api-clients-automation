@@ -116,4 +116,12 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
+
+  // Swift
+  'clients/algoliasearch-client-swift/**',
+  '!clients/algoliasearch-client-swift/.swiftformat',
+  '!clients/algoliasearch-client-swift/Package.swift',
+  '!clients/algoliasearch-client-swift/Package.resolved',
+  '!clients/algoliasearch-client-swift/Sources/AlgoliaSearchClient/Networking/**',
+  '!clients/algoliasearch-client-swift/Sources/AlgoliaSearchClient/Models/Common/**',
 ];
