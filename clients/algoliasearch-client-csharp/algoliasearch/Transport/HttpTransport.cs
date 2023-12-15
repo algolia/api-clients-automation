@@ -1,25 +1,25 @@
 /*
-* Copyright (c) 2018 Algolia
-* http://www.algolia.com/
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ * Copyright (c) 2018 Algolia
+ * http://www.algolia.com/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,6 @@ namespace Algolia.Search.Transport
       _serializer = new CustomJsonCodec(JsonConfig.AlgoliaJsonSerializerSettings);
 
 
-
       _retryStrategy = new RetryStrategy(config);
     }
 
@@ -76,11 +75,11 @@ namespace Algolia.Search.Transport
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
     public async Task<TResult> ExecuteRequestAsync<TResult>(HttpMethod method, string uri,
-        RequestOptions requestOptions = null,
-        CancellationToken ct = default)
-        where TResult : class =>
-        await ExecuteRequestAsync<TResult, object>(method, uri, requestOptions, ct)
-            .ConfigureAwait(false);
+      RequestOptions requestOptions = null,
+      CancellationToken ct = default)
+      where TResult : class =>
+      await ExecuteRequestAsync<TResult, object>(method, uri, requestOptions, ct)
+        .ConfigureAwait(false);
 
     /// <summary>
     /// Call api with retry strategy
@@ -93,10 +92,11 @@ namespace Algolia.Search.Transport
     /// <param name="data">Your data</param>
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
-    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri, RequestOptions requestOptions = null,
-        CancellationToken ct = default)
-        where TResult : class
-        where TData : class
+    public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri,
+      RequestOptions requestOptions = null,
+      CancellationToken ct = default)
+      where TResult : class
+      where TData : class
     {
       if (string.IsNullOrWhiteSpace(uri))
       {
@@ -115,17 +115,27 @@ namespace Algolia.Search.Transport
         Compression = _algoliaConfig.Compression
       };
 
-      var callType = (requestOptions?.UseReadTransporter != null && requestOptions.UseReadTransporter.Value) || method == HttpMethod.Get ? CallType.Read : CallType.Write;
+      var callType =
+        (requestOptions?.UseReadTransporter != null && requestOptions.UseReadTransporter.Value) ||
+        method == HttpMethod.Get
+          ? CallType.Read
+          : CallType.Write;
 
       foreach (var host in _retryStrategy.GetTryableHost(callType))
       {
         request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress);
         request.Uri = BuildUri(host.Url, uri, requestOptions?.PathParameters, requestOptions?.QueryParameters);
-        var requestTimeout = TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
+        var requestTimeout =
+          TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
+
+        if (method == HttpMethod.Post && string.IsNullOrWhiteSpace(request.Body))
+        {
+          request.Body = "{}";
+        }
 
         AlgoliaHttpResponse response = await _httpClient
-            .SendRequestAsync(request, requestTimeout, ct)
-            .ConfigureAwait(false);
+          .SendRequestAsync(request, requestTimeout, ct)
+          .ConfigureAwait(false);
 
         errorMessage = response.Error;
 
@@ -166,8 +176,8 @@ namespace Algolia.Search.Transport
     private Dictionary<string, string> GenerateHeaders(Dictionary<string, string> optionalHeaders = null)
     {
       return optionalHeaders != null && optionalHeaders.Any()
-          ? optionalHeaders.MergeWith(_algoliaConfig.DefaultHeaders)
-          : _algoliaConfig.DefaultHeaders;
+        ? optionalHeaders.MergeWith(_algoliaConfig.DefaultHeaders)
+        : _algoliaConfig.DefaultHeaders;
     }
 
     /// <summary>
@@ -178,7 +188,8 @@ namespace Algolia.Search.Transport
     /// <param name="pathParameters"></param>
     /// <param name="optionalQueryParameters"></param>
     /// <returns></returns>
-    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> pathParameters = null, Dictionary<string, string> optionalQueryParameters = null)
+    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> pathParameters = null,
+      Dictionary<string, string> optionalQueryParameters = null)
     {
       var path = $"{baseUri}";
       if (pathParameters != null)
