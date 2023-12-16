@@ -8,7 +8,7 @@
       {{/parent}}
       attributes = attributes.transform_keys(&:to_sym)
       transformed_hash = {}
-      openapi_types.each_pair do |key, type|
+      types_mapping.each_pair do |key, type|
         if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
           transformed_hash["#{key}"] = nil
         elsif type =~ /\AArray<(.*)>/i

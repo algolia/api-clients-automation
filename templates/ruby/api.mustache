@@ -16,11 +16,11 @@ module {{moduleName}}
       {{#hasRegionalHost}}
       regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
 
-      if {{^fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}(region != '' && regions.include?(region))
+      if {{^fallbackToAliasHost}}region.nil? || {{/fallbackToAliasHost}}(region != '' && !regions.include?(region))
         raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: %s" % regions.join(', ')
       end
 
-      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region == nil ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".sub!('{region}', region), accept: READ | WRITE)
+      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       {{/hasRegionalHost}}{{^hasRegionalHost}}
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
