@@ -51,7 +51,7 @@ module Algolia
             puts decoded_error
             raise AlgoliaHttpError.new(get_option(decoded_error, 'status'), get_option(decoded_error, 'message'))
           end
-          return json_to_hash(response.body, @config.symbolize_keys) unless outcome == RETRY
+          return response.body unless outcome == RETRY
         end
 
         raise AlgoliaUnreachableHostError, 'Unreachable hosts'

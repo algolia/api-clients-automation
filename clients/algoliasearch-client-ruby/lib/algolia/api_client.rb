@@ -1,10 +1,3 @@
-require 'date'
-require 'json'
-require 'logger'
-require 'tempfile'
-require 'time'
-require 'faraday'
-
 module Algolia
   class ApiClient
     # The Configuration object holding settings to be used in the API client.
@@ -31,21 +24,7 @@ module Algolia
     def call_api(http_method, path, opts = {})
       begin
         call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
-        
         response = transporter.request(call_type, http_method, path, opts[:body], opts)
-    
-        unless response.success?
-          if response.status == 0 && response.respond_to?(:return_message)
-            # Errors from libcurl will be made visible here
-            fail ApiError.new(code: 0,
-                              message: response.return_message)
-          else
-            fail ApiError.new(code: response.status,
-                              response_headers: response.headers,
-                              response_body: response.body),
-                 response.reason_phrase
-          end
-        end
       rescue Faraday::TimeoutError
         fail ApiError.new('Connection timed out')
       rescue Faraday::ConnectionFailed
@@ -57,7 +36,7 @@ module Algolia
       else
         data = nil
       end
-      return data, response.status, response.headers
+      return data
     end
 
     # Deserialize the response to the given return type.
