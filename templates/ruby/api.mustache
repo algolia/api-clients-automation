@@ -30,7 +30,7 @@ module {{moduleName}}
       end.shuffle
       {{/hasRegionalHost}}
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{clientName}}}')
       create_with_config(config)
     end
 
@@ -102,9 +102,6 @@ module {{moduleName}}
 {{/allParams}}
     # @return [Array<({{{returnType}}}{{^returnType}}nil{{/returnType}}, Integer, Hash)>] {{#returnType}}{{{.}}} data{{/returnType}}{{^returnType}}nil{{/returnType}}, response status code and response headers
     def {{operationId}}_with_http_info({{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: {{classname}}.{{operationId}} ...'
-      end
       {{#vendorExtensions.x-group-parameters}}
       # unbox the parameters from the hash
       {{#allParams}}
@@ -225,17 +222,14 @@ module {{moduleName}}
 
       new_options = opts.merge(
         :operation => :"{{classname}}.{{operationId}}",
-        :header_params => header_params,
-        :query_params => query_params,
+        :headers => header_params,
+        :params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => {{#useReadTransporter}}true{{/useReadTransporter}}{{^useReadTransporter}}false{{/useReadTransporter}}
       )
 
-      data, status_code, headers = @api_client.call_api(:{{httpMethod}}, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: {{classname}}#{{operationId}}\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      return @api_client.call_api(:{{httpMethod}}, path, new_options)
     end
 {{^-last}}
 
