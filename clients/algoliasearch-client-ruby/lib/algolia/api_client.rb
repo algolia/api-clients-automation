@@ -32,19 +32,18 @@ module Algolia
       end
 
       if opts[:return_type]
-        data = deserialize(response, opts[:return_type])
+        data = deserialize(response.body, opts[:return_type])
       else
         data = nil
       end
-      return data
+      return data, response.status, response.headers
     end
 
     # Deserialize the response to the given return type.
     #
-    # @param [Response] response HTTP response
+    # @param [String] body of the HTTP response
     # @param [String] return_type some examples: "User", "Array<User>", "Hash<String, Integer>"
-    def deserialize(response, return_type)
-      body = response.body
+    def deserialize(body, return_type)
       return nil if body.nil? || body.empty?
 
       # return response body directly for String return type
@@ -117,13 +116,13 @@ module Algolia
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
       return model if model.nil? || model.is_a?(String)
-      local_body = nil
+      body = nil
       if model.is_a?(Array)
-        local_body = model.map { |m| object_to_hash(m) }
+        body = model.map { |m| object_to_hash(m) }
       else
-        local_body = object_to_hash(model)
+        body = object_to_hash(model)
       end
-      local_body.to_json
+      body.to_json
     end
 
     # Convert object(non-array) to hash.

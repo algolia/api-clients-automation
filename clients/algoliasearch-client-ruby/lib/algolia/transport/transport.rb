@@ -25,14 +25,15 @@ module Algolia
       #
       # @return [Response] response of the request
       #
-      def request(call_type, method, path, body = {}, opts = {})
+      def request(call_type, method, path, body, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
           opts[:timeout]         ||= get_timeout(call_type) * (host.retry_count + 1)
           opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
 
           request_options = RequestOptions.new(@config)
           request_options.create(opts)
-          request_options.params.merge!(request_options.data) if method == :GET
+          # TODO: what is this merge for ?
+          # request_options.params.merge!(request_options.data) if method == :GET
 
           request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(
@@ -47,14 +48,14 @@ module Algolia
 
           outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
           if outcome == FAILURE
-            decoded_error = response.error
+            decoded_error = JSON.parse(response.error, :symbolize_names => true)
             puts decoded_error
-            raise AlgoliaHttpError.new(get_option(decoded_error, 'status'), get_option(decoded_error, 'message'))
+            raise AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
           end
-          return response.body unless outcome == RETRY
+          return response unless outcome == RETRY
         end
 
-        raise AlgoliaUnreachableHostError, 'Unreachable hosts'
+        raise AlgoliaUnreachableHostError('Unreachable hosts')
       end
 
       private
@@ -72,7 +73,7 @@ module Algolia
           request                   = {}
           request[:method]          = method.downcase
           request[:path]            = build_uri_path(path, request_options.params)
-          request[:body]            = build_body(body, request_options, method)
+          request[:body]            = body.nil? || body.empty? ? '' : body
           request[:headers]         = generate_headers(request_options)
           request[:timeout]         = request_options.timeout
           request[:connect_timeout] = request_options.connect_timeout
@@ -88,23 +89,6 @@ module Algolia
         #
         def build_uri_path(path, params)
           path + handle_params(params)
-        end
-
-        # Build the body of the request
-        #
-        # @param [Hash] body
-        #
-        # @return [Hash]
-        #
-        def build_body(body, request_options, method)
-          if method == :GET && body.empty?
-            return nil
-          end
-
-          # merge optional special request options to the body when it
-          # doesn't have to be in the array format
-          body.merge!(request_options.data) if body.is_a?(Hash) && method != :GET
-          to_json(body)
         end
 
         # Generates headers from config headers and optional parameters

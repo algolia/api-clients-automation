@@ -8,7 +8,6 @@ module Algolia
       def initialize(config)
         @headers          = {}
         @params           = {}
-        @data             = {}
         @timeout          = nil
         @connect_timeout  = nil
         @compression_type = config.compression_type
@@ -24,7 +23,6 @@ module Algolia
         add_timeout(opts)
         add_connect_timeout(opts)
         add_compression_type(opts)
-        add_data_body(opts)
       end
 
       # Add or update headers
@@ -78,16 +76,6 @@ module Algolia
       def add_compression_type(opts = {})
         @compression_type = opts[:compression_type] || @compression_type
         opts.delete(:compression_type)
-      end
-
-      # @param opts [Hash]
-      #
-      def add_data_body(opts = {})
-        unless opts.empty?
-          opts.each do |key, value|
-            @data[key.to_sym] = value
-          end
-        end
       end
     end
   end
