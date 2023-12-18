@@ -61,6 +61,8 @@ public class Helpers {
         return StringUtils.lowerCase(client);
       case "csharp":
         return capitalize(camelize(client));
+      case "ruby":
+        return StringUtils.lowerCase(client);
       default:
         return capitalize(camelize(client));
     }

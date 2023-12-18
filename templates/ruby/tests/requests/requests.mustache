@@ -1,0 +1,15 @@
+require 'algolia'
+require 'test/unit'
+
+{{#blocksRequests}}
+class Test{{operationId}} < Test::Unit::TestCase
+  {{#tests}}
+  # {{{testName}}}
+  def test{{testIndex}}
+    assert_equal(3, 4)
+  end
+
+  {{/tests}}
+end
+
+{{/blocksRequests}}

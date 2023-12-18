@@ -40,8 +40,8 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     case 'ruby':
-      spinner.warn(`CTS not yet implemented for Ruby`);
-      return;
+      await run(`bundle install && bundle exec rake test`, { cwd: 'tests/output/ruby' });
+      break;
     case 'scala':
       await run('sbt test', { cwd: 'tests/output/scala' });
       break;
