@@ -131,7 +131,7 @@ public class GenericPropagator {
 
   private static void propagateToComposedSchema(Map<String, CodegenModel> models, CodegenModel model) {
     CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
-    if (composedSchemas == null || !hasGeneric(model)) {
+    if (composedSchemas == null) {
       return;
     }
     setGenericToComposedSchema(models, composedSchemas.getOneOf());
