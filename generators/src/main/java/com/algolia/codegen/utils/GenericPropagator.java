@@ -1,6 +1,7 @@
 package com.algolia.codegen.utils;
 
 import java.util.*;
+import java.util.function.Function;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
@@ -65,7 +66,10 @@ public class GenericPropagator {
     return models.get(prop.openApiType);
   }
 
-  private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model) {
+  private static boolean markPropagatedGeneric(
+    IJsonSchemaValidationProperties model,
+    Function<IJsonSchemaValidationProperties, List<CodegenProperty>> getVar
+  ) {
     CodegenProperty items = model.getItems();
     // Skip one-of types
     if (model instanceof CodegenModel codegenModel && !codegenModel.oneOf.isEmpty()) {
@@ -73,13 +77,13 @@ public class GenericPropagator {
     }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
+    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, getVar))) {
       setPropagatedGeneric(model);
       return true;
     }
-    for (CodegenProperty variable : model.getVars()) {
+    for (CodegenProperty variable : getVar.apply(model)) {
       // same thing for the variable, if it's not a generic, we recurse on it until we find one
-      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable)) {
+      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable, getVar)) {
         setPropagatedGeneric(model);
         return true;
       }
@@ -87,19 +91,26 @@ public class GenericPropagator {
     return false;
   }
 
-  private static boolean propagateGenericRecursive(Map<String, CodegenModel> models, IJsonSchemaValidationProperties property) {
+  private static boolean propagateGenericRecursive(
+    Map<String, CodegenModel> models,
+    IJsonSchemaValidationProperties property,
+    Function<IJsonSchemaValidationProperties, List<CodegenProperty>> getVar
+  ) {
     CodegenProperty items = property.getItems();
     // if items itself isn't generic, we recurse on its items and properties (and it's
     // equivalent model if we find one) until we reach the end or find a generic property.
     // We need to check the model too because the tree isn't complete sometime, depending on the ref
     // in the spec, so we get the model with the same name and recurse.
-    if (items != null && ((hasGeneric(items) || propagateGenericRecursive(models, items) || hasGeneric(propertyToModel(models, items))))) {
+    if (
+      items != null &&
+      ((hasGeneric(items) || propagateGenericRecursive(models, items, getVar) || hasGeneric(propertyToModel(models, items))))
+    ) {
       setHasChildGeneric(property);
       return true;
     }
-    for (CodegenProperty variable : property.getVars()) {
+    for (CodegenProperty variable : getVar.apply(property)) {
       // same thing for the variable
-      if (hasGeneric(variable) || propagateGenericRecursive(models, variable) || hasGeneric(propertyToModel(models, variable))) {
+      if (hasGeneric(variable) || propagateGenericRecursive(models, variable, getVar) || hasGeneric(propertyToModel(models, variable))) {
         setHasChildGeneric(property);
         return true;
       }
@@ -158,11 +169,13 @@ public class GenericPropagator {
     Map<String, CodegenModel> models = convertToMap(modelsMap);
 
     for (CodegenModel model : models.values()) {
-      markPropagatedGeneric(model);
+      markPropagatedGeneric(model, m -> m.getVars());
+      markPropagatedGeneric(model, m -> m.getRequiredVars());
     }
 
     for (CodegenModel model : models.values()) {
-      propagateGenericRecursive(models, model);
+      propagateGenericRecursive(models, model, m -> m.getVars());
+      propagateGenericRecursive(models, model, m -> m.getRequiredVars());
     }
 
     for (CodegenModel model : models.values()) {
