@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { createClientName, toAbsolutePath } from '../common.js';
+import { createClientName, toAbsolutePath, toSnakeCase } from '../common.js';
 import { getLanguageApiFolder, getLanguageModelFolder } from '../config.js';
 import type { Generator } from '../types.js';
 
@@ -53,11 +53,12 @@ export async function removeExistingCodegen({
       clientApi = clientName.toLowerCase();
       break;
     case 'python':
-      clientModel = clientName.toLowerCase();
-      clientApi = clientName.toLowerCase();
+      clientModel = toSnakeCase(clientName);
+      clientApi = toSnakeCase(clientName);
       baseModelFolder = '';
       baseApiFolder = '';
       break;
+
     case 'ruby':
       clientModel = clientName.toLowerCase();
       clientApi = `${clientName.toLowerCase()}_client.rb`;
