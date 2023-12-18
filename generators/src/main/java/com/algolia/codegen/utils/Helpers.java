@@ -53,6 +53,8 @@ public class Helpers {
     switch (language) {
       case "javascript":
         return camelize(client);
+      case "python":
+        return toSnakeCase(client);
       case "go":
         return client;
       case "dart":

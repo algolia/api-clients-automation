@@ -29,11 +29,9 @@ from typing import (
 )
 from typing_extensions import Literal
 
-from algoliasearch.http import (
-  ApiResponse,
-  RequestOptions,
-  Transporter,
-  Verb,
-)
+from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.request_options import RequestOptions
+from algoliasearch.http.transporter import Transporter
+from algoliasearch.http.verb import Verb
 
 from algoliasearch.{{packageName}}.config import Config
