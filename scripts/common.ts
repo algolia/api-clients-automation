@@ -261,6 +261,13 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export function toSnakeCase(str: string): string {
+  return (str.charAt(0).toLowerCase() + str.slice(1))
+    .replace(/[A-Z]/g, (letter) => `_${letter}`)
+    .replace(/(-|\s)/g, '_')
+    .toLowerCase();
+}
+
 export async function configureGitHubAuthor(cwd?: string): Promise<void> {
   const { name, email } = getGitAuthor();
 
