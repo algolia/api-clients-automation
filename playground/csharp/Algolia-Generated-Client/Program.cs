@@ -10,7 +10,8 @@ var searchClient = new SearchClient("NIOXZRNMTV", "XXX");
 
 // Save
 Console.WriteLine("--- Save a single object `SaveObjectAsync` ---");
-var saved = await searchClient.SaveObjectAsync("test-csharp-new-client", new { ObjectID = "test2", value = "test", otherValue = "otherValue" });
+var saved = await searchClient.SaveObjectAsync("test-csharp-new-client",
+  new { ObjectID = "test2", value = "test", otherValue = "otherValue" });
 Console.WriteLine(saved.ObjectID);
 
 // Batch
@@ -24,23 +25,40 @@ var requests = new List<BatchRequest>()
 var batch = await searchClient.BatchAsync("test-csharp-new-client", new BatchWriteParams(requests));
 batch.ObjectIDs.ForEach(Console.WriteLine);
 
-// Browse
-Console.WriteLine("--- Browse all objects `BrowseAsync` ---");
-var r = await searchClient.BrowseAsync<TestObject>("test-csharp-new-client");
-r.Hits.ForEach(h => Console.WriteLine(h.ObjectID));
+// // Browse
+// Console.WriteLine("--- Browse all objects `BrowseAsync` ---");
+// var r = await searchClient.BrowseAsync<TestObject>("test-csharp-new-client");
+// r.Hits.ForEach(h => Console.WriteLine(h.ObjectID));
+//
+// // Get Objects
+// Console.WriteLine("--- Get Objects `GetObjectsAsync` ---");
+// var getObjRequests = new List<GetObjectsRequest>
+// {
+//   new("test2", "test-csharp-new-client")
+//   {
+//     AttributesToRetrieve = new List<string> { "otherValue" }
+//   },
+//   new("test3", "test-csharp-new-client")
+//   {
+//     AttributesToRetrieve = new List<string> { "otherValue" }
+//   },
+// };
+//
+// var getObjResults = await searchClient.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
+// getObjResults.Results.ForEach(testObject => Console.WriteLine(testObject.otherValue));
+//
+// // Search single
+// Console.WriteLine("--- Search single index `SearchSingleIndexAsync` ---");
+// var t = await searchClient.SearchSingleIndexAsync<TestObject>("test-csharp-new-client");
+// t.Hits.ForEach(h => Console.WriteLine(h.ObjectID));
 
-// Get Objects
-Console.WriteLine("--- Get Objects `GetObjectsAsync` ---");
-var getObjRequests = new List<GetObjectsRequest>
+// Search
+Console.WriteLine("--- Search multiple indices `SearchAsync` ---");
+var searchQueries = new List<SearchQuery>()
 {
-  new(new List<string> { "otherValue" }, "test2", "test-csharp-new-client"),
-  new(new List<string> { "otherValue" }, "test3", "test-csharp-new-client"),
+  new SearchQuery(new SearchForHits("test-csharp-new-client")),
+  new SearchQuery(new SearchForHits("test-csharp-new-client")),
 };
-
-var getObjResults = await searchClient.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
-getObjResults.Results.ForEach(r => Console.WriteLine(r.otherValue));
-
-// Search single
-Console.WriteLine("--- Search single index `SearchSingleIndexAsync` ---");
-var t = await searchClient.SearchSingleIndexAsync<TestObject>("test-csharp-new-client");
-t.Hits.ForEach(h => Console.WriteLine(h.ObjectID));
+var search = await searchClient.SearchAsync(new SearchMethodParams(searchQueries));
+var getterSearchResponse = search.Results.First().GetterSearchResponse<TestObject>();
+Console.WriteLine(getterSearchResponse.Hits.First().ObjectID);
