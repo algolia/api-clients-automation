@@ -22,6 +22,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("packageVersion", Helpers.getClientConfigField("ruby", "packageVersion"));
     setGemName("algolia");
+    additionalProperties.put("modelModule", Helpers.capitalize(Helpers.camelize(CLIENT)));
 
     setApiNameSuffix(Helpers.API_SUFFIX);
 
@@ -44,6 +45,9 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
       file.getTemplateFile().equals("Gemfile.mustache") ||
       file.getTemplateFile().equals("gem.mustache") ||
       file.getTemplateFile().equals("gemspec.mustache") ||
+      file.getTemplateFile().equals("api_client.mustache") ||
+      file.getTemplateFile().equals("configuration.mustache") ||
+      file.getTemplateFile().equals("api_error.mustache") ||
       file.getTemplateFile().equals("README.mustache") ||
       file.getTemplateFile().equals("Rakefile.mustache") ||
       file.getTemplateFile().equals("api_client_spec.mustache") ||
