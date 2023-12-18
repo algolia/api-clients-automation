@@ -52,7 +52,7 @@ __metadata:
     eslint-plugin-json-format: "npm:2.0.1"
     eslint-plugin-prettier: "npm:5.0.1"
     eslint-plugin-unused-imports: "npm:3.0.0"
-    eslint-plugin-yml: "npm:1.10.0"
+    eslint-plugin-yml: "npm:1.11.0"
     husky: "npm:8.0.3"
     js-yaml: "npm:4.1.0"
     json: "npm:11.0.0"
@@ -6289,7 +6289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-compat-utils@npm:^0.1.0":
+"eslint-compat-utils@npm:^0.1.1":
   version: 0.1.2
   resolution: "eslint-compat-utils@npm:0.1.2"
   peerDependencies:
@@ -6490,18 +6490,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:1.10.0":
-  version: 1.10.0
-  resolution: "eslint-plugin-yml@npm:1.10.0"
+"eslint-plugin-yml@npm:1.11.0":
+  version: 1.11.0
+  resolution: "eslint-plugin-yml@npm:1.11.0"
   dependencies:
     debug: "npm:^4.3.2"
-    eslint-compat-utils: "npm:^0.1.0"
+    eslint-compat-utils: "npm:^0.1.1"
     lodash: "npm:^4.17.21"
     natural-compare: "npm:^1.4.0"
     yaml-eslint-parser: "npm:^1.2.1"
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: 26959918394a675ecade16d86de3304c7c65d49b93ca6095679f27844843ad344f122201dc803d6b855c4027538a734df3b4c8865bc2719f9d0e98e9a1efe2d3
+  checksum: 6b609a7ddae7112d3915553bbb717ca80394d28e8dc48202107d04bd7ee55f424881d32f3e44c14d9272dffaae56aa3f677db43a93304fb63155224c6885e31a
   languageName: node
   linkType: hard
 
