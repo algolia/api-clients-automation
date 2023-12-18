@@ -44,7 +44,7 @@
     "@algolia/requester-node-http": "5.0.0-alpha.92"
   },
   "devDependencies": {
-    "@types/node": "20.10.4",
+    "@types/node": "20.10.5",
     "rollup": "4.8.0",
     "typescript": "5.3.3"
   },
