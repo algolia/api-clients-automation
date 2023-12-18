@@ -233,6 +233,7 @@ export function createClientName(client: string, language: string): string {
       return camelize(client);
     case 'dart':
     case 'go':
+    case 'ruby':
       return client;
     default:
       return capitalize(camelize(client));
