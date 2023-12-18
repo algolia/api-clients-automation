@@ -7,9 +7,38 @@ module {{moduleName}}
   class {{classname}}
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key{{#hasRegionalHost}}, region = nil{{/hasRegionalHost}})
+      hosts = []
+      {{#hasRegionalHost}}
+      regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
+
+      if {{^fallbackToAliasHost}}region.nil? || {{/fallbackToAliasHost}}(region != '' && !regions.include?(region))
+        raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: %s" % regions.join(', ')
+      end
+
+      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      {{/hasRegionalHost}}{{^hasRegionalHost}}
+      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
+      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
+
+      hosts += 1.upto(3).map do |i|
+        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+      end.shuffle
+      {{/hasRegionalHost}}
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
 {{#operation}}
     {{#summary}}
     # {{{.}}}
@@ -166,10 +195,7 @@ module {{moduleName}}
       {{/minItems}}
       {{/hasValidation}}
       {{/allParams}}
-      # resource path
-      local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', CGI.escape({{paramName}}.to_s){{^strictSpecBehavior}}.gsub('%2F', '/'){{/strictSpecBehavior}}){{/pathParams}}
-
-      # query parameters
+      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', CGI.escape({{paramName}}.to_s){{^strictSpecBehavior}}.gsub('%2F', '/'){{/strictSpecBehavior}}){{/pathParams}}
       query_params = opts[:query_params] || {}
       {{#queryParams}}
       {{#required}}
@@ -181,20 +207,7 @@ module {{moduleName}}
       query_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
       {{/required}}
       {{/queryParams}}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      {{#hasProduces}}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept([{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}])
-      {{/hasProduces}}
-      {{#hasConsumes}}
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type([{{#consumes}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}])
-      if !content_type.nil?
-          header_params['Content-Type'] = content_type
-      end
-      {{/hasConsumes}}
       {{#headerParams}}
       {{#required}}
       header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
@@ -206,39 +219,19 @@ module {{moduleName}}
       {{/required}}
       {{/headerParams}}
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-      {{#formParams}}
-      {{#required}}
-      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
-      {{/required}}
-      {{/formParams}}
-      {{#formParams}}
-      {{^required}}
-      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{paramName}}'].nil?
-      {{/required}}
-      {{/formParams}}
-
-      # http body (model)
       post_body = opts[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}){{/bodyParam}}
 
-      # return_type
-      return_type = opts[:debug_return_type]{{#returnType}} || '{{{.}}}'{{/returnType}}
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || [{{#authMethods}}'{{name}}'{{^-last}}, {{/-last}}{{/authMethods}}]
+      return_type = opts[:debug_return_type]{{#returnType}} || '{{{modelModule}}}::{{{.}}}'{{/returnType}}
 
       new_options = opts.merge(
         :operation => :"{{classname}}.{{operationId}}",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:{{httpMethod}}, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:{{httpMethod}}, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: {{classname}}#{{operationId}}\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
