@@ -30,7 +30,7 @@ module {{moduleName}}
       end.shuffle
       {{/hasRegionalHost}}
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{clientName}}}')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}')
       create_with_config(config)
     end
 
@@ -222,8 +222,8 @@ module {{moduleName}}
 
       new_options = opts.merge(
         :operation => :"{{classname}}.{{operationId}}",
-        :headers => header_params,
-        :params => query_params,
+        :header_params => header_params,
+        :query_params => query_params,
         :body => post_body,
         :return_type => return_type,
         :use_read_transporter => {{#useReadTransporter}}true{{/useReadTransporter}}{{^useReadTransporter}}false{{/useReadTransporter}}

@@ -103,14 +103,6 @@ module Algolia
       end
     end
 
-    # Sets user agent in HTTP header
-    #
-    # @param [String] user_agent User agent (e.g. openapi-generator/ruby/1.0.0)
-    def user_agent=(user_agent)
-      @user_agent = user_agent
-      @default_headers['User-Agent'] = @user_agent
-    end
-
     # Convert object (array, hash, object, etc) to JSON string.
     # @param [Object] model object to be converted into JSON string
     # @return [String] JSON string representation of the object

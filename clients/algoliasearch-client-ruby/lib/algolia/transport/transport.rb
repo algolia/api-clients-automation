@@ -33,7 +33,7 @@ module Algolia
           request_options = RequestOptions.new(@config)
           request_options.create(opts)
           # TODO: what is this merge for ?
-          # request_options.params.merge!(request_options.data) if method == :GET
+          # request_options.query_params.merge!(request_options.data) if method == :GET
 
           request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(
@@ -41,7 +41,7 @@ module Algolia
             request[:method],
             request[:path],
             request[:body],
-            request[:headers],
+            request[:header_params],
             request[:timeout],
             request[:connect_timeout]
           )
@@ -72,23 +72,23 @@ module Algolia
         def build_request(method, path, body, request_options)
           request                   = {}
           request[:method]          = method.downcase
-          request[:path]            = build_uri_path(path, request_options.params)
+          request[:path]            = build_uri_path(path, request_options.query_params)
           request[:body]            = body.nil? || body.empty? ? '' : body
-          request[:headers]         = generate_headers(request_options)
+          request[:header_params]   = generate_header_params(request_options)
           request[:timeout]         = request_options.timeout
           request[:connect_timeout] = request_options.connect_timeout
           request
         end
 
-        # Build the uri from path and additional params
+        # Build the uri from path and additional query_params
         #
         # @param [Object] path
-        # @param [Object] params
+        # @param [Object] query_params
         #
         # @return [String]
         #
-        def build_uri_path(path, params)
-          path + handle_params(params)
+        def build_uri_path(path, query_params)
+          path + handle_query_params(query_params)
         end
 
         # Generates headers from config headers and optional parameters
@@ -97,12 +97,12 @@ module Algolia
         #
         # @return [Hash] merged headers
         #
-        def generate_headers(request_options = {})
-          headers = @config.headers.merge(request_options.headers)
+        def generate_header_params(request_options = {})
+          header_params = @config.header_params.merge(request_options.header_params)
           if request_options.compression_type == 'gzip'
-            headers['Accept-Encoding'] = 'gzip'
+            header_params['Accept-Encoding'] = 'gzip'
           end
-          headers
+          header_params
         end
 
         # Retrieves a timeout according to call_type
@@ -120,16 +120,16 @@ module Algolia
           end
         end
 
-        # Convert params to a full query string
+        # Convert query_params to a full query string
         #
-        def handle_params(params)
-          params.nil? || params.empty? ? '' : "?#{to_query_string(params)}"
+        def handle_query_params(query_params)
+          query_params.nil? || query_params.empty? ? '' : "?#{to_query_string(query_params)}"
         end
 
-        # Create a query string from params
+        # Create a query string from query_params
         #
-        def to_query_string(params)
-          params.map do |key, value|
+        def to_query_string(query_params)
+          query_params.map do |key, value|
             "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
           end.join('&')
         end

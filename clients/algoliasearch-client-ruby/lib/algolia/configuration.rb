@@ -23,7 +23,7 @@ module Algolia
     attr_accessor :force_ending_format
 
     attr_accessor :user_agent
-    attr_accessor :headers
+    attr_accessor :header_params
     attr_accessor :read_timeout
     attr_accessor :write_timeout
     attr_accessor :connect_timeout
@@ -38,14 +38,14 @@ module Algolia
       @params_encoder = nil
       @inject_format = false
       @force_ending_format = false
-      @read_timeout = 30
-      @write_timeout = 5
-      @connect_timeout = 2
+      @read_timeout = 30000
+      @write_timeout = 5000
+      @connect_timeout = 2000
       @compression_type = 'none'
 
       @user_agent = UserAgent::new().add(client_name, VERSION)
 
-      @headers = {
+      @header_params = {
         'X-Algolia-Application-Id' => app_id,
         'X-Algolia-API-Key' => api_key,
         'Content-Type' => 'application/json',
