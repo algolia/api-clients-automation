@@ -24,6 +24,7 @@
 
         {{/isNullable}}
         {{#composedSchemas.oneOf}}
+        {{^vendorExtensions.x-has-child-generic}}
         {{^vendorExtensions.x-duplicated-data-type}}
         {{^isNull}}
         /// <summary>
@@ -33,13 +34,27 @@
         /// <param name="actualInstance">An instance of {{dataType}}.</param>
         public {{classname}}({{{dataType}}} actualInstance)
         {
-            this.IsNullable = {{#model.isNullable}}true{{/model.isNullable}}{{^model.isNullable}}false{{/model.isNullable}};
-            this.SchemaType= "oneOf";
-            this.ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
+            IsNullable = {{#model.isNullable}}true{{/model.isNullable}}{{^model.isNullable}}false{{/model.isNullable}};
+            SchemaType= "oneOf";
+            ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
         }
-
         {{/isNull}}
         {{/vendorExtensions.x-duplicated-data-type}}
+        {{/vendorExtensions.x-has-child-generic}}
+
+        {{#vendorExtensions.x-has-child-generic}}
+          /// <summary>
+          /// Initializes a new instance of the <see cref="{{classname}}" /> class
+          /// with the <see cref="{{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}" /> class
+          /// </summary>
+          /// <param name="actualInstance">An instance of {{dataType}}.</param>
+          public {{classname}}(object actualInstance)
+          {
+              IsNullable = {{#model.isNullable}}true{{/model.isNullable}}{{^model.isNullable}}false{{/model.isNullable}};
+              SchemaType= "oneOf";
+              ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
+          }
+        {{/vendorExtensions.x-has-child-generic}}
         {{/composedSchemas.oneOf}}
 
         private Object _actualInstance;
@@ -55,16 +70,7 @@
             }
             set
             {
-                {{#oneOf}}
-                {{^-first}}else {{/-first}}if (value.GetType() == typeof({{{.}}}))
-                {
-                    this._actualInstance = value;
-                }
-                {{/oneOf}}
-                else
-                {
-                    throw new ArgumentException("Invalid instance found. Must be the following types:{{#oneOf}} {{{.}}}{{^-last}},{{/-last}}{{/oneOf}}");
-                }
+                this._actualInstance = value;
             }
         }
         {{#composedSchemas.oneOf}}
@@ -76,9 +82,16 @@
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of {{dataType}}</returns>
-        public {{{dataType}}} Getter{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
+        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} Getter{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
         {
-            return ({{{dataType}}})this.ActualInstance;
+          {{#vendorExtensions.x-has-child-generic}}
+          if (ActualInstance.GetType() == typeof(JObject))
+          {
+          return ((JObject)ActualInstance).ToObject<{{{dataType}}}<T>>();
+          }
+          {{/vendorExtensions.x-has-child-generic}}
+
+            return ({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})ActualInstance;
         }
         {{/isNull}}
         {{/vendorExtensions.x-duplicated-data-type}}
@@ -92,7 +105,7 @@
         {
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
-            sb.Append("  ActualInstance: ").Append(this.ActualInstance).Append("\n");
+            sb.Append("  ActualInstance: ").Append(ActualInstance).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -103,7 +116,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public override string ToJson()
         {
-            return JsonConvert.SerializeObject(this.ActualInstance, {{classname}}.SerializerSettings);
+            return JsonConvert.SerializeObject(ActualInstance, {{classname}}.SerializerSettings);
         }
 
         /// <summary>
@@ -147,28 +160,28 @@
             {{/useOneOfDiscriminatorLookup}}
             int match = 0;
             List<string> matchedTypes = new List<string>();
-            {{#oneOf}}
 
+            {{#composedSchemas.oneOf}}
             try
             {
                 // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
-                if (typeof({{{.}}}).GetProperty("AdditionalProperties") == null)
+                if (typeof({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<>{{/vendorExtensions.x-has-child-generic}}).GetProperty("AdditionalProperties") == null)
                 {
-                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{{.}}}>(jsonString, {{classname}}.SerializerSettings));
+                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.SerializerSettings));
                 }
                 else
                 {
-                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{{.}}}>(jsonString, {{classname}}.AdditionalPropertiesSerializerSettings));
+                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.AdditionalPropertiesSerializerSettings));
                 }
-                matchedTypes.Add("{{{.}}}");
+                matchedTypes.Add("{{{datatypeWithEnum}}}");
                 match++;
             }
             catch (Exception exception)
             {
                 // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into {{{.}}}: {1}", jsonString, exception.ToString()));
+                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into {{{datatypeWithEnum}}}: {1}", jsonString, exception.ToString()));
             }
-            {{/oneOf}}
+            {{/composedSchemas.oneOf}}
 
             if (match == 0)
             {
@@ -213,7 +226,7 @@
             if (input == null)
                 return false;
 
-            return this.ActualInstance.Equals(input.ActualInstance);
+            return ActualInstance.Equals(input.ActualInstance);
             {{/useCompareNetObjects}}
         }
 
@@ -226,8 +239,8 @@
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.ActualInstance != null)
-                    hashCode = hashCode * 59 + this.ActualInstance.GetHashCode();
+                if (ActualInstance != null)
+                    hashCode = hashCode * 59 + ActualInstance.GetHashCode();
                 return hashCode;
             }
         }
