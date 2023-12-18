@@ -37,7 +37,7 @@
     "fs-extra": "11.2.0",
     "inquirer": "9.2.12",
     "js-yaml": "4.1.0",
-    "knip": "3.7.0",
+    "knip": "3.8.2",
     "micromatch": "4.0.5",
     "semver": "7.5.4",
     "spinnies": "0.5.1",
