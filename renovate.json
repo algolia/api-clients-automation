@@ -57,7 +57,7 @@
         "poetry.mustache"
       ],
       "matchStrings": [
-        ".*=\\s*\"(?<currentValue>.*?)\""
+        "(?<depName>.*?)=\\s*\"(?<currentValue>.*?)\""
       ],
       "matchStringsStrategy": "recursive",
       "datasourceTemplate": "pypi"
