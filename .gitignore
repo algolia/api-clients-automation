@@ -5,6 +5,7 @@ node_modules
 .parcel-cache
 
 yarn-error.log
+debug.log
 
 **/.yarn/*
 !**/.yarn/releases
