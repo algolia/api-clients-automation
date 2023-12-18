@@ -126,7 +126,7 @@ jobs:
         run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }}
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: specs
@@ -290,7 +290,7 @@ jobs:
         run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**"
 
       - name: Store ${{ matrix.client.language }} clients
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
