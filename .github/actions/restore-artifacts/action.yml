@@ -46,7 +46,7 @@ runs:
     # Bundled specs
     - name: specs
       if: ${{ inputs.type == 'all' || inputs.type == 'specs' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: specs
         path: specs/bundled/
@@ -54,7 +54,7 @@ runs:
     # JavaScript
     - name: Download clients-javascript artifact
       if: ${{ inputs.javascript == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-javascript
 
@@ -68,7 +68,7 @@ runs:
     # PHP
     - name: Download clients-php artifact
       if: ${{ inputs.php == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-php
 
@@ -82,7 +82,7 @@ runs:
     # Java
     - name: Download clients-java artifact
       if: ${{ inputs.java == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-java
 
@@ -96,7 +96,7 @@ runs:
     # Go
     - name: Download clients-go artifact
       if: ${{ inputs.go == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-go
 
@@ -110,7 +110,7 @@ runs:
     # Kotlin
     - name: Download clients-kotlin artifact
       if: ${{ inputs.kotlin == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-kotlin
 
@@ -124,7 +124,7 @@ runs:
     # Dart
     - name: Download clients-dart artifact
       if: ${{ inputs.dart == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-dart
 
@@ -138,7 +138,7 @@ runs:
     # Python
     - name: Download clients-python artifact
       if: ${{ inputs.python == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-python
 
@@ -152,7 +152,7 @@ runs:
     # Ruby
     - name: Download clients-ruby artifact
       if: ${{ inputs.ruby == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-ruby
 
@@ -166,7 +166,7 @@ runs:
     # Scala
     - name: Download clients-scala artifact
       if: ${{ inputs.scala == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-scala
 
@@ -180,7 +180,7 @@ runs:
     # CSharp
     - name: Download clients-csharp artifact
       if: ${{ inputs.csharp == 'true' && inputs.type == 'all' }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: clients-csharp
 
