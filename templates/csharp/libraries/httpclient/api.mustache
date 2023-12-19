@@ -15,7 +15,6 @@ using Algolia.Search.Client;
 namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 {
     {{#operations}}
-
     {{#supportsAsync}}
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
@@ -81,17 +80,14 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
           {
             throw new ArgumentNullException(nameof(httpRequester), "An httpRequester is required");
           }
-
           if (config == null)
           {
             throw new ArgumentNullException(nameof(config), "A config is required");
           }
-
           if (string.IsNullOrWhiteSpace(config.AppId))
           {
             throw new ArgumentNullException(nameof(config.AppId), "Application ID is required");
           }
-
           if (string.IsNullOrWhiteSpace(config.ApiKey))
           {
             throw new ArgumentNullException(nameof(config.ApiKey), "An API key is required");
@@ -122,15 +118,13 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{#allParams}}
             {{#required}}
             {{^vendorExtensions.x-csharp-value-type}}
-            // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
                 throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
 
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
-
-            RequestOptions requestOptions = new RequestOptions();
+            InternalRequestOptions requestOptions = new InternalRequestOptions(options);
             {{#pathParams}}
             {{#required}}
             requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
@@ -178,7 +172,6 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{#bodyParam}}
             requestOptions.Data = {{paramName}};
             {{/bodyParam}}
-
             {{#vendorExtensions}}
             {{#x-use-read-transporter}}
             requestOptions.UseReadTransporter = true;
@@ -187,7 +180,6 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
 
             return await _transport.ExecuteRequestAsync<{{> return_type}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
         }
-
         {{/supportsAsync}}
         {{/operation}}
     }

@@ -69,7 +69,7 @@ namespace Algolia.Search.Client
     /// <summary>
     /// Compression for outgoing http requests  <see cref="CompressionType"/>
     /// </summary>
-    public virtual CompressionType Compression { get; protected set; }
+    public CompressionType Compression { get; set; }
 
     /// <summary>
     /// Configurations hosts

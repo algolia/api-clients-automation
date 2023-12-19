@@ -1,12 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Algolia.Search.Client;
+using Algolia.Search.Http;
 using Algolia.Search.Search.Api;
+using Algolia.Search.Search.Client;
 using Algolia.Search.Search.Models;
 using Action = Algolia.Search.Search.Models.Action;
 
 Console.WriteLine("Hello, World!");
 
-var searchClient = new SearchClient("NIOXZRNMTV", "XXX");
+var searchClient = new SearchClient(new SearchConfig("NIOXZRNMTV", "XXX")
+{
+  Compression = CompressionType.NONE
+});
 
 // Save
 Console.WriteLine("--- Save a single object `SaveObjectAsync` ---");
@@ -74,11 +80,11 @@ search.Results.ForEach(result =>
 {
   if (result.IsSearchResponse<TestObject>())
   {
-    Console.WriteLine("Hits: "+ result.GetSearchResponse<TestObject>().Hits.First().ObjectID);
+    Console.WriteLine("Hits: "+ result.AsSearchResponse<TestObject>().Hits.First().ObjectID);
   }
   else if (result.IsSearchForFacetValuesResponse())
   {
-    Console.WriteLine("Facet: "+ result.GetSearchForFacetValuesResponse().FacetHits.First().Value);
+    Console.WriteLine("Facet: "+ result.AsSearchForFacetValuesResponse().FacetHits.First().Value);
   }
   else
   {

@@ -6,11 +6,49 @@ using System.Collections.Generic;
 namespace Algolia.Search.Http
 {
     /// <summary>
-    /// A container for generalized request inputs. This type allows consumers to extend the request functionality
-    /// by abstracting away from the default (built-in) request framework (e.g. RestSharp).
+    /// Request option you can add to your queries
     /// </summary>
     public class RequestOptions
     {
+        /// <summary>
+        /// Custom headers will override default headers if they exist
+        /// </summary>
+        public Dictionary<string, string> Headers { get; set; }
+
+        /// <summary>
+        /// Add custom queries parameters
+        /// </summary>
+        public Dictionary<string, string> QueryParameters { get; set; }
+
+        /// <summary>
+        /// Request timeout in seconds
+        /// </summary>
+        public TimeSpan? Timeout { get; set; }
+
+        /// <summary>
+        /// Constructs a new instance of <see cref="RequestOptions"/>
+        /// </summary>
+        public RequestOptions()
+        {
+            QueryParameters = new Dictionary<string, string>();
+            Headers = new Dictionary<string, string>();
+        }
+    }
+
+    /// <summary>
+    /// A container for generalized request inputs. This type allows consumers to extend the request functionality
+    /// by abstracting away from the default (built-in) request framework (e.g. RestSharp).
+    /// </summary>
+    internal class InternalRequestOptions
+    {
+        public InternalRequestOptions(RequestOptions options = null)
+        {
+            QueryParameters = options?.QueryParameters ?? new Dictionary<string, string>();
+            HeaderParameters = options?.Headers ?? new Dictionary<string, string>();
+            PathParameters = new Dictionary<string, string>();
+            Timeout = options?.Timeout;
+        }
+
         /// <summary>
         /// Parameters to be bound to path parts of the Request's URL
         /// </summary>
@@ -42,15 +80,5 @@ namespace Algolia.Search.Http
         /// Enforce the Read Transporter
         /// </summary>
         public bool? UseReadTransporter { get; set; }
-
-        /// <summary>
-        /// Constructs a new instance of <see cref="RequestOptions"/>
-        /// </summary>
-        public RequestOptions()
-        {
-            PathParameters = new Dictionary<string, string>();
-            QueryParameters = new Dictionary<string, string>();
-            HeaderParameters = new Dictionary<string, string>();
-        }
     }
 }

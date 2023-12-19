@@ -58,7 +58,6 @@ namespace Algolia.Search.Transport
     {
       _algoliaConfig = config ?? throw new ArgumentNullException(nameof(config));
       _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-      //_serializer = new DefaultSerializer();
       _serializer = new CustomJsonCodec(JsonConfig.AlgoliaJsonSerializerSettings);
 
 
@@ -75,7 +74,7 @@ namespace Algolia.Search.Transport
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
     public async Task<TResult> ExecuteRequestAsync<TResult>(HttpMethod method, string uri,
-      RequestOptions requestOptions = null,
+      InternalRequestOptions requestOptions = null,
       CancellationToken ct = default)
       where TResult : class =>
       await ExecuteRequestAsync<TResult, object>(method, uri, requestOptions, ct)
@@ -93,7 +92,7 @@ namespace Algolia.Search.Transport
     /// <param name="requestOptions">Add extra http header or query parameters to Algolia</param>
     /// <param name="ct">Optional cancellation token</param>
     public async Task<TResult> ExecuteRequestAsync<TResult, TData>(HttpMethod method, string uri,
-      RequestOptions requestOptions = null,
+      InternalRequestOptions requestOptions = null,
       CancellationToken ct = default)
       where TResult : class
       where TData : class
