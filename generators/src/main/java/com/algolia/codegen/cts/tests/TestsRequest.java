@@ -35,6 +35,11 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
+
+    if (this.language.equals("python")) {
+      extension = "_requests" + extension;
+    }
+
     supportingFiles.add(
       new SupportingFile(
         "requests/requests.mustache",

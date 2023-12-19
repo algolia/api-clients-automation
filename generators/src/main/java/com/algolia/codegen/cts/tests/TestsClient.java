@@ -35,6 +35,11 @@ public class TestsClient extends TestsGenerator {
     if (!available()) {
       return;
     }
+
+    if (this.language.equals("python")) {
+      extension = "_client" + extension;
+    }
+
     supportingFiles.add(
       new SupportingFile("client/suite.mustache", outputFolder + "/client", Helpers.createClientName(client, language) + extension)
     );
