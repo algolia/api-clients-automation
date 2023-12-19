@@ -14,13 +14,11 @@ module {{moduleName}}
     def self.create(app_id, api_key{{#hasRegionalHost}}, region = nil{{/hasRegionalHost}})
       hosts = []
       {{#hasRegionalHost}}
-      regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
+      regions = [{{#allowedRegions}}'{{.}}'{{^-last}}, {{/-last}}{{/allowedRegions}}]
 
-      if {{^fallbackToAliasHost}}region.nil? || {{/fallbackToAliasHost}}(region != '' && !regions.include?(region))
-        raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: #{regions.join(', ')}"
-      end
+      raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: #{regions.join(', ')}" if {{^fallbackToAliasHost}}region.nil? || {{/fallbackToAliasHost}}(region != '' && !regions.include?(region))
 
-      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}}"{{{regionalHost}}}".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       {{/hasRegionalHost}}{{^hasRegionalHost}}
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
@@ -33,7 +31,6 @@ module {{moduleName}}
       config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}')
       create_with_config(config)
     end
-
 
     def self.create_with_config(config)
       new(config)
@@ -117,14 +114,14 @@ module {{moduleName}}
       {{#required}}
       # verify the required parameter '{{paramName}}' is set
       if @api_client.config.client_side_validation && {{{paramName}}}.nil?
-        fail ArgumentError, "Missing the required parameter '{{paramName}}' when calling {{classname}}.{{operationId}}"
+        raise ArgumentError, "Missing the required parameter '{{paramName}}' when calling {{classname}}.{{operationId}}"
       end
       {{#isEnum}}
       {{^isContainer}}
       # verify enum value
       allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
       if @api_client.config.client_side_validation && !allowable_values.include?({{{paramName}}})
-        fail ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
+        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
       end
       {{/isContainer}}
       {{/isEnum}}
@@ -135,13 +132,13 @@ module {{moduleName}}
       {{#collectionFormat}}
       allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
       if @api_client.config.client_side_validation && opts[:{{{paramName}}}] && !opts[:{{{paramName}}}].all? { |item| allowable_values.include?(item) }
-        fail ArgumentError, "invalid value for \"{{{paramName}}}\", must include one of #{allowable_values}"
+        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must include one of #{allowable_values}"
       end
       {{/collectionFormat}}
       {{^collectionFormat}}
       allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
       if @api_client.config.client_side_validation && opts[:{{{paramName}}}] && !allowable_values.include?(opts[:{{{paramName}}}])
-        fail ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
+        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
       end
       {{/collectionFormat}}
       {{/isEnum}}
@@ -149,44 +146,44 @@ module {{moduleName}}
       {{#hasValidation}}
       {{#maxLength}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.to_s.length > {{{maxLength}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
       end
 
       {{/maxLength}}
       {{#minLength}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.to_s.length < {{{minLength}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
       end
 
       {{/minLength}}
       {{#maximum}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
       end
 
       {{/maximum}}
       {{#minimum}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
       end
 
       {{/minimum}}
       {{#pattern}}
-      pattern = Regexp.new({{{pattern}}})
+      pattern = {{{pattern}}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} !~ pattern
-        fail ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern #{pattern}."
+        raise ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern #{pattern}."
       end
 
       {{/pattern}}
       {{#maxItems}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.length > {{{maxItems}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
       end
 
       {{/maxItems}}
       {{#minItems}}
       if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.length < {{{minItems}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
+        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
       end
 
       {{/minItems}}
@@ -201,7 +198,7 @@ module {{moduleName}}
       {{/queryParams}}
       {{#queryParams}}
       {{^required}}
-      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(opts[{{{paramName}}}], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:{{{paramName}}}]{{/collectionFormat}} unless opts[:{{{paramName}}}].nil?
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(opts[:{{{paramName}}}], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:{{{paramName}}}]{{/collectionFormat}} unless opts[:{{{paramName}}}].nil?
       {{/required}}
       {{/queryParams}}
       header_params = opts[:header_params] || {}
@@ -221,7 +218,7 @@ module {{moduleName}}
       return_type = opts[:debug_return_type]{{#returnType}} || '{{{modelModule}}}::{{{.}}}'{{/returnType}}
 
       new_options = opts.merge(
-        :operation => :"{{classname}}.{{operationId}}",
+        :operation => :'{{classname}}.{{operationId}}',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

@@ -20,14 +20,16 @@ module Algolia
 
       attr_accessor :_distinct_seq_id
 
+      attr_accessor :additional_properties
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'object_id' => :'objectID',
-          :'_highlight_result' => :'_highlightResult',
-          :'_snippet_result' => :'_snippetResult',
-          :'_ranking_info' => :'_rankingInfo',
-          :'_distinct_seq_id' => :'_distinctSeqID'
+          :object_id => :objectID,
+          :_highlight_result => :_highlightResult,
+          :_snippet_result => :_snippetResult,
+          :_ranking_info => :_rankingInfo,
+          :_distinct_seq_id => :_distinctSeqID
         }
       end
 
@@ -39,78 +41,74 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'object_id' => :'String',
-          :'_highlight_result' => :'Hash<String, HighlightResult>',
-          :'_snippet_result' => :'Hash<String, SnippetResult>',
-          :'_ranking_info' => :'RankingInfo',
-          :'_distinct_seq_id' => :'Integer'
+          :object_id => :String,
+          :_highlight_result => :'Hash<String, HighlightResult>',
+          :_snippet_result => :'Hash<String, SnippetResult>',
+          :_ranking_info => :RankingInfo,
+          :_distinct_seq_id => :Integer
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Hit` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Hit` initialize method"
         end
 
-        # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::Hit`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
-          end
-          h[k.to_sym] = v
-        }
-
-        if attributes.key?(:'object_id')
-          self.object_id = attributes[:'object_id']
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         else
           self.object_id = nil
         end
 
-        if attributes.key?(:'_highlight_result')
-          if (value = attributes[:'_highlight_result']).is_a?(Hash)
+        if attributes.key?(:_highlight_result)
+          if (value = attributes[:_highlight_result]).is_a?(Hash)
             self._highlight_result = value
           end
         end
 
-        if attributes.key?(:'_snippet_result')
-          if (value = attributes[:'_snippet_result']).is_a?(Hash)
+        if attributes.key?(:_snippet_result)
+          if (value = attributes[:_snippet_result]).is_a?(Hash)
             self._snippet_result = value
           end
         end
 
-        if attributes.key?(:'_ranking_info')
-          self._ranking_info = attributes[:'_ranking_info']
+        if attributes.key?(:_ranking_info)
+          self._ranking_info = attributes[:_ranking_info]
         end
 
-        if attributes.key?(:'_distinct_seq_id')
-          self._distinct_seq_id = attributes[:'_distinct_seq_id']
+        if attributes.key?(:_distinct_seq_id)
+          self._distinct_seq_id = attributes[:_distinct_seq_id]
         end
+
+        # add extra attribute to additional_properties
+        self.additional_properties ||= {}
+        self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            object_id == o.object_id &&
-            _highlight_result == o._highlight_result &&
-            _snippet_result == o._snippet_result &&
-            _ranking_info == o._ranking_info &&
-            _distinct_seq_id == o._distinct_seq_id
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          object_id == other.object_id &&
+          _highlight_result == other._highlight_result &&
+          _snippet_result == other._snippet_result &&
+          _ranking_info == other._ranking_info &&
+          _distinct_seq_id == other._distinct_seq_id
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -124,21 +122,24 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
+
+        transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
         new(transformed_hash)
       end
 
@@ -202,13 +203,18 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
           end
 
           hash[param] = _to_hash(value)
+        end
+
+        # also add attributes from additional_properties to hash
+        self.additional_properties&.each_pair do |k, v|
+          hash[k.to_sym] = _to_hash(v)
         end
         hash
       end
