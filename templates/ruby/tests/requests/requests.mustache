@@ -1,15 +1,29 @@
 require 'algolia'
 require 'test/unit'
 
-{{#blocksRequests}}
-class Test{{operationId}} < Test::Unit::TestCase
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
+  def setup
+    @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(
+      Algolia::Configuration.new(
+      'APP_ID', 
+      'API_KEY', 
+      [Algolia::Transport::StatefulHost.new('localhost')], 
+      '{{clientPrefix}}', 
+      { requester: Algolia::Transport::EchoRequester.new })
+    )
+  end
+
+  {{#blocksRequests}}
   {{#tests}}
   # {{{testName}}}
-  def test{{testIndex}}
-    assert_equal(3, 4)
+  def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
+    _, res = @client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}})
+
+    assert_equal(:{{#lambda.lowercase}}{{request.method}}{{/lambda.lowercase}}, res.method)
+    assert_equal('{{request.path}}', res.path)
+    assert_equal(%q({{{request.body}}}), res.body)
   end
 
   {{/tests}}
+  {{/blocksRequests}}
 end
-
-{{/blocksRequests}}

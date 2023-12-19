@@ -3,6 +3,9 @@ module Algolia
     class Response
       attr_reader :status, :body, :error, :headers, :has_timed_out, :network_failure
 
+      # used for the echo requester
+      attr_reader :method, :path
+
       #
       # @option status    [String]  Response status
       # @option body    [String]  Response body
@@ -17,6 +20,9 @@ module Algolia
         @headers         = opts[:headers] || ''
         @has_timed_out   = opts[:has_timed_out] || false
         @network_failure = opts[:network_failure] || false
+
+        @method = opts[:method] || ''
+        @path = opts[:path] || ''
       end
     end
   end

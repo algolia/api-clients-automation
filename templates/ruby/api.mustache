@@ -17,10 +17,10 @@ module {{moduleName}}
       regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
 
       if {{^fallbackToAliasHost}}region.nil? || {{/fallbackToAliasHost}}(region != '' && !regions.include?(region))
-        raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: %s" % regions.join(', ')
+        raise "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: #{regions.join(', ')}"
       end
 
-      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}}"{{{regionalHost}}}".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       {{/hasRegionalHost}}{{^hasRegionalHost}}
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
@@ -69,7 +69,7 @@ module {{moduleName}}
 {{/allParams}}
     # @return [{{{returnType}}}{{^returnType}}nil{{/returnType}}]
     def {{operationId}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}opts = {})
-      {{#returnType}}data, _status_code, _headers = {{/returnType}}{{operationId}}_with_http_info({{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}opts)
+      {{#returnType}}data, _response = {{/returnType}}{{operationId}}_with_http_info({{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}opts)
       {{#returnType}}data{{/returnType}}{{^returnType}}nil{{/returnType}}
     end
 
@@ -107,7 +107,7 @@ module {{moduleName}}
       {{#allParams}}
       {{^isNullable}}
       {{#required}}
-      {{{paramName}}} = opts[:'{{{paramName}}}']
+      {{{paramName}}} = opts[:{{{paramName}}}]
       {{/required}}
       {{/isNullable}}
       {{/allParams}}
@@ -134,13 +134,13 @@ module {{moduleName}}
       {{#isEnum}}
       {{#collectionFormat}}
       allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
-      if @api_client.config.client_side_validation && opts[:'{{{paramName}}}'] && !opts[:'{{{paramName}}}'].all? { |item| allowable_values.include?(item) }
+      if @api_client.config.client_side_validation && opts[:{{{paramName}}}] && !opts[:{{{paramName}}}].all? { |item| allowable_values.include?(item) }
         fail ArgumentError, "invalid value for \"{{{paramName}}}\", must include one of #{allowable_values}"
       end
       {{/collectionFormat}}
       {{^collectionFormat}}
       allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
-      if @api_client.config.client_side_validation && opts[:'{{{paramName}}}'] && !allowable_values.include?(opts[:'{{{paramName}}}'])
+      if @api_client.config.client_side_validation && opts[:{{{paramName}}}] && !allowable_values.include?(opts[:{{{paramName}}}])
         fail ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
       end
       {{/collectionFormat}}
@@ -148,44 +148,44 @@ module {{moduleName}}
       {{/required}}
       {{#hasValidation}}
       {{#maxLength}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length > {{{maxLength}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.to_s.length > {{{maxLength}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
       end
 
       {{/maxLength}}
       {{#minLength}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length < {{{minLength}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.to_s.length < {{{minLength}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
       end
 
       {{/minLength}}
       {{#maximum}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
       end
 
       {{/maximum}}
       {{#minimum}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
       end
 
       {{/minimum}}
       {{#pattern}}
       pattern = Regexp.new({{{pattern}}})
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} !~ pattern
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}} !~ pattern
         fail ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern #{pattern}."
       end
 
       {{/pattern}}
       {{#maxItems}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length > {{{maxItems}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.length > {{{maxItems}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
       end
 
       {{/maxItems}}
       {{#minItems}}
-      if @api_client.config.client_side_validation && {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length < {{{minItems}}}
+      if @api_client.config.client_side_validation && {{^required}}!opts[:{{{paramName}}}].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}.length < {{{minItems}}}
         fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
       end
 
@@ -196,27 +196,27 @@ module {{moduleName}}
       query_params = opts[:query_params] || {}
       {{#queryParams}}
       {{#required}}
-      query_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
       {{/required}}
       {{/queryParams}}
       {{#queryParams}}
       {{^required}}
-      query_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(opts[{{{paramName}}}], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:{{{paramName}}}]{{/collectionFormat}} unless opts[:{{{paramName}}}].nil?
       {{/required}}
       {{/queryParams}}
       header_params = opts[:header_params] || {}
       {{#headerParams}}
       {{#required}}
-      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
+      header_params[{{#lambdaFixHeaderKey}}:{{{baseName}}}{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
       {{/required}}
       {{/headerParams}}
       {{#headerParams}}
       {{^required}}
-      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
+      header_params[{{#lambdaFixHeaderKey}}:{{{baseName}}}{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param(opts[:{{{paramName}}}], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:{{{paramName}}}]{{/collectionFormat}} unless opts[:{{{paramName}}}].nil?
       {{/required}}
       {{/headerParams}}
 
-      post_body = opts[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}){{/bodyParam}}
+      post_body = opts[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:{{{paramName}}}]{{/required}}){{/bodyParam}}
 
       return_type = opts[:debug_return_type]{{#returnType}} || '{{{modelModule}}}::{{{.}}}'{{/returnType}}
 
@@ -229,7 +229,7 @@ module {{moduleName}}
         :use_read_transporter => {{#useReadTransporter}}true{{/useReadTransporter}}{{^useReadTransporter}}false{{/useReadTransporter}}
       )
 
-      return @api_client.call_api(:{{httpMethod}}, path, new_options)
+      @api_client.call_api(:{{httpMethod}}, path, new_options)
     end
 {{^-last}}
 

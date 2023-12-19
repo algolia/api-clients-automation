@@ -1,0 +1,12 @@
+AllCops:
+  DisabledByDefault: false
+  NewCops: enable
+
+Metrics/ClassLength:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 180
+
+Styles/HashSyntax:
+  Enabled: false

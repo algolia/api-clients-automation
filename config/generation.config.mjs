@@ -97,7 +97,6 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/logger_helper.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/user_agent.rb',
-  '!clients/algoliasearch-client-ruby/lib/algolia/http/**',
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   // Scala
