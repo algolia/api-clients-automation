@@ -30,7 +30,7 @@
       def openapi_discriminator_mapping
         {
       {{/-first}}
-          :'{{{mappingName}}}' => :'{{{modelName}}}'{{^-last}},{{/-last}}
+          :{{{mappingName}}} => :'{{{modelName}}}'{{^-last}},{{/-last}}
       {{#-last}}
         }
       end
@@ -118,13 +118,13 @@
           if const
             if const.respond_to?(:openapi_one_of) # nested oneOf model
               model = const.build(data)
-              return model if model
             else
               # raise if data contains keys that are not known to the model
               raise unless (data.keys - const.acceptable_attributes).empty?
               model = const.build_from_hash(data)
-              return model if model
             end
+
+            return model if model
           end
         end
 
