@@ -10,15 +10,15 @@
       transformed_hash = {}
       types_mapping.each_pair do |key, type|
         if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-          transformed_hash["#{key}"] = nil
+          transformed_hash[key.to_s] = nil
         elsif type =~ /\AArray<(.*)>/i
           # check to ensure the input is an array given that the attribute
           # is documented as an array but the input is not
           if attributes[attribute_map[key]].is_a?(Array)
-            transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+            transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
           end
         elsif !attributes[attribute_map[key]].nil?
-          transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+          transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
         end
       end
       {{#vendorExtensions.x-is-generic}}
@@ -88,7 +88,7 @@
     def to_hash
       hash = {{^parent}}{}{{/parent}}{{#parent}}super{{/parent}}
       self.class.attribute_map.each_pair do |attr, param|
-        value = self.send(attr)
+        value = send(attr)
         if value.nil?
           is_nullable = self.class.openapi_nullable.include?(attr)
           next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
@@ -99,9 +99,9 @@
       {{#vendorExtensions.x-is-generic}}
 
       # also add attributes from additional_properties to hash
-      self.additional_properties.each_pair do |k, v|
+      self.additional_properties&.each_pair do |k, v|
         hash[k.to_sym] = _to_hash(v)
-      end if self.additional_properties
+      end
       {{/vendorExtensions.x-is-generic}}
       hash
     end
