@@ -19,8 +19,8 @@ module Algolia
 
     # Call an API with given options.
     #
-    # @return [Array<(Object, Integer, Hash)>] an array of 3 elements:
-    #   the data deserialized from response body (could be nil), response status code and response headers.
+    # @return [Array<(Object, Http::Response)>] an array of 2 elements:
+    #   the data deserialized from response body (could be nil) and the response.
     def call_api(http_method, path, opts = {})
       begin
         call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
