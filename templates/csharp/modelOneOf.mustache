@@ -82,7 +82,7 @@
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of {{dataType}}</returns>
-        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} Getter{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
+        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} Get{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
         {
           {{#vendorExtensions.x-has-child-generic}}
           if (ActualInstance.GetType() == typeof(JObject))
@@ -95,6 +95,29 @@
         }
         {{/isNull}}
         {{/vendorExtensions.x-duplicated-data-type}}
+        {{/composedSchemas.oneOf}}
+
+        {{#composedSchemas.oneOf}}
+          {{^vendorExtensions.x-duplicated-data-type}}
+            {{^isNull}}
+
+                /// <summary>
+                /// Check if the actual instance is of `{{dataType}}` type.
+                /// </summary>
+                /// <returns>Whether or not the instance is the type</returns>
+                public bool Is{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
+                {
+                {{#vendorExtensions.x-has-child-generic}}
+                    if (ActualInstance.GetType() == typeof(JObject))
+                    {
+                        return ((JObject)ActualInstance).ToObject<{{{dataType}}}<T>>() != null;
+                    }
+                {{/vendorExtensions.x-has-child-generic}}
+
+                    return ActualInstance.GetType() == typeof({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}});
+                }
+            {{/isNull}}
+          {{/vendorExtensions.x-duplicated-data-type}}
         {{/composedSchemas.oneOf}}
 
         /// <summary>
@@ -158,23 +181,10 @@
 
             {{/discriminator}}
             {{/useOneOfDiscriminatorLookup}}
-            int match = 0;
-            List<string> matchedTypes = new List<string>();
-
             {{#composedSchemas.oneOf}}
             try
             {
-                // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
-                if (typeof({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<>{{/vendorExtensions.x-has-child-generic}}).GetProperty("AdditionalProperties") == null)
-                {
-                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.SerializerSettings));
-                }
-                else
-                {
-                    new{{classname}} = new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.AdditionalPropertiesSerializerSettings));
-                }
-                matchedTypes.Add("{{{datatypeWithEnum}}}");
-                match++;
+                return new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.AdditionalPropertiesSerializerSettings));
             }
             catch (Exception exception)
             {
@@ -183,17 +193,7 @@
             }
             {{/composedSchemas.oneOf}}
 
-            if (match == 0)
-            {
-                throw new InvalidDataException("The JSON string `" + jsonString + "` cannot be deserialized into any schema defined.");
-            }
-            else if (match > 1)
-            {
-                throw new InvalidDataException("The JSON string `" + jsonString + "` incorrectly matches more than one schema (should be exactly one match): " + String.Join(",", matchedTypes));
-            }
-
-            // deserialization is considered successful at this point if no exception has been thrown.
-            return new{{classname}};
+            throw new InvalidDataException("The JSON string `" + jsonString + "` cannot be deserialized into any schema defined.");
         }
 
         {{#equatable}}
