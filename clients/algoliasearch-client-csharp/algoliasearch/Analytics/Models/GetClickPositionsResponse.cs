@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Analytics.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Analytics.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Analytics.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Analytics.Models
   /// GetClickPositionsResponse
   /// </summary>
   [DataContract(Name = "getClickPositionsResponse")]
-  public partial class GetClickPositionsResponse : IEquatable<GetClickPositionsResponse>, IValidatableObject
+  public partial class GetClickPositionsResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetClickPositionsResponse" /> class.
@@ -74,62 +72,6 @@ namespace Algolia.Search.Analytics.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as GetClickPositionsResponse);
-    }
-
-    /// <summary>
-    /// Returns true if GetClickPositionsResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of GetClickPositionsResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(GetClickPositionsResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Positions == input.Positions ||
-              this.Positions != null &&
-              input.Positions != null &&
-              this.Positions.SequenceEqual(input.Positions)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Positions != null)
-        {
-          hashCode = (hashCode * 59) + this.Positions.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

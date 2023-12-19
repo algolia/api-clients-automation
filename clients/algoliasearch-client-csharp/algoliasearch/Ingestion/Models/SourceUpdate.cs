@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// SourceUpdate
   /// </summary>
   [DataContract(Name = "SourceUpdate")]
-  public partial class SourceUpdate : IEquatable<SourceUpdate>, IValidatableObject
+  public partial class SourceUpdate
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SourceUpdate" /> class.
@@ -82,79 +80,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SourceUpdate);
-    }
-
-    /// <summary>
-    /// Returns true if SourceUpdate instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SourceUpdate to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SourceUpdate input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Name == input.Name ||
-              (this.Name != null &&
-              this.Name.Equals(input.Name))
-          ) &&
-          (
-              this.Input == input.Input ||
-              (this.Input != null &&
-              this.Input.Equals(input.Input))
-          ) &&
-          (
-              this.AuthenticationID == input.AuthenticationID ||
-              (this.AuthenticationID != null &&
-              this.AuthenticationID.Equals(input.AuthenticationID))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Name != null)
-        {
-          hashCode = (hashCode * 59) + this.Name.GetHashCode();
-        }
-        if (this.Input != null)
-        {
-          hashCode = (hashCode * 59) + this.Input.GetHashCode();
-        }
-        if (this.AuthenticationID != null)
-        {
-          hashCode = (hashCode * 59) + this.AuthenticationID.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

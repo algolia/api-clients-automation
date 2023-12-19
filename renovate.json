@@ -14,7 +14,6 @@
     "regex",
     "pub",
     "gomod",
-    "poetry",
     "pip_requirements",
     "gradle-wrapper",
     "bundler"
@@ -54,10 +53,10 @@
     {
       "description": "Update poetry.toml mustache devDeps",
       "fileMatch": [
-        "poetry.mustache"
+        "pyproject.mustache"
       ],
       "matchStrings": [
-        ".*=\\s*\"(?<currentValue>.*?)\""
+        "(?<depName>.*?)=\\s*\"(?<currentValue>.*?)\""
       ],
       "matchStringsStrategy": "recursive",
       "datasourceTemplate": "pypi"

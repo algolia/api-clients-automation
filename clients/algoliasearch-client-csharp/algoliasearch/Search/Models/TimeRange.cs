@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// TimeRange
   /// </summary>
   [DataContract(Name = "timeRange")]
-  public partial class TimeRange : IEquatable<TimeRange>, IValidatableObject
+  public partial class TimeRange
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="TimeRange" /> class.
@@ -79,62 +77,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as TimeRange);
-    }
-
-    /// <summary>
-    /// Returns true if TimeRange instances are equal
-    /// </summary>
-    /// <param name="input">Instance of TimeRange to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(TimeRange input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.From == input.From ||
-              this.From.Equals(input.From)
-          ) &&
-          (
-              this.Until == input.Until ||
-              this.Until.Equals(input.Until)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        hashCode = (hashCode * 59) + this.From.GetHashCode();
-        hashCode = (hashCode * 59) + this.Until.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

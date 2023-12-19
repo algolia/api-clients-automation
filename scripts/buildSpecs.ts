@@ -6,7 +6,7 @@ import { checkForCache, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
 import type { Spec } from './types.js';
 
-const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'post'];
+const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 
 /**
  * This function will transform properties in the bundle depending on the context.
@@ -142,8 +142,8 @@ async function buildLiteSpec({
   // Filter methods.
   parsed.paths = Object.entries(parsed.paths).reduce(
     (acc, [path, operations]) => {
-      for (const [method, operation] of Object.entries(operations)) {
-        if (method === 'post' && ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)) {
+      for (const [, operation] of Object.entries(operations)) {
+        if (ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)) {
           return { ...acc, [path]: { post: operation } };
         }
       }

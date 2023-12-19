@@ -17,7 +17,7 @@ void main() {
         region: client.region,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test",
       ),
       intercept: (request) {
@@ -38,7 +38,7 @@ void main() {
         region: client.region,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.get(
+      call: (client) => client.customGet(
         path: "/test",
       ),
       intercept: (request) {
@@ -59,7 +59,7 @@ void main() {
         region: client.region,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test",
       ),
       intercept: (request) {
@@ -103,7 +103,7 @@ void main() {
         region: client.region,
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.del(
+      call: (client) => client.customDelete(
         path: "/test",
       ),
       intercept: (request) {

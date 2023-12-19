@@ -17,7 +17,7 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -34,7 +34,7 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -50,7 +50,7 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },

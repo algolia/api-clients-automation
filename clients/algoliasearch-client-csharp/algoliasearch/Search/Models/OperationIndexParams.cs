@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// OperationIndexParams
   /// </summary>
   [DataContract(Name = "operationIndexParams")]
-  public partial class OperationIndexParams : IEquatable<OperationIndexParams>, IValidatableObject
+  public partial class OperationIndexParams
   {
 
     /// <summary>
@@ -93,76 +91,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as OperationIndexParams);
-    }
-
-    /// <summary>
-    /// Returns true if OperationIndexParams instances are equal
-    /// </summary>
-    /// <param name="input">Instance of OperationIndexParams to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(OperationIndexParams input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Operation == input.Operation ||
-              this.Operation.Equals(input.Operation)
-          ) &&
-          (
-              this.Destination == input.Destination ||
-              (this.Destination != null &&
-              this.Destination.Equals(input.Destination))
-          ) &&
-          (
-              this.Scope == input.Scope ||
-              this.Scope != null &&
-              input.Scope != null &&
-              this.Scope.SequenceEqual(input.Scope)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        hashCode = (hashCode * 59) + this.Operation.GetHashCode();
-        if (this.Destination != null)
-        {
-          hashCode = (hashCode * 59) + this.Destination.GetHashCode();
-        }
-        if (this.Scope != null)
-        {
-          hashCode = (hashCode * 59) + this.Scope.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

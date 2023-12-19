@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Recommend.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Recommend.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Recommend.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Recommend.Models
   /// RuleResponseMetadata
   /// </summary>
   [DataContract(Name = "ruleResponse__metadata")]
-  public partial class RuleResponseMetadata : IEquatable<RuleResponseMetadata>, IValidatableObject
+  public partial class RuleResponseMetadata
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="RuleResponseMetadata" /> class.
@@ -64,61 +62,6 @@ namespace Algolia.Search.Recommend.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as RuleResponseMetadata);
-    }
-
-    /// <summary>
-    /// Returns true if RuleResponseMetadata instances are equal
-    /// </summary>
-    /// <param name="input">Instance of RuleResponseMetadata to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(RuleResponseMetadata input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.LastUpdate == input.LastUpdate ||
-              (this.LastUpdate != null &&
-              this.LastUpdate.Equals(input.LastUpdate))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.LastUpdate != null)
-        {
-          hashCode = (hashCode * 59) + this.LastUpdate.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

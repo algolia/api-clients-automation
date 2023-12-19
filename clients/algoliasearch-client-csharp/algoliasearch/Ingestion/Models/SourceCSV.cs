@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// SourceCSV
   /// </summary>
   [DataContract(Name = "SourceCSV")]
-  public partial class SourceCSV : IEquatable<SourceCSV>, IValidatableObject
+  public partial class SourceCSV
   {
 
     /// <summary>
@@ -114,106 +112,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SourceCSV);
-    }
-
-    /// <summary>
-    /// Returns true if SourceCSV instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SourceCSV to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SourceCSV input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Url == input.Url ||
-              (this.Url != null &&
-              this.Url.Equals(input.Url))
-          ) &&
-          (
-              this.UniqueIDColumn == input.UniqueIDColumn ||
-              (this.UniqueIDColumn != null &&
-              this.UniqueIDColumn.Equals(input.UniqueIDColumn))
-          ) &&
-          (
-              this.Mapping == input.Mapping ||
-              this.Mapping != null &&
-              input.Mapping != null &&
-              this.Mapping.SequenceEqual(input.Mapping)
-          ) &&
-          (
-              this.Method == input.Method ||
-              this.Method.Equals(input.Method)
-          ) &&
-          (
-              this.Delimiter == input.Delimiter ||
-              (this.Delimiter != null &&
-              this.Delimiter.Equals(input.Delimiter))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Url != null)
-        {
-          hashCode = (hashCode * 59) + this.Url.GetHashCode();
-        }
-        if (this.UniqueIDColumn != null)
-        {
-          hashCode = (hashCode * 59) + this.UniqueIDColumn.GetHashCode();
-        }
-        if (this.Mapping != null)
-        {
-          hashCode = (hashCode * 59) + this.Mapping.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Method.GetHashCode();
-        if (this.Delimiter != null)
-        {
-          hashCode = (hashCode * 59) + this.Delimiter.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // Delimiter (string) maxLength
-      if (this.Delimiter != null && this.Delimiter.Length > 1)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Delimiter, length must be less than 1.", new[] { "Delimiter" });
-      }
-
-      // Delimiter (string) minLength
-      if (this.Delimiter != null && this.Delimiter.Length < 1)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Delimiter, length must be greater than 1.", new[] { "Delimiter" });
-      }
-
-      yield break;
-    }
   }
 
 }

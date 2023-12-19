@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// Condition
   /// </summary>
   [DataContract(Name = "condition")]
-  public partial class Condition : IEquatable<Condition>, IValidatableObject
+  public partial class Condition
   {
 
     /// <summary>
@@ -93,80 +91,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as Condition);
-    }
-
-    /// <summary>
-    /// Returns true if Condition instances are equal
-    /// </summary>
-    /// <param name="input">Instance of Condition to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(Condition input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Pattern == input.Pattern ||
-              (this.Pattern != null &&
-              this.Pattern.Equals(input.Pattern))
-          ) &&
-          (
-              this.Anchoring == input.Anchoring ||
-              this.Anchoring.Equals(input.Anchoring)
-          ) &&
-          (
-              this.Alternatives == input.Alternatives ||
-              this.Alternatives.Equals(input.Alternatives)
-          ) &&
-          (
-              this.Context == input.Context ||
-              (this.Context != null &&
-              this.Context.Equals(input.Context))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Pattern != null)
-        {
-          hashCode = (hashCode * 59) + this.Pattern.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Anchoring.GetHashCode();
-        hashCode = (hashCode * 59) + this.Alternatives.GetHashCode();
-        if (this.Context != null)
-        {
-          hashCode = (hashCode * 59) + this.Context.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

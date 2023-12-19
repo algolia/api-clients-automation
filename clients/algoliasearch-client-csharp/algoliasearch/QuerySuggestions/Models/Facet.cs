@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.QuerySuggestions.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.QuerySuggestions.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.QuerySuggestions.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.QuerySuggestions.Models
   /// Facet to use as category.
   /// </summary>
   [DataContract(Name = "Facet")]
-  public partial class Facet : IEquatable<Facet>, IValidatableObject
+  public partial class Facet
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="Facet" /> class.
@@ -74,66 +72,6 @@ namespace Algolia.Search.QuerySuggestions.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as Facet);
-    }
-
-    /// <summary>
-    /// Returns true if Facet instances are equal
-    /// </summary>
-    /// <param name="input">Instance of Facet to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(Facet input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Attribute == input.Attribute ||
-              (this.Attribute != null &&
-              this.Attribute.Equals(input.Attribute))
-          ) &&
-          (
-              this.Amount == input.Amount ||
-              this.Amount.Equals(input.Amount)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Attribute != null)
-        {
-          hashCode = (hashCode * 59) + this.Attribute.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Amount.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

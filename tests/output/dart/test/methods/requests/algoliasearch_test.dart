@@ -3,7 +3,7 @@ import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  // post
+  // customPost
   test(
     'allow post method for a custom path with minimal parameters',
     () => runTest(
@@ -12,7 +12,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/minimal",
       ),
       intercept: (request) {
@@ -23,7 +23,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'allow post method for a custom path with all parameters',
     () => runTest(
@@ -32,7 +32,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/all",
         parameters: {
           'query': "parameters",
@@ -50,7 +50,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions can override default query parameters',
     () => runTest(
@@ -59,7 +59,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -83,7 +83,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions merges query parameters with default ones',
     () => runTest(
@@ -92,7 +92,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -116,7 +116,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions can override default headers',
     () => runTest(
@@ -125,7 +125,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -149,7 +149,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions merges headers with default ones',
     () => runTest(
@@ -158,7 +158,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -182,7 +182,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts booleans',
     () => runTest(
@@ -191,7 +191,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -215,7 +215,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts integers',
     () => runTest(
@@ -224,7 +224,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -248,7 +248,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of string',
     () => runTest(
@@ -257,7 +257,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -284,7 +284,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of booleans',
     () => runTest(
@@ -293,7 +293,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -321,7 +321,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of integers',
     () => runTest(
@@ -330,7 +330,7 @@ void main() {
         apiKey: 'apiKey',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",

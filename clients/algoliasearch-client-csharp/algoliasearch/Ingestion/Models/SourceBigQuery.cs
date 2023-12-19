@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// SourceBigQuery
   /// </summary>
   [DataContract(Name = "SourceBigQuery")]
-  public partial class SourceBigQuery : IEquatable<SourceBigQuery>, IValidatableObject
+  public partial class SourceBigQuery
   {
 
     /// <summary>
@@ -138,111 +136,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SourceBigQuery);
-    }
-
-    /// <summary>
-    /// Returns true if SourceBigQuery instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SourceBigQuery to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SourceBigQuery input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.ProjectID == input.ProjectID ||
-              (this.ProjectID != null &&
-              this.ProjectID.Equals(input.ProjectID))
-          ) &&
-          (
-              this.DatasetID == input.DatasetID ||
-              (this.DatasetID != null &&
-              this.DatasetID.Equals(input.DatasetID))
-          ) &&
-          (
-              this.DataType == input.DataType ||
-              this.DataType.Equals(input.DataType)
-          ) &&
-          (
-              this.Table == input.Table ||
-              (this.Table != null &&
-              this.Table.Equals(input.Table))
-          ) &&
-          (
-              this.TablePrefix == input.TablePrefix ||
-              (this.TablePrefix != null &&
-              this.TablePrefix.Equals(input.TablePrefix))
-          ) &&
-          (
-              this.CustomSQLRequest == input.CustomSQLRequest ||
-              (this.CustomSQLRequest != null &&
-              this.CustomSQLRequest.Equals(input.CustomSQLRequest))
-          ) &&
-          (
-              this.UniqueIDColumn == input.UniqueIDColumn ||
-              (this.UniqueIDColumn != null &&
-              this.UniqueIDColumn.Equals(input.UniqueIDColumn))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.ProjectID != null)
-        {
-          hashCode = (hashCode * 59) + this.ProjectID.GetHashCode();
-        }
-        if (this.DatasetID != null)
-        {
-          hashCode = (hashCode * 59) + this.DatasetID.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.DataType.GetHashCode();
-        if (this.Table != null)
-        {
-          hashCode = (hashCode * 59) + this.Table.GetHashCode();
-        }
-        if (this.TablePrefix != null)
-        {
-          hashCode = (hashCode * 59) + this.TablePrefix.GetHashCode();
-        }
-        if (this.CustomSQLRequest != null)
-        {
-          hashCode = (hashCode * 59) + this.CustomSQLRequest.GetHashCode();
-        }
-        if (this.UniqueIDColumn != null)
-        {
-          hashCode = (hashCode * 59) + this.UniqueIDColumn.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

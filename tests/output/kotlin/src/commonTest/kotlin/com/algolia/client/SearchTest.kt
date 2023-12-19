@@ -17,7 +17,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -32,7 +32,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -47,7 +47,7 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },
@@ -64,7 +64,7 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        get(
+        customGet(
           path = "/test",
         )
       },
@@ -80,7 +80,7 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
-        post(
+        customPost(
           path = "/test",
         )
       },

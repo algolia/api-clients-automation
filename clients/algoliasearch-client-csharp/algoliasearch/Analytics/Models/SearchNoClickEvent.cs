@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Analytics.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Analytics.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Analytics.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Analytics.Models
   /// SearchNoClickEvent
   /// </summary>
   [DataContract(Name = "searchNoClickEvent")]
-  public partial class SearchNoClickEvent : IEquatable<SearchNoClickEvent>, IValidatableObject
+  public partial class SearchNoClickEvent
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchNoClickEvent" /> class.
@@ -94,71 +92,6 @@ namespace Algolia.Search.Analytics.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchNoClickEvent);
-    }
-
-    /// <summary>
-    /// Returns true if SearchNoClickEvent instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchNoClickEvent to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchNoClickEvent input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Search == input.Search ||
-              (this.Search != null &&
-              this.Search.Equals(input.Search))
-          ) &&
-          (
-              this.Count == input.Count ||
-              this.Count.Equals(input.Count)
-          ) &&
-          (
-              this.WithFilterCount == input.WithFilterCount ||
-              this.WithFilterCount.Equals(input.WithFilterCount)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Search != null)
-        {
-          hashCode = (hashCode * 59) + this.Search.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Count.GetHashCode();
-        hashCode = (hashCode * 59) + this.WithFilterCount.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

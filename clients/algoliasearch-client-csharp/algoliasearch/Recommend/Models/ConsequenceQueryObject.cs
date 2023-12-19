@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Recommend.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Recommend.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Recommend.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Recommend.Models
   /// ConsequenceQueryObject
   /// </summary>
   [DataContract(Name = "consequenceQueryObject")]
-  public partial class ConsequenceQueryObject : IEquatable<ConsequenceQueryObject>, IValidatableObject
+  public partial class ConsequenceQueryObject
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="ConsequenceQueryObject" /> class.
@@ -74,72 +72,6 @@ namespace Algolia.Search.Recommend.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as ConsequenceQueryObject);
-    }
-
-    /// <summary>
-    /// Returns true if ConsequenceQueryObject instances are equal
-    /// </summary>
-    /// <param name="input">Instance of ConsequenceQueryObject to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ConsequenceQueryObject input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Remove == input.Remove ||
-              this.Remove != null &&
-              input.Remove != null &&
-              this.Remove.SequenceEqual(input.Remove)
-          ) &&
-          (
-              this.Edits == input.Edits ||
-              this.Edits != null &&
-              input.Edits != null &&
-              this.Edits.SequenceEqual(input.Edits)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Remove != null)
-        {
-          hashCode = (hashCode * 59) + this.Remove.GetHashCode();
-        }
-        if (this.Edits != null)
-        {
-          hashCode = (hashCode * 59) + this.Edits.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

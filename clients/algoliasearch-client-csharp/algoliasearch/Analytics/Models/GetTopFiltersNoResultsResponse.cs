@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Analytics.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Analytics.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Analytics.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Analytics.Models
   /// GetTopFiltersNoResultsResponse
   /// </summary>
   [DataContract(Name = "getTopFiltersNoResultsResponse")]
-  public partial class GetTopFiltersNoResultsResponse : IEquatable<GetTopFiltersNoResultsResponse>, IValidatableObject
+  public partial class GetTopFiltersNoResultsResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetTopFiltersNoResultsResponse" /> class.
@@ -74,62 +72,6 @@ namespace Algolia.Search.Analytics.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as GetTopFiltersNoResultsResponse);
-    }
-
-    /// <summary>
-    /// Returns true if GetTopFiltersNoResultsResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of GetTopFiltersNoResultsResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(GetTopFiltersNoResultsResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Values == input.Values ||
-              this.Values != null &&
-              input.Values != null &&
-              this.Values.SequenceEqual(input.Values)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Values != null)
-        {
-          hashCode = (hashCode * 59) + this.Values.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

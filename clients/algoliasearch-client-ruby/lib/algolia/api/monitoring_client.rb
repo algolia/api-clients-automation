@@ -6,17 +6,37 @@ module Algolia
   class MonitoringClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key)
+      hosts = []
+
+      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
+      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
+
+      hosts += 1.upto(3).map do |i|
+        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+      end.shuffle
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring')
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Object]
-    def del(path, opts = {})
-      data, _status_code, _headers = del_with_http_info(path, opts)
+    def custom_delete(path, opts = {})
+      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
       data
     end
 
@@ -26,53 +46,30 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def del_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.del ...'
-      end
+    def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.del"
+        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::Object'
 
       new_options = opts.merge(
-        :operation => :"MonitoringClient.del",
+        :operation => :"MonitoringClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#del\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -81,8 +78,8 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Object]
-    def get(path, opts = {})
-      data, _status_code, _headers = get_with_http_info(path, opts)
+    def custom_get(path, opts = {})
+      data, _status_code, _headers = custom_get_with_http_info(path, opts)
       data
     end
 
@@ -92,53 +89,120 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get ...'
-      end
+    def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.get"
+        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::Object'
 
       new_options = opts.merge(
-        :operation => :"MonitoringClient.get",
+        :operation => :"MonitoringClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Object]
+    def custom_post(path, opts = {})
+      data, _status_code, _headers = custom_post_with_http_info(path, opts)
+      data
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
+    def custom_post_with_http_info(path, opts = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_post"
       end
-      return data, status_code, headers
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
+      query_params = opts[:query_params] || {}
+      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      header_params = opts[:header_params] || {}
+
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+
+      return_type = opts[:debug_return_type] || 'Monitoring::Object'
+
+      new_options = opts.merge(
+        :operation => :"MonitoringClient.custom_post",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :return_type => return_type,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Object]
+    def custom_put(path, opts = {})
+      data, _status_code, _headers = custom_put_with_http_info(path, opts)
+      data
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
+    def custom_put_with_http_info(path, opts = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_put"
+      end
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
+      query_params = opts[:query_params] || {}
+      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      header_params = opts[:header_params] || {}
+
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+
+      return_type = opts[:debug_return_type] || 'Monitoring::Object'
+
+      new_options = opts.merge(
+        :operation => :"MonitoringClient.custom_put",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :return_type => return_type,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # List incidents for selected clusters.
@@ -157,51 +221,28 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IncidentsResponse, Integer, Hash)>] IncidentsResponse data, response status code and response headers
     def get_cluster_incidents_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_cluster_incidents ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_incidents"
       end
-      # resource path
-      local_var_path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
-
-      # query parameters
+      path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'text/plain'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'IncidentsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::IncidentsResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_cluster_incidents",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_cluster_incidents\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List statuses of selected clusters.
@@ -220,51 +261,28 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(StatusResponse, Integer, Hash)>] StatusResponse data, response status code and response headers
     def get_cluster_status_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_cluster_status ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_status"
       end
-      # resource path
-      local_var_path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
-
-      # query parameters
+      path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'text/plain'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'StatusResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::StatusResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_cluster_status",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_cluster_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List incidents.
@@ -281,47 +299,24 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IncidentsResponse, Integer, Hash)>] IncidentsResponse data, response status code and response headers
     def get_incidents_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_incidents ...'
-      end
-      # resource path
-      local_var_path = '/1/incidents'
-
-      # query parameters
+      path = '/1/incidents'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'text/plain'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'IncidentsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::IncidentsResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_incidents",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_incidents\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get indexing times.
@@ -340,51 +335,28 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IndexingTimeResponse, Integer, Hash)>] IndexingTimeResponse data, response status code and response headers
     def get_indexing_time_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_indexing_time ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_indexing_time"
       end
-      # resource path
-      local_var_path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
-
-      # query parameters
+      path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'IndexingTimeResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::IndexingTimeResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_indexing_time",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_indexing_time\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List servers.
@@ -401,47 +373,24 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(InventoryResponse, Integer, Hash)>] InventoryResponse data, response status code and response headers
     def get_inventory_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_inventory ...'
-      end
-      # resource path
-      local_var_path = '/1/inventory/servers'
-
-      # query parameters
+      path = '/1/inventory/servers'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'InventoryResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Monitoring::InventoryResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_inventory",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_inventory\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get search latency times.
@@ -460,51 +409,28 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(LatencyResponse, Integer, Hash)>] LatencyResponse data, response status code and response headers
     def get_latency_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_latency ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_latency"
       end
-      # resource path
-      local_var_path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
-
-      # query parameters
+      path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'LatencyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::LatencyResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_latency",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_latency\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get metrics for a given period.
@@ -525,9 +451,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(InfrastructureResponse, Integer, Hash)>] InfrastructureResponse data, response status code and response headers
     def get_metrics_with_http_info(metric, period, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_metrics ...'
-      end
       # verify the required parameter 'metric' is set
       if @api_client.config.client_side_validation && metric.nil?
         fail ArgumentError, "Missing the required parameter 'metric' when calling MonitoringClient.get_metrics"
@@ -536,44 +459,24 @@ module Algolia
       if @api_client.config.client_side_validation && period.nil?
         fail ArgumentError, "Missing the required parameter 'period' when calling MonitoringClient.get_metrics"
       end
-      # resource path
-      local_var_path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', CGI.escape(metric.to_s)).sub('{' + 'period' + '}', CGI.escape(period.to_s))
-
-      # query parameters
+      path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', CGI.escape(metric.to_s)).sub('{' + 'period' + '}', CGI.escape(period.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'InfrastructureResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::InfrastructureResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_metrics",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_metrics\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Test the reachability of clusters.
@@ -592,51 +495,28 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Hash<String, Hash>, Integer, Hash)>] Hash<String, Hash> data, response status code and response headers
     def get_reachability_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_reachability ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_reachability"
       end
-      # resource path
-      local_var_path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
-
-      # query parameters
+      path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', CGI.escape(clusters.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Hash<String, Hash>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      return_type = opts[:debug_return_type] || 'Monitoring::Hash<String, Hash>'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_reachability",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_reachability\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List cluster statuses.
@@ -653,193 +533,24 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(StatusResponse, Integer, Hash)>] StatusResponse data, response status code and response headers
     def get_status_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_status ...'
-      end
-      # resource path
-      local_var_path = '/1/status'
-
-      # query parameters
+      path = '/1/status'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json', 'text/plain'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'StatusResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Monitoring::StatusResponse'
 
       new_options = opts.merge(
         :operation => :"MonitoringClient.get_status",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Object]
-    def post(path, opts = {})
-      data, _status_code, _headers = post_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.post ...'
-      end
-      # verify the required parameter 'path' is set
-      if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.post"
-      end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
-
-      new_options = opts.merge(
-        :operation => :"MonitoringClient.post",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Object]
-    def put(path, opts = {})
-      data, _status_code, _headers = put_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.put ...'
-      end
-      # verify the required parameter 'path' is set
-      if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.put"
-      end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
-
-      new_options = opts.merge(
-        :operation => :"MonitoringClient.put",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
   end
 end

@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// ListSourcesResponse
   /// </summary>
   [DataContract(Name = "listSourcesResponse")]
-  public partial class ListSourcesResponse : IEquatable<ListSourcesResponse>, IValidatableObject
+  public partial class ListSourcesResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="ListSourcesResponse" /> class.
@@ -87,71 +85,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as ListSourcesResponse);
-    }
-
-    /// <summary>
-    /// Returns true if ListSourcesResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of ListSourcesResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ListSourcesResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Sources == input.Sources ||
-              this.Sources != null &&
-              input.Sources != null &&
-              this.Sources.SequenceEqual(input.Sources)
-          ) &&
-          (
-              this.Pagination == input.Pagination ||
-              (this.Pagination != null &&
-              this.Pagination.Equals(input.Pagination))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Sources != null)
-        {
-          hashCode = (hashCode * 59) + this.Sources.GetHashCode();
-        }
-        if (this.Pagination != null)
-        {
-          hashCode = (hashCode * 59) + this.Pagination.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

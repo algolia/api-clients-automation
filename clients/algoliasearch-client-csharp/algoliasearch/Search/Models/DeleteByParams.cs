@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// DeleteByParams
   /// </summary>
   [DataContract(Name = "deleteByParams")]
-  public partial class DeleteByParams : IEquatable<DeleteByParams>, IValidatableObject
+  public partial class DeleteByParams
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteByParams" /> class.
@@ -132,126 +130,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as DeleteByParams);
-    }
-
-    /// <summary>
-    /// Returns true if DeleteByParams instances are equal
-    /// </summary>
-    /// <param name="input">Instance of DeleteByParams to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(DeleteByParams input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.FacetFilters == input.FacetFilters ||
-              (this.FacetFilters != null &&
-              this.FacetFilters.Equals(input.FacetFilters))
-          ) &&
-          (
-              this.Filters == input.Filters ||
-              (this.Filters != null &&
-              this.Filters.Equals(input.Filters))
-          ) &&
-          (
-              this.NumericFilters == input.NumericFilters ||
-              (this.NumericFilters != null &&
-              this.NumericFilters.Equals(input.NumericFilters))
-          ) &&
-          (
-              this.TagFilters == input.TagFilters ||
-              (this.TagFilters != null &&
-              this.TagFilters.Equals(input.TagFilters))
-          ) &&
-          (
-              this.AroundLatLng == input.AroundLatLng ||
-              (this.AroundLatLng != null &&
-              this.AroundLatLng.Equals(input.AroundLatLng))
-          ) &&
-          (
-              this.AroundRadius == input.AroundRadius ||
-              (this.AroundRadius != null &&
-              this.AroundRadius.Equals(input.AroundRadius))
-          ) &&
-          (
-              this.InsideBoundingBox == input.InsideBoundingBox ||
-              this.InsideBoundingBox != null &&
-              input.InsideBoundingBox != null &&
-              this.InsideBoundingBox.SequenceEqual(input.InsideBoundingBox)
-          ) &&
-          (
-              this.InsidePolygon == input.InsidePolygon ||
-              this.InsidePolygon != null &&
-              input.InsidePolygon != null &&
-              this.InsidePolygon.SequenceEqual(input.InsidePolygon)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.FacetFilters != null)
-        {
-          hashCode = (hashCode * 59) + this.FacetFilters.GetHashCode();
-        }
-        if (this.Filters != null)
-        {
-          hashCode = (hashCode * 59) + this.Filters.GetHashCode();
-        }
-        if (this.NumericFilters != null)
-        {
-          hashCode = (hashCode * 59) + this.NumericFilters.GetHashCode();
-        }
-        if (this.TagFilters != null)
-        {
-          hashCode = (hashCode * 59) + this.TagFilters.GetHashCode();
-        }
-        if (this.AroundLatLng != null)
-        {
-          hashCode = (hashCode * 59) + this.AroundLatLng.GetHashCode();
-        }
-        if (this.AroundRadius != null)
-        {
-          hashCode = (hashCode * 59) + this.AroundRadius.GetHashCode();
-        }
-        if (this.InsideBoundingBox != null)
-        {
-          hashCode = (hashCode * 59) + this.InsideBoundingBox.GetHashCode();
-        }
-        if (this.InsidePolygon != null)
-        {
-          hashCode = (hashCode * 59) + this.InsidePolygon.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

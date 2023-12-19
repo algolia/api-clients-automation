@@ -41,7 +41,7 @@
       {
         "type": "method",
         "object": "$client",
-        "path": "post",
+        "path": "customPost",
         "parameters": {
           "path": "/test"
         },

@@ -14,10 +14,8 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
 using System.Reflection;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -26,7 +24,7 @@ namespace Algolia.Search.Search.Models
   /// </summary>
   [JsonConverter(typeof(ReRankingApplyFilterJsonConverter))]
   [DataContract(Name = "reRankingApplyFilter")]
-  public partial class ReRankingApplyFilter : AbstractOpenAPISchema, IEquatable<ReRankingApplyFilter>, IValidatableObject
+  public partial class ReRankingApplyFilter : AbstractSchema
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="ReRankingApplyFilter" /> class.
@@ -201,53 +199,6 @@ namespace Algolia.Search.Search.Models
       return newReRankingApplyFilter;
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as ReRankingApplyFilter);
-    }
-
-    /// <summary>
-    /// Returns true if ReRankingApplyFilter instances are equal
-    /// </summary>
-    /// <param name="input">Instance of ReRankingApplyFilter to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ReRankingApplyFilter input)
-    {
-      if (input == null)
-        return false;
-
-      return this.ActualInstance.Equals(input.ActualInstance);
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.ActualInstance != null)
-          hashCode = hashCode * 59 + this.ActualInstance.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
   /// <summary>

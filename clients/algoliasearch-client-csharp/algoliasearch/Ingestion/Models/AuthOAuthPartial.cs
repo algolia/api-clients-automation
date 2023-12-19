@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// Authentication input for OAuth login.
   /// </summary>
   [DataContract(Name = "AuthOAuthPartial")]
-  public partial class AuthOAuthPartial : IEquatable<AuthOAuthPartial>, IValidatableObject
+  public partial class AuthOAuthPartial
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthOAuthPartial" /> class.
@@ -84,79 +82,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as AuthOAuthPartial);
-    }
-
-    /// <summary>
-    /// Returns true if AuthOAuthPartial instances are equal
-    /// </summary>
-    /// <param name="input">Instance of AuthOAuthPartial to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(AuthOAuthPartial input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Url == input.Url ||
-              (this.Url != null &&
-              this.Url.Equals(input.Url))
-          ) &&
-          (
-              this.ClientId == input.ClientId ||
-              (this.ClientId != null &&
-              this.ClientId.Equals(input.ClientId))
-          ) &&
-          (
-              this.ClientSecret == input.ClientSecret ||
-              (this.ClientSecret != null &&
-              this.ClientSecret.Equals(input.ClientSecret))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Url != null)
-        {
-          hashCode = (hashCode * 59) + this.Url.GetHashCode();
-        }
-        if (this.ClientId != null)
-        {
-          hashCode = (hashCode * 59) + this.ClientId.GetHashCode();
-        }
-        if (this.ClientSecret != null)
-        {
-          hashCode = (hashCode * 59) + this.ClientSecret.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

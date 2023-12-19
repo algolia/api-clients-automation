@@ -136,6 +136,8 @@ When writing your template, here is a list of variables accessible from `mustach
               },
               // properties used to have unique name and link to parent
               "parent": "theParentObject",
+              // whether there is a parent to the current object or not.
+              "isRoot": false,
               "suffix": 7,
               "parentSuffix": 6,
               "useAnonymousKey": "true if we are in an array at the first level",

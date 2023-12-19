@@ -40,7 +40,7 @@ class InsightsTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -56,7 +56,7 @@ class InsightsTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.get[Any](
+      client.customGet[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -70,7 +70,7 @@ class InsightsTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.post[Any](
+      client.customPost[Any](
         path = "/test"
       ),
       Duration.Inf
@@ -101,7 +101,7 @@ class InsightsTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "us")
 
     Await.ready(
-      client.del[Any](
+      client.customDelete[Any](
         path = "/test"
       ),
       Duration.Inf

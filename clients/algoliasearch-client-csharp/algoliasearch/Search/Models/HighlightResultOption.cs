@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// Show highlighted section and words matched on a query.
   /// </summary>
   [DataContract(Name = "highlightResultOption")]
-  public partial class HighlightResultOption : IEquatable<HighlightResultOption>, IValidatableObject
+  public partial class HighlightResultOption
   {
 
     /// <summary>
@@ -108,81 +106,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as HighlightResultOption);
-    }
-
-    /// <summary>
-    /// Returns true if HighlightResultOption instances are equal
-    /// </summary>
-    /// <param name="input">Instance of HighlightResultOption to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(HighlightResultOption input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Value == input.Value ||
-              (this.Value != null &&
-              this.Value.Equals(input.Value))
-          ) &&
-          (
-              this.MatchLevel == input.MatchLevel ||
-              this.MatchLevel.Equals(input.MatchLevel)
-          ) &&
-          (
-              this.MatchedWords == input.MatchedWords ||
-              this.MatchedWords != null &&
-              input.MatchedWords != null &&
-              this.MatchedWords.SequenceEqual(input.MatchedWords)
-          ) &&
-          (
-              this.FullyHighlighted == input.FullyHighlighted ||
-              this.FullyHighlighted.Equals(input.FullyHighlighted)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Value != null)
-        {
-          hashCode = (hashCode * 59) + this.Value.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.MatchLevel.GetHashCode();
-        if (this.MatchedWords != null)
-        {
-          hashCode = (hashCode * 59) + this.MatchedWords.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.FullyHighlighted.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

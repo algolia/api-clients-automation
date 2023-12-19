@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// SearchHits
   /// </summary>
   [DataContract(Name = "searchHits")]
-  public partial class SearchHits : Dictionary<String, Object>, IEquatable<SearchHits>, IValidatableObject
+  public partial class SearchHits : Dictionary<String, Object>
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchHits" /> class.
@@ -115,95 +113,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchHits);
-    }
-
-    /// <summary>
-    /// Returns true if SearchHits instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchHits to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchHits input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.Hits == input.Hits ||
-              this.Hits != null &&
-              input.Hits != null &&
-              this.Hits.SequenceEqual(input.Hits)
-          ) && base.Equals(input) &&
-          (
-              this.Query == input.Query ||
-              (this.Query != null &&
-              this.Query.Equals(input.Query))
-          ) && base.Equals(input) &&
-          (
-              this.VarParams == input.VarParams ||
-              (this.VarParams != null &&
-              this.VarParams.Equals(input.VarParams))
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        if (this.Hits != null)
-        {
-          hashCode = (hashCode * 59) + this.Hits.GetHashCode();
-        }
-        if (this.Query != null)
-        {
-          hashCode = (hashCode * 59) + this.Query.GetHashCode();
-        }
-        if (this.VarParams != null)
-        {
-          hashCode = (hashCode * 59) + this.VarParams.GetHashCode();
-        }
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      return this.BaseValidate(validationContext);
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

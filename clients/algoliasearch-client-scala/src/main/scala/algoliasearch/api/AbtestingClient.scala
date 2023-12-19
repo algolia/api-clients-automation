@@ -90,17 +90,94 @@ class AbtestingClient(
     * @param parameters
     *   Query parameters to apply to the current query.
     */
-  def del[T: Manifest](
+  def customDelete[T: Manifest](
       path: String,
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `del`.")
+    requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1${path}")
+      .withQueryParameters(parameters)
+      .build()
+    execute[T](request, requestOptions)
+  }
+
+  /** This method allow you to send requests to the Algolia REST API.
+    *
+    * @param path
+    *   Path of the endpoint, anything after \"/1\" must be specified.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGet[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[T] = Future {
+    requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1${path}")
+      .withQueryParameters(parameters)
+      .build()
+    execute[T](request, requestOptions)
+  }
+
+  /** This method allow you to send requests to the Algolia REST API.
+    *
+    * @param path
+    *   Path of the endpoint, anything after \"/1\" must be specified.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPost[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[T] = Future {
+    requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1${path}")
+      .withBody(body)
+      .withQueryParameters(parameters)
+      .build()
+    execute[T](request, requestOptions)
+  }
+
+  /** This method allow you to send requests to the Algolia REST API.
+    *
+    * @param path
+    *   Path of the endpoint, anything after \"/1\" must be specified.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPut[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[T] = Future {
+    requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
+      .withPath(s"/1${path}")
+      .withBody(body)
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -123,29 +200,6 @@ class AbtestingClient(
       .withPath(s"/2/abtests/${escape(id)}")
       .build()
     execute[ABTestResponse](request, requestOptions)
-  }
-
-  /** This method allow you to send requests to the Algolia REST API.
-    *
-    * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
-    * @param parameters
-    *   Query parameters to apply to the current query.
-    */
-  def get[T: Manifest](
-      path: String,
-      parameters: Option[Map[String, Any]] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `get`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1${path}")
-      .withQueryParameters(parameters)
-      .build()
-    execute[T](request, requestOptions)
   }
 
   /** Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests`
@@ -195,60 +249,6 @@ class AbtestingClient(
       .withQueryParameter("indexSuffix", indexSuffix)
       .build()
     execute[ListABTestsResponse](request, requestOptions)
-  }
-
-  /** This method allow you to send requests to the Algolia REST API.
-    *
-    * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
-    * @param parameters
-    *   Query parameters to apply to the current query.
-    * @param body
-    *   Parameters to send with the custom request.
-    */
-  def post[T: Manifest](
-      path: String,
-      parameters: Option[Map[String, Any]] = None,
-      body: Option[Any] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `post`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("POST")
-      .withPath(s"/1${path}")
-      .withBody(body)
-      .withQueryParameters(parameters)
-      .build()
-    execute[T](request, requestOptions)
-  }
-
-  /** This method allow you to send requests to the Algolia REST API.
-    *
-    * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
-    * @param parameters
-    *   Query parameters to apply to the current query.
-    * @param body
-    *   Parameters to send with the custom request.
-    */
-  def put[T: Manifest](
-      path: String,
-      parameters: Option[Map[String, Any]] = None,
-      body: Option[Any] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[T] = Future {
-    requireNotNull(path, "Parameter `path` is required when calling `put`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("PUT")
-      .withPath(s"/1${path}")
-      .withBody(body)
-      .withQueryParameters(parameters)
-      .build()
-    execute[T](request, requestOptions)
   }
 
   /** If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search

@@ -61,8 +61,9 @@ public class PersonalizationClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object del(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(delAsync(path, parameters, requestOptions));
+  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
   }
 
   /**
@@ -72,8 +73,8 @@ public class PersonalizationClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object del(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
-    return this.del(path, parameters, null);
+  public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDelete(path, parameters, null);
   }
 
   /**
@@ -84,8 +85,8 @@ public class PersonalizationClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object del(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.del(path, null, requestOptions);
+  public Object customDelete(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDelete(path, null, requestOptions);
   }
 
   /**
@@ -94,8 +95,8 @@ public class PersonalizationClient extends ApiClient {
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object del(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.del(path, null, null);
+  public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDelete(path, null, null);
   }
 
   /**
@@ -107,9 +108,9 @@ public class PersonalizationClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> delAsync(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(path, "Parameter `path` is required when calling `del`.");
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/1{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -122,8 +123,8 @@ public class PersonalizationClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> delAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
-    return this.delAsync(path, parameters, null);
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, parameters, null);
   }
 
   /**
@@ -134,8 +135,8 @@ public class PersonalizationClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> delAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.delAsync(path, null, requestOptions);
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, null, requestOptions);
   }
 
   /**
@@ -144,8 +145,329 @@ public class PersonalizationClient extends ApiClient {
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> delAsync(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.delAsync(path, null, null);
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGet(path, null, requestOptions);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGet(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/1{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPost(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPathEncoded("/1{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPut(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPathEncoded("/1{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, null, null, null);
   }
 
   /**
@@ -215,102 +537,6 @@ public class PersonalizationClient extends ApiClient {
    */
   public CompletableFuture<DeleteUserProfileResponse> deleteUserProfileAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
     return this.deleteUserProfileAsync(userToken, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object get(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getAsync(path, parameters, requestOptions));
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object get(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
-    return this.get(path, parameters, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object get(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.get(path, null, requestOptions);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object get(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.get(path, null, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> getAsync(@Nonnull String path, Map<String, Object> parameters, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(path, "Parameter `path` is required when calling `get`.");
-
-    HttpRequest request = HttpRequest.builder().setPathEncoded("/1{path}", path).setMethod("GET").addQueryParameters(parameters).build();
-    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> getAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
-    return this.getAsync(path, parameters, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> getAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getAsync(path, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> getAsync(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.getAsync(path, null, null);
   }
 
   /**
@@ -426,230 +652,6 @@ public class PersonalizationClient extends ApiClient {
    */
   public CompletableFuture<GetUserTokenResponse> getUserTokenProfileAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
     return this.getUserTokenProfileAsync(userToken, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object post(@Nonnull String path, Map<String, Object> parameters, Object body, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(postAsync(path, parameters, body, requestOptions));
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object post(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
-    return this.post(path, parameters, body, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object post(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.post(path, null, null, requestOptions);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object post(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.post(path, null, null, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> postAsync(
-    @Nonnull String path,
-    Map<String, Object> parameters,
-    Object body,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(path, "Parameter `path` is required when calling `post`.");
-
-    HttpRequest request = HttpRequest
-      .builder()
-      .setPathEncoded("/1{path}", path)
-      .setMethod("POST")
-      .setBody(body)
-      .addQueryParameters(parameters)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> postAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    return this.postAsync(path, parameters, body, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> postAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.postAsync(path, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> postAsync(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.postAsync(path, null, null, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object put(@Nonnull String path, Map<String, Object> parameters, Object body, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(putAsync(path, parameters, body, requestOptions));
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object put(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
-    return this.put(path, parameters, body, null);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object put(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.put(path, null, null, requestOptions);
-  }
-
-  /**
-   * This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Object put(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.put(path, null, null, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> putAsync(
-    @Nonnull String path,
-    Map<String, Object> parameters,
-    Object body,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(path, "Parameter `path` is required when calling `put`.");
-
-    HttpRequest request = HttpRequest
-      .builder()
-      .setPathEncoded("/1{path}", path)
-      .setMethod("PUT")
-      .setBody(body)
-      .addQueryParameters(parameters)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param parameters Query parameters to apply to the current query. (optional)
-   * @param body Parameters to send with the custom request. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> putAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
-    return this.putAsync(path, parameters, body, null);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> putAsync(@Nonnull String path, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.putAsync(path, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
-   *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<Object> putAsync(@Nonnull String path) throws AlgoliaRuntimeException {
-    return this.putAsync(path, null, null, null);
   }
 
   /**

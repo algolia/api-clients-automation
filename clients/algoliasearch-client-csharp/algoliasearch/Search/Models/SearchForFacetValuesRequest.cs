@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// SearchForFacetValuesRequest
   /// </summary>
   [DataContract(Name = "searchForFacetValuesRequest")]
-  public partial class SearchForFacetValuesRequest : IEquatable<SearchForFacetValuesRequest>, IValidatableObject
+  public partial class SearchForFacetValuesRequest
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchForFacetValuesRequest" /> class.
@@ -86,81 +84,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchForFacetValuesRequest);
-    }
-
-    /// <summary>
-    /// Returns true if SearchForFacetValuesRequest instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchForFacetValuesRequest to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchForFacetValuesRequest input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.VarParams == input.VarParams ||
-              (this.VarParams != null &&
-              this.VarParams.Equals(input.VarParams))
-          ) &&
-          (
-              this.FacetQuery == input.FacetQuery ||
-              (this.FacetQuery != null &&
-              this.FacetQuery.Equals(input.FacetQuery))
-          ) &&
-          (
-              this.MaxFacetHits == input.MaxFacetHits ||
-              this.MaxFacetHits.Equals(input.MaxFacetHits)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.VarParams != null)
-        {
-          hashCode = (hashCode * 59) + this.VarParams.GetHashCode();
-        }
-        if (this.FacetQuery != null)
-        {
-          hashCode = (hashCode * 59) + this.FacetQuery.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.MaxFacetHits.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // MaxFacetHits (int) maximum
-      if (this.MaxFacetHits > (int)100)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MaxFacetHits, must be a value less than or equal to 100.", new[] { "MaxFacetHits" });
-      }
-
-      yield break;
-    }
   }
 
 }

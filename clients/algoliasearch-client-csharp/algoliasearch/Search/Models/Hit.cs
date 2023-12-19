@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// A single hit.
   /// </summary>
   [DataContract(Name = "hit")]
-  public partial class Hit : Dictionary<String, Object>, IEquatable<Hit>, IValidatableObject
+  public partial class Hit : Dictionary<String, Object>
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="Hit" /> class.
@@ -124,110 +122,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as Hit);
-    }
-
-    /// <summary>
-    /// Returns true if Hit instances are equal
-    /// </summary>
-    /// <param name="input">Instance of Hit to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(Hit input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.ObjectID == input.ObjectID ||
-              (this.ObjectID != null &&
-              this.ObjectID.Equals(input.ObjectID))
-          ) && base.Equals(input) &&
-          (
-              this.HighlightResult == input.HighlightResult ||
-              this.HighlightResult != null &&
-              input.HighlightResult != null &&
-              this.HighlightResult.SequenceEqual(input.HighlightResult)
-          ) && base.Equals(input) &&
-          (
-              this.SnippetResult == input.SnippetResult ||
-              this.SnippetResult != null &&
-              input.SnippetResult != null &&
-              this.SnippetResult.SequenceEqual(input.SnippetResult)
-          ) && base.Equals(input) &&
-          (
-              this.RankingInfo == input.RankingInfo ||
-              (this.RankingInfo != null &&
-              this.RankingInfo.Equals(input.RankingInfo))
-          ) && base.Equals(input) &&
-          (
-              this.DistinctSeqID == input.DistinctSeqID ||
-              this.DistinctSeqID.Equals(input.DistinctSeqID)
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        if (this.ObjectID != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
-        }
-        if (this.HighlightResult != null)
-        {
-          hashCode = (hashCode * 59) + this.HighlightResult.GetHashCode();
-        }
-        if (this.SnippetResult != null)
-        {
-          hashCode = (hashCode * 59) + this.SnippetResult.GetHashCode();
-        }
-        if (this.RankingInfo != null)
-        {
-          hashCode = (hashCode * 59) + this.RankingInfo.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.DistinctSeqID.GetHashCode();
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      return this.BaseValidate(validationContext);
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

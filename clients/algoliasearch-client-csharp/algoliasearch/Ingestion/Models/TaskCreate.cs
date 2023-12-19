@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// The payload for a task creation.
   /// </summary>
   [DataContract(Name = "TaskCreate")]
-  public partial class TaskCreate : IEquatable<TaskCreate>, IValidatableObject
+  public partial class TaskCreate
   {
 
     /// <summary>
@@ -141,115 +139,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as TaskCreate);
-    }
-
-    /// <summary>
-    /// Returns true if TaskCreate instances are equal
-    /// </summary>
-    /// <param name="input">Instance of TaskCreate to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(TaskCreate input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.SourceID == input.SourceID ||
-              (this.SourceID != null &&
-              this.SourceID.Equals(input.SourceID))
-          ) &&
-          (
-              this.DestinationID == input.DestinationID ||
-              (this.DestinationID != null &&
-              this.DestinationID.Equals(input.DestinationID))
-          ) &&
-          (
-              this.Trigger == input.Trigger ||
-              (this.Trigger != null &&
-              this.Trigger.Equals(input.Trigger))
-          ) &&
-          (
-              this.Action == input.Action ||
-              this.Action.Equals(input.Action)
-          ) &&
-          (
-              this.Enabled == input.Enabled ||
-              this.Enabled.Equals(input.Enabled)
-          ) &&
-          (
-              this.FailureThreshold == input.FailureThreshold ||
-              this.FailureThreshold.Equals(input.FailureThreshold)
-          ) &&
-          (
-              this.Input == input.Input ||
-              (this.Input != null &&
-              this.Input.Equals(input.Input))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.SourceID != null)
-        {
-          hashCode = (hashCode * 59) + this.SourceID.GetHashCode();
-        }
-        if (this.DestinationID != null)
-        {
-          hashCode = (hashCode * 59) + this.DestinationID.GetHashCode();
-        }
-        if (this.Trigger != null)
-        {
-          hashCode = (hashCode * 59) + this.Trigger.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Action.GetHashCode();
-        hashCode = (hashCode * 59) + this.Enabled.GetHashCode();
-        hashCode = (hashCode * 59) + this.FailureThreshold.GetHashCode();
-        if (this.Input != null)
-        {
-          hashCode = (hashCode * 59) + this.Input.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // FailureThreshold (int) maximum
-      if (this.FailureThreshold > (int)100)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FailureThreshold, must be a value less than or equal to 100.", new[] { "FailureThreshold" });
-      }
-
-      // FailureThreshold (int) minimum
-      if (this.FailureThreshold < (int)0)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FailureThreshold, must be a value greater than or equal to 0.", new[] { "FailureThreshold" });
-      }
-
-      yield break;
-    }
   }
 
 }

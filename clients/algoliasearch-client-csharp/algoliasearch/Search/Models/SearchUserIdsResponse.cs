@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// userIDs data.
   /// </summary>
   [DataContract(Name = "searchUserIdsResponse")]
-  public partial class SearchUserIdsResponse : IEquatable<SearchUserIdsResponse>, IValidatableObject
+  public partial class SearchUserIdsResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchUserIdsResponse" /> class.
@@ -119,98 +117,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchUserIdsResponse);
-    }
-
-    /// <summary>
-    /// Returns true if SearchUserIdsResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchUserIdsResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchUserIdsResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Hits == input.Hits ||
-              this.Hits != null &&
-              input.Hits != null &&
-              this.Hits.SequenceEqual(input.Hits)
-          ) &&
-          (
-              this.NbHits == input.NbHits ||
-              this.NbHits.Equals(input.NbHits)
-          ) &&
-          (
-              this.Page == input.Page ||
-              this.Page.Equals(input.Page)
-          ) &&
-          (
-              this.HitsPerPage == input.HitsPerPage ||
-              this.HitsPerPage.Equals(input.HitsPerPage)
-          ) &&
-          (
-              this.UpdatedAt == input.UpdatedAt ||
-              (this.UpdatedAt != null &&
-              this.UpdatedAt.Equals(input.UpdatedAt))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Hits != null)
-        {
-          hashCode = (hashCode * 59) + this.Hits.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.NbHits.GetHashCode();
-        hashCode = (hashCode * 59) + this.Page.GetHashCode();
-        hashCode = (hashCode * 59) + this.HitsPerPage.GetHashCode();
-        if (this.UpdatedAt != null)
-        {
-          hashCode = (hashCode * 59) + this.UpdatedAt.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // HitsPerPage (int) maximum
-      if (this.HitsPerPage > (int)1000)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for HitsPerPage, must be a value less than or equal to 1000.", new[] { "HitsPerPage" });
-      }
-
-      // HitsPerPage (int) minimum
-      if (this.HitsPerPage < (int)1)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for HitsPerPage, must be a value greater than or equal to 1.", new[] { "HitsPerPage" });
-      }
-
-      yield break;
-    }
   }
 
 }

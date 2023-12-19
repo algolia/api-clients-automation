@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Insights.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Insights.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Insights.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Insights.Models
   /// Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don&#39;t use Algolia to build your category pages, use this event.  To track add-to-cart events related to Algolia requests, use the \&quot;Added to cart object IDs after search\&quot; event. 
   /// </summary>
   [DataContract(Name = "AddedToCartObjectIDs")]
-  public partial class AddedToCartObjectIDs : IEquatable<AddedToCartObjectIDs>, IValidatableObject
+  public partial class AddedToCartObjectIDs
   {
 
     /// <summary>
@@ -177,176 +175,6 @@ namespace Algolia.Search.Insights.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as AddedToCartObjectIDs);
-    }
-
-    /// <summary>
-    /// Returns true if AddedToCartObjectIDs instances are equal
-    /// </summary>
-    /// <param name="input">Instance of AddedToCartObjectIDs to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(AddedToCartObjectIDs input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.EventName == input.EventName ||
-              (this.EventName != null &&
-              this.EventName.Equals(input.EventName))
-          ) &&
-          (
-              this.EventType == input.EventType ||
-              this.EventType.Equals(input.EventType)
-          ) &&
-          (
-              this.EventSubtype == input.EventSubtype ||
-              this.EventSubtype.Equals(input.EventSubtype)
-          ) &&
-          (
-              this.Index == input.Index ||
-              (this.Index != null &&
-              this.Index.Equals(input.Index))
-          ) &&
-          (
-              this.ObjectIDs == input.ObjectIDs ||
-              this.ObjectIDs != null &&
-              input.ObjectIDs != null &&
-              this.ObjectIDs.SequenceEqual(input.ObjectIDs)
-          ) &&
-          (
-              this.ObjectData == input.ObjectData ||
-              this.ObjectData != null &&
-              input.ObjectData != null &&
-              this.ObjectData.SequenceEqual(input.ObjectData)
-          ) &&
-          (
-              this.Currency == input.Currency ||
-              (this.Currency != null &&
-              this.Currency.Equals(input.Currency))
-          ) &&
-          (
-              this.UserToken == input.UserToken ||
-              (this.UserToken != null &&
-              this.UserToken.Equals(input.UserToken))
-          ) &&
-          (
-              this.Timestamp == input.Timestamp ||
-              this.Timestamp.Equals(input.Timestamp)
-          ) &&
-          (
-              this.AuthenticatedUserToken == input.AuthenticatedUserToken ||
-              (this.AuthenticatedUserToken != null &&
-              this.AuthenticatedUserToken.Equals(input.AuthenticatedUserToken))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.EventName != null)
-        {
-          hashCode = (hashCode * 59) + this.EventName.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.EventType.GetHashCode();
-        hashCode = (hashCode * 59) + this.EventSubtype.GetHashCode();
-        if (this.Index != null)
-        {
-          hashCode = (hashCode * 59) + this.Index.GetHashCode();
-        }
-        if (this.ObjectIDs != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectIDs.GetHashCode();
-        }
-        if (this.ObjectData != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectData.GetHashCode();
-        }
-        if (this.Currency != null)
-        {
-          hashCode = (hashCode * 59) + this.Currency.GetHashCode();
-        }
-        if (this.UserToken != null)
-        {
-          hashCode = (hashCode * 59) + this.UserToken.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Timestamp.GetHashCode();
-        if (this.AuthenticatedUserToken != null)
-        {
-          hashCode = (hashCode * 59) + this.AuthenticatedUserToken.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // EventName (string) maxLength
-      if (this.EventName != null && this.EventName.Length > 64)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EventName, length must be less than 64.", new[] { "EventName" });
-      }
-
-      // EventName (string) minLength
-      if (this.EventName != null && this.EventName.Length < 1)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EventName, length must be greater than 1.", new[] { "EventName" });
-      }
-
-      if (this.EventName != null)
-      {
-        // EventName (string) pattern
-        Regex regexEventName = new Regex(@"[\x20-\x7E]{1,64}", RegexOptions.CultureInvariant);
-        if (!regexEventName.Match(this.EventName).Success)
-        {
-          yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EventName, must match a pattern of " + regexEventName, new[] { "EventName" });
-        }
-      }
-
-      // UserToken (string) maxLength
-      if (this.UserToken != null && this.UserToken.Length > 129)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for UserToken, length must be less than 129.", new[] { "UserToken" });
-      }
-
-      // UserToken (string) minLength
-      if (this.UserToken != null && this.UserToken.Length < 1)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for UserToken, length must be greater than 1.", new[] { "UserToken" });
-      }
-
-      if (this.UserToken != null)
-      {
-        // UserToken (string) pattern
-        Regex regexUserToken = new Regex(@"[a-zA-Z0-9_=/+-]{1,129}", RegexOptions.CultureInvariant);
-        if (!regexUserToken.Match(this.UserToken).Success)
-        {
-          yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for UserToken, must match a pattern of " + regexUserToken, new[] { "UserToken" });
-        }
-      }
-
-      yield break;
-    }
   }
 
 }

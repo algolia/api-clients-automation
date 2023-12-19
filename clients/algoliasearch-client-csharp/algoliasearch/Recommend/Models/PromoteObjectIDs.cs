@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Recommend.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Recommend.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Recommend.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Recommend.Models
   /// Records to promote.
   /// </summary>
   [DataContract(Name = "promoteObjectIDs")]
-  public partial class PromoteObjectIDs : IEquatable<PromoteObjectIDs>, IValidatableObject
+  public partial class PromoteObjectIDs
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="PromoteObjectIDs" /> class.
@@ -84,67 +82,6 @@ namespace Algolia.Search.Recommend.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as PromoteObjectIDs);
-    }
-
-    /// <summary>
-    /// Returns true if PromoteObjectIDs instances are equal
-    /// </summary>
-    /// <param name="input">Instance of PromoteObjectIDs to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(PromoteObjectIDs input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.ObjectIDs == input.ObjectIDs ||
-              this.ObjectIDs != null &&
-              input.ObjectIDs != null &&
-              this.ObjectIDs.SequenceEqual(input.ObjectIDs)
-          ) &&
-          (
-              this.Position == input.Position ||
-              this.Position.Equals(input.Position)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.ObjectIDs != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectIDs.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Position.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

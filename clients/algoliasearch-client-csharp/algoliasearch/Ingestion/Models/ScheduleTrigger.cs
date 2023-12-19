@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// The trigger information for a task of type &#39;schedule&#39;.
   /// </summary>
   [DataContract(Name = "ScheduleTrigger")]
-  public partial class ScheduleTrigger : IEquatable<ScheduleTrigger>, IValidatableObject
+  public partial class ScheduleTrigger
   {
 
     /// <summary>
@@ -108,84 +106,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as ScheduleTrigger);
-    }
-
-    /// <summary>
-    /// Returns true if ScheduleTrigger instances are equal
-    /// </summary>
-    /// <param name="input">Instance of ScheduleTrigger to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(ScheduleTrigger input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Type == input.Type ||
-              this.Type.Equals(input.Type)
-          ) &&
-          (
-              this.Cron == input.Cron ||
-              (this.Cron != null &&
-              this.Cron.Equals(input.Cron))
-          ) &&
-          (
-              this.LastRun == input.LastRun ||
-              (this.LastRun != null &&
-              this.LastRun.Equals(input.LastRun))
-          ) &&
-          (
-              this.NextRun == input.NextRun ||
-              (this.NextRun != null &&
-              this.NextRun.Equals(input.NextRun))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        hashCode = (hashCode * 59) + this.Type.GetHashCode();
-        if (this.Cron != null)
-        {
-          hashCode = (hashCode * 59) + this.Cron.GetHashCode();
-        }
-        if (this.LastRun != null)
-        {
-          hashCode = (hashCode * 59) + this.LastRun.GetHashCode();
-        }
-        if (this.NextRun != null)
-        {
-          hashCode = (hashCode * 59) + this.NextRun.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

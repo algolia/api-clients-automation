@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Abtesting.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Abtesting.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Abtesting.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Abtesting.Models
   /// A/B test filter effects resulting from configuration settings.
   /// </summary>
   [DataContract(Name = "filterEffects")]
-  public partial class FilterEffects : IEquatable<FilterEffects>, IValidatableObject
+  public partial class FilterEffects
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="FilterEffects" /> class.
@@ -72,70 +70,6 @@ namespace Algolia.Search.Abtesting.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as FilterEffects);
-    }
-
-    /// <summary>
-    /// Returns true if FilterEffects instances are equal
-    /// </summary>
-    /// <param name="input">Instance of FilterEffects to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(FilterEffects input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Outliers == input.Outliers ||
-              (this.Outliers != null &&
-              this.Outliers.Equals(input.Outliers))
-          ) &&
-          (
-              this.EmptySearch == input.EmptySearch ||
-              (this.EmptySearch != null &&
-              this.EmptySearch.Equals(input.EmptySearch))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Outliers != null)
-        {
-          hashCode = (hashCode * 59) + this.Outliers.GetHashCode();
-        }
-        if (this.EmptySearch != null)
-        {
-          hashCode = (hashCode * 59) + this.EmptySearch.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

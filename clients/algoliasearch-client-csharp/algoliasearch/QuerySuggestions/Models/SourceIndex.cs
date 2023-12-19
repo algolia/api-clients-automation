@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.QuerySuggestions.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.QuerySuggestions.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.QuerySuggestions.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.QuerySuggestions.Models
   /// Configuration of an Algolia index for Query Suggestions.
   /// </summary>
   [DataContract(Name = "SourceIndex")]
-  public partial class SourceIndex : IEquatable<SourceIndex>, IValidatableObject
+  public partial class SourceIndex
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SourceIndex" /> class.
@@ -143,128 +141,6 @@ namespace Algolia.Search.QuerySuggestions.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SourceIndex);
-    }
-
-    /// <summary>
-    /// Returns true if SourceIndex instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SourceIndex to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SourceIndex input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.IndexName == input.IndexName ||
-              (this.IndexName != null &&
-              this.IndexName.Equals(input.IndexName))
-          ) &&
-          (
-              this.Replicas == input.Replicas ||
-              this.Replicas.Equals(input.Replicas)
-          ) &&
-          (
-              this.AnalyticsTags == input.AnalyticsTags ||
-              this.AnalyticsTags != null &&
-              input.AnalyticsTags != null &&
-              this.AnalyticsTags.SequenceEqual(input.AnalyticsTags)
-          ) &&
-          (
-              this.Facets == input.Facets ||
-              this.Facets != null &&
-              input.Facets != null &&
-              this.Facets.SequenceEqual(input.Facets)
-          ) &&
-          (
-              this.MinHits == input.MinHits ||
-              this.MinHits.Equals(input.MinHits)
-          ) &&
-          (
-              this.MinLetters == input.MinLetters ||
-              this.MinLetters.Equals(input.MinLetters)
-          ) &&
-          (
-              this.Generate == input.Generate ||
-              this.Generate != null &&
-              input.Generate != null &&
-              this.Generate.SequenceEqual(input.Generate)
-          ) &&
-          (
-              this.External == input.External ||
-              this.External != null &&
-              input.External != null &&
-              this.External.SequenceEqual(input.External)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.IndexName != null)
-        {
-          hashCode = (hashCode * 59) + this.IndexName.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Replicas.GetHashCode();
-        if (this.AnalyticsTags != null)
-        {
-          hashCode = (hashCode * 59) + this.AnalyticsTags.GetHashCode();
-        }
-        if (this.Facets != null)
-        {
-          hashCode = (hashCode * 59) + this.Facets.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.MinHits.GetHashCode();
-        hashCode = (hashCode * 59) + this.MinLetters.GetHashCode();
-        if (this.Generate != null)
-        {
-          hashCode = (hashCode * 59) + this.Generate.GetHashCode();
-        }
-        if (this.External != null)
-        {
-          hashCode = (hashCode * 59) + this.External.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      // MinHits (int) minimum
-      if (this.MinHits < (int)0)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MinHits, must be a value greater than or equal to 0.", new[] { "MinHits" });
-      }
-
-      // MinLetters (int) minimum
-      if (this.MinLetters < (int)0)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MinLetters, must be a value greater than or equal to 0.", new[] { "MinLetters" });
-      }
-
-      yield break;
-    }
   }
 
 }

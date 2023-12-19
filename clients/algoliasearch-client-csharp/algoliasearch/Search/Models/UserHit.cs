@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// UserHit
   /// </summary>
   [DataContract(Name = "userHit")]
-  public partial class UserHit : IEquatable<UserHit>, IValidatableObject
+  public partial class UserHit
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="UserHit" /> class.
@@ -138,108 +136,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as UserHit);
-    }
-
-    /// <summary>
-    /// Returns true if UserHit instances are equal
-    /// </summary>
-    /// <param name="input">Instance of UserHit to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(UserHit input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.UserID == input.UserID ||
-              (this.UserID != null &&
-              this.UserID.Equals(input.UserID))
-          ) &&
-          (
-              this.ClusterName == input.ClusterName ||
-              (this.ClusterName != null &&
-              this.ClusterName.Equals(input.ClusterName))
-          ) &&
-          (
-              this.NbRecords == input.NbRecords ||
-              this.NbRecords.Equals(input.NbRecords)
-          ) &&
-          (
-              this.DataSize == input.DataSize ||
-              this.DataSize.Equals(input.DataSize)
-          ) &&
-          (
-              this.ObjectID == input.ObjectID ||
-              (this.ObjectID != null &&
-              this.ObjectID.Equals(input.ObjectID))
-          ) &&
-          (
-              this.HighlightResult == input.HighlightResult ||
-              (this.HighlightResult != null &&
-              this.HighlightResult.Equals(input.HighlightResult))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.UserID != null)
-        {
-          hashCode = (hashCode * 59) + this.UserID.GetHashCode();
-        }
-        if (this.ClusterName != null)
-        {
-          hashCode = (hashCode * 59) + this.ClusterName.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.NbRecords.GetHashCode();
-        hashCode = (hashCode * 59) + this.DataSize.GetHashCode();
-        if (this.ObjectID != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
-        }
-        if (this.HighlightResult != null)
-        {
-          hashCode = (hashCode * 59) + this.HighlightResult.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      if (this.UserID != null)
-      {
-        // UserID (string) pattern
-        Regex regexUserID = new Regex(@"^[a-zA-Z0-9 \-*.]+$", RegexOptions.CultureInvariant);
-        if (!regexUserID.Match(this.UserID).Success)
-        {
-          yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for UserID, must match a pattern of " + regexUserID, new[] { "UserID" });
-        }
-      }
-
-      yield break;
-    }
   }
 
 }

@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// Response, taskID, and update timestamp.
   /// </summary>
   [DataContract(Name = "updatedAtResponse")]
-  public partial class UpdatedAtResponse : IEquatable<UpdatedAtResponse>, IValidatableObject
+  public partial class UpdatedAtResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdatedAtResponse" /> class.
@@ -84,66 +82,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as UpdatedAtResponse);
-    }
-
-    /// <summary>
-    /// Returns true if UpdatedAtResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of UpdatedAtResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(UpdatedAtResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.TaskID == input.TaskID ||
-              this.TaskID.Equals(input.TaskID)
-          ) &&
-          (
-              this.UpdatedAt == input.UpdatedAt ||
-              (this.UpdatedAt != null &&
-              this.UpdatedAt.Equals(input.UpdatedAt))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        hashCode = (hashCode * 59) + this.TaskID.GetHashCode();
-        if (this.UpdatedAt != null)
-        {
-          hashCode = (hashCode * 59) + this.UpdatedAt.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

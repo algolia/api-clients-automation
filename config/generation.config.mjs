@@ -91,6 +91,14 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
+  '!clients/algoliasearch-client-ruby/lib/algolia/api_client.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/api_error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/logger_helper.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/user_agent.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/http/**',
+  '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   // Scala
   '!clients/algoliasearch-client-scala/**',
@@ -103,8 +111,10 @@ export const patterns = [
   // C#
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
-  '!clients/algoliasearch-client-csharp/algoliasearch/obj/**',
-  'clients/algoliasearch-client-csharp/Algolia.Search.sln',
-  'clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj',
-  'clients/algoliasearch-client-csharp/.gitignore',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Client/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
 ];

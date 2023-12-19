@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Recommend.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Recommend.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Recommend.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Recommend.Models
   /// Recommend hit.
   /// </summary>
   [DataContract(Name = "recommendHit")]
-  public partial class RecommendHit : Dictionary<String, Object>, IEquatable<RecommendHit>, IValidatableObject
+  public partial class RecommendHit : Dictionary<String, Object>
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="RecommendHit" /> class.
@@ -134,127 +132,6 @@ namespace Algolia.Search.Recommend.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as RecommendHit);
-    }
-
-    /// <summary>
-    /// Returns true if RecommendHit instances are equal
-    /// </summary>
-    /// <param name="input">Instance of RecommendHit to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(RecommendHit input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.ObjectID == input.ObjectID ||
-              (this.ObjectID != null &&
-              this.ObjectID.Equals(input.ObjectID))
-          ) && base.Equals(input) &&
-          (
-              this.HighlightResult == input.HighlightResult ||
-              this.HighlightResult != null &&
-              input.HighlightResult != null &&
-              this.HighlightResult.SequenceEqual(input.HighlightResult)
-          ) && base.Equals(input) &&
-          (
-              this.SnippetResult == input.SnippetResult ||
-              this.SnippetResult != null &&
-              input.SnippetResult != null &&
-              this.SnippetResult.SequenceEqual(input.SnippetResult)
-          ) && base.Equals(input) &&
-          (
-              this.RankingInfo == input.RankingInfo ||
-              (this.RankingInfo != null &&
-              this.RankingInfo.Equals(input.RankingInfo))
-          ) && base.Equals(input) &&
-          (
-              this.DistinctSeqID == input.DistinctSeqID ||
-              this.DistinctSeqID.Equals(input.DistinctSeqID)
-          ) && base.Equals(input) &&
-          (
-              this.Score == input.Score ||
-              this.Score.Equals(input.Score)
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        if (this.ObjectID != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
-        }
-        if (this.HighlightResult != null)
-        {
-          hashCode = (hashCode * 59) + this.HighlightResult.GetHashCode();
-        }
-        if (this.SnippetResult != null)
-        {
-          hashCode = (hashCode * 59) + this.SnippetResult.GetHashCode();
-        }
-        if (this.RankingInfo != null)
-        {
-          hashCode = (hashCode * 59) + this.RankingInfo.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.DistinctSeqID.GetHashCode();
-        hashCode = (hashCode * 59) + this.Score.GetHashCode();
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      return this.BaseValidate(validationContext);
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
-    {
-      // Score (double) maximum
-      if (this.Score > (double)100)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Score, must be a value less than or equal to 100.", new[] { "Score" });
-      }
-
-      // Score (double) minimum
-      if (this.Score < (double)0)
-      {
-        yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Score, must be a value greater than or equal to 0.", new[] { "Score" });
-      }
-
-      yield break;
-    }
   }
 
 }

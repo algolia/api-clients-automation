@@ -45,7 +45,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->post(
+        $client->customPost(
             '/test',
         );
 
@@ -63,7 +63,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->get(
+        $client->customGet(
             '/test',
         );
 
@@ -84,7 +84,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->post(
+        $client->customPost(
             '/test',
         );
 

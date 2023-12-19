@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Search.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Search.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Search.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// SearchResponses
   /// </summary>
   [DataContract(Name = "searchResponses")]
-  public partial class SearchResponses : IEquatable<SearchResponses>, IValidatableObject
+  public partial class SearchResponses
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchResponses" /> class.
@@ -73,62 +71,6 @@ namespace Algolia.Search.Search.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchResponses);
-    }
-
-    /// <summary>
-    /// Returns true if SearchResponses instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchResponses to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchResponses input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Results == input.Results ||
-              this.Results != null &&
-              input.Results != null &&
-              this.Results.SequenceEqual(input.Results)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Results != null)
-        {
-          hashCode = (hashCode * 59) + this.Results.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

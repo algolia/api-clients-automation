@@ -3,7 +3,7 @@ import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  // del
+  // customDelete
   test(
     'allow del method for a custom path with minimal parameters',
     () => runTest(
@@ -13,7 +13,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.del(
+      call: (client) => client.customDelete(
         path: "/test/minimal",
       ),
       intercept: (request) {
@@ -24,7 +24,7 @@ void main() {
     ),
   );
 
-  // del
+  // customDelete
   test(
     'allow del method for a custom path with all parameters',
     () => runTest(
@@ -34,7 +34,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.del(
+      call: (client) => client.customDelete(
         path: "/test/all",
         parameters: {
           'query': "parameters",
@@ -49,7 +49,7 @@ void main() {
     ),
   );
 
-  // get
+  // customGet
   test(
     'allow get method for a custom path with minimal parameters',
     () => runTest(
@@ -59,7 +59,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.get(
+      call: (client) => client.customGet(
         path: "/test/minimal",
       ),
       intercept: (request) {
@@ -70,7 +70,7 @@ void main() {
     ),
   );
 
-  // get
+  // customGet
   test(
     'allow get method for a custom path with all parameters',
     () => runTest(
@@ -80,7 +80,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.get(
+      call: (client) => client.customGet(
         path: "/test/all",
         parameters: {
           'query': "parameters",
@@ -95,7 +95,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'allow post method for a custom path with minimal parameters',
     () => runTest(
@@ -105,7 +105,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/minimal",
       ),
       intercept: (request) {
@@ -116,7 +116,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'allow post method for a custom path with all parameters',
     () => runTest(
@@ -126,7 +126,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/all",
         parameters: {
           'query': "parameters",
@@ -144,7 +144,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions can override default query parameters',
     () => runTest(
@@ -154,7 +154,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -178,7 +178,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions merges query parameters with default ones',
     () => runTest(
@@ -188,7 +188,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -212,7 +212,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions can override default headers',
     () => runTest(
@@ -222,7 +222,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -246,7 +246,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions merges headers with default ones',
     () => runTest(
@@ -256,7 +256,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -280,7 +280,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts booleans',
     () => runTest(
@@ -290,7 +290,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -314,7 +314,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts integers',
     () => runTest(
@@ -324,7 +324,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -348,7 +348,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of string',
     () => runTest(
@@ -358,7 +358,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -385,7 +385,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of booleans',
     () => runTest(
@@ -395,7 +395,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -423,7 +423,7 @@ void main() {
     ),
   );
 
-  // post
+  // customPost
   test(
     'requestOptions queryParameters accepts list of integers',
     () => runTest(
@@ -433,7 +433,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.post(
+      call: (client) => client.customPost(
         path: "/test/requestOptions",
         parameters: {
           'query': "parameters",
@@ -456,6 +456,55 @@ void main() {
         expectParams(request.queryParameters,
             """{"query":"parameters","myParam":"1,2"}""");
         expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPut
+  test(
+    'allow put method for a custom path with minimal parameters',
+    () => runTest(
+      builder: (requester) => InsightsClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPut(
+        path: "/test/minimal",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/test/minimal');
+        expect(request.method, 'put');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // customPut
+  test(
+    'allow put method for a custom path with all parameters',
+    () => runTest(
+      builder: (requester) => InsightsClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPut(
+        path: "/test/all",
+        parameters: {
+          'query': "parameters",
+        },
+        body: {
+          'body': "parameters",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/test/all');
+        expect(request.method, 'put');
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectBody(request.body, """{"body":"parameters"}""");
       },
     ),
   );
@@ -675,55 +724,6 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"events":[{"eventType":"conversion","eventSubtype":"addToCart","eventName":"Product Added To Cart","index":"products","queryID":"43b15df305339e827f0ac0bdc5ebcaa7","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"objectData":[{"price":19.99,"quantity":10,"discount":2.5},{"price":"8\$","quantity":7,"discount":"30%"}],"currency":"USD"}]}""");
-      },
-    ),
-  );
-
-  // put
-  test(
-    'allow put method for a custom path with minimal parameters',
-    () => runTest(
-      builder: (requester) => InsightsClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        region: 'us',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.put(
-        path: "/test/minimal",
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/test/minimal');
-        expect(request.method, 'put');
-        expectBody(request.body, """{}""");
-      },
-    ),
-  );
-
-  // put
-  test(
-    'allow put method for a custom path with all parameters',
-    () => runTest(
-      builder: (requester) => InsightsClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        region: 'us',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.put(
-        path: "/test/all",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'body': "parameters",
-        },
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/test/all');
-        expect(request.method, 'put');
-        expectParams(request.queryParameters, """{"query":"parameters"}""");
-        expectBody(request.body, """{"body":"parameters"}""");
       },
     ),
   );

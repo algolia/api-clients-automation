@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Monitoring.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Monitoring.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Monitoring.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Monitoring.Models
   /// InfrastructureResponseMetrics
   /// </summary>
   [DataContract(Name = "InfrastructureResponse_metrics")]
-  public partial class InfrastructureResponseMetrics : IEquatable<InfrastructureResponseMetrics>, IValidatableObject
+  public partial class InfrastructureResponseMetrics
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="InfrastructureResponseMetrics" /> class.
@@ -104,102 +102,6 @@ namespace Algolia.Search.Monitoring.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as InfrastructureResponseMetrics);
-    }
-
-    /// <summary>
-    /// Returns true if InfrastructureResponseMetrics instances are equal
-    /// </summary>
-    /// <param name="input">Instance of InfrastructureResponseMetrics to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(InfrastructureResponseMetrics input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.CpuUsage == input.CpuUsage ||
-              this.CpuUsage != null &&
-              input.CpuUsage != null &&
-              this.CpuUsage.SequenceEqual(input.CpuUsage)
-          ) &&
-          (
-              this.RamIndexingUsage == input.RamIndexingUsage ||
-              this.RamIndexingUsage != null &&
-              input.RamIndexingUsage != null &&
-              this.RamIndexingUsage.SequenceEqual(input.RamIndexingUsage)
-          ) &&
-          (
-              this.RamSearchUsage == input.RamSearchUsage ||
-              this.RamSearchUsage != null &&
-              input.RamSearchUsage != null &&
-              this.RamSearchUsage.SequenceEqual(input.RamSearchUsage)
-          ) &&
-          (
-              this.SsdUsage == input.SsdUsage ||
-              this.SsdUsage != null &&
-              input.SsdUsage != null &&
-              this.SsdUsage.SequenceEqual(input.SsdUsage)
-          ) &&
-          (
-              this.AvgBuildTime == input.AvgBuildTime ||
-              this.AvgBuildTime != null &&
-              input.AvgBuildTime != null &&
-              this.AvgBuildTime.SequenceEqual(input.AvgBuildTime)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.CpuUsage != null)
-        {
-          hashCode = (hashCode * 59) + this.CpuUsage.GetHashCode();
-        }
-        if (this.RamIndexingUsage != null)
-        {
-          hashCode = (hashCode * 59) + this.RamIndexingUsage.GetHashCode();
-        }
-        if (this.RamSearchUsage != null)
-        {
-          hashCode = (hashCode * 59) + this.RamSearchUsage.GetHashCode();
-        }
-        if (this.SsdUsage != null)
-        {
-          hashCode = (hashCode * 59) + this.SsdUsage.GetHashCode();
-        }
-        if (this.AvgBuildTime != null)
-        {
-          hashCode = (hashCode * 59) + this.AvgBuildTime.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// DestinationIndexName
   /// </summary>
   [DataContract(Name = "DestinationIndexName")]
-  public partial class DestinationIndexName : IEquatable<DestinationIndexName>, IValidatableObject
+  public partial class DestinationIndexName
   {
 
     /// <summary>
@@ -93,76 +91,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as DestinationIndexName);
-    }
-
-    /// <summary>
-    /// Returns true if DestinationIndexName instances are equal
-    /// </summary>
-    /// <param name="input">Instance of DestinationIndexName to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(DestinationIndexName input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.IndexName == input.IndexName ||
-              (this.IndexName != null &&
-              this.IndexName.Equals(input.IndexName))
-          ) &&
-          (
-              this.RecordType == input.RecordType ||
-              this.RecordType.Equals(input.RecordType)
-          ) &&
-          (
-              this.AttributesToExclude == input.AttributesToExclude ||
-              this.AttributesToExclude != null &&
-              input.AttributesToExclude != null &&
-              this.AttributesToExclude.SequenceEqual(input.AttributesToExclude)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.IndexName != null)
-        {
-          hashCode = (hashCode * 59) + this.IndexName.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.RecordType.GetHashCode();
-        if (this.AttributesToExclude != null)
-        {
-          hashCode = (hashCode * 59) + this.AttributesToExclude.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

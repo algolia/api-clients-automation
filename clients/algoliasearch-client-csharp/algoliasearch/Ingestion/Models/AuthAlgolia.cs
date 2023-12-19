@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Ingestion.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Ingestion.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Ingestion.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Ingestion.Models
   /// AuthAlgolia
   /// </summary>
   [DataContract(Name = "AuthAlgolia")]
-  public partial class AuthAlgolia : IEquatable<AuthAlgolia>, IValidatableObject
+  public partial class AuthAlgolia
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthAlgolia" /> class.
@@ -89,70 +87,6 @@ namespace Algolia.Search.Ingestion.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as AuthAlgolia);
-    }
-
-    /// <summary>
-    /// Returns true if AuthAlgolia instances are equal
-    /// </summary>
-    /// <param name="input">Instance of AuthAlgolia to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(AuthAlgolia input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.AppID == input.AppID ||
-              (this.AppID != null &&
-              this.AppID.Equals(input.AppID))
-          ) &&
-          (
-              this.ApiKey == input.ApiKey ||
-              (this.ApiKey != null &&
-              this.ApiKey.Equals(input.ApiKey))
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.AppID != null)
-        {
-          hashCode = (hashCode * 59) + this.AppID.GetHashCode();
-        }
-        if (this.ApiKey != null)
-        {
-          hashCode = (hashCode * 59) + this.ApiKey.GetHashCode();
-        }
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }

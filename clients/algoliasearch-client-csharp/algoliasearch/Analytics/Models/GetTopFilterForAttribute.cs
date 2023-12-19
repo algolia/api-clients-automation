@@ -14,9 +14,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using FileParameter = Algolia.Search.Analytics.Client.FileParameter;
-using OpenAPIDateConverter = Algolia.Search.Analytics.Client.OpenAPIDateConverter;
+using Algolia.Search.Models;
 
 namespace Algolia.Search.Analytics.Models
 {
@@ -24,7 +22,7 @@ namespace Algolia.Search.Analytics.Models
   /// GetTopFilterForAttribute
   /// </summary>
   [DataContract(Name = "getTopFilterForAttribute")]
-  public partial class GetTopFilterForAttribute : IEquatable<GetTopFilterForAttribute>, IValidatableObject
+  public partial class GetTopFilterForAttribute
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="GetTopFilterForAttribute" /> class.
@@ -114,84 +112,6 @@ namespace Algolia.Search.Analytics.Models
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
     }
 
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as GetTopFilterForAttribute);
-    }
-
-    /// <summary>
-    /// Returns true if GetTopFilterForAttribute instances are equal
-    /// </summary>
-    /// <param name="input">Instance of GetTopFilterForAttribute to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(GetTopFilterForAttribute input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return
-          (
-              this.Attribute == input.Attribute ||
-              (this.Attribute != null &&
-              this.Attribute.Equals(input.Attribute))
-          ) &&
-          (
-              this.VarOperator == input.VarOperator ||
-              (this.VarOperator != null &&
-              this.VarOperator.Equals(input.VarOperator))
-          ) &&
-          (
-              this.Value == input.Value ||
-              (this.Value != null &&
-              this.Value.Equals(input.Value))
-          ) &&
-          (
-              this.Count == input.Count ||
-              this.Count.Equals(input.Count)
-          );
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = 41;
-        if (this.Attribute != null)
-        {
-          hashCode = (hashCode * 59) + this.Attribute.GetHashCode();
-        }
-        if (this.VarOperator != null)
-        {
-          hashCode = (hashCode * 59) + this.VarOperator.GetHashCode();
-        }
-        if (this.Value != null)
-        {
-          hashCode = (hashCode * 59) + this.Value.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.Count.GetHashCode();
-        return hashCode;
-      }
-    }
-
-    /// <summary>
-    /// To validate all properties of the instance
-    /// </summary>
-    /// <param name="validationContext">Validation context</param>
-    /// <returns>Validation Result</returns>
-    IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-    {
-      yield break;
-    }
   }
 
 }
