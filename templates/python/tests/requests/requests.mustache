@@ -6,7 +6,7 @@ from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}
 from algoliasearch.{{{import}}}.config import Config
 
 
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}Requests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

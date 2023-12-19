@@ -1,0 +1,51 @@
+from os import environ
+from re import compile
+from json import loads
+
+from algoliasearch.http.transporter import EchoTransporter
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.config import Config
+
+
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+    _config: Config
+    _client: {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+
+    def create_client(self) -> {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+        self._config = Config("appId", "apiKey"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
+        self._client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(self._config), self._config)
+
+    {{#blocksClient}}
+    {{#tests}}
+    async def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        {{#autoCreateClient}}
+        self.create_client()
+        {{/autoCreateClient}}
+
+        {{#steps}}
+        {{#isError}}
+        try:
+            {{> client/step}}
+        except (ValueError, Exception) as e:
+            assert {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}} == str(e)
+        {{/isError}}
+        {{^isError}}
+        {{> client/step}}
+        {{#match}}
+        {{#testUserAgent}}
+        regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}")
+        assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+        {{/testUserAgent}}
+        {{#testTimeouts}}
+        assert {{{match.parametersWithDataTypeMap.connectTimeout.value}}} == _req.timeouts.get("connect")
+        assert {{{match.parametersWithDataTypeMap.responseTimeout.value}}} == _req.timeouts.get("response")
+        {{/testTimeouts}}
+        {{#testHost}}
+        assert "{{{match}}}" == _req.host
+        {{/testHost}}        
+        {{/match}}
+        {{/isError}}
+        {{/steps}}
+
+    {{/tests}}
+    {{/blocksClient}}

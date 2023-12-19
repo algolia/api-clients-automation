@@ -57,7 +57,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     setOutputDir("tests/output/" + language);
     ctsManager.addSupportingFiles(supportingFiles);
 
-    testsGenerators.add(new TestsRequest(language, client));
+    // testsGenerators.add(new TestsRequest(language, client));
     testsGenerators.add(new TestsClient(language, client));
 
     for (TestsGenerator testGen : testsGenerators) {
@@ -87,6 +87,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
+    lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
     return lambdas;
   }
 

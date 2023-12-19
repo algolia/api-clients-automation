@@ -14,7 +14,11 @@ public class PythonCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {}
+  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/methods/", "__init__.py"));
+    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/methods/requests", "__init__.py"));
+    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/client", "__init__.py"));
+  }
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
