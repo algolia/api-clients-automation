@@ -58,26 +58,25 @@ class {{classname}}:
         {{/required}}
         {{/allParams}}
 
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = {}
-        {{#vendorExtensions}}
-        _path = '{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+        _query_parameters: List[Tuple[str, str]] = []
+        _headers_parameters: Dict[str, Optional[str]] = {}
         
+        {{#vendorExtensions}}
         {{#queryParams}}
         if {{paramName}} is not None:
         {{^x-is-custom-request}}
-            _query_params.append(('{{baseName}}', {{paramName}}))
+            _query_parameters.append(('{{baseName}}', {{paramName}}))
         {{/x-is-custom-request}}
         {{#x-is-custom-request}}
             for _qpkey, _qpvalue in {{paramName}}.items():
-                _query_params.append((_qpkey, _qpvalue))
+                _query_parameters.append((_qpkey, _qpvalue))
         {{/x-is-custom-request}}
         {{/queryParams}}
         {{/vendorExtensions}}
 
         {{#headerParams}}
         if {{paramName}} is not None:
-            _header_params['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+            _headers_parameters['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
         {{/headerParams}}
 
         {{#bodyParam}}
@@ -86,18 +85,16 @@ class {{classname}}:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        _param = self._transporter.param_serialize(
-            query_params=_query_params,
-            header_params=_header_params,
-            body={{#bodyParam}}_body{{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
-            request_options=request_options,
-        )
-
         response = await self._transporter.request(
             verb=Verb.{{httpMethod}},
-            path=_path,
-            data=_param[0],
-            request_options=_param[1],
+            path='{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#vendorExtensions.x-is-custom-request}}{{paramName}}{{/vendorExtensions.x-is-custom-request}}{{^vendorExtensions.x-is-custom-request}}quote(str({{paramName}})){{/vendorExtensions.x-is-custom-request}}){{/pathParams}},
+            data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
+            request_options=RequestOptions.create(
+                config=self._config,
+                query_parameters=_query_parameters,
+                headers_parameters=_headers_parameters,
+                user_request_options=request_options,
+            ),
             {{#vendorExtensions}}
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}

@@ -8,9 +8,10 @@ from algoliasearch.http.hosts import (
 )
 from algoliasearch.http.user_agent import UserAgent
 from algoliasearch.http.exceptions import AlgoliaException
+from algoliasearch.http.base_config import BaseConfig
 
 
-class Config:
+class Config(BaseConfig):
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
         app_id = environ.get("ALGOLIA_APP_ID") if app_id is None else app_id
 
