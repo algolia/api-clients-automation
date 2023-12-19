@@ -9,6 +9,10 @@
     attr_accessor :{{{name}}}
 
   {{/vars}}
+  {{#vendorExtensions.x-is-generic}}
+    attr_accessor :additional_properties
+
+  {{/vendorExtensions.x-is-generic}}
 {{#hasEnums}}
     class EnumAttributeValidator
       attr_reader :datatype
@@ -114,6 +118,7 @@
         fail ArgumentError, "The input argument (attributes) must be a hash in `{{{moduleName}}}::{{{classname}}}` initialize method"
       end
 
+      {{^vendorExtensions.x-is-generic}}
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
@@ -121,13 +126,13 @@
         end
         h[k.to_sym] = v
       }
-      {{#parent}}
 
+      {{/vendorExtensions.x-is-generic}}
+      {{#parent}}
       # call parent's initialize
       super(attributes)
       {{/parent}}
       {{#vars}}
-
       if attributes.key?(:'{{{name}}}')
         {{#isArray}}
         if (value = attributes[:'{{{name}}}']).is_a?(Array)
@@ -147,7 +152,14 @@
         self.{{{name}}} = nil
       {{/required}}
       end
+
       {{/vars}}
+      {{#vendorExtensions.x-is-generic}}
+
+      # add extra attribute to additional_properties
+      self.additional_properties ||= {}
+      self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
+      {{/vendorExtensions.x-is-generic}}
     end
 
     {{#vars}}
