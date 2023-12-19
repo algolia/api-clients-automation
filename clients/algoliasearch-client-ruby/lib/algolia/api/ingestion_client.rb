@@ -6,12 +6,29 @@ module Algolia
   class IngestionClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key, region = nil)
+      hosts = []
+      regions = ['eu', 'us']
+
+      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || (region != '' && !regions.include?(region))
+
+      hosts << Transport::StatefulHost.new('data.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Ingestion')
+      create_with_config(config)
+    end
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Create a authentication.
     # Create a authentication.
-    # @param authentication_create [AuthenticationCreate] 
+    # @param authentication_create [AuthenticationCreate]
     # @param [Hash] opts the optional parameters
     # @return [AuthenticationCreateResponse]
     def create_authentication(authentication_create, opts = {})
@@ -21,65 +38,38 @@ module Algolia
 
     # Create a authentication.
     # Create a authentication.
-    # @param authentication_create [AuthenticationCreate] 
+    # @param authentication_create [AuthenticationCreate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(AuthenticationCreateResponse, Integer, Hash)>] AuthenticationCreateResponse data, response status code and response headers
     def create_authentication_with_http_info(authentication_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_authentication ...'
-      end
       # verify the required parameter 'authentication_create' is set
       if @api_client.config.client_side_validation && authentication_create.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_create' when calling IngestionClient.create_authentication"
+        raise ArgumentError, "Missing the required parameter 'authentication_create' when calling IngestionClient.create_authentication"
       end
-      # resource path
-      local_var_path = '/1/authentications'
 
-      # query parameters
+      path = '/1/authentications'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_create)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'AuthenticationCreateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.create_authentication",
+        :operation => :'IngestionClient.create_authentication',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a destination.
     # Create a destination.
-    # @param destination_create [DestinationCreate] 
+    # @param destination_create [DestinationCreate]
     # @param [Hash] opts the optional parameters
     # @return [DestinationCreateResponse]
     def create_destination(destination_create, opts = {})
@@ -89,65 +79,38 @@ module Algolia
 
     # Create a destination.
     # Create a destination.
-    # @param destination_create [DestinationCreate] 
+    # @param destination_create [DestinationCreate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(DestinationCreateResponse, Integer, Hash)>] DestinationCreateResponse data, response status code and response headers
     def create_destination_with_http_info(destination_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_destination ...'
-      end
       # verify the required parameter 'destination_create' is set
       if @api_client.config.client_side_validation && destination_create.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_create' when calling IngestionClient.create_destination"
+        raise ArgumentError, "Missing the required parameter 'destination_create' when calling IngestionClient.create_destination"
       end
-      # resource path
-      local_var_path = '/1/destinations'
 
-      # query parameters
+      path = '/1/destinations'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_create)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DestinationCreateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DestinationCreateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.create_destination",
+        :operation => :'IngestionClient.create_destination',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a source.
     # Create a source.
-    # @param source_create [SourceCreate] 
+    # @param source_create [SourceCreate]
     # @param [Hash] opts the optional parameters
     # @return [SourceCreateResponse]
     def create_source(source_create, opts = {})
@@ -157,65 +120,38 @@ module Algolia
 
     # Create a source.
     # Create a source.
-    # @param source_create [SourceCreate] 
+    # @param source_create [SourceCreate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(SourceCreateResponse, Integer, Hash)>] SourceCreateResponse data, response status code and response headers
     def create_source_with_http_info(source_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_source ...'
-      end
       # verify the required parameter 'source_create' is set
       if @api_client.config.client_side_validation && source_create.nil?
-        fail ArgumentError, "Missing the required parameter 'source_create' when calling IngestionClient.create_source"
+        raise ArgumentError, "Missing the required parameter 'source_create' when calling IngestionClient.create_source"
       end
-      # resource path
-      local_var_path = '/1/sources'
 
-      # query parameters
+      path = '/1/sources'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(source_create)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SourceCreateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::SourceCreateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.create_source",
+        :operation => :'IngestionClient.create_source',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a task.
     # Create a task.
-    # @param task_create [TaskCreate] 
+    # @param task_create [TaskCreate]
     # @param [Hash] opts the optional parameters
     # @return [TaskCreateResponse]
     def create_task(task_create, opts = {})
@@ -225,60 +161,33 @@ module Algolia
 
     # Create a task.
     # Create a task.
-    # @param task_create [TaskCreate] 
+    # @param task_create [TaskCreate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskCreateResponse, Integer, Hash)>] TaskCreateResponse data, response status code and response headers
     def create_task_with_http_info(task_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_task ...'
-      end
       # verify the required parameter 'task_create' is set
       if @api_client.config.client_side_validation && task_create.nil?
-        fail ArgumentError, "Missing the required parameter 'task_create' when calling IngestionClient.create_task"
+        raise ArgumentError, "Missing the required parameter 'task_create' when calling IngestionClient.create_task"
       end
-      # resource path
-      local_var_path = '/1/tasks'
 
-      # query parameters
+      path = '/1/tasks'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(task_create)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'TaskCreateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::TaskCreateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.create_task",
+        :operation => :'IngestionClient.create_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -299,52 +208,30 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
 
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Object'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.custom_delete",
+        :operation => :'IngestionClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -365,52 +252,30 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
 
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Object'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.custom_get",
+        :operation => :'IngestionClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -433,57 +298,30 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
 
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Object'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.custom_post",
+        :operation => :'IngestionClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -506,57 +344,30 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
 
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Object'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.custom_put",
+        :operation => :'IngestionClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete a authentication.
@@ -575,51 +386,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_authentication_with_http_info(authentication_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.delete_authentication"
+        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.delete_authentication"
       end
-      # resource path
-      local_var_path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
 
-      # query parameters
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.delete_authentication",
+        :operation => :'IngestionClient.delete_authentication',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a destination.
@@ -638,51 +427,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_destination_with_http_info(destination_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.delete_destination"
+        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.delete_destination"
       end
-      # resource path
-      local_var_path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
 
-      # query parameters
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.delete_destination",
+        :operation => :'IngestionClient.delete_destination',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a source.
@@ -701,51 +468,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_source_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.delete_source"
+        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.delete_source"
       end
-      # resource path
-      local_var_path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
 
-      # query parameters
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.delete_source",
+        :operation => :'IngestionClient.delete_source',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a task.
@@ -764,51 +509,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.delete_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.delete_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.delete_task",
+        :operation => :'IngestionClient.delete_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Disable a task.
@@ -827,51 +550,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def disable_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.disable_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.disable_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.disable_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'TaskUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.disable_task",
+        :operation => :'IngestionClient.disable_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#disable_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Enable a task.
@@ -890,51 +591,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def enable_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.enable_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.enable_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.enable_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'TaskUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.enable_task",
+        :operation => :'IngestionClient.enable_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#enable_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Get a authentication.
@@ -953,51 +632,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Authentication, Integer, Hash)>] Authentication data, response status code and response headers
     def get_authentication_with_http_info(authentication_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.get_authentication"
+        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.get_authentication"
       end
-      # resource path
-      local_var_path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
 
-      # query parameters
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Authentication'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Authentication'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_authentication",
+        :operation => :'IngestionClient.get_authentication',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of authentications.
@@ -1026,53 +683,30 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListAuthenticationsResponse, Integer, Hash)>] ListAuthenticationsResponse data, response status code and response headers
     def get_authentications_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_authentications ...'
-      end
-      # resource path
-      local_var_path = '/1/authentications'
-
-      # query parameters
+      path = '/1/authentications'
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'type'] = @api_client.build_collection_param(opts[:'type'], :csv) if !opts[:'type'].nil?
-      query_params[:'platform'] = @api_client.build_collection_param(opts[:'platform'], :csv) if !opts[:'platform'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
+      query_params[:platform] = @api_client.build_collection_param(opts[:platform], :csv) unless opts[:platform].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListAuthenticationsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_authentications",
+        :operation => :'IngestionClient.get_authentications',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_authentications\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a destination.
@@ -1091,51 +725,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Destination, Integer, Hash)>] Destination data, response status code and response headers
     def get_destination_with_http_info(destination_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.get_destination"
+        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.get_destination"
       end
-      # resource path
-      local_var_path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
 
-      # query parameters
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Destination'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Destination'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_destination",
+        :operation => :'IngestionClient.get_destination',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of destinations.
@@ -1164,53 +776,30 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListDestinationsResponse, Integer, Hash)>] ListDestinationsResponse data, response status code and response headers
     def get_destinations_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_destinations ...'
-      end
-      # resource path
-      local_var_path = '/1/destinations'
-
-      # query parameters
+      path = '/1/destinations'
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'type'] = @api_client.build_collection_param(opts[:'type'], :csv) if !opts[:'type'].nil?
-      query_params[:'authenticationID'] = @api_client.build_collection_param(opts[:'authentication_id'], :csv) if !opts[:'authentication_id'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
+      query_params[:authenticationID] = @api_client.build_collection_param(opts[:authentication_id], :csv) unless opts[:authentication_id].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListDestinationsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::ListDestinationsResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_destinations",
+        :operation => :'IngestionClient.get_destinations',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_destinations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Retrieve a stream listing.
@@ -1229,51 +818,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DockerSourceStreams, Integer, Hash)>] DockerSourceStreams data, response status code and response headers
     def get_docker_source_streams_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_docker_source_streams ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_docker_source_streams"
+        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_docker_source_streams"
       end
-      # resource path
-      local_var_path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
 
-      # query parameters
+      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DockerSourceStreams'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DockerSourceStreams'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_docker_source_streams",
+        :operation => :'IngestionClient.get_docker_source_streams',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_docker_source_streams\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get an event.
@@ -1294,55 +861,33 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Event, Integer, Hash)>] Event data, response status code and response headers
     def get_event_with_http_info(run_id, event_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_event ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_event"
+        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_event"
       end
       # verify the required parameter 'event_id' is set
       if @api_client.config.client_side_validation && event_id.nil?
-        fail ArgumentError, "Missing the required parameter 'event_id' when calling IngestionClient.get_event"
+        raise ArgumentError, "Missing the required parameter 'event_id' when calling IngestionClient.get_event"
       end
-      # resource path
-      local_var_path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s)).sub('{' + 'eventID' + '}', CGI.escape(event_id.to_s))
 
-      # query parameters
+      path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s)).sub('{' + 'eventID' + '}', CGI.escape(event_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Event'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Event'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_event",
+        :operation => :'IngestionClient.get_event',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_event\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of events.
@@ -1377,59 +922,37 @@ module Algolia
     # @option opts [String] :end_date The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
     # @return [Array<(ListEventsResponse, Integer, Hash)>] ListEventsResponse data, response status code and response headers
     def get_events_with_http_info(run_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_events ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_events"
+        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_events"
       end
-      # resource path
-      local_var_path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
 
-      # query parameters
+      path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'status'] = @api_client.build_collection_param(opts[:'status'], :multi) if !opts[:'status'].nil?
-      query_params[:'type'] = @api_client.build_collection_param(opts[:'type'], :multi) if !opts[:'type'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:status] = @api_client.build_collection_param(opts[:status], :multi) unless opts[:status].nil?
+      query_params[:type] = @api_client.build_collection_param(opts[:type], :multi) unless opts[:type].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListEventsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::ListEventsResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_events",
+        :operation => :'IngestionClient.get_events',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_events\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a run.
@@ -1448,51 +971,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Run, Integer, Hash)>] Run data, response status code and response headers
     def get_run_with_http_info(run_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_run ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_run"
+        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_run"
       end
-      # resource path
-      local_var_path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
 
-      # query parameters
+      path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Run'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Run'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_run",
+        :operation => :'IngestionClient.get_run',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_run\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of runs.
@@ -1525,55 +1026,32 @@ module Algolia
     # @option opts [String] :end_date The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
     # @return [Array<(RunListResponse, Integer, Hash)>] RunListResponse data, response status code and response headers
     def get_runs_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_runs ...'
-      end
-      # resource path
-      local_var_path = '/1/runs'
-
-      # query parameters
+      path = '/1/runs'
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'status'] = @api_client.build_collection_param(opts[:'status'], :multi) if !opts[:'status'].nil?
-      query_params[:'taskID'] = opts[:'task_id'] if !opts[:'task_id'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:status] = @api_client.build_collection_param(opts[:status], :multi) unless opts[:status].nil?
+      query_params[:taskID] = opts[:task_id] unless opts[:task_id].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'RunListResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::RunListResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_runs",
+        :operation => :'IngestionClient.get_runs',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_runs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a source.
@@ -1592,51 +1070,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Source, Integer, Hash)>] Source data, response status code and response headers
     def get_source_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_source"
+        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_source"
       end
-      # resource path
-      local_var_path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
 
-      # query parameters
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Source'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Source'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_source",
+        :operation => :'IngestionClient.get_source',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of sources.
@@ -1645,7 +1101,7 @@ module Algolia
     # @option opts [Integer] :items_per_page The number of items per page to return.
     # @option opts [Integer] :page The page number to fetch, starting at 1.
     # @option opts [Array<SourceType>] :type The type of the sources to retrieve.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication. 
+    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @option opts [SourceSortKeys] :sort The key by which the list should be sorted.
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [ListSourcesResponse]
@@ -1660,58 +1116,35 @@ module Algolia
     # @option opts [Integer] :items_per_page The number of items per page to return.
     # @option opts [Integer] :page The page number to fetch, starting at 1.
     # @option opts [Array<SourceType>] :type The type of the sources to retrieve.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication. 
+    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @option opts [SourceSortKeys] :sort The key by which the list should be sorted.
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListSourcesResponse, Integer, Hash)>] ListSourcesResponse data, response status code and response headers
     def get_sources_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_sources ...'
-      end
-      # resource path
-      local_var_path = '/1/sources'
-
-      # query parameters
+      path = '/1/sources'
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'type'] = @api_client.build_collection_param(opts[:'type'], :csv) if !opts[:'type'].nil?
-      query_params[:'authenticationID'] = @api_client.build_collection_param(opts[:'authentication_id'], :csv) if !opts[:'authentication_id'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
+      query_params[:authenticationID] = @api_client.build_collection_param(opts[:authentication_id], :csv) unless opts[:authentication_id].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListSourcesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::ListSourcesResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_sources",
+        :operation => :'IngestionClient.get_sources',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a task.
@@ -1730,51 +1163,29 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Task, Integer, Hash)>] Task data, response status code and response headers
     def get_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.get_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.get_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Task'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Task'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_task",
+        :operation => :'IngestionClient.get_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of tasks.
@@ -1809,56 +1220,33 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListTasksResponse, Integer, Hash)>] ListTasksResponse data, response status code and response headers
     def get_tasks_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_tasks ...'
-      end
-      # resource path
-      local_var_path = '/1/tasks'
-
-      # query parameters
+      path = '/1/tasks'
       query_params = opts[:query_params] || {}
-      query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
-      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
-      query_params[:'action'] = @api_client.build_collection_param(opts[:'action'], :csv) if !opts[:'action'].nil?
-      query_params[:'enabled'] = opts[:'enabled'] if !opts[:'enabled'].nil?
-      query_params[:'sourceID'] = @api_client.build_collection_param(opts[:'source_id'], :csv) if !opts[:'source_id'].nil?
-      query_params[:'destinationID'] = @api_client.build_collection_param(opts[:'destination_id'], :csv) if !opts[:'destination_id'].nil?
-      query_params[:'triggerType'] = @api_client.build_collection_param(opts[:'trigger_type'], :csv) if !opts[:'trigger_type'].nil?
-      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
-      query_params[:'order'] = opts[:'order'] if !opts[:'order'].nil?
-
-      # header parameters
+      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
+      query_params[:page] = opts[:page] unless opts[:page].nil?
+      query_params[:action] = @api_client.build_collection_param(opts[:action], :csv) unless opts[:action].nil?
+      query_params[:enabled] = opts[:enabled] unless opts[:enabled].nil?
+      query_params[:sourceID] = @api_client.build_collection_param(opts[:source_id], :csv) unless opts[:source_id].nil?
+      query_params[:destinationID] = @api_client.build_collection_param(opts[:destination_id], :csv) unless opts[:destination_id].nil?
+      query_params[:triggerType] = @api_client.build_collection_param(opts[:trigger_type], :csv) unless opts[:trigger_type].nil?
+      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
+      query_params[:order] = opts[:order] unless opts[:order].nil?
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListTasksResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::ListTasksResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.get_tasks",
+        :operation => :'IngestionClient.get_tasks',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_tasks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Run a task.
@@ -1877,56 +1265,34 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(RunResponse, Integer, Hash)>] RunResponse data, response status code and response headers
     def run_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.run_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.run_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.run_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'RunResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::RunResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.run_task",
+        :operation => :'IngestionClient.run_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#run_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among authentications.
     # Search among authentications with a defined set of parameters.
-    # @param authentication_search [AuthenticationSearch] 
+    # @param authentication_search [AuthenticationSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<Authentication>]
     def search_authentications(authentication_search, opts = {})
@@ -1936,65 +1302,38 @@ module Algolia
 
     # Search among authentications.
     # Search among authentications with a defined set of parameters.
-    # @param authentication_search [AuthenticationSearch] 
+    # @param authentication_search [AuthenticationSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Authentication>, Integer, Hash)>] Array<Authentication> data, response status code and response headers
     def search_authentications_with_http_info(authentication_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_authentications ...'
-      end
       # verify the required parameter 'authentication_search' is set
       if @api_client.config.client_side_validation && authentication_search.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_search' when calling IngestionClient.search_authentications"
+        raise ArgumentError, "Missing the required parameter 'authentication_search' when calling IngestionClient.search_authentications"
       end
-      # resource path
-      local_var_path = '/1/authentications/search'
 
-      # query parameters
+      path = '/1/authentications/search'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_search)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<Authentication>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Array<Authentication>'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.search_authentications",
+        :operation => :'IngestionClient.search_authentications',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_authentications\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among destinations.
     # Search among destinations with a defined set of parameters.
-    # @param destination_search [DestinationSearch] 
+    # @param destination_search [DestinationSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<Destination>]
     def search_destinations(destination_search, opts = {})
@@ -2004,65 +1343,38 @@ module Algolia
 
     # Search among destinations.
     # Search among destinations with a defined set of parameters.
-    # @param destination_search [DestinationSearch] 
+    # @param destination_search [DestinationSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Destination>, Integer, Hash)>] Array<Destination> data, response status code and response headers
     def search_destinations_with_http_info(destination_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_destinations ...'
-      end
       # verify the required parameter 'destination_search' is set
       if @api_client.config.client_side_validation && destination_search.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_search' when calling IngestionClient.search_destinations"
+        raise ArgumentError, "Missing the required parameter 'destination_search' when calling IngestionClient.search_destinations"
       end
-      # resource path
-      local_var_path = '/1/destinations/search'
 
-      # query parameters
+      path = '/1/destinations/search'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_search)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<Destination>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Array<Destination>'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.search_destinations",
+        :operation => :'IngestionClient.search_destinations',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_destinations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among sources.
     # Search among sources with a defined set of parameters.
-    # @param source_search [SourceSearch] 
+    # @param source_search [SourceSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<Source>]
     def search_sources(source_search, opts = {})
@@ -2072,65 +1384,38 @@ module Algolia
 
     # Search among sources.
     # Search among sources with a defined set of parameters.
-    # @param source_search [SourceSearch] 
+    # @param source_search [SourceSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Source>, Integer, Hash)>] Array<Source> data, response status code and response headers
     def search_sources_with_http_info(source_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_sources ...'
-      end
       # verify the required parameter 'source_search' is set
       if @api_client.config.client_side_validation && source_search.nil?
-        fail ArgumentError, "Missing the required parameter 'source_search' when calling IngestionClient.search_sources"
+        raise ArgumentError, "Missing the required parameter 'source_search' when calling IngestionClient.search_sources"
       end
-      # resource path
-      local_var_path = '/1/sources/search'
 
-      # query parameters
+      path = '/1/sources/search'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(source_search)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<Source>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Array<Source>'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.search_sources",
+        :operation => :'IngestionClient.search_sources',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among tasks.
     # Search among tasks with a defined set of parameters.
-    # @param task_search [TaskSearch] 
+    # @param task_search [TaskSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<Task>]
     def search_tasks(task_search, opts = {})
@@ -2140,60 +1425,33 @@ module Algolia
 
     # Search among tasks.
     # Search among tasks with a defined set of parameters.
-    # @param task_search [TaskSearch] 
+    # @param task_search [TaskSearch]
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Task>, Integer, Hash)>] Array<Task> data, response status code and response headers
     def search_tasks_with_http_info(task_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_tasks ...'
-      end
       # verify the required parameter 'task_search' is set
       if @api_client.config.client_side_validation && task_search.nil?
-        fail ArgumentError, "Missing the required parameter 'task_search' when calling IngestionClient.search_tasks"
+        raise ArgumentError, "Missing the required parameter 'task_search' when calling IngestionClient.search_tasks"
       end
-      # resource path
-      local_var_path = '/1/tasks/search'
 
-      # query parameters
+      path = '/1/tasks/search'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(task_search)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<Task>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::Array<Task>'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.search_tasks",
+        :operation => :'IngestionClient.search_tasks',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_tasks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Trigger a stream listing request.
@@ -2212,57 +1470,35 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DockerSourceDiscover, Integer, Hash)>] DockerSourceDiscover data, response status code and response headers
     def trigger_docker_source_discover_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.trigger_docker_source_discover ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.trigger_docker_source_discover"
+        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.trigger_docker_source_discover"
       end
-      # resource path
-      local_var_path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
 
-      # query parameters
+      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DockerSourceDiscover'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DockerSourceDiscover'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.trigger_docker_source_discover",
+        :operation => :'IngestionClient.trigger_docker_source_discover',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#trigger_docker_source_discover\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Update a authentication.
     # Update the authentication of the given authenticationID.
     # @param authentication_id [String] The authentication UUID.
-    # @param authentication_update [AuthenticationUpdate] 
+    # @param authentication_update [AuthenticationUpdate]
     # @param [Hash] opts the optional parameters
     # @return [AuthenticationUpdateResponse]
     def update_authentication(authentication_id, authentication_update, opts = {})
@@ -2273,70 +1509,43 @@ module Algolia
     # Update a authentication.
     # Update the authentication of the given authenticationID.
     # @param authentication_id [String] The authentication UUID.
-    # @param authentication_update [AuthenticationUpdate] 
+    # @param authentication_update [AuthenticationUpdate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(AuthenticationUpdateResponse, Integer, Hash)>] AuthenticationUpdateResponse data, response status code and response headers
     def update_authentication_with_http_info(authentication_id, authentication_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.update_authentication"
+        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.update_authentication"
       end
       # verify the required parameter 'authentication_update' is set
       if @api_client.config.client_side_validation && authentication_update.nil?
-        fail ArgumentError, "Missing the required parameter 'authentication_update' when calling IngestionClient.update_authentication"
+        raise ArgumentError, "Missing the required parameter 'authentication_update' when calling IngestionClient.update_authentication"
       end
-      # resource path
-      local_var_path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
 
-      # query parameters
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_update)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'AuthenticationUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.update_authentication",
+        :operation => :'IngestionClient.update_authentication',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a destination.
     # Update the destination of the given destinationID.
     # @param destination_id [String] The destination UUID.
-    # @param destination_update [DestinationUpdate] 
+    # @param destination_update [DestinationUpdate]
     # @param [Hash] opts the optional parameters
     # @return [DestinationUpdateResponse]
     def update_destination(destination_id, destination_update, opts = {})
@@ -2347,70 +1556,43 @@ module Algolia
     # Update a destination.
     # Update the destination of the given destinationID.
     # @param destination_id [String] The destination UUID.
-    # @param destination_update [DestinationUpdate] 
+    # @param destination_update [DestinationUpdate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(DestinationUpdateResponse, Integer, Hash)>] DestinationUpdateResponse data, response status code and response headers
     def update_destination_with_http_info(destination_id, destination_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.update_destination"
+        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.update_destination"
       end
       # verify the required parameter 'destination_update' is set
       if @api_client.config.client_side_validation && destination_update.nil?
-        fail ArgumentError, "Missing the required parameter 'destination_update' when calling IngestionClient.update_destination"
+        raise ArgumentError, "Missing the required parameter 'destination_update' when calling IngestionClient.update_destination"
       end
-      # resource path
-      local_var_path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
 
-      # query parameters
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_update)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DestinationUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::DestinationUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.update_destination",
+        :operation => :'IngestionClient.update_destination',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a source.
     # Update the source of the given sourceID.
     # @param source_id [String] The source UUID.
-    # @param source_update [SourceUpdate] 
+    # @param source_update [SourceUpdate]
     # @param [Hash] opts the optional parameters
     # @return [SourceUpdateResponse]
     def update_source(source_id, source_update, opts = {})
@@ -2421,70 +1603,43 @@ module Algolia
     # Update a source.
     # Update the source of the given sourceID.
     # @param source_id [String] The source UUID.
-    # @param source_update [SourceUpdate] 
+    # @param source_update [SourceUpdate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(SourceUpdateResponse, Integer, Hash)>] SourceUpdateResponse data, response status code and response headers
     def update_source_with_http_info(source_id, source_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.update_source"
+        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.update_source"
       end
       # verify the required parameter 'source_update' is set
       if @api_client.config.client_side_validation && source_update.nil?
-        fail ArgumentError, "Missing the required parameter 'source_update' when calling IngestionClient.update_source"
+        raise ArgumentError, "Missing the required parameter 'source_update' when calling IngestionClient.update_source"
       end
-      # resource path
-      local_var_path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
 
-      # query parameters
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(source_update)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SourceUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::SourceUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.update_source",
+        :operation => :'IngestionClient.update_source',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a task.
     # Update the task of the given taskID.
     # @param task_id [String] The task UUID.
-    # @param task_update [TaskUpdate] 
+    # @param task_update [TaskUpdate]
     # @param [Hash] opts the optional parameters
     # @return [TaskUpdateResponse]
     def update_task(task_id, task_update, opts = {})
@@ -2495,64 +1650,37 @@ module Algolia
     # Update a task.
     # Update the task of the given taskID.
     # @param task_id [String] The task UUID.
-    # @param task_update [TaskUpdate] 
+    # @param task_update [TaskUpdate]
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def update_task_with_http_info(task_id, task_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.update_task"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.update_task"
       end
       # verify the required parameter 'task_update' is set
       if @api_client.config.client_side_validation && task_update.nil?
-        fail ArgumentError, "Missing the required parameter 'task_update' when calling IngestionClient.update_task"
+        raise ArgumentError, "Missing the required parameter 'task_update' when calling IngestionClient.update_task"
       end
-      # resource path
-      local_var_path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
 
-      # query parameters
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(task_update)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'TaskUpdateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
 
       new_options = opts.merge(
-        :operation => :"IngestionClient.update_task",
+        :operation => :'IngestionClient.update_task',
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
   end
 end

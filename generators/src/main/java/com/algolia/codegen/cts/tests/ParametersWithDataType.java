@@ -139,6 +139,7 @@ public class ParametersWithDataType {
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
+    testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", Helpers.capitalize(baseType));
 
     if (param == null) {
@@ -175,6 +176,7 @@ public class ParametersWithDataType {
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
+    testOutput.put("isRoot", "".equals(parent));
     // cannot determine objectName with inference
     // testOutput.put("objectName", Helpers.capitalize(baseType));
 

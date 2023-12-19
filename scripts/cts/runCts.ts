@@ -35,8 +35,10 @@ async function runCtsOne(language: string): Promise<void> {
       await run('(cd tests/output/dart && dart test)');
       break;
     case 'python':
-      spinner.warn(`CTS not yet implemented for Python`);
-      return;
+      await run('poetry lock && poetry install --sync && poetry run pytest', {
+        cwd: 'tests/output/python',
+      });
+      break;
     case 'ruby':
       spinner.warn(`CTS not yet implemented for Ruby`);
       return;

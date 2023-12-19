@@ -38,10 +38,10 @@ export async function formatter(language: string, folder: string): Promise<void>
       }
       break;
     case 'python':
-      cmd = `(cd ${folder} && poetry lock && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 --per-file-ignore='**/__init__.py:F401' .)`;
+      cmd = `(cd ${folder} && poetry lock && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .)`;
       break;
     case 'ruby':
-      cmd = `cd ${folder} && bundle install && bundle exec rubocop -a`;
+      cmd = `cd ${folder} && bundle install && bundle exec rubocop -a --fail-level W`;
       break;
     case 'scala':
       cmd = `(cd ${folder} && sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt)`;

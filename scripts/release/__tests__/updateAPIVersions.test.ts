@@ -63,3 +63,15 @@ describe('updateAPIversions', () => {
     });
   });
 });
+
+describe('getNextVersion', () => {
+  it('does nothing for -SNAPSHOT', () => {
+    expect(getNextVersion('1.0.0-SNAPSHOT', 'minor')).toEqual('1.0.0-SNAPSHOT');
+  });
+
+  it('bumps python alpha releases', () => {
+    expect(getNextVersion('4.0.0a1', 'minor')).toEqual('4.0.0a2');
+    expect(getNextVersion('4.0.0a12', 'minor')).toEqual('4.0.0a13');
+    expect(getNextVersion('4.0.0a99', 'minor')).toEqual('4.0.0a100');
+  });
+});

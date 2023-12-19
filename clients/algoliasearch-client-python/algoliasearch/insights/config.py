@@ -1,12 +1,13 @@
 from os import environ
 from typing import Optional
 
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.exceptions import AlgoliaException
 from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
 
 
-class Config:
+class Config(BaseConfig):
     def __init__(
         self,
         app_id: Optional[str] = None,
@@ -30,10 +31,10 @@ class Config:
         self.connect_timeout = 2000
 
         self.headers = {
-            "X-Algolia-Application-Id": app_id,
-            "X-Algolia-API-Key": api_key,
-            "User-Agent": UserAgent.get(),
-            "Content-Type": "application/json",
+            "x-algolia-application-id": app_id,
+            "x-algolia-api-key": api_key,
+            "user-agent": UserAgent.get(),
+            "content-type": "application/json",
         }
 
         self.proxies = {

@@ -1,7 +1,9 @@
 {{>partial_header}}
 {{>imports}}
 
-from algoliasearch.{{packageName}}.models import ({{#operations}}{{#operation}}{{#imports}}{{{.}}},{{/imports}}{{/operation}}{{/operations}})
+{{#operations}}{{#operation}}{{#imports}}
+from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
+{{/imports}}{{/operation}}{{/operations}}
 
 try:
     from typing import Self
@@ -23,8 +25,8 @@ class {{classname}}:
 
         return {{classname}}(transporter, config)
 
-    def create(app_id: Optional[str] = None, api_key: Optional[str] = None) -> Self:
-        return {{classname}}.create_with_config(Config(app_id, api_key))
+    def create(app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> Self:
+        return {{classname}}.create_with_config(Config(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
 
     async def close(self) -> None:
         return await self._transporter.close()
@@ -56,33 +58,43 @@ class {{classname}}:
         {{/required}}
         {{/allParams}}
 
-        _query_params: List[Tuple[str, str]] = []
-        _body: Optional[bytes] = None
+        _query_parameters: List[Tuple[str, str]] = []
+        _headers_parameters: Dict[str, Optional[str]] = {}
+        
         {{#vendorExtensions}}
-        _path = '{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
-        {{/vendorExtensions}}
-
         {{#queryParams}}
         if {{paramName}} is not None:
-            _query_params.append(('{{baseName}}', {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}))
+        {{^x-is-custom-request}}
+            _query_parameters.append(('{{baseName}}', {{paramName}}))
+        {{/x-is-custom-request}}
+        {{#x-is-custom-request}}
+            for _qpkey, _qpvalue in {{paramName}}.items():
+                _query_parameters.append((_qpkey, _qpvalue))
+        {{/x-is-custom-request}}
         {{/queryParams}}
+        {{/vendorExtensions}}
+
+        {{#headerParams}}
+        if {{paramName}} is not None:
+            _headers_parameters['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+        {{/headerParams}}
 
         {{#bodyParam}}
+        _body = {}
         if {{paramName}} is not None:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        _param = self._transporter.param_serialize(
-            query_params=_query_params,
-            body=_body,
-            request_options=request_options,
-        )
-
         response = await self._transporter.request(
             verb=Verb.{{httpMethod}},
-            path=_path,
-            data=_param[0],
-            request_options=_param[1],
+            path='{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#vendorExtensions.x-is-custom-request}}{{paramName}}{{/vendorExtensions.x-is-custom-request}}{{^vendorExtensions.x-is-custom-request}}quote(str({{paramName}})){{/vendorExtensions.x-is-custom-request}}){{/pathParams}},
+            data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
+            request_options=RequestOptions.create(
+                config=self._config,
+                query_parameters=_query_parameters,
+                headers_parameters=_headers_parameters,
+                user_request_options=request_options,
+            ),
             {{#vendorExtensions}}
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
@@ -113,5 +125,6 @@ class {{classname}}:
         response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
         return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
+
 {{/operation}}
 {{/operations}}

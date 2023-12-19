@@ -233,7 +233,10 @@ export function createClientName(client: string, language: string): string {
       return camelize(client);
     case 'dart':
     case 'go':
+    case 'ruby':
       return client;
+    case 'python':
+      return toSnakeCase(client);
     default:
       return capitalize(camelize(client));
   }
@@ -259,6 +262,13 @@ function camelize(str: string, delimiter: string = '-'): string {
  */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function toSnakeCase(str: string): string {
+  return (str.charAt(0).toLowerCase() + str.slice(1))
+    .replace(/[A-Z]/g, (letter) => `_${letter}`)
+    .replace(/(-|\s)/g, '_')
+    .toLowerCase();
 }
 
 export async function configureGitHubAuthor(cwd?: string): Promise<void> {
