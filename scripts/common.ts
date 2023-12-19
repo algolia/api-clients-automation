@@ -235,6 +235,8 @@ export function createClientName(client: string, language: string): string {
     case 'go':
     case 'ruby':
       return client;
+    case 'python':
+      return toSnakeCase(client);
     default:
       return capitalize(camelize(client));
   }
