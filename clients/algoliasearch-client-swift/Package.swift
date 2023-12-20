@@ -27,16 +27,48 @@ import PackageDescription
 let package = Package(
   name: "AlgoliaSearchClient",
   platforms: [
-    .iOS(.v11),
+    .iOS(.v13),
     .macOS(macOSVersion),
-    .tvOS(.v11),
-    .watchOS(.v4),
+    .tvOS(.v13),
+    .watchOS(.v6),
   ],
   products: [
     .library(
-      name: "AlgoliaSearchClient",
-      targets: ["AlgoliaSearchClient"]
-    )
+      name: "Abtesting",
+      targets: ["Abtesting"]
+    ),
+    .library(
+      name: "Analytics",
+      targets: ["Analytics"]
+    ),
+    .library(
+      name: "Ingestion",
+      targets: ["Ingestion"]
+    ),
+    .library(
+      name: "Insights",
+      targets: ["Insights"]
+    ),
+    .library(
+      name: "Monitoring",
+      targets: ["Monitoring"]
+    ),
+    .library(
+      name: "Personalization",
+      targets: ["Personalization"]
+    ),
+    .library(
+      name: "QuerySuggestions",
+      targets: ["QuerySuggestions"]
+    ),
+    .library(
+      name: "Recommend",
+      targets: ["Recommend"]
+    ),
+    .library(
+      name: "Search",
+      targets: ["Search"]
+    ),
   ],
   dependencies: [
     .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
@@ -44,12 +76,93 @@ let package = Package(
   ] + extraPackageDependencies,
   targets: [
     .target(
-      name: "AlgoliaSearchClient",
+      name: "Core",
       dependencies: [
-        "AnyCodable",
+        .product(name: "AnyCodable", package: "AnyCodable"),
         .product(name: "Logging", package: "swift-log"),
       ] + extraTargetDependencies,
-      path: "Sources/AlgoliaSearchClient"
-    )
+      path: "Sources/Core"
+    ),
+    .target(
+      name: "Abtesting",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Abtesting"
+    ),
+    .target(
+      name: "Analytics",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Analytics"
+    ),
+    .target(
+      name: "Ingestion",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Ingestion"
+    ),
+    .target(
+      name: "Insights",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Insights"
+    ),
+    .target(
+      name: "Monitoring",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Monitoring"
+    ),
+    .target(
+      name: "Personalization",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Personalization"
+    ),
+    .target(
+      name: "QuerySuggestions",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/QuerySuggestions"
+    ),
+    .target(
+      name: "Recommend",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Recommend"
+    ),
+    .target(
+      name: "Search",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "Logging", package: "swift-log"),
+        .target(name: "Core"),
+      ] + extraTargetDependencies,
+      path: "Sources/Search"
+    ),
   ]
 )

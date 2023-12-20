@@ -5,7 +5,8 @@
 // https://openapi-generator.tech
 //
 
-import Foundation{{#usePromiseKit}}
+import Foundation
+import Core{{#usePromiseKit}}
 import PromiseKit{{/usePromiseKit}}{{#useRxSwift}}
 import RxSwift{{/useRxSwift}}{{#useCombine}}
 #if canImport(Combine)
@@ -14,10 +15,18 @@ import Combine
 import Vapor{{/useVapor}}
 #if canImport(AnyCodable)
 import AnyCodable
-#endif{{#swiftUseApiNamespace}}
+#endif{{#swiftUseApiNamespace}}{{^swiftUseClientNamespace}}
 
-extension {{projectName}}API {
-{{/swiftUseApiNamespace}}
+  extension {{projectName}}API {
+{{/swiftUseClientNamespace}}{{/swiftUseApiNamespace}}
+
+{{#swiftUseClientNamespace}}{{^swiftUseApiNamespace}}
+
+  open class {{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}} {
+  }
+
+  extension {{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}} {
+{{/swiftUseApiNamespace}}{{/swiftUseClientNamespace}}
 
 {{#description}}
 /** {{{.}}} */{{/description}}
@@ -444,6 +453,13 @@ extension {{projectName}}API {
 {{/operation}}
 }
 {{#swiftUseApiNamespace}}
+{{^swiftUseClientNamespace}}
+}
+{{/swiftUseClientNamespace}}
+{{/swiftUseApiNamespace}}
+{{#swiftUseClientNamespace}}
+{{^swiftUseApiNamespace}}
 }
 {{/swiftUseApiNamespace}}
+{{/swiftUseClientNamespace}}
 {{/operations}}

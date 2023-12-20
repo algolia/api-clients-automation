@@ -377,7 +377,7 @@ jobs:
           path: clients-${{matrix.client.language }}.zip
 
   codegen:
-    runs-on: macos-12
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
     needs:
       - setup

@@ -21,7 +21,7 @@ public struct RetryableHost {
     self.init(url: url, callType: .universal)
   }
 
-  init(url: URL, callType: CallTypeSupport = .universal) {
+  public init(url: URL, callType: CallTypeSupport = .universal) {
     self.url = url
     self.supportedCallTypes = callType
     self.isUp = true
@@ -59,18 +59,22 @@ public struct RetryableHost {
 
 extension RetryableHost {
 
-  struct CallTypeSupport: OptionSet {
-    let rawValue: Int
-    static let read = CallTypeSupport(rawValue: 1 << 0)
-    static let write = CallTypeSupport(rawValue: 1 << 1)
-    static let universal: CallTypeSupport = [.read, .write]
+  public struct CallTypeSupport: OptionSet {
+    public let rawValue: Int
+    public static let read = CallTypeSupport(rawValue: 1 << 0)
+    public static let write = CallTypeSupport(rawValue: 1 << 1)
+    public static let universal: CallTypeSupport = [.read, .write]
+
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
   }
 
 }
 
 extension RetryableHost.CallTypeSupport: CustomDebugStringConvertible {
 
-  var debugDescription: String {
+  public var debugDescription: String {
     var components: [String] = []
     if contains(.read) {
       components.append("read")

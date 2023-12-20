@@ -55,8 +55,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
     additionalProperties.put(CodegenConstants.API_NAME_SUFFIX, Helpers.API_SUFFIX);
-    additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + "AlgoliaSearchClient");
+    additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
 
+    additionalProperties.put("swiftUseClientNamespace", false);
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     additionalProperties.put(
       "lambda.client-to-name",
@@ -65,13 +66,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     super.processOpts();
 
-    supportingFiles.add(
-      new SupportingFile(
-        "networking/client_configuration.mustache",
-        sourceFolder + File.separator + "Models" + File.separator + getClientName(CLIENT),
-        "ClientConfiguration.swift"
-      )
-    );
+    supportingFiles.add(new SupportingFile("client_configuration.mustache", sourceFolder, "ClientConfiguration.swift"));
 
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("gitignore.mustache") ||
@@ -93,32 +88,70 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     );
 
     if (!getLibrary().equals(LIBRARY_VAPOR)) {
-      supportingFiles.add(new SupportingFile("CodableHelper.mustache", sourceFolder + File.separator + "Helpers", "CodableHelper.swift"));
       supportingFiles.add(
-        new SupportingFile("JSONDataEncoding.mustache", sourceFolder + File.separator + "Helpers", "JSONDataEncoding.swift")
+        new SupportingFile(
+          "CodableHelper.mustache",
+          "Sources" + File.separator + "Core" + File.separator + "Helpers",
+          "CodableHelper.swift"
+        )
       );
       supportingFiles.add(
-        new SupportingFile("JSONEncodingHelper.mustache", sourceFolder + File.separator + "Helpers", "JSONEncodingHelper.swift")
+        new SupportingFile(
+          "JSONDataEncoding.mustache",
+          "Sources" + File.separator + "Core" + File.separator + "Helpers",
+          "JSONDataEncoding.swift"
+        )
       );
       supportingFiles.add(
-        new SupportingFile("SynchronizedDictionary.mustache", sourceFolder + File.separator + "Helpers", "SynchronizedDictionary.swift")
+        new SupportingFile(
+          "JSONEncodingHelper.mustache",
+          "Sources" + File.separator + "Core" + File.separator + "Helpers",
+          "JSONEncodingHelper.swift"
+        )
       );
-      supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder + File.separator + "Helpers", "APIHelper.swift"));
-      supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder + File.separator + "Helpers", "Models.swift"));
+      supportingFiles.add(
+        new SupportingFile(
+          "SynchronizedDictionary.mustache",
+          "Sources" + File.separator + "Core" + File.separator + "Helpers",
+          "SynchronizedDictionary.swift"
+        )
+      );
+      supportingFiles.add(
+        new SupportingFile("APIHelper.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "APIHelper.swift")
+      );
+      supportingFiles.add(
+        new SupportingFile("Models.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "Models.swift")
+      );
     }
-    supportingFiles.add(new SupportingFile("Configuration.mustache", sourceFolder + File.separator + "Helpers", "Configuration.swift"));
-    supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder + File.separator + "Helpers", "Extensions.swift"));
     supportingFiles.add(
-      new SupportingFile("OpenISO8601DateFormatter.mustache", sourceFolder + File.separator + "Helpers", "OpenISO8601DateFormatter.swift")
+      new SupportingFile("Configuration.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "Configuration.swift")
+    );
+    supportingFiles.add(
+      new SupportingFile("Extensions.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "Extensions.swift")
+    );
+    supportingFiles.add(
+      new SupportingFile(
+        "OpenISO8601DateFormatter.mustache",
+        "Sources" + File.separator + "Core" + File.separator + "Helpers",
+        "OpenISO8601DateFormatter.swift"
+      )
     );
     if (useCustomDateWithoutTime) {
       supportingFiles.add(
-        new SupportingFile("OpenAPIDateWithoutTime.mustache", sourceFolder + File.separator + "Helpers", "OpenAPIDateWithoutTime.swift")
+        new SupportingFile(
+          "OpenAPIDateWithoutTime.mustache",
+          "Sources" + File.separator + "Core" + File.separator + "Helpers",
+          "OpenAPIDateWithoutTime.swift"
+        )
       );
     }
-    supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder + File.separator + "Helpers", "APIs.swift"));
+    supportingFiles.add(
+      new SupportingFile("APIs.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "APIs.swift")
+    );
     if (validatable) {
-      supportingFiles.add(new SupportingFile("Validation.mustache", sourceFolder + File.separator + "Helpers", "Validation.swift"));
+      supportingFiles.add(
+        new SupportingFile("Validation.mustache", "Sources" + File.separator + "Core" + File.separator + "Helpers", "Validation.swift")
+      );
     }
 
     switch (getLibrary()) {
@@ -126,7 +159,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
         supportingFiles.add(
           new SupportingFile(
             "AlamofireImplementations.mustache",
-            sourceFolder + File.separator + "Networking",
+            "Sources" + File.separator + "Core" + File.separator + "Networking",
             "AlamofireImplementations.swift"
           )
         );
@@ -135,7 +168,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
         supportingFiles.add(
           new SupportingFile(
             "URLSessionImplementations.mustache",
-            sourceFolder + File.separator + "Networking",
+            "Sources" + File.separator + "Core" + File.separator + "Networking",
             "URLSessionImplementations.swift"
           )
         );
@@ -144,22 +177,34 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
         break;
     }
 
-    reservedWords.add("Task");
-    reservedWords.add("Source");
-    reservedWords.add("Region");
-    reservedWords.add("ConsequenceQueryObject");
-    reservedWords.add("Edit");
+    //    reservedWords.add("Task");
+    //    reservedWords.add("Source");
+    //    reservedWords.add("Region");
+    //    reservedWords.add("ConsequenceQueryObject");
+    //    reservedWords.add("Edit");
     reservedWords.add("LogLevel");
+    //    reservedWords.add("ErrorBase");
+    //    reservedWords.add("AdvancedSyntaxFeatures");
+    //    reservedWords.add("AlternativesAsExact");
+    //    reservedWords.add("Anchoring");
+    //    reservedWords.add("AroundPrecision");
+    //    reservedWords.add("AroundPrecisionFromValueInner");
+    //    reservedWords.add("AroundRadius");
+    //    reservedWords.add("AroundRadiusAll");
+    //    reservedWords.add("AutomaticFacetFilter");
+    //    reservedWords.add("AutomaticFacetFilters");
+    //    reservedWords.add("BaseSearchParams");
 
     setObjcCompatible(false);
-    setProjectName("AlgoliaSearchClient");
+    setProjectName(getClientName(CLIENT));
     setUseSPMFileStructure(true);
 
     setApiNamePrefix("");
     setApiNameSuffix(Helpers.API_SUFFIX);
     setModelNamePrefix("");
-    setApiPackage(File.separator + "Clients");
-    setModelPackage(File.separator + "Models" + File.separator + getClientName(CLIENT));
+    setApiPackage("");
+    setModelPackage(File.separator + "Models");
+    //    setModelPackage(File.separator + "Models" + File.separator + getClientName(CLIENT));
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
@@ -216,11 +261,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
   @Override
   public String toModelName(String name) {
-    name = sanitizeName(name);
-
-    if (isReservedWord(name) || name.matches("^\\d.*")) {
-      return getClientName(CLIENT) + name;
-    }
+    //    name = sanitizeName(name);
+    //
+    //    if (isReservedWord(name) || name.matches("^\\d.*")) {
+    //      return getClientName(CLIENT) + name;
+    //    }
 
     return super.toModelName(name);
   }
@@ -262,6 +307,12 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public String toApiName(String name) {
     return camelize(getApiNamePrefix() + name + getApiNameSuffix());
   }
+  //  @Override
+  //  public String modelFilename(String templateName, String modelName) {
+  //    String suffix = modelTemplateFiles().get(templateName);
+  //    return modelFileFolder() + File.separator + getClientName(CLIENT) +
+  // toModelFilename(modelName) + suffix;
+  //  }
   //  @Override
   //  public String apiFileFolder() {
   //    return outputFolder + File.separator + sourceFolder;

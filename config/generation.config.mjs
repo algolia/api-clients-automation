@@ -122,6 +122,5 @@ export const patterns = [
   '!clients/algoliasearch-client-swift/.swiftformat',
   '!clients/algoliasearch-client-swift/Package.swift',
   '!clients/algoliasearch-client-swift/Package.resolved',
-  '!clients/algoliasearch-client-swift/Sources/AlgoliaSearchClient/Networking/**',
-  '!clients/algoliasearch-client-swift/Sources/AlgoliaSearchClient/Models/Common/**',
+  '!clients/algoliasearch-client-swift/Sources/Core/**',
 ];

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ClientConfiguration {
+public protocol CommonClientConfiguration {
 
   /// The timeout for each request when performing write operations (POST, PUT ..).
   var writeTimeout: TimeInterval { get }
@@ -19,7 +19,7 @@ public protocol ClientConfiguration {
   var logLevel: LogLevel { get }
 
   /// List of hosts and back-up host used to perform a custom retry logic.
-  var hosts: [RetryableHost] { get set }
+  var hosts: [RetryableHost]! { get set }
 
   /// Default headers that should be applied to every request.
   var defaultHeaders: [String: String]? { get }
@@ -28,7 +28,7 @@ public protocol ClientConfiguration {
 
 }
 
-extension ClientConfiguration {
+extension CommonClientConfiguration {
 
   func timeout(for callType: CallType) -> TimeInterval {
     switch callType {
@@ -41,15 +41,15 @@ extension ClientConfiguration {
 
 }
 
-struct DefaultConfiguration: ClientConfiguration {
+public struct DefaultConfiguration: CommonClientConfiguration {
 
-  static let `default`: ClientConfiguration = DefaultConfiguration()
+  public static let `default`: CommonClientConfiguration = DefaultConfiguration()
 
-  let writeTimeout: TimeInterval = 30
-  let readTimeout: TimeInterval = 5
-  let logLevel: LogLevel = .info
-  var hosts: [RetryableHost] = []
-  let defaultHeaders: [String: String]? = [:]
-  let batchSize: Int = 1000
+  public let writeTimeout: TimeInterval = 30
+  public let readTimeout: TimeInterval = 5
+  public let logLevel: LogLevel = .info
+  public let defaultHeaders: [String: String]? = [:]
+  public let batchSize: Int = 1000
+  public var hosts: [RetryableHost]! = []
 
 }
