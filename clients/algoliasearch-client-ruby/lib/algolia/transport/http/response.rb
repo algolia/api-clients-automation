@@ -4,7 +4,7 @@ module Algolia
       attr_reader :status, :body, :error, :headers, :has_timed_out, :network_failure
 
       # used for the echo requester
-      attr_reader :method, :path
+      attr_reader :method, :path, :query_params
 
       #
       # @option status    [String]  Response status

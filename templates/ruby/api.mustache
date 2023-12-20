@@ -155,7 +155,7 @@ module {{moduleName}}
       {{/minItems}}
       {{/hasValidation}}
       {{/allParams}}
-      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', CGI.escape({{paramName}}.to_s){{^strictSpecBehavior}}.gsub('%2F', '/'){{/strictSpecBehavior}}){{/pathParams}}
+      path = {{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}CGI.escape({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}{{/vendorExtensions}}
       query_params = request_options[:query_params] || {}
       {{#queryParams}}
       {{#required}}
@@ -170,18 +170,18 @@ module {{moduleName}}
       header_params = request_options[:header_params] || {}
       {{#headerParams}}
       {{#required}}
-      header_params[{{#lambdaFixHeaderKey}}:{{{baseName}}}{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
+      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
       {{/required}}
       {{/headerParams}}
       {{#headerParams}}
       {{^required}}
-      header_params[{{#lambdaFixHeaderKey}}:{{{baseName}}}{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}} unless {{{paramName}}}.nil?
+      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}} unless {{{paramName}}}.nil?
       {{/required}}
       {{/headerParams}}
 
-      post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}}){{/bodyParam}}
+      post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 
-      return_type = request_options[:debug_return_type]{{#returnType}} || '{{{modelModule}}}::{{{.}}}'{{/returnType}}
+      return_type = request_options[:debug_return_type]{{#returnType}} || '{{^vendorExtensions.x-is-custom-request}}{{{modelModule}}}::{{/vendorExtensions.x-is-custom-request}}{{{.}}}'{{/returnType}}
 
       new_options = request_options.merge(
         :operation => :'{{classname}}.{{operationId}}',

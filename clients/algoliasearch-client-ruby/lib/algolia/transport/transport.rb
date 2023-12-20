@@ -41,6 +41,7 @@ module Algolia
             request[:method],
             request[:path],
             request[:body],
+            request[:query_params],
             request[:header_params],
             request[:timeout],
             request[:connect_timeout]
@@ -72,23 +73,13 @@ module Algolia
       def build_request(method, path, body, request_options)
         request                   = {}
         request[:method]          = method.downcase
-        request[:path]            = build_uri_path(path, request_options.query_params)
+        request[:path]            = path
         request[:body]            = body.nil? || body.empty? ? '' : body
+        request[:query_params]    = request_options.query_params
         request[:header_params]   = generate_header_params(request_options)
         request[:timeout]         = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
         request
-      end
-
-      # Build the uri from path and additional query_params
-      #
-      # @param [Object] path
-      # @param [Object] query_params
-      #
-      # @return [String]
-      #
-      def build_uri_path(path, query_params)
-        path + handle_query_params(query_params)
       end
 
       # Generates headers from config headers and optional parameters
@@ -116,20 +107,6 @@ module Algolia
         else
           @config.write_timeout
         end
-      end
-
-      # Convert query_params to a full query string
-      #
-      def handle_query_params(query_params)
-        query_params.nil? || query_params.empty? ? '' : "?#{to_query_string(query_params)}"
-      end
-
-      # Create a query string from query_params
-      #
-      def to_query_string(query_params)
-        query_params.map do |key, value|
-          "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
-        end.join('&')
       end
     end
   end

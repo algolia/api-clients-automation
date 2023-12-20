@@ -147,10 +147,6 @@
         {{^isContainer}}
         self.{{{name}}} = attributes[:{{{name}}}]
         {{/isContainer}}
-      {{#required}}
-      else
-        self.{{{name}}} = nil
-      {{/required}}
       end
 
       {{/vars}}

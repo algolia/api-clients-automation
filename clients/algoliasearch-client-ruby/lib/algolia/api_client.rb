@@ -102,7 +102,8 @@ module Algolia
     # @param [Object] model object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
-      return model if model.nil? || model.is_a?(String)
+      return '{}' if model.nil?
+      return model if model.is_a?(String)
 
       body = if model.is_a?(Array)
                model.map { |m| object_to_hash(m) }
