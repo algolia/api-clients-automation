@@ -31,7 +31,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     )
   }
 
-  test("createConfig") {
+  test("createConfig0") {
     val (client, echo) = testClient()
     val future = client.createConfig(
       querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
@@ -511,7 +511,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("deleteConfig") {
+  test("deleteConfig0") {
     val (client, echo) = testClient()
     val future = client.deleteConfig(
       indexName = "theIndexName"
@@ -525,7 +525,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getAllConfigs") {
+  test("getAllConfigs0") {
     val (client, echo) = testClient()
     val future = client.getAllConfigs(
     )
@@ -538,7 +538,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getConfig") {
+  test("getConfig0") {
     val (client, echo) = testClient()
     val future = client.getConfig(
       indexName = "theIndexName"
@@ -552,7 +552,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getConfigStatus") {
+  test("getConfigStatus0") {
     val (client, echo) = testClient()
     val future = client.getConfigStatus(
       indexName = "theIndexName"
@@ -566,7 +566,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getLogFile") {
+  test("getLogFile0") {
     val (client, echo) = testClient()
     val future = client.getLogFile(
       indexName = "theIndexName"
@@ -580,7 +580,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("updateConfig") {
+  test("updateConfig0") {
     val (client, echo) = testClient()
     val future = client.updateConfig(
       indexName = "theIndexName",

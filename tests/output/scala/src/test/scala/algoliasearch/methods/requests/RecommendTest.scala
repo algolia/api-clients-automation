@@ -475,7 +475,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("deleteRecommendRule") {
+  test("deleteRecommendRule0") {
     val (client, echo) = testClient()
     val future = client.deleteRecommendRule(
       indexName = "indexName",
@@ -491,7 +491,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRecommendRule") {
+  test("getRecommendRule0") {
     val (client, echo) = testClient()
     val future = client.getRecommendRule(
       indexName = "indexName",
@@ -507,7 +507,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRecommendStatus") {
+  test("getRecommendStatus0") {
     val (client, echo) = testClient()
     val future = client.getRecommendStatus(
       indexName = "indexName",
@@ -774,7 +774,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchRecommendRules") {
+  test("searchRecommendRules0") {
     val (client, echo) = testClient()
     val future = client.searchRecommendRules(
       indexName = "indexName",

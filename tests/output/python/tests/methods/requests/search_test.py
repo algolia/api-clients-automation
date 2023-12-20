@@ -20,7 +20,7 @@ class TestSearchClient:
 
     async def test_add_api_key_0(self):
         """
-        addApiKey
+        addApiKey0
         """
         _req = await self._client.add_api_key_with_http_info(
             api_key={
@@ -45,7 +45,7 @@ class TestSearchClient:
 
     async def test_add_or_update_object_0(self):
         """
-        addOrUpdateObject
+        addOrUpdateObject0
         """
         _req = await self._client.add_or_update_object_with_http_info(
             index_name="indexName",
@@ -63,7 +63,7 @@ class TestSearchClient:
 
     async def test_append_source_0(self):
         """
-        appendSource
+        appendSource0
         """
         _req = await self._client.append_source_with_http_info(
             source={
@@ -82,7 +82,7 @@ class TestSearchClient:
 
     async def test_assign_user_id_0(self):
         """
-        assignUserId
+        assignUserId0
         """
         _req = await self._client.assign_user_id_with_http_info(
             x_algolia_user_id="userID",
@@ -281,7 +281,7 @@ class TestSearchClient:
 
     async def test_batch_assign_user_ids_0(self):
         """
-        batchAssignUserIds
+        batchAssignUserIds0
         """
         _req = await self._client.batch_assign_user_ids_with_http_info(
             x_algolia_user_id="userID",
@@ -474,7 +474,7 @@ class TestSearchClient:
 
     async def test_clear_all_synonyms_0(self):
         """
-        clearAllSynonyms
+        clearAllSynonyms0
         """
         _req = await self._client.clear_all_synonyms_with_http_info(
             index_name="indexName",
@@ -487,7 +487,7 @@ class TestSearchClient:
 
     async def test_clear_objects_0(self):
         """
-        clearObjects
+        clearObjects0
         """
         _req = await self._client.clear_objects_with_http_info(
             index_name="theIndexName",
@@ -500,7 +500,7 @@ class TestSearchClient:
 
     async def test_clear_rules_0(self):
         """
-        clearRules
+        clearRules0
         """
         _req = await self._client.clear_rules_with_http_info(
             index_name="indexName",
@@ -868,7 +868,7 @@ class TestSearchClient:
 
     async def test_delete_api_key_0(self):
         """
-        deleteApiKey
+        deleteApiKey0
         """
         _req = await self._client.delete_api_key_with_http_info(
             key="myTestApiKey",
@@ -882,7 +882,7 @@ class TestSearchClient:
 
     async def test_delete_by_0(self):
         """
-        deleteBy
+        deleteBy0
         """
         _req = await self._client.delete_by_with_http_info(
             index_name="theIndexName",
@@ -899,7 +899,7 @@ class TestSearchClient:
 
     async def test_delete_index_0(self):
         """
-        deleteIndex
+        deleteIndex0
         """
         _req = await self._client.delete_index_with_http_info(
             index_name="theIndexName",
@@ -913,7 +913,7 @@ class TestSearchClient:
 
     async def test_delete_object_0(self):
         """
-        deleteObject
+        deleteObject0
         """
         _req = await self._client.delete_object_with_http_info(
             index_name="theIndexName",
@@ -928,7 +928,7 @@ class TestSearchClient:
 
     async def test_delete_rule_0(self):
         """
-        deleteRule
+        deleteRule0
         """
         _req = await self._client.delete_rule_with_http_info(
             index_name="indexName",
@@ -943,7 +943,7 @@ class TestSearchClient:
 
     async def test_delete_source_0(self):
         """
-        deleteSource
+        deleteSource0
         """
         _req = await self._client.delete_source_with_http_info(
             source="theSource",
@@ -957,7 +957,7 @@ class TestSearchClient:
 
     async def test_delete_synonym_0(self):
         """
-        deleteSynonym
+        deleteSynonym0
         """
         _req = await self._client.delete_synonym_with_http_info(
             index_name="indexName",
@@ -972,7 +972,7 @@ class TestSearchClient:
 
     async def test_get_api_key_0(self):
         """
-        getApiKey
+        getApiKey0
         """
         _req = await self._client.get_api_key_with_http_info(
             key="myTestApiKey",
@@ -1047,7 +1047,7 @@ class TestSearchClient:
 
     async def test_get_object_0(self):
         """
-        getObject
+        getObject0
         """
         _req = await self._client.get_object_with_http_info(
             index_name="theIndexName",
@@ -1069,7 +1069,7 @@ class TestSearchClient:
 
     async def test_get_objects_0(self):
         """
-        getObjects
+        getObjects0
         """
         _req = await self._client.get_objects_with_http_info(
             get_objects_params={
@@ -1096,7 +1096,7 @@ class TestSearchClient:
 
     async def test_get_rule_0(self):
         """
-        getRule
+        getRule0
         """
         _req = await self._client.get_rule_with_http_info(
             index_name="indexName",
@@ -1111,7 +1111,7 @@ class TestSearchClient:
 
     async def test_get_settings_0(self):
         """
-        getSettings
+        getSettings0
         """
         _req = await self._client.get_settings_with_http_info(
             index_name="theIndexName",
@@ -1125,7 +1125,7 @@ class TestSearchClient:
 
     async def test_get_sources_0(self):
         """
-        getSources
+        getSources0
         """
         _req = await self._client.get_sources_with_http_info()
 
@@ -1137,7 +1137,7 @@ class TestSearchClient:
 
     async def test_get_synonym_0(self):
         """
-        getSynonym
+        getSynonym0
         """
         _req = await self._client.get_synonym_with_http_info(
             index_name="indexName",
@@ -1152,7 +1152,7 @@ class TestSearchClient:
 
     async def test_get_task_0(self):
         """
-        getTask
+        getTask0
         """
         _req = await self._client.get_task_with_http_info(
             index_name="theIndexName",
@@ -1167,7 +1167,7 @@ class TestSearchClient:
 
     async def test_get_top_user_ids_0(self):
         """
-        getTopUserIds
+        getTopUserIds0
         """
         _req = await self._client.get_top_user_ids_with_http_info()
 
@@ -1179,7 +1179,7 @@ class TestSearchClient:
 
     async def test_get_user_id_0(self):
         """
-        getUserId
+        getUserId0
         """
         _req = await self._client.get_user_id_with_http_info(
             user_id="uniqueID",
@@ -1219,7 +1219,7 @@ class TestSearchClient:
 
     async def test_list_api_keys_0(self):
         """
-        listApiKeys
+        listApiKeys0
         """
         _req = await self._client.list_api_keys_with_http_info()
 
@@ -1231,7 +1231,7 @@ class TestSearchClient:
 
     async def test_list_clusters_0(self):
         """
-        listClusters
+        listClusters0
         """
         _req = await self._client.list_clusters_with_http_info()
 
@@ -1301,7 +1301,7 @@ class TestSearchClient:
 
     async def test_multiple_batch_0(self):
         """
-        multipleBatch
+        multipleBatch0
         """
         _req = await self._client.multiple_batch_with_http_info(
             batch_params={
@@ -1327,7 +1327,7 @@ class TestSearchClient:
 
     async def test_operation_index_0(self):
         """
-        operationIndex
+        operationIndex0
         """
         _req = await self._client.operation_index_with_http_info(
             index_name="theIndexName",
@@ -1351,7 +1351,7 @@ class TestSearchClient:
 
     async def test_partial_update_object_0(self):
         """
-        partialUpdateObject
+        partialUpdateObject0
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
@@ -1376,7 +1376,7 @@ class TestSearchClient:
 
     async def test_remove_user_id_0(self):
         """
-        removeUserId
+        removeUserId0
         """
         _req = await self._client.remove_user_id_with_http_info(
             user_id="uniqueID",
@@ -1390,7 +1390,7 @@ class TestSearchClient:
 
     async def test_replace_sources_0(self):
         """
-        replaceSources
+        replaceSources0
         """
         _req = await self._client.replace_sources_with_http_info(
             source=[
@@ -1411,7 +1411,7 @@ class TestSearchClient:
 
     async def test_restore_api_key_0(self):
         """
-        restoreApiKey
+        restoreApiKey0
         """
         _req = await self._client.restore_api_key_with_http_info(
             key="myApiKey",
@@ -1424,7 +1424,7 @@ class TestSearchClient:
 
     async def test_save_object_0(self):
         """
-        saveObject
+        saveObject0
         """
         _req = await self._client.save_object_with_http_info(
             index_name="theIndexName",
@@ -1667,7 +1667,7 @@ class TestSearchClient:
 
     async def test_save_synonym_0(self):
         """
-        saveSynonym
+        saveSynonym0
         """
         _req = await self._client.save_synonym_with_http_info(
             index_name="indexName",
@@ -1694,7 +1694,7 @@ class TestSearchClient:
 
     async def test_save_synonyms_0(self):
         """
-        saveSynonyms
+        saveSynonyms0
         """
         _req = await self._client.save_synonyms_with_http_info(
             index_name="indexName",
@@ -2232,7 +2232,7 @@ class TestSearchClient:
 
     async def test_search_rules_0(self):
         """
-        searchRules
+        searchRules0
         """
         _req = await self._client.search_rules_with_http_info(
             index_name="indexName",
@@ -2322,7 +2322,7 @@ class TestSearchClient:
 
     async def test_search_user_ids_0(self):
         """
-        searchUserIds
+        searchUserIds0
         """
         _req = await self._client.search_user_ids_with_http_info(
             search_user_ids_params={
@@ -2715,7 +2715,7 @@ class TestSearchClient:
 
     async def test_update_api_key_0(self):
         """
-        updateApiKey
+        updateApiKey0
         """
         _req = await self._client.update_api_key_with_http_info(
             key="myApiKey",

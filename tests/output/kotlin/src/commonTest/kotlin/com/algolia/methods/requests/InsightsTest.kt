@@ -440,7 +440,7 @@ class InsightsTest {
   // pushEvents
 
   @Test
-  fun `pushEvents`() = runTest {
+  fun `pushEvents0`() = runTest {
     client.runTest(
       call = {
         pushEvents(

@@ -515,7 +515,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteRecommendRule
-     * deleteRecommendRule.
+     * deleteRecommendRule0.
      */
     public function testDeleteRecommendRule0()
     {
@@ -537,7 +537,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetRecommendRule
-     * getRecommendRule.
+     * getRecommendRule0.
      */
     public function testGetRecommendRule0()
     {
@@ -559,7 +559,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetRecommendStatus
-     * getRecommendStatus.
+     * getRecommendStatus0.
      */
     public function testGetRecommendStatus0()
     {
@@ -826,7 +826,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SearchRecommendRules
-     * searchRecommendRules.
+     * searchRecommendRules0.
      */
     public function testSearchRecommendRules0()
     {

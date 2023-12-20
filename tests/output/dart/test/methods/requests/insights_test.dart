@@ -511,7 +511,7 @@ void main() {
 
   // pushEvents
   test(
-    'pushEvents',
+    'pushEvents0',
     () => runTest(
       builder: (requester) => InsightsClient(
         appId: 'appId',

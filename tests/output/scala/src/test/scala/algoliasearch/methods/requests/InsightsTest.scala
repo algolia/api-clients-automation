@@ -476,7 +476,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("pushEvents") {
+  test("pushEvents0") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(

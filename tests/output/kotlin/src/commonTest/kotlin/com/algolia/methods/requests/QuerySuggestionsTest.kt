@@ -21,7 +21,7 @@ class QuerySuggestionsTest {
   // createConfig
 
   @Test
-  fun `createConfig`() = runTest {
+  fun `createConfig0`() = runTest {
     client.runTest(
       call = {
         createConfig(
@@ -473,7 +473,7 @@ class QuerySuggestionsTest {
   // deleteConfig
 
   @Test
-  fun `deleteConfig`() = runTest {
+  fun `deleteConfig0`() = runTest {
     client.runTest(
       call = {
         deleteConfig(
@@ -491,7 +491,7 @@ class QuerySuggestionsTest {
   // getAllConfigs
 
   @Test
-  fun `getAllConfigs`() = runTest {
+  fun `getAllConfigs0`() = runTest {
     client.runTest(
       call = {
         getAllConfigs()
@@ -507,7 +507,7 @@ class QuerySuggestionsTest {
   // getConfig
 
   @Test
-  fun `getConfig`() = runTest {
+  fun `getConfig0`() = runTest {
     client.runTest(
       call = {
         getConfig(
@@ -525,7 +525,7 @@ class QuerySuggestionsTest {
   // getConfigStatus
 
   @Test
-  fun `getConfigStatus`() = runTest {
+  fun `getConfigStatus0`() = runTest {
     client.runTest(
       call = {
         getConfigStatus(
@@ -543,7 +543,7 @@ class QuerySuggestionsTest {
   // getLogFile
 
   @Test
-  fun `getLogFile`() = runTest {
+  fun `getLogFile0`() = runTest {
     client.runTest(
       call = {
         getLogFile(
@@ -561,7 +561,7 @@ class QuerySuggestionsTest {
   // updateConfig
 
   @Test
-  fun `updateConfig`() = runTest {
+  fun `updateConfig0`() = runTest {
     client.runTest(
       call = {
         updateConfig(
