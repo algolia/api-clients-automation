@@ -8,10 +8,10 @@ export function {{apiName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: ClientOptions
-): {{capitalizedApiName}} {
+): {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} {
   {{> client/builds/checkParameters}}
 
-  return create{{capitalizedApiName}}({
+  return create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
