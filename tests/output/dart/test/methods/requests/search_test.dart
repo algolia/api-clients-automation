@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   // addApiKey
   test(
-    'addApiKey',
+    'addApiKey0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -35,7 +35,7 @@ void main() {
 
   // addOrUpdateObject
   test(
-    'addOrUpdateObject',
+    'addOrUpdateObject0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -59,7 +59,7 @@ void main() {
 
   // appendSource
   test(
-    'appendSource',
+    'appendSource0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -83,7 +83,7 @@ void main() {
 
   // assignUserId
   test(
-    'assignUserId',
+    'assignUserId0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -324,7 +324,7 @@ void main() {
 
   // batchAssignUserIds
   test(
-    'batchAssignUserIds',
+    'batchAssignUserIds0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -555,7 +555,7 @@ void main() {
 
   // clearAllSynonyms
   test(
-    'clearAllSynonyms',
+    'clearAllSynonyms0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -575,7 +575,7 @@ void main() {
 
   // clearObjects
   test(
-    'clearObjects',
+    'clearObjects0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -595,7 +595,7 @@ void main() {
 
   // clearRules
   test(
-    'clearRules',
+    'clearRules0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1104,7 +1104,7 @@ void main() {
 
   // deleteApiKey
   test(
-    'deleteApiKey',
+    'deleteApiKey0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1124,7 +1124,7 @@ void main() {
 
   // deleteBy
   test(
-    'deleteBy',
+    'deleteBy0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1147,7 +1147,7 @@ void main() {
 
   // deleteIndex
   test(
-    'deleteIndex',
+    'deleteIndex0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1167,7 +1167,7 @@ void main() {
 
   // deleteObject
   test(
-    'deleteObject',
+    'deleteObject0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1188,7 +1188,7 @@ void main() {
 
   // deleteRule
   test(
-    'deleteRule',
+    'deleteRule0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1209,7 +1209,7 @@ void main() {
 
   // deleteSource
   test(
-    'deleteSource',
+    'deleteSource0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1229,7 +1229,7 @@ void main() {
 
   // deleteSynonym
   test(
-    'deleteSynonym',
+    'deleteSynonym0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1250,7 +1250,7 @@ void main() {
 
   // getApiKey
   test(
-    'getApiKey',
+    'getApiKey0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1349,7 +1349,7 @@ void main() {
 
   // getObject
   test(
-    'getObject',
+    'getObject0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1376,7 +1376,7 @@ void main() {
 
   // getObjects
   test(
-    'getObjects',
+    'getObjects0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1408,7 +1408,7 @@ void main() {
 
   // getRule
   test(
-    'getRule',
+    'getRule0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1429,7 +1429,7 @@ void main() {
 
   // getSettings
   test(
-    'getSettings',
+    'getSettings0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1449,7 +1449,7 @@ void main() {
 
   // getSources
   test(
-    'getSources',
+    'getSources0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1467,7 +1467,7 @@ void main() {
 
   // getSynonym
   test(
-    'getSynonym',
+    'getSynonym0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1488,7 +1488,7 @@ void main() {
 
   // getTask
   test(
-    'getTask',
+    'getTask0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1509,7 +1509,7 @@ void main() {
 
   // getTopUserIds
   test(
-    'getTopUserIds',
+    'getTopUserIds0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1527,7 +1527,7 @@ void main() {
 
   // getUserId
   test(
-    'getUserId',
+    'getUserId0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1586,7 +1586,7 @@ void main() {
 
   // listApiKeys
   test(
-    'listApiKeys',
+    'listApiKeys0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1604,7 +1604,7 @@ void main() {
 
   // listClusters
   test(
-    'listClusters',
+    'listClusters0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1704,7 +1704,7 @@ void main() {
 
   // multipleBatch
   test(
-    'multipleBatch',
+    'multipleBatch0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1735,7 +1735,7 @@ void main() {
 
   // operationIndex
   test(
-    'operationIndex',
+    'operationIndex0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1764,7 +1764,7 @@ void main() {
 
   // partialUpdateObject
   test(
-    'partialUpdateObject',
+    'partialUpdateObject0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1796,7 +1796,7 @@ void main() {
 
   // removeUserId
   test(
-    'removeUserId',
+    'removeUserId0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1816,7 +1816,7 @@ void main() {
 
   // replaceSources
   test(
-    'replaceSources',
+    'replaceSources0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1842,7 +1842,7 @@ void main() {
 
   // restoreApiKey
   test(
-    'restoreApiKey',
+    'restoreApiKey0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1862,7 +1862,7 @@ void main() {
 
   // saveObject
   test(
-    'saveObject',
+    'saveObject0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2136,7 +2136,7 @@ void main() {
 
   // saveSynonym
   test(
-    'saveSynonym',
+    'saveSynonym0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2170,7 +2170,7 @@ void main() {
 
   // saveSynonyms
   test(
-    'saveSynonyms',
+    'saveSynonyms0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2776,7 +2776,7 @@ void main() {
 
   // searchRules
   test(
-    'searchRules',
+    'searchRules0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2894,7 +2894,7 @@ void main() {
 
   // searchUserIds
   test(
-    'searchUserIds',
+    'searchUserIds0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3379,7 +3379,7 @@ void main() {
 
   // updateApiKey
   test(
-    'updateApiKey',
+    'updateApiKey0',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',

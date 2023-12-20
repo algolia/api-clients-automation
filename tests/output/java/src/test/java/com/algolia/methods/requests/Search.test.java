@@ -41,7 +41,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("addApiKey")
+  @DisplayName("addApiKey0")
   void addApiKeyTest0() {
     ApiKey apiKey0 = new ApiKey();
     {
@@ -80,7 +80,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("addOrUpdateObject")
+  @DisplayName("addOrUpdateObject0")
   void addOrUpdateObjectTest0() {
     String indexName0 = "indexName";
     String objectID0 = "uniqueID";
@@ -100,7 +100,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("appendSource")
+  @DisplayName("appendSource0")
   void appendSourceTest0() {
     Source source0 = new Source();
     {
@@ -122,7 +122,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("assignUserId")
+  @DisplayName("assignUserId0")
   void assignUserIdTest0() {
     String xAlgoliaUserID0 = "userID";
     AssignUserIdParams assignUserIdParams0 = new AssignUserIdParams();
@@ -416,7 +416,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("batchAssignUserIds")
+  @DisplayName("batchAssignUserIds0")
   void batchAssignUserIdsTest0() {
     String xAlgoliaUserID0 = "userID";
     BatchAssignUserIdsParams batchAssignUserIdsParams0 = new BatchAssignUserIdsParams();
@@ -714,7 +714,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearAllSynonyms")
+  @DisplayName("clearAllSynonyms0")
   void clearAllSynonymsTest0() {
     String indexName0 = "indexName";
 
@@ -728,7 +728,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearObjects")
+  @DisplayName("clearObjects0")
   void clearObjectsTest0() {
     String indexName0 = "theIndexName";
 
@@ -742,7 +742,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearRules")
+  @DisplayName("clearRules0")
   void clearRulesTest0() {
     String indexName0 = "indexName";
 
@@ -1346,7 +1346,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteApiKey")
+  @DisplayName("deleteApiKey0")
   void deleteApiKeyTest0() {
     String key0 = "myTestApiKey";
 
@@ -1360,7 +1360,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteBy")
+  @DisplayName("deleteBy0")
   void deleteByTest0() {
     String indexName0 = "theIndexName";
     DeleteByParams deleteByParams0 = new DeleteByParams();
@@ -1379,7 +1379,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteIndex")
+  @DisplayName("deleteIndex0")
   void deleteIndexTest0() {
     String indexName0 = "theIndexName";
 
@@ -1393,7 +1393,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteObject")
+  @DisplayName("deleteObject0")
   void deleteObjectTest0() {
     String indexName0 = "theIndexName";
     String objectID0 = "uniqueID";
@@ -1408,7 +1408,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteRule")
+  @DisplayName("deleteRule0")
   void deleteRuleTest0() {
     String indexName0 = "indexName";
     String objectID0 = "id1";
@@ -1423,7 +1423,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteSource")
+  @DisplayName("deleteSource0")
   void deleteSourceTest0() {
     String source0 = "theSource";
 
@@ -1437,7 +1437,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteSynonym")
+  @DisplayName("deleteSynonym0")
   void deleteSynonymTest0() {
     String indexName0 = "indexName";
     String objectID0 = "id1";
@@ -1452,7 +1452,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getApiKey")
+  @DisplayName("getApiKey0")
   void getApiKeyTest0() {
     String key0 = "myTestApiKey";
 
@@ -1534,7 +1534,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getObject")
+  @DisplayName("getObject0")
   void getObjectTest0() {
     String indexName0 = "theIndexName";
     String objectID0 = "uniqueID";
@@ -1571,7 +1571,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getObjects")
+  @DisplayName("getObjects0")
   void getObjectsTest0() {
     GetObjectsParams getObjectsParams0 = new GetObjectsParams();
     {
@@ -1613,7 +1613,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRule")
+  @DisplayName("getRule0")
   void getRuleTest0() {
     String indexName0 = "indexName";
     String objectID0 = "id1";
@@ -1628,7 +1628,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSettings")
+  @DisplayName("getSettings0")
   void getSettingsTest0() {
     String indexName0 = "theIndexName";
 
@@ -1642,7 +1642,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSources")
+  @DisplayName("getSources0")
   void getSourcesTest0() {
     assertDoesNotThrow(() -> {
       client.getSources();
@@ -1654,7 +1654,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSynonym")
+  @DisplayName("getSynonym0")
   void getSynonymTest0() {
     String indexName0 = "indexName";
     String objectID0 = "id1";
@@ -1669,7 +1669,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTask")
+  @DisplayName("getTask0")
   void getTaskTest0() {
     String indexName0 = "theIndexName";
     long taskID0 = 123L;
@@ -1684,7 +1684,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTopUserIds")
+  @DisplayName("getTopUserIds0")
   void getTopUserIdsTest0() {
     assertDoesNotThrow(() -> {
       client.getTopUserIds();
@@ -1696,7 +1696,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getUserId")
+  @DisplayName("getUserId0")
   void getUserIdTest0() {
     String userID0 = "uniqueID";
 
@@ -1748,7 +1748,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("listApiKeys")
+  @DisplayName("listApiKeys0")
   void listApiKeysTest0() {
     assertDoesNotThrow(() -> {
       client.listApiKeys();
@@ -1760,7 +1760,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("listClusters")
+  @DisplayName("listClusters0")
   void listClustersTest0() {
     assertDoesNotThrow(() -> {
       client.listClusters();
@@ -1856,7 +1856,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("multipleBatch")
+  @DisplayName("multipleBatch0")
   void multipleBatchTest0() {
     BatchParams batchParams0 = new BatchParams();
     {
@@ -1896,7 +1896,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("operationIndex")
+  @DisplayName("operationIndex0")
   void operationIndexTest0() {
     String indexName0 = "theIndexName";
     OperationIndexParams operationIndexParams0 = new OperationIndexParams();
@@ -1931,7 +1931,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("partialUpdateObject")
+  @DisplayName("partialUpdateObject0")
   void partialUpdateObjectTest0() {
     String indexName0 = "theIndexName";
     String objectID0 = "uniqueID";
@@ -1981,7 +1981,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("removeUserId")
+  @DisplayName("removeUserId0")
   void removeUserIdTest0() {
     String userID0 = "uniqueID";
 
@@ -1995,7 +1995,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("replaceSources")
+  @DisplayName("replaceSources0")
   void replaceSourcesTest0() {
     List<Source> source0 = new ArrayList<>();
     {
@@ -2021,7 +2021,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("restoreApiKey")
+  @DisplayName("restoreApiKey0")
   void restoreApiKeyTest0() {
     String key0 = "myApiKey";
 
@@ -2035,7 +2035,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveObject")
+  @DisplayName("saveObject0")
   void saveObjectTest0() {
     String indexName0 = "theIndexName";
     Map<String, String> body0 = new HashMap<>();
@@ -2473,7 +2473,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveSynonym")
+  @DisplayName("saveSynonym0")
   void saveSynonymTest0() {
     String indexName0 = "indexName";
     String objectID0 = "id1";
@@ -2527,7 +2527,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveSynonyms")
+  @DisplayName("saveSynonyms0")
   void saveSynonymsTest0() {
     String indexName0 = "indexName";
     List<SynonymHit> synonymHit0 = new ArrayList<>();
@@ -3435,7 +3435,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchRules")
+  @DisplayName("searchRules0")
   void searchRulesTest0() {
     String indexName0 = "indexName";
     SearchRulesParams searchRulesParams0 = new SearchRulesParams();
@@ -3546,7 +3546,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchUserIds")
+  @DisplayName("searchUserIds0")
   void searchUserIdsTest0() {
     SearchUserIdsParams searchUserIdsParams0 = new SearchUserIdsParams();
     {
@@ -4274,7 +4274,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("updateApiKey")
+  @DisplayName("updateApiKey0")
   void updateApiKeyTest0() {
     String key0 = "myApiKey";
     ApiKey apiKey0 = new ApiKey();

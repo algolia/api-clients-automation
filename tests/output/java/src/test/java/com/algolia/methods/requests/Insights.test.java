@@ -631,7 +631,7 @@ class InsightsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("pushEvents")
+  @DisplayName("pushEvents0")
   void pushEventsTest0() {
     InsightsEvents insightsEvents0 = new InsightsEvents();
     {

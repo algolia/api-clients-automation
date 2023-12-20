@@ -30,7 +30,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("addApiKey") {
+  test("addApiKey0") {
     val (client, echo) = testClient()
     val future = client.addApiKey(
       apiKey = ApiKey(
@@ -54,7 +54,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("addOrUpdateObject") {
+  test("addOrUpdateObject0") {
     val (client, echo) = testClient()
     val future = client.addOrUpdateObject(
       indexName = "indexName",
@@ -72,7 +72,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("appendSource") {
+  test("appendSource0") {
     val (client, echo) = testClient()
     val future = client.appendSource(
       source = Source(
@@ -91,7 +91,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("assignUserId") {
+  test("assignUserId0") {
     val (client, echo) = testClient()
     val future = client.assignUserId(
       xAlgoliaUserID = "userID",
@@ -284,7 +284,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("batchAssignUserIds") {
+  test("batchAssignUserIds0") {
     val (client, echo) = testClient()
     val future = client.batchAssignUserIds(
       xAlgoliaUserID = "userID",
@@ -479,7 +479,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("clearAllSynonyms") {
+  test("clearAllSynonyms0") {
     val (client, echo) = testClient()
     val future = client.clearAllSynonyms(
       indexName = "indexName"
@@ -493,7 +493,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("clearObjects") {
+  test("clearObjects0") {
     val (client, echo) = testClient()
     val future = client.clearObjects(
       indexName = "theIndexName"
@@ -507,7 +507,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("clearRules") {
+  test("clearRules0") {
     val (client, echo) = testClient()
     val future = client.clearRules(
       indexName = "indexName"
@@ -966,7 +966,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("deleteApiKey") {
+  test("deleteApiKey0") {
     val (client, echo) = testClient()
     val future = client.deleteApiKey(
       key = "myTestApiKey"
@@ -980,7 +980,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteBy") {
+  test("deleteBy0") {
     val (client, echo) = testClient()
     val future = client.deleteBy(
       indexName = "theIndexName",
@@ -999,7 +999,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("deleteIndex") {
+  test("deleteIndex0") {
     val (client, echo) = testClient()
     val future = client.deleteIndex(
       indexName = "theIndexName"
@@ -1013,7 +1013,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteObject") {
+  test("deleteObject0") {
     val (client, echo) = testClient()
     val future = client.deleteObject(
       indexName = "theIndexName",
@@ -1028,7 +1028,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteRule") {
+  test("deleteRule0") {
     val (client, echo) = testClient()
     val future = client.deleteRule(
       indexName = "indexName",
@@ -1043,7 +1043,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteSource") {
+  test("deleteSource0") {
     val (client, echo) = testClient()
     val future = client.deleteSource(
       source = "theSource"
@@ -1057,7 +1057,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteSynonym") {
+  test("deleteSynonym0") {
     val (client, echo) = testClient()
     val future = client.deleteSynonym(
       indexName = "indexName",
@@ -1072,7 +1072,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getApiKey") {
+  test("getApiKey0") {
     val (client, echo) = testClient()
     val future = client.getApiKey(
       key = "myTestApiKey"
@@ -1150,7 +1150,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("getObject") {
+  test("getObject0") {
     val (client, echo) = testClient()
     val future = client.getObject(
       indexName = "theIndexName",
@@ -1173,7 +1173,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("getObjects") {
+  test("getObjects0") {
     val (client, echo) = testClient()
     val future = client.getObjects(
       getObjectsParams = GetObjectsParams(
@@ -1199,7 +1199,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("getRule") {
+  test("getRule0") {
     val (client, echo) = testClient()
     val future = client.getRule(
       indexName = "indexName",
@@ -1214,7 +1214,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSettings") {
+  test("getSettings0") {
     val (client, echo) = testClient()
     val future = client.getSettings(
       indexName = "theIndexName"
@@ -1228,7 +1228,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSources") {
+  test("getSources0") {
     val (client, echo) = testClient()
     val future = client.getSources(
     )
@@ -1241,7 +1241,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSynonym") {
+  test("getSynonym0") {
     val (client, echo) = testClient()
     val future = client.getSynonym(
       indexName = "indexName",
@@ -1256,7 +1256,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTask") {
+  test("getTask0") {
     val (client, echo) = testClient()
     val future = client.getTask(
       indexName = "theIndexName",
@@ -1271,7 +1271,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTopUserIds") {
+  test("getTopUserIds0") {
     val (client, echo) = testClient()
     val future = client.getTopUserIds(
     )
@@ -1284,7 +1284,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getUserId") {
+  test("getUserId0") {
     val (client, echo) = testClient()
     val future = client.getUserId(
       userID = "uniqueID"
@@ -1332,7 +1332,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("listApiKeys") {
+  test("listApiKeys0") {
     val (client, echo) = testClient()
     val future = client.listApiKeys(
     )
@@ -1345,7 +1345,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("listClusters") {
+  test("listClusters0") {
     val (client, echo) = testClient()
     val future = client.listClusters(
     )
@@ -1428,7 +1428,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("multipleBatch") {
+  test("multipleBatch0") {
     val (client, echo) = testClient()
     val future = client.multipleBatch(
       batchParams = BatchParams(
@@ -1453,7 +1453,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("operationIndex") {
+  test("operationIndex0") {
     val (client, echo) = testClient()
     val future = client.operationIndex(
       indexName = "theIndexName",
@@ -1474,7 +1474,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("partialUpdateObject") {
+  test("partialUpdateObject0") {
     val (client, echo) = testClient()
     val future = client.partialUpdateObject(
       indexName = "theIndexName",
@@ -1506,7 +1506,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("removeUserId") {
+  test("removeUserId0") {
     val (client, echo) = testClient()
     val future = client.removeUserId(
       userID = "uniqueID"
@@ -1520,7 +1520,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("replaceSources") {
+  test("replaceSources0") {
     val (client, echo) = testClient()
     val future = client.replaceSources(
       source = Seq(
@@ -1541,7 +1541,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("restoreApiKey") {
+  test("restoreApiKey0") {
     val (client, echo) = testClient()
     val future = client.restoreApiKey(
       key = "myApiKey"
@@ -1555,7 +1555,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("saveObject") {
+  test("saveObject0") {
     val (client, echo) = testClient()
     val future = client.saveObject(
       indexName = "theIndexName",
@@ -1855,7 +1855,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("saveSynonym") {
+  test("saveSynonym0") {
     val (client, echo) = testClient()
     val future = client.saveSynonym(
       indexName = "indexName",
@@ -1885,7 +1885,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("saveSynonyms") {
+  test("saveSynonyms0") {
     val (client, echo) = testClient()
     val future = client.saveSynonyms(
       indexName = "indexName",
@@ -2357,7 +2357,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchRules") {
+  test("searchRules0") {
     val (client, echo) = testClient()
     val future = client.searchRules(
       indexName = "indexName",
@@ -2464,7 +2464,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("searchUserIds") {
+  test("searchUserIds0") {
     val (client, echo) = testClient()
     val future = client.searchUserIds(
       searchUserIdsParams = SearchUserIdsParams(
@@ -2877,7 +2877,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("updateApiKey") {
+  test("updateApiKey0") {
     val (client, echo) = testClient()
     val future = client.updateApiKey(
       key = "myApiKey",
