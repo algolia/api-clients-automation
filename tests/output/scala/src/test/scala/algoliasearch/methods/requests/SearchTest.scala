@@ -1043,6 +1043,21 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("deleteRule1") {
+    val (client, echo) = testClient()
+    val future = client.deleteRule(
+      indexName = "indexName",
+      objectID = "test/with/slash"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/rules/test%2Fwith%2Fslash")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
   test("deleteSource0") {
     val (client, echo) = testClient()
     val future = client.deleteSource(

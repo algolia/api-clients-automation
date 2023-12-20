@@ -785,6 +785,18 @@ describe('deleteRule', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('deleteRule1', async () => {
+    const req = (await client.deleteRule({
+      indexName: 'indexName',
+      objectID: 'test/with/slash',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/test%2Fwith%2Fslash');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('deleteSource', () => {

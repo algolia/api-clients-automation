@@ -6,7 +6,7 @@ from algoliasearch.monitoring.client import MonitoringClient
 from algoliasearch.monitoring.config import Config
 
 
-class TestMonitoringClient:
+class TestMonitoringClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

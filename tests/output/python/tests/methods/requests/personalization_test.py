@@ -6,7 +6,7 @@ from algoliasearch.personalization.client import PersonalizationClient
 from algoliasearch.personalization.config import Config
 
 
-class TestPersonalizationClient:
+class TestPersonalizationClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

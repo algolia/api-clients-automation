@@ -6,7 +6,7 @@ from algoliasearch.abtesting.config import Config
 from algoliasearch.http.transporter import EchoTransporter
 
 
-class TestAbtestingClient:
+class TestAbtestingClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

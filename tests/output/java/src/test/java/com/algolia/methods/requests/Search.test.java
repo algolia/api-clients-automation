@@ -1423,6 +1423,21 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("deleteRule1")
+  void deleteRuleTest1() {
+    String indexName0 = "indexName";
+    String objectID0 = "test/with/slash";
+
+    assertDoesNotThrow(() -> {
+      client.deleteRule(indexName0, objectID0);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/test%2Fwith%2Fslash", req.path);
+    assertEquals("DELETE", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("deleteSource0")
   void deleteSourceTest0() {
     String source0 = "theSource";

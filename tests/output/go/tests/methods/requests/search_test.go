@@ -1239,6 +1239,23 @@ func TestSearch_DeleteRule(t *testing.T) {
 				require.Nil(t, echo.body)
 			},
 		},
+		{
+			name: "deleteRule1",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"indexName":"indexName","objectID":"test/with/slash"}`
+				req := search.ApiDeleteRuleRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				_, err := client.DeleteRule(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/test%2Fwith%2Fslash")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "DELETE", echo.method)
+
+				require.Nil(t, echo.body)
+			},
+		},
 	}
 	for _, test := range tests {
 		test := test

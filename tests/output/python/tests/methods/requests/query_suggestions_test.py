@@ -6,7 +6,7 @@ from algoliasearch.query_suggestions.client import QuerySuggestionsClient
 from algoliasearch.query_suggestions.config import Config
 
 
-class TestQuerySuggestionsClient:
+class TestQuerySuggestionsClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"
