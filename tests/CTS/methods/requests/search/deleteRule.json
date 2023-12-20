@@ -8,5 +8,15 @@
       "path": "/1/indexes/indexName/rules/id1",
       "method": "DELETE"
     }
+  },
+  {
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "test/with/slash"
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/test%2Fwith%2Fslash",
+      "method": "DELETE"
+    }
   }
 ]
