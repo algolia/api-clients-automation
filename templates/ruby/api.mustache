@@ -181,7 +181,7 @@ module {{moduleName}}
 
       post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 
-      return_type = request_options[:debug_return_type]{{#returnType}} || '{{^vendorExtensions.x-is-custom-request}}{{{modelModule}}}::{{/vendorExtensions.x-is-custom-request}}{{{.}}}'{{/returnType}}
+      return_type = request_options[:debug_return_type]{{#vendorExtensions}}{{#returnProperty}} || '{{#isArray}}Array<{{{modelModule}}}::{{complexType}}>{{/isArray}}{{^isArray}}{{^x-is-custom-request}}{{{modelModule}}}::{{/x-is-custom-request}}{{{dataType}}}{{/isArray}}'{{/returnProperty}}{{/vendorExtensions}}
 
       new_options = request_options.merge(
         :operation => :'{{classname}}.{{operationId}}',
