@@ -12,9 +12,9 @@ module Algolia
       # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
       #
       def initialize(config, requester)
-        @config           = config
-        @http_requester   = requester
-        @retry_strategy   = RetryStrategy.new(config.hosts)
+        @config = config
+        @requester = requester
+        @retry_strategy = RetryStrategy.new(config.hosts)
       end
 
       # @param call_type [Binary] READ or WRITE operation
@@ -36,7 +36,7 @@ module Algolia
           # request_options.query_params.merge!(request_options.data) if method == :GET
 
           request  = build_request(method, path, body, request_options)
-          response = @http_requester.send_request(
+          response = @requester.send_request(
             host,
             request[:method],
             request[:path],
@@ -74,8 +74,8 @@ module Algolia
         request                   = {}
         request[:method]          = method.downcase
         request[:path]            = path
-        request[:body]            = body.nil? || body.empty? ? '' : body
-        request[:query_params]    = request_options.query_params
+        request[:body]            = body
+        request[:query_params]    = stringify_query_params(request_options.query_params)
         request[:header_params]   = generate_header_params(request_options)
         request[:timeout]         = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
@@ -89,8 +89,10 @@ module Algolia
       # @return [Hash] merged headers
       #
       def generate_header_params(request_options = {})
-        header_params = @config.header_params.merge(request_options.header_params)
-        header_params['Accept-Encoding'] = 'gzip' if request_options.compression_type == 'gzip'
+        header_params = request_options.header_params.transform_keys(&:downcase)
+        header_params = @config.header_params.merge(header_params)
+        header_params['accept-encoding'] = 'gzip' if request_options.compression_type == 'gzip'
+
         header_params
       end
 
@@ -107,6 +109,13 @@ module Algolia
         else
           @config.write_timeout
         end
+      end
+
+      def stringify_query_params(query_params)
+        query_params.map do |key, value|
+          value = value.join(',') if value.is_a?(Array)
+          [key, value.to_s]
+        end.to_h
       end
     end
   end

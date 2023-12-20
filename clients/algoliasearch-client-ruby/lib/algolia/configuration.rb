@@ -29,6 +29,7 @@ module Algolia
         'Content-Type' => 'application/json',
         'User-Agent' => @user_agent
       }
+      @header_params.transform_keys!(&:downcase)
 
       yield(self) if block_given?
     end

@@ -81,7 +81,7 @@ module Algolia
       #
       def to_query_string(query_params)
         query_params.map do |key, value|
-          "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
+          "#{key}=#{value}"
         end.join('&')
       end
     end

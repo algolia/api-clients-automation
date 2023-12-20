@@ -155,29 +155,24 @@ module {{moduleName}}
       {{/minItems}}
       {{/hasValidation}}
       {{/allParams}}
-      path = {{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}CGI.escape({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}{{/vendorExtensions}}
-      query_params = request_options[:query_params] || {}
+      {{#vendorExtensions}}
+      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}CGI.escape({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
+      query_params = {}
       {{#queryParams}}
-      {{#required}}
-      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
-      {{/required}}
+      {{#x-is-custom-request}}
+      query_params = query_params.merge({{{paramName}}}) unless {{{paramName}}}.nil?
+      {{/x-is-custom-request}}
+      {{^x-is-custom-request}}
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}{{^required}} unless {{{paramName}}}.nil?{{/required}}
+      {{/x-is-custom-request}}
       {{/queryParams}}
-      {{#queryParams}}
-      {{^required}}
-      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}} unless {{{paramName}}}.nil?
-      {{/required}}
-      {{/queryParams}}
-      header_params = request_options[:header_params] || {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
       {{#headerParams}}
-      {{#required}}
-      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
-      {{/required}}
+      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}{{^required}} unless {{{paramName}}}.nil?{{/required}}
       {{/headerParams}}
-      {{#headerParams}}
-      {{^required}}
-      header_params[{{#lambdaFixHeaderKey}}:'{{{baseName}}}'{{/lambdaFixHeaderKey}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}} unless {{{paramName}}}.nil?
-      {{/required}}
-      {{/headerParams}}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      {{/vendorExtensions}}
 
       post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 
