@@ -316,7 +316,7 @@ describe('customPut', () => {
 });
 
 describe('pushEvents', () => {
-  test('pushEvents', async () => {
+  test('pushEvents0', async () => {
     const req = (await client.pushEvents({
       events: [
         {

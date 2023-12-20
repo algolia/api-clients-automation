@@ -515,7 +515,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for PushEvents
-     * pushEvents.
+     * pushEvents0.
      */
     public function testPushEvents0()
     {

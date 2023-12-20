@@ -20,7 +20,7 @@ class SearchTest {
   // addApiKey
 
   @Test
-  fun `addApiKey`() = runTest {
+  fun `addApiKey0`() = runTest {
     client.runTest(
       call = {
         addApiKey(
@@ -44,7 +44,7 @@ class SearchTest {
   // addOrUpdateObject
 
   @Test
-  fun `addOrUpdateObject`() = runTest {
+  fun `addOrUpdateObject0`() = runTest {
     client.runTest(
       call = {
         addOrUpdateObject(
@@ -69,7 +69,7 @@ class SearchTest {
   // appendSource
 
   @Test
-  fun `appendSource`() = runTest {
+  fun `appendSource0`() = runTest {
     client.runTest(
       call = {
         appendSource(
@@ -90,7 +90,7 @@ class SearchTest {
   // assignUserId
 
   @Test
-  fun `assignUserId`() = runTest {
+  fun `assignUserId0`() = runTest {
     client.runTest(
       call = {
         assignUserId(
@@ -317,7 +317,7 @@ class SearchTest {
   // batchAssignUserIds
 
   @Test
-  fun `batchAssignUserIds`() = runTest {
+  fun `batchAssignUserIds0`() = runTest {
     client.runTest(
       call = {
         batchAssignUserIds(
@@ -506,7 +506,7 @@ class SearchTest {
   // clearAllSynonyms
 
   @Test
-  fun `clearAllSynonyms`() = runTest {
+  fun `clearAllSynonyms0`() = runTest {
     client.runTest(
       call = {
         clearAllSynonyms(
@@ -524,7 +524,7 @@ class SearchTest {
   // clearObjects
 
   @Test
-  fun `clearObjects`() = runTest {
+  fun `clearObjects0`() = runTest {
     client.runTest(
       call = {
         clearObjects(
@@ -542,7 +542,7 @@ class SearchTest {
   // clearRules
 
   @Test
-  fun `clearRules`() = runTest {
+  fun `clearRules0`() = runTest {
     client.runTest(
       call = {
         clearRules(
@@ -979,7 +979,7 @@ class SearchTest {
   // deleteApiKey
 
   @Test
-  fun `deleteApiKey`() = runTest {
+  fun `deleteApiKey0`() = runTest {
     client.runTest(
       call = {
         deleteApiKey(
@@ -997,7 +997,7 @@ class SearchTest {
   // deleteBy
 
   @Test
-  fun `deleteBy`() = runTest {
+  fun `deleteBy0`() = runTest {
     client.runTest(
       call = {
         deleteBy(
@@ -1018,7 +1018,7 @@ class SearchTest {
   // deleteIndex
 
   @Test
-  fun `deleteIndex`() = runTest {
+  fun `deleteIndex0`() = runTest {
     client.runTest(
       call = {
         deleteIndex(
@@ -1036,7 +1036,7 @@ class SearchTest {
   // deleteObject
 
   @Test
-  fun `deleteObject`() = runTest {
+  fun `deleteObject0`() = runTest {
     client.runTest(
       call = {
         deleteObject(
@@ -1055,7 +1055,7 @@ class SearchTest {
   // deleteRule
 
   @Test
-  fun `deleteRule`() = runTest {
+  fun `deleteRule0`() = runTest {
     client.runTest(
       call = {
         deleteRule(
@@ -1074,7 +1074,7 @@ class SearchTest {
   // deleteSource
 
   @Test
-  fun `deleteSource`() = runTest {
+  fun `deleteSource0`() = runTest {
     client.runTest(
       call = {
         deleteSource(
@@ -1092,7 +1092,7 @@ class SearchTest {
   // deleteSynonym
 
   @Test
-  fun `deleteSynonym`() = runTest {
+  fun `deleteSynonym0`() = runTest {
     client.runTest(
       call = {
         deleteSynonym(
@@ -1111,7 +1111,7 @@ class SearchTest {
   // getApiKey
 
   @Test
-  fun `getApiKey`() = runTest {
+  fun `getApiKey0`() = runTest {
     client.runTest(
       call = {
         getApiKey(
@@ -1197,7 +1197,7 @@ class SearchTest {
   // getObject
 
   @Test
-  fun `getObject`() = runTest {
+  fun `getObject0`() = runTest {
     client.runTest(
       call = {
         getObject(
@@ -1218,7 +1218,7 @@ class SearchTest {
   // getObjects
 
   @Test
-  fun `getObjects`() = runTest {
+  fun `getObjects0`() = runTest {
     client.runTest(
       call = {
         getObjects(
@@ -1244,7 +1244,7 @@ class SearchTest {
   // getRule
 
   @Test
-  fun `getRule`() = runTest {
+  fun `getRule0`() = runTest {
     client.runTest(
       call = {
         getRule(
@@ -1263,7 +1263,7 @@ class SearchTest {
   // getSettings
 
   @Test
-  fun `getSettings`() = runTest {
+  fun `getSettings0`() = runTest {
     client.runTest(
       call = {
         getSettings(
@@ -1281,7 +1281,7 @@ class SearchTest {
   // getSources
 
   @Test
-  fun `getSources`() = runTest {
+  fun `getSources0`() = runTest {
     client.runTest(
       call = {
         getSources()
@@ -1297,7 +1297,7 @@ class SearchTest {
   // getSynonym
 
   @Test
-  fun `getSynonym`() = runTest {
+  fun `getSynonym0`() = runTest {
     client.runTest(
       call = {
         getSynonym(
@@ -1316,7 +1316,7 @@ class SearchTest {
   // getTask
 
   @Test
-  fun `getTask`() = runTest {
+  fun `getTask0`() = runTest {
     client.runTest(
       call = {
         getTask(
@@ -1335,7 +1335,7 @@ class SearchTest {
   // getTopUserIds
 
   @Test
-  fun `getTopUserIds`() = runTest {
+  fun `getTopUserIds0`() = runTest {
     client.runTest(
       call = {
         getTopUserIds()
@@ -1351,7 +1351,7 @@ class SearchTest {
   // getUserId
 
   @Test
-  fun `getUserId`() = runTest {
+  fun `getUserId0`() = runTest {
     client.runTest(
       call = {
         getUserId(
@@ -1402,7 +1402,7 @@ class SearchTest {
   // listApiKeys
 
   @Test
-  fun `listApiKeys`() = runTest {
+  fun `listApiKeys0`() = runTest {
     client.runTest(
       call = {
         listApiKeys()
@@ -1418,7 +1418,7 @@ class SearchTest {
   // listClusters
 
   @Test
-  fun `listClusters`() = runTest {
+  fun `listClusters0`() = runTest {
     client.runTest(
       call = {
         listClusters()
@@ -1502,7 +1502,7 @@ class SearchTest {
   // multipleBatch
 
   @Test
-  fun `multipleBatch`() = runTest {
+  fun `multipleBatch0`() = runTest {
     client.runTest(
       call = {
         multipleBatch(
@@ -1533,7 +1533,7 @@ class SearchTest {
   // operationIndex
 
   @Test
-  fun `operationIndex`() = runTest {
+  fun `operationIndex0`() = runTest {
     client.runTest(
       call = {
         operationIndex(
@@ -1556,7 +1556,7 @@ class SearchTest {
   // partialUpdateObject
 
   @Test
-  fun `partialUpdateObject`() = runTest {
+  fun `partialUpdateObject0`() = runTest {
     client.runTest(
       call = {
         partialUpdateObject(
@@ -1584,7 +1584,7 @@ class SearchTest {
   // removeUserId
 
   @Test
-  fun `removeUserId`() = runTest {
+  fun `removeUserId0`() = runTest {
     client.runTest(
       call = {
         removeUserId(
@@ -1602,7 +1602,7 @@ class SearchTest {
   // replaceSources
 
   @Test
-  fun `replaceSources`() = runTest {
+  fun `replaceSources0`() = runTest {
     client.runTest(
       call = {
         replaceSources(
@@ -1625,7 +1625,7 @@ class SearchTest {
   // restoreApiKey
 
   @Test
-  fun `restoreApiKey`() = runTest {
+  fun `restoreApiKey0`() = runTest {
     client.runTest(
       call = {
         restoreApiKey(
@@ -1643,7 +1643,7 @@ class SearchTest {
   // saveObject
 
   @Test
-  fun `saveObject`() = runTest {
+  fun `saveObject0`() = runTest {
     client.runTest(
       call = {
         saveObject(
@@ -1893,7 +1893,7 @@ class SearchTest {
   // saveSynonym
 
   @Test
-  fun `saveSynonym`() = runTest {
+  fun `saveSynonym0`() = runTest {
     client.runTest(
       call = {
         saveSynonym(
@@ -1919,7 +1919,7 @@ class SearchTest {
   // saveSynonyms
 
   @Test
-  fun `saveSynonyms`() = runTest {
+  fun `saveSynonyms0`() = runTest {
     client.runTest(
       call = {
         saveSynonyms(
@@ -2350,7 +2350,7 @@ class SearchTest {
   // searchRules
 
   @Test
-  fun `searchRules`() = runTest {
+  fun `searchRules0`() = runTest {
     client.runTest(
       call = {
         searchRules(
@@ -2450,7 +2450,7 @@ class SearchTest {
   // searchUserIds
 
   @Test
-  fun `searchUserIds`() = runTest {
+  fun `searchUserIds0`() = runTest {
     client.runTest(
       call = {
         searchUserIds(
@@ -2811,7 +2811,7 @@ class SearchTest {
   // updateApiKey
 
   @Test
-  fun `updateApiKey`() = runTest {
+  fun `updateApiKey0`() = runTest {
     client.runTest(
       call = {
         updateApiKey(

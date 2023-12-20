@@ -41,7 +41,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("createConfig")
+  @DisplayName("createConfig0")
   void createConfigTest0() {
     QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex0 = new QuerySuggestionsConfigurationWithIndex();
     {
@@ -705,7 +705,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteConfig")
+  @DisplayName("deleteConfig0")
   void deleteConfigTest0() {
     String indexName0 = "theIndexName";
 
@@ -719,7 +719,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getAllConfigs")
+  @DisplayName("getAllConfigs0")
   void getAllConfigsTest0() {
     assertDoesNotThrow(() -> {
       client.getAllConfigs();
@@ -731,7 +731,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getConfig")
+  @DisplayName("getConfig0")
   void getConfigTest0() {
     String indexName0 = "theIndexName";
 
@@ -745,7 +745,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getConfigStatus")
+  @DisplayName("getConfigStatus0")
   void getConfigStatusTest0() {
     String indexName0 = "theIndexName";
 
@@ -759,7 +759,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getLogFile")
+  @DisplayName("getLogFile0")
   void getLogFileTest0() {
     String indexName0 = "theIndexName";
 
@@ -773,7 +773,7 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("updateConfig")
+  @DisplayName("updateConfig0")
   void updateConfigTest0() {
     String indexName0 = "theIndexName";
     QuerySuggestionsConfiguration querySuggestionsConfiguration0 = new QuerySuggestionsConfiguration();

@@ -375,7 +375,7 @@ class TestRecommendClient:
 
     async def test_delete_recommend_rule_0(self):
         """
-        deleteRecommendRule
+        deleteRecommendRule0
         """
         _req = await self._client.delete_recommend_rule_with_http_info(
             index_name="indexName",
@@ -394,7 +394,7 @@ class TestRecommendClient:
 
     async def test_get_recommend_rule_0(self):
         """
-        getRecommendRule
+        getRecommendRule0
         """
         _req = await self._client.get_recommend_rule_with_http_info(
             index_name="indexName",
@@ -413,7 +413,7 @@ class TestRecommendClient:
 
     async def test_get_recommend_status_0(self):
         """
-        getRecommendStatus
+        getRecommendStatus0
         """
         _req = await self._client.get_recommend_status_with_http_info(
             index_name="indexName",
@@ -668,7 +668,7 @@ class TestRecommendClient:
 
     async def test_search_recommend_rules_0(self):
         """
-        searchRecommendRules
+        searchRecommendRules0
         """
         _req = await self._client.search_recommend_rules_with_http_info(
             index_name="indexName",

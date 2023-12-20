@@ -35,7 +35,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "createConfig",
+			name: "createConfig0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}`
 				req := suggestions.ApiCreateConfigRequest{}
@@ -564,7 +564,7 @@ func TestSuggestions_DeleteConfig(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteConfig",
+			name: "deleteConfig0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := suggestions.ApiDeleteConfigRequest{}
@@ -597,7 +597,7 @@ func TestSuggestions_GetAllConfigs(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getAllConfigs",
+			name: "getAllConfigs0",
 			testFunc: func(t *testing.T) {
 				_, err := client.GetAllConfigs()
 				require.NoError(t, err)
@@ -627,7 +627,7 @@ func TestSuggestions_GetConfig(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getConfig",
+			name: "getConfig0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := suggestions.ApiGetConfigRequest{}
@@ -660,7 +660,7 @@ func TestSuggestions_GetConfigStatus(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getConfigStatus",
+			name: "getConfigStatus0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := suggestions.ApiGetConfigStatusRequest{}
@@ -693,7 +693,7 @@ func TestSuggestions_GetLogFile(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getLogFile",
+			name: "getLogFile0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := suggestions.ApiGetLogFileRequest{}
@@ -726,7 +726,7 @@ func TestSuggestions_UpdateConfig(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "updateConfig",
+			name: "updateConfig0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","querySuggestionsConfiguration":{"sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}}`
 				req := suggestions.ApiUpdateConfigRequest{}

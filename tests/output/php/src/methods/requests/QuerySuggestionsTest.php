@@ -37,7 +37,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for CreateConfig
-     * createConfig.
+     * createConfig0.
      */
     public function testCreateConfig0()
     {
@@ -561,7 +561,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteConfig
-     * deleteConfig.
+     * deleteConfig0.
      */
     public function testDeleteConfig0()
     {
@@ -581,7 +581,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetAllConfigs
-     * getAllConfigs.
+     * getAllConfigs0.
      */
     public function testGetAllConfigs0()
     {
@@ -599,7 +599,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetConfig
-     * getConfig.
+     * getConfig0.
      */
     public function testGetConfig0()
     {
@@ -619,7 +619,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetConfigStatus
-     * getConfigStatus.
+     * getConfigStatus0.
      */
     public function testGetConfigStatus0()
     {
@@ -639,7 +639,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetLogFile
-     * getLogFile.
+     * getLogFile0.
      */
     public function testGetLogFile0()
     {
@@ -659,7 +659,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for UpdateConfig
-     * updateConfig.
+     * updateConfig0.
      */
     public function testUpdateConfig0()
     {

@@ -529,7 +529,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteRecommendRule",
+			name: "deleteRecommendRule0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","model":"related-products","objectID":"objectID"}`
 				req := recommend.ApiDeleteRecommendRuleRequest{}
@@ -562,7 +562,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getRecommendRule",
+			name: "getRecommendRule0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","model":"related-products","objectID":"objectID"}`
 				req := recommend.ApiGetRecommendRuleRequest{}
@@ -595,7 +595,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getRecommendStatus",
+			name: "getRecommendStatus0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","model":"related-products","taskID":12345}`
 				req := recommend.ApiGetRecommendStatusRequest{}
@@ -770,7 +770,7 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "searchRecommendRules",
+			name: "searchRecommendRules0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","model":"related-products"}`
 				req := recommend.ApiSearchRecommendRulesRequest{}

@@ -8,7 +8,7 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = searchClient(appId, apiKey, { requester: echoRequester() });
 
 describe('addApiKey', () => {
-  test('addApiKey', async () => {
+  test('addApiKey0', async () => {
     const req = (await client.addApiKey({
       acl: ['search', 'addObject'],
       description: 'my new api key',
@@ -31,7 +31,7 @@ describe('addApiKey', () => {
 });
 
 describe('addOrUpdateObject', () => {
-  test('addOrUpdateObject', async () => {
+  test('addOrUpdateObject0', async () => {
     const req = (await client.addOrUpdateObject({
       indexName: 'indexName',
       objectID: 'uniqueID',
@@ -46,7 +46,7 @@ describe('addOrUpdateObject', () => {
 });
 
 describe('appendSource', () => {
-  test('appendSource', async () => {
+  test('appendSource0', async () => {
     const req = (await client.appendSource({
       source: 'theSource',
       description: 'theDescription',
@@ -63,7 +63,7 @@ describe('appendSource', () => {
 });
 
 describe('assignUserId', () => {
-  test('assignUserId', async () => {
+  test('assignUserId0', async () => {
     const req = (await client.assignUserId({
       xAlgoliaUserID: 'userID',
       assignUserIdParams: { cluster: 'theCluster' },
@@ -198,7 +198,7 @@ describe('batch', () => {
 });
 
 describe('batchAssignUserIds', () => {
-  test('batchAssignUserIds', async () => {
+  test('batchAssignUserIds0', async () => {
     const req = (await client.batchAssignUserIds({
       xAlgoliaUserID: 'userID',
       batchAssignUserIdsParams: {
@@ -375,7 +375,7 @@ describe('browse', () => {
 });
 
 describe('clearAllSynonyms', () => {
-  test('clearAllSynonyms', async () => {
+  test('clearAllSynonyms0', async () => {
     const req = (await client.clearAllSynonyms({
       indexName: 'indexName',
     })) as unknown as EchoResponse;
@@ -388,7 +388,7 @@ describe('clearAllSynonyms', () => {
 });
 
 describe('clearObjects', () => {
-  test('clearObjects', async () => {
+  test('clearObjects0', async () => {
     const req = (await client.clearObjects({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -401,7 +401,7 @@ describe('clearObjects', () => {
 });
 
 describe('clearRules', () => {
-  test('clearRules', async () => {
+  test('clearRules0', async () => {
     const req = (await client.clearRules({
       indexName: 'indexName',
     })) as unknown as EchoResponse;
@@ -720,7 +720,7 @@ describe('customPut', () => {
 });
 
 describe('deleteApiKey', () => {
-  test('deleteApiKey', async () => {
+  test('deleteApiKey0', async () => {
     const req = (await client.deleteApiKey({
       key: 'myTestApiKey',
     })) as unknown as EchoResponse;
@@ -733,7 +733,7 @@ describe('deleteApiKey', () => {
 });
 
 describe('deleteBy', () => {
-  test('deleteBy', async () => {
+  test('deleteBy0', async () => {
     const req = (await client.deleteBy({
       indexName: 'theIndexName',
       deleteByParams: { filters: 'brand:brandName' },
@@ -747,7 +747,7 @@ describe('deleteBy', () => {
 });
 
 describe('deleteIndex', () => {
-  test('deleteIndex', async () => {
+  test('deleteIndex0', async () => {
     const req = (await client.deleteIndex({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -760,7 +760,7 @@ describe('deleteIndex', () => {
 });
 
 describe('deleteObject', () => {
-  test('deleteObject', async () => {
+  test('deleteObject0', async () => {
     const req = (await client.deleteObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -774,7 +774,7 @@ describe('deleteObject', () => {
 });
 
 describe('deleteRule', () => {
-  test('deleteRule', async () => {
+  test('deleteRule0', async () => {
     const req = (await client.deleteRule({
       indexName: 'indexName',
       objectID: 'id1',
@@ -788,7 +788,7 @@ describe('deleteRule', () => {
 });
 
 describe('deleteSource', () => {
-  test('deleteSource', async () => {
+  test('deleteSource0', async () => {
     const req = (await client.deleteSource({
       source: 'theSource',
     })) as unknown as EchoResponse;
@@ -801,7 +801,7 @@ describe('deleteSource', () => {
 });
 
 describe('deleteSynonym', () => {
-  test('deleteSynonym', async () => {
+  test('deleteSynonym0', async () => {
     const req = (await client.deleteSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -815,7 +815,7 @@ describe('deleteSynonym', () => {
 });
 
 describe('getApiKey', () => {
-  test('getApiKey', async () => {
+  test('getApiKey0', async () => {
     const req = (await client.getApiKey({
       key: 'myTestApiKey',
     })) as unknown as EchoResponse;
@@ -882,7 +882,7 @@ describe('getLogs', () => {
 });
 
 describe('getObject', () => {
-  test('getObject', async () => {
+  test('getObject0', async () => {
     const req = (await client.getObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -899,7 +899,7 @@ describe('getObject', () => {
 });
 
 describe('getObjects', () => {
-  test('getObjects', async () => {
+  test('getObjects0', async () => {
     const req = (await client.getObjects({
       requests: [
         {
@@ -926,7 +926,7 @@ describe('getObjects', () => {
 });
 
 describe('getRule', () => {
-  test('getRule', async () => {
+  test('getRule0', async () => {
     const req = (await client.getRule({
       indexName: 'indexName',
       objectID: 'id1',
@@ -940,7 +940,7 @@ describe('getRule', () => {
 });
 
 describe('getSettings', () => {
-  test('getSettings', async () => {
+  test('getSettings0', async () => {
     const req = (await client.getSettings({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -953,7 +953,7 @@ describe('getSettings', () => {
 });
 
 describe('getSources', () => {
-  test('getSources', async () => {
+  test('getSources0', async () => {
     const req = (await client.getSources()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/security/sources');
@@ -964,7 +964,7 @@ describe('getSources', () => {
 });
 
 describe('getSynonym', () => {
-  test('getSynonym', async () => {
+  test('getSynonym0', async () => {
     const req = (await client.getSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -978,7 +978,7 @@ describe('getSynonym', () => {
 });
 
 describe('getTask', () => {
-  test('getTask', async () => {
+  test('getTask0', async () => {
     const req = (await client.getTask({
       indexName: 'theIndexName',
       taskID: 123,
@@ -992,7 +992,7 @@ describe('getTask', () => {
 });
 
 describe('getTopUserIds', () => {
-  test('getTopUserIds', async () => {
+  test('getTopUserIds0', async () => {
     const req = (await client.getTopUserIds()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/top');
@@ -1003,7 +1003,7 @@ describe('getTopUserIds', () => {
 });
 
 describe('getUserId', () => {
-  test('getUserId', async () => {
+  test('getUserId0', async () => {
     const req = (await client.getUserId({
       userID: 'uniqueID',
     })) as unknown as EchoResponse;
@@ -1038,7 +1038,7 @@ describe('hasPendingMappings', () => {
 });
 
 describe('listApiKeys', () => {
-  test('listApiKeys', async () => {
+  test('listApiKeys0', async () => {
     const req = (await client.listApiKeys()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys');
@@ -1049,7 +1049,7 @@ describe('listApiKeys', () => {
 });
 
 describe('listClusters', () => {
-  test('listClusters', async () => {
+  test('listClusters0', async () => {
     const req = (await client.listClusters()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters');
@@ -1106,7 +1106,7 @@ describe('listUserIds', () => {
 });
 
 describe('multipleBatch', () => {
-  test('multipleBatch', async () => {
+  test('multipleBatch0', async () => {
     const req = (await client.multipleBatch({
       requests: [
         {
@@ -1133,7 +1133,7 @@ describe('multipleBatch', () => {
 });
 
 describe('operationIndex', () => {
-  test('operationIndex', async () => {
+  test('operationIndex0', async () => {
     const req = (await client.operationIndex({
       indexName: 'theIndexName',
       operationIndexParams: {
@@ -1155,7 +1155,7 @@ describe('operationIndex', () => {
 });
 
 describe('partialUpdateObject', () => {
-  test('partialUpdateObject', async () => {
+  test('partialUpdateObject0', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -1177,7 +1177,7 @@ describe('partialUpdateObject', () => {
 });
 
 describe('removeUserId', () => {
-  test('removeUserId', async () => {
+  test('removeUserId0', async () => {
     const req = (await client.removeUserId({
       userID: 'uniqueID',
     })) as unknown as EchoResponse;
@@ -1190,7 +1190,7 @@ describe('removeUserId', () => {
 });
 
 describe('replaceSources', () => {
-  test('replaceSources', async () => {
+  test('replaceSources0', async () => {
     const req = (await client.replaceSources({
       source: [{ source: 'theSource', description: 'theDescription' }],
     })) as unknown as EchoResponse;
@@ -1205,7 +1205,7 @@ describe('replaceSources', () => {
 });
 
 describe('restoreApiKey', () => {
-  test('restoreApiKey', async () => {
+  test('restoreApiKey0', async () => {
     const req = (await client.restoreApiKey({
       key: 'myApiKey',
     })) as unknown as EchoResponse;
@@ -1218,7 +1218,7 @@ describe('restoreApiKey', () => {
 });
 
 describe('saveObject', () => {
-  test('saveObject', async () => {
+  test('saveObject0', async () => {
     const req = (await client.saveObject({
       indexName: 'theIndexName',
       body: { objectID: 'id', test: 'val' },
@@ -1448,7 +1448,7 @@ describe('saveRules', () => {
 });
 
 describe('saveSynonym', () => {
-  test('saveSynonym', async () => {
+  test('saveSynonym0', async () => {
     const req = (await client.saveSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -1472,7 +1472,7 @@ describe('saveSynonym', () => {
 });
 
 describe('saveSynonyms', () => {
-  test('saveSynonyms', async () => {
+  test('saveSynonyms0', async () => {
     const req = (await client.saveSynonyms({
       indexName: 'indexName',
       synonymHit: [
@@ -1988,7 +1988,7 @@ describe('searchForFacetValues', () => {
 });
 
 describe('searchRules', () => {
-  test('searchRules', async () => {
+  test('searchRules0', async () => {
     const req = (await client.searchRules({
       indexName: 'indexName',
       searchRulesParams: { query: 'something' },
@@ -2062,7 +2062,7 @@ describe('searchSynonyms', () => {
 });
 
 describe('searchUserIds', () => {
-  test('searchUserIds', async () => {
+  test('searchUserIds0', async () => {
     const req = (await client.searchUserIds({
       query: 'test',
       clusterName: 'theClusterName',
@@ -2384,7 +2384,7 @@ describe('setSettings', () => {
 });
 
 describe('updateApiKey', () => {
-  test('updateApiKey', async () => {
+  test('updateApiKey0', async () => {
     const req = (await client.updateApiKey({
       key: 'myApiKey',
       apiKey: {
