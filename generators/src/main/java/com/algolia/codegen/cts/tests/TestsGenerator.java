@@ -64,6 +64,8 @@ public abstract class TestsGenerator {
         return "JavaScript";
       case "php":
         return "PHP";
+      case "scala":
+        return language.toLowerCase();
       default:
         return Helpers.capitalize(language);
     }
