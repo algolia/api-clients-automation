@@ -1,8 +1,8 @@
 import type { ClientOptions } from '{{{npmNamespace}}}/client-common';
 import { createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache } from '{{{npmNamespace}}}/client-common';
 
-import { create{{capitalizedApiName}}, apiClientVersion } from '../src/{{apiName}}';
-import type { {{capitalizedApiName}} } from '../src/{{apiName}}';
+import { create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{apiName}}';
+import type { {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} } from '../src/{{apiName}}';
 
 {{#hasRegionalHost}}
 import { Region, REGIONS } from '../src/{{apiName}}';
@@ -11,7 +11,7 @@ import { Region, REGIONS } from '../src/{{apiName}}';
 {{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
 export {
   apiClientVersion,
-  {{capitalizedApiName}},
+  {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}},
   {{#hasRegionalHost}}
   Region,
   {{/hasRegionalHost}}
