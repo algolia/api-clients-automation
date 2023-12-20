@@ -13,12 +13,17 @@ except ImportError:
 
 {{#operations}}
 class {{classname}}:
+    _transporter: Transporter
+    _config: Config
+    _request_options: RequestOptions
+
     def app_id(self) -> str:
         return self._config.app_id
 
     def __init__(self, transporter: Transporter, config: Config) -> None:
         self._transporter = transporter
         self._config = config
+        self._request_options = RequestOptions(config)
 
     def create_with_config(config: Config) -> Self:
         transporter = Transporter(config)
@@ -59,7 +64,7 @@ class {{classname}}:
         {{/allParams}}
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers_parameters: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, Optional[str]] = {}
         
         {{#vendorExtensions}}
         {{#queryParams}}
@@ -76,7 +81,7 @@ class {{classname}}:
 
         {{#headerParams}}
         if {{paramName}} is not None:
-            _headers_parameters['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+            _headers['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
         {{/headerParams}}
 
         {{#bodyParam}}
@@ -89,10 +94,9 @@ class {{classname}}:
             verb=Verb.{{httpMethod}},
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
-            request_options=RequestOptions.create(
-                config=self._config,
+            request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers_parameters=_headers_parameters,
+                headers=_headers,
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}

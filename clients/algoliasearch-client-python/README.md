@@ -25,7 +25,7 @@
 ## ✨ Features
 
 - Thin & minimal low-level HTTP client to interact with Algolia's API
-- Supports Python from `3.7` to `3.12`
+- Supports Python from `3.8` to `3.12`
 
 ## 💡 Getting Started
 

@@ -27,7 +27,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         try:
             {{> client/step}}
         except (ValueError, Exception) as e:
-            assert {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}} == str(e)
+            assert str(e) == {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}}
         {{/isError}}
         {{^isError}}
         {{> client/step}}
@@ -37,11 +37,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
         {{/testUserAgent}}
         {{#testTimeouts}}
-        assert {{{match.parametersWithDataTypeMap.connectTimeout.value}}} == _req.timeouts.get("connect")
-        assert {{{match.parametersWithDataTypeMap.responseTimeout.value}}} == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == {{{match.parametersWithDataTypeMap.connectTimeout.value}}}
+        assert _req.timeouts.get("response") == {{{match.parametersWithDataTypeMap.responseTimeout.value}}}
         {{/testTimeouts}}
         {{#testHost}}
-        assert "{{{match}}}" == _req.host
+        assert _req.host == "{{{match}}}"
         {{/testHost}}
         {{/match}}
         {{/isError}}
