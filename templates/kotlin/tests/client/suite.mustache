@@ -15,7 +15,7 @@ class {{clientPrefix}}Test {
     {{#blocksClient}}
     {{#tests}}
     @Test
-    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = runTest {
+    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{testIndex}}{{/lambda.replaceBacktick}}`() = runTest {
         {{#autoCreateClient}}
         val client = {{client}}(appId = "appId", apiKey = "apiKey",{{#hasRegionalHost}}region = "{{defaultRegion}}",{{/hasRegionalHost}})
         {{/autoCreateClient}}
