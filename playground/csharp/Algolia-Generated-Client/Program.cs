@@ -1,14 +1,21 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Algolia.Search.Client;
+﻿using Algolia.Search.Client;
 using Algolia.Search.Search.Api;
 using Algolia.Search.Search.Client;
 using Algolia.Search.Search.Models;
+using Microsoft.Extensions.Configuration;
 using Action = Algolia.Search.Search.Models.Action;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Welcome to the Algolia C# playground");
 
-var searchClient = new SearchClient(new SearchConfig("NIOXZRNMTV", "XXX")
+var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true).Build();
+
+var algoliaSetting = config.GetSection("Algolia").Get<PlaygroundSetting>();
+if (algoliaSetting == null)
+{
+  throw new Exception("Please check your appsettings.json file");
+}
+
+var searchClient = new SearchClient(new SearchConfig(algoliaSetting.AppId, algoliaSetting.ApiKey)
 {
   Compression = CompressionType.NONE
 });
@@ -79,11 +86,11 @@ search.Results.ForEach(result =>
 {
   if (result.IsSearchResponse())
   {
-    Console.WriteLine("Hits: "+ result.AsSearchResponse().Hits.First().ObjectID);
+    Console.WriteLine("Hits: " + result.AsSearchResponse().Hits.First().ObjectID);
   }
   else if (result.IsSearchForFacetValuesResponse())
   {
-    Console.WriteLine("Facet: "+ result.AsSearchForFacetValuesResponse().FacetHits.First().Value);
+    Console.WriteLine("Facet: " + result.AsSearchForFacetValuesResponse().FacetHits.First().Value);
   }
   else
   {
