@@ -59,8 +59,6 @@ namespace Algolia.Search.Transport
       _algoliaConfig = config ?? throw new ArgumentNullException(nameof(config));
       _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
       _serializer = new CustomJsonCodec(JsonConfig.AlgoliaJsonSerializerSettings);
-
-
       _retryStrategy = new RetryStrategy(config);
     }
 

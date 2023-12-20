@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Algolia.Search.Client;
-using Algolia.Search.Http;
 using Algolia.Search.Search.Api;
 using Algolia.Search.Search.Client;
 using Algolia.Search.Search.Models;
@@ -75,12 +74,12 @@ var searchQueries = new List<SearchQuery>
   new(new SearchForHits("test-csharp-new-client")),
   new(new SearchForFacets("otherValue", "test-csharp-new-client", SearchTypeFacet.Facet)),
 };
-var search = await searchClient.SearchAsync(new SearchMethodParams(searchQueries));
+var search = await searchClient.SearchAsync<TestObject>(new SearchMethodParams(searchQueries));
 search.Results.ForEach(result =>
 {
-  if (result.IsSearchResponse<TestObject>())
+  if (result.IsSearchResponse())
   {
-    Console.WriteLine("Hits: "+ result.AsSearchResponse<TestObject>().Hits.First().ObjectID);
+    Console.WriteLine("Hits: "+ result.AsSearchResponse().Hits.First().ObjectID);
   }
   else if (result.IsSearchForFacetValuesResponse())
   {

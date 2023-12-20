@@ -10,7 +10,7 @@
     {{/vendorExtensions.x-com-visible}}
     [JsonConverter(typeof({{classname}}JsonConverter))]
     [DataContract(Name = "{{{name}}}")]
-    {{>visibility}} partial class {{classname}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
+    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
     {
         {{#isNullable}}
         /// <summary>
@@ -82,15 +82,8 @@
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of {{dataType}}</returns>
-        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} As{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
+        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} As{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
         {
-          {{#vendorExtensions.x-has-child-generic}}
-          if (ActualInstance.GetType() == typeof(JObject))
-          {
-          return ((JObject)ActualInstance).ToObject<{{{dataType}}}<T>>();
-          }
-          {{/vendorExtensions.x-has-child-generic}}
-
             return ({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})ActualInstance;
         }
         {{/isNull}}
@@ -105,15 +98,8 @@
                 /// Check if the actual instance is of `{{dataType}}` type.
                 /// </summary>
                 /// <returns>Whether or not the instance is the type</returns>
-                public bool Is{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}()
+                public bool Is{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
                 {
-                {{#vendorExtensions.x-has-child-generic}}
-                    if (ActualInstance.GetType() == typeof(JObject))
-                    {
-                        return ((JObject)ActualInstance).ToObject<{{{dataType}}}<T>>() != null;
-                    }
-                {{/vendorExtensions.x-has-child-generic}}
-
                     return ActualInstance.GetType() == typeof({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}});
                 }
             {{/isNull}}
@@ -139,7 +125,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public override string ToJson()
         {
-            return JsonConvert.SerializeObject(ActualInstance, {{classname}}.SerializerSettings);
+            return JsonConvert.SerializeObject(ActualInstance, SerializerSettings);
         }
 
         /// <summary>
@@ -147,9 +133,9 @@
         /// </summary>
         /// <param name="jsonString">JSON string</param>
         /// <returns>An instance of {{classname}}</returns>
-        public static {{classname}} FromJson(string jsonString)
+        public static {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} FromJson(string jsonString)
         {
-            {{classname}} new{{classname}} = null;
+            {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} new{{classname}} = null;
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -181,10 +167,11 @@
 
             {{/discriminator}}
             {{/useOneOfDiscriminatorLookup}}
+            {{#vendorExtensions}}
             {{#composedSchemas.oneOf}}
             try
             {
-                return new {{classname}}(JsonConvert.DeserializeObject<{{#vendorExtensions.x-has-child-generic}}JObject{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-has-child-generic}}>(jsonString, {{classname}}.AdditionalPropertiesSerializerSettings));
+                return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, AdditionalPropertiesSerializerSettings));
             }
             catch (Exception exception)
             {
@@ -192,6 +179,7 @@
                 System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into {{{datatypeWithEnum}}}: {1}", jsonString, exception.ToString()));
             }
             {{/composedSchemas.oneOf}}
+            {{/vendorExtensions}}
 
             throw new InvalidDataException("The JSON string `" + jsonString + "` cannot be deserialized into any schema defined.");
         }
@@ -272,7 +260,7 @@
         /// <param name="serializer">JSON Serializer</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue((string)(typeof({{classname}}).GetMethod("ToJson").Invoke(value, null)));
+            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson").Invoke(value, null)));
         }
 
         /// <summary>
@@ -287,7 +275,7 @@
         {
             if(reader.TokenType != JsonToken.Null)
             {
-                return {{classname}}.FromJson(JObject.Load(reader).ToString(Formatting.None));
+                return objectType.GetMethod("FromJson").Invoke(null, new[] { JObject.Load(reader).ToString(Formatting.None) });
             }
             return null;
         }
