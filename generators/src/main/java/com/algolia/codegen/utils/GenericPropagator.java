@@ -67,10 +67,6 @@ public class GenericPropagator {
 
   private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model) {
     CodegenProperty items = model.getItems();
-    // Skip one-of types
-    if (model instanceof CodegenModel codegenModel && !codegenModel.oneOf.isEmpty()) {
-      return false;
-    }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
     if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
