@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "cleanGeneratedBranch": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
-    "createMatrix": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
-    "createReleasePR": "tsc && NODE_NO_WARNINGS=1 RELEASE=true node dist/scripts/release/createReleasePR.js",
+    "cleanGeneratedBranch": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
+    "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
+    "createReleasePR": "NODE_NO_WARNINGS=1 RELEASE=true node dist/scripts/release/createReleasePR.js",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
-    "pushGeneratedCode": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushGeneratedCode.js",
-    "setRunVariables": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/setRunVariables.js",
-    "spreadGeneration": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
-    "start": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",
+    "pushGeneratedCode": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushGeneratedCode.js",
+    "setRunVariables": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/setRunVariables.js",
+    "spreadGeneration": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
+    "start": "NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",
     "test": "vitest",
-    "upsertGenerationComment": "tsc && NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/upsertGenerationComment.js"
+    "upsertGenerationComment": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/upsertGenerationComment.js"
   },
   "devDependencies": {
     "@actions/core": "1.10.1",

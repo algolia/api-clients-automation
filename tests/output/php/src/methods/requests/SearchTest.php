@@ -37,7 +37,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for AddApiKey
-     * addApiKey.
+     * addApiKey0.
      */
     public function testAddApiKey0()
     {
@@ -66,7 +66,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for AddOrUpdateObject
-     * addOrUpdateObject.
+     * addOrUpdateObject0.
      */
     public function testAddOrUpdateObject0()
     {
@@ -89,7 +89,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for AppendSource
-     * appendSource.
+     * appendSource0.
      */
     public function testAppendSource0()
     {
@@ -111,7 +111,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for AssignUserId
-     * assignUserId.
+     * assignUserId0.
      */
     public function testAssignUserId0()
     {
@@ -323,7 +323,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for BatchAssignUserIds
-     * batchAssignUserIds.
+     * batchAssignUserIds0.
      */
     public function testBatchAssignUserIds0()
     {
@@ -540,7 +540,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ClearAllSynonyms
-     * clearAllSynonyms.
+     * clearAllSynonyms0.
      */
     public function testClearAllSynonyms0()
     {
@@ -560,7 +560,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ClearObjects
-     * clearObjects.
+     * clearObjects0.
      */
     public function testClearObjects0()
     {
@@ -580,7 +580,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ClearRules
-     * clearRules.
+     * clearRules0.
      */
     public function testClearRules0()
     {
@@ -1078,7 +1078,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteApiKey
-     * deleteApiKey.
+     * deleteApiKey0.
      */
     public function testDeleteApiKey0()
     {
@@ -1098,7 +1098,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteBy
-     * deleteBy.
+     * deleteBy0.
      */
     public function testDeleteBy0()
     {
@@ -1120,7 +1120,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteIndex
-     * deleteIndex.
+     * deleteIndex0.
      */
     public function testDeleteIndex0()
     {
@@ -1140,7 +1140,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteObject
-     * deleteObject.
+     * deleteObject0.
      */
     public function testDeleteObject0()
     {
@@ -1161,7 +1161,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteRule
-     * deleteRule.
+     * deleteRule0.
      */
     public function testDeleteRule0()
     {
@@ -1182,7 +1182,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteSource
-     * deleteSource.
+     * deleteSource0.
      */
     public function testDeleteSource0()
     {
@@ -1202,7 +1202,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteSynonym
-     * deleteSynonym.
+     * deleteSynonym0.
      */
     public function testDeleteSynonym0()
     {
@@ -1223,7 +1223,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetApiKey
-     * getApiKey.
+     * getApiKey0.
      */
     public function testGetApiKey0()
     {
@@ -1321,7 +1321,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetObject
-     * getObject.
+     * getObject0.
      */
     public function testGetObject0()
     {
@@ -1348,7 +1348,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetObjects
-     * getObjects.
+     * getObjects0.
      */
     public function testGetObjects0()
     {
@@ -1378,7 +1378,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetRule
-     * getRule.
+     * getRule0.
      */
     public function testGetRule0()
     {
@@ -1399,7 +1399,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetSettings
-     * getSettings.
+     * getSettings0.
      */
     public function testGetSettings0()
     {
@@ -1419,7 +1419,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetSources
-     * getSources.
+     * getSources0.
      */
     public function testGetSources0()
     {
@@ -1437,7 +1437,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetSynonym
-     * getSynonym.
+     * getSynonym0.
      */
     public function testGetSynonym0()
     {
@@ -1458,7 +1458,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetTask
-     * getTask.
+     * getTask0.
      */
     public function testGetTask0()
     {
@@ -1479,7 +1479,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetTopUserIds
-     * getTopUserIds.
+     * getTopUserIds0.
      */
     public function testGetTopUserIds0()
     {
@@ -1497,7 +1497,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetUserId
-     * getUserId.
+     * getUserId0.
      */
     public function testGetUserId0()
     {
@@ -1556,7 +1556,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ListApiKeys
-     * listApiKeys.
+     * listApiKeys0.
      */
     public function testListApiKeys0()
     {
@@ -1574,7 +1574,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ListClusters
-     * listClusters.
+     * listClusters0.
      */
     public function testListClusters0()
     {
@@ -1672,7 +1672,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for MultipleBatch
-     * multipleBatch.
+     * multipleBatch0.
      */
     public function testMultipleBatch0()
     {
@@ -1699,7 +1699,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for OperationIndex
-     * operationIndex.
+     * operationIndex0.
      */
     public function testOperationIndex0()
     {
@@ -1727,7 +1727,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for PartialUpdateObject
-     * partialUpdateObject.
+     * partialUpdateObject0.
      */
     public function testPartialUpdateObject0()
     {
@@ -1755,7 +1755,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for RemoveUserId
-     * removeUserId.
+     * removeUserId0.
      */
     public function testRemoveUserId0()
     {
@@ -1775,7 +1775,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for ReplaceSources
-     * replaceSources.
+     * replaceSources0.
      */
     public function testReplaceSources0()
     {
@@ -1799,7 +1799,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for RestoreApiKey
-     * restoreApiKey.
+     * restoreApiKey0.
      */
     public function testRestoreApiKey0()
     {
@@ -1819,7 +1819,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SaveObject
-     * saveObject.
+     * saveObject0.
      */
     public function testSaveObject0()
     {
@@ -2061,7 +2061,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SaveSynonym
-     * saveSynonym.
+     * saveSynonym0.
      */
     public function testSaveSynonym0()
     {
@@ -2094,7 +2094,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SaveSynonyms
-     * saveSynonyms.
+     * saveSynonyms0.
      */
     public function testSaveSynonyms0()
     {
@@ -2690,7 +2690,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SearchRules
-     * searchRules.
+     * searchRules0.
      */
     public function testSearchRules0()
     {
@@ -2803,7 +2803,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SearchUserIds
-     * searchUserIds.
+     * searchUserIds0.
      */
     public function testSearchUserIds0()
     {
@@ -3247,7 +3247,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for UpdateApiKey
-     * updateApiKey.
+     * updateApiKey0.
      */
     public function testUpdateApiKey0()
     {

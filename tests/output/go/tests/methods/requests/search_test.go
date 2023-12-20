@@ -34,7 +34,7 @@ func TestSearch_AddApiKey(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "addApiKey",
+			name: "addApiKey0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`
 				req := search.ApiAddApiKeyRequest{}
@@ -68,7 +68,7 @@ func TestSearch_AddOrUpdateObject(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "addOrUpdateObject",
+			name: "addOrUpdateObject0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"uniqueID","body":{"key":"value"}}`
 				req := search.ApiAddOrUpdateObjectRequest{}
@@ -102,7 +102,7 @@ func TestSearch_AppendSource(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "appendSource",
+			name: "appendSource0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"source":"theSource","description":"theDescription"}`
 				req := search.ApiAppendSourceRequest{}
@@ -136,7 +136,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "assignUserId",
+			name: "assignUserId0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"xAlgoliaUserID":"userID","assignUserIdParams":{"cluster":"theCluster"}}`
 				req := search.ApiAssignUserIdRequest{}
@@ -317,7 +317,7 @@ func TestSearch_BatchAssignUserIds(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "batchAssignUserIds",
+			name: "batchAssignUserIds0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"xAlgoliaUserID":"userID","batchAssignUserIdsParams":{"cluster":"theCluster","users":["user1","user2"]}}`
 				req := search.ApiBatchAssignUserIdsRequest{}
@@ -496,7 +496,7 @@ func TestSearch_ClearAllSynonyms(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "clearAllSynonyms",
+			name: "clearAllSynonyms0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName"}`
 				req := search.ApiClearAllSynonymsRequest{}
@@ -529,7 +529,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "clearObjects",
+			name: "clearObjects0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := search.ApiClearObjectsRequest{}
@@ -562,7 +562,7 @@ func TestSearch_ClearRules(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "clearRules",
+			name: "clearRules0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName"}`
 				req := search.ApiClearRulesRequest{}
@@ -1090,7 +1090,7 @@ func TestSearch_DeleteApiKey(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteApiKey",
+			name: "deleteApiKey0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"key":"myTestApiKey"}`
 				req := search.ApiDeleteApiKeyRequest{}
@@ -1123,7 +1123,7 @@ func TestSearch_DeleteBy(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteBy",
+			name: "deleteBy0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","deleteByParams":{"filters":"brand:brandName"}}`
 				req := search.ApiDeleteByRequest{}
@@ -1157,7 +1157,7 @@ func TestSearch_DeleteIndex(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteIndex",
+			name: "deleteIndex0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := search.ApiDeleteIndexRequest{}
@@ -1190,7 +1190,7 @@ func TestSearch_DeleteObject(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteObject",
+			name: "deleteObject0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID"}`
 				req := search.ApiDeleteObjectRequest{}
@@ -1223,7 +1223,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteRule",
+			name: "deleteRule0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
 				req := search.ApiDeleteRuleRequest{}
@@ -1256,7 +1256,7 @@ func TestSearch_DeleteSource(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteSource",
+			name: "deleteSource0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"source":"theSource"}`
 				req := search.ApiDeleteSourceRequest{}
@@ -1289,7 +1289,7 @@ func TestSearch_DeleteSynonym(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "deleteSynonym",
+			name: "deleteSynonym0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
 				req := search.ApiDeleteSynonymRequest{}
@@ -1322,7 +1322,7 @@ func TestSearch_GetApiKey(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getApiKey",
+			name: "getApiKey0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"key":"myTestApiKey"}`
 				req := search.ApiGetApiKeyRequest{}
@@ -1470,7 +1470,7 @@ func TestSearch_GetObject(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getObject",
+			name: "getObject0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID","attributesToRetrieve":["attr1","attr2"]}`
 				req := search.ApiGetObjectRequest{}
@@ -1508,7 +1508,7 @@ func TestSearch_GetObjects(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getObjects",
+			name: "getObjects0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}`
 				req := search.ApiGetObjectsRequest{}
@@ -1542,7 +1542,7 @@ func TestSearch_GetRule(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getRule",
+			name: "getRule0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
 				req := search.ApiGetRuleRequest{}
@@ -1575,7 +1575,7 @@ func TestSearch_GetSettings(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getSettings",
+			name: "getSettings0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName"}`
 				req := search.ApiGetSettingsRequest{}
@@ -1608,7 +1608,7 @@ func TestSearch_GetSources(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getSources",
+			name: "getSources0",
 			testFunc: func(t *testing.T) {
 				_, err := client.GetSources()
 				require.NoError(t, err)
@@ -1638,7 +1638,7 @@ func TestSearch_GetSynonym(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getSynonym",
+			name: "getSynonym0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
 				req := search.ApiGetSynonymRequest{}
@@ -1671,7 +1671,7 @@ func TestSearch_GetTask(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getTask",
+			name: "getTask0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","taskID":123}`
 				req := search.ApiGetTaskRequest{}
@@ -1704,7 +1704,7 @@ func TestSearch_GetTopUserIds(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getTopUserIds",
+			name: "getTopUserIds0",
 			testFunc: func(t *testing.T) {
 				_, err := client.GetTopUserIds()
 				require.NoError(t, err)
@@ -1734,7 +1734,7 @@ func TestSearch_GetUserId(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "getUserId",
+			name: "getUserId0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"userID":"uniqueID"}`
 				req := search.ApiGetUserIdRequest{}
@@ -1822,7 +1822,7 @@ func TestSearch_ListApiKeys(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "listApiKeys",
+			name: "listApiKeys0",
 			testFunc: func(t *testing.T) {
 				_, err := client.ListApiKeys()
 				require.NoError(t, err)
@@ -1852,7 +1852,7 @@ func TestSearch_ListClusters(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "listClusters",
+			name: "listClusters0",
 			testFunc: func(t *testing.T) {
 				_, err := client.ListClusters()
 				require.NoError(t, err)
@@ -1992,7 +1992,7 @@ func TestSearch_MultipleBatch(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "multipleBatch",
+			name: "multipleBatch0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}`
 				req := search.ApiMultipleBatchRequest{}
@@ -2026,7 +2026,7 @@ func TestSearch_OperationIndex(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "operationIndex",
+			name: "operationIndex0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","operationIndexParams":{"operation":"copy","destination":"dest","scope":["rules","settings"]}}`
 				req := search.ApiOperationIndexRequest{}
@@ -2060,7 +2060,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "partialUpdateObject",
+			name: "partialUpdateObject0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID","attributesToUpdate":{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}},"createIfNotExists":true}`
 				req := search.ApiPartialUpdateObjectRequest{}
@@ -2099,7 +2099,7 @@ func TestSearch_RemoveUserId(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "removeUserId",
+			name: "removeUserId0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"userID":"uniqueID"}`
 				req := search.ApiRemoveUserIdRequest{}
@@ -2132,7 +2132,7 @@ func TestSearch_ReplaceSources(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "replaceSources",
+			name: "replaceSources0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"source":[{"source":"theSource","description":"theDescription"}]}`
 				req := search.ApiReplaceSourcesRequest{}
@@ -2166,7 +2166,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "restoreApiKey",
+			name: "restoreApiKey0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"key":"myApiKey"}`
 				req := search.ApiRestoreApiKeyRequest{}
@@ -2199,7 +2199,7 @@ func TestSearch_SaveObject(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "saveObject",
+			name: "saveObject0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"theIndexName","body":{"objectID":"id","test":"val"}}`
 				req := search.ApiSaveObjectRequest{}
@@ -2347,7 +2347,7 @@ func TestSearch_SaveSynonym(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "saveSynonym",
+			name: "saveSynonym0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","objectID":"id1","synonymHit":{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},"forwardToReplicas":true}`
 				req := search.ApiSaveSynonymRequest{}
@@ -2386,7 +2386,7 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "saveSynonyms",
+			name: "saveSynonyms0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","synonymHit":[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}],"forwardToReplicas":true,"replaceExistingSynonyms":false}`
 				req := search.ApiSaveSynonymsRequest{}
@@ -2689,7 +2689,7 @@ func TestSearch_SearchRules(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "searchRules",
+			name: "searchRules0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","searchRulesParams":{"query":"something"}}`
 				req := search.ApiSearchRulesRequest{}
@@ -2832,7 +2832,7 @@ func TestSearch_SearchUserIds(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "searchUserIds",
+			name: "searchUserIds0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}`
 				req := search.ApiSearchUserIdsRequest{}
@@ -3159,7 +3159,7 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 		testFunc func(t *testing.T)
 	}{
 		{
-			name: "updateApiKey",
+			name: "updateApiKey0",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"key":"myApiKey","apiKey":{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}}`
 				req := search.ApiUpdateApiKeyRequest{}

@@ -375,7 +375,7 @@ class TestInsightsClient:
 
     async def test_push_events_0(self):
         """
-        pushEvents
+        pushEvents0
         """
         _req = await self._client.push_events_with_http_info(
             insights_events={

@@ -631,7 +631,7 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteRecommendRule")
+  @DisplayName("deleteRecommendRule0")
   void deleteRecommendRuleTest0() {
     String indexName0 = "indexName";
     RecommendModels model0 = RecommendModels.fromValue("related-products");
@@ -647,7 +647,7 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRecommendRule")
+  @DisplayName("getRecommendRule0")
   void getRecommendRuleTest0() {
     String indexName0 = "indexName";
     RecommendModels model0 = RecommendModels.fromValue("related-products");
@@ -663,7 +663,7 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRecommendStatus")
+  @DisplayName("getRecommendStatus0")
   void getRecommendStatusTest0() {
     String indexName0 = "indexName";
     RecommendModels model0 = RecommendModels.fromValue("related-products");
@@ -1073,7 +1073,7 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchRecommendRules")
+  @DisplayName("searchRecommendRules0")
   void searchRecommendRulesTest0() {
     String indexName0 = "indexName";
     RecommendModels model0 = RecommendModels.fromValue("related-products");

@@ -439,7 +439,7 @@ class RecommendTest {
   // deleteRecommendRule
 
   @Test
-  fun `deleteRecommendRule`() = runTest {
+  fun `deleteRecommendRule0`() = runTest {
     client.runTest(
       call = {
         deleteRecommendRule(
@@ -459,7 +459,7 @@ class RecommendTest {
   // getRecommendRule
 
   @Test
-  fun `getRecommendRule`() = runTest {
+  fun `getRecommendRule0`() = runTest {
     client.runTest(
       call = {
         getRecommendRule(
@@ -479,7 +479,7 @@ class RecommendTest {
   // getRecommendStatus
 
   @Test
-  fun `getRecommendStatus`() = runTest {
+  fun `getRecommendStatus0`() = runTest {
     client.runTest(
       call = {
         getRecommendStatus(
@@ -724,7 +724,7 @@ class RecommendTest {
   // searchRecommendRules
 
   @Test
-  fun `searchRecommendRules`() = runTest {
+  fun `searchRecommendRules0`() = runTest {
     client.runTest(
       call = {
         searchRecommendRules(

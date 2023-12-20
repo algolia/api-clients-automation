@@ -11,7 +11,7 @@
     }
   },
   {
-    "testName": "delete rule simple characters to encode in objectID",
+    "testName": "delete rule with simple characters to encode in objectID",
     "parameters": {
       "indexName": "indexName",
       "objectID": "test/with/slash"

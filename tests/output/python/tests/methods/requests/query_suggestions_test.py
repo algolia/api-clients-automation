@@ -20,7 +20,7 @@ class TestQuerySuggestionsClient:
 
     async def test_create_config_0(self):
         """
-        createConfig
+        createConfig0
         """
         _req = await self._client.create_config_with_http_info(
             query_suggestions_configuration_with_index={
@@ -418,7 +418,7 @@ class TestQuerySuggestionsClient:
 
     async def test_delete_config_0(self):
         """
-        deleteConfig
+        deleteConfig0
         """
         _req = await self._client.delete_config_with_http_info(
             index_name="theIndexName",
@@ -432,7 +432,7 @@ class TestQuerySuggestionsClient:
 
     async def test_get_all_configs_0(self):
         """
-        getAllConfigs
+        getAllConfigs0
         """
         _req = await self._client.get_all_configs_with_http_info()
 
@@ -444,7 +444,7 @@ class TestQuerySuggestionsClient:
 
     async def test_get_config_0(self):
         """
-        getConfig
+        getConfig0
         """
         _req = await self._client.get_config_with_http_info(
             index_name="theIndexName",
@@ -458,7 +458,7 @@ class TestQuerySuggestionsClient:
 
     async def test_get_config_status_0(self):
         """
-        getConfigStatus
+        getConfigStatus0
         """
         _req = await self._client.get_config_status_with_http_info(
             index_name="theIndexName",
@@ -472,7 +472,7 @@ class TestQuerySuggestionsClient:
 
     async def test_get_log_file_0(self):
         """
-        getLogFile
+        getLogFile0
         """
         _req = await self._client.get_log_file_with_http_info(
             index_name="theIndexName",
@@ -486,7 +486,7 @@ class TestQuerySuggestionsClient:
 
     async def test_update_config_0(self):
         """
-        updateConfig
+        updateConfig0
         """
         _req = await self._client.update_config_with_http_info(
             index_name="theIndexName",

@@ -494,7 +494,7 @@ void main() {
 
   // deleteRecommendRule
   test(
-    'deleteRecommendRule',
+    'deleteRecommendRule0',
     () => runTest(
       builder: (requester) => RecommendClient(
         appId: 'appId',
@@ -517,7 +517,7 @@ void main() {
 
   // getRecommendRule
   test(
-    'getRecommendRule',
+    'getRecommendRule0',
     () => runTest(
       builder: (requester) => RecommendClient(
         appId: 'appId',
@@ -540,7 +540,7 @@ void main() {
 
   // getRecommendStatus
   test(
-    'getRecommendStatus',
+    'getRecommendStatus0',
     () => runTest(
       builder: (requester) => RecommendClient(
         appId: 'appId',
@@ -837,7 +837,7 @@ void main() {
 
   // searchRecommendRules
   test(
-    'searchRecommendRules',
+    'searchRecommendRules0',
     () => runTest(
       builder: (requester) => RecommendClient(
         appId: 'appId',
