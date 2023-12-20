@@ -6,7 +6,7 @@ from algoliasearch.insights.client import InsightsClient
 from algoliasearch.insights.config import Config
 
 
-class TestInsightsClient:
+class TestInsightsClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

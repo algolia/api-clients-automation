@@ -6,7 +6,7 @@ from algoliasearch.search.client import SearchClient
 from algoliasearch.search.config import Config
 
 
-class TestSearchClient:
+class TestSearchClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"
@@ -936,6 +936,21 @@ class TestSearchClient:
         )
 
         assert _req.path == "/1/indexes/indexName/rules/id1"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() >= {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_delete_rule_1(self):
+        """
+        deleteRule1
+        """
+        _req = await self._client.delete_rule_with_http_info(
+            index_name="indexName",
+            object_id="test/with/slash",
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/test%2Fwith%2Fslash"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()

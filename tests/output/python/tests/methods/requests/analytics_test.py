@@ -6,7 +6,7 @@ from algoliasearch.analytics.config import Config
 from algoliasearch.http.transporter import EchoTransporter
 
 
-class TestAnalyticsClient:
+class TestAnalyticsClientRequests:
     app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if app_id is None:
         app_id = "test_app_id"

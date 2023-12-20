@@ -1071,6 +1071,23 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `deleteRule1`() = runTest {
+    client.runTest(
+      call = {
+        deleteRule(
+          indexName = "indexName",
+          objectID = "test/with/slash",
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/test%2Fwith%2Fslash".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // deleteSource
 
   @Test

@@ -1207,6 +1207,28 @@ void main() {
     ),
   );
 
+  // deleteRule
+  test(
+    'deleteRule1',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.deleteRule(
+        indexName: "indexName",
+        objectID: "test/with/slash",
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/indexName/rules/test%2Fwith%2Fslash');
+        expect(request.method, 'delete');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // deleteSource
   test(
     'deleteSource0',

@@ -1181,6 +1181,27 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for DeleteRule
+     * deleteRule1.
+     */
+    public function testDeleteRule1()
+    {
+        $client = $this->getClient();
+        $client->deleteRule(
+            'indexName',
+            'test/with/slash',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/rules/test%2Fwith%2Fslash',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
      * Test case for DeleteSource
      * deleteSource0.
      */
