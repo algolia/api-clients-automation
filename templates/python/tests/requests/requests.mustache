@@ -1,22 +1,31 @@
 from os import environ
 from json import loads
+{{#hasE2E}}
+from dotenv import load_dotenv
+{{/hasE2E}}
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import Config
 
 
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}Requests:
-    app_id = environ.get("ALGOLIA_APPLICATION_ID")
-    if app_id is None:
-        app_id = "test_app_id"
-
-    api_key = environ.get("ALGOLIA_SEARCH_KEY")
-    if api_key is None:
-        api_key = "test_api_key"
-
-    _config = Config(app_id, api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{{/isE2E}}:
+    _config = Config("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(_config), _config)
+
+    {{#hasE2E}}
+    load_dotenv()
+
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+
+    _e2e_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(_e2e_app_id, _e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
+    {{/hasE2E}}
 
     {{#blocksRequests}}
     {{#tests}}
@@ -26,11 +35,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}Requests:
         """
         _req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
-        assert _req.path == "{{{request.path}}}"
-        assert _req.verb == "{{{request.method}}}"
-        assert _req.query_parameters.items()  >= {{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}{}{{/request.queryParameters}}.items()
-        assert _req.headers.items() >= {{#request.headers}}{{{.}}}{{/request.headers}}{{^request.headers}}{}{{/request.headers}}.items()
         {{#request}}
+        assert _req.path == "{{{path}}}"
+        assert _req.verb == "{{{method}}}"
+        assert _req.query_parameters.items()  >= {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
+        assert _req.headers.items() >= {{#headers}}{{{.}}}{{/headers}}{{^headers}}{}{{/headers}}.items()
         {{#body}}
         assert loads(_req.data) == loads("""{{{.}}}""")
         {{/body}}
@@ -40,6 +49,12 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}Requests:
         {{/assertNullBody}}
         {{/body}}
         {{/request}}
+
+        {{#hasResponse}}
+        resp = await self._e2e_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
+        assert resp.status_code == {{response.statusCode}}
+        {{/hasResponse}}
 
     {{/tests}}
     {{/blocksRequests}}

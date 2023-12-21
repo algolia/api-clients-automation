@@ -107,6 +107,21 @@ public class TestsRequest extends TestsGenerator {
             test.put("assertNullBody", true);
           }
 
+          if (req.response != null) {
+            bundle.put("hasE2E", true);
+            test.put("hasResponse", true);
+            test.put("response", req.response);
+
+            if (req.response.statusCode == 0) {
+              throw new CTSException(
+                "operationId '" +
+                operationId +
+                "' has a 'response' field in order to generate e2e tests but is missing the" +
+                " 'statusCode' parameter"
+              );
+            }
+          }
+
           test.put("request", req.request);
           test.put("hasParameters", req.parameters.size() != 0);
           test.put("extras", req.extras);

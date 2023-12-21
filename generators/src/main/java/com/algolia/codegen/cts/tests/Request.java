@@ -16,6 +16,7 @@ public class Request {
   public Map<String, Object> parameters;
   public RequestOptions requestOptions;
   public RequestProp request;
+  public ResponseProp response;
   public Map<String, Object> extras;
 
   @Override
@@ -26,6 +27,7 @@ public class Request {
     sb.append("    parameters: ").append(parameters).append("\n");
     sb.append("    requestOptions: ").append(requestOptions).append("\n");
     sb.append("    request: ").append(request).append("\n");
+    sb.append("    response: ").append(response).append("\n");
     sb.append("    extras: ").append(extras).append("\n");
     sb.append("}");
     return sb.toString();
@@ -71,6 +73,20 @@ class RequestProp {
     sb.append("    body: ").append(body).append("\n");
     sb.append("    queryParameters: ").append(queryParameters).append("\n");
     sb.append("    headers: ").append(headers).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+}
+
+class ResponseProp {
+
+  public int statusCode;
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ResponseProp {\n");
+    sb.append("    statusCode: ").append(statusCode).append("\n");
     sb.append("}");
     return sb.toString();
   }

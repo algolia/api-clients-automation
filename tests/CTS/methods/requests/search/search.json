@@ -18,6 +18,9 @@
           }
         ]
       }
+    },
+    "response": {
+      "statusCode": 200
     }
   },
   {
