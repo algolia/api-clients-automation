@@ -34,8 +34,8 @@ class TestQuerySuggestionsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 5000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
         self.create_client()
@@ -44,8 +44,8 @@ class TestQuerySuggestionsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 30000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
         try:
@@ -56,8 +56,8 @@ class TestQuerySuggestionsClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "`region` is required and must be one of the following: eu, us"
-                == str(e)
+                str(e)
+                == "`region` is required and must be one of the following: eu, us"
             )
 
     async def test_parameters_1(self):
@@ -69,8 +69,8 @@ class TestQuerySuggestionsClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "`region` is required and must be one of the following: eu, us"
-                == str(e)
+                str(e)
+                == "`region` is required and must be one of the following: eu, us"
             )
 
     async def test_parameters_2(self):

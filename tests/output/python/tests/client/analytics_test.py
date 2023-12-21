@@ -32,8 +32,8 @@ class TestAnalyticsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 5000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
         self.create_client()
@@ -42,8 +42,8 @@ class TestAnalyticsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 30000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
         self._client = AnalyticsClient(
@@ -55,7 +55,7 @@ class TestAnalyticsClient:
             index="my-index",
         )
 
-        assert "analytics.algolia.com" == _req.host
+        assert _req.host == "analytics.algolia.com"
 
     async def test_parameters_1(self):
         self._client = AnalyticsClient(
@@ -67,7 +67,7 @@ class TestAnalyticsClient:
             path="/test",
         )
 
-        assert "analytics.de.algolia.com" == _req.host
+        assert _req.host == "analytics.de.algolia.com"
 
     async def test_parameters_2(self):
         try:
@@ -77,7 +77,7 @@ class TestAnalyticsClient:
             )
 
         except (ValueError, Exception) as e:
-            assert "`region` must be one of the following: de, us" == str(e)
+            assert str(e) == "`region` must be one of the following: de, us"
 
     async def test_parameters_3(self):
         self.create_client()
@@ -89,6 +89,6 @@ class TestAnalyticsClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "Parameter `index` is required when calling `get_click_positions`."
-                == str(e)
+                str(e)
+                == "Parameter `index` is required when calling `get_click_positions`."
             )
