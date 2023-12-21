@@ -1,3 +1,6 @@
+{{#hasE2E}}
+import 'dotenv/config'
+{{/hasE2E}}
 import { {{client}} } from '{{{import}}}';
 import { echoRequester } from '{{{npmNamespace}}}/requester-node-http';
 import type { EchoResponse } from '{{{npmNamespace}}}/client-common';
@@ -7,6 +10,18 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
+
+{{#hasE2E}}
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+}
+
+const e2eClient = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
+{{/hasE2E}}
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {
@@ -28,6 +43,14 @@ describe('{{operationId}}', () => {
       expect.objectContaining({{{request.headers}}})
     );
     {{/request.headers}}
+
+    {{#response}}
+    const resp = (await e2eClient.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}}));
+  
+    {{#body}}
+    expect(resp).toMatchObject({{{.}}});
+    {{/body}}
+    {{/response}}
   });
 
   {{/tests}}
