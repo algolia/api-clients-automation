@@ -50,14 +50,16 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{/body}}
         {{/request}}
 
-        {{#hasResponse}}
+        {{#response}}
         resp = await self._e2e_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-        {{#response.body}}
+  
+        {{#assertStatusCode}}
+        assert resp.status_code == {{statusCode}}
+        {{/assertStatusCode}}
+        {{#body}}
         assert loads(resp.raw_data) == loads("""{{{.}}}""")
-        {{/response.body}}
-
-        assert resp.status_code == {{response.statusCode}}
-        {{/hasResponse}}
+        {{/body}}
+        {{/response}}
 
     {{/tests}}
     {{/blocksRequests}}

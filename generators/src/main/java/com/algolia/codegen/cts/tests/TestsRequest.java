@@ -109,8 +109,8 @@ public class TestsRequest extends TestsGenerator {
 
           if (req.response != null) {
             bundle.put("hasE2E", true);
-            test.put("hasResponse", true);
             test.put("response", req.response);
+            test.put("assertStatusCode", language.equals("ruby") || language.equals("python"));
 
             if (req.response.statusCode == 0) {
               throw new CTSException(
