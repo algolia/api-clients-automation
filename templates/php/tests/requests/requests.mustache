@@ -11,6 +11,10 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable('tests/output/php/');
+$dotenv->load();
 
 /**
  * {{clientPrefix}}Test
@@ -73,6 +77,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
+    {{#hasE2E}}
+    protected function getE2EClient()
+    {
+
+        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
+    }
+    {{/hasE2E}}
+
     protected function getClient()
     {
         $api = new ApiWrapper($this, {{clientPrefix}}Config::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
@@ -132,6 +144,18 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 {{/request.headers}}
             ],
         ]);
+
+        {{#response}}
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
+        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
+        );{{/hasParameters}}
+
+        {{#body}}
+        $this->assertEquals($resp, json_decode('{{{.}}}', true));
+        {{/body}}
+        {{/response}}
+
     }
     {{/tests}}
     {{/blocksRequests}}
