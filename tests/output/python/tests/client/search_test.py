@@ -23,7 +23,7 @@ class TestSearchClient:
             path="/test",
         )
 
-        assert "test-app-id-dsn.algolia.net" == _req.host
+        assert _req.host == "test-app-id-dsn.algolia.net"
 
     async def test_api_1(self):
         self._client = SearchClient(
@@ -35,7 +35,7 @@ class TestSearchClient:
             path="/test",
         )
 
-        assert "test-app-id.algolia.net" == _req.host
+        assert _req.host == "test-app-id.algolia.net"
 
     async def test_common_api_0(self):
         self.create_client()
@@ -56,8 +56,8 @@ class TestSearchClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 5000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
         self.create_client()
@@ -66,29 +66,29 @@ class TestSearchClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 30000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
         try:
             self._client = SearchClient(EchoTransporter(Config("", "")), Config("", ""))
 
         except (ValueError, Exception) as e:
-            assert "`app_id` is missing." == str(e)
+            assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
                 EchoTransporter(Config("", "my-api-key")), Config("", "my-api-key")
             )
 
         except (ValueError, Exception) as e:
-            assert "`app_id` is missing." == str(e)
+            assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
                 EchoTransporter(Config("my-app-id", "")), Config("my-app-id", "")
             )
 
         except (ValueError, Exception) as e:
-            assert "`api_key` is missing." == str(e)
+            assert str(e) == "`api_key` is missing."
 
     async def test_parameters_1(self):
         self.create_client()
@@ -99,8 +99,8 @@ class TestSearchClient:
             )
 
         except (ValueError, Exception) as e:
-            assert "Parameter `api_key` is required when calling `add_api_key`." == str(
-                e
+            assert (
+                str(e) == "Parameter `api_key` is required when calling `add_api_key`."
             )
 
     async def test_parameters_2(self):
@@ -115,8 +115,8 @@ class TestSearchClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "Parameter `index_name` is required when calling `add_or_update_object`."
-                == str(e)
+                str(e)
+                == "Parameter `index_name` is required when calling `add_or_update_object`."
             )
         try:
             await self._client.add_or_update_object_with_http_info(
@@ -127,8 +127,8 @@ class TestSearchClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "Parameter `object_id` is required when calling `add_or_update_object`."
-                == str(e)
+                str(e)
+                == "Parameter `object_id` is required when calling `add_or_update_object`."
             )
         try:
             await self._client.add_or_update_object_with_http_info(
@@ -139,6 +139,6 @@ class TestSearchClient:
 
         except (ValueError, Exception) as e:
             assert (
-                "Parameter `body` is required when calling `add_or_update_object`."
-                == str(e)
+                str(e)
+                == "Parameter `body` is required when calling `add_or_update_object`."
             )

@@ -32,8 +32,8 @@ class TestInsightsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 5000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
         self.create_client()
@@ -42,8 +42,8 @@ class TestInsightsClient:
             path="/test",
         )
 
-        assert 2000 == _req.timeouts.get("connect")
-        assert 30000 == _req.timeouts.get("response")
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
         self._client = InsightsClient(
@@ -57,7 +57,7 @@ class TestInsightsClient:
             },
         )
 
-        assert "insights.algolia.io" == _req.host
+        assert _req.host == "insights.algolia.io"
 
     async def test_parameters_1(self):
         self._client = InsightsClient(
@@ -69,7 +69,7 @@ class TestInsightsClient:
             path="/test",
         )
 
-        assert "insights.us.algolia.io" == _req.host
+        assert _req.host == "insights.us.algolia.io"
 
     async def test_parameters_2(self):
         try:
@@ -79,4 +79,4 @@ class TestInsightsClient:
             )
 
         except (ValueError, Exception) as e:
-            assert "`region` must be one of the following: de, us" == str(e)
+            assert str(e) == "`region` must be one of the following: de, us"
