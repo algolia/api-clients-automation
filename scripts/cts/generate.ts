@@ -51,7 +51,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       });
     }
 
-    if (lang === 'ruby' || lang === 'csharp') {
+    if (lang === 'csharp') {
       const spinner = createSpinner('');
       spinner.warn(`CTS not yet implemented for ${lang}`);
 
