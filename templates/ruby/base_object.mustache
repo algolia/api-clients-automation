@@ -21,10 +21,10 @@
           transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
         end
       end
-      {{#vendorExtensions.x-is-generic}}
+      {{#getAdditionalPropertiesIsAnyType}}
 
       transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
-      {{/vendorExtensions.x-is-generic}}
+      {{/getAdditionalPropertiesIsAnyType}}
       new(transformed_hash)
     end
 
@@ -96,13 +96,13 @@
 
         hash[param] = _to_hash(value)
       end
-      {{#vendorExtensions.x-is-generic}}
+      {{#getAdditionalPropertiesIsAnyType}}
 
       # also add attributes from additional_properties to hash
       self.additional_properties&.each_pair do |k, v|
         hash[k.to_sym] = _to_hash(v)
       end
-      {{/vendorExtensions.x-is-generic}}
+      {{/getAdditionalPropertiesIsAnyType}}
       hash
     end
 
