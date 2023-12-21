@@ -4,7 +4,7 @@
     "parameters": {
       "requests": [
         {
-          "indexName": "theIndexName"
+          "indexName": "cts_e2e_empty_index"
         }
       ]
     },
@@ -14,13 +14,35 @@
       "body": {
         "requests": [
           {
-            "indexName": "theIndexName"
+            "indexName": "cts_e2e_empty_index"
           }
         ]
       }
     },
     "response": {
-      "statusCode": 200
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "hits": [],
+            "page": 0,
+            "nbHits": 0,
+            "nbPages": 0,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "exhaustive": {
+              "nbHits": true,
+              "typo": true
+            },
+            "processingTimeMS": 1,
+            "query": "",
+            "params": "",
+            "index": "cts_e2e_empty_index",
+            "renderingContent": {}
+          }
+        ]
+      }
     }
   },
   {
