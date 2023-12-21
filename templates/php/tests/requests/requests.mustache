@@ -11,13 +11,17 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+{{#hasE2E}}
 use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (isset($_ENV['DOCKER']) && $_ENV['DOCKER'] === "true") {
     $dotenv = Dotenv::createImmutable('tests/output/php/');
     $dotenv->load();
+} else {
+    $_ENV = getenv();
 }
+{{/hasE2E}}
 
 /**
  * {{clientPrefix}}Test
