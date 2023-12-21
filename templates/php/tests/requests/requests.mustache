@@ -13,13 +13,10 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Dotenv\Dotenv;
 
-$env = getenv();
-
 // we only read .env file if we run locally
-if (isset($env['DOCKER']) && $env['DOCKER'] === "true") {
+if (isset($_ENV['DOCKER']) && $_ENV['DOCKER'] === "true") {
     $dotenv = Dotenv::createImmutable('tests/output/php/');
     $dotenv->load();
-    $env = $_ENV;
 }
 
 /**
@@ -86,8 +83,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {{#hasE2E}}
     protected function getE2EClient()
     {
-
-        return {{client}}::create($env['ALGOLIA_APPLICATION_ID'], $env['ALGOLIA_ADMIN_KEY']);
+        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
     }
     {{/hasE2E}}
 
