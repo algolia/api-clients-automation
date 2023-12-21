@@ -117,7 +117,9 @@ module Algolia
     # @param [Object] obj object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_hash(obj)
-      if obj.respond_to?(:to_hash)
+      if obj.is_a?(Hash)
+        obj.map { |k, v| [k, object_to_hash(v)] }.to_h
+      elsif obj.respond_to?(:to_hash)
         obj.to_hash
       else
         obj
