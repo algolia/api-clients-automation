@@ -76,7 +76,7 @@ public class Helpers {
   // testInput -> test_input
   // test-input -> test_input
   public static String toSnakeCase(String s) {
-    return toKebabCase(s).replaceAll("-", "_");
+    return s.replaceAll("(.+?)([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
   }
 
   /** Inject server info into the client to generate the right URL */

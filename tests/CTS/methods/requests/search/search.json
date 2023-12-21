@@ -356,7 +356,7 @@
           "getRankingInfo": true,
           "highlightPostTag": "",
           "highlightPreTag": "",
-          "hitsPerPage": 0,
+          "hitsPerPage": 1,
           "ignorePlurals": false,
           "indexName": "theIndexName",
           "insideBoundingBox": [
@@ -392,12 +392,12 @@
             ]
           ],
           "keepDiacriticsOnCharacters": "",
-          "length": 0,
+          "length": 1,
           "maxValuesPerFacet": 0,
-          "minProximity": 0,
+          "minProximity": 1,
           "minWordSizefor1Typo": 0,
           "minWordSizefor2Typos": 0,
-          "minimumAroundRadius": 0,
+          "minimumAroundRadius": 1,
           "naturalLanguages": [
             ""
           ],
@@ -538,7 +538,7 @@
             "getRankingInfo": true,
             "highlightPostTag": "",
             "highlightPreTag": "",
-            "hitsPerPage": 0,
+            "hitsPerPage": 1,
             "ignorePlurals": false,
             "indexName": "theIndexName",
             "insideBoundingBox": [

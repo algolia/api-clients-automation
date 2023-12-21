@@ -15,5 +15,6 @@ public class RubyCTSManager implements CTSManager {
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", Helpers.getClientConfigField("ruby", "packageVersion"));
+    bundle.put("modelModule", Helpers.capitalize(Helpers.camelize(client)));
   }
 }
