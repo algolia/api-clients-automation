@@ -19,8 +19,7 @@ module Algolia
 
     # Call an API with given options.
     #
-    # @return [Array<(Object, Http::Response)>] an array of 2 elements:
-    #   the data deserialized from response body (could be nil) and the response.
+    # @return [Http::Response] the response.
     def call_api(http_method, path, opts = {})
       begin
         call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
@@ -31,8 +30,7 @@ module Algolia
         raise ApiError, 'Connection failed'
       end
 
-      data = (deserialize(response.body, opts[:return_type]) if opts[:return_type])
-      [data, response]
+      response
     end
 
     # Deserialize the response to the given return type.

@@ -38,27 +38,6 @@ module {{moduleName}}
 
 {{#operation}}
     {{#summary}}
-    # {{{.}}}
-    {{/summary}}
-    {{#notes}}
-    # {{{.}}}
-    {{/notes}}
-{{#allParams}}
-{{#required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
-{{/required}}
-{{^required}}
-    # @option {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/required}}
-{{/allParams}}
-    # @option request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [{{{returnType}}}{{^returnType}}nil{{/returnType}}]
-    def {{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{^required}}{{paramName}}=nil, {{/required}}{{/allParams}}request_options = {})
-      {{#returnType}}data, _response = {{/returnType}}{{operationId}}_with_http_info({{#allParams}}{{paramName}}, {{/allParams}}request_options)
-      {{#returnType}}data{{/returnType}}{{^returnType}}nil{{/returnType}}
-    end
-
-    {{#summary}}
     # {{.}}
     {{/summary}}
     {{#notes}}
@@ -69,11 +48,11 @@ module {{moduleName}}
     # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
 {{/required}}
 {{^required}}
-    # @option {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/required}}
 {{/allParams}}
-    # @option request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Array<({{{returnType}}}{{^returnType}}nil{{/returnType}}, Http::Response)>] {{#returnType}}{{{.}}} data{{/returnType}}{{^returnType}}nil{{/returnType}} and response
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
     def {{operationId}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{^required}}{{paramName}}=nil, {{/required}}{{/allParams}}request_options = {})
       {{#allParams}}
       {{^isNullable}}
@@ -176,18 +155,36 @@ module {{moduleName}}
 
       post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 
-      return_type = request_options[:debug_return_type]{{#vendorExtensions}}{{#returnProperty}} || '{{#isArray}}Array<{{{modelModule}}}::{{complexType}}>{{/isArray}}{{^isArray}}{{^x-is-custom-request}}{{{modelModule}}}::{{/x-is-custom-request}}{{{dataType}}}{{/isArray}}'{{/returnProperty}}{{/vendorExtensions}}
-
       new_options = request_options.merge(
         :operation => :'{{classname}}.{{operationId}}',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => {{#useReadTransporter}}true{{/useReadTransporter}}{{^useReadTransporter}}false{{/useReadTransporter}}
       )
 
       @api_client.call_api(:{{httpMethod}}, path, new_options)
+    end
+
+    {{#summary}}
+    # {{{.}}}
+    {{/summary}}
+    {{#notes}}
+    # {{{.}}}
+    {{/notes}}
+{{#allParams}}
+{{#required}}
+    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
+{{/required}}
+{{^required}}
+    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+{{/required}}
+{{/allParams}}
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [{{{returnType}}}{{^returnType}}nil{{/returnType}}]
+    def {{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{^required}}{{paramName}}=nil, {{/required}}{{/allParams}}request_options = {})
+      {{#returnType}}response = {{/returnType}}{{operationId}}_with_http_info({{#allParams}}{{paramName}}, {{/allParams}}request_options)
+      {{#returnType}}deserialize(response.body, request_options[:debug_return_type]{{#vendorExtensions}}{{#returnProperty}} || '{{#isArray}}Array<{{{modelModule}}}::{{complexType}}>{{/isArray}}{{^isArray}}{{^x-is-custom-request}}{{{modelModule}}}::{{/x-is-custom-request}}{{{dataType}}}{{/isArray}}'{{/returnProperty}}{{/vendorExtensions}}){{/returnType}}{{^returnType}}nil{{/returnType}}
     end
 {{^-last}}
 
