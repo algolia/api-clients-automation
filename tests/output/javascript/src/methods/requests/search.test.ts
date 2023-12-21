@@ -774,7 +774,7 @@ describe('deleteObject', () => {
 });
 
 describe('deleteRule', () => {
-  test('deleteRule0', async () => {
+  test('delete rule simple case', async () => {
     const req = (await client.deleteRule({
       indexName: 'indexName',
       objectID: 'id1',
@@ -786,7 +786,7 @@ describe('deleteRule', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('deleteRule1', async () => {
+  test('delete rule with simple characters to encode in objectID', async () => {
     const req = (await client.deleteRule({
       indexName: 'indexName',
       objectID: 'test/with/slash',
@@ -1770,7 +1770,7 @@ describe('search', () => {
           getRankingInfo: true,
           highlightPostTag: '',
           highlightPreTag: '',
-          hitsPerPage: 0,
+          hitsPerPage: 1,
           ignorePlurals: false,
           indexName: 'theIndexName',
           insideBoundingBox: [
@@ -1782,12 +1782,12 @@ describe('search', () => {
             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
           ],
           keepDiacriticsOnCharacters: '',
-          length: 0,
+          length: 1,
           maxValuesPerFacet: 0,
-          minProximity: 0,
+          minProximity: 1,
           minWordSizefor1Typo: 0,
           minWordSizefor2Typos: 0,
-          minimumAroundRadius: 0,
+          minimumAroundRadius: 1,
           naturalLanguages: [''],
           numericFilters: [''],
           offset: 0,
@@ -1867,7 +1867,7 @@ describe('search', () => {
           getRankingInfo: true,
           highlightPostTag: '',
           highlightPreTag: '',
-          hitsPerPage: 0,
+          hitsPerPage: 1,
           ignorePlurals: false,
           indexName: 'theIndexName',
           insideBoundingBox: [
@@ -1879,12 +1879,12 @@ describe('search', () => {
             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
           ],
           keepDiacriticsOnCharacters: '',
-          length: 0,
+          length: 1,
           maxValuesPerFacet: 0,
-          minProximity: 0,
+          minProximity: 1,
           minWordSizefor1Typo: 0,
           minWordSizefor2Typos: 0,
-          minimumAroundRadius: 0,
+          minimumAroundRadius: 1,
           naturalLanguages: [''],
           numericFilters: [''],
           offset: 0,
