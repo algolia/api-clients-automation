@@ -238,6 +238,58 @@ extension KeyedDecodingContainerProtocol {
 
 extension HTTPURLResponse {
   var isStatusCodeSuccessful: Bool {
-    return Configuration.successfulStatusCodeRange.contains(statusCode)
+    return HTTPStatusCategory.success.contains(statusCode)
   }
+}
+
+extension URLRequest: Builder {}
+extension URLComponents: Builder {}
+
+extension URLRequest {
+
+  @discardableResult func switchingHost(
+    by host: RetryableHost, withBaseTimeout baseTimeout: TimeInterval
+  ) throws -> URLRequest {
+    guard let url = url else { throw FormatError.missingURL }
+    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+      throw FormatError.malformedURL(url.absoluteString)
+    }
+    guard let updatedURL = components.set(\.host, to: host.url.absoluteString).url else {
+      throw FormatError.badHost(host.url.absoluteString)
+    }
+    let updatedTimeout = TimeInterval(host.retryCount + 1) * baseTimeout
+    return
+      self
+      .set(\.url, to: updatedURL)
+      .set(\.timeoutInterval, to: updatedTimeout)
+  }
+
+}
+
+extension URLRequest {
+
+  public enum FormatError: LocalizedError {
+    case missingURL
+    case malformedURL(String)
+    case badHost(String)
+    case invalidPath(String)
+    case invalidQueryItems
+
+    public var errorDescription: String? {
+      let contactUs = "Please contact support@algolia.com if this problem occurs."
+      switch self {
+      case .badHost(let host):
+        return "Bad host: \(host). Will retry with next host. " + contactUs
+      case .malformedURL(let url):
+        return "Command's request URL is malformed: \(url). " + contactUs
+      case .missingURL:
+        return "Command's request doesn't contain URL. " + contactUs
+      case .invalidPath(let path):
+        return "Invalid path: \(path)"
+      case .invalidQueryItems:
+        return "Invalid query items. " + contactUs
+      }
+    }
+  }
+
 }

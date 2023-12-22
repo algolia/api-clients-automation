@@ -23,7 +23,7 @@ import AnyCodable
   extension {{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}} {
 {{/swiftUseApiNamespace}}{{/swiftUseClientNamespace}}
 
-public struct ClientConfiguration: CommonClientConfiguration, Credentials {
+public struct Configuration: Core.Configuration, Credentials {
 {{#hasRegionalHost}}
 
   private let authorizedRegions: [Region] = [
@@ -38,9 +38,24 @@ public struct ClientConfiguration: CommonClientConfiguration, Credentials {
   public var logLevel: LogLevel
   public var defaultHeaders: [String: String]?
   public var batchSize: Int
-  public var hosts: [RetryableHost]!
+  public var hosts: [RetryableHost]
 
-  private func buildHosts({{#hasRegionalHost}}for region: Region?{{/hasRegionalHost}}) -> [RetryableHost] {
+  init(applicationID: String,
+       apiKey: String,{{#hasRegionalHost}}
+       region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
+       writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
+       readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
+       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
+       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
+       batchSize: Int = DefaultConfiguration.default.batchSize) {
+    self.applicationID = applicationID
+    self.apiKey = apiKey
+    self.writeTimeout = writeTimeout
+    self.readTimeout = readTimeout
+    self.logLevel = logLevel
+    self.defaultHeaders = defaultHeaders
+    self.batchSize = batchSize
+
     {{^hasRegionalHost}}
     func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport))
       -> RetryableHost
@@ -60,19 +75,12 @@ public struct ClientConfiguration: CommonClientConfiguration, Credentials {
       ("-3.algolianet.com", .universal),
     ].map(buildHost).shuffled()
 
-    return hosts + commonHosts
+    self.hosts = hosts + commonHosts
 {{/hasRegionalHost}}
 {{#hasRegionalHost}}
-    {{^fallbackToAliasHost}}
-
-      guard let region = region else {
-        fatalError("Region is required")
-      }
-      {{/fallbackToAliasHost}}
-
     guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {
         fatalError(
-          "Region must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
+          "Region {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
         )
       }
 
@@ -83,39 +91,21 @@ public struct ClientConfiguration: CommonClientConfiguration, Credentials {
                     fatalError("Malformed URL")
                 }
 
-            return [
+            self.hosts = [
                 .init(url: url)
             ]
     {{#fallbackToAliasHost}}
-      }
+      } else {
+        guard let url = URL(string: "{{{hostWithFallback}}}") else {
+          fatalError("Malformed URL")
+        }
 
-      guard let url = URL(string: "{{{hostWithFallback}}}") else {
-        fatalError("Malformed URL")
+        self.hosts = [
+          .init(url: url)
+        ]
       }
-
-      return [
-        .init(url: url)
-      ]
     {{/fallbackToAliasHost}}
     {{/hasRegionalHost}}
-  }
-
-  init(applicationID: String,
-       apiKey: String,{{#hasRegionalHost}}
-       region: Region? = nil,{{/hasRegionalHost}}
-       writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
-       readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
-       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
-       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
-       batchSize: Int = DefaultConfiguration.default.batchSize) {
-    self.applicationID = applicationID
-    self.apiKey = apiKey
-    self.writeTimeout = writeTimeout
-    self.readTimeout = readTimeout
-    self.logLevel = logLevel
-    self.defaultHeaders = defaultHeaders
-    self.batchSize = batchSize
-    self.hosts = buildHosts({{#hasRegionalHost}}for: region{{/hasRegionalHost}})
   }
 }
 {{#swiftUseApiNamespace}}

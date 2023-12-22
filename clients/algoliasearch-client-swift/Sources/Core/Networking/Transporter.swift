@@ -9,12 +9,19 @@ import Foundation
 #if canImport(FoundationNetworking)
   import FoundationNetworking
 #endif
-open class AlgoliaSearchClientAPI {
-  public static var basePath = "https://status.algolia.com"
+open class Transporter {
   public static var customHeaders: [String: String] = [:]
   public static var credential: URLCredential?
   public static var requestBuilderFactory: RequestBuilderFactory = URLSessionRequestBuilderFactory()
   public static var apiResponseQueue: DispatchQueue = .main
+
+  var configuration: Configuration
+  var retryStrategy: RetryStrategy
+
+  public init(configuration: Configuration, retryStrategy: RetryStrategy? = nil) {
+    self.configuration = configuration
+    self.retryStrategy = retryStrategy ?? AlgoliaRetryStrategy(configuration: configuration)
+  }
 }
 
 open class RequestBuilder<T> {
@@ -22,24 +29,39 @@ open class RequestBuilder<T> {
   var headers: [String: String]
   public let parameters: [String: Any]?
   public let method: String
-  public let URLString: String
+  public let path: String
+  public let queryItems: [URLQueryItem]?
   public let requestTask: RequestTask = RequestTask()
   public let requiresAuthentication: Bool
+  public let hostIterator: HostIterator
+
+  public let transporter: Transporter
 
   /// Optional block to obtain a reference to the request's progress instance when available.
   public var onProgressReady: ((Progress) -> Void)?
 
   required public init(
-    method: String, URLString: String, parameters: [String: Any]?, headers: [String: String] = [:],
-    requiresAuthentication: Bool
+    method: String, path: String, queryItems: [URLQueryItem]?, parameters: [String: Any]?,
+    headers: [String: String] = [:],
+    requiresAuthentication: Bool, transporter: Transporter
   ) {
     self.method = method
-    self.URLString = URLString
+    self.path = path
+    self.queryItems = queryItems
     self.parameters = parameters
     self.headers = headers
     self.requiresAuthentication = requiresAuthentication
+    self.transporter = transporter
 
-    addHeaders(AlgoliaSearchClientAPI.customHeaders)
+    let httpMethod = HTTPMethod(rawValue: method)
+
+    guard let httpMethod = httpMethod else {
+      fatalError("Unknown HTTP method: '\(method)'")
+    }
+
+    self.hostIterator = transporter.retryStrategy.retryableHosts(for: httpMethod.toCallType())
+
+    addHeaders(Transporter.customHeaders)
   }
 
   open func addHeaders(_ aHeaders: [String: String]) {
@@ -50,7 +72,7 @@ open class RequestBuilder<T> {
 
   @discardableResult
   open func execute(
-    _ apiResponseQueue: DispatchQueue = AlgoliaSearchClientAPI.apiResponseQueue,
+    _ apiResponseQueue: DispatchQueue = Transporter.apiResponseQueue,
     _ completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void
   ) -> RequestTask {
     return requestTask
@@ -89,7 +111,7 @@ open class RequestBuilder<T> {
   }
 
   open func addCredential() -> Self {
-    credential = AlgoliaSearchClientAPI.credential
+    credential = Transporter.credential
     return self
   }
 }

@@ -12,7 +12,7 @@ typealias SwiftLog = Logging.Logger
 
 public struct Logger {
 
-  static var loggingService: Loggable = {
+  public static var loggingService: Loggable = {
     var swiftLog = SwiftLog(label: "com.algolia.searchClientSwift")
     print(
       "Algolia Search Client Swift: Default minimal log severity level is info. Change Logger.minLogServerityLevel value if you want to change it."
@@ -109,7 +109,7 @@ extension LogLevel {
 
 }
 
-protocol Loggable {
+public protocol Loggable {
 
   var minSeverityLevel: LogLevel { get set }
 
@@ -119,7 +119,7 @@ protocol Loggable {
 
 extension SwiftLog: Loggable {
 
-  var minSeverityLevel: LogLevel {
+  public var minSeverityLevel: LogLevel {
     get {
       return LogLevel(swiftLogLevel: logLevel)
     }
@@ -128,7 +128,7 @@ extension SwiftLog: Loggable {
     }
   }
 
-  func log(level: LogLevel, message: String) {
+  public func log(level: LogLevel, message: String) {
     self.log(level: level.swiftLogLevel, SwiftLog.Message(stringLiteral: message), metadata: .none)
   }
 

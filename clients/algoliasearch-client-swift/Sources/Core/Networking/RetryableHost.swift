@@ -2,7 +2,7 @@
 //  RetryableHost.swift
 //
 //
-//  Created by Thomas Raffray on 15/12/2023.
+//  Created by Vladislav Fitc on 19/02/2020.
 //
 
 import Foundation

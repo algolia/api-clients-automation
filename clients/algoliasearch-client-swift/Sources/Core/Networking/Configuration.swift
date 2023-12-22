@@ -1,13 +1,13 @@
 //
-//  ClientConfiguration.swift
+//  Configuration.swift
 //
 //
-//  Created by Thomas Raffray on 15/12/2023.
+//  Created by Vladislav Fitc on 20/02/2020.
 //
 
 import Foundation
 
-public protocol CommonClientConfiguration {
+public protocol Configuration {
 
   /// The timeout for each request when performing write operations (POST, PUT ..).
   var writeTimeout: TimeInterval { get }
@@ -19,7 +19,7 @@ public protocol CommonClientConfiguration {
   var logLevel: LogLevel { get }
 
   /// List of hosts and back-up host used to perform a custom retry logic.
-  var hosts: [RetryableHost]! { get set }
+  var hosts: [RetryableHost] { get }
 
   /// Default headers that should be applied to every request.
   var defaultHeaders: [String: String]? { get }
@@ -28,7 +28,7 @@ public protocol CommonClientConfiguration {
 
 }
 
-extension CommonClientConfiguration {
+extension Configuration {
 
   func timeout(for callType: CallType) -> TimeInterval {
     switch callType {
@@ -41,15 +41,15 @@ extension CommonClientConfiguration {
 
 }
 
-public struct DefaultConfiguration: CommonClientConfiguration {
+public struct DefaultConfiguration: Configuration {
 
-  public static let `default`: CommonClientConfiguration = DefaultConfiguration()
+  public static let `default`: Configuration = DefaultConfiguration()
 
   public let writeTimeout: TimeInterval = 30
   public let readTimeout: TimeInterval = 5
   public let logLevel: LogLevel = .info
   public let defaultHeaders: [String: String]? = [:]
   public let batchSize: Int = 1000
-  public var hosts: [RetryableHost]! = []
+  public var hosts: [RetryableHost] = []
 
 }

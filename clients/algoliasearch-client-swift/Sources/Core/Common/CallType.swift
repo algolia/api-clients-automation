@@ -23,3 +23,14 @@ extension CallType: CustomStringConvertible {
     }
   }
 }
+
+extension HTTPMethod {
+  public func toCallType() -> CallType {
+    switch self {
+    case .get:
+      .read
+    default:
+      .write
+    }
+  }
+}

@@ -22,12 +22,12 @@ public protocol URLSessionProtocol {
 
 extension URLSession: URLSessionProtocol {}
 
-class URLSessionRequestBuilderFactory: RequestBuilderFactory {
-  func getNonDecodableBuilder<T>() -> RequestBuilder<T>.Type {
+public class URLSessionRequestBuilderFactory: RequestBuilderFactory {
+  public func getNonDecodableBuilder<T>() -> RequestBuilder<T>.Type {
     return URLSessionRequestBuilder<T>.self
   }
 
-  func getBuilder<T: Decodable>() -> RequestBuilder<T>.Type {
+  public func getBuilder<T: Decodable>() -> RequestBuilder<T>.Type {
     return URLSessionDecodableRequestBuilder<T>.self
   }
 }
@@ -61,12 +61,13 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
   public var taskDidReceiveChallenge: AlgoliaSearchClientAPIChallengeHandler?
 
   required public init(
-    method: String, URLString: String, parameters: [String: Any]?, headers: [String: String] = [:],
-    requiresAuthentication: Bool
+    method: String, path: String, queryItems: [URLQueryItem]?, parameters: [String: Any]?,
+    headers: [String: String] = [:],
+    requiresAuthentication: Bool, transporter: Transporter
   ) {
     super.init(
-      method: method, URLString: URLString, parameters: parameters, headers: headers,
-      requiresAuthentication: requiresAuthentication)
+      method: method, path: path, queryItems: queryItems, parameters: parameters, headers: headers,
+      requiresAuthentication: requiresAuthentication, transporter: transporter)
   }
 
   /**
@@ -97,11 +98,12 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
     headers: [String: String]
   ) throws -> URLRequest {
 
-    guard let url = URL(string: URLString) else {
+    guard let url = URL(string: path) else {
       throw DownloadException.requestMissingURL
     }
 
-    var originalRequest = URLRequest(url: url)
+    var originalRequest = URLRequest(
+      url: url, timeoutInterval: self.transporter.configuration.timeout(for: method.toCallType()))
 
     originalRequest.httpMethod = method.rawValue
 
@@ -116,7 +118,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 
   @discardableResult
   override open func execute(
-    _ apiResponseQueue: DispatchQueue = AlgoliaSearchClientAPI.apiResponseQueue,
+    _ apiResponseQueue: DispatchQueue = Transporter.apiResponseQueue,
     _ completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void
   ) -> RequestTask {
     let urlSession = createURLSession()
@@ -159,11 +161,61 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
         }
       }
 
+      guard let host = hostIterator.next() else {
+        let errorMessage = "No host available"
+        Logger.loggingService.log(
+          level: self.transporter.configuration.logLevel, message: errorMessage)
+        throw AlgoliaError(errorMessage: errorMessage)
+      }
+
+      let retryableCompletion: (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void = {
+        [weak self] result in
+        guard let self = self else { return }
+
+        switch result {
+        case .success:
+          // Call the original completion block for successful responses
+          completion(result)
+
+        case .failure(let error):
+          // Check if the error is retryable
+
+          self.transporter.retryStrategy.notify(host: host, result: result)
+
+          if self.transporter.retryStrategy.canRetry(inCaseOf: error) {
+            // Retry the request using the same function recursively
+
+            guard let host = hostIterator.next() else {
+              let errorMessage = "No host available"
+              Logger.loggingService.log(
+                level: self.transporter.configuration.logLevel, message: errorMessage)
+              return completion(result)
+            }
+            do {
+              try request.switchingHost(
+                by: host,
+                withBaseTimeout: self.transporter.configuration.timeout(for: xMethod.toCallType()))
+            } catch {
+              let errorMessage = "Unable to switch host"
+              Logger.loggingService.log(
+                level: self.transporter.configuration.logLevel, message: errorMessage)
+              return completion(result)
+            }
+
+            let retryTask = self.execute(apiResponseQueue, completion)
+            requestTask.set(task: retryTask)
+          } else {
+            // Call the original completion block for non-retryable errors
+            completion(result)
+          }
+        }
+      }
+
       let dataTask = urlSession.dataTask(with: request) { data, response, error in
         apiResponseQueue.async {
           self.processRequestResponse(
             urlRequest: request, data: data, response: response, error: error,
-            completion: completion)
+            completion: retryableCompletion)
           cleanupRequest()
         }
       }
@@ -225,7 +277,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 
   open func buildHeaders() -> [String: String] {
     var httpHeaders: [String: String] = [:]
-    for (key, value) in AlgoliaSearchClientAPI.customHeaders {
+    for (key, value) in Transporter.customHeaders {
       httpHeaders[key] = value
     }
     for (key, value) in headers {
@@ -288,6 +340,25 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 }
 
 open class URLSessionDecodableRequestBuilder<T: Decodable>: URLSessionRequestBuilder<T> {
+  override open func createURLRequest(
+    urlSession: URLSessionProtocol, method: HTTPMethod, encoding: ParameterEncoding,
+    headers: [String: String]
+  ) throws -> URLRequest {
+    var superReq = try super.createURLRequest(
+      urlSession: urlSession, method: method, encoding: encoding, headers: headers)
+    superReq.timeoutInterval = self.transporter.configuration.timeout(for: method.toCallType())
+
+    guard let url = superReq.url else { throw URLRequest.FormatError.missingURL }
+    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+      throw URLRequest.FormatError.malformedURL(url.absoluteString)
+    }
+    guard let urlWithQueryItems = components.set(\.queryItems, to: queryItems).url else {
+      throw URLRequest.FormatError.invalidQueryItems
+    }
+
+    return superReq.setIfNotNil(\.url, to: urlWithQueryItems)
+  }
+
   override fileprivate func processRequestResponse(
     urlRequest: URLRequest, data: Data?, response: URLResponse?, error: Error?,
     completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void

@@ -112,7 +112,7 @@ open class Response<T> {
   }
 }
 
-public final class RequestTask: @unchecked Sendable {
+public final class RequestTask: URLSessionTask {
   private var lock = NSRecursiveLock()
   private var task: URLSessionTask?
 
@@ -122,7 +122,7 @@ public final class RequestTask: @unchecked Sendable {
     self.task = task
   }
 
-  public func cancel() {
+  override public func cancel() {
     lock.lock()
     defer { lock.unlock() }
     task?.cancel()
