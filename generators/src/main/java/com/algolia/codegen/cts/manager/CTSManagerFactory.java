@@ -16,6 +16,7 @@ public class CTSManagerFactory {
       case "dart" -> new DartCTSManager(client);
       case "scala" -> new ScalaCTSManager(client);
       case "python" -> new PythonCTSManager(client);
+      case "csharp" -> new CSharpCTSManager(client);
       default -> null;
     };
   }

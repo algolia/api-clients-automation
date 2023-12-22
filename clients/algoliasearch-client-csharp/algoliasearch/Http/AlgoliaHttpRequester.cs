@@ -22,6 +22,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -137,5 +138,50 @@ namespace Algolia.Search.Http
 
       return content;
     }
+  }
+
+
+  public class EchoHttpRequester : IHttpRequester
+  {
+    public EchoResponse lastResponse;
+
+    public EchoHttpRequester()
+    {
+    }
+
+    public async Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan totalTimeout,
+      CancellationToken ct = default)
+    {
+      EchoResponse echo = new EchoResponse();
+      echo.Path = request.Uri.AbsolutePath;
+      echo.Host = request.Uri.Host;
+      echo.Method = request.Method;
+      //echo.Body = processResponseBody(request);
+      //echo.QueryParameters = buildQueryParameters(request);
+      //echo.Headers = buildHeaders(request.Headers);
+      //echo.ConnectTimeout = chain.connectTimeoutMillis();
+      //echo.ResponseTimeout =
+      //  (useReadTransporter != null || request.Method == HttpMethod.Get) ? chain.readTimeoutMillis() : chain.writeTimeoutMillis();
+
+      lastResponse = echo;
+
+      return new AlgoliaHttpResponse
+      {
+        Body = new MemoryStream(),
+        HttpStatusCode = 200
+      };
+    }
+  }
+  public class EchoResponse
+  {
+
+    public String Path;
+    public String Host;
+    public HttpMethod Method;
+    public String Body;
+    public Dictionary<String, Object> QueryParameters;
+    public Dictionary<String, String> Headers;
+    public int ConnectTimeout;
+    public int ResponseTimeout;
   }
 }

@@ -112,10 +112,10 @@
         /// </summary>
         [JsonConstructorAttribute]
         {{^isAdditionalPropertiesTrue}}
-        protected {{classname}}() { }
+        public {{classname}}() { }
         {{/isAdditionalPropertiesTrue}}
         {{#isAdditionalPropertiesTrue}}
-        protected {{classname}}()
+        public {{classname}}()
         {
             this.AdditionalProperties = new Dictionary<string, object>();
         }

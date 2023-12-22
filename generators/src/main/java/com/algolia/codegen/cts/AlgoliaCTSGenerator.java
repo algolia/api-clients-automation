@@ -87,6 +87,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
+    lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
     return lambdas;
   }
 
@@ -98,7 +99,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       Object lambda = objs.get("lambda");
       List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
       CodegenServerVariable regionVariable = null;
-      outerLoop:for (CodegenServer server : servers) {
+      outerLoop:
+      for (CodegenServer server : servers) {
         for (CodegenServerVariable variable : server.variables) {
           if (variable.name.equals("region")) {
             regionVariable = variable;
@@ -122,7 +124,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       // This only exists for the `javascript-algoliasearch` combo, because the `lite` client is
       // nested inside `algoliasearch`.
       String importClientName = client;
-      if ((language.equals("javascript") || language.equals("dart")) && client.equals("algoliasearch")) {
+      if ((language.equals("javascript") || language.equals("dart"))
+          && client.equals("algoliasearch")) {
         importClientName = "lite";
       }
 
@@ -173,7 +176,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
   // operationId -> CodegenOperation
   private TreeMap<String, CodegenOperation> buildOperations(Map<String, Object> objs) {
     HashMap<String, CodegenOperation> result = new HashMap<>();
-    List<Map<String, Object>> apis = ((Map<String, List<Map<String, Object>>>) objs.get("apiInfo")).get("apis");
+    List<Map<String, Object>> apis =
+        ((Map<String, List<Map<String, Object>>>) objs.get("apiInfo")).get("apis");
 
     for (Map<String, Object> api : apis) {
       String apiName = ((String) api.get("baseName")).toLowerCase();
@@ -181,7 +185,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
         continue;
       }
 
-      List<CodegenOperation> operations = ((Map<String, List<CodegenOperation>>) api.get("operations")).get("operation");
+      List<CodegenOperation> operations =
+          ((Map<String, List<CodegenOperation>>) api.get("operations")).get("operation");
 
       for (CodegenOperation ope : operations) {
         result.put(ope.operationId, ope);

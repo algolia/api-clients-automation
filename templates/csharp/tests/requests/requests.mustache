@@ -1,0 +1,53 @@
+using Algolia.Search.Http;
+using Algolia.Search.Search.Api;
+using Algolia.Search.Search.Client;
+using Algolia.Search.Search.Models;
+using Action = Algolia.Search.Search.Models.Action;
+
+public class {{client}}RequestTests
+{
+  private {{client}} _client;
+  private EchoHttpRequester _echo;
+
+  public {{client}}RequestTests()
+  {
+    _echo = new EchoHttpRequester();
+    _client = new {{client}}(new SearchConfig("appId", "apiKey"), _echo);
+  }
+
+  // teardown
+  public void Dispose()
+  {
+
+  }
+
+  {{#blocksRequests}}
+  {{#tests}}
+  [Fact(DisplayName = "{{{testName}}}")]
+  public async Task {{method}}Test{{testIndex}}()
+  {
+    {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
+
+    {{#hasRequestOptions}}
+     var requestOptions = new RequestOptions();
+     {{#requestOptions.queryParameters.parametersWithDataType}}
+     requestOptions.QueryParameters.Add("test", "test");
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+      {{#requestOptions.headers.parametersWithDataType}}
+     requestOptions.Headers.Add("test", "test");
+      {{/requestOptions.headers.parametersWithDataType}}
+    {{/hasRequestOptions}}
+
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+
+     EchoResponse req = _echo.lastResponse;
+
+    {{#request}}
+     Assert.Equal("{{{path}}}",req.Path);
+     Assert.Equal("{{{method}}}",req.Method.ToString());
+
+    {{/request}}
+  }
+  {{/tests}}
+  {{/blocksRequests}}
+}

@@ -28,7 +28,7 @@ using Algolia.Search.Search.Client;
 namespace Algolia.Search.Utils
 {
   /// <summary>
-  /// Helper regarding dictionary mergning
+  /// Helper regarding dictionary merging
   /// </summary>
   public static class DictionaryHelper
   {

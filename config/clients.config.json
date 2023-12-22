@@ -117,7 +117,7 @@
     "customGenerator": "algolia-csharp",
     "tests": {
       "extension": ".test.cs",
-      "outputFolder": "test"
+      "outputFolder": "tests"
     }
   }
 }

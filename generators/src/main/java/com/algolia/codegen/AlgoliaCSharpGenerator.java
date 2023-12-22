@@ -11,6 +11,32 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
+  // This is used for the CTS generation
+  private static final AlgoliaCSharpGenerator INSTANCE = new AlgoliaCSharpGenerator();
+
+  /** Convert a text to a valid scala identifier. */
+  public static String formatIdentifier(String text) {
+    Helpers.prettyPrint(text + " -> " + INSTANCE.escapeReservedWord(text));
+    return INSTANCE.escapeReservedWord(text);
+    //     if (NAME_MAPPING.containsKey(text)) return NAME_MAPPING.get(text);
+    //     return INSTANCE.formatIdentifier(text, false);
+  }
+
+  /**
+   * Custom mapping for field names This a workaround; a better solution would be to use json4s'
+   * FieldSerializer for all fields with special cases.
+   */
+  static final Map<String, String> NAME_MAPPING = Map.of(
+    "source",
+    "varSource",
+    "_operation",
+    "_operation",
+    "client_id",
+    "client_id",
+    "client_secret",
+    "client_secret"
+  );
+
   private String CLIENT;
 
   @Override
