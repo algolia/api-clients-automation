@@ -94,16 +94,16 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
      configuration (e.g. to override the cache policy).
      */
   open func createURLRequest(
-    urlSession: URLSessionProtocol, method: HTTPMethod, encoding: ParameterEncoding,
+    urlSession: URLSessionProtocol, method: HTTPMethod, host: RetryableHost?,
+    encoding: ParameterEncoding,
     headers: [String: String]
   ) throws -> URLRequest {
 
-    guard let url = URL(string: path) else {
+    guard let url = URL(string: (host?.url.absoluteString ?? "") + path) else {
       throw DownloadException.requestMissingURL
     }
 
-    var originalRequest = URLRequest(
-      url: url, timeoutInterval: self.transporter.configuration.timeout(for: method.toCallType()))
+    var originalRequest = URLRequest(url: url)
 
     originalRequest.httpMethod = method.rawValue
 
@@ -150,8 +150,15 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
     }
 
     do {
+      guard let host = hostIterator.next() else {
+        let errorMessage = "No host available"
+        Logger.loggingService.log(
+          level: self.transporter.configuration.logLevel, message: errorMessage)
+        throw AlgoliaError(errorMessage: errorMessage)
+      }
+
       let request = try createURLRequest(
-        urlSession: urlSession, method: xMethod, encoding: encoding, headers: headers)
+        urlSession: urlSession, method: xMethod, host: host, encoding: encoding, headers: headers)
 
       var taskIdentifier: Int?
       let cleanupRequest = {
@@ -159,13 +166,6 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
           challengeHandlerStore[taskIdentifier] = nil
           credentialStore[taskIdentifier] = nil
         }
-      }
-
-      guard let host = hostIterator.next() else {
-        let errorMessage = "No host available"
-        Logger.loggingService.log(
-          level: self.transporter.configuration.logLevel, message: errorMessage)
-        throw AlgoliaError(errorMessage: errorMessage)
       }
 
       let retryableCompletion: (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void = {
@@ -280,6 +280,10 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
     for (key, value) in Transporter.customHeaders {
       httpHeaders[key] = value
     }
+    for (key, value) in self.transporter.configuration.defaultHeaders ?? [:] {
+      httpHeaders[key] = value
+    }
+    httpHeaders["User-Agent"] = UserAgentController.httpHeaderValue
     for (key, value) in headers {
       httpHeaders[key] = value
     }
@@ -341,11 +345,12 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 
 open class URLSessionDecodableRequestBuilder<T: Decodable>: URLSessionRequestBuilder<T> {
   override open func createURLRequest(
-    urlSession: URLSessionProtocol, method: HTTPMethod, encoding: ParameterEncoding,
+    urlSession: URLSessionProtocol, method: HTTPMethod, host: RetryableHost?,
+    encoding: ParameterEncoding,
     headers: [String: String]
   ) throws -> URLRequest {
     var superReq = try super.createURLRequest(
-      urlSession: urlSession, method: method, encoding: encoding, headers: headers)
+      urlSession: urlSession, method: method, host: host, encoding: encoding, headers: headers)
     superReq.timeoutInterval = self.transporter.configuration.timeout(for: method.toCallType())
 
     guard let url = superReq.url else { throw URLRequest.FormatError.missingURL }

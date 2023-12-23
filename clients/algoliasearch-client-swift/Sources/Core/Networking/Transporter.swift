@@ -60,8 +60,6 @@ open class RequestBuilder<T> {
     }
 
     self.hostIterator = transporter.retryStrategy.retryableHosts(for: httpMethod.toCallType())
-
-    addHeaders(Transporter.customHeaders)
   }
 
   open func addHeaders(_ aHeaders: [String: String]) {

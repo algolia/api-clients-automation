@@ -41,16 +41,16 @@ import AnyCodable
         self.configuration.applicationID
     }
 
-    init(configuration: Configuration, transporter: Transporter) {
+    public init(configuration: Configuration, transporter: Transporter) {
         self.configuration = configuration
         self.transporter = transporter
     }
 
-    convenience init(configuration: Configuration) {
+    public convenience init(configuration: Configuration) {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    convenience init(applicationID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) {
+    public convenience init(applicationID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) {
         self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 

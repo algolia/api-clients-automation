@@ -421,9 +421,9 @@ describe('createReleasePR', () => {
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
         - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~swift: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default."
-          `);
+        - ~swift: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default."
+      `);
     });
   });
 

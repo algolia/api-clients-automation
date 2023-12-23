@@ -74,10 +74,8 @@ export async function removeExistingCodegen({
       baseApiFolder = '';
       break;
     case 'swift':
-      clientModel = clientName;
+      clientModel = `${clientName}/Models`;
       clientApi = clientName;
-      baseModelFolder = 'Sources/AlgoliaSearchClient/Models';
-      baseApiFolder = 'Sources/AlgoliaSearchClient';
       break;
     default:
       break;

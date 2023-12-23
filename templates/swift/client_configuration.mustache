@@ -53,14 +53,18 @@ public struct Configuration: Core.Configuration, Credentials {
     self.writeTimeout = writeTimeout
     self.readTimeout = readTimeout
     self.logLevel = logLevel
-    self.defaultHeaders = defaultHeaders
+    self.defaultHeaders = [
+      "X-Algolia-Application-Id": applicationID,
+      "X-Algolia-API-Key": apiKey,
+      "Content-Type": "application/json"
+    ].merging(defaultHeaders ?? [:]) { (_, new) in new }
     self.batchSize = batchSize
 
     {{^hasRegionalHost}}
     func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport))
       -> RetryableHost
     {
-      let url = URL(string: "\(applicationID)\(components.suffix)")!
+      let url = URL(string: "https://\(applicationID)\(components.suffix)")!
       return RetryableHost(url: url, callType: components.callType)
     }
 
@@ -87,7 +91,7 @@ public struct Configuration: Core.Configuration, Credentials {
     {{#fallbackToAliasHost}}
       if let region = region {
     {{/fallbackToAliasHost}}
-        guard let url = URL(string: "{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
+        guard let url = URL(string: "https://{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
                     fatalError("Malformed URL")
                 }
 
@@ -96,7 +100,7 @@ public struct Configuration: Core.Configuration, Credentials {
             ]
     {{#fallbackToAliasHost}}
       } else {
-        guard let url = URL(string: "{{{hostWithFallback}}}") else {
+        guard let url = URL(string: "https://{{{hostWithFallback}}}") else {
           fatalError("Malformed URL")
         }
 
@@ -106,6 +110,8 @@ public struct Configuration: Core.Configuration, Credentials {
       }
     {{/fallbackToAliasHost}}
     {{/hasRegionalHost}}
+
+    UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
   }
 }
 {{#swiftUseApiNamespace}}

@@ -76,6 +76,7 @@ runs:
         echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
         echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
         echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
+        echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
 
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
