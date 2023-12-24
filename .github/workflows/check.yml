@@ -217,7 +217,7 @@ jobs:
 
       - name: Download specs artifacts
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/restore-artifacts
+        uses: ./scripts/cli/actions/restore-artifacts
         with:
           type: specs
 
@@ -326,19 +326,10 @@ jobs:
 
       - name: Download all artifacts
         if: ${{ needs.setup.outputs.RUN_CODEGEN == 'true' }}
-        uses: ./.github/actions/restore-artifacts
+        uses: ./scripts/cli/actions/restore-artifacts
         with:
           type: all
-          javascript: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT }}
-          php: ${{ needs.setup.outputs.RUN_GEN_PHP }}
-          java: ${{ needs.setup.outputs.RUN_GEN_JAVA }}
-          go: ${{ needs.setup.outputs.RUN_GEN_GO }}
-          kotlin: ${{ needs.setup.outputs.RUN_GEN_KOTLIN }}
-          dart: ${{ needs.setup.outputs.RUN_GEN_DART }}
-          python: ${{ needs.setup.outputs.RUN_GEN_PYTHON }}
-          ruby: ${{ needs.setup.outputs.RUN_GEN_RUBY }}
-          scala: ${{ needs.setup.outputs.RUN_GEN_SCALA }}
-          csharp: ${{ needs.setup.outputs.RUN_GEN_CSHARP }}
+          languages: ${{ needs.setup.outputs }}
 
       - name: Setup
         uses: ./.github/actions/setup
