@@ -22,9 +22,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    if (language === 'javascript') {
-      continue;
-    }
     const bundledSpec = client === 'algoliasearch' ? 'search' : client;
 
     if (!commonDependenciesChanged) {
@@ -144,6 +141,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   }
 
   const shouldRun = clientMatrix.client.length > 0;
+
+  if ('javascript' in clientMatrix) {
+    core.setOutput('JAVASCRIPT_DATA', clientMatrix.javascript);
+    delete clientMatrix.javascript;
+  }
 
   core.setOutput('RUN_GEN', shouldRun);
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));

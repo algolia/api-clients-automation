@@ -74,6 +74,7 @@ jobs:
 
       RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
       GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
+      JAVASCRIPT_DATA: ${{ steps.setup.outputs.JAVASCRIPT_DATA }}
 
       RUN_GEN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_GEN_JAVASCRIPT }}
       RUN_GEN_JAVA: ${{ steps.setup.outputs.RUN_GEN_JAVA }}
@@ -191,12 +192,13 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     needs:
+      - setup
       - client_javascript_utils
       - specs
       - scripts
     if: |
       always() &&
-      needs.setup.outputs.RUN_GEN == 'true' &&
+      needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
@@ -207,8 +209,8 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          key: ${{ matrix.client.cacheKey }}
-          path: ${{ matrix.client.path }}
+          key: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).cacheKey }}
+          path: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).path }}
 
       - name: Download specs artifacts
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -231,53 +233,53 @@ jobs:
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli generate javascript ${{ matrix.client.toRun }}
+        run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Update `yarn.lock` for JavaScript
         run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: ${{ matrix.client.buildCommand }}
+        run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
 
       - name: Test JavaScript bundle size
         if: ${{ steps.cache.outputs.cache-hit != 'true' && startsWith(env.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
 
       - name: Run JavaScript 'algoliasearch' client tests
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && contains(matrix.client.toRun,'algoliasearch') }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun,'algoliasearch') }}
         run: cd clients/algoliasearch-client-javascript && yarn workspace algoliasearch test
 
       - name: Remove previous CTS output
         run: rm -rf tests/output/javascript/src || true
 
       - name: Generate CTS
-        run: yarn cli cts generate javascript ${{ matrix.client.toRun }}
+        run: yarn cli cts generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
         # JavaScript test deps (needs to be cached because they are huge and inefficient)
       - name: Get yarn js test cache directory path
         shell: bash
         id: yarn-cache-dir-tests
-        run: echo "dir=$(cd ${{ matrix.client.testsRootFolder }} && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
         uses: actions/cache@v3
         with:
-          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || format('{0}/.yarn/cache', matrix.client.testsRootFolder) }}
+          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           # let yarn handle the cache hash
           key: yarn-cache-tests-${{ env.CACHE_VERSION }}
 
       - name: Cache js tests node modules
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.client.testsRootFolder }}/node_modules
-          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles(format('{0}/yarn.lock', matrix.client.testsRootFolder)) }}
+          path: tests/output/javascript/node_modules
+          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run CTS
         run: yarn cli cts run javascript
 
       - name: Zip artifact before storing
-        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ matrix.client.testsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**"
+        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**"
 
       - name: Store javascript clients
         uses: actions/upload-artifact@v4
@@ -290,6 +292,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
     needs:
+      - setup
       - specs
       - scripts
     if: |
@@ -366,6 +369,7 @@ jobs:
     needs:
       - setup
       - client_gen
+      - client_gen_javascript
     if: |
       always() &&
       !contains(needs.*.result, 'cancelled') &&
