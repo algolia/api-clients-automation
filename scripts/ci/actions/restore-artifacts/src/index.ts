@@ -5,7 +5,8 @@ function run(): void {
     const actionType = core.getInput('type');
     const languages = core.getInput('languages');
 
-    console.log(actionType, languages);
+    core.info(`actionType: ${actionType}`);
+    core.info(`languages: ${languages}`);
 
     core.setOutput('time', new Date().toTimeString());
   } catch (error) {
