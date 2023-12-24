@@ -190,7 +190,10 @@ jobs:
   client_gen_javascript:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
-    needs: client_javascript_utils
+    needs:
+      - client_javascript_utils
+      - specs
+      - scripts
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
