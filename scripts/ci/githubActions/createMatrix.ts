@@ -30,11 +30,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         [key]: DEPENDENCIES[key],
       };
 
-      // only JS have other dependencies for its utils packages
-      if (language === 'javascript') {
-        languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
-      }
-
       // We will check if dependencies have changed for each clients of each languages:
       //   - language specific dependencies
       //   - common dependencies of every clients

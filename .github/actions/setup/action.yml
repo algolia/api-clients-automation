@@ -226,16 +226,6 @@ runs:
       shell: bash
       run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
 
-    - name: Check if JavaScript utils should run
-      if: inputs.type == 'matrix'
-      id: js-utils
-      shell: bash
-      run: |
-        if ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT || steps.diff.outputs.JAVASCRIPT_UTILS_CHANGED > 0 }}; then
-          echo "Running JavaScript utils: true"
-          echo "RUN_JS_UTILS=true" >> $GITHUB_OUTPUT
-        fi
-
 outputs:
   RUN_SCRIPTS:
     description: Determine if the `scripts` job should run
@@ -282,10 +272,6 @@ outputs:
   RUN_GEN_CSHARP:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_CSHARP }}
-
-  RUN_JS_UTILS:
-    description: Whether to build JS client common folders when RUN_JS is false
-    value: ${{ steps.js-utils.outputs.RUN_JS_UTILS }}
 
   RUN_CODEGEN:
     description: Determine if the `codegen` job should run

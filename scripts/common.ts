@@ -63,13 +63,6 @@ export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.
 
 export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client))];
 
-export const CLIENTS_JS_UTILS = [
-  'client-common',
-  'requester-browser-xhr',
-  'requester-fetch',
-  'requester-node-http',
-];
-
 export async function run(
   command: string,
   { errorMessage, cwd }: RunOptions = {}

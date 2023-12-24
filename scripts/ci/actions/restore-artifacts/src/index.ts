@@ -11,7 +11,7 @@ async function restoreSpecs(): Promise<void> {
 async function run(): Promise<void> {
   try {
     const actionType = core.getInput('type');
-    if (actionType === 'restore') {
+    if (actionType === 'specs') {
       await restoreSpecs();
     } else if (actionType === 'all') {
       const languages = core.getInput('languages');
