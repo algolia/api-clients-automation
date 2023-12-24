@@ -241,6 +241,9 @@ outputs:
   GEN_MATRIX:
     description: The generated `client_gen` matrix
     value: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
+  JAVASCRIPT_DATA:
+    description: Data needed to generate and test the javascript client
+    value: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
 
   RUN_GEN_JAVASCRIPT:
     description: Indicates if we plan to run the job for this language
