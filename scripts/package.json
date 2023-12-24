@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "yarn build:cli && yarn build:actions",
-    "build:actions": "ncc build ci/actions/restore-artifacts/src/index.ts --source-map --transpile-only --minify -o ci/actions/restore-artifacts/builddir",
+    "build:actions": "ncc build ci/actions/restore-artifacts/src/index.ts --source-map --transpile-only -o ci/actions/restore-artifacts/builddir",
     "build:cli": "tsc",
     "cleanGeneratedBranch": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
     "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
