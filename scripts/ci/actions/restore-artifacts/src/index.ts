@@ -1,20 +1,26 @@
 import { DefaultArtifactClient } from '@actions/artifact';
 import * as core from '@actions/core';
 
+async function restoreSpecs(): Promise<void> {
+  const artifact = new DefaultArtifactClient();
+  const artifacts = await artifact.listArtifacts();
+
+  core.info(`artifacts: ${JSON.stringify(artifacts, null, 2)}`);
+}
+
 async function run(): Promise<void> {
   try {
     const actionType = core.getInput('type');
-    const languages = core.getInput('languages');
+    if (actionType === 'restore') {
+      await restoreSpecs();
+    } else if (actionType === 'all') {
+      const languages = core.getInput('languages');
 
-    core.info(`actionType: ${actionType}`);
-    core.info(`languages: ${languages}`);
-
-    const artifact = new DefaultArtifactClient();
-    const artifacts = await artifact.listArtifacts();
-
-    core.info(`artifacts: ${artifacts}`);
-
-    core.setOutput('time', new Date().toTimeString());
+      await restoreSpecs();
+      core.info(`languages: ${languages}`);
+    } else {
+      throw new Error(`Unknown type: ${actionType}`);
+    }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }
