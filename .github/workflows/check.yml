@@ -217,7 +217,7 @@ jobs:
 
       - name: Download specs artifacts
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./scripts/cli/actions/restore-artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
 
@@ -326,7 +326,7 @@ jobs:
 
       - name: Download all artifacts
         if: ${{ needs.setup.outputs.RUN_CODEGEN == 'true' }}
-        uses: ./scripts/cli/actions/restore-artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
           languages: ${{ needs.setup.outputs }}
