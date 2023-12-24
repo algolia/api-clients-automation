@@ -31,6 +31,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          type: matrix
+
       - name: check that custom actions are built
         run: |
           yarn workspace scripts build:actions
@@ -41,12 +47,6 @@ jobs:
           fi
 
           exit $diff
-
-      - name: Setup
-        id: setup
-        uses: ./.github/actions/setup
-        with:
-          type: matrix
 
       - name: Lint GitHub actions
         run: yarn github-actions:lint
