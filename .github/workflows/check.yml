@@ -151,7 +151,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: |
-            ${{ matrix.client }}-${{ hashFiles(
+            ${{ matrix.client }}-${{ env.CACHE_VERSION }}-${{ hashFiles(
               format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
               'clients/algoliasearch-client-javascript/yarn.lock'
             )}}
