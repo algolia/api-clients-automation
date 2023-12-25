@@ -22,7 +22,8 @@ async function restoreLanguages(): Promise<void> {
     const language = arti.name.replace('clients-', '');
     await artifact.downloadArtifact(arti.id);
     await io.rmRF(`clients/algoliasearch-client-${language}`);
-    await exec(`unzip -q -o clients-${language}.zip && rm clients-${language}.zip`);
+    await exec(`unzip -q -o clients-${language}.zip`);
+    await io.rmRF(`clients-${language}.zip`);
   }
 }
 
