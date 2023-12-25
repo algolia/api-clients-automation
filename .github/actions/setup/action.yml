@@ -65,6 +65,18 @@ runs:
       shell: bash
       run: yarn install
 
+    - name: Get all languages versions
+      id: versions
+      shell: bash
+      run: |
+        # remove patch from php version
+        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
+        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
+        echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
+        echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
+        echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
+        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
+
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
       if: ${{ inputs.language == 'javascript' }}
@@ -91,18 +103,6 @@ runs:
       if: ${{ inputs.language == 'javascript' }}
       shell: bash
       run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-
-    - name: Get all languages versions
-      id: versions
-      shell: bash
-      run: |
-        # remove patch from php version
-        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
-        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
-        echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
-        echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
-        echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
-        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
 
     # PHP
     - name: Install PHP
