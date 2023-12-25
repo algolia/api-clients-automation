@@ -4,7 +4,7 @@ description: Setup CI environment.
 
 inputs:
   type:
-    description: Type of setup, `minimal` will only setup the JavaScript monorepo, `matrix` will set the run variables.
+    description: Type of setup, `minimal` will only setup the JavaScript monorepo, empty will also install Java.
     required: false
   language:
     description: the language for which to install deps
@@ -201,50 +201,3 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.csharp-version.outputs.CSHARP_VERSION }}
-
-    # Computing jobs that should run
-    - name: Setting diff outputs variables
-      if: inputs.type == 'matrix'
-      id: diff
-      shell: bash
-      run: |
-        previousCommit=${{ github.event.before }}
-        baseRef=${{ github.base_ref }}
-        origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
-
-        yarn workspace scripts setRunVariables "$origin"
-
-    - name: Compute specs matrix
-      if: inputs.type == 'matrix'
-      id: spec-matrix
-      shell: bash
-      run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
-
-    - name: Compute the client codegen matrix
-      if: inputs.type == 'matrix'
-      id: gen-matrix
-      shell: bash
-      run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
-
-outputs:
-  RUN_SCRIPTS:
-    description: Determine if the `scripts` job should run
-    value: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
-
-  SPECS_MATRIX:
-    description: The generated `specs` matrix
-    value: ${{ steps.spec-matrix.outputs.MATRIX }}
-
-  RUN_GEN:
-    description: Determine if the `client_gen` job should run
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN }}
-  GEN_MATRIX:
-    description: The generated `client_gen` matrix
-    value: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
-  JAVASCRIPT_DATA:
-    description: Data needed to generate and test the javascript client
-    value: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
-
-  RUN_GEN_JAVASCRIPT:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}

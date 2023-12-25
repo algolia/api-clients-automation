@@ -34,8 +34,30 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
-        with:
-          type: matrix
+
+      # Computing jobs that should run
+      - name: Setting diff outputs variables
+        if: inputs.type == 'matrix'
+        id: diff
+        shell: bash
+        run: |
+          previousCommit=${{ github.event.before }}
+          baseRef=${{ github.base_ref }}
+          origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
+
+          yarn workspace scripts setRunVariables "$origin"
+
+      - name: Compute specs matrix
+        if: inputs.type == 'matrix'
+        id: spec-matrix
+        shell: bash
+        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
+
+      - name: Compute the client codegen matrix
+        if: inputs.type == 'matrix'
+        id: gen-matrix
+        shell: bash
+        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
 
       - name: check that custom actions are built
         run: |
@@ -68,14 +90,14 @@ jobs:
           echo 'Use yarn fix:json to fix issues'
 
     outputs:
-      RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
+      RUN_SCRIPTS: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
-      SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
+      SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
-      RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
-      GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
-      JAVASCRIPT_DATA: ${{ steps.setup.outputs.JAVASCRIPT_DATA }}
-      RUN_GEN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_GEN_JAVASCRIPT }}
+      RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
+      GEN_MATRIX: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
+      JAVASCRIPT_DATA: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
+      RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
 
   scripts:
     runs-on: ubuntu-22.04
