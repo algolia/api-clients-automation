@@ -248,7 +248,3 @@ outputs:
   RUN_GEN_JAVASCRIPT:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
-
-  RUN_CODEGEN:
-    description: Determine if the `codegen` job should run
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN == 'true' }}

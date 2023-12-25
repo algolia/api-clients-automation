@@ -141,13 +141,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  core.debug(`CLIENT_MATRIX: ${JSON.stringify(clientMatrix, null, 2)}`);
-
-  if ('javascript' in clientMatrix) {
-    core.info(`JAVASCRIPT_DATA: ${JSON.stringify(clientMatrix.javascript)}`);
-    core.setOutput('JAVASCRIPT_DATA', clientMatrix.javascript);
+  const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
+  if (javascriptData) {
+    core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
     core.setOutput('RUN_GEN_JAVASCRIPT', true);
-    delete clientMatrix.javascript;
+    clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
   }
 
   core.setOutput('RUN_GEN', shouldRun);
