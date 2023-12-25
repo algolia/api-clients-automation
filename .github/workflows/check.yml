@@ -37,7 +37,6 @@ jobs:
 
       # Computing jobs that should run
       - name: Setting diff outputs variables
-        if: inputs.type == 'matrix'
         id: diff
         shell: bash
         run: |
@@ -48,13 +47,11 @@ jobs:
           yarn workspace scripts setRunVariables "$origin"
 
       - name: Compute specs matrix
-        if: inputs.type == 'matrix'
         id: spec-matrix
         shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
       - name: Compute the client codegen matrix
-        if: inputs.type == 'matrix'
         id: gen-matrix
         shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
