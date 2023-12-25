@@ -4,8 +4,13 @@ import * as core from '@actions/core';
 async function restoreSpecs(): Promise<void> {
   const artifact = new DefaultArtifactClient();
   const artifacts = await artifact.listArtifacts();
+  const specArtifact = artifacts.artifacts.find((a) => a.name === 'specs');
+  if (specArtifact === undefined) {
+    throw new Error('No specs artifact found');
+  }
 
-  core.info(`artifacts: ${JSON.stringify(artifacts, null, 2)}`);
+  const res = await artifact.downloadArtifact(specArtifact.id, { path: 'specs/bundled' });
+  core.info(`Downloaded artifact to ${res.downloadPath}`);
 }
 
 async function run(): Promise<void> {
