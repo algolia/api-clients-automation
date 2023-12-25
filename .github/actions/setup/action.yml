@@ -248,33 +248,6 @@ outputs:
   RUN_GEN_JAVASCRIPT:
     description: Indicates if we plan to run the job for this language
     value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
-  RUN_GEN_JAVA:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVA }}
-  RUN_GEN_PHP:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_PHP }}
-  RUN_GEN_GO:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_GO }}
-  RUN_GEN_KOTLIN:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_KOTLIN }}
-  RUN_GEN_DART:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_DART }}
-  RUN_GEN_PYTHON:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_PYTHON }}
-  RUN_GEN_RUBY:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_RUBY }}
-  RUN_GEN_SCALA:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_SCALA }}
-  RUN_GEN_CSHARP:
-    description: Indicates if we plan to run the job for this language
-    value: ${{ steps.gen-matrix.outputs.RUN_GEN_CSHARP }}
 
   RUN_CODEGEN:
     description: Determine if the `codegen` job should run

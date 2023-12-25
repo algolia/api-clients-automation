@@ -75,19 +75,7 @@ jobs:
       RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
       GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
       JAVASCRIPT_DATA: ${{ steps.setup.outputs.JAVASCRIPT_DATA }}
-
       RUN_GEN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_GEN_JAVASCRIPT }}
-      RUN_GEN_JAVA: ${{ steps.setup.outputs.RUN_GEN_JAVA }}
-      RUN_GEN_PHP: ${{ steps.setup.outputs.RUN_GEN_PHP }}
-      RUN_GEN_GO: ${{ steps.setup.outputs.RUN_GEN_GO }}
-      RUN_GEN_KOTLIN: ${{ steps.setup.outputs.RUN_GEN_KOTLIN }}
-      RUN_GEN_DART: ${{ steps.setup.outputs.RUN_GEN_DART }}
-      RUN_GEN_PYTHON: ${{ steps.setup.outputs.RUN_GEN_PYTHON }}
-      RUN_GEN_RUBY: ${{ steps.setup.outputs.RUN_GEN_RUBY }}
-      RUN_GEN_SCALA: ${{ steps.setup.outputs.RUN_GEN_SCALA }}
-      RUN_GEN_CSHARP: ${{ steps.setup.outputs.RUN_GEN_CSHARP }}
-
-      RUN_CODEGEN: ${{ steps.setup.outputs.RUN_CODEGEN }}
 
   scripts:
     runs-on: ubuntu-22.04
@@ -382,7 +370,7 @@ jobs:
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Download all artifacts
-        if: ${{ needs.setup.outputs.RUN_CODEGEN == 'true' }}
+        if: ${{ needs.setup.outputs.RUN_GEN == 'true' }}
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
