@@ -374,7 +374,6 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
-          languages: ${{ needs.setup.outputs }}
 
       - name: Setup
         uses: ./.github/actions/setup

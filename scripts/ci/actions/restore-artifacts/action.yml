@@ -5,9 +5,6 @@ inputs:
   type:
     required: true
     description: Type of artifacts to restore (`all` | `specs`)
-  languages:
-    required: false
-    description: list of languages to restore
 runs:
   using: 'node20'
   main: './builddir/index.js'

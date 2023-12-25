@@ -1,5 +1,7 @@
 import { DefaultArtifactClient } from '@actions/artifact';
 import * as core from '@actions/core';
+import { exec } from '@actions/exec';
+import * as io from '@actions/io';
 
 async function restoreSpecs(): Promise<void> {
   const artifact = new DefaultArtifactClient();
@@ -13,16 +15,25 @@ async function restoreSpecs(): Promise<void> {
   core.info(`Downloaded artifact to ${res.downloadPath}`);
 }
 
+async function restoreLanguages(): Promise<void> {
+  const artifact = new DefaultArtifactClient();
+  const artifacts = await artifact.listArtifacts();
+  for (const arti of artifacts.artifacts.filter((a) => a.name.startsWith('clients-'))) {
+    const language = arti.name.replace('clients-', '');
+    await artifact.downloadArtifact(arti.id);
+    await io.rmRF(`clients/algoliasearch-client-${language}`);
+    await exec(`unzip -q -o clients-${language}.zip && rm clients-${language}.zip`);
+  }
+}
+
 async function run(): Promise<void> {
   try {
     const actionType = core.getInput('type');
     if (actionType === 'specs') {
       await restoreSpecs();
     } else if (actionType === 'all') {
-      const languages = core.getInput('languages');
-
       await restoreSpecs();
-      core.info(`languages: ${languages}`);
+      await restoreLanguages();
     } else {
       throw new Error(`Unknown type: ${actionType}`);
     }
