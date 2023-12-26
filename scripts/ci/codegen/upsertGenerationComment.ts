@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type { Octokit } from '@octokit/rest';
 
-import { run, OWNER, REPO, getOctokit } from '../../common';
+import { run, OWNER, REPO, getOctokit } from '../../common.js';
 
 import commentText from './text.js';
 
