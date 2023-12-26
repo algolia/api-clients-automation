@@ -62,7 +62,7 @@ export const patterns = [
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
 
   'tests/output/kotlin/src/commonTest/kotlin/com/algolia/client/**',
-  'tests/output/kotlin/src/commonTest/kotlin/com/algolia/methods/requests/**',
+  'tests/output/kotlin/src/commonTest/kotlin/com/algolia/requests/**',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',

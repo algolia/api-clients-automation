@@ -23,9 +23,9 @@ There are differents type of tests in the CTS:
 
 Those tests aims at ensuring minimal working operation for the API clients, by comparing the request formed by sample parameters.
 
-The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `tests/CTS/methods/requests/<client>/` folder (e.g. `tests/CTS/methods/requests/search/`).
+The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `tests/CTS/requests/<client>/` folder (e.g. `tests/CTS/requests/search/`).
 
-> See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/methods/requests/search/browse.json)
+> See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/requests/search/browse.json)
 
 ```json
 [
@@ -254,7 +254,7 @@ If specific values are needed for a specific languages, or custom generated file
 
 You might want to test how every clients behaves, without having to duplicate the same tests. We provide 4 methods on every clients, common to all languages.
 
-You can find [the common folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/methods/requests/common) in the CTS too. [Adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
+You can find [the common folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/requests/common) in the CTS too. [Adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
 
 ## Get the list of remaining CTS to implement
 
