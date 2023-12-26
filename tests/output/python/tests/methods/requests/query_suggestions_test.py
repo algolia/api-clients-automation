@@ -1,21 +1,12 @@
 from json import loads
-from os import environ
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.query_suggestions.client import QuerySuggestionsClient
 from algoliasearch.query_suggestions.config import Config
 
 
-class TestQuerySuggestionsClientRequests:
-    app_id = environ.get("ALGOLIA_APPLICATION_ID")
-    if app_id is None:
-        app_id = "test_app_id"
-
-    api_key = environ.get("ALGOLIA_SEARCH_KEY")
-    if api_key is None:
-        api_key = "test_api_key"
-
-    _config = Config(app_id, api_key, "us")
+class TestQuerySuggestionsClient:
+    _config = Config("test_app_id", "test_api_key", "us")
     _client = QuerySuggestionsClient(EchoTransporter(_config), _config)
 
     async def test_create_config_0(self):

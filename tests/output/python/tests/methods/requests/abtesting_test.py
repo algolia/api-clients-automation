@@ -1,21 +1,12 @@
 from json import loads
-from os import environ
 
 from algoliasearch.abtesting.client import AbtestingClient
 from algoliasearch.abtesting.config import Config
 from algoliasearch.http.transporter import EchoTransporter
 
 
-class TestAbtestingClientRequests:
-    app_id = environ.get("ALGOLIA_APPLICATION_ID")
-    if app_id is None:
-        app_id = "test_app_id"
-
-    api_key = environ.get("ALGOLIA_SEARCH_KEY")
-    if api_key is None:
-        api_key = "test_api_key"
-
-    _config = Config(app_id, api_key, "us")
+class TestAbtestingClient:
+    _config = Config("test_app_id", "test_api_key", "us")
     _client = AbtestingClient(EchoTransporter(_config), _config)
 
     async def test_add_ab_tests_0(self):

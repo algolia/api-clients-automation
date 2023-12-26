@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (isset($_ENV['DOCKER']) && 'true' === $_ENV['DOCKER']) {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+} else {
+    $_ENV = getenv();
+}
 
 /**
  * SearchTest.
@@ -2169,7 +2178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->search(
             ['requests' => [
-                ['indexName' => 'theIndexName',
+                ['indexName' => 'cts_e2e_search_empty_index',
                 ],
             ],
             ],
@@ -2179,9 +2188,20 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/queries',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"theIndexName"}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}'),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_search_empty_index',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertEquals($resp, json_decode('{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"processingTimeMS":1,"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}', true));
     }
 
     /**
@@ -2193,9 +2213,9 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->search(
             ['requests' => [
-                ['indexName' => 'theIndexName',
+                ['indexName' => 'cts_e2e_search_facet',
                     'type' => 'facet',
-                    'facet' => 'theFacet',
+                    'facet' => 'editor',
                 ],
             ],
                 'strategy' => 'stopIfEnoughMatches',
@@ -2206,9 +2226,23 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/queries',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}'),
+                'body' => json_decode('{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}'),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_search_facet',
+                    'type' => 'facet',
+                    'facet' => 'editor',
+                ],
+            ],
+                'strategy' => 'stopIfEnoughMatches',
+            ],
+        );
+
+        $this->assertEquals($resp, json_decode('{"results":[{"exhaustiveFacetsCount":true,"processingTimeMS":1,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}', true));
     }
 
     /**
@@ -3334,6 +3368,11 @@ class SearchTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return SearchClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
     }
 
     protected function getClient()

@@ -2249,7 +2249,7 @@ void main() {
         searchMethodParams: SearchMethodParams(
           requests: [
             SearchForHits(
-              indexName: "theIndexName",
+              indexName: "cts_e2e_search_empty_index",
             ),
           ],
         ),
@@ -2257,8 +2257,8 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/indexes/*/queries');
         expect(request.method, 'post');
-        expectBody(
-            request.body, """{"requests":[{"indexName":"theIndexName"}]}""");
+        expectBody(request.body,
+            """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""");
       },
     ),
   );
@@ -2276,9 +2276,9 @@ void main() {
         searchMethodParams: SearchMethodParams(
           requests: [
             SearchForFacets(
-              indexName: "theIndexName",
+              indexName: "cts_e2e_search_facet",
               type: SearchTypeFacet.fromJson("facet"),
-              facet: "theFacet",
+              facet: "editor",
             ),
           ],
           strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
@@ -2288,7 +2288,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/queries');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}""");
+            """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}""");
       },
     ),
   );

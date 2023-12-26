@@ -4,19 +4,24 @@ from os import environ
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.config import Config
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
 
 
-class TestSearchClientRequests:
-    app_id = environ.get("ALGOLIA_APPLICATION_ID")
-    if app_id is None:
-        app_id = "test_app_id"
-
-    api_key = environ.get("ALGOLIA_SEARCH_KEY")
-    if api_key is None:
-        api_key = "test_api_key"
-
-    _config = Config(app_id, api_key)
+class TestSearchClient:
+    _config = Config("test_app_id", "test_api_key")
     _client = SearchClient(EchoTransporter(_config), _config)
+
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
     async def test_add_api_key_0(self):
         """
@@ -1757,7 +1762,7 @@ class TestSearchClientRequests:
             search_method_params={
                 "requests": [
                     {
-                        "indexName": "theIndexName",
+                        "indexName": "cts_e2e_search_empty_index",
                     },
                 ],
             },
@@ -1768,7 +1773,24 @@ class TestSearchClientRequests:
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"theIndexName"}]}"""
+            """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}"""
+        )
+
+        resp = await SearchClient.create(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_empty_index",
+                    },
+                ],
+            },
+        )
+
+        assert resp.status_code == 200
+        assert loads(resp.raw_data) == loads(
+            """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"processingTimeMS":1,"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
         )
 
     async def test_search_1(self):
@@ -1779,9 +1801,9 @@ class TestSearchClientRequests:
             search_method_params={
                 "requests": [
                     {
-                        "indexName": "theIndexName",
+                        "indexName": "cts_e2e_search_facet",
                         "type": "facet",
-                        "facet": "theFacet",
+                        "facet": "editor",
                     },
                 ],
                 "strategy": "stopIfEnoughMatches",
@@ -1793,7 +1815,27 @@ class TestSearchClientRequests:
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}"""
+            """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
+        )
+
+        resp = await SearchClient.create(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "type": "facet",
+                        "facet": "editor",
+                    },
+                ],
+                "strategy": "stopIfEnoughMatches",
+            },
+        )
+
+        assert resp.status_code == 200
+        assert loads(resp.raw_data) == loads(
+            """{"results":[{"exhaustiveFacetsCount":true,"processingTimeMS":1,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
         )
 
     async def test_search_2(self):
