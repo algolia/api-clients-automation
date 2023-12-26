@@ -43,27 +43,9 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
-    - name: Get yarn cache directory path
-      shell: bash
-      id: yarn-cache-dir
-      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-    - name: Restore Yarn
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        # let yarn handle the cache hash
-        key: yarn-cache-${{ env.CACHE_VERSION }}
-
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
-
     - name: Install JavaScript dependencies
       shell: bash
-      run: yarn install
+      run: yarn install --prefer-offline
 
     - name: Get all languages versions
       id: versions
@@ -78,31 +60,10 @@ runs:
         echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
 
     # JavaScript client deps
-    - name: Get yarn js-client cache directory path
-      if: ${{ inputs.language == 'javascript' }}
-      shell: bash
-      id: yarn-cache-dir-client
-      run: echo "dir=$(cd clients/algoliasearch-client-javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-    - name: Restore Yarn js-client
-      if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
-        # let yarn handle the cache hash
-        key: yarn-cache-client-${{ env.CACHE_VERSION }}
-
-    - name: Cache js-client node modules
-      if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v3
-      with:
-        path: clients/algoliasearch-client-javascript/node_modules
-        key: node-modules-client-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
-
     - name: Install JavaScript client dependencies
       if: ${{ inputs.language == 'javascript' }}
       shell: bash
-      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --prefer-offline
 
     # PHP
     - name: Install PHP
