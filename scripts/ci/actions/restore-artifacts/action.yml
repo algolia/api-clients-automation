@@ -1,0 +1,10 @@
+name: restore-artifacts
+description: Restore the correct artifacts
+author: algolia
+inputs:
+  type:
+    required: true
+    description: Type of artifacts to restore (`all` | `specs`)
+runs:
+  using: 'node20'
+  main: './builddir/index.js'

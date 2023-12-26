@@ -93,7 +93,7 @@
     "customGenerator": "algolia-ruby",
     "tests": {
       "extension": "_test.rb",
-      "outputFolder": "tests"
+      "outputFolder": "test"
     }
   },
   "scala": {

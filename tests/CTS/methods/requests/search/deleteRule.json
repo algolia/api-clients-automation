@@ -1,5 +1,6 @@
 [
   {
+    "testName": "delete rule simple case",
     "parameters": {
       "indexName": "indexName",
       "objectID": "id1"
@@ -10,6 +11,7 @@
     }
   },
   {
+    "testName": "delete rule with simple characters to encode in objectID",
     "parameters": {
       "indexName": "indexName",
       "objectID": "test/with/slash"
