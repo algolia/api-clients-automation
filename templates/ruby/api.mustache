@@ -8,6 +8,10 @@ module {{moduleName}}
     attr_accessor :api_client
 
     def initialize(config = nil)
+      raise '`config` must be provided' if config.nil?
+      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
+      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+
       @api_client = Algolia::ApiClient.new(config)
     end
 
