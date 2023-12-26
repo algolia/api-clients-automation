@@ -5,10 +5,9 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
 )
 
 func createInsightsClient() (*insights.APIClient, *echoRequester) {
