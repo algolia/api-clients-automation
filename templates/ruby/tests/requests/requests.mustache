@@ -9,8 +9,8 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
   def setup
     @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(
       Algolia::Configuration.new(
-      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
-      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'APP_ID', 
+      'API_KEY',
       [Algolia::Transport::StatefulHost.new('localhost')], 
       '{{clientPrefix}}', 
       { requester: Algolia::Transport::EchoRequester.new })
