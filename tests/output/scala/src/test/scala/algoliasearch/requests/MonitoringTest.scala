@@ -1,0 +1,602 @@
+package algoliasearch.methods.requests
+
+import algoliasearch.EchoInterceptor
+import algoliasearch.api.MonitoringClient
+import algoliasearch.config.*
+import algoliasearch.monitoring.*
+import org.json4s.*
+import org.json4s.native.JsonParser.*
+import org.scalatest.funsuite.AnyFunSuite
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+class MonitoringTest extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = org.json4s.DefaultFormats
+
+  def testClient(): (MonitoringClient, EchoInterceptor) = {
+    val echo = EchoInterceptor()
+    (
+      MonitoringClient(
+        appId = "appId",
+        apiKey = "apiKey",
+        clientOptions = ClientOptions
+          .builder()
+          .withRequesterConfig(requester => requester.withInterceptor(echo))
+          .build()
+      ),
+      echo
+    )
+  }
+
+  test("allow del method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customDelete[JObject](
+      path = "/test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/minimal")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("allow del method for a custom path with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.customDelete[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "parameters"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow get method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "/test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/minimal")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("allow get method for a custom path with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "parameters"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow post method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/minimal")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("allow post method for a custom path with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("body", JString("parameters")))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"body":"parameters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions can override default query parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query", "myQueryParameter")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"myQueryParameter"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions merges query parameters with default ones") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query2", "myQueryParameter")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","query2":"myQueryParameter"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions can override default headers") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("x-algolia-api-key", "myApiKey")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("requestOptions merges headers with default ones") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("x-algolia-api-key", "myApiKey")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("requestOptions queryParameters accepts booleans") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("isItWorking", true)
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","isItWorking":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts integers") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", 2)
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of string") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq("c", "d"))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"c,d"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of booleans") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq(true, true, false))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"true,true,false"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of integers") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "/test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq(1, 2))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"1,2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow put method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "/test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/minimal")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("allow put method for a custom path with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("body", JString("parameters")))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"body":"parameters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("getClusterIncidents") {
+    val (client, echo) = testClient()
+    val future = client.getClusterIncidents(
+      clusters = "c1-de"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/incidents/c1-de")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getClusterStatus") {
+    val (client, echo) = testClient()
+    val future = client.getClusterStatus(
+      clusters = "c1-de"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/status/c1-de")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getIncidents") {
+    val (client, echo) = testClient()
+    val future = client.getIncidents(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/incidents")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getIndexingTime") {
+    val (client, echo) = testClient()
+    val future = client.getIndexingTime(
+      clusters = "c1-de"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexing/c1-de")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getInventory") {
+    val (client, echo) = testClient()
+    val future = client.getInventory(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/inventory/servers")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getLatency") {
+    val (client, echo) = testClient()
+    val future = client.getLatency(
+      clusters = "c1-de"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/latency/c1-de")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getMetrics") {
+    val (client, echo) = testClient()
+    val future = client.getMetrics(
+      metric = Metric.withName("avg_build_time"),
+      period = Period.withName("minute")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/infrastructure/avg_build_time/period/minute")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getReachability") {
+    val (client, echo) = testClient()
+    val future = client.getReachability(
+      clusters = "c1-de"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/reachability/c1-de/probes")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getStatus") {
+    val (client, echo) = testClient()
+    val future = client.getStatus(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/status")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+}
