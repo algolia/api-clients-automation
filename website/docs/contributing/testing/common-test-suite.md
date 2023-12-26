@@ -64,6 +64,32 @@ The test generation script requires a JSON file name from the `operationId` (e.g
       "headers": {
         "x-header": "test"
       }
+    },
+    // The expected response
+    "request": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "hits": [],
+            "page": 0,
+            "nbHits": 0,
+            "nbPages": 0,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "exhaustive": {
+              "nbHits": true,
+              "typo": true
+            },
+            "processingTimeMS": 1,
+            "query": "",
+            "params": "",
+            "index": "cts_e2e_search_empty_index",
+            "renderingContent": {}
+          }
+        ]
+      }
     }
   }
 ]
@@ -96,6 +122,7 @@ When writing your template, here is a list of variables accessible from `mustach
   "clientPrefix": "the name of the client without Client at the end",
   "hasRegionalHost": "true if the hosts accepts region",
   "defaultRegion": "the region to provide by default to the constructor",
+  "hasE2E": "true if the test suite has e2e tests to be asserted",
   "blocks": [
     {
       // The list of test to implement
@@ -184,6 +211,10 @@ When writing your template, here is a list of variables accessible from `mustach
               // key: string map
               "headerName": "stringify version of the value"
             }
+          },
+          "response": {
+            "statusCode": 200, // any status code expected by the request sent
+            "body": {} // the raw JSON object returned by the API
           }
         }
       ]

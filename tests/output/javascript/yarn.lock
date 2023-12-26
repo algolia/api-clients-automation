@@ -1455,6 +1455,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: dbb778237ef8750e9e3cd1473d3c8eaa9cc3600e33a75c0e36415d0fa0848197f56c3800f77924c70e7828f0b03896818cd52f785b07b9ad4d88dba73fbba83f
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -2048,6 +2055,7 @@ __metadata:
     "@types/jest": "npm:29.5.11"
     "@types/node": "npm:20.10.5"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
+    dotenv: "npm:16.3.1"
     jest: "npm:29.7.0"
     typescript: "npm:5.3.3"
   languageName: unknown
