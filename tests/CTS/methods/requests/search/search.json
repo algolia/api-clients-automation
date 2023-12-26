@@ -4,7 +4,7 @@
     "parameters": {
       "requests": [
         {
-          "indexName": "cts_e2e_empty_index"
+          "indexName": "cts_e2e_search_empty_index"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "body": {
         "requests": [
           {
-            "indexName": "cts_e2e_empty_index"
+            "indexName": "cts_e2e_search_empty_index"
           }
         ]
       }
@@ -38,7 +38,7 @@
             "processingTimeMS": 1,
             "query": "",
             "params": "",
-            "index": "cts_e2e_empty_index",
+            "index": "cts_e2e_search_empty_index",
             "renderingContent": {}
           }
         ]
@@ -50,9 +50,9 @@
     "parameters": {
       "requests": [
         {
-          "indexName": "theIndexName",
+          "indexName": "cts_e2e_search_facet",
           "type": "facet",
-          "facet": "theFacet"
+          "facet": "editor"
         }
       ],
       "strategy": "stopIfEnoughMatches"
@@ -63,12 +63,40 @@
       "body": {
         "requests": [
           {
-            "indexName": "theIndexName",
+            "indexName": "cts_e2e_search_facet",
             "type": "facet",
-            "facet": "theFacet"
+            "facet": "editor"
           }
         ],
         "strategy": "stopIfEnoughMatches"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "exhaustiveFacetsCount": true,
+            "processingTimeMS": 1,
+            "facetHits": [
+              {
+                "count": 1,
+                "highlighted": "goland",
+                "value": "goland"
+              },
+              {
+                "count": 1,
+                "highlighted": "neovim",
+                "value": "neovim"
+              },
+              {
+                "count": 1,
+                "highlighted": "vscode",
+                "value": "vscode"
+              }
+            ]
+          }
+        ]
       }
     }
   },

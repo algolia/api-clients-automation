@@ -23,8 +23,6 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
     _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
     if _e2e_api_key is None:
         raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-
-    _e2e_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(_e2e_app_id, _e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
     {{/hasE2E}}
 
     {{#blocksRequests}}
@@ -51,7 +49,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{/request}}
 
         {{#response}}
-        resp = await self._e2e_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        resp = await SearchClient.create(self._e2e_app_id, self._e2e_api_key).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
   
         {{#assertStatusCode}}
         assert resp.status_code == {{statusCode}}
