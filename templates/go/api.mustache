@@ -1,4 +1,3 @@
-// {{{generationBanner}}}
 package {{packageName}}
 
 {{#operations}}
@@ -156,7 +155,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	)
 
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.Replace(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString(r.{{paramName}})), -1){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString(r.{{paramName}}))){{/pathParams}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -195,10 +194,6 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	}
 	{{/maxLength}}
 	{{#minimum}}
-	{{#isString}}
-	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}r.{{paramName}})
-	if {{paramName}}Txt < {{minimum}} {
-	{{/isString}}
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} < {{minimum}} {
 	{{/isString}}
@@ -206,10 +201,6 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	}
 	{{/minimum}}
 	{{#maximum}}
-	{{#isString}}
-	{{paramName}}Txt, err := atoi({{^isPathParam}}*{{/isPathParam}}r.{{paramName}})
-	if {{paramName}}Txt > {{maximum}} {
-	{{/isString}}
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} > {{maximum}} {
 	{{/isString}}
@@ -294,42 +285,14 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
       Message: string(resBody),
 			Status: res.StatusCode,
 		}
-		{{#responses}}
-		{{#dataType}}
-		{{^is1xx}}
-		{{^is2xx}}
-		{{#range}}
-		{{#is3xx}}
-		if res.StatusCode >= 300 && res.StatusCode < 400 {
-		{{/is3xx}}
-		{{#is4xx}}
-		if res.StatusCode >= 400 && res.StatusCode < 500 {
-		{{/is4xx}}
-		{{#is5xx}}
-		if res.StatusCode >= 500
-		{{/is5xx}}
-		{{/range}}
-		{{^range}}
-		{{^wildcard}}
-		if res.StatusCode == {{{code}}} {
-		{{/wildcard}}
-		{{/range}}
-			var v {{{dataType}}}
-			err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.Message = err.Error()
-				return {{#returnType}}returnValue, {{/returnType}}newErr
-			}
-			{{^-last}}
-			return {{#returnType}}returnValue, {{/returnType}}newErr
-			{{/-last}}
-		{{^wildcard}}
-		}
-		{{/wildcard}}
-		{{/is2xx}}
-		{{/is1xx}}
-		{{/dataType}}
-		{{/responses}}
+		
+    var v ErrorBase
+    err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+    if err != nil {
+      newErr.Message = err.Error()
+      return {{#returnType}}returnValue, {{/returnType}}newErr
+    }
+
 		return {{#returnType}}returnValue, {{/returnType}}newErr
 	}
 
@@ -562,25 +525,21 @@ func (c *APIClient) WaitForApiKeyWithContext(
         slices.Sort(apiKey.Acl)
         slices.Sort(response.Acl)
 
-        if slices.Equal(apiKey.Acl, response.Acl) == false {
+        if !slices.Equal(apiKey.Acl, response.Acl) {
           return false
         }
 
         slices.Sort(apiKey.Indexes)
         slices.Sort(response.Indexes)
 
-        if slices.Equal(apiKey.Indexes, response.Indexes) == false {
+        if !slices.Equal(apiKey.Indexes, response.Indexes) {
           return false
         }
 
         slices.Sort(apiKey.Referers)
         slices.Sort(response.Referers)
 
-        if slices.Equal(apiKey.Referers, response.Referers) == false {
-          return false
-        }
-
-        return true
+        return slices.Equal(apiKey.Referers, response.Referers)
       },
       maxRetries,
       initialDelay,

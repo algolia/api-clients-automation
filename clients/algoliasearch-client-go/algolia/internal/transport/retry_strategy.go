@@ -70,6 +70,8 @@ func (s *RetryStrategy) GetTryableHosts(k call.Kind) []Host {
 		baseTimeout = DefaultWriteTimeout
 	}
 
+	var hosts []Host
+
 	for _, h := range s.hosts {
 		if !h.isDown && h.accept(k) {
 			hosts = append(hosts, Host{h.host, time.Duration(h.retryCount+1) * baseTimeout})

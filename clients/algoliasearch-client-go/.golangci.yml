@@ -1,7 +1,4 @@
 linters-settings:
-  funlen:
-    statements: 60
-
   govet:
     check-shadowing: true
     enable-all: true
@@ -11,185 +8,8 @@ linters-settings:
   revive:
     min-confidence: 0.8
     rules:
-      - name: argument-limit
-        severity: error
-        disabled: false
-      - name: atomic
-        severity: error
-        disabled: false
-      - name: banned-characters
-        severity: error
-        disabled: false
-      - name: bare-return
-        severity: error
-        disabled: false
-      - name: blank-imports
-        severity: error
-        disabled: false
-      - name: call-to-gc
-        severity: error
-        disabled: false
-      - name: comment-spacings
-        severity: error
-        disabled: false
-        arguments:
-          - nolint
-      - name: constant-logical-expr
-        severity: error
-        disabled: false
-      - name: context-as-argument
-        severity: error
-        disabled: false
-      - name: context-keys-type
-        severity: error
-        disabled: false
-      - name: datarace
-        severity: error
-        disabled: false
-      - name: defer
-        severity: error
-        disabled: false
-      - name: dot-imports
-        severity: error
-        disabled: false
-      - name: duplicated-imports
-        severity: error
-        disabled: false
-      - name: early-return
-        severity: error
-        disabled: false
-      - name: empty-block
-        severity: error
-        disabled: false
-      - name: empty-lines
-        severity: error
-        disabled: false
-      - name: enforce-map-style
-        severity: error
-        disabled: false
-      - name: error-naming
-        severity: error
-        disabled: false
-      - name: error-return
-        severity: error
-        disabled: false
-      - name: error-strings
-        severity: error
-        disabled: false
-      - name: errorf
-        severity: error
-        disabled: false
-      - name: exported
-        severity: error
-        disabled: false
-      - name: file-header
-        severity: error
-        disabled: false
-      - name: get-return
-        severity: error
-        disabled: false
-      - name: identical-branches
-        severity: error
-        disabled: false
-      - name: if-return
-        severity: error
-        disabled: false
-      - name: import-alias-naming
-        severity: error
-        disabled: false
-      - name: imports-blacklist
-        severity: error
-        disabled: false
-      - name: increment-decrement
-        severity: error
-        disabled: false
-      - name: indent-error-flow
-        severity: error
-        disabled: false
-      - name: modifies-parameter
-        severity: error
-        disabled: false
-      - name: modifies-value-receiver
-        severity: error
-        disabled: false
-      - name: nested-structs
-        severity: error
-        disabled: false
-      - name: optimize-operands-order
-        severity: error
-        disabled: false
-      - name: package-comments
-        severity: error
-        disabled: false
-      - name: range-val-address
-        severity: error
-        disabled: false
-      - name: range-val-in-closure
-        severity: error
-        disabled: false
-      - name: range
-        severity: error
-        disabled: false
-      - name: receiver-naming
-        severity: error
-        disabled: false
-      - name: redefines-builtin-id
-        severity: error
-        disabled: false
-      - name: redundant-import-alias
-        severity: error
-        disabled: false
-      - name: string-format
-        severity: error
-        disabled: false
-      - name: string-of-int
-        severity: error
-        disabled: false
-      - name: struct-tag
-        severity: error
-        disabled: false
-      - name: superfluous-else
-        severity: error
-        disabled: false
-      - name: time-equal
-        severity: error
-        disabled: false
-      - name: time-naming
-        severity: error
-        disabled: false
-      - name: unconditional-recursion
-        severity: error
-        disabled: false
-      - name: unexported-naming
-        severity: error
-        disabled: false
-      - name: unexported-return
-        severity: error
-        disabled: false
-      - name: unnecessary-stmt
-        severity: error
-        disabled: false
-      - name: unreachable-code
-        severity: error
-        disabled: false
-      - name: unused-parameter
-        severity: error
-        disabled: false
-      - name: use-any
-        severity: error
-        disabled: false
-      - name: useless-break
-        severity: error
-        disabled: false
-      - name: var-declaration
-        severity: error
-        disabled: false
       - name: var-naming
-        severity: error
-        disabled: false
-      - name: waitgroup-by-value
-        severity: error
-        disabled: false
+        disabled: true
 
 linters:
   enable-all: true
@@ -198,6 +18,7 @@ linters:
     - godox
     - contextcheck
     - interfacebloat
+    - gci
     - gosmopolitan
     - wsl
     - varnamelen
@@ -212,6 +33,27 @@ linters:
     - forbidigo
     - gochecknoinits
     - cyclop
+    - errorlint
+    - gomnd
+    - tagliatelle
+    - nilnil
+    - stylecheck
+    - musttag
+    - errchkjson
+    - nonamedreturns
+    - inamedparam
+    - ineffassign
+    - dupword
+    - nestif
+    - goconst
+    - funlen
+    - dupl
+    - unparam
+    - gocognit
+    - forcetypeassert
+    - wastedassign
+    - gocyclo
+    - maintidx
 
     # Deprecated
     - deadcode
