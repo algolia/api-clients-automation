@@ -79,7 +79,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/methods/requests`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests`;
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
@@ -87,7 +87,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/methods/requests/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension}`;
       })
       .join(' ');
 
@@ -100,7 +100,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'go':
-        testsToStore = `${testsToStore} ${testsOutputBase}/methods/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        testsToStore = `${testsToStore} ${testsOutputBase}/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
         break;
       case 'javascript':
         const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
