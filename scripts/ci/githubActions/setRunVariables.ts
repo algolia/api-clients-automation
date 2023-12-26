@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { CLIENTS_JS_UTILS, LANGUAGES } from '../../common.js';
+import { LANGUAGES } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
 import type { Language } from '../../types.js';
 
@@ -72,10 +72,6 @@ export const DEPENDENCIES = LANGUAGES.reduce(
   },
   {
     ...COMMON_DEPENDENCIES,
-    // We default the JS utils client as it's a bit specific
-    JAVASCRIPT_UTILS_CHANGED: CLIENTS_JS_UTILS.map(
-      (clientName) => `${getLanguageFolder('javascript')}/packages/${clientName}`
-    ),
   } as Record<string, string[]>
 );
 

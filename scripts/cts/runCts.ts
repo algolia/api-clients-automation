@@ -35,7 +35,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('(cd tests/output/dart && dart test)');
       break;
     case 'python':
-      await run('poetry lock --no-update && poetry install --sync && poetry run pytest', {
+      await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
         cwd: 'tests/output/python',
       });
       break;
