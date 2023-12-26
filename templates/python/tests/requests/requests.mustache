@@ -1,12 +1,13 @@
 from os import environ
 from json import loads
-{{#hasE2E}}
-from dotenv import load_dotenv
-{{/hasE2E}}
-
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import Config
+{{#hasE2E}}
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
+{{/hasE2E}}
 
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{{/isE2E}}:
@@ -14,8 +15,6 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(_config), _config)
 
     {{#hasE2E}}
-    load_dotenv()
-
     _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if _e2e_app_id is None:
         raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
@@ -51,9 +50,9 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{#response}}
         resp = await SearchClient.create(self._e2e_app_id, self._e2e_api_key).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
   
-        {{#assertStatusCode}}
+        {{#statusCode}}
         assert resp.status_code == {{statusCode}}
-        {{/assertStatusCode}}
+        {{/statusCode}}
         {{#body}}
         assert loads(resp.raw_data) == loads("""{{{.}}}""")
         {{/body}}

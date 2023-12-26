@@ -16,7 +16,7 @@ use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (isset($_ENV['DOCKER']) && $_ENV['DOCKER'] === "true") {
-    $dotenv = Dotenv::createImmutable('tests/output/php/');
+    $dotenv = Dotenv::createImmutable('tests');
     $dotenv->load();
 } else {
     $_ENV = getenv();

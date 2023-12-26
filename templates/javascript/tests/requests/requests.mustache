@@ -1,5 +1,7 @@
 {{#hasE2E}}
-import 'dotenv/config'
+import * as dotenv from 'dotenv';
+
+dotenv.config({path:'../../.env'});
 {{/hasE2E}}
 import { {{client}} } from '{{{import}}}';
 import { echoRequester } from '{{{npmNamespace}}}/requester-node-http';
