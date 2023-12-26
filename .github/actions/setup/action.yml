@@ -127,6 +127,11 @@ runs:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
         go-version: ${{ steps.versions.outputs.GO_VERSION }}
 
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.55.2
+
     # Dart
     - name: Install dart
       if: ${{ inputs.language == 'dart' }}

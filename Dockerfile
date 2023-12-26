@@ -39,7 +39,9 @@ RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
-RUN echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
+
 
 # Dart
 COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
