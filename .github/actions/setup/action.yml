@@ -127,10 +127,13 @@ runs:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
         go-version: ${{ steps.versions.outputs.GO_VERSION }}
 
-    - name: golangci-lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: v1.55.2
+    - name: Install golangci-lint
+      if: ${{ inputs.language == 'go' }}
+      shell: bash
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
+        go install github.com/incu6us/goimports-reviser/v3@latest
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
     # Dart
     - name: Install dart
