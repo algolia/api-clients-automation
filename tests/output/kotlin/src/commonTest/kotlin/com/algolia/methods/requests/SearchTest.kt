@@ -1977,7 +1977,7 @@ class SearchTest {
           searchMethodParams = SearchMethodParams(
             requests = listOf(
               SearchForHits(
-                indexName = "theIndexName",
+                indexName = "cts_e2e_search_empty_index",
               ),
             ),
           ),
@@ -1986,7 +1986,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"theIndexName"}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""", it.body)
       },
     )
   }
@@ -1999,9 +1999,9 @@ class SearchTest {
           searchMethodParams = SearchMethodParams(
             requests = listOf(
               SearchForFacets(
-                indexName = "theIndexName",
+                indexName = "cts_e2e_search_facet",
                 type = SearchTypeFacet.entries.first { it.value == "facet" },
-                facet = "theFacet",
+                facet = "editor",
               ),
             ),
             strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
@@ -2011,7 +2011,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}""", it.body)
       },
     )
   }

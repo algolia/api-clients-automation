@@ -2628,7 +2628,7 @@ class SearchClientRequestsTests {
       {
         SearchForHits requests_02 = new SearchForHits();
         {
-          String indexName3 = "theIndexName";
+          String indexName3 = "cts_e2e_search_empty_index";
           requests_02.setIndexName(indexName3);
         }
         requests1.add(requests_02);
@@ -2642,7 +2642,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"requests\":[{\"indexName\":\"theIndexName\"}]}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -2655,11 +2656,11 @@ class SearchClientRequestsTests {
       {
         SearchForFacets requests_02 = new SearchForFacets();
         {
-          String indexName3 = "theIndexName";
+          String indexName3 = "cts_e2e_search_facet";
           requests_02.setIndexName(indexName3);
           SearchTypeFacet type3 = SearchTypeFacet.fromValue("facet");
           requests_02.setType(type3);
-          String facet3 = "theFacet";
+          String facet3 = "editor";
           requests_02.setFacet(facet3);
         }
         requests1.add(requests_02);
@@ -2677,7 +2678,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\"}],\"strategy\":\"stopIfEnoughMatches\"}",
+        "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}",
         req.body,
         JSONCompareMode.STRICT
       )

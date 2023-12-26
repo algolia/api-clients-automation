@@ -1947,7 +1947,7 @@ class SearchTest extends AnyFunSuite {
       searchMethodParams = SearchMethodParams(
         requests = Seq(
           SearchForHits(
-            indexName = "theIndexName"
+            indexName = "cts_e2e_search_empty_index"
           )
         )
       )
@@ -1958,7 +1958,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/*/queries")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"requests":[{"indexName":"theIndexName"}]}""")
+    val expectedBody = parse("""{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1969,9 +1969,9 @@ class SearchTest extends AnyFunSuite {
       searchMethodParams = SearchMethodParams(
         requests = Seq(
           SearchForFacets(
-            indexName = "theIndexName",
+            indexName = "cts_e2e_search_facet",
             `type` = SearchTypeFacet.withName("facet"),
-            facet = "theFacet"
+            facet = "editor"
           )
         ),
         strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
@@ -1984,7 +1984,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/queries")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}"""
+      """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

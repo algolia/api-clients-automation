@@ -2444,7 +2444,7 @@ func TestSearch_Search(t *testing.T) {
 		{
 			name: "search for a single hits request with minimal parameters",
 			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName"}]}`
+				parametersStr := `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`
 				req := search.ApiSearchRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				_, err := client.Search(req)
@@ -2456,13 +2456,13 @@ func TestSearch_Search(t *testing.T) {
 				require.Equal(t, "POST", echo.method)
 
 				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName"}]}`)
+				ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
 			},
 		},
 		{
 			name: "search for a single facet request with minimal parameters",
 			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}`
+				parametersStr := `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`
 				req := search.ApiSearchRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				_, err := client.Search(req)
@@ -2474,7 +2474,7 @@ func TestSearch_Search(t *testing.T) {
 				require.Equal(t, "POST", echo.method)
 
 				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}`)
+				ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`)
 			},
 		},
 		{

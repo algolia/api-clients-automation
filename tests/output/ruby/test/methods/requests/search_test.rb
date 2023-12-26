@@ -986,25 +986,25 @@ class TestSearchClient < Test::Unit::TestCase
 
   # search for a single hits request with minimal parameters
   def test_search0
-    req = @client.search_with_http_info(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "theIndexName")]))
+    req = @client.search_with_http_info(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")]))
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/queries', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"requests":[{"indexName":"theIndexName"}]}'), JSON.parse(req.body))
+    assert_equal(JSON.parse('{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}'), JSON.parse(req.body))
   end
 
   # search for a single facet request with minimal parameters
   def test_search1
-    req = @client.search_with_http_info(SearchMethodParams.new(requests: [SearchForFacets.new(index_name: "theIndexName", type: 'facet', facet: "theFacet")],
+    req = @client.search_with_http_info(SearchMethodParams.new(requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: 'facet', facet: "editor")],
                                                                strategy: 'stopIfEnoughMatches'))
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/queries', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet"}],"strategy":"stopIfEnoughMatches"}'), JSON.parse(req.body))
+    assert_equal(JSON.parse('{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}'), JSON.parse(req.body))
   end
 
   # search for a single hits request with all parameters
