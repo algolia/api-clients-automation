@@ -45,7 +45,7 @@ runs:
 
     - name: Install JavaScript dependencies
       shell: bash
-      run: yarn install --prefer-offline
+      run: yarn install
 
     - name: Get all languages versions
       id: versions
@@ -63,7 +63,7 @@ runs:
     - name: Install JavaScript client dependencies
       if: ${{ inputs.language == 'javascript' }}
       shell: bash
-      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --prefer-offline
+      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
     # PHP
     - name: Install PHP
