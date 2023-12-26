@@ -5,3 +5,4 @@ playground
 composer.json
 tsconfig.json
 vendor
+builddir

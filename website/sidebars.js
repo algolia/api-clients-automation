@@ -41,6 +41,14 @@ const sidebars = {
         },
         'contributing/commit-and-pull-request',
         'contributing/release-process',
+        {
+          type: 'category',
+          label: 'CI',
+          collapsed: false,
+          items: [
+            'contributing/CI/overview',
+          ]
+        }
       ],
     },
   ],

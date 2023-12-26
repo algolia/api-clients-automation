@@ -30,11 +30,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         [key]: DEPENDENCIES[key],
       };
 
-      // only JS have other dependencies for its utils packages
-      if (language === 'javascript') {
-        languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
-      }
-
       // We will check if dependencies have changed for each clients of each languages:
       //   - language specific dependencies
       //   - common dependencies of every clients
@@ -142,10 +137,16 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
     });
-    core.setOutput(`RUN_GEN_${language.toUpperCase()}`, true);
   }
 
   const shouldRun = clientMatrix.client.length > 0;
+
+  const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
+  if (javascriptData) {
+    core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
+    core.setOutput('RUN_GEN_JAVASCRIPT', true);
+    clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
+  }
 
   core.setOutput('RUN_GEN', shouldRun);
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
