@@ -3,6 +3,8 @@ import { searchClient } from '@algolia/client-search';
 import { echoRequester } from '@algolia/requester-node-http';
 import * as dotenv from 'dotenv';
 
+import { union } from '../helpers';
+
 dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
@@ -1563,7 +1565,7 @@ describe('search', () => {
       requests: [{ indexName: 'cts_e2e_search_empty_index' }],
     });
 
-    expect(resp).toMatchObject({
+    const expectedBody = {
       results: [
         {
           hits: [],
@@ -1574,14 +1576,15 @@ describe('search', () => {
           exhaustiveNbHits: true,
           exhaustiveTypo: true,
           exhaustive: { nbHits: true, typo: true },
-          processingTimeMS: 1,
           query: '',
           params: '',
           index: 'cts_e2e_search_empty_index',
           renderingContent: {},
         },
       ],
-    });
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('search for a single facet request with minimal parameters', async () => {
@@ -1609,11 +1612,10 @@ describe('search', () => {
       strategy: 'stopIfEnoughMatches',
     });
 
-    expect(resp).toMatchObject({
+    const expectedBody = {
       results: [
         {
           exhaustiveFacetsCount: true,
-          processingTimeMS: 1,
           facetHits: [
             { count: 1, highlighted: 'goland', value: 'goland' },
             { count: 1, highlighted: 'neovim', value: 'neovim' },
@@ -1621,7 +1623,9 @@ describe('search', () => {
           ],
         },
       ],
-    });
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('search for a single hits request with all parameters', async () => {

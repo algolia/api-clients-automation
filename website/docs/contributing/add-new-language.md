@@ -6,8 +6,6 @@ title: Support a new language
 
 Make sure to first [setup the repository tooling](/docs/contributing/setup-repository) to ease your journey!
 
-You will also need to have the [openapi-generator](https://openapi-generator.tech/docs/installation/) installed.
-
 :::
 
 This repository leverages [openapi-generator](https://openapi-generator.tech/) to generate API clients.

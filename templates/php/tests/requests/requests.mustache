@@ -36,6 +36,33 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
      */
     private $recordedRequests = [];
 
+    {{#hasE2E}}
+    protected function union($expected, $received)
+    {
+        $res = [];
+
+        foreach ($expected as $k => $v) {
+            if (isset($received[$k])) {
+                if (is_array($v)) {
+                    $res[$k] = $this->union($v, $received[$k]);
+                } elseif (is_array($v)) {
+                    if (!isset($res[$k])) {
+                        $res[$k] = [];
+                    }
+
+                    foreach ($v as $iv => $v) {
+                        $res[$k][] = $this->union($v, $received[$k][$iv]);
+                    }
+                } else {
+                    $res[$k] = $received[$k];
+                }
+            }
+        }
+
+        return $res;
+    }
+    {{/hasE2E}}
+
     protected function assertRequests(array $requests)
     {
         $this->assertGreaterThan(0, count($requests));
@@ -158,7 +185,9 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         );{{/hasParameters}}
 
         {{#body}}
-        $this->assertEquals($resp, json_decode('{{{.}}}', true));
+        $expected = json_decode('{{{.}}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
         {{/body}}
         {{/response}}
 
