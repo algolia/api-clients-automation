@@ -2,7 +2,7 @@ from os import environ
 from json import loads
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
-from algoliasearch.{{{import}}}.config import Config
+from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
 {{#hasE2E}}
 from dotenv import load_dotenv
 
@@ -11,7 +11,7 @@ load_dotenv("../../.env")
 
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{{/isE2E}}:
-    _config = Config("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
+    _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(_config), _config)
 
     {{#hasE2E}}
