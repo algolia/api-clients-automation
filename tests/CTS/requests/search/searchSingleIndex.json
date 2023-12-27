@@ -10,6 +10,16 @@
     }
   },
   {
+    "testName": "search with special characters in indexName",
+    "parameters": {
+      "indexName": "space in index"
+    },
+    "request": {
+      "path": "/1/indexes/space%20in%20index/query",
+      "method": "POST"
+    }
+  },
+  {
     "testName": "search with searchParams",
     "parameters": {
       "indexName": "indexName",
