@@ -14,6 +14,7 @@ Adding a new API client requires some manual steps in order to have a properly w
 2. [Configuring the generator](#2-configuring-the-generator)
 3. [Generate the client](#3-generate-the-client)
 4. [Adding tests](#4-adding-tests-with-the-common-test-suite)
+5. [Helpers](#5-helpers)
 
 ## 1. Writing specs
 
@@ -50,7 +51,7 @@ Same as [the global `common` folder](#common-spec-folder) but only related to th
 
 #### **`specs/<apiName>/paths` folder**
 
-Path definition of the paths defined in the [spec file](#specyml-file). See [guidelines](#guidelines).
+Path definition of the paths defined in the [spec file](#specsapinamespecyml-file). See [guidelines](#guidelines).
 
 ### Troubleshooting
 
