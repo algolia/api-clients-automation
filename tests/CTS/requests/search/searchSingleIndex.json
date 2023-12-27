@@ -17,6 +17,9 @@
     "request": {
       "path": "/1/indexes/space%20in%20index/query",
       "method": "POST"
+    },
+    "response": {
+      "statusCode": 200
     }
   },
   {
