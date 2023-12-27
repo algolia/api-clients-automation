@@ -3,7 +3,7 @@ from os import environ
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.client import SearchClient
-from algoliasearch.search.config import Config
+from algoliasearch.search.config import SearchConfig
 from dotenv import load_dotenv
 
 from ..helpers import Helpers
@@ -12,7 +12,7 @@ load_dotenv("../../.env")
 
 
 class TestSearchClient:
-    _config = Config("test_app_id", "test_api_key")
+    _config = SearchConfig("test_app_id", "test_api_key")
     _client = SearchClient(EchoTransporter(_config), _config)
 
     _helpers = Helpers()

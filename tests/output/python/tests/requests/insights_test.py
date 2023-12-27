@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.insights.client import InsightsClient
-from algoliasearch.insights.config import Config
+from algoliasearch.insights.config import InsightsConfig
 
 
 class TestInsightsClient:
-    _config = Config("test_app_id", "test_api_key", "us")
+    _config = InsightsConfig("test_app_id", "test_api_key", "us")
     _client = InsightsClient(EchoTransporter(_config), _config)
 
     async def test_custom_delete_0(self):
