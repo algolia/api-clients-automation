@@ -49,7 +49,7 @@ describe('{{operationId}}', () => {
     {{/request.headers}}
 
     {{#response}}
-    const resp = (await e2eClient.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}}));
+    {{#body}}const resp = {{/body}}await e2eClient.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
   
     {{#body}}
     const expectedBody = {{{.}}};
