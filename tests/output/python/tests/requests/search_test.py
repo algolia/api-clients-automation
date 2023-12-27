@@ -6,6 +6,8 @@ from algoliasearch.search.client import SearchClient
 from algoliasearch.search.config import Config
 from dotenv import load_dotenv
 
+from ..helpers import Helpers
+
 load_dotenv("../../.env")
 
 
@@ -13,6 +15,7 @@ class TestSearchClient:
     _config = Config("test_app_id", "test_api_key")
     _client = SearchClient(EchoTransporter(_config), _config)
 
+    _helpers = Helpers()
     _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if _e2e_app_id is None:
         raise Exception(
@@ -1789,8 +1792,11 @@ class TestSearchClient:
         )
 
         assert resp.status_code == 200
-        assert loads(resp.raw_data) == loads(
-            """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"processingTimeMS":1,"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
+        _expected_body = loads(
+            """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
         )
 
     async def test_search_1(self):
@@ -1834,8 +1840,11 @@ class TestSearchClient:
         )
 
         assert resp.status_code == 200
-        assert loads(resp.raw_data) == loads(
-            """{"results":[{"exhaustiveFacetsCount":true,"processingTimeMS":1,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
+        _expected_body = loads(
+            """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
         )
 
     async def test_search_2(self):
