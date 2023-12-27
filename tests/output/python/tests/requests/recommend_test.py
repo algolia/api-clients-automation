@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.recommend.client import RecommendClient
-from algoliasearch.recommend.config import Config
+from algoliasearch.recommend.config import RecommendConfig
 
 
 class TestRecommendClient:
-    _config = Config("test_app_id", "test_api_key")
+    _config = RecommendConfig("test_app_id", "test_api_key")
     _client = RecommendClient(EchoTransporter(_config), _config)
 
     async def test_custom_delete_0(self):

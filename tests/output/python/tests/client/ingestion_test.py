@@ -2,15 +2,15 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.ingestion.client import IngestionClient
-from algoliasearch.ingestion.config import Config
+from algoliasearch.ingestion.config import IngestionConfig
 
 
 class TestIngestionClient:
-    _config: Config
+    _config: IngestionConfig
     _client: IngestionClient
 
     def create_client(self) -> IngestionClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = IngestionConfig("appId", "apiKey", "us")
         self._client = IngestionClient(EchoTransporter(self._config), self._config)
 
     async def test_common_api_0(self):
@@ -47,8 +47,8 @@ class TestIngestionClient:
 
     async def test_parameters_0(self):
         self._client = IngestionClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "us")),
-            Config("my-app-id", "my-api-key", "us"),
+            EchoTransporter(IngestionConfig("my-app-id", "my-api-key", "us")),
+            IngestionConfig("my-app-id", "my-api-key", "us"),
         )
 
         _req = await self._client.get_source_with_http_info(
@@ -60,8 +60,10 @@ class TestIngestionClient:
     async def test_parameters_1(self):
         try:
             self._client = IngestionClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    IngestionConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                IngestionConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:

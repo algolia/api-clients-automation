@@ -1,12 +1,12 @@
 from json import loads
 
 from algoliasearch.abtesting.client import AbtestingClient
-from algoliasearch.abtesting.config import Config
+from algoliasearch.abtesting.config import AbtestingConfig
 from algoliasearch.http.transporter import EchoTransporter
 
 
 class TestAbtestingClient:
-    _config = Config("test_app_id", "test_api_key", "us")
+    _config = AbtestingConfig("test_app_id", "test_api_key", "us")
     _client = AbtestingClient(EchoTransporter(_config), _config)
 
     async def test_add_ab_tests_0(self):

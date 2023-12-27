@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.monitoring.client import MonitoringClient
-from algoliasearch.monitoring.config import Config
+from algoliasearch.monitoring.config import MonitoringConfig
 
 
 class TestMonitoringClient:
-    _config = Config("test_app_id", "test_api_key")
+    _config = MonitoringConfig("test_app_id", "test_api_key")
     _client = MonitoringClient(EchoTransporter(_config), _config)
 
     async def test_custom_delete_0(self):
