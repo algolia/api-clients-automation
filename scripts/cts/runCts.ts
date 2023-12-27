@@ -1,4 +1,4 @@
-import { DOCKER, run, runComposerUpdate } from '../common.js';
+import { DOCKER, run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -13,7 +13,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('./gradle/gradlew --no-daemon -p tests/output/java test');
       break;
     case 'php': {
-      await runComposerUpdate();
+      await runComposerInstall();
       await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`);
       break;
     }

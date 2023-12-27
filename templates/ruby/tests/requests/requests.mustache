@@ -1,6 +1,7 @@
 require 'algolia'
 require 'test/unit'
 require 'dotenv'
+require_relative '../helpers'
 
 Dotenv.load('../../.env')
 
@@ -49,6 +50,10 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
     {{#statusCode}}
     assert_equal(res.status, {{statusCode}})
     {{/statusCode}}
+    {{#body}}
+    expected_body = JSON.parse(%q({{{.}}}))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
+    {{/body}}
     {{/response}}
   end
 

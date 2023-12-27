@@ -197,10 +197,10 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
   }
 }
 
-export async function runComposerUpdate(): Promise<void> {
+export async function runComposerInstall(): Promise<void> {
   if (!CI) {
     await run(
-      'composer update --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php'
+      'composer install --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php'
     );
   }
 }
@@ -226,9 +226,9 @@ export function createClientName(client: string, language: string): string {
       return camelize(client);
     case 'dart':
     case 'go':
-    case 'ruby':
       return client;
     case 'python':
+    case 'ruby':
       return toSnakeCase(client);
     default:
       return capitalize(camelize(client));
