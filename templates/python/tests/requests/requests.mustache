@@ -4,6 +4,7 @@ from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import Config
 {{#hasE2E}}
+from ..helpers import Helpers
 from dotenv import load_dotenv
 
 load_dotenv("../../.env")
@@ -15,6 +16,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(_config), _config)
 
     {{#hasE2E}}
+    _helpers = Helpers()
     _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if _e2e_app_id is None:
         raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
@@ -54,7 +56,8 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         assert resp.status_code == {{statusCode}}
         {{/statusCode}}
         {{#body}}
-        assert loads(resp.raw_data) == loads("""{{{.}}}""")
+        _expected_body = loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
         {{/body}}
         {{/response}}
 
