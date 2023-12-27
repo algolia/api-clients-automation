@@ -261,7 +261,7 @@ jobs:
         run: cd clients/algoliasearch-client-javascript && yarn workspace algoliasearch test
 
       - name: Remove previous CTS output
-        run: rm -rf tests/output/javascript/src/requests tests/output/javascript/src/client || true
+        run: rm -rf ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToDelete }}
 
       - name: Generate CTS
         run: yarn cli cts generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
