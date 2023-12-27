@@ -4,15 +4,15 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
-from algoliasearch.{{{import}}}.config import Config
+from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
 
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
-    _config: Config
+    _config: {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
     _client: {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 
     def create_client(self) -> {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
-        self._config = Config("appId", "apiKey"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
+        self._config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("appId", "apiKey"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
         self._client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(EchoTransporter(self._config), self._config)
 
     {{#blocksClient}}

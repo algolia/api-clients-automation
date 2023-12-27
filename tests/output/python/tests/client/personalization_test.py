@@ -2,15 +2,15 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.personalization.client import PersonalizationClient
-from algoliasearch.personalization.config import Config
+from algoliasearch.personalization.config import PersonalizationConfig
 
 
 class TestPersonalizationClient:
-    _config: Config
+    _config: PersonalizationConfig
     _client: PersonalizationClient
 
     def create_client(self) -> PersonalizationClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = PersonalizationConfig("appId", "apiKey", "us")
         self._client = PersonalizationClient(
             EchoTransporter(self._config), self._config
         )
@@ -50,8 +50,8 @@ class TestPersonalizationClient:
     async def test_parameters_0(self):
         try:
             self._client = PersonalizationClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "")),
-                Config("my-app-id", "my-api-key", ""),
+                EchoTransporter(PersonalizationConfig("my-app-id", "my-api-key", "")),
+                PersonalizationConfig("my-app-id", "my-api-key", ""),
             )
 
         except (ValueError, Exception) as e:
@@ -63,8 +63,10 @@ class TestPersonalizationClient:
     async def test_parameters_1(self):
         try:
             self._client = PersonalizationClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    PersonalizationConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                PersonalizationConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:
@@ -75,6 +77,6 @@ class TestPersonalizationClient:
 
     async def test_parameters_2(self):
         self._client = PersonalizationClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "us")),
-            Config("my-app-id", "my-api-key", "us"),
+            EchoTransporter(PersonalizationConfig("my-app-id", "my-api-key", "us")),
+            PersonalizationConfig("my-app-id", "my-api-key", "us"),
         )
