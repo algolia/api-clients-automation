@@ -2096,6 +2096,19 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('search with special characters in indexName', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'cts_e2e_space in index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_space%20in%20index/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+
+    await e2eClient.searchSingleIndex({ indexName: 'cts_e2e_space in index' });
+  });
+
   test('search with searchParams', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',

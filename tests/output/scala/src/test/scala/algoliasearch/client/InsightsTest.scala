@@ -87,7 +87,19 @@ class InsightsTest extends AnyFunSuite {
     Await.ready(
       client.pushEvents(
         insightsEvents = InsightsEvents(
-          events = Seq()
+          events = Seq(
+            ClickedObjectIDsAfterSearch(
+              eventType = ClickEvent.withName("click"),
+              eventName = "Product Clicked",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              positions = Seq(7, 6)
+            )
+          )
         )
       ),
       Duration.Inf

@@ -53,6 +53,9 @@ Lint/SymbolConversion:
 Lint/UnderscorePrefixedVariableName:
   Enabled: false
 
+Lint/UselessAssignment:
+  Enabled: false
+
 Naming/PredicateName:
   Enabled: false
 

@@ -2791,9 +2791,34 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SearchSingleIndex
-     * search with searchParams.
+     * search with special characters in indexName.
      */
     public function testSearchSingleIndex1()
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'cts_e2e_space in index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_space%20in%20index/query',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->searchSingleIndex(
+            'cts_e2e_space in index',
+        );
+    }
+
+    /**
+     * Test case for SearchSingleIndex
+     * search with searchParams.
+     */
+    public function testSearchSingleIndex2()
     {
         $client = $this->getClient();
         $client->searchSingleIndex(

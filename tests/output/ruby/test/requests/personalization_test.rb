@@ -1,17 +1,18 @@
 require 'algolia'
 require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
 
 class TestPersonalizationClient < Test::Unit::TestCase
   include Algolia::Personalization
   def setup
-    @client = Algolia::PersonalizationClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'personalization',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::PersonalizationClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

@@ -2329,6 +2329,28 @@ class TestSearchClient:
 
     async def test_search_single_index_1(self):
         """
+        search with special characters in indexName
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="cts_e2e_space in index",
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_space%20in%20index/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() >= {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+        resp = await SearchClient.create(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index_with_http_info(
+            index_name="cts_e2e_space in index",
+        )
+
+        assert resp.status_code == 200
+
+    async def test_search_single_index_2(self):
+        """
         search with searchParams
         """
         _req = await self._client.search_single_index_with_http_info(
