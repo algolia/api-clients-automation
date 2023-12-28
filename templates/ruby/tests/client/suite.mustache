@@ -1,0 +1,45 @@
+require 'algolia'
+require 'test/unit'
+
+class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
+  include Algolia::{{{modelModule}}}
+  {{#blocksClient}}
+  {{#tests}}
+  def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}{{testIndex}}
+    {{#autoCreateClient}}
+    client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
+      'APP_ID',
+      'API_KEY',
+      {{#hasRegionalHost}}'{{{defaultRegion}}}',{{/hasRegionalHost}}
+      { requester: Algolia::Transport::EchoRequester.new }
+    )
+    {{/autoCreateClient}}
+    {{#steps}}
+    {{#isError}}
+    begin
+      {{> client/step}}
+    rescue => e
+      assert_equal({{#lambda.codeSnakeCase}}'{{{expectedError}}}'{{/lambda.codeSnakeCase}}, e.message)
+    end
+    {{/isError}}
+    {{^isError}}
+    {{> client/step}}
+    {{#match}}
+    {{#testUserAgent}}
+    assert(req.headers['user-agent'].match(/{{{match}}}/))
+    {{/testUserAgent}}
+    {{#testTimeouts}}
+    assert_equal({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, req.connect_timeout)
+    assert_equal({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, req.timeout)
+    {{/testTimeouts}}
+    {{#testHost}}
+    assert_equal('{{{match}}}', req.host.url)
+    {{/testHost}}
+    {{/match}}
+    {{/isError}}
+    {{/steps}}
+  end
+
+  {{/tests}}
+  {{/blocksClient}}
+end
