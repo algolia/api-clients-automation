@@ -179,6 +179,7 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
   // python alpha releases have a pattern like X.Y.ZaN
   // where a means alpha and N can be any digit representing the alpha version
   // see https://peps.python.org/pep-0440/
+  // It also support ruby alpha like `X.Y.Z.alpha.N`
   if (releaseType !== 'major' && /\d\.\d\.\d\.?a(lpha\.)?\d+$/.test(current)) {
     nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
   } else if (current.endsWith('-SNAPSHOT')) {
