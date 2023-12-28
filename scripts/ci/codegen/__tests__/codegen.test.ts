@@ -44,7 +44,7 @@ describe('codegen', () => {
         // @ts-expect-error a parameter is required
         upsertGenerationComment()
       ).rejects.toThrow(
-        "'upsertGenerationComment' requires a 'trigger' parameter (notification | codegen | noGen | cleanup)."
+        "'upsertGenerationComment' requires a 'trigger' parameter (notification | codegen | noGen | cleanup | noGenButShouldHave | genButShouldNotHave)."
       );
     });
 

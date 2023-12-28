@@ -15,11 +15,11 @@ const allowedTriggers = [
   'noGen',
   'cleanup',
   'noGenButShouldHave',
-  'genBuShouldNotHave',
+  'genButShouldNotHave',
 ] as const;
 
-type Trigger = (typeof allowedTriggers)[number];
-type ExtraTrigger = Trigger | 'genBuShouldNotHave' | 'noGenButSHouldHave';
+type Trigger = 'cleanup' | 'codegen' | 'noGen' | 'notification';
+type ExtraTrigger = Trigger | 'genButShouldNotHave' | 'noGenButShouldHave';
 
 export async function getCommentBody(trigger: ExtraTrigger): Promise<string> {
   let generatedBranch = await run('git branch --show-current');
@@ -75,7 +75,7 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
     writeComment('noGenButShouldHave', octokit);
     throw new Error('Expected code generation but no generated code was found');
   } else if (trigger === 'codegen' && !shouldHaveGenerated) {
-    writeComment('genBuShouldNotHave', octokit);
+    writeComment('genButShouldNotHave', octokit);
     throw new Error('No code generation was expected');
   } else {
     writeComment(trigger, octokit);
