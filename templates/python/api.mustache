@@ -30,6 +30,11 @@ class {{classname}}:
 
     async def close(self) -> None:
         return await self._transporter.close()
+
+    {{#isSearchClient}}
+{{> search_helpers}}
+    {{/isSearchClient}}
+
     {{#operation}}
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
