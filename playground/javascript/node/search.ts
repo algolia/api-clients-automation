@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
+const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';
 
 const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
@@ -19,13 +19,13 @@ client.addAlgoliaAgent('Node playground', '0.0.1');
 const requests: SearchQuery[] = [
   { indexName: searchIndex, query: searchQuery },
 ];
-console.log('verison', apiClientVersion, 'requests', requests);
+console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.searchForHits<{foo: 'bar', baz: number}>({requests})
+    const res = await client.browseRules({ indexName: "cts_e2e_search_facet", aggregator: (resp: any) => {console.log(resp)} });
 
-    console.log(`[OK]`, res.results[0].hits[0].foo);
+    console.log(`[OK]`, res);
   } catch (e: any) {
     // Instance of
     if (e instanceof ApiError) {
