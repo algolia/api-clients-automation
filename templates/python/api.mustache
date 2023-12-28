@@ -5,33 +5,28 @@
 from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}
 
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
-
 
 {{#operations}}
 class {{classname}}:
     _transporter: Transporter
-    _config: Config
+    _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
     _request_options: RequestOptions
 
     def app_id(self) -> str:
         return self._config.app_id
 
-    def __init__(self, transporter: Transporter, config: Config) -> None:
+    def __init__(self, transporter: Transporter, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> None:
         self._transporter = transporter
         self._config = config
         self._request_options = RequestOptions(config)
 
-    def create_with_config(config: Config) -> Self:
+    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> Self:
         transporter = Transporter(config)
 
         return {{classname}}(transporter, config)
 
     def create(app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> Self:
-        return {{classname}}.create_with_config(Config(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
+        return {{classname}}.create_with_config({{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
 
     async def close(self) -> None:
         return await self._transporter.close()

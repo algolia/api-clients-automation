@@ -2,21 +2,21 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.recommend.client import RecommendClient
-from algoliasearch.recommend.config import Config
+from algoliasearch.recommend.config import RecommendConfig
 
 
 class TestRecommendClient:
-    _config: Config
+    _config: RecommendConfig
     _client: RecommendClient
 
     def create_client(self) -> RecommendClient:
-        self._config = Config("appId", "apiKey")
+        self._config = RecommendConfig("appId", "apiKey")
         self._client = RecommendClient(EchoTransporter(self._config), self._config)
 
     async def test_api_0(self):
         self._client = RecommendClient(
-            EchoTransporter(Config("test-app-id", "test-api-key")),
-            Config("test-app-id", "test-api-key"),
+            EchoTransporter(RecommendConfig("test-app-id", "test-api-key")),
+            RecommendConfig("test-app-id", "test-api-key"),
         )
 
         _req = await self._client.custom_get_with_http_info(
@@ -27,8 +27,8 @@ class TestRecommendClient:
 
     async def test_api_1(self):
         self._client = RecommendClient(
-            EchoTransporter(Config("test-app-id", "test-api-key")),
-            Config("test-app-id", "test-api-key"),
+            EchoTransporter(RecommendConfig("test-app-id", "test-api-key")),
+            RecommendConfig("test-app-id", "test-api-key"),
         )
 
         _req = await self._client.custom_post_with_http_info(

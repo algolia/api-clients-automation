@@ -1,16 +1,16 @@
 from re import compile
 
 from algoliasearch.abtesting.client import AbtestingClient
-from algoliasearch.abtesting.config import Config
+from algoliasearch.abtesting.config import AbtestingConfig
 from algoliasearch.http.transporter import EchoTransporter
 
 
 class TestAbtestingClient:
-    _config: Config
+    _config: AbtestingConfig
     _client: AbtestingClient
 
     def create_client(self) -> AbtestingClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = AbtestingConfig("appId", "apiKey", "us")
         self._client = AbtestingClient(EchoTransporter(self._config), self._config)
 
     async def test_common_api_0(self):
@@ -47,8 +47,8 @@ class TestAbtestingClient:
 
     async def test_parameters_0(self):
         self._client = AbtestingClient(
-            EchoTransporter(Config("my-app-id", "my-api-key")),
-            Config("my-app-id", "my-api-key"),
+            EchoTransporter(AbtestingConfig("my-app-id", "my-api-key")),
+            AbtestingConfig("my-app-id", "my-api-key"),
         )
 
         _req = await self._client.get_ab_test_with_http_info(
@@ -59,8 +59,8 @@ class TestAbtestingClient:
 
     async def test_parameters_1(self):
         self._client = AbtestingClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "us")),
-            Config("my-app-id", "my-api-key", "us"),
+            EchoTransporter(AbtestingConfig("my-app-id", "my-api-key", "us")),
+            AbtestingConfig("my-app-id", "my-api-key", "us"),
         )
 
         _req = await self._client.get_ab_test_with_http_info(
@@ -72,8 +72,10 @@ class TestAbtestingClient:
     async def test_parameters_2(self):
         try:
             self._client = AbtestingClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    AbtestingConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                AbtestingConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:

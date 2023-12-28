@@ -2201,7 +2201,9 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
         );
 
-        $this->assertEquals($resp, json_decode('{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"processingTimeMS":1,"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}', true));
+        $expected = json_decode('{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -2242,7 +2244,9 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
         );
 
-        $this->assertEquals($resp, json_decode('{"results":[{"exhaustiveFacetsCount":true,"processingTimeMS":1,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}', true));
+        $expected = json_decode('{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -3327,6 +3331,31 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'body' => json_decode('{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}'),
             ],
         ]);
+    }
+
+    protected function union($expected, $received)
+    {
+        $res = [];
+
+        foreach ($expected as $k => $v) {
+            if (isset($received[$k])) {
+                if (is_array($v)) {
+                    $res[$k] = $this->union($v, $received[$k]);
+                } elseif (is_array($v)) {
+                    if (!isset($res[$k])) {
+                        $res[$k] = [];
+                    }
+
+                    foreach ($v as $iv => $v) {
+                        $res[$k][] = $this->union($v, $received[$k][$iv]);
+                    }
+                } else {
+                    $res[$k] = $received[$k];
+                }
+            }
+        }
+
+        return $res;
     }
 
     protected function assertRequests(array $requests)

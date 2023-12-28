@@ -2,15 +2,15 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.monitoring.client import MonitoringClient
-from algoliasearch.monitoring.config import Config
+from algoliasearch.monitoring.config import MonitoringConfig
 
 
 class TestMonitoringClient:
-    _config: Config
+    _config: MonitoringConfig
     _client: MonitoringClient
 
     def create_client(self) -> MonitoringClient:
-        self._config = Config("appId", "apiKey")
+        self._config = MonitoringConfig("appId", "apiKey")
         self._client = MonitoringClient(EchoTransporter(self._config), self._config)
 
     async def test_common_api_0(self):
@@ -47,6 +47,6 @@ class TestMonitoringClient:
 
     async def test_parameters_0(self):
         self._client = MonitoringClient(
-            EchoTransporter(Config("my-app-id", "my-api-key")),
-            Config("my-app-id", "my-api-key"),
+            EchoTransporter(MonitoringConfig("my-app-id", "my-api-key")),
+            MonitoringConfig("my-app-id", "my-api-key"),
         )

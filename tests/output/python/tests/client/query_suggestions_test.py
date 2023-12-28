@@ -2,15 +2,15 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.query_suggestions.client import QuerySuggestionsClient
-from algoliasearch.query_suggestions.config import Config
+from algoliasearch.query_suggestions.config import QuerySuggestionsConfig
 
 
 class TestQuerySuggestionsClient:
-    _config: Config
+    _config: QuerySuggestionsConfig
     _client: QuerySuggestionsClient
 
     def create_client(self) -> QuerySuggestionsClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = QuerySuggestionsConfig("appId", "apiKey", "us")
         self._client = QuerySuggestionsClient(
             EchoTransporter(self._config), self._config
         )
@@ -50,8 +50,8 @@ class TestQuerySuggestionsClient:
     async def test_parameters_0(self):
         try:
             self._client = QuerySuggestionsClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "")),
-                Config("my-app-id", "my-api-key", ""),
+                EchoTransporter(QuerySuggestionsConfig("my-app-id", "my-api-key", "")),
+                QuerySuggestionsConfig("my-app-id", "my-api-key", ""),
             )
 
         except (ValueError, Exception) as e:
@@ -63,8 +63,10 @@ class TestQuerySuggestionsClient:
     async def test_parameters_1(self):
         try:
             self._client = QuerySuggestionsClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    QuerySuggestionsConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                QuerySuggestionsConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:
@@ -75,6 +77,6 @@ class TestQuerySuggestionsClient:
 
     async def test_parameters_2(self):
         self._client = QuerySuggestionsClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "us")),
-            Config("my-app-id", "my-api-key", "us"),
+            EchoTransporter(QuerySuggestionsConfig("my-app-id", "my-api-key", "us")),
+            QuerySuggestionsConfig("my-app-id", "my-api-key", "us"),
         )

@@ -26,8 +26,9 @@ from typing import (
   Optional,
   Tuple,
   Union,
+  Literal,
+  Self
 )
-from typing_extensions import Literal
 
 from algoliasearch.http.serializer import bodySerializer
 from algoliasearch.http.api_response import ApiResponse
@@ -35,4 +36,4 @@ from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.verb import Verb
 
-from algoliasearch.{{packageName}}.config import Config
+from algoliasearch.{{packageName}}.config import {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}

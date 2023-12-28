@@ -2,21 +2,21 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.client import SearchClient
-from algoliasearch.search.config import Config
+from algoliasearch.search.config import SearchConfig
 
 
 class TestSearchClient:
-    _config: Config
+    _config: SearchConfig
     _client: SearchClient
 
     def create_client(self) -> SearchClient:
-        self._config = Config("appId", "apiKey")
+        self._config = SearchConfig("appId", "apiKey")
         self._client = SearchClient(EchoTransporter(self._config), self._config)
 
     async def test_api_0(self):
         self._client = SearchClient(
-            EchoTransporter(Config("test-app-id", "test-api-key")),
-            Config("test-app-id", "test-api-key"),
+            EchoTransporter(SearchConfig("test-app-id", "test-api-key")),
+            SearchConfig("test-app-id", "test-api-key"),
         )
 
         _req = await self._client.custom_get_with_http_info(
@@ -27,8 +27,8 @@ class TestSearchClient:
 
     async def test_api_1(self):
         self._client = SearchClient(
-            EchoTransporter(Config("test-app-id", "test-api-key")),
-            Config("test-app-id", "test-api-key"),
+            EchoTransporter(SearchConfig("test-app-id", "test-api-key")),
+            SearchConfig("test-app-id", "test-api-key"),
         )
 
         _req = await self._client.custom_post_with_http_info(
@@ -71,20 +71,24 @@ class TestSearchClient:
 
     async def test_parameters_0(self):
         try:
-            self._client = SearchClient(EchoTransporter(Config("", "")), Config("", ""))
-
-        except (ValueError, Exception) as e:
-            assert str(e) == "`app_id` is missing."
-        try:
             self._client = SearchClient(
-                EchoTransporter(Config("", "my-api-key")), Config("", "my-api-key")
+                EchoTransporter(SearchConfig("", "")), SearchConfig("", "")
             )
 
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
-                EchoTransporter(Config("my-app-id", "")), Config("my-app-id", "")
+                EchoTransporter(SearchConfig("", "my-api-key")),
+                SearchConfig("", "my-api-key"),
+            )
+
+        except (ValueError, Exception) as e:
+            assert str(e) == "`app_id` is missing."
+        try:
+            self._client = SearchClient(
+                EchoTransporter(SearchConfig("my-app-id", "")),
+                SearchConfig("my-app-id", ""),
             )
 
         except (ValueError, Exception) as e:
