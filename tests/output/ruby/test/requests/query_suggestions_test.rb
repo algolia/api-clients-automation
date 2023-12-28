@@ -5,31 +5,31 @@ require_relative '../helpers'
 
 Dotenv.load('../../.env')
 
-class TestAbtestingClient < Test::Unit::TestCase
-  include Algolia::Abtesting
+class TestQuerySuggestionsClient < Test::Unit::TestCase
+  include Algolia::QuerySuggestions
   def setup
-    @client = Algolia::AbtestingClient.create_with_config(
+    @client = Algolia::QuerySuggestionsClient.create_with_config(
       Algolia::Configuration.new(
         'APP_ID',
         'API_KEY',
         [Algolia::Transport::StatefulHost.new('localhost')],
-        'abtesting',
+        'query_suggestions',
         { requester: Algolia::Transport::EchoRequester.new }
       )
     )
   end
 
-  # addABTests with minimal parameters
-  def test_add_ab_tests0
-    req = @client.add_ab_tests_with_http_info(AddABTestsRequest.new(end_at: "2022-12-31T00:00:00.000Z", name: "myABTest",
-                                                                    variants: [AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30), AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)]))
+  # createConfig0
+  def test_create_config0
+    req = @client.create_config_with_http_info(QuerySuggestionsConfigurationWithIndex.new(index_name: "theIndexName",
+                                                                                          source_indices: [SourceIndex.new(index_name: "testIndex", facets: [Facet.new(attribute: "test")], generate: [["facetA", "facetB"], ["facetC"]])], languages: ["french"], exclude: ["test"]))
 
     assert_equal(:post, req.method)
-    assert_equal('/2/abtests', req.path)
+    assert_equal('/1/configs', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'), JSON.parse(req.body)
+      JSON.parse('{"indexName":"theIndexName","sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'), JSON.parse(req.body)
     )
   end
 
@@ -233,61 +233,78 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteABTest
-  def test_delete_ab_test0
-    req = @client.delete_ab_test_with_http_info(42)
+  # deleteConfig0
+  def test_delete_config0
+    req = @client.delete_config_with_http_info("theIndexName")
 
     assert_equal(:delete, req.method)
-    assert_equal('/2/abtests/42', req.path)
+    assert_equal('/1/configs/theIndexName', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getABTest
-  def test_get_ab_test0
-    req = @client.get_ab_test_with_http_info(42)
+  # getAllConfigs0
+  def test_get_all_configs0
+    req = @client.get_all_configs_with_http_info
 
     assert_equal(:get, req.method)
-    assert_equal('/2/abtests/42', req.path)
+    assert_equal('/1/configs', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # listABTests with minimal parameters
-  def test_list_ab_tests0
-    req = @client.list_ab_tests_with_http_info
+  # getConfig0
+  def test_get_config0
+    req = @client.get_config_with_http_info("theIndexName")
 
     assert_equal(:get, req.method)
-    assert_equal('/2/abtests', req.path)
+    assert_equal('/1/configs/theIndexName', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # listABTests with parameters
-  def test_list_ab_tests1
-    req = @client.list_ab_tests_with_http_info(42, 21, "foo", "bar")
+  # getConfigStatus0
+  def test_get_config_status0
+    req = @client.get_config_status_with_http_info("theIndexName")
 
     assert_equal(:get, req.method)
-    assert_equal('/2/abtests', req.path)
-    assert(({ 'offset': "42", 'limit': "21", 'indexPrefix': "foo", 'indexSuffix': "bar" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal('/1/configs/theIndexName/status', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # stopABTest
-  def test_stop_ab_test0
-    req = @client.stop_ab_test_with_http_info(42)
+  # getLogFile0
+  def test_get_log_file0
+    req = @client.get_log_file_with_http_info("theIndexName")
 
-    assert_equal(:post, req.method)
-    assert_equal('/2/abtests/42/stop', req.path)
+    assert_equal(:get, req.method)
+    assert_equal('/1/logs/theIndexName', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # updateConfig0
+  def test_update_config0
+    req = @client.update_config_with_http_info("theIndexName",
+                                               QuerySuggestionsConfiguration.new(source_indices: [SourceIndex.new(index_name: "testIndex", facets: [Facet.new(attribute: "test")], generate: [["facetA", "facetB"], ["facetC"]])],
+                                                                                 languages: ["french"], exclude: ["test"]))
+
+    assert_equal(:put, req.method)
+    assert_equal('/1/configs/theIndexName', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}'), JSON.parse(req.body)
+    )
   end
 end

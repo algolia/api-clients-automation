@@ -1,5 +1,9 @@
 require 'algolia'
 require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
 
 class TestPersonalizationClient < Test::Unit::TestCase
   include Algolia::Personalization

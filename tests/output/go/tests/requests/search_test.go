@@ -2757,6 +2757,24 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 			},
 		},
 		{
+			name: "search with special characters in indexName",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"indexName":"cts_e2e_space in index"}`
+				req := search.ApiSearchSingleIndexRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				_, err := client.SearchSingleIndex(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_space%20in%20index/query")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "POST", echo.method)
+
+				ja := jsonassert.New(t)
+				ja.Assertf(*echo.body, `{}`)
+			},
+		},
+		{
 			name: "search with searchParams",
 			testFunc: func(t *testing.T) {
 				parametersStr := `{"indexName":"indexName","searchParams":{"query":"myQuery","facetFilters":["tags:algolia"]}}`

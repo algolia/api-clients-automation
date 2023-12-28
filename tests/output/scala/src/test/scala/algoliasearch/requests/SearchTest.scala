@@ -2409,6 +2409,22 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("search with special characters in indexName") {
+    val (client, echo) = testClient()
+    val future = client.searchSingleIndex(
+      indexName = "cts_e2e_space in index"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_space%20in%20index/query")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("search with searchParams") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(

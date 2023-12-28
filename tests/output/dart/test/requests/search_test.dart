@@ -2841,6 +2841,26 @@ void main() {
 
   // searchSingleIndex
   test(
+    'search with special characters in indexName',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "cts_e2e_space in index",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/cts_e2e_space%20in%20index/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
     'search with searchParams',
     () => runTest(
       builder: (requester) => SearchClient(
