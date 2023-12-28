@@ -19,7 +19,7 @@ class RetryTimeout(Timeout):
         return min(retry_count * 0.2, 5)
 
     def __init__(self) -> None:
-        self._retry_count = 0
+        pass
 
 
 async def create_iterable(
