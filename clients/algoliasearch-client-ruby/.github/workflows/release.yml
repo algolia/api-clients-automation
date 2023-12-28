@@ -23,6 +23,4 @@ jobs:
         run: gem build algolia.gemspec
 
       - name: Publish new gem
-        run: |
-          if [[ -z "$RUBYGEMS_API_KEY" ]]; then echo '$RUBYGEMS_API_KEY is not set'; exit 1; fi
-          gem push --key $RUBYGEMS_API_KEY $(ls algolia-*.gem)
+        run: gem push --key ${{ secrets.RUBYGEMS_API_KEY }} $(ls algolia-*.gem)
