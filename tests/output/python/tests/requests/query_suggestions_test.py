@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.query_suggestions.client import QuerySuggestionsClient
-from algoliasearch.query_suggestions.config import Config
+from algoliasearch.query_suggestions.config import QuerySuggestionsConfig
 
 
 class TestQuerySuggestionsClient:
-    _config = Config("test_app_id", "test_api_key", "us")
+    _config = QuerySuggestionsConfig("test_app_id", "test_api_key", "us")
     _client = QuerySuggestionsClient(EchoTransporter(_config), _config)
 
     async def test_create_config_0(self):

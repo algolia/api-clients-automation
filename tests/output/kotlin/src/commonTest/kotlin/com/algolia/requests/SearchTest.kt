@@ -2404,6 +2404,22 @@ class SearchTest {
   }
 
   @Test
+  fun `search with special characters in indexName`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "cts_e2e_space in index",
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_space%20in%20index/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
   fun `search with searchParams`() = runTest {
     client.runTest(
       call = {

@@ -5,9 +5,10 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
 
 func createSearchClient() (*search.APIClient, *echoRequester) {
@@ -2748,6 +2749,24 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 				require.NoError(t, err)
 
 				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "POST", echo.method)
+
+				ja := jsonassert.New(t)
+				ja.Assertf(*echo.body, `{}`)
+			},
+		},
+		{
+			name: "search with special characters in indexName",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"indexName":"cts_e2e_space in index"}`
+				req := search.ApiSearchSingleIndexRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				_, err := client.SearchSingleIndex(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_space%20in%20index/query")
 				require.NoError(t, err)
 				require.Equal(t, expectedPath, echo.path)
 				require.Equal(t, "POST", echo.method)

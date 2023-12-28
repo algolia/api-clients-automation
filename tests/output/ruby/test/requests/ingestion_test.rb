@@ -1,17 +1,18 @@
 require 'algolia'
 require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
 
 class TestIngestionClient < Test::Unit::TestCase
   include Algolia::Ingestion
   def setup
-    @client = Algolia::IngestionClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'ingestion',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::IngestionClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

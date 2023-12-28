@@ -14,10 +14,13 @@ Adding a new API client requires some manual steps in order to have a properly w
 2. [Configuring the generator](#2-configuring-the-generator)
 3. [Generate the client](#3-generate-the-client)
 4. [Adding tests](#4-adding-tests-with-the-common-test-suite)
+5. [Helpers](#5-helpers)
 
 ## 1. Writing specs
 
-We recommend to have a look at [existing spec files](https://github.com/algolia/api-clients-automation/blob/main/specs/).
+> All of our specs follows the [OpenAPI specification](https://spec.openapis.org/oas/v3.1.0).
+
+Take a look to how we write specs by checking the [existing ones](https://github.com/algolia/api-clients-automation/blob/main/specs/).
 
 > **The `bundled` folder is automatically generated, manual changes shouldn't be done in these files.**
 
@@ -32,23 +35,23 @@ We recommend to have a look at [existing spec files](https://github.com/algolia/
 
 ### `common` spec folder
 
-[The `common` folder](https://github.com/algolia/api-clients-automation/blob/main/specs/common/) hosts properties that are common to Algolia and/or used in multiple clients.
+[The `common` folder](https://github.com/algolia/api-clients-automation/blob/main/specs/common/) contains properties that are common to many Algolia APIs.
 
-### `<clientName>` spec folder
+### `specs/<apiName>` folder
 
 > Example with the [search client spec](https://github.com/algolia/api-clients-automation/blob/main/specs/search/)
 
-#### **`spec.yml` file**
+#### **`specs/<apiName>/spec.yml` file**
 
-The `spec.yml` file is the entry point of the client spec, it contains `servers`, `paths` and other specific information of the API. We recommend to copy an existing [`spec.yml` file](https://github.com/algolia/api-clients-automation/blob/main/specs/search/spec.yml) to get started.
+The `spec.yml` file is the entry point of the client spec, it contains the `servers`, `paths` and other specific information to contact the API. We recommend to copy an existing [`spec.yml` file](https://github.com/algolia/api-clients-automation/blob/main/specs/search/spec.yml) to get started.
 
-#### **`<clientName>`/common folder**
+#### **`specs/<apiName>/common` folder**
 
-Same as [the `common` folder](#common-spec-folder) but only related to the current client.
+Same as [the global `common` folder](#common-spec-folder) but only related to the current API.
 
-#### **`<clientName>`/paths folder**
+#### **`specs/<apiName>/paths` folder**
 
-Path definition of the paths defined in the [spec file](#specyml-file). See [guidelines](#guidelines).
+Path definition of the paths defined in the [spec file](#specsapinamespecyml-file). See [guidelines](#guidelines).
 
 ### Troubleshooting
 
@@ -73,27 +76,33 @@ You might want to send additional information to the generators. To do so, you c
 
 ## 2. Configuring the generator
 
-> The generator follows its own configuration file named `config/openapitools.json`
+> Most of the configuration is "guessed" by the api-clients-automation CLI (`scripts/`).
 
 ### Configs
 
-[`config/openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/config/openapitools.json) and [`config/clients.config.json`](https://github.com/algolia/api-clients-automation/blob/main/config/clients.config.json) hosts the configuration of all of the generated clients with their available languages and extra information.
+#### [`config/clients.config.json`](https://github.com/algolia/api-clients-automation/blob/main/config/clients.config.json)
 
-#### Settings
+Contains information common to every `clients` generated for a language, fields below are required:
 
-Generators are referenced by key with the following pattern `<languageName>-<clientName>`. You can copy an existing object of a client and replace the `<clientName>` value with the one you'd like to generate.
+| Option               | Description                                                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `folder`             | The path to the parent folder of every clients for this language.                                                    |
+| `gitRepoId`          | The name of the repository of this API client.                                                                       |
+| `packageVersion`     | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
+| `modelFolder`        | The path to the `model` folder that will host the generated code.                                                    |
+| `apiFolder`          | The path to the `api` folder that will host the generated code.                                                      |
+| `customGenerator`    | The name of the generator used to generate code, registered in the `generators/` folder.                             |
+| `tests.extension`    | The extension of a test file, e.g. `.test.java` or `_test.py`                                                        |
+| `tests.outputFolder` | The path to the folder that holds the test for this language, e.g. `tests/`                                          |
 
-Below are the options you need to **make sure to define for your client**, other options are automatically added by our generator.
 
-| Option                |         File          |        Language         | Description                                                                                                          |
-| --------------------- | :-------------------: | :---------------------: | -------------------------------------------------------------------------------------------------------------------- |
-| `output`              |  `openapitools.json`  |           All           | The output path of the client.                                                                                       |
-| `packageVersion`      | `clients.config.json` |           All           | The version you'd like to publish the first iteration of the generated client. It will be automatically incremented. |
-| `gitRepoId`           | `clients.config.json` |           All           | The name of the repository.                                                                                          |
-| `folder`              | `clients.config.json` |           All           | The path to the folder that will host the generated code.                                                            |
-| `modelFolder`         | `clients.config.json` |           All           | The path to the `model` folder that will host the generated code.                                                    |
-| `apiFolder`           | `clients.config.json` |           All           | The path to the `api` folder that will host the generated code.                                                      |
-| `customGenerator`     | `clients.config.json` |           All           | The name of the generator used to generate code.                                                                     |
+#### [`config/openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/config/openapitools.json)
+
+Contains information passed to the generator in order to know which client to generate and where to output the code, fields below are required:
+
+| Option    | Description                                                                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `output`  | The path to the folder of the generated API for a given client, must be a children of the corresponding `config/clients.config.json#folder` field.
 
 ## 3. Generate the client
 
@@ -102,3 +111,12 @@ You can find all the commands in the [CLI > clients commands page](/docs/contrib
 ## 4. Adding tests with the Common Test Suite
 
 Clients needs to be tested, you can read more in the [Common Test Suite](/docs/contributing/testing/common-test-suite) guide.
+
+## 5. Helpers
+
+We provide manually written helpers that wrap generated API clients methods in order to ease the user's journey.
+
+| Helper name     | Description                                                                                                  | Wrapped API call | Stop condition                                          | Example                                                                                                                                                           |
+| --------------- | -------------------------------------------------------------------------------------------------------------|----------------- |-------------------------------------------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `waitForTask`   | Given a `taskID`, calls the `getTask` method until the status gets `published`                               | `getTask()`      | `response.status == "published"`                        | [JavaScript](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-search/src/searchClient.ts#L232) |
+| `waitForApiKey` | Given a `Key`, calls the `getApiKey` method until the stop condition for the given `operation` is validated  | `getApiKey()`    | Diff between the given `Key` and the `response` payload | [JavaScript](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-search/src/searchClient.ts#L269) |

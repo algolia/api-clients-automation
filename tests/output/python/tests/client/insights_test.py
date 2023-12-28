@@ -2,15 +2,15 @@ from re import compile
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.insights.client import InsightsClient
-from algoliasearch.insights.config import Config
+from algoliasearch.insights.config import InsightsConfig
 
 
 class TestInsightsClient:
-    _config: Config
+    _config: InsightsConfig
     _client: InsightsClient
 
     def create_client(self) -> InsightsClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = InsightsConfig("appId", "apiKey", "us")
         self._client = InsightsClient(EchoTransporter(self._config), self._config)
 
     async def test_common_api_0(self):
@@ -47,13 +47,31 @@ class TestInsightsClient:
 
     async def test_parameters_0(self):
         self._client = InsightsClient(
-            EchoTransporter(Config("my-app-id", "my-api-key")),
-            Config("my-app-id", "my-api-key"),
+            EchoTransporter(InsightsConfig("my-app-id", "my-api-key")),
+            InsightsConfig("my-app-id", "my-api-key"),
         )
 
         _req = await self._client.push_events_with_http_info(
             insights_events={
-                "events": [],
+                "events": [
+                    {
+                        "eventType": "click",
+                        "eventName": "Product Clicked",
+                        "index": "products",
+                        "userToken": "user-123456",
+                        "authenticatedUserToken": "user-123456",
+                        "timestamp": 1641290601962,
+                        "objectIDs": [
+                            "9780545139700",
+                            "9780439784542",
+                        ],
+                        "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                        "positions": [
+                            7,
+                            6,
+                        ],
+                    },
+                ],
             },
         )
 
@@ -61,8 +79,8 @@ class TestInsightsClient:
 
     async def test_parameters_1(self):
         self._client = InsightsClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "us")),
-            Config("my-app-id", "my-api-key", "us"),
+            EchoTransporter(InsightsConfig("my-app-id", "my-api-key", "us")),
+            InsightsConfig("my-app-id", "my-api-key", "us"),
         )
 
         _req = await self._client.custom_delete_with_http_info(
@@ -74,8 +92,10 @@ class TestInsightsClient:
     async def test_parameters_2(self):
         try:
             self._client = InsightsClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    InsightsConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                InsightsConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:

@@ -3484,8 +3484,22 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("search with searchParams")
+  @DisplayName("search with special characters in indexName")
   void searchSingleIndexTest1() {
+    String indexName0 = "cts_e2e_space in index";
+
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(indexName0, Object.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_space%20in%20index/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("search with searchParams")
+  void searchSingleIndexTest2() {
     String indexName0 = "indexName";
     SearchParamsObject searchParams0 = new SearchParamsObject();
     {

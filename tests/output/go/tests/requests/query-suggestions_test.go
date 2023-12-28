@@ -5,9 +5,10 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
 )
 
 func createSuggestionsClient() (*suggestions.APIClient, *echoRequester) {

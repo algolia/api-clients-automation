@@ -1,17 +1,22 @@
 require 'algolia'
 require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
 
 class TestSearchClient < Test::Unit::TestCase
   include Algolia::Search
   def setup
-    @client = Algolia::SearchClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'search',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::SearchClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
+    )
+
+    @e2e_client = Algolia::SearchClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil)
     )
   end
 
@@ -993,6 +998,12 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}'), JSON.parse(req.body))
+
+    res = @e2e_client.search_with_http_info(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")]))
+
+    assert_equal(res.status, 200)
+    expected_body = JSON.parse('{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
   end
 
   # search for a single facet request with minimal parameters
@@ -1005,6 +1016,14 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}'), JSON.parse(req.body))
+
+    res = @e2e_client.search_with_http_info(SearchMethodParams.new(
+                                              requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: 'facet', facet: "editor")], strategy: 'stopIfEnoughMatches'
+                                            ))
+
+    assert_equal(res.status, 200)
+    expected_body = JSON.parse('{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
   end
 
   # search for a single hits request with all parameters
@@ -1165,8 +1184,23 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
 
-  # search with searchParams
+  # search with special characters in indexName
   def test_search_single_index1
+    req = @client.search_single_index_with_http_info("cts_e2e_space in index")
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/cts_e2e_space%20in%20index/query', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse('{}'), JSON.parse(req.body))
+
+    res = @e2e_client.search_single_index_with_http_info("cts_e2e_space in index")
+
+    assert_equal(res.status, 200)
+  end
+
+  # search with searchParams
+  def test_search_single_index2
     req = @client.search_single_index_with_http_info("indexName", SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"]))
 
     assert_equal(:post, req.method)

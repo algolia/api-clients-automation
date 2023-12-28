@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.ingestion.client import IngestionClient
-from algoliasearch.ingestion.config import Config
+from algoliasearch.ingestion.config import IngestionConfig
 
 
 class TestIngestionClient:
-    _config = Config("test_app_id", "test_api_key", "us")
+    _config = IngestionConfig("test_app_id", "test_api_key", "us")
     _client = IngestionClient(EchoTransporter(_config), _config)
 
     async def test_create_authentication_0(self):

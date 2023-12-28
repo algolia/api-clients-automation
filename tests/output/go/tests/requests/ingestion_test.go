@@ -5,9 +5,10 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 )
 
 func createIngestionClient() (*ingestion.APIClient, *echoRequester) {

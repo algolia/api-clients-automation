@@ -1,16 +1,16 @@
 from re import compile
 
 from algoliasearch.analytics.client import AnalyticsClient
-from algoliasearch.analytics.config import Config
+from algoliasearch.analytics.config import AnalyticsConfig
 from algoliasearch.http.transporter import EchoTransporter
 
 
 class TestAnalyticsClient:
-    _config: Config
+    _config: AnalyticsConfig
     _client: AnalyticsClient
 
     def create_client(self) -> AnalyticsClient:
-        self._config = Config("appId", "apiKey", "us")
+        self._config = AnalyticsConfig("appId", "apiKey", "us")
         self._client = AnalyticsClient(EchoTransporter(self._config), self._config)
 
     async def test_common_api_0(self):
@@ -47,8 +47,8 @@ class TestAnalyticsClient:
 
     async def test_parameters_0(self):
         self._client = AnalyticsClient(
-            EchoTransporter(Config("my-app-id", "my-api-key")),
-            Config("my-app-id", "my-api-key"),
+            EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key")),
+            AnalyticsConfig("my-app-id", "my-api-key"),
         )
 
         _req = await self._client.get_average_click_position_with_http_info(
@@ -59,8 +59,8 @@ class TestAnalyticsClient:
 
     async def test_parameters_1(self):
         self._client = AnalyticsClient(
-            EchoTransporter(Config("my-app-id", "my-api-key", "de")),
-            Config("my-app-id", "my-api-key", "de"),
+            EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key", "de")),
+            AnalyticsConfig("my-app-id", "my-api-key", "de"),
         )
 
         _req = await self._client.custom_post_with_http_info(
@@ -72,8 +72,10 @@ class TestAnalyticsClient:
     async def test_parameters_2(self):
         try:
             self._client = AnalyticsClient(
-                EchoTransporter(Config("my-app-id", "my-api-key", "not_a_region")),
-                Config("my-app-id", "my-api-key", "not_a_region"),
+                EchoTransporter(
+                    AnalyticsConfig("my-app-id", "my-api-key", "not_a_region")
+                ),
+                AnalyticsConfig("my-app-id", "my-api-key", "not_a_region"),
             )
 
         except (ValueError, Exception) as e:

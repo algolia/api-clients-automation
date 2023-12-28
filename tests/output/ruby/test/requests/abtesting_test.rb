@@ -1,17 +1,18 @@
 require 'algolia'
 require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
 
 class TestAbtestingClient < Test::Unit::TestCase
   include Algolia::Abtesting
   def setup
-    @client = Algolia::AbtestingClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'abtesting',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::AbtestingClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

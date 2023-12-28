@@ -85,8 +85,43 @@ class InsightsClientClientTests {
 
     InsightsEvents insightsEvents0 = new InsightsEvents();
     {
-      List events1 = new ArrayList<>();
-      {}
+      List<EventsItems> events1 = new ArrayList<>();
+      {
+        ClickedObjectIDsAfterSearch events_02 = new ClickedObjectIDsAfterSearch();
+        {
+          ClickEvent eventType3 = ClickEvent.fromValue("click");
+          events_02.setEventType(eventType3);
+          String eventName3 = "Product Clicked";
+          events_02.setEventName(eventName3);
+          String index3 = "products";
+          events_02.setIndex(index3);
+          String userToken3 = "user-123456";
+          events_02.setUserToken(userToken3);
+          String authenticatedUserToken3 = "user-123456";
+          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
+          long timestamp3 = 1641290601962L;
+          events_02.setTimestamp(timestamp3);
+          List<String> objectIDs3 = new ArrayList<>();
+          {
+            String objectIDs_04 = "9780545139700";
+            objectIDs3.add(objectIDs_04);
+            String objectIDs_14 = "9780439784542";
+            objectIDs3.add(objectIDs_14);
+          }
+          events_02.setObjectIDs(objectIDs3);
+          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
+          events_02.setQueryID(queryID3);
+          List<Integer> positions3 = new ArrayList<>();
+          {
+            int positions_04 = 7;
+            positions3.add(positions_04);
+            int positions_14 = 6;
+            positions3.add(positions_14);
+          }
+          events_02.setPositions(positions3);
+        }
+        events1.add(events_02);
+      }
       insightsEvents0.setEvents(events1);
     }
 

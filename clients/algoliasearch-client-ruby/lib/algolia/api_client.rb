@@ -1,3 +1,5 @@
+require 'cgi'
+
 module Algolia
   class ApiClient
     # The Configuration object holding settings to be used in the API client.
@@ -22,7 +24,7 @@ module Algolia
     # @return [Http::Response] the response.
     def call_api(http_method, path, opts = {})
       begin
-        call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
+        call_type = opts[:use_read_transporter] || http_method == :GET ? CallType::READ : CallType::WRITE
         response = transporter.request(call_type, http_method, path, opts[:body], opts)
       rescue Faraday::TimeoutError
         raise ApiError, 'Connection timed out'
@@ -142,6 +144,10 @@ module Algolia
       else
         raise "unknown collection format: #{collection_format.inspect}"
       end
+    end
+
+    def encode_uri(uri)
+      CGI.escape(uri).gsub('+', '%20')
     end
   end
 end

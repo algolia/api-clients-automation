@@ -2,11 +2,11 @@ from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.personalization.client import PersonalizationClient
-from algoliasearch.personalization.config import Config
+from algoliasearch.personalization.config import PersonalizationConfig
 
 
 class TestPersonalizationClient:
-    _config = Config("test_app_id", "test_api_key", "us")
+    _config = PersonalizationConfig("test_app_id", "test_api_key", "us")
     _client = PersonalizationClient(EchoTransporter(_config), _config)
 
     async def test_custom_delete_0(self):

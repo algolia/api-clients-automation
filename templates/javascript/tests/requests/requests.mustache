@@ -1,4 +1,6 @@
 {{#hasE2E}}
+import { union } from '../helpers';
+
 import * as dotenv from 'dotenv';
 
 dotenv.config({path:'../../.env'});
@@ -47,10 +49,12 @@ describe('{{operationId}}', () => {
     {{/request.headers}}
 
     {{#response}}
-    const resp = (await e2eClient.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}}));
+    {{#body}}const resp = {{/body}}await e2eClient.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
   
     {{#body}}
-    expect(resp).toMatchObject({{{.}}});
+    const expectedBody = {{{.}}};
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
     {{/body}}
     {{/response}}
   });
