@@ -88,7 +88,6 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
               "nbHits": true,
               "typo": true
             },
-            "processingTimeMS": 1,
             "query": "",
             "params": "",
             "index": "cts_e2e_search_empty_index",
@@ -106,8 +105,9 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
 Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
 
 In order to support the partial assertion, your client must provide an helper named `union` to do so, you can take a look at existing implementations:
-- [python](https://github.com/algolia/api-clients-automation/blob/659a1dbfb0558223c6dd0780d8b318bd748f5cd8/tests/output/python/tests/helpers.py)
-- [https://github.com/algolia/api-clients-automation/blob/659a1dbfb0558223c6dd0780d8b318bd748f5cd8/tests/output/javascript/src/helpers.ts]
+- [python](https://github.com/algolia/api-clients-automation/blob/main/tests/output/python/tests/helpers.py)
+- [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
+- [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
 
 ### Clients tests
 

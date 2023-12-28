@@ -1,4 +1,4 @@
-import { run, runComposerUpdate } from './common.js';
+import { run, runComposerInstall } from './common.js';
 import { createSpinner } from './spinners.js';
 
 export async function formatter(language: string, folder: string): Promise<void> {
@@ -18,7 +18,7 @@ export async function formatter(language: string, folder: string): Promise<void>
         && yarn prettier --no-error-on-unmatched-pattern --write ${folder}/**/*.java`;
       break;
     case 'php':
-      await runComposerUpdate();
+      await runComposerInstall();
       cmd = `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`;
       break;
     case 'go':

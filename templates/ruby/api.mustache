@@ -1,13 +1,15 @@
 # {{{generationBanner}}}
 
-require 'cgi'
-
 module {{moduleName}}
 {{#operations}}
   class {{classname}}
     attr_accessor :api_client
 
     def initialize(config = nil)
+      raise '`config` must be provided' if config.nil?
+      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
+      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+
       @api_client = Algolia::ApiClient.new(config)
     end
 
@@ -135,7 +137,7 @@ module {{moduleName}}
       {{/hasValidation}}
       {{/allParams}}
       {{#vendorExtensions}}
-      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}CGI.escape({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
+      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}@api_client.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
       query_params = {}
       {{#queryParams}}
       {{#x-is-custom-request}}

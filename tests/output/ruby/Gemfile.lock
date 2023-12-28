@@ -12,6 +12,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     connection_pool (2.4.1)
+    dotenv (2.8.1)
     faraday (2.8.1)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -59,6 +60,7 @@ PLATFORMS
 
 DEPENDENCIES
   algolia!
+  dotenv
   rake
   rubocop
   test-unit
