@@ -360,10 +360,10 @@ describe('createReleasePR', () => {
           },
 
           ruby: {
-            current: '0.0.1',
+            current: '3.0.0.alpha.0',
             releaseType: null,
             skipRelease: true,
-            next: getNextVersion('0.0.1', null),
+            next: getNextVersion('3.0.0.alpha.0', 'minor'),
           },
 
           scala: {
@@ -381,25 +381,25 @@ describe('createReleasePR', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-              "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-              - ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
-              - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~kotlin: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~dart: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~python: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~ruby: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default.
-              - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-                - No \`feat\` or \`fix\` commit, thus unchecked by default."
-          `);
+        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
+        - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~kotlin: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~dart: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~python: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~ruby: 3.0.0.alpha.0 -> **\`null\` _(e.g. 3.0.0.alpha.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default."
+      `);
     });
   });
 
