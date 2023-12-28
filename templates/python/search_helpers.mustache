@@ -17,7 +17,7 @@
         def _aggregator(_: GetTaskResponse) -> None:
             self._retry_count += 1
 
-        return await create_iterable_promise(
+        return await create_iterable(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
@@ -71,7 +71,7 @@
                 return _resp is not None
             return _resp is None
 
-        return await create_iterable_promise(
+        return await create_iterable(
             func=_func,
             validate=_validate,
             aggregator=_aggregator,

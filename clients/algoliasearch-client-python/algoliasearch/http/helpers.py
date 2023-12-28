@@ -16,7 +16,7 @@ class RetryTimeout(Timeout):
         return min(retry_count * 0.2, 5)
 
 
-async def create_iterable_promise(
+async def create_iterable(
     func: Callable[[T], T],
     validate: Callable[[T], bool],
     aggregator: Callable[[T], None],
@@ -25,7 +25,7 @@ async def create_iterable_promise(
     error_message: Callable[[T], str] = None,
 ) -> T:
     """
-    Helper: Returns the promise of a given `func` to iterate on, based on a given `validate` condition.
+    Helper: Iterates until the given `func` until `timeout` or `validate`.
     """
 
     async def retry(prev: T = None) -> T:
