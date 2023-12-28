@@ -8,14 +8,11 @@ Dotenv.load('../../.env')
 class TestAnalyticsClient < Test::Unit::TestCase
   include Algolia::Analytics
   def setup
-    @client = Algolia::AnalyticsClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'analytics',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::AnalyticsClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

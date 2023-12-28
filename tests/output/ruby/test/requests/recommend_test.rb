@@ -8,14 +8,10 @@ Dotenv.load('../../.env')
 class TestRecommendClient < Test::Unit::TestCase
   include Algolia::Recommend
   def setup
-    @client = Algolia::RecommendClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'recommend',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::RecommendClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

@@ -8,19 +8,18 @@ Dotenv.load('../../.env')
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
   include Algolia::{{{modelModule}}}
   def setup
-    @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(
-      Algolia::Configuration.new(
-      'APP_ID', 
+    @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
+      'APP_ID',
       'API_KEY',
-      [Algolia::Transport::StatefulHost.new('localhost')], 
-      '{{clientPrefix}}', 
-      { requester: Algolia::Transport::EchoRequester.new })
+      {{#hasRegionalHost}}'{{{defaultRegion}}}',{{/hasRegionalHost}}
+      { requester: Algolia::Transport::EchoRequester.new }
     )
 
     {{#hasE2E}}
     @e2e_client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
       ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
       ENV.fetch('ALGOLIA_ADMIN_KEY', nil)
+      {{#hasRegionalHost}}, '{{{defaultRegion}}}'{{/hasRegionalHost}}
     )
     {{/hasE2E}}
   end

@@ -112,7 +112,26 @@ class InsightsTest extends TestCase implements HttpClientInterface
         // Make sure everything went fine without errors
         $this->assertIsObject($client);
         $client->pushEvents(
-            ['events' => [],
+            ['events' => [
+                ['eventType' => 'click',
+                    'eventName' => 'Product Clicked',
+                    'index' => 'products',
+                    'userToken' => 'user-123456',
+                    'authenticatedUserToken' => 'user-123456',
+                    'timestamp' => 1641290601962,
+                    'objectIDs' => [
+                        '9780545139700',
+
+                        '9780439784542',
+                    ],
+                    'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
+                    'positions' => [
+                        7,
+
+                        6,
+                    ],
+                ],
+            ],
             ],
         );
 

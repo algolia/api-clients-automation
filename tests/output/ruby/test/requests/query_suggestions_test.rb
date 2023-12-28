@@ -8,14 +8,11 @@ Dotenv.load('../../.env')
 class TestQuerySuggestionsClient < Test::Unit::TestCase
   include Algolia::QuerySuggestions
   def setup
-    @client = Algolia::QuerySuggestionsClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'query_suggestions',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::QuerySuggestionsClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 
