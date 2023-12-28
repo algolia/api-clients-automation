@@ -8,14 +8,10 @@ Dotenv.load('../../.env')
 class TestSearchClient < Test::Unit::TestCase
   include Algolia::Search
   def setup
-    @client = Algolia::SearchClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'search',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::SearchClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
 
     @e2e_client = Algolia::SearchClient.create(

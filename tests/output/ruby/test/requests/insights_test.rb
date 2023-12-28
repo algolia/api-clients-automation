@@ -8,14 +8,11 @@ Dotenv.load('../../.env')
 class TestInsightsClient < Test::Unit::TestCase
   include Algolia::Insights
   def setup
-    @client = Algolia::InsightsClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'insights',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::InsightsClient.create(
+      'APP_ID',
+      'API_KEY',
+      'us',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 

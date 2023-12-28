@@ -8,14 +8,10 @@ Dotenv.load('../../.env')
 class TestMonitoringClient < Test::Unit::TestCase
   include Algolia::Monitoring
   def setup
-    @client = Algolia::MonitoringClient.create_with_config(
-      Algolia::Configuration.new(
-        'APP_ID',
-        'API_KEY',
-        [Algolia::Transport::StatefulHost.new('localhost')],
-        'monitoring',
-        { requester: Algolia::Transport::EchoRequester.new }
-      )
+    @client = Algolia::MonitoringClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
     )
   end
 
