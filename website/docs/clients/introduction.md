@@ -16,6 +16,10 @@ Generated code in production can be find on repository of the clients.
 - [Kotlin](https://github.com/algolia/algoliasearch-client-kotlin/tree/next/)
 - [Go](https://github.com/algolia/algoliasearch-client-go/tree/next/)
 - [Dart](https://github.com/algolia/algoliasearch-client-dart/)
+- [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/next)
+- [Python](https://github.com/algolia/algoliasearch-client-python/tree/next)
+- [Ruby](https://github.com/algolia/algoliasearch-client-ruby/tree/next)
+- [C#](https://github.com/algolia/algoliasearch-client-chsarp/tree/next)
 
 ## Usage
 

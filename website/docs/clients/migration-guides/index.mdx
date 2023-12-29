@@ -39,7 +39,7 @@ import { algoliasearch } from 'algoliasearch';
 
 const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
-const searchResults2 = await client.search({
+const searchResults = await client.search({
   requests: [
     {
       indexName: '<YOUR_INDEX_NAME>',
@@ -49,6 +49,17 @@ const searchResults2 = await client.search({
     },
   ],
 });
+```
+
+</TabItem>
+<TabItem value="python">
+
+```py
+from algoliasearch.search.client import SearchClient
+
+client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+searchResults = await client.search(search_method_params={"requests": [{"indexName": "nvim"}]})
 ```
 
 </TabItem>
@@ -122,7 +133,7 @@ The `Abtesting` client now hosts all of the `A/B testing` related methods.
 import { algoliasearch } from 'algoliasearch';
 
 - const analyticsClient = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>').initAnalytics();
-+ const abtestingClient = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>').initAbtesting();
++ const abtestingClient = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
 const abTest = await abtestingClient.getABTest({
   id: 42,
@@ -139,6 +150,20 @@ const client = abtestingClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 const abTest = await abtestingClient.getABTest({
   id: 42,
 });
+```
+
+</TabItem>
+<TabItem value="python">
+
+> Usage with the `algoliasearch` client
+
+```py {2-3}
+from algoliasearch.abtesting.client import AbtestingClient
+
+- analytics_client = AnalyticsClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
++ abtesting_client = AbtestingClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+ab_test = await abtesting_client.get_ab_test(id=42);
 ```
 
 </TabItem>
@@ -195,6 +220,20 @@ const { taskID } = await client.saveObject({
 
 // Poll the task status with defaults values
 await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID });
+```
+
+</TabItem>
+<TabItem value="python">
+
+```py
+from algoliasearch.search.client import SearchClient
+
+client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+save_resp = await client.save_object(index_name="nvim", body={"description": "blazing fast"})
+
+// Poll the task status with defaults values
+await client.wait_for_task(index_name="nvim", task_id=save_resp.task_id)
 ```
 
 </TabItem>
@@ -270,6 +309,27 @@ const { taskID } = await client.operationIndex({
 
 // Poll the task status until it's done
 await client.waitForTask({ indexName: '<SOURCE_INDEX_NAME>', taskID });
+```
+
+</TabItem>
+<TabItem value="python">
+
+```js
+from algoliasearch.search.client import SearchClient
+
+client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+copy_resp = await client.operation_id(
+    index_name="<SOURCE_INDEX_NAME>",
+    operation_index_params={
+        # operation can either be `copy` or `move`
+        operation="copy",
+        destination="<DESTINATION_INDEX_NAME>",
+    },
+)
+
+// Poll the task status until it's done
+await client.wait_for_task(index_name="<SOURCE_INDEX_NAME>", task_id=copy_resp.task_id)
 ```
 
 </TabItem>
@@ -354,7 +414,21 @@ await client.batch({
   },
 });
 ```
+</TabItem>
+<TabItem value="python">
 
+```py
+// The records retrieved by any of your data sources
+await client.batch({
+  index_name="<YOUR_INDEX_NAME>",
+  batch_write_params={
+    "requests":[
+        BatchRequest(action="addObject", body={ name: "Tom Cruise" })
+        BatchRequest(action="addObject", body={ name: "Scarlett Johansson" })
+    ]
+  }
+});
+```
 </TabItem>
 <TabItem value="php">
 
@@ -380,7 +454,6 @@ $client->batch(
     [ 'requests' => $requests ]
 );
 ```
-
 </TabItem>
 <TabItem value="java">
 
@@ -476,6 +549,43 @@ console.log(synonyms, synonyms.length);
 ```
 
 </TabItem>
+<TabItem value="python">
+
+```py
+// browse records
+responses = []
+
+await client.browse_objects(
+    // all base `browse` options are forwarded to the `browse` method
+    index_name="<YOUR_INDEX_NAME>"
+    aggregator=lambda _resp, responses.append(_resp)
+)
+
+print(responses)
+
+// browse rules
+rules = []
+
+await client.browse_rules(
+  // all base `search_rules` options are forwarded to the `search_rules` method
+    index_name="<YOUR_INDEX_NAME>"
+    aggregator=lambda _resp, rules.append(_resp)
+)
+
+print(rules)
+
+// browse synonyms
+synonyms = []
+
+await client.browse_synonyms(
+  // all base `search_synonyms` options are forwarded to the `search_synonyms` method
+    index_name="<YOUR_INDEX_NAME>"
+    aggregator=lambda _resp, synonyms.append(_resp)
+)
+
+print(synonyms)
+```
+</TabItem>
 <TabItem value="php">
 
 ```php
@@ -559,3 +669,6 @@ You can find specific client breaking changes in their own section:
 - [JavaScript migration guide](/docs/clients/migration-guides/javascript)
 - [PHP migration guide](/docs/clients/migration-guides/php)
 - [Java migration guide](/docs/clients/migration-guides/java)
+- [Go migration guide](/docs/clients/migration-guides/go)
+- [Kotlin migration guide](/docs/clients/migration-guides/kotlin)
+- [Python migration guide](/docs/clients/migration-guides/python)
