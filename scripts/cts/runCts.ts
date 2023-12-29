@@ -1,4 +1,4 @@
-import { DOCKER, run, runComposerUpdate } from '../common.js';
+import { DOCKER, run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -13,7 +13,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('./gradle/gradlew --no-daemon -p tests/output/java test');
       break;
     case 'php': {
-      await runComposerUpdate();
+      await runComposerInstall();
       await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`);
       break;
     }
@@ -35,11 +35,13 @@ async function runCtsOne(language: string): Promise<void> {
       await run('(cd tests/output/dart && dart test)');
       break;
     case 'python':
-      spinner.warn(`CTS not yet implemented for Python`);
-      return;
+      await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
+        cwd: 'tests/output/python',
+      });
+      break;
     case 'ruby':
-      spinner.warn(`CTS not yet implemented for Ruby`);
-      return;
+      await run(`bundle install && bundle exec rake test`, { cwd: 'tests/output/ruby' });
+      break;
     case 'scala':
       await run('sbt test', { cwd: 'tests/output/scala' });
       break;

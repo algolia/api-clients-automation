@@ -31,7 +31,7 @@ export async function playground({
     case 'php':
       await run(
         `cd clients/algoliasearch-client-php/ && \
-       composer update && \
+       composer install && \
        composer dump-autoload && \
        cd ../../playground/php/src && \
        php ${client}.php`
@@ -43,6 +43,9 @@ export async function playground({
       break;
     case 'python':
       await run(`poetry install --sync && poetry run ${client}`, { cwd: 'playground/python' });
+      break;
+    case 'ruby':
+      await run(`bundle install && bundle exec ruby ${client}.rb`, { cwd: 'playground/ruby' });
       break;
     case 'scala':
       // run scala playground

@@ -4,6 +4,7 @@ module.exports = {
   ignorePatterns: [
     '**/node_modules',
     '**/build',
+    '**/builddir',
     '**/dist',
     '**/target',
     '**/.yarn',
@@ -132,7 +133,7 @@ module.exports = {
             },
           },
         ],
-        'jsdoc/match-description':[
+        'jsdoc/match-description': [
           'error',
           {
             matchDescription: '^\n?([A-Z`\[\\d_][\\s\\S]*[.?!`]\\s*)?$'

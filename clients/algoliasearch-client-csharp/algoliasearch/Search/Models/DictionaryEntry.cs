@@ -22,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// Dictionary entry.
   /// </summary>
   [DataContract(Name = "dictionaryEntry")]
-  public partial class DictionaryEntry : Dictionary<String, Object>, IEquatable<DictionaryEntry>
+  public partial class DictionaryEntry
   {
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace Algolia.Search.Search.Models
     /// <param name="words">Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia&#39;s standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its &#x60;state&#x60; to &#x60;disabled&#x60;. .</param>
     /// <param name="decomposition">For compound entries, governs the behavior of the &#x60;word&#x60; parameter..</param>
     /// <param name="state">state.</param>
-    public DictionaryEntry(string objectID = default(string), string language = default(string), string word = default(string), List<string> words = default(List<string>), List<string> decomposition = default(List<string>), DictionaryEntryState? state = default(DictionaryEntryState?)) : base()
+    public DictionaryEntry(string objectID = default(string), string language = default(string), string word = default(string), List<string> words = default(List<string>), List<string> decomposition = default(List<string>), DictionaryEntryState? state = default(DictionaryEntryState?))
     {
       // to ensure "objectID" is required (not null)
       if (objectID == null)
@@ -117,7 +117,6 @@ namespace Algolia.Search.Search.Models
     {
       StringBuilder sb = new StringBuilder();
       sb.Append("class DictionaryEntry {\n");
-      sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
       sb.Append("  ObjectID: ").Append(ObjectID).Append("\n");
       sb.Append("  Language: ").Append(Language).Append("\n");
       sb.Append("  Word: ").Append(Word).Append("\n");
@@ -133,103 +132,9 @@ namespace Algolia.Search.Search.Models
     /// Returns the JSON string presentation of the object
     /// </summary>
     /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
+    public virtual string ToJson()
     {
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-    }
-
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as DictionaryEntry);
-    }
-
-    /// <summary>
-    /// Returns true if DictionaryEntry instances are equal
-    /// </summary>
-    /// <param name="input">Instance of DictionaryEntry to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(DictionaryEntry input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.ObjectID == input.ObjectID ||
-              (this.ObjectID != null &&
-              this.ObjectID.Equals(input.ObjectID))
-          ) && base.Equals(input) &&
-          (
-              this.Language == input.Language ||
-              (this.Language != null &&
-              this.Language.Equals(input.Language))
-          ) && base.Equals(input) &&
-          (
-              this.Word == input.Word ||
-              (this.Word != null &&
-              this.Word.Equals(input.Word))
-          ) && base.Equals(input) &&
-          (
-              this.Words == input.Words ||
-              this.Words != null &&
-              input.Words != null &&
-              this.Words.SequenceEqual(input.Words)
-          ) && base.Equals(input) &&
-          (
-              this.Decomposition == input.Decomposition ||
-              this.Decomposition != null &&
-              input.Decomposition != null &&
-              this.Decomposition.SequenceEqual(input.Decomposition)
-          ) && base.Equals(input) &&
-          (
-              this.State == input.State ||
-              this.State.Equals(input.State)
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        if (this.ObjectID != null)
-        {
-          hashCode = (hashCode * 59) + this.ObjectID.GetHashCode();
-        }
-        if (this.Language != null)
-        {
-          hashCode = (hashCode * 59) + this.Language.GetHashCode();
-        }
-        if (this.Word != null)
-        {
-          hashCode = (hashCode * 59) + this.Word.GetHashCode();
-        }
-        if (this.Words != null)
-        {
-          hashCode = (hashCode * 59) + this.Words.GetHashCode();
-        }
-        if (this.Decomposition != null)
-        {
-          hashCode = (hashCode * 59) + this.Decomposition.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.State.GetHashCode();
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
     }
 
   }

@@ -13,7 +13,7 @@ export const apiClientVersion = '{{packageVersion}}';
 {{/isIngestionClient}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function create{{capitalizedApiName}}({
+export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     appId: appIdOption,
     apiKey: apiKeyOption,
     authMode,
@@ -156,6 +156,6 @@ export function create{{capitalizedApiName}}({
 /**
  * The client type.
  */
-export type {{capitalizedApiName}} = ReturnType<typeof create{{capitalizedApiName}}>;
+export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>;
 
 {{/operations}}

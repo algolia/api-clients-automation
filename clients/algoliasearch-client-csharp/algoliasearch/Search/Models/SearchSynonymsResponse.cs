@@ -22,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// SearchSynonymsResponse
   /// </summary>
   [DataContract(Name = "searchSynonymsResponse")]
-  public partial class SearchSynonymsResponse : Dictionary<String, Object>, IEquatable<SearchSynonymsResponse>
+  public partial class SearchSynonymsResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="SearchSynonymsResponse" /> class.
@@ -37,7 +37,7 @@ namespace Algolia.Search.Search.Models
     /// </summary>
     /// <param name="hits">Synonym objects. (required).</param>
     /// <param name="nbHits">Number of hits the search query matched. (required).</param>
-    public SearchSynonymsResponse(List<SynonymHit> hits = default(List<SynonymHit>), int nbHits = default(int)) : base()
+    public SearchSynonymsResponse(List<SynonymHit> hits = default(List<SynonymHit>), int nbHits = default(int))
     {
       // to ensure "hits" is required (not null)
       if (hits == null)
@@ -77,7 +77,6 @@ namespace Algolia.Search.Search.Models
     {
       StringBuilder sb = new StringBuilder();
       sb.Append("class SearchSynonymsResponse {\n");
-      sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
       sb.Append("  Hits: ").Append(Hits).Append("\n");
       sb.Append("  NbHits: ").Append(NbHits).Append("\n");
       sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
@@ -89,66 +88,9 @@ namespace Algolia.Search.Search.Models
     /// Returns the JSON string presentation of the object
     /// </summary>
     /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
+    public virtual string ToJson()
     {
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-    }
-
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as SearchSynonymsResponse);
-    }
-
-    /// <summary>
-    /// Returns true if SearchSynonymsResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of SearchSynonymsResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(SearchSynonymsResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.Hits == input.Hits ||
-              this.Hits != null &&
-              input.Hits != null &&
-              this.Hits.SequenceEqual(input.Hits)
-          ) && base.Equals(input) &&
-          (
-              this.NbHits == input.NbHits ||
-              this.NbHits.Equals(input.NbHits)
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        if (this.Hits != null)
-        {
-          hashCode = (hashCode * 59) + this.Hits.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.NbHits.GetHashCode();
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
     }
 
   }

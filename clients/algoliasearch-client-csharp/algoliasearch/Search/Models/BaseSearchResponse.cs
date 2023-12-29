@@ -22,7 +22,7 @@ namespace Algolia.Search.Search.Models
   /// BaseSearchResponse
   /// </summary>
   [DataContract(Name = "baseSearchResponse")]
-  public partial class BaseSearchResponse : Dictionary<String, Object>, IEquatable<BaseSearchResponse>
+  public partial class BaseSearchResponse
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="BaseSearchResponse" /> class.
@@ -62,7 +62,7 @@ namespace Algolia.Search.Search.Models
     /// <param name="serverTimeMS">Time the server took to process the request, in milliseconds..</param>
     /// <param name="serverUsed">Host name of the server that processed the request..</param>
     /// <param name="userData">Lets you store custom data in your indices..</param>
-    public BaseSearchResponse(int abTestID = default(int), int abTestVariantID = default(int), string aroundLatLng = default(string), string automaticRadius = default(string), Exhaustive exhaustive = default(Exhaustive), bool exhaustiveFacetsCount = default(bool), bool exhaustiveNbHits = default(bool), bool exhaustiveTypo = default(bool), Dictionary<string, Dictionary<string, int>> facets = default(Dictionary<string, Dictionary<string, int>>), Dictionary<string, FacetsStats> facetsStats = default(Dictionary<string, FacetsStats>), int hitsPerPage = 20, string index = default(string), string indexUsed = default(string), string message = default(string), int nbHits = default(int), int nbPages = default(int), int nbSortedHits = default(int), int page = 0, string parsedQuery = default(string), int processingTimeMS = default(int), Object processingTimingsMS = default(Object), string queryAfterRemoval = default(string), Redirect redirect = default(Redirect), RenderingContent renderingContent = default(RenderingContent), int serverTimeMS = default(int), string serverUsed = default(string), Object userData = default(Object)) : base()
+    public BaseSearchResponse(int abTestID = default(int), int abTestVariantID = default(int), string aroundLatLng = default(string), string automaticRadius = default(string), Exhaustive exhaustive = default(Exhaustive), bool exhaustiveFacetsCount = default(bool), bool exhaustiveNbHits = default(bool), bool exhaustiveTypo = default(bool), Dictionary<string, Dictionary<string, int>> facets = default(Dictionary<string, Dictionary<string, int>>), Dictionary<string, FacetsStats> facetsStats = default(Dictionary<string, FacetsStats>), int hitsPerPage = 20, string index = default(string), string indexUsed = default(string), string message = default(string), int nbHits = default(int), int nbPages = default(int), int nbSortedHits = default(int), int page = 0, string parsedQuery = default(string), int processingTimeMS = default(int), Object processingTimingsMS = default(Object), string queryAfterRemoval = default(string), Redirect redirect = default(Redirect), RenderingContent renderingContent = default(RenderingContent), int serverTimeMS = default(int), string serverUsed = default(string), Object userData = default(Object))
     {
       this.HitsPerPage = hitsPerPage;
       this.NbHits = nbHits;
@@ -297,7 +297,6 @@ namespace Algolia.Search.Search.Models
     {
       StringBuilder sb = new StringBuilder();
       sb.Append("class BaseSearchResponse {\n");
-      sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
       sb.Append("  AbTestID: ").Append(AbTestID).Append("\n");
       sb.Append("  AbTestVariantID: ").Append(AbTestVariantID).Append("\n");
       sb.Append("  AroundLatLng: ").Append(AroundLatLng).Append("\n");
@@ -334,248 +333,9 @@ namespace Algolia.Search.Search.Models
     /// Returns the JSON string presentation of the object
     /// </summary>
     /// <returns>JSON string presentation of the object</returns>
-    public string ToJson()
+    public virtual string ToJson()
     {
       return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-    }
-
-    /// <summary>
-    /// Returns true if objects are equal
-    /// </summary>
-    /// <param name="input">Object to be compared</param>
-    /// <returns>Boolean</returns>
-    public override bool Equals(object input)
-    {
-      return this.Equals(input as BaseSearchResponse);
-    }
-
-    /// <summary>
-    /// Returns true if BaseSearchResponse instances are equal
-    /// </summary>
-    /// <param name="input">Instance of BaseSearchResponse to be compared</param>
-    /// <returns>Boolean</returns>
-    public bool Equals(BaseSearchResponse input)
-    {
-      if (input == null)
-      {
-        return false;
-      }
-      return base.Equals(input) &&
-          (
-              this.AbTestID == input.AbTestID ||
-              this.AbTestID.Equals(input.AbTestID)
-          ) && base.Equals(input) &&
-          (
-              this.AbTestVariantID == input.AbTestVariantID ||
-              this.AbTestVariantID.Equals(input.AbTestVariantID)
-          ) && base.Equals(input) &&
-          (
-              this.AroundLatLng == input.AroundLatLng ||
-              (this.AroundLatLng != null &&
-              this.AroundLatLng.Equals(input.AroundLatLng))
-          ) && base.Equals(input) &&
-          (
-              this.AutomaticRadius == input.AutomaticRadius ||
-              (this.AutomaticRadius != null &&
-              this.AutomaticRadius.Equals(input.AutomaticRadius))
-          ) && base.Equals(input) &&
-          (
-              this.Exhaustive == input.Exhaustive ||
-              (this.Exhaustive != null &&
-              this.Exhaustive.Equals(input.Exhaustive))
-          ) && base.Equals(input) &&
-          (
-              this.ExhaustiveFacetsCount == input.ExhaustiveFacetsCount ||
-              this.ExhaustiveFacetsCount.Equals(input.ExhaustiveFacetsCount)
-          ) && base.Equals(input) &&
-          (
-              this.ExhaustiveNbHits == input.ExhaustiveNbHits ||
-              this.ExhaustiveNbHits.Equals(input.ExhaustiveNbHits)
-          ) && base.Equals(input) &&
-          (
-              this.ExhaustiveTypo == input.ExhaustiveTypo ||
-              this.ExhaustiveTypo.Equals(input.ExhaustiveTypo)
-          ) && base.Equals(input) &&
-          (
-              this.Facets == input.Facets ||
-              this.Facets != null &&
-              input.Facets != null &&
-              this.Facets.SequenceEqual(input.Facets)
-          ) && base.Equals(input) &&
-          (
-              this.FacetsStats == input.FacetsStats ||
-              this.FacetsStats != null &&
-              input.FacetsStats != null &&
-              this.FacetsStats.SequenceEqual(input.FacetsStats)
-          ) && base.Equals(input) &&
-          (
-              this.HitsPerPage == input.HitsPerPage ||
-              this.HitsPerPage.Equals(input.HitsPerPage)
-          ) && base.Equals(input) &&
-          (
-              this.Index == input.Index ||
-              (this.Index != null &&
-              this.Index.Equals(input.Index))
-          ) && base.Equals(input) &&
-          (
-              this.IndexUsed == input.IndexUsed ||
-              (this.IndexUsed != null &&
-              this.IndexUsed.Equals(input.IndexUsed))
-          ) && base.Equals(input) &&
-          (
-              this.Message == input.Message ||
-              (this.Message != null &&
-              this.Message.Equals(input.Message))
-          ) && base.Equals(input) &&
-          (
-              this.NbHits == input.NbHits ||
-              this.NbHits.Equals(input.NbHits)
-          ) && base.Equals(input) &&
-          (
-              this.NbPages == input.NbPages ||
-              this.NbPages.Equals(input.NbPages)
-          ) && base.Equals(input) &&
-          (
-              this.NbSortedHits == input.NbSortedHits ||
-              this.NbSortedHits.Equals(input.NbSortedHits)
-          ) && base.Equals(input) &&
-          (
-              this.Page == input.Page ||
-              this.Page.Equals(input.Page)
-          ) && base.Equals(input) &&
-          (
-              this.ParsedQuery == input.ParsedQuery ||
-              (this.ParsedQuery != null &&
-              this.ParsedQuery.Equals(input.ParsedQuery))
-          ) && base.Equals(input) &&
-          (
-              this.ProcessingTimeMS == input.ProcessingTimeMS ||
-              this.ProcessingTimeMS.Equals(input.ProcessingTimeMS)
-          ) && base.Equals(input) &&
-          (
-              this.ProcessingTimingsMS == input.ProcessingTimingsMS ||
-              (this.ProcessingTimingsMS != null &&
-              this.ProcessingTimingsMS.Equals(input.ProcessingTimingsMS))
-          ) && base.Equals(input) &&
-          (
-              this.QueryAfterRemoval == input.QueryAfterRemoval ||
-              (this.QueryAfterRemoval != null &&
-              this.QueryAfterRemoval.Equals(input.QueryAfterRemoval))
-          ) && base.Equals(input) &&
-          (
-              this.Redirect == input.Redirect ||
-              (this.Redirect != null &&
-              this.Redirect.Equals(input.Redirect))
-          ) && base.Equals(input) &&
-          (
-              this.RenderingContent == input.RenderingContent ||
-              (this.RenderingContent != null &&
-              this.RenderingContent.Equals(input.RenderingContent))
-          ) && base.Equals(input) &&
-          (
-              this.ServerTimeMS == input.ServerTimeMS ||
-              this.ServerTimeMS.Equals(input.ServerTimeMS)
-          ) && base.Equals(input) &&
-          (
-              this.ServerUsed == input.ServerUsed ||
-              (this.ServerUsed != null &&
-              this.ServerUsed.Equals(input.ServerUsed))
-          ) && base.Equals(input) &&
-          (
-              this.UserData == input.UserData ||
-              (this.UserData != null &&
-              this.UserData.Equals(input.UserData))
-          )
-          && (this.AdditionalProperties.Count == input.AdditionalProperties.Count && !this.AdditionalProperties.Except(input.AdditionalProperties).Any());
-    }
-
-    /// <summary>
-    /// Gets the hash code
-    /// </summary>
-    /// <returns>Hash code</returns>
-    public override int GetHashCode()
-    {
-      unchecked // Overflow is fine, just wrap
-      {
-        int hashCode = base.GetHashCode();
-        hashCode = (hashCode * 59) + this.AbTestID.GetHashCode();
-        hashCode = (hashCode * 59) + this.AbTestVariantID.GetHashCode();
-        if (this.AroundLatLng != null)
-        {
-          hashCode = (hashCode * 59) + this.AroundLatLng.GetHashCode();
-        }
-        if (this.AutomaticRadius != null)
-        {
-          hashCode = (hashCode * 59) + this.AutomaticRadius.GetHashCode();
-        }
-        if (this.Exhaustive != null)
-        {
-          hashCode = (hashCode * 59) + this.Exhaustive.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.ExhaustiveFacetsCount.GetHashCode();
-        hashCode = (hashCode * 59) + this.ExhaustiveNbHits.GetHashCode();
-        hashCode = (hashCode * 59) + this.ExhaustiveTypo.GetHashCode();
-        if (this.Facets != null)
-        {
-          hashCode = (hashCode * 59) + this.Facets.GetHashCode();
-        }
-        if (this.FacetsStats != null)
-        {
-          hashCode = (hashCode * 59) + this.FacetsStats.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.HitsPerPage.GetHashCode();
-        if (this.Index != null)
-        {
-          hashCode = (hashCode * 59) + this.Index.GetHashCode();
-        }
-        if (this.IndexUsed != null)
-        {
-          hashCode = (hashCode * 59) + this.IndexUsed.GetHashCode();
-        }
-        if (this.Message != null)
-        {
-          hashCode = (hashCode * 59) + this.Message.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.NbHits.GetHashCode();
-        hashCode = (hashCode * 59) + this.NbPages.GetHashCode();
-        hashCode = (hashCode * 59) + this.NbSortedHits.GetHashCode();
-        hashCode = (hashCode * 59) + this.Page.GetHashCode();
-        if (this.ParsedQuery != null)
-        {
-          hashCode = (hashCode * 59) + this.ParsedQuery.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.ProcessingTimeMS.GetHashCode();
-        if (this.ProcessingTimingsMS != null)
-        {
-          hashCode = (hashCode * 59) + this.ProcessingTimingsMS.GetHashCode();
-        }
-        if (this.QueryAfterRemoval != null)
-        {
-          hashCode = (hashCode * 59) + this.QueryAfterRemoval.GetHashCode();
-        }
-        if (this.Redirect != null)
-        {
-          hashCode = (hashCode * 59) + this.Redirect.GetHashCode();
-        }
-        if (this.RenderingContent != null)
-        {
-          hashCode = (hashCode * 59) + this.RenderingContent.GetHashCode();
-        }
-        hashCode = (hashCode * 59) + this.ServerTimeMS.GetHashCode();
-        if (this.ServerUsed != null)
-        {
-          hashCode = (hashCode * 59) + this.ServerUsed.GetHashCode();
-        }
-        if (this.UserData != null)
-        {
-          hashCode = (hashCode * 59) + this.UserData.GetHashCode();
-        }
-        if (this.AdditionalProperties != null)
-        {
-          hashCode = (hashCode * 59) + this.AdditionalProperties.GetHashCode();
-        }
-        return hashCode;
-      }
     }
 
   }

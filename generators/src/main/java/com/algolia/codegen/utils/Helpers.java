@@ -53,12 +53,16 @@ public class Helpers {
     switch (language) {
       case "javascript":
         return camelize(client);
+      case "python":
+        return toSnakeCase(client);
       case "go":
         return client;
       case "dart":
         return StringUtils.lowerCase(client);
       case "csharp":
         return capitalize(camelize(client));
+      case "ruby":
+        return toSnakeCase(client);
       default:
         return capitalize(camelize(client));
     }
@@ -72,7 +76,7 @@ public class Helpers {
   // testInput -> test_input
   // test-input -> test_input
   public static String toSnakeCase(String s) {
-    return toKebabCase(s).replaceAll("-", "_");
+    return s.replace('-', '_').replaceAll("(.+?)([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
   }
 
   /** Inject server info into the client to generate the right URL */

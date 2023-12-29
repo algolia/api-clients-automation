@@ -9,9 +9,7 @@ It is automatically generated for all languages from JSON files and ensure prope
 
 :::info
 
-Common Test Suite requires all clients to be built.
-
-[CLI commands for the Common Test Suite](/docs/contributing/CLI/cts-commands)
+While some clients can run tests from source, languages like Java or JavaScript and other requires clients to be built, see [CLI > clients commands page](/docs/contributing/CLI/clients-commands)
 
 :::
 
@@ -21,11 +19,18 @@ There are differents type of tests in the CTS:
 
 ### Requests tests
 
-Those tests aims at ensuring minimal working operation for the API clients, by comparing the request formed by sample parameters.
+There are two types of `requests` tests:
+- Unit tests with interceptors (named `EchoRequesters`/`EchoTransporters` in this codebase)
+- ^ and an e2e step that asserts the response of the API
 
-The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `tests/CTS/methods/requests/<client>/` folder (e.g. `tests/CTS/methods/requests/search/`).
+#### Input test file
 
-> See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/methods/requests/search/browse.json)
+The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `tests/CTS/requests/<apiname>/` folder (e.g. `tests/CTS/requests/search/`).
+
+The list of `queryParameters` must match exactly the actual value, the CTS has to check the number of query parameters and the value of each.
+**It's important to ensure the number of parameters because the API clients must not set default values, they should be handled by the engine.**
+
+> See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/requests/search/browse.json)
 
 ```json
 [
@@ -64,19 +69,49 @@ The test generation script requires a JSON file name from the `operationId` (e.g
       "headers": {
         "x-header": "test"
       }
+    },
+    // The expected response - useful for e2e assertions
+    "response": {
+      "statusCode": 200,
+      // This doesn't need to be the full response since we support partial assertions
+      "body": {
+        "results": [
+          {
+            "hits": [],
+            "page": 0,
+            "nbHits": 0,
+            "nbPages": 0,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "exhaustive": {
+              "nbHits": true,
+              "typo": true
+            },
+            "query": "",
+            "params": "",
+            "index": "cts_e2e_search_empty_index",
+            "renderingContent": {}
+          }
+        ]
+      }
     }
   }
 ]
 ```
 
-And that's it! If the name of the file matches an `operationId` in the spec, a test will be generated and will be calling the method name `operationId`.
+#### e2e
 
-The list of `queryParameters` must match exactly the actual value, the CTS has to check the number of query parameters and the value of each.
-**It's important to ensure the number of parameters because the API clients must not set default values, they should be handled by the engine.**
+Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
+
+In order to support the partial assertion, your client must provide an helper named `union` to do so, you can take a look at existing implementations:
+- [python](https://github.com/algolia/api-clients-automation/blob/main/tests/output/python/tests/helpers.py)
+- [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
+- [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
 
 ### Clients tests
 
-The clients tests are located in the folder `tests/CTS/client/<client>`, they aim at testing the constructors and common error thrown by the API, and can be use to build more complex multi-step tests.
+The clients tests are located in the folder `tests/CTS/client/<apiName>`, they aim at testing the constructors and common error thrown by an API, and can be use to build more complex multi-step tests.
 
 > TODO
 
@@ -96,6 +131,7 @@ When writing your template, here is a list of variables accessible from `mustach
   "clientPrefix": "the name of the client without Client at the end",
   "hasRegionalHost": "true if the hosts accepts region",
   "defaultRegion": "the region to provide by default to the constructor",
+  "hasE2E": "true if the test suite has e2e tests to be asserted",
   "blocks": [
     {
       // The list of test to implement
@@ -136,6 +172,8 @@ When writing your template, here is a list of variables accessible from `mustach
               },
               // properties used to have unique name and link to parent
               "parent": "theParentObject",
+              // whether there is a parent to the current object or not.
+              "isRoot": false,
               "suffix": 7,
               "parentSuffix": 6,
               "useAnonymousKey": "true if we are in an array at the first level",
@@ -182,6 +220,10 @@ When writing your template, here is a list of variables accessible from `mustach
               // key: string map
               "headerName": "stringify version of the value"
             }
+          },
+          "response": {
+            "statusCode": 200, // any status code expected by the request sent
+            "body": {} // the raw JSON object returned by the API
           }
         }
       ]
@@ -221,7 +263,7 @@ If specific values are needed for a specific languages, or custom generated file
 
 You might want to test how every clients behaves, without having to duplicate the same tests. We provide 4 methods on every clients, common to all languages.
 
-You can find [the common folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/methods/requests/common) in the CTS too. [Adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
+You can find [the common folder](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/requests/common) in the CTS too. [Adding a test](#how-to-add-test) in this folder will generate tests for all the clients.
 
 ## Get the list of remaining CTS to implement
 

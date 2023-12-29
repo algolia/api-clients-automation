@@ -63,13 +63,6 @@ export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.
 
 export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client))];
 
-export const CLIENTS_JS_UTILS = [
-  'client-common',
-  'requester-browser-xhr',
-  'requester-fetch',
-  'requester-node-http',
-];
-
 export async function run(
   command: string,
   { errorMessage, cwd }: RunOptions = {}
@@ -204,10 +197,10 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
   }
 }
 
-export async function runComposerUpdate(): Promise<void> {
+export async function runComposerInstall(): Promise<void> {
   if (!CI) {
     await run(
-      'composer update --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php'
+      'composer install --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php'
     );
   }
 }
@@ -234,6 +227,9 @@ export function createClientName(client: string, language: string): string {
     case 'dart':
     case 'go':
       return client;
+    case 'python':
+    case 'ruby':
+      return toSnakeCase(client);
     default:
       return capitalize(camelize(client));
   }
@@ -259,6 +255,13 @@ function camelize(str: string, delimiter: string = '-'): string {
  */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function toSnakeCase(str: string): string {
+  return (str.charAt(0).toLowerCase() + str.slice(1))
+    .replace(/[A-Z]/g, (letter) => `_${letter}`)
+    .replace(/(-|\s)/g, '_')
+    .toLowerCase();
 }
 
 export async function configureGitHubAuthor(cwd?: string): Promise<void> {

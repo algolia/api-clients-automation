@@ -22,7 +22,7 @@ public class TestsRequest extends TestsGenerator {
     if ((language.equals("javascript") || language.equals("dart")) && client.equals("algoliasearch")) {
       clientName = "search";
     }
-    return super.loadCTS("methods/requests", clientName, Request[].class);
+    return super.loadCTS("requests", clientName, Request[].class);
   }
 
   @Override
@@ -37,11 +37,7 @@ public class TestsRequest extends TestsGenerator {
       return;
     }
     supportingFiles.add(
-      new SupportingFile(
-        "requests/requests.mustache",
-        outputFolder + "/methods/requests",
-        Helpers.createClientName(client, language) + extension
-      )
+      new SupportingFile("requests/requests.mustache", outputFolder + "/requests", Helpers.createClientName(client, language) + extension)
     );
   }
 
@@ -59,7 +55,7 @@ public class TestsRequest extends TestsGenerator {
           "operationId '" +
           operationId +
           "' does not exist in the tests suite, please create the file:" +
-          " 'tests/CTS/methods/requests/" +
+          " 'tests/CTS/requests/" +
           client +
           "/" +
           operationId +
@@ -75,7 +71,7 @@ public class TestsRequest extends TestsGenerator {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
         test.put("method", operationId);
-        test.put("testName", req.testName == null ? operationId : req.testName);
+        test.put("testName", req.testName == null ? operationId + i : req.testName);
         test.put("testIndex", i);
 
         try {
@@ -106,6 +102,20 @@ public class TestsRequest extends TestsGenerator {
           // is correctly parsed (absent from the payload)
           if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
             test.put("assertNullBody", true);
+          }
+
+          if (req.response != null) {
+            bundle.put("hasE2E", true);
+            test.put("response", req.response);
+
+            if (req.response.statusCode == 0) {
+              throw new CTSException(
+                "operationId '" +
+                operationId +
+                "' has a 'response' field in order to generate e2e tests but is missing the" +
+                " 'statusCode' parameter"
+              );
+            }
           }
 
           test.put("request", req.request);

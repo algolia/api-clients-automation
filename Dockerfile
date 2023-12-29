@@ -39,7 +39,9 @@ RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
-RUN echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
+RUN go install golang.org/x/tools/cmd/goimports@latest
 
 # Dart
 COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
@@ -56,7 +58,7 @@ RUN echo "source $HOME/.sdkman/bin/sdkman-init.sh" >> ~/.profile && source ~/.pr
 # Java
 ARG JAVA_VERSION
 RUN sdk install java ${JAVA_VERSION}-tem
-ADD https://github.com/google/google-java-format/releases/download/v1.18.1/google-java-format-1.18.1-all-deps.jar /tmp/java-formatter.jar
+ADD https://github.com/google/google-java-format/releases/download/v1.19.1/google-java-format-1.19.1-all-deps.jar /tmp/java-formatter.jar
 
 # Scala
 RUN sdk install sbt

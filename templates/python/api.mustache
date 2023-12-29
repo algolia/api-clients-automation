@@ -1,30 +1,32 @@
 {{>partial_header}}
 {{>imports}}
 
-from algoliasearch.{{packageName}}.models import ({{#operations}}{{#operation}}{{#imports}}{{{.}}},{{/imports}}{{/operation}}{{/operations}})
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+{{#operations}}{{#operation}}{{#imports}}
+from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
+{{/imports}}{{/operation}}{{/operations}}
 
 
 {{#operations}}
 class {{classname}}:
+    _transporter: Transporter
+    _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
+    _request_options: RequestOptions
+
     def app_id(self) -> str:
         return self._config.app_id
 
-    def __init__(self, transporter: Transporter, config: Config) -> None:
+    def __init__(self, transporter: Transporter, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> None:
         self._transporter = transporter
         self._config = config
+        self._request_options = RequestOptions(config)
 
-    def create_with_config(config: Config) -> Self:
+    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> Self:
         transporter = Transporter(config)
 
         return {{classname}}(transporter, config)
 
-    def create(app_id: Optional[str] = None, api_key: Optional[str] = None) -> Self:
-        return {{classname}}.create_with_config(Config(app_id, api_key))
+    def create(app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> Self:
+        return {{classname}}.create_with_config({{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
 
     async def close(self) -> None:
         return await self._transporter.close()
@@ -51,38 +53,47 @@ class {{classname}}:
         {{#allParams}}
         {{#required}}
         if {{paramName}} is None:
-            raise ValueError("'{{paramName}}' is required when calling '{{nickname}}'")
+            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}`.")
 
         {{/required}}
         {{/allParams}}
 
-        _query_params: List[Tuple[str, str]] = []
-        _body: Optional[bytes] = None
+        _query_parameters: List[Tuple[str, str]] = []
+        _headers: Dict[str, Optional[str]] = {}
+        
         {{#vendorExtensions}}
-        _path = '{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
-        {{/vendorExtensions}}
-
         {{#queryParams}}
         if {{paramName}} is not None:
-            _query_params.append(('{{baseName}}', {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}))
+        {{^x-is-custom-request}}
+            _query_parameters.append(('{{baseName}}', {{paramName}}))
+        {{/x-is-custom-request}}
+        {{#x-is-custom-request}}
+            for _qpkey, _qpvalue in {{paramName}}.items():
+                _query_parameters.append((_qpkey, _qpvalue))
+        {{/x-is-custom-request}}
         {{/queryParams}}
+        {{/vendorExtensions}}
+
+        {{#headerParams}}
+        if {{paramName}} is not None:
+            _headers['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+        {{/headerParams}}
 
         {{#bodyParam}}
+        _body = {}
         if {{paramName}} is not None:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        _param = self._transporter.param_serialize(
-            query_params=_query_params,
-            body=_body,
-            request_options=request_options,
-        )
-
         response = await self._transporter.request(
             verb=Verb.{{httpMethod}},
-            path=_path,
-            data=_param[0],
-            request_options=_param[1],
+            path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
+            data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
+            request_options=self._request_options.merge(
+                query_parameters=_query_parameters,
+                headers=_headers,
+                user_request_options=request_options,
+            ),
             {{#vendorExtensions}}
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
@@ -113,5 +124,6 @@ class {{classname}}:
         response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
 
         return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
+
 {{/operation}}
 {{/operations}}

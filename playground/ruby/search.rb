@@ -1,5 +1,8 @@
+require 'dotenv'
 require 'algolia'
 
-client = Algolia::SearchClient.initialize('ALGOLIA_APPLICATION_ID','ALGOLIA_ADMIN_KEY')
-res = client.search('')
+Dotenv.load('../.env')
+
+client = Algolia::SearchClient.create(ENV['ALGOLIA_APPLICATION_ID'], ENV['ALGOLIA_ADMIN_KEY'])
+res = client.search_single_index('actors', Algolia::Search::SearchParamsObject.new(query: 'john'))
 puts res

@@ -1,4 +1,4 @@
-import { run, runComposerUpdate } from './common.js';
+import { run, runComposerInstall } from './common.js';
 import { createSpinner } from './spinners.js';
 
 export async function formatter(language: string, folder: string): Promise<void> {
@@ -18,11 +18,11 @@ export async function formatter(language: string, folder: string): Promise<void>
         && yarn prettier --no-error-on-unmatched-pattern --write ${folder}/**/*.java`;
       break;
     case 'php':
-      await runComposerUpdate();
+      await runComposerInstall();
       cmd = `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${folder} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`;
       break;
     case 'go':
-      cmd = `cd ${folder} && go fmt ./...`;
+      cmd = `cd ${folder} && goimports -w . && golangci-lint run --fix`;
       break;
     case 'kotlin':
       cmd = `./gradle/gradlew -p ${folder} spotlessApply`;
@@ -38,10 +38,10 @@ export async function formatter(language: string, folder: string): Promise<void>
       }
       break;
     case 'python':
-      cmd = `(cd ${folder} && poetry lock && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 --per-file-ignore='**/__init__.py:F401' .)`;
+      cmd = `(cd ${folder} && poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .)`;
       break;
     case 'ruby':
-      cmd = `cd ${folder} && bundle install && bundle exec rubocop -a`;
+      cmd = `cd ${folder} && bundle install && bundle exec rubocop -a --fail-level W`;
       break;
     case 'scala':
       cmd = `(cd ${folder} && sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt)`;

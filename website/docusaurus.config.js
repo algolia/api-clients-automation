@@ -55,7 +55,7 @@ function getSpecsForNavBar() {
     tagline: 'Documentation for the Algolia API and Clients.',
     url: 'https://api-clients-automation.netlify.app/',
     baseUrl: '/',
-    favicon: 'img/logo-small.png',
+    favicon: 'img/logo-small.svg',
     organizationName: 'Algolia',
     projectName: 'Algolia API and Clients',
     onBrokenLinks: 'throw',
@@ -110,8 +110,8 @@ function getSpecsForNavBar() {
           title: 'Algolia API',
           logo: {
             alt: 'Algolia',
-            src: 'img/logo-small.png',
-            srcDark: 'img/logo-small.png',
+            src: 'img/logo-small.svg',
+            srcDark: 'img/logo-small.svg',
           },
           items: [
             // left

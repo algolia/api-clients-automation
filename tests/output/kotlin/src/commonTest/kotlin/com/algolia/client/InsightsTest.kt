@@ -22,7 +22,7 @@ class InsightsTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*$".toRegex()
+        val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -68,7 +68,19 @@ class InsightsTest {
       call = {
         pushEvents(
           insightsEvents = InsightsEvents(
-            events = listOf(),
+            events = listOf(
+              ClickedObjectIDsAfterSearch(
+                eventType = ClickEvent.entries.first { it.value == "click" },
+                eventName = "Product Clicked",
+                index = "products",
+                userToken = "user-123456",
+                authenticatedUserToken = "user-123456",
+                timestamp = 1641290601962L,
+                objectIDs = listOf("9780545139700", "9780439784542"),
+                queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                positions = listOf(7, 6),
+              ),
+            ),
           ),
         )
       },

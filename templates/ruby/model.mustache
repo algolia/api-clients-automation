@@ -4,6 +4,7 @@ require 'date'
 require 'time'
 
 module {{moduleName}}
+module {{modelModule}}
 {{#models}}
 {{#model}}
 {{#isEnum}}
@@ -28,4 +29,5 @@ module {{moduleName}}
 {{/isEnum}}
 {{/model}}
 {{/models}}
+end
 end

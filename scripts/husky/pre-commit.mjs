@@ -21,7 +21,7 @@ export function getPatterns() {
   const entries = patterns;
   for (const [language, { tests }] of Object.entries(clientConfig)) {
     entries.push(`tests/output/${language}/${tests.outputFolder}/client/**`);
-    entries.push(`tests/output/${language}/${tests.outputFolder}/methods/**`);
+    entries.push(`tests/output/${language}/${tests.outputFolder}/requests/**`);
   }
   return entries;
 }
