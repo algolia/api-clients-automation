@@ -89,7 +89,7 @@ class {{classname}}:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.{{httpMethod}},
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
@@ -102,10 +102,6 @@ class {{classname}}:
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
