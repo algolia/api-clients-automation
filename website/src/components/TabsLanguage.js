@@ -10,7 +10,6 @@ export const languagesTabValues = [
   { label: 'Go', value: 'go' },
   { label: 'Python', value: 'python' },
   { label: 'Scala', value: 'scala' },
-  { label: 'Dart', value: 'dart' },
   { label: 'C#', value: 'csharp' },
 ];
 
