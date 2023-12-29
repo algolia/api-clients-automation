@@ -8,6 +8,10 @@ export const languagesTabValues = [
   { label: 'Kotlin', value: 'kotlin' },
   { label: 'Dart', value: 'dart' },
   { label: 'Go', value: 'go' },
+  { label: 'Python', value: 'python' },
+  { label: 'Scala', value: 'scala' },
+  { label: 'Dart', value: 'dart' },
+  { label: 'C#', value: 'csharp' },
 ];
 
 export function TabsLanguage(props) {
