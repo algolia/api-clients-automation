@@ -58,8 +58,12 @@ class {{classname}}:
         {{/required}}
         {{/allParams}}
 
+        {{#queryParams.0}}
         _query_parameters: List[Tuple[str, str]] = []
+        {{/queryParams.0}}
+        {{#headerParams.0}}
         _headers: Dict[str, Optional[str]] = {}
+        {{/headerParams.0}}
         
         {{#vendorExtensions}}
         {{#queryParams}}
@@ -90,8 +94,8 @@ class {{classname}}:
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
+                {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
+                {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}
@@ -120,10 +124,7 @@ class {{classname}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-
-        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
-
-        return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
+        return (await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
 
 {{/operation}}
 {{/operations}}
