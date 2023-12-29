@@ -182,5 +182,6 @@ class EchoTransporter(Transporter):
                 query_parameters=request_options.query_parameters
             ).query_parameters,
             headers=dict(request_options.headers),
+            data=data,
             raw_data=data,
         )
