@@ -19,17 +19,11 @@ This document lists every known breaking change, not all of them may affect your
 
 > The changes below are effective on all of the API clients.
 
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### `initIndex`
-
-<hr />
 
 Methods previously available at the `initIndex` level are now available at the `root` level of the API client.
 
 The `indexName` parameter is now **required** when calling those methods.
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -110,19 +104,11 @@ client.search(
 </TabItem>
 </TabsLanguage>
 
-</td></tr></tbody></table>
-
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### A/B testing client
-
-<hr />
 
 The A/B testing methods were previously available under the `Analytics` client, we've decided to make a client out of it to split concerns.
 
 The `Abtesting` client now hosts all of the `A/B testing` related methods.
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -187,21 +173,13 @@ ABTest abTest = client.getABTest(42);
 </TabItem>
 </TabsLanguage>
 
-</td></tr></tbody></table>
-
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### `wait`
-
-<hr />
 
 The chainable `wait` method that was available on a few methods has been replaced with an helper called `waitForTask`.
 
 You can now optionally configure how the wait logic behaves by passing the `taskID` returned when calling the Algolia API.
 
 [Read more in our dedicated guide](/docs/clients/guides/wait-for-a-task-to-finish)
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -274,21 +252,13 @@ client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());
 </TabItem>
 </TabsLanguage>
 
-</td></tr></tbody></table>
-
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### `moveIndex`/`copyIndex`
-
-<hr />
 
 The `operationIndex` allows you to either `copy` or `move` a `source` index to a `destination` index **within the same Algolia application**.
 
 You can also decide what `scope` of the `source` index should be copied, [read more in our dedicated guide](/docs/clients/guides/copy-or-move-index-rules-settings-synonyms).
 
 This method can be used as a replacement for the `copyRules`, `copySynonyms`, and `copySettings` method when using the associated `scope`.
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -374,19 +344,11 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 </TabItem>
 </TabsLanguage>
 
-</td></tr></tbody></table>
-
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### `saveObjects`
-
-<hr />
 
 The `saveObjects` method has been removed, you can leverage the already existing `batch` method instead.
 
 [Read more in our dedicated guide](/docs/clients/guides/send-data-to-algolia) or [the API reference](/specs/search/#tag/Records/operation/batch).
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -492,17 +454,9 @@ client.batch("<YOUR_INDEX_NAME>", new BatchWriteParams().setRequests(batch));
 </TabItem>
 </TabsLanguage>
 
-</td></tr></tbody></table>
-
-<table width="100%"><tbody><tr><td width="400px" valign="top">
-
 ### `browseObjects`/`browseRules`/`browseSynonyms`
 
-<hr />
-
 The `browseObjects`/`browseRules`/`browseSynonyms` signature have changed to match the general usage of the API clients.
-
-</td><td width="600px">
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -659,8 +613,6 @@ for (SynonymHit synonym : synonyms) {
 
 </TabItem>
 </TabsLanguage>
-
-</td></tr></tbody></table>
 
 ## Client's specific breaking changes
 
