@@ -10,16 +10,16 @@ This section hosts informations about the [usage of the API clients](https://git
 
 Generated code in production can be find on repository of the clients.
 
-- [Javascript](https://github.com/algolia/algoliasearch-client-javascript/tree/next/)
-- [PHP](https://github.com/algolia/algoliasearch-client-php/tree/next/)
-- [Java](https://github.com/algolia/algoliasearch-client-java/tree/next/)
-- [Kotlin](https://github.com/algolia/algoliasearch-client-kotlin/tree/next/)
-- [Go](https://github.com/algolia/algoliasearch-client-go/tree/next/)
+- [C#](https://github.com/algolia/algoliasearch-client-chsarp/tree/next)
 - [Dart](https://github.com/algolia/algoliasearch-client-dart/)
-- [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/next)
+- [Go](https://github.com/algolia/algoliasearch-client-go/tree/next/)
+- [Java](https://github.com/algolia/algoliasearch-client-java/tree/next/)
+- [Javascript](https://github.com/algolia/algoliasearch-client-javascript/tree/next/)
+- [Kotlin](https://github.com/algolia/algoliasearch-client-kotlin/tree/next/)
+- [PHP](https://github.com/algolia/algoliasearch-client-php/tree/next/)
 - [Python](https://github.com/algolia/algoliasearch-client-python/tree/next)
 - [Ruby](https://github.com/algolia/algoliasearch-client-ruby/tree/next)
-- [C#](https://github.com/algolia/algoliasearch-client-chsarp/tree/next)
+- [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/next)
 
 ## Usage
 
