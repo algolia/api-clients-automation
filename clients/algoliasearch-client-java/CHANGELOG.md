@@ -1,3 +1,8 @@
+## [4.0.0-beta.13](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.12...4.0.0-beta.13)
+
+- [8d71c2b69](https://github.com/algolia/api-clients-automation/commit/8d71c2b69) fix(specs): provide non clashing names for custom methods ([#2369](https://github.com/algolia/api-clients-automation/pull/2369)) by [@shortcuts](https://github.com/shortcuts/)
+- [205519c6f](https://github.com/algolia/api-clients-automation/commit/205519c6f) fix(specs): highlight result map definition ([#2312](https://github.com/algolia/api-clients-automation/pull/2312)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-beta.12](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.11...4.0.0-beta.12)
 
 - [15b81fe64](https://github.com/algolia/api-clients-automation/commit/15b81fe64) feat(specs): add `window` parameter to observability responses ([#2223](https://github.com/algolia/api-clients-automation/pull/2223)) by [@shortcuts](https://github.com/shortcuts/)
