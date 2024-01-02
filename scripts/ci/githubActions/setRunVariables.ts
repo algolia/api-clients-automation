@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { CLIENTS_JS_UTILS, LANGUAGES } from '../../common.js';
+import { LANGUAGES } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
 import type { Language } from '../../types.js';
 
@@ -19,7 +19,6 @@ export const COMMON_DEPENDENCIES = {
     'config/clients.config.json',
     'config/release.config.json',
     'generators',
-    'templates',
     'tests/CTS',
     '.nvmrc',
   ],
@@ -61,6 +60,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     // eslint-disable-next-line no-param-reassign
     finalDependencies[key] = [
       ':!**node_modules',
+      `templates/${lang}`,
       // language related files
       langFolder,
       getVersionFileForLanguage(lang),
@@ -70,13 +70,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
 
     return finalDependencies;
   },
-  {
-    ...COMMON_DEPENDENCIES,
-    // We default the JS utils client as it's a bit specific
-    JAVASCRIPT_UTILS_CHANGED: CLIENTS_JS_UTILS.map(
-      (clientName) => `${getLanguageFolder('javascript')}/packages/${clientName}`
-    ),
-  } as Record<string, string[]>
+  { ...COMMON_DEPENDENCIES } as Record<string, string[]>
 );
 
 /**

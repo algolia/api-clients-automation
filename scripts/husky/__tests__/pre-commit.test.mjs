@@ -33,7 +33,7 @@ describe('micromatch', () => {
             'tests/output/javascript/package.json',
             'tests/output/javascript/src/client/test.ts',
 
-            'tests/output/php/src/methods/requests/test.php',
+            'tests/output/php/src/requests/test.php',
           ],
           getPatterns()
         )
@@ -54,7 +54,7 @@ describe('micromatch', () => {
         'tests/output/javascript/src/client/test.ts',
         'tests/output/javascript/package.json',
 
-        'tests/output/php/src/methods/requests/test.php',
+        'tests/output/php/src/requests/test.php',
       ].sort()
     );
   });

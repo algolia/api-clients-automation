@@ -34,8 +34,38 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
-        with:
-          type: matrix
+
+      # Computing jobs that should run
+      - name: Setting diff outputs variables
+        id: diff
+        shell: bash
+        run: |
+          previousCommit=${{ github.event.before }}
+          baseRef=${{ github.base_ref }}
+          origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
+
+          yarn workspace scripts setRunVariables "$origin"
+
+      - name: Compute specs matrix
+        id: spec-matrix
+        shell: bash
+        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
+
+      - name: Compute the client codegen matrix
+        id: gen-matrix
+        shell: bash
+        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
+
+      - name: check that custom actions are built
+        run: |
+          yarn workspace scripts build:actions
+          diff=$(git status --porcelain ./scripts/ci/actions | wc -l)
+
+          if [[ $diff > 0 ]]; then
+            echo "Build the custom github actions by running `yarn workspace scripts build:actions`"
+          fi
+
+          exit $diff
 
       - name: Lint GitHub actions
         run: yarn github-actions:lint
@@ -46,7 +76,7 @@ jobs:
           diff=$(git status --porcelain ./generators | wc -l)
 
           if [[ $diff > 0 ]]; then
-            echo "Format the generators folder by running 'yarn docker format java generators'"
+            echo "Format the generators folder by running 'apic format java generators'"
           fi
 
           exit $diff
@@ -57,27 +87,14 @@ jobs:
           echo 'Use yarn fix:json to fix issues'
 
     outputs:
-      RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
+      RUN_SCRIPTS: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
-      SPECS_MATRIX: ${{ steps.setup.outputs.SPECS_MATRIX }}
+      SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
-      RUN_GEN: ${{ steps.setup.outputs.RUN_GEN }}
-      GEN_MATRIX: ${{ steps.setup.outputs.GEN_MATRIX }}
-
-      RUN_GEN_JAVASCRIPT: ${{ steps.setup.outputs.RUN_GEN_JAVASCRIPT }}
-      RUN_GEN_JAVA: ${{ steps.setup.outputs.RUN_GEN_JAVA }}
-      RUN_GEN_PHP: ${{ steps.setup.outputs.RUN_GEN_PHP }}
-      RUN_GEN_GO: ${{ steps.setup.outputs.RUN_GEN_GO }}
-      RUN_GEN_KOTLIN: ${{ steps.setup.outputs.RUN_GEN_KOTLIN }}
-      RUN_GEN_DART: ${{ steps.setup.outputs.RUN_GEN_DART }}
-      RUN_GEN_PYTHON: ${{ steps.setup.outputs.RUN_GEN_PYTHON }}
-      RUN_GEN_RUBY: ${{ steps.setup.outputs.RUN_GEN_RUBY }}
-      RUN_GEN_SCALA: ${{ steps.setup.outputs.RUN_GEN_SCALA }}
-      RUN_GEN_CSHARP: ${{ steps.setup.outputs.RUN_GEN_CSHARP }}
-
-      RUN_JS_UTILS: ${{ steps.setup.outputs.RUN_JS_UTILS }}
-
-      RUN_CODEGEN: ${{ steps.setup.outputs.RUN_CODEGEN }}
+      RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
+      GEN_MATRIX: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
+      JAVASCRIPT_DATA: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
+      RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
 
   scripts:
     runs-on: ubuntu-22.04
@@ -126,7 +143,7 @@ jobs:
         run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }}
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: specs
@@ -136,7 +153,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_JS_UTILS == 'true' }}
+    if: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
     strategy:
       matrix:
         client:
@@ -153,7 +170,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: |
-            ${{ matrix.client }}-${{ hashFiles(
+            ${{ matrix.client }}-${{ env.CACHE_VERSION }}-${{ hashFiles(
               format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
               'clients/algoliasearch-client-javascript/yarn.lock'
             )}}
@@ -178,6 +195,109 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: cd clients/algoliasearch-client-javascript && yarn workspace @algolia/${{ matrix.client }} test
 
+  client_gen_javascript:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    needs:
+      - setup
+      - client_javascript_utils
+      - specs
+      - scripts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    env:
+      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache clients folder
+        if: ${{ github.ref != 'refs/heads/main' }}
+        id: cache
+        uses: actions/cache@v3
+        with:
+          key: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).cacheKey }}
+          path: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).path }}
+
+      - name: Download specs artifacts
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: specs
+
+      - name: Remove generated clients
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && startsWith(env.head_ref, 'chore/prepare-release-') }}
+        run: |
+          cd clients/algoliasearch-client-javascript/packages
+          ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
+          cd algoliasearch
+          ls | grep -v -E "(__tests__|jest.config.ts)" | xargs rm -rf
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          language: javascript
+
+      - name: Generate clients
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
+      - name: Update `yarn.lock` for JavaScript
+        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+
+      - name: Build clients
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
+
+      - name: Test JavaScript bundle size
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && startsWith(env.head_ref, 'chore/prepare-release-') }}
+        run: cd clients/algoliasearch-client-javascript && yarn test:size
+
+      - name: Run JavaScript 'algoliasearch' client tests
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun,'algoliasearch') }}
+        run: cd clients/algoliasearch-client-javascript && yarn workspace algoliasearch test
+
+      - name: Remove previous CTS output
+        run: rm -rf ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToDelete }}
+
+      - name: Generate CTS
+        run: yarn cli cts generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
+        # JavaScript test deps (needs to be cached because they are huge and inefficient)
+      - name: Get yarn js test cache directory path
+        shell: bash
+        id: yarn-cache-dir-tests
+        run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Restore Yarn js tests
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
+          # let yarn handle the cache hash
+          key: yarn-cache-tests-${{ env.CACHE_VERSION }}
+
+      - name: Cache js tests node modules
+        uses: actions/cache@v3
+        with:
+          path: tests/output/javascript/node_modules
+          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
+
+      - name: Run CTS
+        run: yarn cli cts run javascript
+
+      - name: Zip artifact before storing
+        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+
+      - name: Store javascript clients
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: clients-javascript
+          path: clients-javascript.zip
+
   client_gen:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
@@ -185,7 +305,6 @@ jobs:
       - setup
       - specs
       - scripts
-      - client_javascript_utils
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
@@ -193,6 +312,9 @@ jobs:
       !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
+    env:
+      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -206,17 +328,9 @@ jobs:
 
       - name: Download specs artifacts
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/restore-artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
-
-      - name: Remove generated clients
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' && startsWith(env.head_ref, 'chore/prepare-release-') }}
-        run: |
-          cd ${{ matrix.client.path }}/packages
-          ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
-          cd algoliasearch
-          ls | grep -v -E "(__tests__|jest.config.ts)" | xargs rm -rf
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -227,21 +341,9 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-      - name: Update `yarn.lock` for JavaScript
-        if: ${{ matrix.client.language == 'javascript' }}
-        run: cd ${{ matrix.client.path }} && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}
         run: ${{ matrix.client.buildCommand }}
-
-      - name: Test JavaScript bundle size
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' && startsWith(env.head_ref, 'chore/prepare-release-') }}
-        run: cd ${{ matrix.client.path }} && yarn test:size
-
-      - name: Run JavaScript 'algoliasearch' client tests
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'javascript' && contains(matrix.client.toRun,'algoliasearch') }}
-        run: cd ${{ matrix.client.path }} && yarn workspace algoliasearch test
 
       - name: Run Java 'algoliasearch' public API validation
         if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'java' }}
@@ -261,36 +363,14 @@ jobs:
       - name: Generate CTS
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-        # JavaScript test deps (needs to be cached because they are huge and inefficient)
-      - name: Get yarn js test cache directory path
-        if: ${{ matrix.client.language == 'javascript' }}
-        shell: bash
-        id: yarn-cache-dir-tests
-        run: echo "dir=$(cd ${{ matrix.client.testsRootFolder }} && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Restore Yarn js tests
-        if: ${{ matrix.client.language == 'javascript' }}
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.yarn-cache-dir-tests.outputs.dir || format('{0}/.yarn/cache', matrix.client.testsRootFolder) }}
-          # let yarn handle the cache hash
-          key: yarn-cache-tests-${{ env.CACHE_VERSION }}
-
-      - name: Cache js tests node modules
-        if: ${{ matrix.client.language == 'javascript' }}
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.client.testsRootFolder }}/node_modules
-          key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles(format('{0}/yarn.lock', matrix.client.testsRootFolder)) }}
-
       - name: Run CTS
         run: yarn cli cts run ${{ matrix.client.language }}
 
       - name: Zip artifact before storing
-        run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**"
+        run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
 
       - name: Store ${{ matrix.client.language }} clients
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
@@ -302,6 +382,7 @@ jobs:
     needs:
       - setup
       - client_gen
+      - client_gen_javascript
     if: |
       always() &&
       !contains(needs.*.result, 'cancelled') &&
@@ -314,20 +395,10 @@ jobs:
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Download all artifacts
-        if: ${{ needs.setup.outputs.RUN_CODEGEN == 'true' }}
-        uses: ./.github/actions/restore-artifacts
+        if: ${{ needs.setup.outputs.RUN_GEN == 'true' }}
+        uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
-          javascript: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT }}
-          php: ${{ needs.setup.outputs.RUN_GEN_PHP }}
-          java: ${{ needs.setup.outputs.RUN_GEN_JAVA }}
-          go: ${{ needs.setup.outputs.RUN_GEN_GO }}
-          kotlin: ${{ needs.setup.outputs.RUN_GEN_KOTLIN }}
-          dart: ${{ needs.setup.outputs.RUN_GEN_DART }}
-          python: ${{ needs.setup.outputs.RUN_GEN_PYTHON }}
-          ruby: ${{ needs.setup.outputs.RUN_GEN_RUBY }}
-          scala: ${{ needs.setup.outputs.RUN_GEN_SCALA }}
-          csharp: ${{ needs.setup.outputs.RUN_GEN_CSHARP }}
 
       - name: Setup
         uses: ./.github/actions/setup

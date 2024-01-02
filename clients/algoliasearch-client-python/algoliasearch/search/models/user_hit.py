@@ -7,16 +7,11 @@ from __future__ import annotations
 
 from json import loads
 from re import match
-from typing import Annotated, Any, ClassVar, Dict, List
+from typing import Annotated, Any, Dict, Self
 
 from pydantic import BaseModel, Field, StrictInt, StrictStr, field_validator
 
 from algoliasearch.search.models.user_highlight_result import UserHighlightResult
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class UserHit(BaseModel):
@@ -39,14 +34,6 @@ class UserHit(BaseModel):
         description="userID of the requested user. Same as userID.", alias="objectID"
     )
     highlight_result: UserHighlightResult = Field(alias="_highlightResult")
-    __properties: ClassVar[List[str]] = [
-        "userID",
-        "clusterName",
-        "nbRecords",
-        "dataSize",
-        "objectID",
-        "_highlightResult",
-    ]
 
     @field_validator("user_id")
     def user_id_validate_regular_expression(cls, value):

@@ -5,31 +5,36 @@
 from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}
 
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
-
 
 {{#operations}}
 class {{classname}}:
+    _transporter: Transporter
+    _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
+    _request_options: RequestOptions
+
     def app_id(self) -> str:
         return self._config.app_id
 
-    def __init__(self, transporter: Transporter, config: Config) -> None:
+    def __init__(self, transporter: Transporter, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> None:
         self._transporter = transporter
         self._config = config
+        self._request_options = RequestOptions(config)
 
-    def create_with_config(config: Config) -> Self:
+    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> Self:
         transporter = Transporter(config)
 
         return {{classname}}(transporter, config)
 
     def create(app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> Self:
-        return {{classname}}.create_with_config(Config(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
+        return {{classname}}.create_with_config({{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
 
     async def close(self) -> None:
         return await self._transporter.close()
+
+    {{#isSearchClient}}
+{{> search_helpers}}
+    {{/isSearchClient}}
+
     {{#operation}}
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
@@ -53,13 +58,17 @@ class {{classname}}:
         {{#allParams}}
         {{#required}}
         if {{paramName}} is None:
-            raise ValueError("'{{paramName}}' is required when calling '{{nickname}}'")
+            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}`.")
 
         {{/required}}
         {{/allParams}}
 
+        {{#queryParams.0}}
         _query_parameters: List[Tuple[str, str]] = []
-        _headers_parameters: Dict[str, Optional[str]] = {}
+        {{/queryParams.0}}
+        {{#headerParams.0}}
+        _headers: Dict[str, Optional[str]] = {}
+        {{/headerParams.0}}
         
         {{#vendorExtensions}}
         {{#queryParams}}
@@ -76,7 +85,7 @@ class {{classname}}:
 
         {{#headerParams}}
         if {{paramName}} is not None:
-            _headers_parameters['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+            _headers['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
         {{/headerParams}}
 
         {{#bodyParam}}
@@ -85,24 +94,19 @@ class {{classname}}:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.{{httpMethod}},
-            path='{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#vendorExtensions.x-is-custom-request}}{{paramName}}{{/vendorExtensions.x-is-custom-request}}{{^vendorExtensions.x-is-custom-request}}quote(str({{paramName}})){{/vendorExtensions.x-is-custom-request}}){{/pathParams}},
+            path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
-            request_options=RequestOptions.create(
-                config=self._config,
-                query_parameters=_query_parameters,
-                headers_parameters=_headers_parameters,
+            request_options=self._request_options.merge(
+                {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
+                {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
@@ -121,10 +125,7 @@ class {{classname}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-
-        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
-
-        return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
+        return (await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
 
 {{/operation}}
 {{/operations}}

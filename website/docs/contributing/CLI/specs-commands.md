@@ -13,7 +13,7 @@ The Specs commands are used to [`build`](#build), [`lint`](#lint) and validate t
 > The `client` parameter is variadic, you can pass multiple `client` name
 
 ```bash
-yarn docker build specs <client... | all>
+apic build specs <client... | all>
 ```
 
 ### Available options
@@ -29,19 +29,19 @@ yarn docker build specs <client... | all>
 ### Build all specs
 
 ```bash
-yarn docker build specs
+apic build specs
 ```
 
 ### Build specific spec
 
 ```bash
-yarn docker build specs recommend
+apic build specs recommend
 ```
 
 ### Build many spec
 
 ```bash
-yarn docker build specs recommend search ingestion
+apic build specs recommend search ingestion
 ```
 
 ## Lint

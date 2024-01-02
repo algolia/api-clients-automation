@@ -7,14 +7,9 @@ from __future__ import annotations
 
 from json import loads
 from re import match
-from typing import Annotated, Any, ClassVar, Dict, List
+from typing import Annotated, Any, Dict, Self
 
 from pydantic import BaseModel, Field, StrictInt, StrictStr, field_validator
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class UserId(BaseModel):
@@ -34,12 +29,6 @@ class UserId(BaseModel):
     data_size: StrictInt = Field(
         description="Data size used by the user.", alias="dataSize"
     )
-    __properties: ClassVar[List[str]] = [
-        "userID",
-        "clusterName",
-        "nbRecords",
-        "dataSize",
-    ]
 
     @field_validator("user_id")
     def user_id_validate_regular_expression(cls, value):

@@ -17,7 +17,7 @@ Make sure to first [setup the repository tooling](/docs/contributing/setup-repos
 > `language` and `client` defaults to `all`
 
 ```bash
-yarn docker playground <languageName> <clientName>
+apic playground <languageName> <clientName>
 ```
 
 ### JavaScript
@@ -25,13 +25,13 @@ yarn docker playground <languageName> <clientName>
 You can also find [sandboxes for all our clients](https://codesandbox.io/search?refinementList%5Btags%5D=&page=1&configure%5BhitsPerPage%5D=12&query=shortcuts%20generated%20api%20clients%20algolia%20javascript)
 
 ```bash
-yarn docker playground javascript search
+apic playground javascript search
 ```
 
 ### Java
 
 ```bash
-yarn docker playground java search
+apic playground java search
 ```
 
 ## Add new playground

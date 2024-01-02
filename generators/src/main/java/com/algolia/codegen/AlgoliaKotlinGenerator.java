@@ -38,6 +38,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     setModelPackage("com.algolia.client.model." + Helpers.camelize(client).toLowerCase());
     additionalProperties.put(CodegenConstants.SOURCE_FOLDER, "client/src/commonMain/kotlin");
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    additionalProperties.put("dateLibrary", "kotlinx-datetime");
 
     super.processOpts();
 

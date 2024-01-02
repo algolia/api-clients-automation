@@ -2,12 +2,11 @@ from os import environ
 from typing import Optional
 
 from algoliasearch.http.base_config import BaseConfig
-from algoliasearch.http.exceptions import AlgoliaException
 from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
 
 
-class Config(BaseConfig):
+class AnalyticsConfig(BaseConfig):
     def __init__(
         self,
         app_id: Optional[str] = None,
@@ -30,6 +29,8 @@ class Config(BaseConfig):
         self.write_timeout = 30000
         self.connect_timeout = 2000
 
+        UserAgent.add("Analytics")
+
         self.headers = {
             "x-algolia-application-id": app_id,
             "x-algolia-api-key": api_key,
@@ -49,7 +50,7 @@ class Config(BaseConfig):
         _regions = ["de", "us"]
 
         if region is not None and region not in _regions:
-            raise AlgoliaException(
+            raise ValueError(
                 f"`region` must be one of the following: {', '.join(_regions)}"
             )
 

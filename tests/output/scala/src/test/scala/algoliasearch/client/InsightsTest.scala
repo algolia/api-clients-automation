@@ -47,7 +47,7 @@ class InsightsTest extends AnyFunSuite {
     )
 
     val regexp =
-      """^Algolia for scala \(\d+\.\d+\.\d+(-.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-.*)?\))?)*$""".r
+      """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -87,7 +87,19 @@ class InsightsTest extends AnyFunSuite {
     Await.ready(
       client.pushEvents(
         insightsEvents = InsightsEvents(
-          events = Seq()
+          events = Seq(
+            ClickedObjectIDsAfterSearch(
+              eventType = ClickEvent.withName("click"),
+              eventName = "Product Clicked",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              positions = Seq(7, 6)
+            )
+          )
         )
       ),
       Duration.Inf

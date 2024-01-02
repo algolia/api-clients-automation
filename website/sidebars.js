@@ -41,6 +41,14 @@ const sidebars = {
         },
         'contributing/commit-and-pull-request',
         'contributing/release-process',
+        {
+          type: 'category',
+          label: 'CI',
+          collapsed: false,
+          items: [
+            'contributing/CI/overview',
+          ]
+        }
       ],
     },
   ],
@@ -62,11 +70,12 @@ const sidebars = {
             id: 'clients/migration-guides/index',
           },
           items: [
-            'clients/migration-guides/javascript',
-            'clients/migration-guides/java',
-            'clients/migration-guides/php',
-            'clients/migration-guides/kotlin',
             'clients/migration-guides/go',
+            'clients/migration-guides/java',
+            'clients/migration-guides/javascript',
+            'clients/migration-guides/kotlin',
+            'clients/migration-guides/php',
+            'clients/migration-guides/python',
           ],
         },
       ],

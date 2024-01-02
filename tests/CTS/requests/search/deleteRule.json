@@ -1,0 +1,24 @@
+[
+  {
+    "testName": "delete rule simple case",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "id1"
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/id1",
+      "method": "DELETE"
+    }
+  },
+  {
+    "testName": "delete rule with simple characters to encode in objectID",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "test/with/slash"
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/test%2Fwith%2Fslash",
+      "method": "DELETE"
+    }
+  }
+]

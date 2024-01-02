@@ -6,7 +6,7 @@ from algoliasearch.http.hosts import CallType, Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
 
 
-class Config(BaseConfig):
+class SearchConfig(BaseConfig):
     def __init__(
         self, app_id: Optional[str] = None, api_key: Optional[str] = None
     ) -> None:
@@ -26,9 +26,7 @@ class Config(BaseConfig):
         self.write_timeout = 30000
         self.connect_timeout = 2000
 
-        # In microseconds - this parameter is used for the `wait` helper
-        # methods
-        self.wait_task_time_before_retry = 100000
+        UserAgent.add("Search")
 
         self.headers = {
             "x-algolia-application-id": app_id,

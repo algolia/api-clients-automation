@@ -7,16 +7,11 @@ from __future__ import annotations
 
 from json import loads
 from re import match
-from typing import Annotated, Any, ClassVar, Dict, List, Optional
+from typing import Annotated, Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel, Field, StrictInt, StrictStr, field_validator
 
 from algoliasearch.insights.models.click_event import ClickEvent
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class ClickedObjectIDs(BaseModel):
@@ -44,14 +39,6 @@ class ClickedObjectIDs(BaseModel):
         default=None,
         description="Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. ",
     )
-    __properties: ClassVar[List[str]] = [
-        "eventName",
-        "eventType",
-        "index",
-        "objectIDs",
-        "userToken",
-        "timestamp",
-    ]
 
     @field_validator("event_name")
     def event_name_validate_regular_expression(cls, value):
