@@ -28,13 +28,16 @@ from typing import (
   Tuple,
   Union,
   Literal,
-  Self
+  Self,
+  Callable
 )
 
+from algoliasearch.http.helpers import create_iterable, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.verb import Verb
+from algoliasearch.http.exceptions import RequestException
 
 from algoliasearch.{{packageName}}.config import {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
