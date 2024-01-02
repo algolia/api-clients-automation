@@ -70,7 +70,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
 
     return finalDependencies;
   },
-  COMMON_DEPENDENCIES as Record<string, string[]>
+  { ...COMMON_DEPENDENCIES } as Record<string, string[]>
 );
 
 /**
