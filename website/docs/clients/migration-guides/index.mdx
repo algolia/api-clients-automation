@@ -528,11 +528,11 @@ await client.browse_rules(
 
 print(rules)
 
-// browse synonyms
+# browse synonyms
 synonyms = []
 
 await client.browse_synonyms(
-  // all base `search_synonyms` options are forwarded to the `search_synonyms` method
+    # all base `search_synonyms` options are forwarded to the `search_synonyms` method
     index_name="<YOUR_INDEX_NAME>"
     aggregator=lambda _resp, synonyms.append(_resp)
 )
