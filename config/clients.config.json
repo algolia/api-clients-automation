@@ -75,7 +75,7 @@
   "python": {
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.0.0a3",
+    "packageVersion": "4.0.0a4",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "customGenerator": "algolia-python",
