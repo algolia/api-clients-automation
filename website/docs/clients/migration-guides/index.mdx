@@ -210,7 +210,7 @@ client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 save_resp = await client.save_object(index_name="nvim", body={"description": "blazing fast"})
 
-// Poll the task status with defaults values
+# Poll the task status with defaults values
 await client.wait_for_task(index_name="nvim", task_id=save_resp.task_id)
 ```
 
@@ -298,7 +298,7 @@ copy_resp = await client.operation_id(
     },
 )
 
-// Poll the task status until it's done
+# Poll the task status until it's done
 await client.wait_for_task(index_name="<SOURCE_INDEX_NAME>", task_id=copy_resp.task_id)
 ```
 
@@ -380,7 +380,7 @@ await client.batch({
 <TabItem value="python">
 
 ```py
-// The records retrieved by any of your data sources
+# The records retrieved by any of your data sources
 await client.batch({
   index_name="<YOUR_INDEX_NAME>",
   batch_write_params={
@@ -506,11 +506,11 @@ console.log(synonyms, synonyms.length);
 <TabItem value="python">
 
 ```py
-// browse records
+# browse records
 responses = []
 
 await client.browse_objects(
-    // all base `browse` options are forwarded to the `browse` method
+    # all base `browse` options are forwarded to the `browse` method
     index_name="<YOUR_INDEX_NAME>"
     aggregator=lambda _resp, responses.append(_resp)
 )
@@ -521,7 +521,7 @@ print(responses)
 rules = []
 
 await client.browse_rules(
-  // all base `search_rules` options are forwarded to the `search_rules` method
+    # all base `search_rules` options are forwarded to the `search_rules` method
     index_name="<YOUR_INDEX_NAME>"
     aggregator=lambda _resp, rules.append(_resp)
 )
