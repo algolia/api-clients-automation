@@ -1,4 +1,2 @@
-{{#vendorExtensions}}
-  {{#isContainer}}{{#x-has-child-generic}}List<{{{complexType}}}<T>>{{/x-has-child-generic}}{{^x-has-child-generic}}{{#x-propagated-generic}}List<T>{{/x-propagated-generic}}{{^x-propagated-generic}}{{{datatypeWithEnum}}}{{/x-propagated-generic}}{{/x-has-child-generic}}{{/isContainer}}
-  {{^isContainer}}{{#x-is-generic}}T{{/x-is-generic}}{{^x-is-generic}}{{{datatypeWithEnum}}}{{/x-is-generic}}{{/isContainer}}
-{{/vendorExtensions}}
+{{#isContainer}}{{#vendorExtensions.x-has-child-generic}}List<{{{complexType}}}<T>>{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{#vendorExtensions.x-propagated-generic}}List<T>{{/vendorExtensions.x-propagated-generic}}{{^vendorExtensions.x-propagated-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-propagated-generic}}{{/vendorExtensions.x-has-child-generic}}{{/isContainer}}
+{{^isContainer}}{{#vendorExtensions.x-is-generic}}T{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{datatypeWithEnum}}}{{/vendorExtensions.x-is-generic}}{{/isContainer}}
