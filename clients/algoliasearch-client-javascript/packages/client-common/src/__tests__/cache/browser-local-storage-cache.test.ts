@@ -95,7 +95,7 @@ describe('browser local storage cache', () => {
 
     await cache.clear();
 
-    const defaultValue = () => Promise.resolve({ bar: 2 });
+    const defaultValue = (): Promise<void> => Promise.resolve({ bar: 2 });
 
     expect(localStorage.length).toBe(0);
 
@@ -159,7 +159,7 @@ describe('browser local storage cache', () => {
   });
 
   it('creates a namespace within local storage', async () => {
-        const cache = createBrowserLocalStorageCache({
+    const cache = createBrowserLocalStorageCache({
       key: version,
     });
     const key = { foo: 'bar' };
@@ -175,8 +175,12 @@ describe('browser local storage cache', () => {
       },
     });
 
-    const localStorageValue = localStorage.getItem(`algolia-client-js-${version}`);
+    const localStorageValue = localStorage.getItem(
+      `algolia-client-js-${version}`
+    );
 
-    expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(expectedValue);
+    expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(
+      expectedValue
+    );
   });
 });
