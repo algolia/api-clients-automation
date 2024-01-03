@@ -31,17 +31,17 @@ public class SearchHits<T> {
   }
 
   @JsonAnySetter
-  public SearchHits setAdditionalProperty(String name, Object value) {
+  public SearchHits<T> setAdditionalProperty(String name, Object value) {
     this.additionalProperties.put(name, value);
     return this;
   }
 
-  public SearchHits setHits(List<T> hits) {
+  public SearchHits<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
   }
 
-  public SearchHits addHits(T hitsItem) {
+  public SearchHits<T> addHits(T hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
@@ -52,7 +52,7 @@ public class SearchHits<T> {
     return hits;
   }
 
-  public SearchHits setQuery(String query) {
+  public SearchHits<T> setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -63,7 +63,7 @@ public class SearchHits<T> {
     return query;
   }
 
-  public SearchHits setParams(String params) {
+  public SearchHits<T> setParams(String params) {
     this.params = params;
     return this;
   }
@@ -82,7 +82,7 @@ public class SearchHits<T> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchHits searchHits = (SearchHits) o;
+    SearchHits<?> searchHits = (SearchHits<?>) o;
     return (
       Objects.equals(this.hits, searchHits.hits) &&
       Objects.equals(this.query, searchHits.query) &&

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /** SearchResponse */
 @JsonDeserialize(as = SearchResponse.class)
-public class SearchResponse<T> implements SearchResult {
+public class SearchResponse<T> implements SearchResult<T> {
 
   @JsonProperty("abTestID")
   private Integer abTestID;
@@ -113,12 +113,12 @@ public class SearchResponse<T> implements SearchResult {
   }
 
   @JsonAnySetter
-  public SearchResponse setAdditionalProperty(String name, Object value) {
+  public SearchResponse<T> setAdditionalProperty(String name, Object value) {
     this.additionalProperties.put(name, value);
     return this;
   }
 
-  public SearchResponse setAbTestID(Integer abTestID) {
+  public SearchResponse<T> setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
   }
@@ -131,7 +131,7 @@ public class SearchResponse<T> implements SearchResult {
     return abTestID;
   }
 
-  public SearchResponse setAbTestVariantID(Integer abTestVariantID) {
+  public SearchResponse<T> setAbTestVariantID(Integer abTestVariantID) {
     this.abTestVariantID = abTestVariantID;
     return this;
   }
@@ -145,7 +145,7 @@ public class SearchResponse<T> implements SearchResult {
     return abTestVariantID;
   }
 
-  public SearchResponse setAroundLatLng(String aroundLatLng) {
+  public SearchResponse<T> setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -156,7 +156,7 @@ public class SearchResponse<T> implements SearchResult {
     return aroundLatLng;
   }
 
-  public SearchResponse setAutomaticRadius(String automaticRadius) {
+  public SearchResponse<T> setAutomaticRadius(String automaticRadius) {
     this.automaticRadius = automaticRadius;
     return this;
   }
@@ -167,7 +167,7 @@ public class SearchResponse<T> implements SearchResult {
     return automaticRadius;
   }
 
-  public SearchResponse setExhaustive(Exhaustive exhaustive) {
+  public SearchResponse<T> setExhaustive(Exhaustive exhaustive) {
     this.exhaustive = exhaustive;
     return this;
   }
@@ -178,7 +178,7 @@ public class SearchResponse<T> implements SearchResult {
     return exhaustive;
   }
 
-  public SearchResponse setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
+  public SearchResponse<T> setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
     this.exhaustiveFacetsCount = exhaustiveFacetsCount;
     return this;
   }
@@ -194,7 +194,7 @@ public class SearchResponse<T> implements SearchResult {
     return exhaustiveFacetsCount;
   }
 
-  public SearchResponse setExhaustiveNbHits(Boolean exhaustiveNbHits) {
+  public SearchResponse<T> setExhaustiveNbHits(Boolean exhaustiveNbHits) {
     this.exhaustiveNbHits = exhaustiveNbHits;
     return this;
   }
@@ -210,7 +210,7 @@ public class SearchResponse<T> implements SearchResult {
     return exhaustiveNbHits;
   }
 
-  public SearchResponse setExhaustiveTypo(Boolean exhaustiveTypo) {
+  public SearchResponse<T> setExhaustiveTypo(Boolean exhaustiveTypo) {
     this.exhaustiveTypo = exhaustiveTypo;
     return this;
   }
@@ -226,12 +226,12 @@ public class SearchResponse<T> implements SearchResult {
     return exhaustiveTypo;
   }
 
-  public SearchResponse setFacets(Map<String, Map<String, Integer>> facets) {
+  public SearchResponse<T> setFacets(Map<String, Map<String, Integer>> facets) {
     this.facets = facets;
     return this;
   }
 
-  public SearchResponse putFacets(String key, Map<String, Integer> facetsItem) {
+  public SearchResponse<T> putFacets(String key, Map<String, Integer> facetsItem) {
     if (this.facets == null) {
       this.facets = new HashMap<>();
     }
@@ -245,12 +245,12 @@ public class SearchResponse<T> implements SearchResult {
     return facets;
   }
 
-  public SearchResponse setFacetsStats(Map<String, FacetsStats> facetsStats) {
+  public SearchResponse<T> setFacetsStats(Map<String, FacetsStats> facetsStats) {
     this.facetsStats = facetsStats;
     return this;
   }
 
-  public SearchResponse putFacetsStats(String key, FacetsStats facetsStatsItem) {
+  public SearchResponse<T> putFacetsStats(String key, FacetsStats facetsStatsItem) {
     if (this.facetsStats == null) {
       this.facetsStats = new HashMap<>();
     }
@@ -264,7 +264,7 @@ public class SearchResponse<T> implements SearchResult {
     return facetsStats;
   }
 
-  public SearchResponse setHitsPerPage(Integer hitsPerPage) {
+  public SearchResponse<T> setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -275,7 +275,7 @@ public class SearchResponse<T> implements SearchResult {
     return hitsPerPage;
   }
 
-  public SearchResponse setIndex(String index) {
+  public SearchResponse<T> setIndex(String index) {
     this.index = index;
     return this;
   }
@@ -286,7 +286,7 @@ public class SearchResponse<T> implements SearchResult {
     return index;
   }
 
-  public SearchResponse setIndexUsed(String indexUsed) {
+  public SearchResponse<T> setIndexUsed(String indexUsed) {
     this.indexUsed = indexUsed;
     return this;
   }
@@ -300,7 +300,7 @@ public class SearchResponse<T> implements SearchResult {
     return indexUsed;
   }
 
-  public SearchResponse setMessage(String message) {
+  public SearchResponse<T> setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -311,7 +311,7 @@ public class SearchResponse<T> implements SearchResult {
     return message;
   }
 
-  public SearchResponse setNbHits(Integer nbHits) {
+  public SearchResponse<T> setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -322,7 +322,7 @@ public class SearchResponse<T> implements SearchResult {
     return nbHits;
   }
 
-  public SearchResponse setNbPages(Integer nbPages) {
+  public SearchResponse<T> setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -333,7 +333,7 @@ public class SearchResponse<T> implements SearchResult {
     return nbPages;
   }
 
-  public SearchResponse setNbSortedHits(Integer nbSortedHits) {
+  public SearchResponse<T> setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
   }
@@ -344,7 +344,7 @@ public class SearchResponse<T> implements SearchResult {
     return nbSortedHits;
   }
 
-  public SearchResponse setPage(Integer page) {
+  public SearchResponse<T> setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -355,7 +355,7 @@ public class SearchResponse<T> implements SearchResult {
     return page;
   }
 
-  public SearchResponse setParsedQuery(String parsedQuery) {
+  public SearchResponse<T> setParsedQuery(String parsedQuery) {
     this.parsedQuery = parsedQuery;
     return this;
   }
@@ -369,7 +369,7 @@ public class SearchResponse<T> implements SearchResult {
     return parsedQuery;
   }
 
-  public SearchResponse setProcessingTimeMS(Integer processingTimeMS) {
+  public SearchResponse<T> setProcessingTimeMS(Integer processingTimeMS) {
     this.processingTimeMS = processingTimeMS;
     return this;
   }
@@ -380,7 +380,7 @@ public class SearchResponse<T> implements SearchResult {
     return processingTimeMS;
   }
 
-  public SearchResponse setProcessingTimingsMS(Object processingTimingsMS) {
+  public SearchResponse<T> setProcessingTimingsMS(Object processingTimingsMS) {
     this.processingTimingsMS = processingTimingsMS;
     return this;
   }
@@ -394,7 +394,7 @@ public class SearchResponse<T> implements SearchResult {
     return processingTimingsMS;
   }
 
-  public SearchResponse setQueryAfterRemoval(String queryAfterRemoval) {
+  public SearchResponse<T> setQueryAfterRemoval(String queryAfterRemoval) {
     this.queryAfterRemoval = queryAfterRemoval;
     return this;
   }
@@ -408,7 +408,7 @@ public class SearchResponse<T> implements SearchResult {
     return queryAfterRemoval;
   }
 
-  public SearchResponse setRedirect(Redirect redirect) {
+  public SearchResponse<T> setRedirect(Redirect redirect) {
     this.redirect = redirect;
     return this;
   }
@@ -419,7 +419,7 @@ public class SearchResponse<T> implements SearchResult {
     return redirect;
   }
 
-  public SearchResponse setRenderingContent(RenderingContent renderingContent) {
+  public SearchResponse<T> setRenderingContent(RenderingContent renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -430,7 +430,7 @@ public class SearchResponse<T> implements SearchResult {
     return renderingContent;
   }
 
-  public SearchResponse setServerTimeMS(Integer serverTimeMS) {
+  public SearchResponse<T> setServerTimeMS(Integer serverTimeMS) {
     this.serverTimeMS = serverTimeMS;
     return this;
   }
@@ -441,7 +441,7 @@ public class SearchResponse<T> implements SearchResult {
     return serverTimeMS;
   }
 
-  public SearchResponse setServerUsed(String serverUsed) {
+  public SearchResponse<T> setServerUsed(String serverUsed) {
     this.serverUsed = serverUsed;
     return this;
   }
@@ -452,7 +452,7 @@ public class SearchResponse<T> implements SearchResult {
     return serverUsed;
   }
 
-  public SearchResponse setUserData(Object userData) {
+  public SearchResponse<T> setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -463,12 +463,12 @@ public class SearchResponse<T> implements SearchResult {
     return userData;
   }
 
-  public SearchResponse setHits(List<T> hits) {
+  public SearchResponse<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
   }
 
-  public SearchResponse addHits(T hitsItem) {
+  public SearchResponse<T> addHits(T hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
@@ -479,7 +479,7 @@ public class SearchResponse<T> implements SearchResult {
     return hits;
   }
 
-  public SearchResponse setQuery(String query) {
+  public SearchResponse<T> setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -490,7 +490,7 @@ public class SearchResponse<T> implements SearchResult {
     return query;
   }
 
-  public SearchResponse setParams(String params) {
+  public SearchResponse<T> setParams(String params) {
     this.params = params;
     return this;
   }
@@ -509,7 +509,7 @@ public class SearchResponse<T> implements SearchResult {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchResponse searchResponse = (SearchResponse) o;
+    SearchResponse<?> searchResponse = (SearchResponse<?>) o;
     return (
       Objects.equals(this.abTestID, searchResponse.abTestID) &&
       Objects.equals(this.abTestVariantID, searchResponse.abTestVariantID) &&

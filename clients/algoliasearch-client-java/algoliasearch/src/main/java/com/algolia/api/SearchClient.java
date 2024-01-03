@@ -4561,13 +4561,14 @@ public class SearchClient extends ApiClient {
    *
    * @param searchMethodParams Query requests and strategies. Results will be received in the same
    *     order as the queries. (required)
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SearchResponses search(@Nonnull SearchMethodParams searchMethodParams, RequestOptions requestOptions)
+  public <T> SearchResponses<T> search(@Nonnull SearchMethodParams searchMethodParams, Class<T> innerType, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(searchAsync(searchMethodParams, requestOptions));
+    return LaunderThrowable.await(searchAsync(searchMethodParams, innerType, requestOptions));
   }
 
   /**
@@ -4575,10 +4576,11 @@ public class SearchClient extends ApiClient {
    *
    * @param searchMethodParams Query requests and strategies. Results will be received in the same
    *     order as the queries. (required)
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SearchResponses search(@Nonnull SearchMethodParams searchMethodParams) throws AlgoliaRuntimeException {
-    return this.search(searchMethodParams, null);
+  public <T> SearchResponses<T> search(@Nonnull SearchMethodParams searchMethodParams, Class<T> innerType) throws AlgoliaRuntimeException {
+    return this.search(searchMethodParams, innerType, null);
   }
 
   /**
@@ -4586,12 +4588,16 @@ public class SearchClient extends ApiClient {
    *
    * @param searchMethodParams Query requests and strategies. Results will be received in the same
    *     order as the queries. (required)
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SearchResponses> searchAsync(@Nonnull SearchMethodParams searchMethodParams, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public <T> CompletableFuture<SearchResponses<T>> searchAsync(
+    @Nonnull SearchMethodParams searchMethodParams,
+    Class<T> innerType,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(searchMethodParams, "Parameter `searchMethodParams` is required when calling `search`.");
 
     HttpRequest request = HttpRequest
@@ -4601,7 +4607,7 @@ public class SearchClient extends ApiClient {
       .setBody(searchMethodParams)
       .setRead(true)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<SearchResponses>() {});
+    return executeAsync(request, requestOptions, SearchResponses.class, innerType);
   }
 
   /**
@@ -4609,10 +4615,12 @@ public class SearchClient extends ApiClient {
    *
    * @param searchMethodParams Query requests and strategies. Results will be received in the same
    *     order as the queries. (required)
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SearchResponses> searchAsync(@Nonnull SearchMethodParams searchMethodParams) throws AlgoliaRuntimeException {
-    return this.searchAsync(searchMethodParams, null);
+  public <T> CompletableFuture<SearchResponses<T>> searchAsync(@Nonnull SearchMethodParams searchMethodParams, Class<T> innerType)
+    throws AlgoliaRuntimeException {
+    return this.searchAsync(searchMethodParams, innerType, null);
   }
 
   /**
@@ -6019,8 +6027,8 @@ public class SearchClient extends ApiClient {
    *
    * @param requests A list of search requests to be executed.
    */
-  public List<SearchResponse<?>> searchForHits(@Nonnull List<SearchForHits> requests) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, null, null));
+  public <T> List<SearchResponse<T>> searchForHits(@Nonnull List<SearchForHits> requests, Class<T> innerType) {
+    return LaunderThrowable.await(searchForHitsAsync(requests, null, innerType, null));
   }
 
   /**
@@ -6030,8 +6038,8 @@ public class SearchClient extends ApiClient {
    * @param requests A list of search requests to be executed.
    * @param strategy The search strategy to be employed during the search.
    */
-  public List<SearchResponse<?>> searchForHits(@Nonnull List<SearchForHits> requests, SearchStrategy strategy) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, null));
+  public <T> List<SearchResponse<T>> searchForHits(@Nonnull List<SearchForHits> requests, SearchStrategy strategy, Class<T> innerType) {
+    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, null));
   }
 
   /**
@@ -6042,12 +6050,13 @@ public class SearchClient extends ApiClient {
    * @param strategy The search strategy to be employed during the search.
    * @param requestOptions Additional options for the search request.
    */
-  public List<SearchResponse<?>> searchForHits(
+  public <T> List<SearchResponse<T>> searchForHits(
     @Nonnull List<SearchForHits> requests,
     SearchStrategy strategy,
+    Class<T> innerType,
     RequestOptions requestOptions
   ) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, requestOptions));
+    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, requestOptions));
   }
 
   /**
@@ -6056,8 +6065,8 @@ public class SearchClient extends ApiClient {
    *
    * @param requests A list of search requests to be executed.
    */
-  public CompletableFuture<List<SearchResponse<?>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests) {
-    return searchForHitsAsync(requests, null, null);
+  public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, Class<T> innerType) {
+    return searchForHitsAsync(requests, null, innerType, null);
   }
 
   /**
@@ -6067,8 +6076,12 @@ public class SearchClient extends ApiClient {
    * @param requests A list of search requests to be executed.
    * @param strategy The search strategy to be employed during the search.
    */
-  public CompletableFuture<List<SearchResponse<?>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, SearchStrategy strategy) {
-    return searchForHitsAsync(requests, strategy, null);
+  public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(
+    @Nonnull List<SearchForHits> requests,
+    SearchStrategy strategy,
+    Class<T> innerType
+  ) {
+    return searchForHitsAsync(requests, strategy, innerType, null);
   }
 
   /**
@@ -6076,18 +6089,20 @@ public class SearchClient extends ApiClient {
    * only request Algolia records (hits). Results will be received in the same order as the queries.
    *
    * @param requests A list of search requests to be executed.
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param strategy The search strategy to be employed during the search.
    * @param requestOptions Additional options for the search request.
    */
-  public CompletableFuture<List<SearchResponse<?>>> searchForHitsAsync(
+  public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(
     @Nonnull List<SearchForHits> requests,
     SearchStrategy strategy,
+    Class<T> innerType,
     RequestOptions requestOptions
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params)
-      .thenApply(searchResponses -> searchResponses.getResults().stream().map(res -> (SearchResponse<?>) res).collect(Collectors.toList()));
+    return searchAsync(params, innerType)
+      .thenApply(searchResponses -> searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList()));
   }
 
   /**
@@ -6166,7 +6181,7 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params)
+    return searchAsync(params, Object.class)
       .thenApply(searchResponses ->
         searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
       );
