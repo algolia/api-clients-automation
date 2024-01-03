@@ -71,7 +71,7 @@ public class Search {
         List<SearchQuery> requests = List.of(searchQuery);
         searchMethodParams.setRequests(requests);
 
-        var responses = client.search(searchMethodParams);
+        var responses = client.search(searchMethodParams, Actor.class);
         var results = responses.getResults();
         System.out.println("-> Multi Index Search:");
         for (var result : results) {

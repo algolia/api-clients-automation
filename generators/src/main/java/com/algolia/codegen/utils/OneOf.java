@@ -79,8 +79,9 @@ public class OneOf {
 
     // 3. mark the child and add its parent (may have many)
     compoundModel.vendorExtensions.put("x-one-of-element", true);
-    var parentInfo = new HashMap<String, String>();
+    var parentInfo = new HashMap<String, Object>();
     parentInfo.put("parent_classname", model.classname);
+    parentInfo.put("parent_is_generic", model.vendorExtensions.getOrDefault("x-has-child-generic", false));
     compoundParent(compoundModel).add(parentInfo);
     //noinspection unchecked
     var values = (List<String>) compoundModel.vendorExtensions.get("x-discriminator-fields");
@@ -90,9 +91,9 @@ public class OneOf {
     }
   }
 
-  private static Set<Map<String, String>> compoundParent(CodegenModel model) {
+  private static Set<Map<String, Object>> compoundParent(CodegenModel model) {
     //noinspection unchecked
-    var parents = (Set<Map<String, String>>) model.vendorExtensions.get("x-one-of-element-parents");
+    var parents = (Set<Map<String, Object>>) model.vendorExtensions.get("x-one-of-element-parents");
     if (parents != null) return parents;
     parents = new HashSet<>();
     model.vendorExtensions.put("x-one-of-element-parents", parents);

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 @Deprecated{{/isDeprecated}}
 @JsonDeserialize(using = {{classname}}.Deserializer.class)
 {{>additionalModelTypeAnnotations}}
-public interface {{classname}} {
+public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {
 
     {{#vendorExtensions.x-is-multi-array}}
     {{#composedSchemas.oneOf}}
@@ -74,19 +74,19 @@ public interface {{classname}} {
     {{/isModel}}
     {{/composedSchemas.oneOf}}
 
-    class Deserializer extends JsonDeserializer<{{classname}}> {
+    class Deserializer{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} extends JsonDeserializer<{{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}> {
 
         private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
         @Override
-        public {{classname}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             JsonNode tree = jp.readValueAsTree();
             {{#composedSchemas.oneOf}}
             // deserialize {{{datatypeWithEnum}}}
             if (tree.{{#isMap}}isObject(){{/isMap}}{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}){
                 try(JsonParser parser = tree.traverse(jp.getCodec())) {  
                     {{#isModel}}
-                    return parser.readValueAs({{{datatypeWithEnum}}}.class);
+                    return parser.readValueAs({{#vendorExtensions.x-has-child-generic}}new TypeReference<{{datatypeWithEnum}}<T>>() {}{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}.class{{/vendorExtensions.x-has-child-generic}});
                     {{/isModel}}
                     {{#isEnumRef}}
                     return parser.readValueAs({{{datatypeWithEnum}}}.class);
@@ -116,7 +116,7 @@ public interface {{classname}} {
          * Handle deserialization of the 'null' value.
          */
         @Override
-        public {{classname}} getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+        public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} getNullValue(DeserializationContext ctxt) throws JsonMappingException {
         {{#isNullable}}
             return null;
         {{/isNullable}}

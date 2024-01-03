@@ -122,7 +122,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    GenericPropagator.propagateGenericsToModels(models);
+    GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
     return models;
