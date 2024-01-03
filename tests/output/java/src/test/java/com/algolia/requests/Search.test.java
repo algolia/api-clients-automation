@@ -2637,7 +2637,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2671,7 +2671,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2709,7 +2709,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2753,7 +2753,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2805,7 +2805,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2861,7 +2861,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -2969,7 +2969,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);
@@ -3345,7 +3345,7 @@ class SearchClientRequestsTests {
     }
 
     assertDoesNotThrow(() -> {
-      client.search(searchMethodParams0);
+      client.search(searchMethodParams0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/*/queries", req.path);

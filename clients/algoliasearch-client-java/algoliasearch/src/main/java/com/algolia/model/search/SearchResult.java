@@ -6,6 +6,7 @@ package com.algolia.model.search;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
@@ -13,13 +14,13 @@ import java.util.logging.Logger;
 
 /** SearchResult */
 @JsonDeserialize(using = SearchResult.Deserializer.class)
-public interface SearchResult {
-  class Deserializer extends JsonDeserializer<SearchResult> {
+public interface SearchResult<T> {
+  class Deserializer<T> extends JsonDeserializer<SearchResult<T>> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
-    public SearchResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public SearchResult<T> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize SearchForFacetValuesResponse
       if (tree.isObject() && tree.has("facetHits")) {
@@ -35,7 +36,7 @@ public interface SearchResult {
       // deserialize SearchResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SearchResponse.class);
+          return parser.readValueAs(new TypeReference<SearchResponse<T>>() {});
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchResponse (error: " + e.getMessage() + ") (type: SearchResponse)");
@@ -46,7 +47,7 @@ public interface SearchResult {
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public SearchResult getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+    public SearchResult<T> getNullValue(DeserializationContext ctxt) throws JsonMappingException {
       throw new JsonMappingException(ctxt.getParser(), "SearchResult cannot be null");
     }
   }

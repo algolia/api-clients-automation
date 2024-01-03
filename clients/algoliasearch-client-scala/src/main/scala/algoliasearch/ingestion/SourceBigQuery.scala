@@ -32,5 +32,5 @@ case class SourceBigQuery(
     tablePrefix: Option[String] = scala.None,
     customSQLRequest: Option[String] = scala.None,
     uniqueIDColumn: Option[String] = scala.None
-) extends SourceUpdateInputTrait
-    with SourceInputTrait
+) extends SourceInputTrait
+    with SourceUpdateInputTrait
