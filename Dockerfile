@@ -24,15 +24,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # JavaScript
 RUN mkdir -p /etc/apt/keyrings \
     && curl -sL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor | tee /etc/apt/keyrings/nodesource.gpg >/dev/null \
-    && NODE_MAJOR=20 \
+    && NODE_MAJOR=$(echo $NODE_VERSION | sed -E -n 's/v?([0-9]+)\..*/\1/p') \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x jammy main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update && apt-get install -y --no-install-recommends nodejs
 RUN npm install -g yarn
 
 # Python
-RUN apt-get update && apt-get install -y --no-install-recommends python3-pip python3-venv python3-dev \
+RUN curl -L "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz" -o python.tgz \
+    && tar -xvf python.tgz && cd Python-$PYTHON_VERSION \
+    && ./configure --enable-optimizations \
+    && make install \
+    && cd .. && rm -rf Python-$PYTHON_VERSION python.tgz \
+    && ln -s /usr/local/bin/pip3 /usr/bin/pip \
+    && ln -s /usr/local/bin/python3 /usr/bin/python \
     && pip install --upgrade pip pipx && pipx ensurepath \
     && pipx install poetry
+
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
@@ -75,31 +82,9 @@ COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
 RUN echo "export PATH=$PATH:/usr/share/dotnet" >> ~/.profile && source ~/.profile
 
 # Swift
-## Builder
-#ARG SWIFT_VERSION
-#RUN git clone https://github.com/apple/swift.git swift
-#RUN cd swift && utils/update-checkout --clone
-#RUN cd swift && utils/update-checkout --scheme release/${SWIFT_VERSION}
-#RUN apt-get update && apt-get install -y --no-install-recommends clang
-#RUN cd swift && utils/build-script --release-debuginfo --skip-early-swift-driver --skip-early-swiftsyntax
-#RUN curl -L --compressed -o swift.tar.gz "https://download.swift.org/swift-${SWIFT_VERSION}-release/ubuntu2204-aarch64/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04-aarch64.tar.gz" \
-#    && tar xzf swift.tar.gz \
-#    && mv swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04-aarch64 /usr/share/swift \
-#    && rm -rf swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04-aarch64.tar.gz \
-#    && echo "export PATH=$PATH:/usr/share/swift/usr/bin" >> ~/.profile && source ~/.profile \
-#    && swift --version
-#RUN curl "https://download.swift.org/swift-5.9.1-release/ubuntu2204-aarch64/swift-5.9.1-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04-aarch64.tar.gz.sig"
-#RUN curl -L https://swift.org/keys/all-keys.asc | \
-#      gpg --import -
-#RUN gpg --keyserver hkp://keyserver.ubuntu.com --refresh-keys Swift
-#RUN gpg --verify swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04-aarch64.tar.gz.sig
-
-## Formatter
-# Replace this with the SwiftSyntax version equivalent to the Swift version you're using
-ENV VERSION=509.0.0
 RUN git clone https://github.com/apple/swift-format.git \
   && cd swift-format \
-  && git checkout "tags/$VERSION" \
+  && git checkout "release/$SWIFT_VERSION" \
   && swift build -c release \
   && swift test --parallel \
   && mv .build/release/swift-format /usr/bin \
