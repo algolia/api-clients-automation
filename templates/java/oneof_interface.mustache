@@ -83,7 +83,7 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
             JsonNode tree = jp.readValueAsTree();
             {{#composedSchemas.oneOf}}
             // deserialize {{{datatypeWithEnum}}}
-            if (tree.{{#isMap}}isObject(){{/isMap}}{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}){
+            if (tree.{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}isObject(){{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}}){
                 try(JsonParser parser = tree.traverse(jp.getCodec())) {  
                     {{#isModel}}
                     return parser.readValueAs({{#vendorExtensions.x-has-child-generic}}new TypeReference<{{datatypeWithEnum}}<T>>() {}{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}.class{{/vendorExtensions.x-has-child-generic}});
