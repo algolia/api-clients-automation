@@ -1,16 +1,16 @@
-recommendationsResponse:
+recommendationsResults:
   allOf:
     - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - $ref: '#/recommendHits'
+    - $ref: '#/recommendationsHits'
 
-recommendHits:
+recommendationsHits:
   type: object
   additionalProperties: false
   properties:
     hits:
       type: array
       items:
-        $ref: '#/recommendHit'
+        $ref: '#/recommendationsHit'
     query:
       $ref: '../../../common/schemas/SearchParams.yml#/query'    
     params:
@@ -19,6 +19,11 @@ recommendHits:
       example: query=a&hitsPerPage=20     
   required:
     - hits
+
+recommendationsHit:
+  oneOf:
+    - $ref: '#/recommendHit'
+    - $ref: '#/trendingFacetHit'
 
 recommendHit:
   type: object
@@ -39,11 +44,30 @@ recommendHit:
     _distinctSeqID:
       $ref: '../../../search/common/schemas/Hit.yml#/_distinctSeqID'
     _score:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
-      description: Recommendation score.
+      $ref: '#/recommendScore'
+
+trendingFacetHit:
+  type: object
+  description: Trending facet hit.
+  required:
+    - _score
+    - facetName
+    - facetValue
+  properties:
+    _score:
+      $ref: '#/recommendScore'
+    facetName:
+      type: string
+    facetValue:
+      type: object
+      additionalProperties: true
+
+recommendScore:
+  type: number
+  format: double
+  minimum: 0
+  maximum: 100
+  description: Recommendation score.
 
 ruleResponse:
   type: object
