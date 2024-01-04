@@ -57,10 +57,9 @@ trendingFacetHit:
     _score:
       $ref: '#/recommendScore'
     facetName:
-      type: string
+      $ref: 'TrendingQuery.yml#/facetName'
     facetValue:
-      type: object
-      additionalProperties: true
+      $ref: 'TrendingQuery.yml#/facetValue'
 
 recommendScore:
   type: number

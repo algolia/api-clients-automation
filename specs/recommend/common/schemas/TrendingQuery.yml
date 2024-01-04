@@ -10,8 +10,7 @@ baseTrendingItemsQuery:
     facetName:
       $ref: '#/facetName'
     facetValue:
-      type: string
-      description: Facet value for trending models.
+      $ref: '#/facetValue'
     model:
       $ref: '#/trendingItemsModel'
     queryParameters:
@@ -48,3 +47,7 @@ trendingItemsModel:
 facetName:
   type: string
   description: Facet name for trending models.
+
+facetValue:
+  type: string
+  description: Facet value for trending models.
