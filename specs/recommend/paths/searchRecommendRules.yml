@@ -33,14 +33,6 @@ post:
               nullable: true
               default: null
               description: Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
-            requestOptions:
-              type: array
-              description: Request options to send with the API call.
-              example: >
-                {timeouts:{read:20}}
-              items:
-                type: object
-                description: Request option.
   responses:
     '200':
       description: OK
@@ -60,16 +52,13 @@ post:
                 type: array
                 description: Fetched rules.
                 items:
-                  $ref: '../common/schemas/RecommendationsResponse.yml#/ruleResponse'
+                  $ref: '../common/schemas/RuleResponse.yml#/ruleResponse'
               nbHits:
-                type: integer
-                description: Number of fetched rules.
+                $ref: '../../search/common/schemas/SearchResponse.yml#/nbHits'
               page:
-                type: integer
-                description: Current page.
+                $ref: '../../common/schemas/SearchParams.yml#/page'
               nbPages:
-                type: integer
-                description: Number of pages.
+                $ref: '../../search/common/schemas/SearchResponse.yml#/nbPages'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

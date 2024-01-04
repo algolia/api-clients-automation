@@ -1,7 +1,7 @@
 recommendationsRequest:
   oneOf:
-    - $ref: './TrendingQuery.yml#/trendingItemsQuery'
-    - $ref: './TrendingQuery.yml#/trendingFacetsQuery'
+    - $ref: './TrendingItemsQuery.yml#/trendingItemsQuery'
+    - $ref: './TrendingFacetsQuery.yml#/trendingFacetsQuery'
     - $ref: './RecommendationsQuery.yml#/recommendationsQuery'
 
 baseRecommendRequest:
