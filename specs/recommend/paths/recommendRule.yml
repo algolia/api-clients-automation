@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/ruleResponse.yml#/ruleResponse'
+            $ref: '../common/schemas/ruleResponse.yml'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

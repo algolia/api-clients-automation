@@ -52,7 +52,7 @@ post:
                 type: array
                 description: Fetched rules.
                 items:
-                  $ref: '../common/schemas/RuleResponse.yml#/ruleResponse'
+                  $ref: '../common/schemas/RuleResponse.yml'
               nbHits:
                 $ref: '../../search/common/schemas/SearchResponse.yml#/nbHits'
               page:
