@@ -136,11 +136,7 @@ baseSearchParamsWithoutQuery:
       x-categories:
         - Personalization
     userToken:
-      type: string
-      description: Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
-      example: '123456'
-      x-categories:
-        - Personalization
+      $ref: '#/userToken'
     getRankingInfo:
       type: boolean
       description: Incidates whether the search response includes [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information).
@@ -208,6 +204,13 @@ paramsAsString:
   example: 'hitsPerPage=2&getRankingInfo=1'
   type: string
   default: ''
+
+userToken:
+  type: string
+  description: Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
+  example: '123456'
+  x-categories:
+    - Personalization
 
 query:
   type: string

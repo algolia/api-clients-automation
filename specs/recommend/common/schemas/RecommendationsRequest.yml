@@ -3,6 +3,7 @@ recommendationsRequest:
     - $ref: './TrendingItemsQuery.yml#/trendingItemsQuery'
     - $ref: './TrendingFacetsQuery.yml#/trendingFacetsQuery'
     - $ref: './RecommendationsQuery.yml#/recommendationsQuery'
+    - $ref: './RecommendedForYouQuery.yml#/recommendedForYouQuery'
 
 baseRecommendRequest:
   type: object
