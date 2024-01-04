@@ -1,3 +1,7 @@
+## [1.2.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.2.1...1.2.2)
+
+- [ae6adfbf7](https://github.com/algolia/api-clients-automation/commit/ae6adfbf7) fix(specs): port recommend changes ([#2476](https://github.com/algolia/api-clients-automation/pull/2476)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.2.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.2.0...1.2.1)
 
 - [8d71c2b69](https://github.com/algolia/api-clients-automation/commit/8d71c2b69) fix(specs): provide non clashing names for custom methods ([#2369](https://github.com/algolia/api-clients-automation/pull/2369)) by [@shortcuts](https://github.com/shortcuts/)
