@@ -13,6 +13,10 @@ RecommendationsQuery _$RecommendationsQueryFromJson(
       json,
       ($checkedConvert) {
         final val = RecommendationsQuery(
+          indexName: $checkedConvert('indexName', (v) => v as String),
+          threshold: $checkedConvert('threshold', (v) => v as int?),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$RecommendationModelsEnumMap, v)),
           objectID: $checkedConvert('objectID', (v) => v as String),
@@ -26,10 +30,6 @@ RecommendationsQuery _$RecommendationsQueryFromJson(
               (v) => v == null
                   ? null
                   : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
-          indexName: $checkedConvert('indexName', (v) => v as String),
-          threshold: $checkedConvert('threshold', (v) => v as int?),
-          maxRecommendations:
-              $checkedConvert('maxRecommendations', (v) => v as int?),
         );
         return val;
       },
@@ -38,8 +38,7 @@ RecommendationsQuery _$RecommendationsQueryFromJson(
 Map<String, dynamic> _$RecommendationsQueryToJson(
     RecommendationsQuery instance) {
   final val = <String, dynamic>{
-    'model': instance.model.toJson(),
-    'objectID': instance.objectID,
+    'indexName': instance.indexName,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -48,11 +47,12 @@ Map<String, dynamic> _$RecommendationsQueryToJson(
     }
   }
 
-  writeNotNull('queryParameters', instance.queryParameters?.toJson());
-  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
-  val['indexName'] = instance.indexName;
   writeNotNull('threshold', instance.threshold);
   writeNotNull('maxRecommendations', instance.maxRecommendations);
+  val['model'] = instance.model.toJson();
+  val['objectID'] = instance.objectID;
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
   return val;
 }
 

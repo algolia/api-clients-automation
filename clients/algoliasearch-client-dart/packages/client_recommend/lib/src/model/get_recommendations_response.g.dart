@@ -16,7 +16,7 @@ GetRecommendationsResponse _$GetRecommendationsResponseFromJson(
           results: $checkedConvert(
               'results',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) => RecommendationsResponse.fromJson(
+                  ?.map((e) => RecommendationsResults.fromJson(
                       e as Map<String, dynamic>))
                   .toList()),
         );

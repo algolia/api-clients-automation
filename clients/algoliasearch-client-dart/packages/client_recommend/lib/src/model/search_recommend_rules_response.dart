@@ -20,15 +20,15 @@ final class SearchRecommendRulesResponse {
   @JsonKey(name: r'hits')
   final List<RuleResponse> hits;
 
-  /// Number of fetched rules.
+  /// Number of hits the search query matched.
   @JsonKey(name: r'nbHits')
   final int nbHits;
 
-  /// Current page.
+  /// Page to retrieve (the first page is `0`, not `1`).
   @JsonKey(name: r'page')
   final int page;
 
-  /// Number of pages.
+  /// Number of pages of results for the current query.
   @JsonKey(name: r'nbPages')
   final int nbPages;
 

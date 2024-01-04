@@ -24,14 +24,11 @@ package algoliasearch.recommend
   *   Maximum number of hits per page.
   * @param enabled
   *   Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
-  * @param requestOptions
-  *   Request options to send with the API call.
   */
 case class SearchRecommendRulesParams(
     query: Option[String] = scala.None,
     context: Option[String] = scala.None,
     page: Option[Int] = scala.None,
     hitsPerPage: Option[Int] = scala.None,
-    enabled: Option[Boolean] = scala.None,
-    requestOptions: Option[Seq[Any]] = scala.None
+    enabled: Option[Boolean] = scala.None
 )

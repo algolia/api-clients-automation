@@ -70,9 +70,41 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    indexName:
+      type: string
+      example: products
+      description: Algolia index name.
+    baseRecommendRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: >
+            Recommendations with a confidence score lower than `threshold` won't
+            appear in results.
+
+            > **Note**: Each recommendation has a confidence score of 0 to 100.
+            The closer the score is to 100, the more relevant the
+            recommendations are.
+        maxRecommendations:
+          type: integer
+          default: 0
+          description: >-
+            Maximum number of recommendations to retrieve. If 0, all
+            recommendations will be returned.
+      required:
+        - indexName
     facetName:
       type: string
       description: Facet name for trending models.
+    facetValue:
+      type: string
+      description: Facet value for trending models.
     trendingItemsModel:
       description: Trending items model.
       type: string
@@ -283,6 +315,15 @@ components:
           - 2.0104
       x-categories:
         - Geo-Search
+    userToken:
+      type: string
+      description: >-
+        Associates a [user
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/)
+        with the current search.
+      example: '123456'
+      x-categories:
+        - Personalization
     baseSearchParamsWithoutQuery:
       type: object
       additionalProperties: false
@@ -434,14 +475,7 @@ components:
           x-categories:
             - Personalization
         userToken:
-          type: string
-          description: >-
-            Associates a [user
-            token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/)
-            with the current search.
-          example: '123456'
-          x-categories:
-            - Personalization
+          $ref: '#/components/schemas/userToken'
         getRankingInfo:
           type: boolean
           description: >-
@@ -1149,47 +1183,17 @@ components:
         facetName:
           $ref: '#/components/schemas/facetName'
         facetValue:
-          type: string
-          description: Facet value for trending models.
+          $ref: '#/components/schemas/facetValue'
         model:
           $ref: '#/components/schemas/trendingItemsModel'
         queryParameters:
           $ref: '#/components/schemas/searchParamsObject'
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
-    indexName:
-      type: string
-      example: products
-      description: Algolia index name.
-    baseRecommendRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        indexName:
-          $ref: '#/components/schemas/indexName'
-        threshold:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: >
-            Recommendations with a confidence score lower than `threshold` won't
-            appear in results.
-
-            > **Note**: Each recommendation has a confidence score of 0 to 100.
-            The closer the score is to 100, the more relevant the
-            recommendations are.
-        maxRecommendations:
-          type: integer
-          default: 0
-          description: >-
-            Maximum number of recommendations to retrieve. If 0, all
-            recommendations will be returned.
-      required:
-        - indexName
     trendingItemsQuery:
       allOf:
-        - $ref: '#/components/schemas/baseTrendingItemsQuery'
         - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/baseTrendingItemsQuery'
     trendingFacetsModel:
       description: Trending facets model.
       type: string
@@ -1207,8 +1211,8 @@ components:
         - facetName
     trendingFacetsQuery:
       allOf:
-        - $ref: '#/components/schemas/baseTrendingFacetsQuery'
         - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/baseTrendingFacetsQuery'
     recommendationModels:
       description: Recommendation model.
       type: string
@@ -1236,13 +1240,46 @@ components:
         - objectID
     recommendationsQuery:
       allOf:
-        - $ref: '#/components/schemas/baseRecommendationsQuery'
         - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/baseRecommendationsQuery'
+    recommendedForYouModel:
+      description: Recommended for you model.
+      type: string
+      enum:
+        - recommended-for-you
+    baseRecommendedForYouQueryParameters:
+      type: object
+      properties:
+        userToken:
+          $ref: '#/components/schemas/userToken'
+      required:
+        - userToken
+    recommendedForYouQueryParameters:
+      allOf:
+        - $ref: '#/components/schemas/searchParamsObject'
+        - $ref: '#/components/schemas/baseRecommendedForYouQueryParameters'
+    baseRecommendedForYouQuery:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          $ref: '#/components/schemas/recommendedForYouModel'
+        queryParameters:
+          $ref: '#/components/schemas/recommendedForYouQueryParameters'
+        fallbackParameters:
+          $ref: '#/components/schemas/recommendedForYouQueryParameters'
+      required:
+        - model
+    recommendedForYouQuery:
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/baseRecommendedForYouQuery'
     recommendationsRequest:
       oneOf:
         - $ref: '#/components/schemas/trendingItemsQuery'
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/recommendationsQuery'
+        - $ref: '#/components/schemas/recommendedForYouQuery'
     nbHits:
       type: integer
       description: Number of hits the search query matched.
@@ -1656,6 +1693,12 @@ components:
         - userScore
     _distinctSeqID:
       type: integer
+    recommendScore:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
+      description: Recommendation score.
     recommendHit:
       type: object
       description: Recommend hit.
@@ -1675,19 +1718,33 @@ components:
         _distinctSeqID:
           $ref: '#/components/schemas/_distinctSeqID'
         _score:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 100
-          description: Recommendation score.
-    recommendHits:
+          $ref: '#/components/schemas/recommendScore'
+    trendingFacetHit:
+      type: object
+      description: Trending facet hit.
+      required:
+        - _score
+        - facetName
+        - facetValue
+      properties:
+        _score:
+          $ref: '#/components/schemas/recommendScore'
+        facetName:
+          $ref: '#/components/schemas/facetName'
+        facetValue:
+          $ref: '#/components/schemas/facetValue'
+    recommendationsHit:
+      oneOf:
+        - $ref: '#/components/schemas/recommendHit'
+        - $ref: '#/components/schemas/trendingFacetHit'
+    recommendationsHits:
       type: object
       additionalProperties: false
       properties:
         hits:
           type: array
           items:
-            $ref: '#/components/schemas/recommendHit'
+            $ref: '#/components/schemas/recommendationsHit'
         query:
           $ref: '#/components/schemas/query'
         params:
@@ -1696,10 +1753,10 @@ components:
           example: query=a&hitsPerPage=20
       required:
         - hits
-    recommendationsResponse:
+    recommendationsResults:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
-        - $ref: '#/components/schemas/recommendHits'
+        - $ref: '#/components/schemas/recommendationsHits'
     recommendModels:
       type: string
       enum:
@@ -1922,7 +1979,7 @@ components:
           example:
             settingID: f2a7b51e3503acc6a39b3784ffb84300
             pluginVersion: 1.6.0
-    ruleResponse:
+    RuleResponse:
       type: object
       description: Rule object.
       additionalProperties: false
@@ -2225,7 +2282,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/recommendationsResponse'
+                      $ref: '#/components/schemas/recommendationsResults'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2253,7 +2310,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ruleResponse'
+                $ref: '#/components/schemas/RuleResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2369,14 +2426,6 @@ paths:
                   description: >-
                     Restricts responses to enabled rules. When absent (default),
                     _all_ rules are retrieved.
-                requestOptions:
-                  type: array
-                  description: Request options to send with the API call.
-                  example: |
-                    {timeouts:{read:20}}
-                  items:
-                    type: object
-                    description: Request option.
       responses:
         '200':
           description: OK
@@ -2396,16 +2445,13 @@ paths:
                     type: array
                     description: Fetched rules.
                     items:
-                      $ref: '#/components/schemas/ruleResponse'
+                      $ref: '#/components/schemas/RuleResponse'
                   nbHits:
-                    type: integer
-                    description: Number of fetched rules.
+                    $ref: '#/components/schemas/nbHits'
                   page:
-                    type: integer
-                    description: Current page.
+                    $ref: '#/components/schemas/page'
                   nbPages:
-                    type: integer
-                    description: Number of pages.
+                    $ref: '#/components/schemas/nbPages'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':

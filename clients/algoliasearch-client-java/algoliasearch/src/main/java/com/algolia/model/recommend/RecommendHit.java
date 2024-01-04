@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /** Recommend hit. */
-public class RecommendHit {
+@JsonDeserialize(as = RecommendHit.class)
+public class RecommendHit implements RecommendationsHit {
 
   @JsonProperty("objectID")
   private String objectID;

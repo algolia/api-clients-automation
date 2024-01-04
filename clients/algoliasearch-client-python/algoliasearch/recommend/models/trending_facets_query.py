@@ -18,10 +18,6 @@ class TrendingFacetsQuery(BaseModel):
     TrendingFacetsQuery
     """
 
-    facet_name: StrictStr = Field(
-        description="Facet name for trending models.", alias="facetName"
-    )
-    model: Optional[TrendingFacetsModel] = None
     index_name: StrictStr = Field(description="Algolia index name.", alias="indexName")
     threshold: Optional[Annotated[int, Field(le=100, strict=True, ge=0)]] = Field(
         default=None,
@@ -32,6 +28,10 @@ class TrendingFacetsQuery(BaseModel):
         description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.",
         alias="maxRecommendations",
     )
+    facet_name: StrictStr = Field(
+        description="Facet name for trending models.", alias="facetName"
+    )
+    model: Optional[TrendingFacetsModel] = None
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
 
@@ -71,13 +71,13 @@ class TrendingFacetsQuery(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "facetName": obj.get("facetName"),
-                "model": obj.get("model"),
                 "indexName": obj.get("indexName"),
                 "threshold": obj.get("threshold"),
                 "maxRecommendations": obj.get("maxRecommendations")
                 if obj.get("maxRecommendations") is not None
                 else 0,
+                "facetName": obj.get("facetName"),
+                "model": obj.get("model"),
             }
         )
         return _obj

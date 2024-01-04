@@ -10,19 +10,12 @@ part 'trending_facets_query.g.dart';
 final class TrendingFacetsQuery {
   /// Returns a new [TrendingFacetsQuery] instance.
   const TrendingFacetsQuery({
-    required this.facetName,
-    this.model,
     required this.indexName,
     this.threshold,
     this.maxRecommendations,
+    required this.facetName,
+    this.model,
   });
-
-  /// Facet name for trending models.
-  @JsonKey(name: r'facetName')
-  final String facetName;
-
-  @JsonKey(name: r'model')
-  final TrendingFacetsModel? model;
 
   /// Algolia index name.
   @JsonKey(name: r'indexName')
@@ -38,23 +31,30 @@ final class TrendingFacetsQuery {
   @JsonKey(name: r'maxRecommendations')
   final int? maxRecommendations;
 
+  /// Facet name for trending models.
+  @JsonKey(name: r'facetName')
+  final String facetName;
+
+  @JsonKey(name: r'model')
+  final TrendingFacetsModel? model;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TrendingFacetsQuery &&
-          other.facetName == facetName &&
-          other.model == model &&
           other.indexName == indexName &&
           other.threshold == threshold &&
-          other.maxRecommendations == maxRecommendations;
+          other.maxRecommendations == maxRecommendations &&
+          other.facetName == facetName &&
+          other.model == model;
 
   @override
   int get hashCode =>
-      facetName.hashCode +
-      model.hashCode +
       indexName.hashCode +
       threshold.hashCode +
-      maxRecommendations.hashCode;
+      maxRecommendations.hashCode +
+      facetName.hashCode +
+      model.hashCode;
 
   factory TrendingFacetsQuery.fromJson(Map<String, dynamic> json) =>
       _$TrendingFacetsQueryFromJson(json);

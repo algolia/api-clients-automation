@@ -6,6 +6,8 @@ import 'package:algolia_client_recommend/src/model/around_radius_all.dart';
 import 'package:algolia_client_recommend/src/model/automatic_facet_filter.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
 import 'package:algolia_client_recommend/src/model/base_recommendations_query.dart';
+import 'package:algolia_client_recommend/src/model/base_recommended_for_you_query.dart';
+import 'package:algolia_client_recommend/src/model/base_recommended_for_you_query_parameters.dart';
 import 'package:algolia_client_recommend/src/model/base_search_params.dart';
 import 'package:algolia_client_recommend/src/model/base_search_params_without_query.dart';
 import 'package:algolia_client_recommend/src/model/base_search_response.dart';
@@ -40,11 +42,14 @@ import 'package:algolia_client_recommend/src/model/promote_object_ids.dart';
 import 'package:algolia_client_recommend/src/model/query_type.dart';
 import 'package:algolia_client_recommend/src/model/ranking_info.dart';
 import 'package:algolia_client_recommend/src/model/recommend_hit.dart';
-import 'package:algolia_client_recommend/src/model/recommend_hits.dart';
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
 import 'package:algolia_client_recommend/src/model/recommendation_models.dart';
+import 'package:algolia_client_recommend/src/model/recommendations_hits.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_query.dart';
-import 'package:algolia_client_recommend/src/model/recommendations_response.dart';
+import 'package:algolia_client_recommend/src/model/recommendations_results.dart';
+import 'package:algolia_client_recommend/src/model/recommended_for_you_model.dart';
+import 'package:algolia_client_recommend/src/model/recommended_for_you_query.dart';
+import 'package:algolia_client_recommend/src/model/recommended_for_you_query_parameters.dart';
 import 'package:algolia_client_recommend/src/model/redirect.dart';
 import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata.dart';
 import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata_data.dart';
@@ -60,6 +65,7 @@ import 'package:algolia_client_recommend/src/model/semantic_search.dart';
 import 'package:algolia_client_recommend/src/model/snippet_result_option.dart';
 import 'package:algolia_client_recommend/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_recommend/src/model/task_status.dart';
+import 'package:algolia_client_recommend/src/model/trending_facet_hit.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets_model.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets_query.dart';
 import 'package:algolia_client_recommend/src/model/trending_items_model.dart';
@@ -106,6 +112,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BaseRecommendationsQuery':
       return BaseRecommendationsQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BaseRecommendedForYouQuery':
+      return BaseRecommendedForYouQuery.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BaseRecommendedForYouQueryParameters':
+      return BaseRecommendedForYouQueryParameters.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'BaseSearchParams':
       return BaseSearchParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -193,19 +205,27 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RecommendHit':
       return RecommendHit.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'RecommendHits':
-      return RecommendHits.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'RecommendModels':
       return RecommendModels.fromJson(value) as ReturnType;
     case 'RecommendationModels':
       return RecommendationModels.fromJson(value) as ReturnType;
+    case 'RecommendationsHits':
+      return RecommendationsHits.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RecommendationsQuery':
       return RecommendationsQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'RecommendationsResponse':
-      return RecommendationsResponse.fromJson(value as Map<String, dynamic>)
+    case 'RecommendationsResults':
+      return RecommendationsResults.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'RecommendedForYouModel':
+      return RecommendedForYouModel.fromJson(value) as ReturnType;
+    case 'RecommendedForYouQuery':
+      return RecommendedForYouQuery.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RecommendedForYouQueryParameters':
+      return RecommendedForYouQueryParameters.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RedirectRuleIndexMetadata':
@@ -246,6 +266,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return SortRemainingBy.fromJson(value) as ReturnType;
     case 'TaskStatus':
       return TaskStatus.fromJson(value) as ReturnType;
+    case 'TrendingFacetHit':
+      return TrendingFacetHit.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'TrendingFacetsModel':
       return TrendingFacetsModel.fromJson(value) as ReturnType;
     case 'TrendingFacetsQuery':
