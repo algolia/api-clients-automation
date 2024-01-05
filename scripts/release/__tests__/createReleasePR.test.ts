@@ -217,8 +217,8 @@ describe('createReleasePR', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        "- java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -296,8 +296,8 @@ describe('createReleasePR', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        "- java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - ~php: 0.0.1 (no commit)~
         - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -381,9 +381,9 @@ describe('createReleasePR', () => {
           },
         })
       ).toMatchInlineSnapshot(`
-        "- javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+        "- ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
         - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
