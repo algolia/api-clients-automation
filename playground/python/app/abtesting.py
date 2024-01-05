@@ -6,7 +6,7 @@ from algoliasearch.abtesting import AbtestingClient, __version__
 async def main():
     print("AbtestingClient version", __version__)
 
-    client = AbtestingClient()
+    client = AbtestingClient("FOO", "BAR")
 
     print("client initialized", client)
 

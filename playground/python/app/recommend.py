@@ -6,7 +6,7 @@ from algoliasearch.recommend import RecommendClient, __version__
 async def main():
     print("RecommendClient version", __version__)
 
-    client = RecommendClient.create("FOO", "BAR")
+    client = RecommendClient("FOO", "BAR")
 
     print("client initialized", client)
 
