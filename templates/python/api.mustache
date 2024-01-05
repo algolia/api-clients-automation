@@ -14,9 +14,7 @@ class {{classname}}:
 
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None, {{/hasRegionalHost}}transporter: Optional[Transporter] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
-            raise ValueError(
-                "Parameter `config` is required when calling `__init__` with a custom transporter, otherwise the `config` we create might differ from the one you've used to instantiate the `transporter`."
-            )
+            config = transporter._config
 
         if config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
