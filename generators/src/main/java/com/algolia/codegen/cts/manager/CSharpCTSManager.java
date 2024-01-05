@@ -3,7 +3,6 @@ package com.algolia.codegen.cts.manager;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import java.util.*;
-import org.openapitools.codegen.SupportingFile;
 
 public class CSharpCTSManager implements CTSManager {
 
@@ -11,11 +10,6 @@ public class CSharpCTSManager implements CTSManager {
 
   public CSharpCTSManager(String client) {
     this.client = client;
-  }
-
-  @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    // supportingFiles.add(new SupportingFile("build.mustache", "", "build.gradle"));
   }
 
   @Override

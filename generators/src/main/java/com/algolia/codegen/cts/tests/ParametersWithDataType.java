@@ -141,7 +141,7 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
-    testOutput.put("objectName", Helpers.capitalize(baseType));
+    testOutput.put("objectName", getObjectNameForLanguage(language, baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
     if (param == null) {
@@ -522,6 +522,13 @@ public class ParametersWithDataType {
       return parameter.isBoolean;
     }
     return false;
+  }
+
+  private String getObjectNameForLanguage(String language, String objectName) {
+    if (objectName.equals("Map") && language.equals("csharp")) {
+      return "Dictionary";
+    }
+    return Helpers.capitalize(objectName);
   }
 
   private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output) throws CTSException {
