@@ -5,6 +5,7 @@ import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.CodegenOperation;
@@ -36,6 +37,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setSupportsES6(true);
     setModelPropertyNaming("original");
     setApiPackage("src");
+    reservedWords.addAll(Arrays.asList("queryParameters", "requestOptions"));
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
