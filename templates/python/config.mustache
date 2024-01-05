@@ -47,6 +47,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
             del self.proxies["https"]
 
         {{#hasRegionalHost}}
+        self.region = region
         _regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
 
         if {{^fallbackToAliasHost}}not region or {{/fallbackToAliasHost}}(region is not None and region not in _regions):
