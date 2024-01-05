@@ -1,7 +1,6 @@
 import { writeFile } from 'fs/promises';
 
 import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import openapiConfig from '../../config/openapitools.json' assert { type: 'json' };
 import { toAbsolutePath } from '../common.js';
 import { getClientsConfigField } from '../config.js';
 import type { Generator } from '../types.js';
@@ -10,8 +9,14 @@ const AVAILABLE_CUSTOM_GEN = Object.values(clientsConfig)
   .map((gen) => ('customGenerator' in gen ? gen.customGenerator : null))
   .filter(Boolean);
 
+const baseOpenapitoolsConfig = {
+  'generator-cli': {
+    version: '7.2.0',
+  },
+};
+
 /**
- * Create openapitools.json file with default options for all generators.
+ * Create an on the fly openapitools.json file with default options for all generators.
  *
  * Defaults options are used to
  * - Set config path.
@@ -47,7 +52,7 @@ export async function generateOpenapitools(generators: Generator[]): Promise<voi
     JSON.stringify(
       {
         'generator-cli': {
-          version: openapiConfig['generator-cli'].version,
+          version: baseOpenapitoolsConfig['generator-cli'].version,
           generators: result,
         },
       },

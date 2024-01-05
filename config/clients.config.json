@@ -1,5 +1,16 @@
 {
   "java": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-java",
     "gitRepoId": "algoliasearch-client-java",
     "packageVersion": "4.0.0-beta.14",
@@ -12,6 +23,48 @@
     }
   },
   "javascript": {
+    "clients": [
+      {
+        "name": "algoliasearch",
+        "output": "clients/algoliasearch-client-javascript/packages/algoliasearch"
+      },
+      {
+        "name": "abtesting",
+        "output": "clients/algoliasearch-client-javascript/packages/client-abtesting"
+      },
+      {
+        "name": "analytics",
+        "output": "clients/algoliasearch-client-javascript/packages/client-analytics"
+      },
+      {
+        "name": "ingestion",
+        "output": "clients/algoliasearch-client-javascript/packages/ingestion"
+      },
+      {
+        "name": "insights",
+        "output": "clients/algoliasearch-client-javascript/packages/client-insights"
+      },
+      {
+        "name": "monitoring",
+        "output": "clients/algoliasearch-client-javascript/packages/monitoring"
+      },
+      {
+        "name": "personalization",
+        "output": "clients/algoliasearch-client-javascript/packages/client-personalization"
+      },
+      {
+        "name": "query-suggestions",
+        "output": "clients/algoliasearch-client-javascript/packages/client-query-suggestions"
+      },
+      {
+        "name": "recommend",
+        "output": "clients/algoliasearch-client-javascript/packages/recommend"
+      },
+      {
+        "name": "search",
+        "output": "clients/algoliasearch-client-javascript/packages/client-search"
+      }
+    ],
     "folder": "clients/algoliasearch-client-javascript",
     "npmNamespace": "@algolia",
     "gitRepoId": "algoliasearch-client-javascript",
@@ -25,6 +78,17 @@
     }
   },
   "php": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
     "packageVersion": "4.0.0-alpha.89",
@@ -37,6 +101,17 @@
     }
   },
   "go": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
     "packageVersion": "4.0.0-alpha.39",
@@ -49,6 +124,17 @@
     }
   },
   "kotlin": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-kotlin",
     "gitRepoId": "algoliasearch-client-kotlin",
     "packageVersion": "3.0.0-beta.8",
@@ -61,6 +147,12 @@
     }
   },
   "dart": {
+    "clients": [
+      "algoliasearch",
+      "insights",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-dart",
     "gitRepoId": "algoliasearch-client-dart",
     "packageVersion": "1.2.2",
@@ -73,6 +165,17 @@
     }
   },
   "python": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
     "packageVersion": "4.0.0a5",
@@ -85,6 +188,17 @@
     }
   },
   "ruby": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-ruby",
     "gitRepoId": "algoliasearch-client-ruby",
     "packageVersion": "3.0.0.alpha.2",
@@ -97,6 +211,17 @@
     }
   },
   "scala": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
     "packageVersion": "2.0.0-alpha.3",
@@ -109,6 +234,17 @@
     }
   },
   "csharp": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
     "packageVersion": "7.0.0-alpha.2",
