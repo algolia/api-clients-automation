@@ -37,7 +37,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setSupportsES6(true);
     setModelPropertyNaming("original");
     setApiPackage("src");
-    reservedWords.addAll(Arrays.asList("queryParameters", "requestOptions"));
+    reservedWords.addAll(Arrays.asList("queryParameters", "requestOptions", "delete"));
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
