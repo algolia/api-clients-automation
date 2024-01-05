@@ -17,7 +17,7 @@
   var {{{key}}}{{suffix}} = {{{value}}};
 {{/isBoolean}}
 {{#isEnum}}
-  var {{{key}}}{{suffix}} = ({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{{value}}}");
+  var {{{key}}}{{suffix}} = ({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}");
 {{/isEnum}}
 {{#isArray}}
   var {{{key}}}{{suffix}} = new List{{> generateGenerics}}();

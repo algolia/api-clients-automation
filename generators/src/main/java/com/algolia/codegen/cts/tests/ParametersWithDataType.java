@@ -26,7 +26,7 @@ public class ParametersWithDataType {
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
-      throws CTSException, JsonMappingException, JsonProcessingException {
+    throws CTSException, JsonMappingException, JsonProcessingException {
     this.enhanceParameters(parameters, bundle, null);
   }
 
@@ -35,9 +35,8 @@ public class ParametersWithDataType {
    * @param bundle The output object
    * @param operation (optional) The model in which to look for spec
    */
-  public void enhanceParameters(
-      Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
-      throws CTSException, JsonMappingException, JsonProcessingException {
+  public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
+    throws CTSException, JsonMappingException, JsonProcessingException {
     if (parameters != null && parameters.size() == 0) {
       bundle.put("parameters", "{}");
       return;
@@ -45,10 +44,7 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec = null;
     String paramName = null;
     // special case if there is only bodyParam which is not an array
-    if (operation != null
-        && operation.allParams.size() == 1
-        && operation.bodyParams.size() == 1
-        && !operation.bodyParam.isArray) {
+    if (operation != null && operation.allParams.size() == 1 && operation.bodyParams.size() == 1 && !operation.bodyParam.isArray) {
       spec = operation.bodyParam;
       paramName = operation.bodyParam.paramName;
     }
@@ -68,12 +64,10 @@ public class ParametersWithDataType {
               }
             }
             if (specParam == null) {
-              throw new CTSException(
-                  "Parameter " + param.getKey() + " not found in the root parameter");
+              throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          Map<String, Object> paramWithType =
-              traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
+          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
           parametersWithDataType.add(paramWithType);
           parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
         }
@@ -92,12 +86,12 @@ public class ParametersWithDataType {
   }
 
   private Map<String, Object> traverseParams(
-      String paramName,
-      Object param,
-      IJsonSchemaValidationProperties spec,
-      String parent,
-      int suffix)
-      throws CTSException {
+    String paramName,
+    Object param,
+    IJsonSchemaValidationProperties spec,
+    String parent,
+    int suffix
+  ) throws CTSException {
     if (spec == null) {
       return traverseParams(paramName, param, parent, suffix);
     }
@@ -180,8 +174,7 @@ public class ParametersWithDataType {
   }
 
   /** Same method but with inference only */
-  private Map<String, Object> traverseParams(
-      String paramName, Object param, String parent, int suffix) throws CTSException {
+  private Map<String, Object> traverseParams(String paramName, Object param, String parent, int suffix) throws CTSException {
     String finalParamName = paramName;
     if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
@@ -238,23 +231,17 @@ public class ParametersWithDataType {
   }
 
   private void handleArray(
-      String paramName,
-      Object param,
-      Map<String, Object> testOutput,
-      IJsonSchemaValidationProperties spec,
-      int suffix)
-      throws CTSException {
+    String paramName,
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec,
+    int suffix
+  ) throws CTSException {
     List<Object> items = (List<Object>) param;
 
     List<Object> values = new ArrayList<>();
     for (int i = 0; i < items.size(); i++) {
-      values.add(
-          traverseParams(
-              paramName + "_" + i,
-              items.get(i),
-              spec == null ? null : spec.getItems(),
-              paramName,
-              suffix + 1));
+      values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, suffix + 1));
     }
 
     testOutput.put("isArray", true);
@@ -268,14 +255,14 @@ public class ParametersWithDataType {
   }
 
   private void handleModel(
-      String paramName,
-      Object param,
-      Map<String, Object> testOutput,
-      IJsonSchemaValidationProperties spec,
-      String baseType,
-      String parent,
-      int suffix)
-      throws CTSException {
+    String paramName,
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec,
+    String baseType,
+    String parent,
+    int suffix
+  ) throws CTSException {
     if (!spec.getHasVars()) {
       // In this case we might have a complex `allOf`, we will first check if it exists
       CodegenComposedSchemas composedSchemas = spec.getComposedSchemas();
@@ -319,12 +306,8 @@ public class ParametersWithDataType {
 
       boolean useExplicitName;
       CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
-      if (composedSchemas != null
-          && composedSchemas.getOneOf() != null
-          && !composedSchemas.getOneOf().isEmpty()) {
-        useExplicitName =
-            Helpers.shouldUseExplicitOneOfName(
-                composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
+      if (composedSchemas != null && composedSchemas.getOneOf() != null && !composedSchemas.getOneOf().isEmpty()) {
+        useExplicitName = Helpers.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
       } else {
         useExplicitName = Helpers.shouldUseExplicitOneOfName(model.oneOf);
       }
@@ -334,8 +317,7 @@ public class ParametersWithDataType {
       oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
       if (!language.equals("csharp")) {
-        oneOfModel.put(
-            "hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
+        oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
       } else {
         oneOfModel.put("hasWrapper", true);
       }
@@ -359,35 +341,26 @@ public class ParametersWithDataType {
         if (spec.getAdditionalPropertiesIsAnyType()) {
           // we hit an additionalProperties, infer it's type
           CodegenParameter additionalPropertiesSpec = new CodegenParameter();
-          additionalPropertiesSpec.dataType =
-              inferDataType(entry.getValue(), additionalPropertiesSpec, null);
-          Map<String, Object> value =
-              traverseParams(
-                  entry.getKey(),
-                  entry.getValue(),
-                  additionalPropertiesSpec,
-                  paramName,
-                  suffix + 1);
+          additionalPropertiesSpec.dataType = inferDataType(entry.getValue(), additionalPropertiesSpec, null);
+          Map<String, Object> value = traverseParams(entry.getKey(), entry.getValue(), additionalPropertiesSpec, paramName, suffix + 1);
           value.put("isAdditionalProperty", true);
           values.add(value);
         } else {
           throw new CTSException(
-              "Parameter '"
-                  + entry.getKey()
-                  + "' not found in '"
-                  + paramName
-                  + "'. Available properties are: "
-                  + spec.getVars().stream().map(v -> v.baseName).collect(Collectors.joining(", "))
-                  + (spec.getAdditionalPropertiesIsAnyType()
-                      ? " (and any additional properties)"
-                      : "")
-                  + ". Or you might have a type conflict in the spec for '"
-                  + baseType
-                  + "'");
+            "Parameter '" +
+            entry.getKey() +
+            "' not found in '" +
+            paramName +
+            "'. Available properties are: " +
+            spec.getVars().stream().map(v -> v.baseName).collect(Collectors.joining(", ")) +
+            (spec.getAdditionalPropertiesIsAnyType() ? " (and any additional properties)" : "") +
+            ". Or you might have a type conflict in the spec for '" +
+            baseType +
+            "'"
+          );
         }
       } else {
-        Map<String, Object> transformedParam =
-            traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1);
+        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1);
         values.add(transformedParam);
 
         if (varSpec instanceof CodegenProperty property) {
@@ -405,9 +378,7 @@ public class ParametersWithDataType {
     testOutput.put("optionalValue", optionalValues);
   }
 
-  private void handleObject(
-      String paramName, Object param, Map<String, Object> testOutput, int suffix)
-      throws CTSException {
+  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, int suffix) throws CTSException {
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
@@ -425,13 +396,8 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleMap(
-      String paramName,
-      Object param,
-      Map<String, Object> testOutput,
-      IJsonSchemaValidationProperties spec,
-      int suffix)
-      throws CTSException {
+  private void handleMap(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int suffix)
+    throws CTSException {
     if (spec.getHasVars()) {
       throw new CTSException("Spec has vars.");
     }
@@ -464,9 +430,7 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handlePrimitive(
-      Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec)
-      throws CTSException {
+  private void handlePrimitive(Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec) throws CTSException {
     if (spec != null && isPrimitiveType(spec)) {
       transferPrimitiveData(spec, testOutput);
     } else {
@@ -560,8 +524,7 @@ public class ParametersWithDataType {
     return false;
   }
 
-  private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output)
-      throws CTSException {
+  private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output) throws CTSException {
     switch (param.getClass().getSimpleName()) {
       case "String":
         if (spec != null) spec.setIsString(true);
@@ -612,8 +575,7 @@ public class ParametersWithDataType {
     }
   }
 
-  private void transferPrimitiveData(
-      IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
+  private void transferPrimitiveData(IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
     switch (getTypeName(spec)) {
       case "String":
         output.put("isString", true);
@@ -638,8 +600,7 @@ public class ParametersWithDataType {
     }
   }
 
-  private IJsonSchemaValidationProperties findMatchingOneOf(Object param, CodegenModel model)
-      throws CTSException {
+  private IJsonSchemaValidationProperties findMatchingOneOf(Object param, CodegenModel model) throws CTSException {
     if (param instanceof Map) {
       // for object, check which has the most of property in common
       int maxCount = 0;
@@ -673,10 +634,7 @@ public class ParametersWithDataType {
 
         // Somehow this is not yet enough
         if (oneOf != null && !oneOf.isEmpty()) {
-          System.out.println(
-              "Choosing the first oneOf by default: "
-                  + oneOf.get(0).name
-                  + " (this won't stay correct forever)");
+          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).name + " (this won't stay correct forever)");
           return oneOf.get(0);
         }
       }
@@ -700,10 +658,7 @@ public class ParametersWithDataType {
 
     // If there is a number, try to use it as other number type, in the order
     // Integer, Long, Float, Double
-    if (hasFloat
-        && (paramType.equals("Integer")
-            || paramType.equals("Long")
-            || paramType.equals("Double"))) {
+    if (hasFloat && (paramType.equals("Integer") || paramType.equals("Long") || paramType.equals("Double"))) {
       return maybeMatch;
     }
 
@@ -720,9 +675,7 @@ public class ParametersWithDataType {
   // it will check that 'value' is in the list.
   // Otherwise return true by default to avoid false negative.
   private boolean couldMatchEnum(Object value, CodegenProperty model) {
-    if (!model.getIsEnumOrRef()
-        || model.allowableValues == null
-        || !model.allowableValues.containsKey("values")) return true;
+    if (!model.getIsEnumOrRef() || model.allowableValues == null || !model.allowableValues.containsKey("values")) return true;
     Object values = model.allowableValues.get("values");
     if (!(values instanceof List)) return true;
 
