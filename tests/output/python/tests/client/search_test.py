@@ -11,12 +11,13 @@ class TestSearchClient:
 
     def create_client(self) -> SearchClient:
         self._config = SearchConfig("appId", "apiKey")
-        self._client = SearchClient(EchoTransporter(self._config), self._config)
+        self._client = SearchClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_api_0(self):
         self._client = SearchClient(
-            EchoTransporter(SearchConfig("test-app-id", "test-api-key")),
-            SearchConfig("test-app-id", "test-api-key"),
+            transporter=EchoTransporter(SearchConfig("test-app-id", "test-api-key"))
         )
 
         _req = await self._client.custom_get_with_http_info(
@@ -27,8 +28,7 @@ class TestSearchClient:
 
     async def test_api_1(self):
         self._client = SearchClient(
-            EchoTransporter(SearchConfig("test-app-id", "test-api-key")),
-            SearchConfig("test-app-id", "test-api-key"),
+            transporter=EchoTransporter(SearchConfig("test-app-id", "test-api-key"))
         )
 
         _req = await self._client.custom_post_with_http_info(
@@ -72,23 +72,21 @@ class TestSearchClient:
     async def test_parameters_0(self):
         try:
             self._client = SearchClient(
-                EchoTransporter(SearchConfig("", "")), SearchConfig("", "")
+                transporter=EchoTransporter(SearchConfig("", ""))
             )
 
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
-                EchoTransporter(SearchConfig("", "my-api-key")),
-                SearchConfig("", "my-api-key"),
+                transporter=EchoTransporter(SearchConfig("", "my-api-key"))
             )
 
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
-                EchoTransporter(SearchConfig("my-app-id", "")),
-                SearchConfig("my-app-id", ""),
+                transporter=EchoTransporter(SearchConfig("my-app-id", ""))
             )
 
         except (ValueError, Exception) as e:

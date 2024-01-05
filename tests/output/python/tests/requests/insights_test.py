@@ -7,7 +7,9 @@ from algoliasearch.insights.config import InsightsConfig
 
 class TestInsightsClient:
     _config = InsightsConfig("test_app_id", "test_api_key", "us")
-    _client = InsightsClient(EchoTransporter(_config), _config)
+    _client = InsightsClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_custom_delete_0(self):
         """

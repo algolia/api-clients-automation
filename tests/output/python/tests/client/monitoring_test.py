@@ -11,7 +11,9 @@ class TestMonitoringClient:
 
     def create_client(self) -> MonitoringClient:
         self._config = MonitoringConfig("appId", "apiKey")
-        self._client = MonitoringClient(EchoTransporter(self._config), self._config)
+        self._client = MonitoringClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_common_api_0(self):
         self.create_client()
@@ -47,6 +49,5 @@ class TestMonitoringClient:
 
     async def test_parameters_0(self):
         self._client = MonitoringClient(
-            EchoTransporter(MonitoringConfig("my-app-id", "my-api-key")),
-            MonitoringConfig("my-app-id", "my-api-key"),
+            transporter=EchoTransporter(MonitoringConfig("my-app-id", "my-api-key"))
         )

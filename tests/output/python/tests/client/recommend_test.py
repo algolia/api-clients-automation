@@ -11,12 +11,13 @@ class TestRecommendClient:
 
     def create_client(self) -> RecommendClient:
         self._config = RecommendConfig("appId", "apiKey")
-        self._client = RecommendClient(EchoTransporter(self._config), self._config)
+        self._client = RecommendClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_api_0(self):
         self._client = RecommendClient(
-            EchoTransporter(RecommendConfig("test-app-id", "test-api-key")),
-            RecommendConfig("test-app-id", "test-api-key"),
+            transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
         )
 
         _req = await self._client.custom_get_with_http_info(
@@ -27,8 +28,7 @@ class TestRecommendClient:
 
     async def test_api_1(self):
         self._client = RecommendClient(
-            EchoTransporter(RecommendConfig("test-app-id", "test-api-key")),
-            RecommendConfig("test-app-id", "test-api-key"),
+            transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
         )
 
         _req = await self._client.custom_post_with_http_info(

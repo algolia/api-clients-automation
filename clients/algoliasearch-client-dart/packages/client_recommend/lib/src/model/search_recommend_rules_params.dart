@@ -14,7 +14,6 @@ final class SearchRecommendRulesParams {
     this.page,
     this.hitsPerPage,
     this.enabled,
-    this.requestOptions,
   });
 
   /// Full-text query.
@@ -40,10 +39,6 @@ final class SearchRecommendRulesParams {
   @JsonKey(name: r'enabled')
   final bool? enabled;
 
-  /// Request options to send with the API call.
-  @JsonKey(name: r'requestOptions')
-  final List<Object>? requestOptions;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -52,8 +47,7 @@ final class SearchRecommendRulesParams {
           other.context == context &&
           other.page == page &&
           other.hitsPerPage == hitsPerPage &&
-          other.enabled == enabled &&
-          other.requestOptions == requestOptions;
+          other.enabled == enabled;
 
   @override
   int get hashCode =>
@@ -61,8 +55,7 @@ final class SearchRecommendRulesParams {
       context.hashCode +
       page.hashCode +
       hitsPerPage.hashCode +
-      (enabled == null ? 0 : enabled.hashCode) +
-      requestOptions.hashCode;
+      (enabled == null ? 0 : enabled.hashCode);
 
   factory SearchRecommendRulesParams.fromJson(Map<String, dynamic> json) =>
       _$SearchRecommendRulesParamsFromJson(json);

@@ -139,14 +139,14 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     });
   }
 
-  const shouldRun = clientMatrix.client.length > 0;
-
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
   if (javascriptData) {
     core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
     core.setOutput('RUN_GEN_JAVASCRIPT', true);
     clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
   }
+
+  const shouldRun = clientMatrix.client.length > 0;
 
   core.setOutput('RUN_GEN', shouldRun);
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));

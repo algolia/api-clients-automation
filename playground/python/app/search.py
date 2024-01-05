@@ -14,7 +14,7 @@ load_dotenv("../.env")
 async def main():
     print("SearchClient version", __version__)
 
-    client = SearchClient.create(environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY"))
+    client = SearchClient(environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY"))
     print("client initialized", client)
 
     try:

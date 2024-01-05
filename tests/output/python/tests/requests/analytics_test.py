@@ -7,7 +7,9 @@ from algoliasearch.http.transporter import EchoTransporter
 
 class TestAnalyticsClient:
     _config = AnalyticsConfig("test_app_id", "test_api_key", "us")
-    _client = AnalyticsClient(EchoTransporter(_config), _config)
+    _client = AnalyticsClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_custom_delete_0(self):
         """

@@ -11,27 +11,14 @@ part 'recommendations_query.g.dart';
 final class RecommendationsQuery {
   /// Returns a new [RecommendationsQuery] instance.
   const RecommendationsQuery({
+    required this.indexName,
+    this.threshold,
+    this.maxRecommendations,
     required this.model,
     required this.objectID,
     this.queryParameters,
     this.fallbackParameters,
-    required this.indexName,
-    this.threshold,
-    this.maxRecommendations,
   });
-
-  @JsonKey(name: r'model')
-  final RecommendationModels model;
-
-  /// Unique object identifier.
-  @JsonKey(name: r'objectID')
-  final String objectID;
-
-  @JsonKey(name: r'queryParameters')
-  final SearchParamsObject? queryParameters;
-
-  @JsonKey(name: r'fallbackParameters')
-  final SearchParamsObject? fallbackParameters;
 
   /// Algolia index name.
   @JsonKey(name: r'indexName')
@@ -47,27 +34,40 @@ final class RecommendationsQuery {
   @JsonKey(name: r'maxRecommendations')
   final int? maxRecommendations;
 
+  @JsonKey(name: r'model')
+  final RecommendationModels model;
+
+  /// Unique object identifier.
+  @JsonKey(name: r'objectID')
+  final String objectID;
+
+  @JsonKey(name: r'queryParameters')
+  final SearchParamsObject? queryParameters;
+
+  @JsonKey(name: r'fallbackParameters')
+  final SearchParamsObject? fallbackParameters;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RecommendationsQuery &&
+          other.indexName == indexName &&
+          other.threshold == threshold &&
+          other.maxRecommendations == maxRecommendations &&
           other.model == model &&
           other.objectID == objectID &&
           other.queryParameters == queryParameters &&
-          other.fallbackParameters == fallbackParameters &&
-          other.indexName == indexName &&
-          other.threshold == threshold &&
-          other.maxRecommendations == maxRecommendations;
+          other.fallbackParameters == fallbackParameters;
 
   @override
   int get hashCode =>
+      indexName.hashCode +
+      threshold.hashCode +
+      maxRecommendations.hashCode +
       model.hashCode +
       objectID.hashCode +
       queryParameters.hashCode +
-      fallbackParameters.hashCode +
-      indexName.hashCode +
-      threshold.hashCode +
-      maxRecommendations.hashCode;
+      fallbackParameters.hashCode;
 
   factory RecommendationsQuery.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsQueryFromJson(json);

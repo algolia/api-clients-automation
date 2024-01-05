@@ -6,7 +6,7 @@ from algoliasearch.query_suggestions import QuerySuggestionsClient, __version__
 async def main():
     print("QuerySuggestionsClient version", __version__)
 
-    client = QuerySuggestionsClient.create("FOO", "BAR")
+    client = QuerySuggestionsClient("FOO", "BAR")
 
     print("client initialized", client)
 

@@ -19,16 +19,6 @@ class RecommendationsQuery(BaseModel):
     RecommendationsQuery
     """
 
-    model: RecommendationModels
-    object_id: StrictStr = Field(
-        description="Unique object identifier.", alias="objectID"
-    )
-    query_parameters: Optional[SearchParamsObject] = Field(
-        default=None, alias="queryParameters"
-    )
-    fallback_parameters: Optional[SearchParamsObject] = Field(
-        default=None, alias="fallbackParameters"
-    )
     index_name: StrictStr = Field(description="Algolia index name.", alias="indexName")
     threshold: Optional[Annotated[int, Field(le=100, strict=True, ge=0)]] = Field(
         default=None,
@@ -38,6 +28,16 @@ class RecommendationsQuery(BaseModel):
         default=0,
         description="Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.",
         alias="maxRecommendations",
+    )
+    model: RecommendationModels
+    object_id: StrictStr = Field(
+        description="Unique object identifier.", alias="objectID"
+    )
+    query_parameters: Optional[SearchParamsObject] = Field(
+        default=None, alias="queryParameters"
+    )
+    fallback_parameters: Optional[SearchParamsObject] = Field(
+        default=None, alias="fallbackParameters"
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
@@ -86,6 +86,11 @@ class RecommendationsQuery(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "indexName": obj.get("indexName"),
+                "threshold": obj.get("threshold"),
+                "maxRecommendations": obj.get("maxRecommendations")
+                if obj.get("maxRecommendations") is not None
+                else 0,
                 "model": obj.get("model"),
                 "objectID": obj.get("objectID"),
                 "queryParameters": SearchParamsObject.from_dict(
@@ -98,11 +103,6 @@ class RecommendationsQuery(BaseModel):
                 )
                 if obj.get("fallbackParameters") is not None
                 else None,
-                "indexName": obj.get("indexName"),
-                "threshold": obj.get("threshold"),
-                "maxRecommendations": obj.get("maxRecommendations")
-                if obj.get("maxRecommendations") is not None
-                else 0,
             }
         )
         return _obj

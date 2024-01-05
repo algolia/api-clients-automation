@@ -15,10 +15,6 @@ import algoliasearch.recommend.TrendingItemsModel._
 
 /** TrendingItemsQuery
   *
-  * @param facetName
-  *   Facet name for trending models.
-  * @param facetValue
-  *   Facet value for trending models.
   * @param indexName
   *   Algolia index name.
   * @param threshold
@@ -27,14 +23,18 @@ import algoliasearch.recommend.TrendingItemsModel._
   *   recommendations are.
   * @param maxRecommendations
   *   Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+  * @param facetName
+  *   Facet name for trending models.
+  * @param facetValue
+  *   Facet value for trending models.
   */
 case class TrendingItemsQuery(
+    indexName: String,
+    threshold: Option[Int] = scala.None,
+    maxRecommendations: Option[Int] = scala.None,
     facetName: Option[String] = scala.None,
     facetValue: Option[String] = scala.None,
     model: Option[TrendingItemsModel] = scala.None,
     queryParameters: Option[SearchParamsObject] = scala.None,
-    fallbackParameters: Option[SearchParamsObject] = scala.None,
-    indexName: String,
-    threshold: Option[Int] = scala.None,
-    maxRecommendations: Option[Int] = scala.None
+    fallbackParameters: Option[SearchParamsObject] = scala.None
 ) extends RecommendationsRequestTrait

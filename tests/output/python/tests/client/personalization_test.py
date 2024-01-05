@@ -11,8 +11,8 @@ class TestPersonalizationClient:
 
     def create_client(self) -> PersonalizationClient:
         self._config = PersonalizationConfig("appId", "apiKey", "us")
-        self._client = PersonalizationClient(
-            EchoTransporter(self._config), self._config
+        self._client = PersonalizationClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
         )
 
     async def test_common_api_0(self):
@@ -50,8 +50,9 @@ class TestPersonalizationClient:
     async def test_parameters_0(self):
         try:
             self._client = PersonalizationClient(
-                EchoTransporter(PersonalizationConfig("my-app-id", "my-api-key", "")),
-                PersonalizationConfig("my-app-id", "my-api-key", ""),
+                transporter=EchoTransporter(
+                    PersonalizationConfig("my-app-id", "my-api-key", "")
+                )
             )
 
         except (ValueError, Exception) as e:
@@ -63,10 +64,9 @@ class TestPersonalizationClient:
     async def test_parameters_1(self):
         try:
             self._client = PersonalizationClient(
-                EchoTransporter(
+                transporter=EchoTransporter(
                     PersonalizationConfig("my-app-id", "my-api-key", "not_a_region")
-                ),
-                PersonalizationConfig("my-app-id", "my-api-key", "not_a_region"),
+                )
             )
 
         except (ValueError, Exception) as e:
@@ -77,6 +77,7 @@ class TestPersonalizationClient:
 
     async def test_parameters_2(self):
         self._client = PersonalizationClient(
-            EchoTransporter(PersonalizationConfig("my-app-id", "my-api-key", "us")),
-            PersonalizationConfig("my-app-id", "my-api-key", "us"),
+            transporter=EchoTransporter(
+                PersonalizationConfig("my-app-id", "my-api-key", "us")
+            )
         )

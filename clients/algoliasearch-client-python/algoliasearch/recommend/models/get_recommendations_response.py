@@ -10,8 +10,8 @@ from typing import Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel
 
-from algoliasearch.recommend.models.recommendations_response import (
-    RecommendationsResponse,
+from algoliasearch.recommend.models.recommendations_results import (
+    RecommendationsResults,
 )
 
 
@@ -20,7 +20,7 @@ class GetRecommendationsResponse(BaseModel):
     GetRecommendationsResponse
     """
 
-    results: Optional[List[RecommendationsResponse]] = None
+    results: Optional[List[RecommendationsResults]] = None
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
 
@@ -69,7 +69,7 @@ class GetRecommendationsResponse(BaseModel):
         _obj = cls.model_validate(
             {
                 "results": [
-                    RecommendationsResponse.from_dict(_item)
+                    RecommendationsResults.from_dict(_item)
                     for _item in obj.get("results")
                 ]
                 if obj.get("results") is not None

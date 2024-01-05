@@ -7,7 +7,9 @@ from algoliasearch.http.transporter import EchoTransporter
 
 class TestAbtestingClient:
     _config = AbtestingConfig("test_app_id", "test_api_key", "us")
-    _client = AbtestingClient(EchoTransporter(_config), _config)
+    _client = AbtestingClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_add_ab_tests_0(self):
         """
