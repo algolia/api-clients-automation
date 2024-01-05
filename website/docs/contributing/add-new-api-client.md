@@ -96,14 +96,6 @@ Contains information common to every `clients` generated for a language, fields 
 | `tests.outputFolder` | The path to the folder that holds the test for this language, e.g. `tests/`                                          |
 
 
-#### [`config/openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/config/openapitools.json)
-
-Contains information passed to the generator in order to know which client to generate and where to output the code, fields below are required:
-
-| Option    | Description                                                                                                                                        |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `output`  | The path to the folder of the generated API for a given client, must be a children of the corresponding `config/clients.config.json#folder` field.
-
 ## 3. Generate the client
 
 You can find all the commands in the [CLI > clients commands page](/docs/contributing/CLI/clients-commands) and [CLI > specs commands page](/docs/contributing/CLI/specs-commands).
