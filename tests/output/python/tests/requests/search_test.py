@@ -13,7 +13,9 @@ load_dotenv("../../.env")
 
 class TestSearchClient:
     _config = SearchConfig("test_app_id", "test_api_key")
-    _client = SearchClient(EchoTransporter(_config), _config)
+    _client = SearchClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     _helpers = Helpers()
     _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
@@ -1779,7 +1781,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}"""
         )
 
-        resp = await SearchClient.create(
+        resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_with_http_info(
             search_method_params={
@@ -1824,7 +1826,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-        resp = await SearchClient.create(
+        resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_with_http_info(
             search_method_params={
@@ -2341,7 +2343,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
-        resp = await SearchClient.create(
+        resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_single_index_with_http_info(
             index_name="cts_e2e_space in index",

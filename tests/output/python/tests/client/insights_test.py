@@ -11,7 +11,9 @@ class TestInsightsClient:
 
     def create_client(self) -> InsightsClient:
         self._config = InsightsConfig("appId", "apiKey", "us")
-        self._client = InsightsClient(EchoTransporter(self._config), self._config)
+        self._client = InsightsClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_common_api_0(self):
         self.create_client()
@@ -47,8 +49,7 @@ class TestInsightsClient:
 
     async def test_parameters_0(self):
         self._client = InsightsClient(
-            EchoTransporter(InsightsConfig("my-app-id", "my-api-key")),
-            InsightsConfig("my-app-id", "my-api-key"),
+            transporter=EchoTransporter(InsightsConfig("my-app-id", "my-api-key"))
         )
 
         _req = await self._client.push_events_with_http_info(
@@ -79,8 +80,7 @@ class TestInsightsClient:
 
     async def test_parameters_1(self):
         self._client = InsightsClient(
-            EchoTransporter(InsightsConfig("my-app-id", "my-api-key", "us")),
-            InsightsConfig("my-app-id", "my-api-key", "us"),
+            transporter=EchoTransporter(InsightsConfig("my-app-id", "my-api-key", "us"))
         )
 
         _req = await self._client.custom_delete_with_http_info(
@@ -92,10 +92,9 @@ class TestInsightsClient:
     async def test_parameters_2(self):
         try:
             self._client = InsightsClient(
-                EchoTransporter(
+                transporter=EchoTransporter(
                     InsightsConfig("my-app-id", "my-api-key", "not_a_region")
-                ),
-                InsightsConfig("my-app-id", "my-api-key", "not_a_region"),
+                )
             )
 
         except (ValueError, Exception) as e:

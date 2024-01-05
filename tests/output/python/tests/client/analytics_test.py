@@ -11,7 +11,9 @@ class TestAnalyticsClient:
 
     def create_client(self) -> AnalyticsClient:
         self._config = AnalyticsConfig("appId", "apiKey", "us")
-        self._client = AnalyticsClient(EchoTransporter(self._config), self._config)
+        self._client = AnalyticsClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_common_api_0(self):
         self.create_client()
@@ -47,8 +49,7 @@ class TestAnalyticsClient:
 
     async def test_parameters_0(self):
         self._client = AnalyticsClient(
-            EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key")),
-            AnalyticsConfig("my-app-id", "my-api-key"),
+            transporter=EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key"))
         )
 
         _req = await self._client.get_average_click_position_with_http_info(
@@ -59,8 +60,9 @@ class TestAnalyticsClient:
 
     async def test_parameters_1(self):
         self._client = AnalyticsClient(
-            EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key", "de")),
-            AnalyticsConfig("my-app-id", "my-api-key", "de"),
+            transporter=EchoTransporter(
+                AnalyticsConfig("my-app-id", "my-api-key", "de")
+            )
         )
 
         _req = await self._client.custom_post_with_http_info(
@@ -72,10 +74,9 @@ class TestAnalyticsClient:
     async def test_parameters_2(self):
         try:
             self._client = AnalyticsClient(
-                EchoTransporter(
+                transporter=EchoTransporter(
                     AnalyticsConfig("my-app-id", "my-api-key", "not_a_region")
-                ),
-                AnalyticsConfig("my-app-id", "my-api-key", "not_a_region"),
+                )
             )
 
         except (ValueError, Exception) as e:

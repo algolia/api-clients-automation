@@ -7,7 +7,9 @@ from algoliasearch.personalization.config import PersonalizationConfig
 
 class TestPersonalizationClient:
     _config = PersonalizationConfig("test_app_id", "test_api_key", "us")
-    _client = PersonalizationClient(EchoTransporter(_config), _config)
+    _client = PersonalizationClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_custom_delete_0(self):
         """

@@ -7,7 +7,9 @@ from algoliasearch.monitoring.config import MonitoringConfig
 
 class TestMonitoringClient:
     _config = MonitoringConfig("test_app_id", "test_api_key")
-    _client = MonitoringClient(EchoTransporter(_config), _config)
+    _client = MonitoringClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_custom_delete_0(self):
         """
