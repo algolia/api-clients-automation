@@ -16,7 +16,6 @@ import (
 	"reflect"
 	"regexp"
 	"runtime"
-	"strconv"
 	"strings"
 	"time"
 
@@ -95,7 +94,7 @@ func getDefaultHosts(r Region) []*transport.StatefulHost {
 	hosts := []*transport.StatefulHost{}
   switch r {
 	case {{#allowedRegions}}{{#lambda.uppercase}}{{.}}{{/lambda.uppercase}}{{^-last}},{{/-last}}{{/allowedRegions}}:
-		hosts = append(hosts, transport.NewStatefulHost(strings.Replace("{{{regionalHost}}}", "{region}", string(r), -1), call.IsReadWrite)){{#fallbackToAliasHost}}
+		hosts = append(hosts, transport.NewStatefulHost(strings.ReplaceAll("{{{regionalHost}}}", "{region}", string(r)), call.IsReadWrite)){{#fallbackToAliasHost}}
   default:
 		hosts = append(hosts, transport.NewStatefulHost("{{{hostWithFallback}}}", call.IsReadWrite)){{/fallbackToAliasHost}}
 	}
@@ -122,54 +121,16 @@ func getUserAgent() string {
   return fmt.Sprintf("Algolia for Go ({{{packageVersion}}}); Go (%s); {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} ({{{packageVersion}}})", runtime.Version())
 }
 
-func atoi(in string) (int, error) {
-	return strconv.Atoi(in)
-}
-
-// contains is a case insensitive match, finding needle in a haystack
-func contains(haystack []string, needle string) bool {
-	for _, a := range haystack {
-		if strings.EqualFold(a, needle) {
-			return true
-		}
-	}
-	return false
-}
-
-// Verify optional parameters are of the correct type.
-func typeCheckParameter(obj any, expected string, name string) error {
-	// Make sure there is an object.
-	if obj == nil {
-		return nil
-	}
-
-	// Check the type is as expected.
-	if reflect.TypeOf(obj).String() != expected {
-		return fmt.Errorf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String())
-	}
-	return nil
-}
-
 // parameterToString convert any parameters to string.
 func parameterToString(obj any) string {
 	if reflect.TypeOf(obj).Kind() == reflect.Slice {
-		return strings.Trim(strings.Replace(fmt.Sprint(obj), " ", ",", -1), "[]")
+		return strings.Trim(strings.ReplaceAll(fmt.Sprint(obj), " ", ","), "[]")
 	} else if t, ok := obj.(time.Time); ok {
 		return t.Format(time.RFC3339)
 	}
 
 	return fmt.Sprintf("%v", obj)
 }
-
-// helper for converting any parameters to json strings
-func parameterToJson(obj any) (string, error) {
-	jsonBuf, err := json.Marshal(obj)
-	if err != nil {
-		return "", err
-	}
-	return string(jsonBuf), err
-}
-
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request
 func (c *APIClient) AddDefaultHeader(key string, value string) {
@@ -277,7 +238,7 @@ func (c *APIClient) prepareRequest(
 	return req, nil
 }
 
-func (c *APIClient) decode(v any, b []byte, contentType string) (err error) {
+func (c *APIClient) decode(v any, b []byte, contentType string) error {
 	if len(b) == 0 {
 		return nil
 	}
@@ -288,13 +249,13 @@ func (c *APIClient) decode(v any, b []byte, contentType string) (err error) {
 	if jsonCheck.MatchString(contentType) {
 		if actualObj, ok := v.(interface{ GetActualInstance() any }); ok { // oneOf, anyOf schemas
 			if unmarshalObj, ok := actualObj.(interface{ UnmarshalJSON([]byte) error }); ok { // make sure it has UnmarshalJSON defined
-				if err = unmarshalObj.UnmarshalJSON(b); err != nil {
+				if err := unmarshalObj.UnmarshalJSON(b); err != nil {
 					return err
 				}
 			} else {
 				return errors.New("Unknown type with GetActualInstance but no unmarshalObj.UnmarshalJSON defined")
 			}
-		} else if err = json.Unmarshal(b, v); err != nil { // simple model
+		} else if err := json.Unmarshal(b, v); err != nil { // simple model
 			return err
 		}
 		return nil
@@ -308,14 +269,14 @@ func reportError(format string, a ...any) error {
 }
 
 // A wrapper for strict JSON decoding
-func newStrictDecoder(data []byte) *json.Decoder {
+func newStrictDecoder(data []byte) *json.Decoder { //nolint:unused
 	dec := json.NewDecoder(bytes.NewBuffer(data))
 	dec.DisallowUnknownFields()
 	return dec
 }
 
 // A wrapper for validating a struct, returns nil if value is not a struct
-func validateStruct(v any) error {
+func validateStruct(v any) error { //nolint:unused
   err := validator.New().Struct(v)
   validationErrors, ok := err.(validator.ValidationErrors)
   if ok && len(validationErrors) > 0 {
@@ -326,12 +287,13 @@ func validateStruct(v any) error {
 }
 
 // Set request body from an any
-func setBody(body any, contentType string, c compression.Compression) (bodyBuf *bytes.Buffer, err error) {
+func setBody(body any, contentType string, c compression.Compression) (*bytes.Buffer, error) {
 	if body == nil {
 		return nil, nil
 	}
 
-	bodyBuf = &bytes.Buffer{}
+	bodyBuf := &bytes.Buffer{}
+  var err error
 
 	switch c {
 	case compression.GZIP:

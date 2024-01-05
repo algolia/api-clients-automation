@@ -60,16 +60,12 @@ public abstract class TestsGenerator {
 
   private String languageCased() {
     switch (language) {
-      case "java":
-        return "Java";
       case "javascript":
         return "JavaScript";
       case "php":
         return "PHP";
-      case "kotlin":
-        return "Kotlin";
       default:
-        return language;
+        return Helpers.capitalize(language);
     }
   }
 

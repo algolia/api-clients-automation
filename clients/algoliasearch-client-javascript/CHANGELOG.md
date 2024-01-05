@@ -1,3 +1,14 @@
+## [5.0.0-alpha.95](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.94...5.0.0-alpha.95)
+
+- [ae6adfbf7](https://github.com/algolia/api-clients-automation/commit/ae6adfbf7) fix(specs): port recommend changes ([#2476](https://github.com/algolia/api-clients-automation/pull/2476)) by [@shortcuts](https://github.com/shortcuts/)
+- [4546090b2](https://github.com/algolia/api-clients-automation/commit/4546090b2) feat(javascript): add cache TTL and fix support message ([#2474](https://github.com/algolia/api-clients-automation/pull/2474)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.0.0-alpha.94](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.93...5.0.0-alpha.94)
+
+- [ae80c666c](https://github.com/algolia/api-clients-automation/commit/ae80c666c) chore(javascript): remove some non needed props from generators ([#2412](https://github.com/algolia/api-clients-automation/pull/2412)) by [@shortcuts](https://github.com/shortcuts/)
+- [8d71c2b69](https://github.com/algolia/api-clients-automation/commit/8d71c2b69) fix(specs): provide non clashing names for custom methods ([#2369](https://github.com/algolia/api-clients-automation/pull/2369)) by [@shortcuts](https://github.com/shortcuts/)
+- [205519c6f](https://github.com/algolia/api-clients-automation/commit/205519c6f) fix(specs): highlight result map definition ([#2312](https://github.com/algolia/api-clients-automation/pull/2312)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.93](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.92...5.0.0-alpha.93)
 
 - [5a7a8aeb4](https://github.com/algolia/api-clients-automation/commit/5a7a8aeb4) chore(specs): publish docs specs ([#2255](https://github.com/algolia/api-clients-automation/pull/2255)) by [@shortcuts](https://github.com/shortcuts/)

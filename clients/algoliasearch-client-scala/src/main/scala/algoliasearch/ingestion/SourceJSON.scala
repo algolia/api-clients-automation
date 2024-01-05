@@ -20,5 +20,5 @@ case class SourceJSON(
     url: String,
     uniqueIDColumn: Option[String] = scala.None,
     method: Option[MethodType] = scala.None
-) extends SourceUpdateInputTrait
-    with SourceInputTrait
+) extends SourceInputTrait
+    with SourceUpdateInputTrait

@@ -190,7 +190,7 @@ class SearchRecommendRulesResponse extends \Algolia\AlgoliaSearch\Model\Abstract
     /**
      * Gets hits.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Recommend\RuleResponse[]
+     * @return RuleResponse[]
      */
     public function getHits()
     {
@@ -200,7 +200,7 @@ class SearchRecommendRulesResponse extends \Algolia\AlgoliaSearch\Model\Abstract
     /**
      * Sets hits.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Recommend\RuleResponse[] $hits fetched rules
+     * @param RuleResponse[] $hits fetched rules
      *
      * @return self
      */
@@ -224,7 +224,7 @@ class SearchRecommendRulesResponse extends \Algolia\AlgoliaSearch\Model\Abstract
     /**
      * Sets nbHits.
      *
-     * @param int $nbHits number of fetched rules
+     * @param int $nbHits number of hits the search query matched
      *
      * @return self
      */
@@ -248,7 +248,7 @@ class SearchRecommendRulesResponse extends \Algolia\AlgoliaSearch\Model\Abstract
     /**
      * Sets page.
      *
-     * @param int $page current page
+     * @param int $page page to retrieve (the first page is `0`, not `1`)
      *
      * @return self
      */
@@ -272,7 +272,7 @@ class SearchRecommendRulesResponse extends \Algolia\AlgoliaSearch\Model\Abstract
     /**
      * Sets nbPages.
      *
-     * @param int $nbPages number of pages
+     * @param int $nbPages number of pages of results for the current query
      *
      * @return self
      */

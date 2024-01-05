@@ -17,7 +17,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
      * @var string[]
      */
     protected static $modelTypes = [
-        'results' => '\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResponse[]',
+        'results' => '\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResults[]',
     ];
 
     /**
@@ -151,7 +151,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
     /**
      * Gets results.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResponse[]
+     * @return null|RecommendationsResults[]
      */
     public function getResults()
     {
@@ -161,7 +161,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
     /**
      * Sets results.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResponse[] $results results
+     * @param null|RecommendationsResults[] $results results
      *
      * @return self
      */

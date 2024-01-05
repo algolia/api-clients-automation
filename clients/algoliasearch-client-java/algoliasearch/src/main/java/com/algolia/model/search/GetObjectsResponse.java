@@ -15,12 +15,12 @@ public class GetObjectsResponse<T> {
   @JsonProperty("results")
   private List<T> results = new ArrayList<>();
 
-  public GetObjectsResponse setResults(List<T> results) {
+  public GetObjectsResponse<T> setResults(List<T> results) {
     this.results = results;
     return this;
   }
 
-  public GetObjectsResponse addResults(T resultsItem) {
+  public GetObjectsResponse<T> addResults(T resultsItem) {
     this.results.add(resultsItem);
     return this;
   }
@@ -39,7 +39,7 @@ public class GetObjectsResponse<T> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetObjectsResponse getObjectsResponse = (GetObjectsResponse) o;
+    GetObjectsResponse<?> getObjectsResponse = (GetObjectsResponse<?>) o;
     return Objects.equals(this.results, getObjectsResponse.results);
   }
 

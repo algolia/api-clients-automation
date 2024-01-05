@@ -30,11 +30,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         [key]: DEPENDENCIES[key],
       };
 
-      // only JS have other dependencies for its utils packages
-      if (language === 'javascript') {
-        languageDependencies.JAVASCRIPT_UTILS_CHANGED = DEPENDENCIES.JAVASCRIPT_UTILS_CHANGED;
-      }
-
       // We will check if dependencies have changed for each clients of each languages:
       //   - language specific dependencies
       //   - common dependencies of every clients
@@ -84,7 +79,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/methods/requests`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests`;
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
@@ -92,7 +87,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/methods/requests/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension}`;
       })
       .join(' ');
 
@@ -105,7 +100,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'go':
-        testsToStore = `${testsToStore} ${testsOutputBase}/methods/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        testsToStore = `${testsToStore} ${testsOutputBase}/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
         break;
       case 'javascript':
         const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
@@ -122,6 +117,12 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
         testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;
+      case 'python':
+        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock`;
+        break;
+      case 'ruby':
+        testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;
+        break;
       default:
         break;
     }
@@ -136,7 +137,13 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
     });
-    core.setOutput(`RUN_GEN_${language.toUpperCase()}`, true);
+  }
+
+  const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
+  if (javascriptData) {
+    core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
+    core.setOutput('RUN_GEN_JAVASCRIPT', true);
+    clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
   }
 
   const shouldRun = clientMatrix.client.length > 0;

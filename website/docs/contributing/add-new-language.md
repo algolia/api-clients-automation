@@ -6,8 +6,6 @@ title: Support a new language
 
 Make sure to first [setup the repository tooling](/docs/contributing/setup-repository) to ease your journey!
 
-You will also need to have the [openapi-generator](https://openapi-generator.tech/docs/installation/) installed.
-
 :::
 
 This repository leverages [openapi-generator](https://openapi-generator.tech/) to generate API clients.
@@ -109,7 +107,7 @@ You can take a look at the Java implementation [here](https://github.com/algolia
 The `User-Agent` MUST match the following regular expression:
 
 ```regex
-^Algolia for <LANGUAGE> \\(\\d+\\.\\d+\\.\\d+(-.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*(; <CLIENT> (\\(\\d+\\.\\d+\\.\\d+(-.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-.*)?\\))?)*$
+^Algolia for <LANGUAGE> \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; <CLIENT> (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$
 ```
 
 The function MUST be named `addAlgoliaAgent` because of JavaScript exception that doesn't allow custom `User-Agent` in the header, and must use `x-algolia-agent` for JavaScript.

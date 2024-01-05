@@ -31,7 +31,7 @@ export async function playground({
     case 'php':
       await run(
         `cd clients/algoliasearch-client-php/ && \
-       composer update && \
+       composer install && \
        composer dump-autoload && \
        cd ../../playground/php/src && \
        php ${client}.php`

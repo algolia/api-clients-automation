@@ -11,15 +11,29 @@ part 'trending_items_query.g.dart';
 final class TrendingItemsQuery {
   /// Returns a new [TrendingItemsQuery] instance.
   const TrendingItemsQuery({
+    required this.indexName,
+    this.threshold,
+    this.maxRecommendations,
     this.facetName,
     this.facetValue,
     this.model,
     this.queryParameters,
     this.fallbackParameters,
-    required this.indexName,
-    this.threshold,
-    this.maxRecommendations,
   });
+
+  /// Algolia index name.
+  @JsonKey(name: r'indexName')
+  final String indexName;
+
+  /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
+  // minimum: 0
+  // maximum: 100
+  @JsonKey(name: r'threshold')
+  final int? threshold;
+
+  /// Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+  @JsonKey(name: r'maxRecommendations')
+  final int? maxRecommendations;
 
   /// Facet name for trending models.
   @JsonKey(name: r'facetName')
@@ -38,43 +52,29 @@ final class TrendingItemsQuery {
   @JsonKey(name: r'fallbackParameters')
   final SearchParamsObject? fallbackParameters;
 
-  /// Algolia index name.
-  @JsonKey(name: r'indexName')
-  final String indexName;
-
-  /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
-  // minimum: 0
-  // maximum: 100
-  @JsonKey(name: r'threshold')
-  final int? threshold;
-
-  /// Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-  @JsonKey(name: r'maxRecommendations')
-  final int? maxRecommendations;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TrendingItemsQuery &&
+          other.indexName == indexName &&
+          other.threshold == threshold &&
+          other.maxRecommendations == maxRecommendations &&
           other.facetName == facetName &&
           other.facetValue == facetValue &&
           other.model == model &&
           other.queryParameters == queryParameters &&
-          other.fallbackParameters == fallbackParameters &&
-          other.indexName == indexName &&
-          other.threshold == threshold &&
-          other.maxRecommendations == maxRecommendations;
+          other.fallbackParameters == fallbackParameters;
 
   @override
   int get hashCode =>
+      indexName.hashCode +
+      threshold.hashCode +
+      maxRecommendations.hashCode +
       facetName.hashCode +
       facetValue.hashCode +
       model.hashCode +
       queryParameters.hashCode +
-      fallbackParameters.hashCode +
-      indexName.hashCode +
-      threshold.hashCode +
-      maxRecommendations.hashCode;
+      fallbackParameters.hashCode;
 
   factory TrendingItemsQuery.fromJson(Map<String, dynamic> json) =>
       _$TrendingItemsQueryFromJson(json);

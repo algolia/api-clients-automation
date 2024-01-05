@@ -73,5 +73,6 @@ describe('getNextVersion', () => {
     expect(getNextVersion('4.0.0a1', 'minor')).toEqual('4.0.0a2');
     expect(getNextVersion('4.0.0a12', 'minor')).toEqual('4.0.0a13');
     expect(getNextVersion('4.0.0a99', 'minor')).toEqual('4.0.0a100');
+    expect(getNextVersion('3.0.0.alpha.0', 'minor')).toEqual('3.0.0.alpha.1');
   });
 });

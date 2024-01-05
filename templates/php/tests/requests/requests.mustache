@@ -11,6 +11,17 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+{{#hasE2E}}
+use Dotenv\Dotenv;
+
+// we only read .env file if we run locally
+if (isset($_ENV['DOCKER']) && $_ENV['DOCKER'] === "true") {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+} else {
+    $_ENV = getenv();
+}
+{{/hasE2E}}
 
 /**
  * {{clientPrefix}}Test
@@ -24,6 +35,33 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
      * @var RequestInterface[]
      */
     private $recordedRequests = [];
+
+    {{#hasE2E}}
+    protected function union($expected, $received)
+    {
+        $res = [];
+
+        foreach ($expected as $k => $v) {
+            if (isset($received[$k])) {
+                if (is_array($v)) {
+                    $res[$k] = $this->union($v, $received[$k]);
+                } elseif (is_array($v)) {
+                    if (!isset($res[$k])) {
+                        $res[$k] = [];
+                    }
+
+                    foreach ($v as $iv => $v) {
+                        $res[$k][] = $this->union($v, $received[$k][$iv]);
+                    }
+                } else {
+                    $res[$k] = $received[$k];
+                }
+            }
+        }
+
+        return $res;
+    }
+    {{/hasE2E}}
 
     protected function assertRequests(array $requests)
     {
@@ -72,6 +110,13 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
         return new Response(200, [], '{}');
     }
+
+    {{#hasE2E}}
+    protected function getE2EClient()
+    {
+        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
+    }
+    {{/hasE2E}}
 
     protected function getClient()
     {
@@ -132,6 +177,20 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 {{/request.headers}}
             ],
         ]);
+
+        {{#response}}
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
+        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
+        );{{/hasParameters}}
+
+        {{#body}}
+        $expected = json_decode('{{{.}}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+        {{/body}}
+        {{/response}}
+
     }
     {{/tests}}
     {{/blocksRequests}}

@@ -14,6 +14,7 @@ public class CTSManagerFactory {
       case "kotlin" -> new KotlinCTSManager(client);
       case "go" -> new GoCTSManager();
       case "dart" -> new DartCTSManager(client);
+      case "ruby" -> new RubyCTSManager(client);
       case "scala" -> new ScalaCTSManager(client);
       case "python" -> new PythonCTSManager(client);
       case "csharp" -> new CSharpCTSManager(client);

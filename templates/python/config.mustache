@@ -7,11 +7,10 @@ from algoliasearch.http.hosts import (
   HostsCollection,
 )
 from algoliasearch.http.user_agent import UserAgent
-from algoliasearch.http.exceptions import AlgoliaException
 from algoliasearch.http.base_config import BaseConfig
 
 
-class Config(BaseConfig):
+class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
         app_id = environ.get("ALGOLIA_APP_ID") if app_id is None else app_id
 
@@ -29,10 +28,7 @@ class Config(BaseConfig):
         self.write_timeout = 30000
         self.connect_timeout = 2000
 
-        {{#isSearchClient}}
-        # In microseconds - this parameter is used for the `wait` helper methods
-        self.wait_task_time_before_retry = 100000
-        {{/isSearchClient}}
+        UserAgent.add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
 
         self.headers = {
             "x-algolia-application-id": app_id,
@@ -51,10 +47,11 @@ class Config(BaseConfig):
             del self.proxies["https"]
 
         {{#hasRegionalHost}}
+        self.region = region
         _regions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}]
 
         if {{^fallbackToAliasHost}}not region or {{/fallbackToAliasHost}}(region is not None and region not in _regions):
-            raise AlgoliaException(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
+            raise ValueError(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
 
         self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region))])
         {{/hasRegionalHost}}

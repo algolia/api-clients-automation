@@ -67,13 +67,13 @@ public class ParametersWithDataType {
               throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0);
+          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
           parametersWithDataType.add(paramWithType);
           parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
         }
       }
     } else {
-      Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0);
+      Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0, false);
       parametersWithDataType.add(paramWithType);
       parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
     }
@@ -90,7 +90,8 @@ public class ParametersWithDataType {
     Object param,
     IJsonSchemaValidationProperties spec,
     String parent,
-    int suffix
+    int suffix,
+    boolean isParentFreeFormObject
   ) throws CTSException {
     if (spec == null) {
       return traverseParams(paramName, param, parent, suffix);
@@ -133,16 +134,6 @@ public class ParametersWithDataType {
       finalParamName = "type_";
     }
 
-    // type is a reserved keyword in go, we need to add more generic way to handle reversed keywords
-    // for all languages.
-    //         if (language.equals("csharp") && paramName.equals("params")) {
-    //           finalParamName = "varParams";
-    //         }
-    //
-    //               if (language.equals("csharp") && paramName.equals("source")) {
-    //                   finalParamName = "varSource";
-    //                 }
-
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
@@ -151,6 +142,7 @@ public class ParametersWithDataType {
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", Helpers.capitalize(baseType));
+    testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
     if (param == null) {
       handleNull(testOutput);
@@ -211,6 +203,7 @@ public class ParametersWithDataType {
     testOutput.put("isArray", false);
     testOutput.put("isNull", false);
     testOutput.put("isFreeFormObject", false);
+    testOutput.put("isParentFreeFormObject", false);
     testOutput.put("isAnyType", false);
     testOutput.put("isString", false);
     testOutput.put("isInteger", false);
@@ -241,7 +234,7 @@ public class ParametersWithDataType {
 
     List<Object> values = new ArrayList<>();
     for (int i = 0; i < items.size(); i++) {
-      values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, suffix + 1));
+      values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, suffix + 1, false));
     }
 
     testOutput.put("isArray", true);
@@ -271,7 +264,7 @@ public class ParametersWithDataType {
         List<CodegenProperty> allOf = composedSchemas.getAllOf();
 
         if (allOf != null && !allOf.isEmpty()) {
-          traverseParams(paramName, param, allOf.get(0), parent, suffix);
+          traverseParams(paramName, param, allOf.get(0), parent, suffix, false);
 
           return;
         }
@@ -290,7 +283,7 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
-      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix));
+      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, false));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();
       IJsonSchemaValidationProperties current = match;
@@ -342,7 +335,14 @@ public class ParametersWithDataType {
           // we hit an additionalProperties, infer it's type
           CodegenParameter additionalPropertiesSpec = new CodegenParameter();
           additionalPropertiesSpec.dataType = inferDataType(entry.getValue(), additionalPropertiesSpec, null);
-          Map<String, Object> value = traverseParams(entry.getKey(), entry.getValue(), additionalPropertiesSpec, paramName, suffix + 1);
+          Map<String, Object> value = traverseParams(
+            entry.getKey(),
+            entry.getValue(),
+            additionalPropertiesSpec,
+            paramName,
+            suffix + 1,
+            false
+          );
           value.put("isAdditionalProperty", true);
           values.add(value);
         } else {
@@ -360,7 +360,7 @@ public class ParametersWithDataType {
           );
         }
       } else {
-        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1);
+        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false);
         values.add(transformedParam);
 
         if (varSpec instanceof CodegenProperty property) {
@@ -385,7 +385,7 @@ public class ParametersWithDataType {
     for (Entry<String, Object> entry : vars.entrySet()) {
       CodegenParameter objSpec = new CodegenParameter();
       objSpec.dataType = inferDataType(entry.getValue(), objSpec, null);
-      values.add(traverseParams(entry.getKey(), entry.getValue(), objSpec, paramName, suffix + 1));
+      values.add(traverseParams(entry.getKey(), entry.getValue(), objSpec, paramName, suffix + 1, true));
     }
     // sometimes it's really just an object
     if (testOutput.getOrDefault("objectName", "").equals("Object")) {
@@ -423,7 +423,7 @@ public class ParametersWithDataType {
         itemType = maybeMatch;
       }
 
-      values.add(traverseParams(entry.getKey(), entry.getValue(), itemType, paramName, suffix + 1));
+      values.add(traverseParams(entry.getKey(), entry.getValue(), itemType, paramName, suffix + 1, true));
     }
 
     testOutput.put("isFreeFormObject", true);

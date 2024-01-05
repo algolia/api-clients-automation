@@ -15,8 +15,6 @@ import algoliasearch.recommend.RecommendationModels._
 
 /** RecommendationsQuery
   *
-  * @param objectID
-  *   Unique object identifier.
   * @param indexName
   *   Algolia index name.
   * @param threshold
@@ -25,13 +23,15 @@ import algoliasearch.recommend.RecommendationModels._
   *   recommendations are.
   * @param maxRecommendations
   *   Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+  * @param objectID
+  *   Unique object identifier.
   */
 case class RecommendationsQuery(
+    indexName: String,
+    threshold: Option[Int] = scala.None,
+    maxRecommendations: Option[Int] = scala.None,
     model: RecommendationModels,
     objectID: String,
     queryParameters: Option[SearchParamsObject] = scala.None,
-    fallbackParameters: Option[SearchParamsObject] = scala.None,
-    indexName: String,
-    threshold: Option[Int] = scala.None,
-    maxRecommendations: Option[Int] = scala.None
+    fallbackParameters: Option[SearchParamsObject] = scala.None
 ) extends RecommendationsRequestTrait

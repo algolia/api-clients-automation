@@ -135,9 +135,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     String packageName = getPackageName(CLIENT);
 
     additionalProperties.put("apiName", apiName);
-    additionalProperties.put("capitalizedApiName", Helpers.capitalize(apiName));
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
-    additionalProperties.put("gitRepoId", "algoliasearch-client-javascript");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
@@ -154,7 +152,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       // Files used to generate the `lite` client
       apiName = "lite" + Helpers.API_SUFFIX;
       additionalProperties.put("apiName", apiName);
-      additionalProperties.put("capitalizedApiName", Helpers.capitalize(apiName));
       additionalProperties.put("algoliaAgent", "Lite");
     }
   }

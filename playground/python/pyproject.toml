@@ -16,6 +16,7 @@ autoflake = "2.2.1"
 autopep8 = "2.0.4"
 black = "23.11.0"
 isort = "5.13.0"
+python-dotenv = "1.0.0"
 
 [tool.poetry.scripts]
 search = "app.search:main"

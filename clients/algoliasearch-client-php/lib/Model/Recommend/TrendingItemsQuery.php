@@ -17,14 +17,14 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      * @var string[]
      */
     protected static $modelTypes = [
+        'indexName' => 'string',
+        'threshold' => 'int',
+        'maxRecommendations' => 'int',
         'facetName' => 'string',
         'facetValue' => 'string',
         'model' => '\Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel',
         'queryParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject',
         'fallbackParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject',
-        'indexName' => 'string',
-        'threshold' => 'int',
-        'maxRecommendations' => 'int',
     ];
 
     /**
@@ -33,14 +33,14 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      * @var string[]
      */
     protected static $modelFormats = [
+        'indexName' => null,
+        'threshold' => null,
+        'maxRecommendations' => null,
         'facetName' => null,
         'facetValue' => null,
         'model' => null,
         'queryParameters' => null,
         'fallbackParameters' => null,
-        'indexName' => null,
-        'threshold' => null,
-        'maxRecommendations' => null,
     ];
 
     /**
@@ -50,14 +50,14 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      * @var string[]
      */
     protected static $attributeMap = [
+        'indexName' => 'indexName',
+        'threshold' => 'threshold',
+        'maxRecommendations' => 'maxRecommendations',
         'facetName' => 'facetName',
         'facetValue' => 'facetValue',
         'model' => 'model',
         'queryParameters' => 'queryParameters',
         'fallbackParameters' => 'fallbackParameters',
-        'indexName' => 'indexName',
-        'threshold' => 'threshold',
-        'maxRecommendations' => 'maxRecommendations',
     ];
 
     /**
@@ -66,14 +66,14 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      * @var string[]
      */
     protected static $setters = [
+        'indexName' => 'setIndexName',
+        'threshold' => 'setThreshold',
+        'maxRecommendations' => 'setMaxRecommendations',
         'facetName' => 'setFacetName',
         'facetValue' => 'setFacetValue',
         'model' => 'setModel',
         'queryParameters' => 'setQueryParameters',
         'fallbackParameters' => 'setFallbackParameters',
-        'indexName' => 'setIndexName',
-        'threshold' => 'setThreshold',
-        'maxRecommendations' => 'setMaxRecommendations',
     ];
 
     /**
@@ -82,14 +82,14 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      * @var string[]
      */
     protected static $getters = [
+        'indexName' => 'getIndexName',
+        'threshold' => 'getThreshold',
+        'maxRecommendations' => 'getMaxRecommendations',
         'facetName' => 'getFacetName',
         'facetValue' => 'getFacetValue',
         'model' => 'getModel',
         'queryParameters' => 'getQueryParameters',
         'fallbackParameters' => 'getFallbackParameters',
-        'indexName' => 'getIndexName',
-        'threshold' => 'getThreshold',
-        'maxRecommendations' => 'getMaxRecommendations',
     ];
 
     /**
@@ -106,6 +106,15 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      */
     public function __construct(array $data = null)
     {
+        if (isset($data['indexName'])) {
+            $this->container['indexName'] = $data['indexName'];
+        }
+        if (isset($data['threshold'])) {
+            $this->container['threshold'] = $data['threshold'];
+        }
+        if (isset($data['maxRecommendations'])) {
+            $this->container['maxRecommendations'] = $data['maxRecommendations'];
+        }
         if (isset($data['facetName'])) {
             $this->container['facetName'] = $data['facetName'];
         }
@@ -120,15 +129,6 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         }
         if (isset($data['fallbackParameters'])) {
             $this->container['fallbackParameters'] = $data['fallbackParameters'];
-        }
-        if (isset($data['indexName'])) {
-            $this->container['indexName'] = $data['indexName'];
-        }
-        if (isset($data['threshold'])) {
-            $this->container['threshold'] = $data['threshold'];
-        }
-        if (isset($data['maxRecommendations'])) {
-            $this->container['maxRecommendations'] = $data['maxRecommendations'];
         }
     }
 
@@ -218,126 +218,6 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     }
 
     /**
-     * Gets facetName.
-     *
-     * @return null|string
-     */
-    public function getFacetName()
-    {
-        return $this->container['facetName'] ?? null;
-    }
-
-    /**
-     * Sets facetName.
-     *
-     * @param null|string $facetName facet name for trending models
-     *
-     * @return self
-     */
-    public function setFacetName($facetName)
-    {
-        $this->container['facetName'] = $facetName;
-
-        return $this;
-    }
-
-    /**
-     * Gets facetValue.
-     *
-     * @return null|string
-     */
-    public function getFacetValue()
-    {
-        return $this->container['facetValue'] ?? null;
-    }
-
-    /**
-     * Sets facetValue.
-     *
-     * @param null|string $facetValue facet value for trending models
-     *
-     * @return self
-     */
-    public function setFacetValue($facetValue)
-    {
-        $this->container['facetValue'] = $facetValue;
-
-        return $this;
-    }
-
-    /**
-     * Gets model.
-     *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel
-     */
-    public function getModel()
-    {
-        return $this->container['model'] ?? null;
-    }
-
-    /**
-     * Sets model.
-     *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel $model model
-     *
-     * @return self
-     */
-    public function setModel($model)
-    {
-        $this->container['model'] = $model;
-
-        return $this;
-    }
-
-    /**
-     * Gets queryParameters.
-     *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject
-     */
-    public function getQueryParameters()
-    {
-        return $this->container['queryParameters'] ?? null;
-    }
-
-    /**
-     * Sets queryParameters.
-     *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject $queryParameters queryParameters
-     *
-     * @return self
-     */
-    public function setQueryParameters($queryParameters)
-    {
-        $this->container['queryParameters'] = $queryParameters;
-
-        return $this;
-    }
-
-    /**
-     * Gets fallbackParameters.
-     *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject
-     */
-    public function getFallbackParameters()
-    {
-        return $this->container['fallbackParameters'] ?? null;
-    }
-
-    /**
-     * Sets fallbackParameters.
-     *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject $fallbackParameters fallbackParameters
-     *
-     * @return self
-     */
-    public function setFallbackParameters($fallbackParameters)
-    {
-        $this->container['fallbackParameters'] = $fallbackParameters;
-
-        return $this;
-    }
-
-    /**
      * Gets indexName.
      *
      * @return string
@@ -412,6 +292,126 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     public function setMaxRecommendations($maxRecommendations)
     {
         $this->container['maxRecommendations'] = $maxRecommendations;
+
+        return $this;
+    }
+
+    /**
+     * Gets facetName.
+     *
+     * @return null|string
+     */
+    public function getFacetName()
+    {
+        return $this->container['facetName'] ?? null;
+    }
+
+    /**
+     * Sets facetName.
+     *
+     * @param null|string $facetName facet name for trending models
+     *
+     * @return self
+     */
+    public function setFacetName($facetName)
+    {
+        $this->container['facetName'] = $facetName;
+
+        return $this;
+    }
+
+    /**
+     * Gets facetValue.
+     *
+     * @return null|string
+     */
+    public function getFacetValue()
+    {
+        return $this->container['facetValue'] ?? null;
+    }
+
+    /**
+     * Sets facetValue.
+     *
+     * @param null|string $facetValue facet value for trending models
+     *
+     * @return self
+     */
+    public function setFacetValue($facetValue)
+    {
+        $this->container['facetValue'] = $facetValue;
+
+        return $this;
+    }
+
+    /**
+     * Gets model.
+     *
+     * @return null|TrendingItemsModel
+     */
+    public function getModel()
+    {
+        return $this->container['model'] ?? null;
+    }
+
+    /**
+     * Sets model.
+     *
+     * @param null|TrendingItemsModel $model model
+     *
+     * @return self
+     */
+    public function setModel($model)
+    {
+        $this->container['model'] = $model;
+
+        return $this;
+    }
+
+    /**
+     * Gets queryParameters.
+     *
+     * @return null|SearchParamsObject
+     */
+    public function getQueryParameters()
+    {
+        return $this->container['queryParameters'] ?? null;
+    }
+
+    /**
+     * Sets queryParameters.
+     *
+     * @param null|SearchParamsObject $queryParameters queryParameters
+     *
+     * @return self
+     */
+    public function setQueryParameters($queryParameters)
+    {
+        $this->container['queryParameters'] = $queryParameters;
+
+        return $this;
+    }
+
+    /**
+     * Gets fallbackParameters.
+     *
+     * @return null|SearchParamsObject
+     */
+    public function getFallbackParameters()
+    {
+        return $this->container['fallbackParameters'] ?? null;
+    }
+
+    /**
+     * Sets fallbackParameters.
+     *
+     * @param null|SearchParamsObject $fallbackParameters fallbackParameters
+     *
+     * @return self
+     */
+    public function setFallbackParameters($fallbackParameters)
+    {
+        $this->container['fallbackParameters'] = $fallbackParameters;
 
         return $this;
     }

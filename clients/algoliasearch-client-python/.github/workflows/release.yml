@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  release:
+    name: Publish
+    runs-on: ubuntu-22.04
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    environment:
+      name: pypi
+      url: https://pypi.org/p/algoliasearch
+    permissions:
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.11.6
+
+    - name: install poetry
+      shell: bash
+      run: pipx install poetry
+
+    - name: install dependencies
+      shell: bash
+      run: poetry install
+
+    - name: build client
+      run: poetry build
+      shell: bash
+
+    - name: Publish algoliasearch package to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

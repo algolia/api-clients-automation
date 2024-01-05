@@ -12,6 +12,10 @@ TrendingItemsQuery _$TrendingItemsQueryFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = TrendingItemsQuery(
+          indexName: $checkedConvert('indexName', (v) => v as String),
+          threshold: $checkedConvert('threshold', (v) => v as int?),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           facetName: $checkedConvert('facetName', (v) => v as String?),
           facetValue: $checkedConvert('facetValue', (v) => v as String?),
           model: $checkedConvert('model',
@@ -26,17 +30,15 @@ TrendingItemsQuery _$TrendingItemsQueryFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
-          indexName: $checkedConvert('indexName', (v) => v as String),
-          threshold: $checkedConvert('threshold', (v) => v as int?),
-          maxRecommendations:
-              $checkedConvert('maxRecommendations', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$TrendingItemsQueryToJson(TrendingItemsQuery instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -44,14 +46,13 @@ Map<String, dynamic> _$TrendingItemsQueryToJson(TrendingItemsQuery instance) {
     }
   }
 
+  writeNotNull('threshold', instance.threshold);
+  writeNotNull('maxRecommendations', instance.maxRecommendations);
   writeNotNull('facetName', instance.facetName);
   writeNotNull('facetValue', instance.facetValue);
   writeNotNull('model', instance.model?.toJson());
   writeNotNull('queryParameters', instance.queryParameters?.toJson());
   writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
-  val['indexName'] = instance.indexName;
-  writeNotNull('threshold', instance.threshold);
-  writeNotNull('maxRecommendations', instance.maxRecommendations);
   return val;
 }
 

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from json import loads
 from re import match
-from typing import Annotated, Any, ClassVar, Dict, List, Optional, Union
+from typing import Annotated, Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, field_validator
 
@@ -16,11 +16,6 @@ from algoliasearch.search.models.facets_stats import FacetsStats
 from algoliasearch.search.models.hit import Hit
 from algoliasearch.search.models.redirect import Redirect
 from algoliasearch.search.models.rendering_content import RenderingContent
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class BrowseResponse(BaseModel):
@@ -108,7 +103,7 @@ class BrowseResponse(BaseModel):
         description="Time the server took to process the request, in milliseconds.",
         alias="processingTimeMS",
     )
-    processing_timings_ms: Optional[Union[str, Any]] = Field(
+    processing_timings_ms: Optional[Dict[str, Any]] = Field(
         default=None,
         description="Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues.",
         alias="processingTimingsMS",
@@ -132,7 +127,7 @@ class BrowseResponse(BaseModel):
         description="Host name of the server that processed the request.",
         alias="serverUsed",
     )
-    user_data: Optional[Union[str, Any]] = Field(
+    user_data: Optional[Dict[str, Any]] = Field(
         default=None,
         description="Lets you store custom data in your indices.",
         alias="userData",
@@ -146,39 +141,6 @@ class BrowseResponse(BaseModel):
         default=None,
         description="Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. ",
     )
-    __properties: ClassVar[List[str]] = [
-        "abTestID",
-        "abTestVariantID",
-        "aroundLatLng",
-        "automaticRadius",
-        "exhaustive",
-        "exhaustiveFacetsCount",
-        "exhaustiveNbHits",
-        "exhaustiveTypo",
-        "facets",
-        "facets_stats",
-        "hitsPerPage",
-        "index",
-        "indexUsed",
-        "message",
-        "nbHits",
-        "nbPages",
-        "nbSortedHits",
-        "page",
-        "parsedQuery",
-        "processingTimeMS",
-        "processingTimingsMS",
-        "queryAfterRemoval",
-        "redirect",
-        "renderingContent",
-        "serverTimeMS",
-        "serverUsed",
-        "userData",
-        "hits",
-        "query",
-        "params",
-        "cursor",
-    ]
 
     @field_validator("around_lat_lng")
     def around_lat_lng_validate_regular_expression(cls, value):

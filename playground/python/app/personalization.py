@@ -6,7 +6,7 @@ from algoliasearch.personalization import PersonalizationClient, __version__
 async def main():
     print("PersonalizationClient version", __version__)
 
-    client = PersonalizationClient.create("FOO", "BAR")
+    client = PersonalizationClient("FOO", "BAR")
 
     print("client initialized", client)
 

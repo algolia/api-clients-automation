@@ -1,16 +1,16 @@
-recommendationsResponse:
+recommendationsResults:
   allOf:
     - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - $ref: '#/recommendHits'
+    - $ref: '#/recommendationsHits'
 
-recommendHits:
+recommendationsHits:
   type: object
   additionalProperties: false
   properties:
     hits:
       type: array
       items:
-        $ref: '#/recommendHit'
+        $ref: '#/recommendationsHit'
     query:
       $ref: '../../../common/schemas/SearchParams.yml#/query'    
     params:
@@ -19,6 +19,11 @@ recommendHits:
       example: query=a&hitsPerPage=20     
   required:
     - hits
+
+recommendationsHit:
+  oneOf:
+    - $ref: '#/recommendHit'
+    - $ref: '#/trendingFacetHit'
 
 recommendHit:
   type: object
@@ -39,41 +44,26 @@ recommendHit:
     _distinctSeqID:
       $ref: '../../../search/common/schemas/Hit.yml#/_distinctSeqID'
     _score:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
-      description: Recommendation score.
+      $ref: '#/recommendScore'
 
-ruleResponse:
+trendingFacetHit:
   type: object
-  description: Rule object.
-  additionalProperties: false
-  properties:
-    _metadata:
-      type: object
-      properties:
-        lastUpdate:
-          $ref: '../../../common/responses/common.yml#/updatedAt'
-    objectID:
-      type: string
-      description: Unique identifier for a rule object.
-      example: 'hide-12345'
-    conditions:
-      type: array
-      description: >
-        [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
-      items:
-        $ref: '../../../search/paths/rules/common/schemas.yml#/condition'
-    consequence:
-      $ref: '../../../search/paths/rules/common/schemas.yml#//consequence'
-    description:
-      type: string
-      description: Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      example: 'Display a promotional banner'
-    enabled:
-      type: boolean
-      default: true
-      description: Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+  description: Trending facet hit.
   required:
-    - objectID
+    - _score
+    - facetName
+    - facetValue
+  properties:
+    _score:
+      $ref: '#/recommendScore'
+    facetName:
+      $ref: '../parameters.yml#/facetName'
+    facetValue:
+      $ref: '../parameters.yml#/facetValue'
+
+recommendScore:
+  type: number
+  format: double
+  minimum: 0
+  maximum: 100
+  description: Recommendation score.

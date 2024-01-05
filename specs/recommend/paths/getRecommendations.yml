@@ -40,7 +40,7 @@ post:
               results:
                 type: array
                 items:
-                  $ref: '../common/schemas/RecommendationsResponse.yml#/recommendationsResponse'
+                  $ref: '../common/schemas/RecommendationsResponse.yml#/recommendationsResults'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

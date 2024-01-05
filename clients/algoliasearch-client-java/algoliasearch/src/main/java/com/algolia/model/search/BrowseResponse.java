@@ -107,7 +107,7 @@ public class BrowseResponse<T> {
   @JsonProperty("cursor")
   private String cursor;
 
-  public BrowseResponse setAbTestID(Integer abTestID) {
+  public BrowseResponse<T> setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
   }
@@ -120,7 +120,7 @@ public class BrowseResponse<T> {
     return abTestID;
   }
 
-  public BrowseResponse setAbTestVariantID(Integer abTestVariantID) {
+  public BrowseResponse<T> setAbTestVariantID(Integer abTestVariantID) {
     this.abTestVariantID = abTestVariantID;
     return this;
   }
@@ -134,7 +134,7 @@ public class BrowseResponse<T> {
     return abTestVariantID;
   }
 
-  public BrowseResponse setAroundLatLng(String aroundLatLng) {
+  public BrowseResponse<T> setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -145,7 +145,7 @@ public class BrowseResponse<T> {
     return aroundLatLng;
   }
 
-  public BrowseResponse setAutomaticRadius(String automaticRadius) {
+  public BrowseResponse<T> setAutomaticRadius(String automaticRadius) {
     this.automaticRadius = automaticRadius;
     return this;
   }
@@ -156,7 +156,7 @@ public class BrowseResponse<T> {
     return automaticRadius;
   }
 
-  public BrowseResponse setExhaustive(Exhaustive exhaustive) {
+  public BrowseResponse<T> setExhaustive(Exhaustive exhaustive) {
     this.exhaustive = exhaustive;
     return this;
   }
@@ -167,7 +167,7 @@ public class BrowseResponse<T> {
     return exhaustive;
   }
 
-  public BrowseResponse setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
+  public BrowseResponse<T> setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
     this.exhaustiveFacetsCount = exhaustiveFacetsCount;
     return this;
   }
@@ -183,7 +183,7 @@ public class BrowseResponse<T> {
     return exhaustiveFacetsCount;
   }
 
-  public BrowseResponse setExhaustiveNbHits(Boolean exhaustiveNbHits) {
+  public BrowseResponse<T> setExhaustiveNbHits(Boolean exhaustiveNbHits) {
     this.exhaustiveNbHits = exhaustiveNbHits;
     return this;
   }
@@ -199,7 +199,7 @@ public class BrowseResponse<T> {
     return exhaustiveNbHits;
   }
 
-  public BrowseResponse setExhaustiveTypo(Boolean exhaustiveTypo) {
+  public BrowseResponse<T> setExhaustiveTypo(Boolean exhaustiveTypo) {
     this.exhaustiveTypo = exhaustiveTypo;
     return this;
   }
@@ -215,12 +215,12 @@ public class BrowseResponse<T> {
     return exhaustiveTypo;
   }
 
-  public BrowseResponse setFacets(Map<String, Map<String, Integer>> facets) {
+  public BrowseResponse<T> setFacets(Map<String, Map<String, Integer>> facets) {
     this.facets = facets;
     return this;
   }
 
-  public BrowseResponse putFacets(String key, Map<String, Integer> facetsItem) {
+  public BrowseResponse<T> putFacets(String key, Map<String, Integer> facetsItem) {
     if (this.facets == null) {
       this.facets = new HashMap<>();
     }
@@ -234,12 +234,12 @@ public class BrowseResponse<T> {
     return facets;
   }
 
-  public BrowseResponse setFacetsStats(Map<String, FacetsStats> facetsStats) {
+  public BrowseResponse<T> setFacetsStats(Map<String, FacetsStats> facetsStats) {
     this.facetsStats = facetsStats;
     return this;
   }
 
-  public BrowseResponse putFacetsStats(String key, FacetsStats facetsStatsItem) {
+  public BrowseResponse<T> putFacetsStats(String key, FacetsStats facetsStatsItem) {
     if (this.facetsStats == null) {
       this.facetsStats = new HashMap<>();
     }
@@ -253,7 +253,7 @@ public class BrowseResponse<T> {
     return facetsStats;
   }
 
-  public BrowseResponse setHitsPerPage(Integer hitsPerPage) {
+  public BrowseResponse<T> setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -264,7 +264,7 @@ public class BrowseResponse<T> {
     return hitsPerPage;
   }
 
-  public BrowseResponse setIndex(String index) {
+  public BrowseResponse<T> setIndex(String index) {
     this.index = index;
     return this;
   }
@@ -275,7 +275,7 @@ public class BrowseResponse<T> {
     return index;
   }
 
-  public BrowseResponse setIndexUsed(String indexUsed) {
+  public BrowseResponse<T> setIndexUsed(String indexUsed) {
     this.indexUsed = indexUsed;
     return this;
   }
@@ -289,7 +289,7 @@ public class BrowseResponse<T> {
     return indexUsed;
   }
 
-  public BrowseResponse setMessage(String message) {
+  public BrowseResponse<T> setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -300,7 +300,7 @@ public class BrowseResponse<T> {
     return message;
   }
 
-  public BrowseResponse setNbHits(Integer nbHits) {
+  public BrowseResponse<T> setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -311,7 +311,7 @@ public class BrowseResponse<T> {
     return nbHits;
   }
 
-  public BrowseResponse setNbPages(Integer nbPages) {
+  public BrowseResponse<T> setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -322,7 +322,7 @@ public class BrowseResponse<T> {
     return nbPages;
   }
 
-  public BrowseResponse setNbSortedHits(Integer nbSortedHits) {
+  public BrowseResponse<T> setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
   }
@@ -333,7 +333,7 @@ public class BrowseResponse<T> {
     return nbSortedHits;
   }
 
-  public BrowseResponse setPage(Integer page) {
+  public BrowseResponse<T> setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -344,7 +344,7 @@ public class BrowseResponse<T> {
     return page;
   }
 
-  public BrowseResponse setParsedQuery(String parsedQuery) {
+  public BrowseResponse<T> setParsedQuery(String parsedQuery) {
     this.parsedQuery = parsedQuery;
     return this;
   }
@@ -358,7 +358,7 @@ public class BrowseResponse<T> {
     return parsedQuery;
   }
 
-  public BrowseResponse setProcessingTimeMS(Integer processingTimeMS) {
+  public BrowseResponse<T> setProcessingTimeMS(Integer processingTimeMS) {
     this.processingTimeMS = processingTimeMS;
     return this;
   }
@@ -369,7 +369,7 @@ public class BrowseResponse<T> {
     return processingTimeMS;
   }
 
-  public BrowseResponse setProcessingTimingsMS(Object processingTimingsMS) {
+  public BrowseResponse<T> setProcessingTimingsMS(Object processingTimingsMS) {
     this.processingTimingsMS = processingTimingsMS;
     return this;
   }
@@ -383,7 +383,7 @@ public class BrowseResponse<T> {
     return processingTimingsMS;
   }
 
-  public BrowseResponse setQueryAfterRemoval(String queryAfterRemoval) {
+  public BrowseResponse<T> setQueryAfterRemoval(String queryAfterRemoval) {
     this.queryAfterRemoval = queryAfterRemoval;
     return this;
   }
@@ -397,7 +397,7 @@ public class BrowseResponse<T> {
     return queryAfterRemoval;
   }
 
-  public BrowseResponse setRedirect(Redirect redirect) {
+  public BrowseResponse<T> setRedirect(Redirect redirect) {
     this.redirect = redirect;
     return this;
   }
@@ -408,7 +408,7 @@ public class BrowseResponse<T> {
     return redirect;
   }
 
-  public BrowseResponse setRenderingContent(RenderingContent renderingContent) {
+  public BrowseResponse<T> setRenderingContent(RenderingContent renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -419,7 +419,7 @@ public class BrowseResponse<T> {
     return renderingContent;
   }
 
-  public BrowseResponse setServerTimeMS(Integer serverTimeMS) {
+  public BrowseResponse<T> setServerTimeMS(Integer serverTimeMS) {
     this.serverTimeMS = serverTimeMS;
     return this;
   }
@@ -430,7 +430,7 @@ public class BrowseResponse<T> {
     return serverTimeMS;
   }
 
-  public BrowseResponse setServerUsed(String serverUsed) {
+  public BrowseResponse<T> setServerUsed(String serverUsed) {
     this.serverUsed = serverUsed;
     return this;
   }
@@ -441,7 +441,7 @@ public class BrowseResponse<T> {
     return serverUsed;
   }
 
-  public BrowseResponse setUserData(Object userData) {
+  public BrowseResponse<T> setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -452,12 +452,12 @@ public class BrowseResponse<T> {
     return userData;
   }
 
-  public BrowseResponse setHits(List<T> hits) {
+  public BrowseResponse<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
   }
 
-  public BrowseResponse addHits(T hitsItem) {
+  public BrowseResponse<T> addHits(T hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
@@ -468,7 +468,7 @@ public class BrowseResponse<T> {
     return hits;
   }
 
-  public BrowseResponse setQuery(String query) {
+  public BrowseResponse<T> setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -479,7 +479,7 @@ public class BrowseResponse<T> {
     return query;
   }
 
-  public BrowseResponse setParams(String params) {
+  public BrowseResponse<T> setParams(String params) {
     this.params = params;
     return this;
   }
@@ -490,7 +490,7 @@ public class BrowseResponse<T> {
     return params;
   }
 
-  public BrowseResponse setCursor(String cursor) {
+  public BrowseResponse<T> setCursor(String cursor) {
     this.cursor = cursor;
     return this;
   }
@@ -513,7 +513,7 @@ public class BrowseResponse<T> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BrowseResponse browseResponse = (BrowseResponse) o;
+    BrowseResponse<?> browseResponse = (BrowseResponse<?>) o;
     return (
       Objects.equals(this.abTestID, browseResponse.abTestID) &&
       Objects.equals(this.abTestVariantID, browseResponse.abTestVariantID) &&

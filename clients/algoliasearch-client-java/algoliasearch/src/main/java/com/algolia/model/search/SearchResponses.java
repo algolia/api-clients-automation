@@ -10,24 +10,24 @@ import java.util.List;
 import java.util.Objects;
 
 /** SearchResponses */
-public class SearchResponses {
+public class SearchResponses<T> {
 
   @JsonProperty("results")
-  private List<SearchResult> results = new ArrayList<>();
+  private List<SearchResult<T>> results = new ArrayList<>();
 
-  public SearchResponses setResults(List<SearchResult> results) {
+  public SearchResponses<T> setResults(List<SearchResult<T>> results) {
     this.results = results;
     return this;
   }
 
-  public SearchResponses addResults(SearchResult resultsItem) {
+  public SearchResponses<T> addResults(SearchResult<T> resultsItem) {
     this.results.add(resultsItem);
     return this;
   }
 
   /** Get results */
   @javax.annotation.Nonnull
-  public List<SearchResult> getResults() {
+  public List<SearchResult<T>> getResults() {
     return results;
   }
 
@@ -39,7 +39,7 @@ public class SearchResponses {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SearchResponses searchResponses = (SearchResponses) o;
+    SearchResponses<?> searchResponses = (SearchResponses<?>) o;
     return Objects.equals(this.results, searchResponses.results);
   }
 

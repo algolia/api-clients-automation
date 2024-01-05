@@ -6,7 +6,7 @@ from algoliasearch.http.hosts import CallType, Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
 
 
-class Config(BaseConfig):
+class RecommendConfig(BaseConfig):
     def __init__(
         self, app_id: Optional[str] = None, api_key: Optional[str] = None
     ) -> None:
@@ -25,6 +25,8 @@ class Config(BaseConfig):
         self.read_timeout = 5000
         self.write_timeout = 30000
         self.connect_timeout = 2000
+
+        UserAgent.add("Recommend")
 
         self.headers = {
             "x-algolia-application-id": app_id,

@@ -1,0 +1,20 @@
+trendingFacetsQuery:
+  allOf:
+    - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
+    - $ref: '#/baseTrendingFacetsQuery'
+
+baseTrendingFacetsQuery:
+  type: object
+  additionalProperties: false
+  properties:
+    facetName:
+      $ref: '../parameters.yml#/facetName'
+    model:
+      $ref: '#/trendingFacetsModel'
+  required:
+    - facetName
+
+trendingFacetsModel:
+  description: Trending facets model.
+  type: string
+  enum: [trending-facets]

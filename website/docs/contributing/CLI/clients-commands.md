@@ -13,7 +13,7 @@ The Clients commands are used to [`generate`](#generate) and [`build`](#build) A
 > The `client` parameter is variadic, you can pass multiple `client` name
 
 ```bash
-yarn docker generate <language | all> <client... | all>
+apic generate <language | all> <client... | all>
 ```
 
 ### Available options
@@ -28,19 +28,19 @@ yarn docker generate <language | all> <client... | all>
 ### Generate all clients for all supported languages
 
 ```bash
-yarn docker generate
+apic generate
 ```
 
 ### Generate specific client for specific language
 
 ```bash
-yarn docker generate java search
+apic generate java search
 ```
 
 ### Generate many client for specific language
 
 ```bash
-yarn docker generate php insights recommend search
+apic generate php insights recommend search
 ```
 
 ## Build
@@ -48,17 +48,17 @@ yarn docker generate php insights recommend search
 ### Build all clients for all supported languages
 
 ```bash
-yarn docker build clients
+apic build clients
 ```
 
 ### Build specific client for specific language
 
 ```bash
-yarn docker build clients javascript recommend
+apic build clients javascript recommend
 ```
 
 ### Build many client for specific language
 
 ```bash
-yarn docker build clients php insights recommend search
+apic build clients php insights recommend search
 ```

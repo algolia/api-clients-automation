@@ -7,16 +7,11 @@ from __future__ import annotations
 
 from json import loads
 from re import match
-from typing import Annotated, Any, ClassVar, Dict, List, Optional
+from typing import Annotated, Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel, Field, StrictInt, StrictStr, field_validator
 
 from algoliasearch.insights.models.conversion_event import ConversionEvent
-
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class ConvertedObjectIDs(BaseModel):
@@ -49,15 +44,6 @@ class ConvertedObjectIDs(BaseModel):
         description="User token for authenticated users.",
         alias="authenticatedUserToken",
     )
-    __properties: ClassVar[List[str]] = [
-        "eventName",
-        "eventType",
-        "index",
-        "objectIDs",
-        "userToken",
-        "timestamp",
-        "authenticatedUserToken",
-    ]
 
     @field_validator("event_name")
     def event_name_validate_regular_expression(cls, value):

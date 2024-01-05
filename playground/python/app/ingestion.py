@@ -6,7 +6,7 @@ from algoliasearch.ingestion import IngestionClient, __version__
 async def main():
     print("IngestionClient version", __version__)
 
-    client = IngestionClient()
+    client = IngestionClient("FOO", "BAR")
 
     print("client initialized", client)
 

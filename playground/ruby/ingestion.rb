@@ -5,7 +5,7 @@ Dotenv.load('../.env')
 
 client = Algolia::IngestionClient.create(ENV['ALGOLIA_APPLICATION_ID'], ENV['ALGOLIA_ADMIN_KEY'], 'us')
 
-res, status, headers = client.get_authentications_with_http_info({:items_per_page => 50})
+res, status, headers = client.get_authentications_with_http_info(50)
 puts res
 puts status
 puts headers

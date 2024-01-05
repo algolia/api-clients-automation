@@ -25,7 +25,7 @@
 ## ✨ Features
 
 - Thin & minimal low-level HTTP client to interact with Algolia's API
-- Supports Python from `3.7` to `3.12`
+- Supports Python from `3.8` to `3.12`
 
 ## 💡 Getting Started
 
@@ -35,16 +35,48 @@ First, install Algolia Python API Client via the [pip](https://pip.pypa.io/en/st
 pip install --upgrade 'algoliasearch>=4.0,<5.0'
 ```
 
-Then, create objects on your index:
+Now you can initialize any client with your Algolia credentials, for example the SearchClient:
 
 ```py
-# TODO
+from algoliasearch.search.client import SearchClient
+
+client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+```
+
+Add new object to your index:
+
+```py
+save_resp = await client.save_object(index_name="nvim", body={"description": "blazing fast"})
+```
+
+Wait for the task to be processed on the Algolia side
+
+```py
+await client.wait_for_task(index_name="nvim", task_id=save_resp.task_id)
 ```
 
 Finally, you may begin searching a object using the `search` method:
 
 ```py
-# TODO
+# using a raw dict
+
+search_resp = await client.search(search_method_params={"requests": [{"indexName": "nvim"}]})
+
+# using the given models
+
+from algoliasearch.search.models.search_method_params import SearchMethodParams
+from algoliasearch.search.models.search_for_hits import SearchForHits
+from algoliasearch.search.models.search_query import SearchQuery
+
+search_resp = await client.search(
+    search_method_params=SearchMethodParams(
+        requests=[
+            SearchQuery(SearchForHits(index_name="nvim")),
+        ],
+    ),
+)
+
+print(search_resp.to_json())
 ```
 
 For full documentation, visit the **[Algolia Python API Client](https://www.algolia.com/doc/api-client/getting-started/install/python/)**.

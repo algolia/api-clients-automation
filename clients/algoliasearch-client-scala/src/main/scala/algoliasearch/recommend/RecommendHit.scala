@@ -33,7 +33,7 @@ case class RecommendHit(
     distinctSeqID: Option[Int] = scala.None,
     score: Double,
     additionalProperties: Option[List[JField]] = None
-)
+) extends RecommendationsHitTrait
 
 class RecommendHitSerializer extends Serializer[RecommendHit] {
 

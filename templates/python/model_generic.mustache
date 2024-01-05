@@ -6,8 +6,13 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{/vars}}
 {{#isAdditionalPropertiesTrue}}
     additional_properties: Dict[str, Any] = {}
-{{/isAdditionalPropertiesTrue}}
     __properties: ClassVar[List[str]] = [{{#allVars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/allVars}}]
+{{/isAdditionalPropertiesTrue}}
+{{#disallowAdditionalPropertiesIfNotPresent}}
+{{^isAdditionalPropertiesTrue}}
+    __properties: ClassVar[List[str]] = [{{#allVars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/allVars}}]
+{{/isAdditionalPropertiesTrue}}
+{{/disallowAdditionalPropertiesIfNotPresent}}
 {{#vars}}
     {{#vendorExtensions.x-regex}}
 

@@ -21,7 +21,7 @@ describe('commonApi', () => {
     })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
-      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-.*)?\))?)*$/
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
   });
 
@@ -57,7 +57,19 @@ describe('parameters', () => {
     });
 
     const result = (await $client.pushEvents({
-      events: [],
+      events: [
+        {
+          eventType: 'click',
+          eventName: 'Product Clicked',
+          index: 'products',
+          userToken: 'user-123456',
+          authenticatedUserToken: 'user-123456',
+          timestamp: 1641290601962,
+          objectIDs: ['9780545139700', '9780439784542'],
+          queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+          positions: [7, 6],
+        },
+      ],
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('insights.algolia.io');

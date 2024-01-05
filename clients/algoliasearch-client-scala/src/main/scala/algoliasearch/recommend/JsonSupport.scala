@@ -26,6 +26,7 @@ object JsonSupport {
     new QueryTypeSerializer() :+
     new RecommendModelsSerializer() :+
     new RecommendationModelsSerializer() :+
+    new RecommendedForYouModelSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new SortRemainingBySerializer() :+
     new TaskStatusSerializer() :+
@@ -47,6 +48,7 @@ object JsonSupport {
     OptionalFiltersSerializer :+
     PromoteSerializer :+
     ReRankingApplyFilterSerializer :+
+    RecommendationsHitSerializer :+
     RecommendationsRequestSerializer :+
     RemoveStopWordsSerializer :+
     SnippetResultSerializer :+
