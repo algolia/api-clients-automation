@@ -3,16 +3,13 @@
     "version": "7.2.0",
     "generators": {
       "javascript-algoliasearch": {
-        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearch",
-        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions,delete=delete"
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/algoliasearch"
       },
       "javascript-search": {
-        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-search",
-        "reservedWordsMappings": "queryParameters=queryParameters,requestOptions=requestOptions,delete=delete"
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-search"
       },
       "javascript-recommend": {
-        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/recommend",
-        "reservedWordsMappings": "queryParameters=queryParameters,delete=delete"
+        "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/recommend"
       },
       "javascript-personalization": {
         "output": "#{cwd}/clients/algoliasearch-client-javascript/packages/client-personalization"
@@ -56,6 +53,9 @@
       "java-query-suggestions": {
         "output": "#{cwd}/clients/algoliasearch-client-java"
       },
+      "java-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-java"
+      },
       "java-monitoring": {
         "output": "#{cwd}/clients/algoliasearch-client-java"
       },
@@ -80,56 +80,38 @@
       "php-query-suggestions": {
         "output": "#{cwd}/clients/algoliasearch-client-php"
       },
+      "php-ingestion": {
+        "output": "#{cwd}/clients/algoliasearch-client-php"
+      },
       "php-monitoring": {
         "output": "#{cwd}/clients/algoliasearch-client-php"
       },
       "go-analytics": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "analytics"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
+      },
+      "go-abtesting": {
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-ingestion": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "ingestion"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-insights": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "insights"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-query-suggestions": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "suggestions"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-personalization": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "personalization"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-recommend": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "recommend"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-search": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "search"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "go-monitoring": {
-        "output": "#{cwd}/clients/algoliasearch-client-go",
-        "additionalProperties": {
-          "packageName": "monitoring"
-        }
+        "output": "#{cwd}/clients/algoliasearch-client-go"
       },
       "kotlin-search": {
         "output": "#{cwd}/clients/algoliasearch-client-kotlin"
