@@ -58,7 +58,7 @@ RUN echo "source $HOME/.sdkman/bin/sdkman-init.sh" >> ~/.profile && source ~/.pr
 # Java
 ARG JAVA_VERSION
 RUN sdk install java ${JAVA_VERSION}-tem
-ADD https://github.com/google/google-java-format/releases/download/v1.19.1/google-java-format-1.19.1-all-deps.jar /tmp/java-formatter.jar
+ADD https://github.com/google/google-java-format/releases/download/v1.19.2/google-java-format-1.19.2-all-deps.jar /tmp/java-formatter.jar
 
 # Scala
 RUN sdk install sbt
