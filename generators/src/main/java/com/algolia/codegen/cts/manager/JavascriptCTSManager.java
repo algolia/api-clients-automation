@@ -26,7 +26,7 @@ public class JavascriptCTSManager implements CTSManager {
     bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
     bundle.put("npmNamespace", npmNamespace);
 
-    JsonNode openApiToolsConfig = Helpers.readJsonFile("config/openapitools.json").get("generator-cli").get("generators");
+    JsonNode openApiToolsConfig = Helpers.readJsonFile("openapitools.json").get("generator-cli").get("generators");
     Iterator<Map.Entry<String, JsonNode>> fields = openApiToolsConfig.fields();
     List<Map<String, String>> clients = new ArrayList<>();
 
