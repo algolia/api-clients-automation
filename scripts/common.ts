@@ -53,7 +53,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
         additionalProperties: {},
         ...gen,
         output,
-        client: key.slice(key.indexOf('-') + 1),
+        client: key,
         language: language as Language,
         key,
       };
