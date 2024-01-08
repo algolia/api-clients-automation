@@ -4,6 +4,7 @@ using Algolia.Search.Search.Client;
 using Algolia.Search.Search.Models;
 using Action = Algolia.Search.Search.Models.Action;
 using Xunit;
+using Quibble.Xunit;
 
 public class {{client}}RequestTests
 {
@@ -47,6 +48,17 @@ public class {{client}}RequestTests
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
 
+    {{#body}}
+        JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.Body, new JsonDiffConfig(true));
+    {{/body}}
+    {{^body}}
+      {{#assertNullBody}}
+          Assert.Null(req.Body);
+      {{/assertNullBody}}
+      {{^assertNullBody}}
+          Assert.Equal("{}", req.Body);
+      {{/assertNullBody}}
+    {{/body}}
     {{/request}}
   }
   {{/tests}}

@@ -156,7 +156,7 @@ namespace Algolia.Search.Http
       echo.Path = request.Uri.AbsolutePath;
       echo.Host = request.Uri.Host;
       echo.Method = request.Method;
-      //echo.Body = processResponseBody(request);
+      echo.Body = request.Body;
       //echo.QueryParameters = buildQueryParameters(request);
       //echo.Headers = buildHeaders(request.Headers);
       //echo.ConnectTimeout = chain.connectTimeoutMillis();

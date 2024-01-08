@@ -125,7 +125,7 @@ namespace Algolia.Search.Transport
         var requestTimeout =
           TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
 
-        if (method == HttpMethod.Post && string.IsNullOrWhiteSpace(request.Body))
+        if (string.IsNullOrWhiteSpace(request.Body) && (method == HttpMethod.Post || method == HttpMethod.Put))
         {
           request.Body = "{}";
         }
