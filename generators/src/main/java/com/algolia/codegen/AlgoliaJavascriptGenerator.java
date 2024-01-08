@@ -116,10 +116,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
-  /** Get the packageName from the output field in the `config/openapitools.json` file */
+  /** Get the packageName from the output field in the runtime generated `openapitools.json` file */
   public String getPackageName(String client) throws ConfigException {
     if (cacheOpenApiToolsConfig == null) {
-      cacheOpenApiToolsConfig = Helpers.readJsonFile("config/openapitools.json");
+      cacheOpenApiToolsConfig = Helpers.readJsonFile("openapitools.json");
     }
 
     String output = cacheOpenApiToolsConfig

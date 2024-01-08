@@ -179,13 +179,16 @@ public class Helpers {
     return value.asText();
   }
 
-  /** Get the `field` value in the `config/openapitools.json` file for the given language */
+  /**
+   * Get the `field` value in the runtime generator `openapitools.json` file for the current
+   * language
+   */
   public static String getOpenApiToolsField(String language, String client, String... fields) throws ConfigException {
     if (fields.length == 0) {
       throw new ConfigException("getOpenApiToolsField requires at least one field");
     }
     if (cacheOpenApiToolsConfig == null) {
-      cacheOpenApiToolsConfig = readJsonFile("config/openapitools.json");
+      cacheOpenApiToolsConfig = readJsonFile("openapitools.json");
     }
     JsonNode value = cacheOpenApiToolsConfig
       .get("generator-cli")
