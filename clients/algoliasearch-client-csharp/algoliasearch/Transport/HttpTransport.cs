@@ -121,7 +121,7 @@ namespace Algolia.Search.Transport
       foreach (var host in _retryStrategy.GetTryableHost(callType))
       {
         request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress);
-        request.Uri = BuildUri(host.Url, uri, requestOptions?.PathParameters, requestOptions?.QueryParameters);
+        request.Uri = BuildUri(host.Url, uri, requestOptions?.CustomPathParameters, requestOptions?.PathParameters, requestOptions?.QueryParameters);
         var requestTimeout =
           TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
 
@@ -182,10 +182,11 @@ namespace Algolia.Search.Transport
     /// </summary>
     /// <param name="url"></param>
     /// <param name="baseUri"></param>
+    /// <param name="customPathParameters"></param>
     /// <param name="pathParameters"></param>
     /// <param name="optionalQueryParameters"></param>
     /// <returns></returns>
-    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> pathParameters = null,
+    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> customPathParameters = null, Dictionary<string, string> pathParameters = null,
       Dictionary<string, string> optionalQueryParameters = null)
     {
       var path = $"{baseUri}";
@@ -194,6 +195,14 @@ namespace Algolia.Search.Transport
         foreach (var parameter in pathParameters)
         {
           path = path.Replace("{" + parameter.Key + "}", Uri.EscapeDataString(parameter.Value));
+        }
+      }
+
+      if (customPathParameters != null)
+      {
+        foreach (var parameter in customPathParameters)
+        {
+          path = path.Replace("{" + parameter.Key + "}", parameter.Value);
         }
       }
 

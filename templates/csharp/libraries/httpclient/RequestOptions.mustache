@@ -45,9 +45,15 @@ namespace Algolia.Search.Http
         {
             QueryParameters = options?.QueryParameters ?? new Dictionary<string, string>();
             HeaderParameters = options?.Headers ?? new Dictionary<string, string>();
+            CustomPathParameters = new Dictionary<string, string>();
             PathParameters = new Dictionary<string, string>();
             Timeout = options?.Timeout;
         }
+
+        /// <summary>
+        /// Parameters to be bound to path parts of the Request's URL path (For custom routes)
+        /// </summary>
+        public Dictionary<string, string> CustomPathParameters { get; set; }
 
         /// <summary>
         /// Parameters to be bound to path parts of the Request's URL

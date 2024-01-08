@@ -2,6 +2,9 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import com.algolia.codegen.utils.OneOf;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
@@ -141,5 +144,10 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     GenericPropagator.propagateGenericsToModels(models);
     OneOf.addOneOfMetadata(models);
     return models;
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 }

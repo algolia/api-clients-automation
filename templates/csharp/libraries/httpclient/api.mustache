@@ -125,6 +125,12 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/required}}
             {{/allParams}}
             InternalRequestOptions requestOptions = new InternalRequestOptions(options);
+            {{#vendorExtensions.x-is-custom-request}}
+            {{#pathParams}}
+            requestOptions.CustomPathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+            {{/pathParams}}
+            {{/vendorExtensions.x-is-custom-request}}
+            {{#vendorExtensions}}{{^x-is-custom-request}}
             {{#pathParams}}
             {{#required}}
             requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
@@ -136,6 +142,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             }
             {{/required}}
             {{/pathParams}}
+            {{/x-is-custom-request}}{{/vendorExtensions}}
             {{#queryParams}}
             {{#required}}
             requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});

@@ -31,10 +31,7 @@ namespace Algolia.Search.Client
 
             if (value is ICollection collection && collectionFormat == "multi")
             {
-                foreach (var item in collection)
-                {
-                    parameters.Add(name, ParameterToString(item));
-                }
+              parameters.Add(name, ParameterToString(collection));
             }
             else if (value is IDictionary dictionary)
             {

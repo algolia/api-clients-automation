@@ -68,7 +68,11 @@ public class GenericPropagator {
     return models.get(prop.openApiType);
   }
 
-  private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model, Function<IJsonSchemaValidationProperties, List<CodegenProperty>> getVar, boolean skipOneOf) {
+  private static boolean markPropagatedGeneric(
+    IJsonSchemaValidationProperties model,
+    Function<IJsonSchemaValidationProperties, List<CodegenProperty>> getVar,
+    boolean skipOneOf
+  ) {
     CodegenProperty items = model.getItems();
     // Skip one-of types
     if (skipOneOf) {
@@ -76,7 +80,10 @@ public class GenericPropagator {
     }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, getVar, skipOneOf))) {
+    if (
+      items != null &&
+      ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, getVar, skipOneOf))
+    ) {
       setPropagatedGeneric(model);
       return true;
     }
