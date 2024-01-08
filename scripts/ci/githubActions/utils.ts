@@ -24,12 +24,7 @@ const commonCacheKey = (async function (): Promise<string> {
     encoding: 'hex',
     folders: { include: ['config'] },
     files: {
-      include: [
-        'openapitools.json',
-        'clients.config.json',
-        'generation.config.mjs',
-        'base.tsconfig.json',
-      ],
+      include: ['clients.config.json', 'generation.config.mjs', 'base.tsconfig.json'],
     },
   });
   const ctsHash = await hashElement(toAbsolutePath('tests'), {
