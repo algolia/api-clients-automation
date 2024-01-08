@@ -148,10 +148,22 @@
   },
   "dart": {
     "clients": [
-      "algoliasearch",
-      "insights",
-      "recommend",
-      "search"
+      {
+        "name": "algoliasearch",
+        "output": "clients/algoliasearch-client-dart/packages/algoliasearch"
+      },
+      {
+        "name": "insights",
+        "output": "clients/algoliasearch-client-dart/packages/client_insights"
+      },
+      {
+        "name": "recommend",
+        "output": "clients/algoliasearch-client-dart/packages/client_recommend"
+      },
+      {
+        "name": "search",
+        "output": "clients/algoliasearch-client-dart/packages/client_search"
+      }
     ],
     "folder": "clients/algoliasearch-client-dart",
     "gitRepoId": "algoliasearch-client-dart",
