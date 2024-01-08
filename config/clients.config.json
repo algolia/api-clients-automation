@@ -188,7 +188,7 @@
       "recommend",
       "search"
     ],
-    "folder": "clients/algoliasearch-client-python",
+    "folder": "clients/algoliasearch-client-python/algoliasearch",
     "gitRepoId": "algoliasearch-client-python",
     "packageVersion": "4.0.0a5",
     "modelFolder": "algoliasearch",
@@ -247,44 +247,17 @@
   },
   "csharp": {
     "clients": [
-      {
-        "name": "abtesting",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "analtyics",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "ingestion",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "ingestion",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "monitoring",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "personalization",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "query-suggestions",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "recommmend",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      },
-      {
-        "name": "search",
-        "output": "clients/algoliasearch-client-csharp/algoliasearch"
-      }
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
     ],
-    "folder": "clients/algoliasearch-client-csharp",
+    "folder": "clients/algoliasearch-client-csharp/algoliasearch",
     "gitRepoId": "algoliasearch-client-csharp",
     "packageVersion": "7.0.0-alpha.2",
     "modelFolder": "algoliasearch",
