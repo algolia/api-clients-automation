@@ -34,7 +34,7 @@ const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
 
-// Build `GENERATORS` from the openapitools file
+// Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
   (current, [language, { clients, folder, ...gen }]) => {
     for (const client of clients) {
@@ -53,7 +53,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
         additionalProperties: {},
         ...gen,
         output,
-        client: key,
+        client,
         language: language as Language,
         key,
       };
