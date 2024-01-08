@@ -247,15 +247,42 @@
   },
   "csharp": {
     "clients": [
-      "abtesting",
-      "analytics",
-      "ingestion",
-      "insights",
-      "monitoring",
-      "personalization",
-      "query-suggestions",
-      "recommend",
-      "search"
+      {
+        "name": "abtesting",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "analtyics",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "ingestion",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "ingestion",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "monitoring",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "personalization",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "query-suggestions",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "recommmend",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      },
+      {
+        "name": "search",
+        "output": "clients/algoliasearch-client-csharp/algoliasearch"
+      }
     ],
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
