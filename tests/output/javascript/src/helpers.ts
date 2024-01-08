@@ -4,6 +4,14 @@ export function union(
 ): Record<string, any> {
   const res = {};
 
+  if (!expected) {
+    return expected;
+  }
+
+  if (typeof expected !== 'object' && !Array.isArray(expected)) {
+    return expected;
+  }
+
   for (const [key, value] of Object.entries(expected)) {
     if (key in received) {
       if (Array.isArray(value)) {
