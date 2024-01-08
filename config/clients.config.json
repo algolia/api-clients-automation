@@ -188,7 +188,7 @@
       "recommend",
       "search"
     ],
-    "folder": "clients/algoliasearch-client-python/algoliasearch",
+    "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
     "packageVersion": "4.0.0a5",
     "modelFolder": "algoliasearch",
@@ -257,7 +257,7 @@
       "recommend",
       "search"
     ],
-    "folder": "clients/algoliasearch-client-csharp/algoliasearch",
+    "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
     "packageVersion": "7.0.0-alpha.2",
     "modelFolder": "algoliasearch",
