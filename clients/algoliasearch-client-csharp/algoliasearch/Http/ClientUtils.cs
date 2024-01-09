@@ -17,25 +17,6 @@ namespace Algolia.Search.Http
   public static class ClientUtils
   {
     /// <summary>
-    /// Convert params to key/value pairs.
-    /// Use collectionFormat to properly format lists and collections.
-    /// </summary>
-    /// <param name="collectionFormat">The swagger-supported collection format, one of: csv, tsv, ssv, pipes, multi</param>
-    /// <param name="name">Key name.</param>
-    /// <param name="value">Value object.</param>
-    /// <param name="isCustomRequest"></param>
-    /// <returns>A multimap of keys with 1..n associated values.</returns>
-    public static IDictionary<string, string> ParameterToDictionary(string name, object value, bool isCustomRequest)
-    {
-      if (isCustomRequest && value is IDictionary<string, object> collection)
-      {
-        return collection.ToDictionary(entry => entry.Key, entry => ParameterToString(entry.Value));
-      }
-
-      return new Dictionary<string, string> { { name, ParameterToString(value) } };
-    }
-
-    /// <summary>
     /// If parameter is a list, join the list with ",".
     /// Otherwise just return the string.
     /// </summary>

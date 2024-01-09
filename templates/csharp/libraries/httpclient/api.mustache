@@ -26,11 +26,11 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// {{{summary}}}
         /// </summary>
         /// <remarks>
-        /// {{notes}}
+        /// {{{notes}}}
         /// </remarks>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
-        /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+        /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
         /// <param name="options">Add extra http header or query parameters to Algolia.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -38,7 +38,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+        Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -57,7 +57,8 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="applicationId">Your application</param>
         /// <param name="apiKey">Your API key</param>
-        public {{classname}}(string applicationId, string apiKey) : this(new {{packageName}}Config(applicationId, apiKey), new AlgoliaHttpRequester())
+        {{#hasRegionalHost}}/// <param name="region">The targeted region</param>{{/hasRegionalHost}}
+        public {{classname}}(string applicationId, string apiKey{{#hasRegionalHost}}, string region{{/hasRegionalHost}}{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}}) : this(new {{packageName}}Config(applicationId, apiKey{{#hasRegionalHost}}, region{{/hasRegionalHost}}), new AlgoliaHttpRequester())
         {
         }
 
@@ -113,7 +114,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}

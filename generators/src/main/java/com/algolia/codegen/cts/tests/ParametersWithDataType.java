@@ -528,6 +528,14 @@ public class ParametersWithDataType {
     if (objectName.equals("Map") && language.equals("csharp")) {
       return "Dictionary";
     }
+
+    if (objectName.equals("Integer") && language.equals("csharp")) {
+      return "int";
+    }
+
+    if (objectName.equals("String") && language.equals("csharp")) {
+      return "string";
+    }
     return Helpers.capitalize(objectName);
   }
 

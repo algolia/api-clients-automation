@@ -15,6 +15,5 @@ public class CSharpCTSManager implements CTSManager {
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", Helpers.getClientConfigField("csharp", "packageVersion"));
-    // bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

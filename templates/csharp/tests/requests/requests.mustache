@@ -1,7 +1,7 @@
 using Algolia.Search.Http;
-using Algolia.Search.Search.Api;
-using Algolia.Search.Search.Client;
-using Algolia.Search.Search.Models;
+using Algolia.Search.{{clientPrefix}}.Api;
+using Algolia.Search.{{clientPrefix}}.Client;
+using Algolia.Search.{{clientPrefix}}.Models;
 using Action = Algolia.Search.Search.Models.Action;
 using Xunit;
 using Newtonsoft.Json;
@@ -15,7 +15,7 @@ public class {{client}}RequestTests
   public {{client}}RequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new {{client}}(new SearchConfig("appId", "apiKey"), _echo);
+    _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"), _echo);
   }
 
   [Fact]
