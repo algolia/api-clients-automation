@@ -71,6 +71,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     setPackageName(packageName);
     setApiPackage("");
     setModelPackage("Models");
+    setOutputDir(getOutputDir() + "/algoliasearch/");
 
     super.processOpts();
 

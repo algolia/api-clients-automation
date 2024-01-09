@@ -22,12 +22,12 @@ _list_clients_for_language() {
   if [[ $1 == "all" ]]; then
     _list_clients
   else
-    echo "all $(cat $ROOT/config/openapitools.json | jq --arg lang "$1-" '."generator-cli".generators | keys[] | select(startswith($lang)) | sub($lang; "")')"
+    echo "all $(cat $ROOT/config/clients.config.json | jq --arg lang "$1" 'with_entries(select(.key == $lang)) | .[] | .clients')"
   fi
 }
 
 _list_clients() {
-  echo "all $(cat $ROOT/config/openapitools.json | jq '."generator-cli".generators | keys[] | sub(".*?-"; "")' | sort | uniq)"
+  echo "all $(cat $ROOT/config/clients.config.json | jq --arg lang "$1" 'with_entries(select(.key == "java")) | .[] | .clients')"
 }
 
 _apic_lang_client_complete() {

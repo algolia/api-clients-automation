@@ -359,13 +359,26 @@ describe('batchDictionaryEntries', () => {
 describe('browse', () => {
   test('browse with minimal parameters', async () => {
     const req = (await client.browse({
-      indexName: 'indexName',
+      indexName: 'cts_e2e_browse',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/browse');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/browse');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.browse({ indexName: 'cts_e2e_browse' });
+
+    const expectedBody = {
+      page: 0,
+      nbHits: 33191,
+      nbPages: 34,
+      hitsPerPage: 1000,
+      query: '',
+      params: '',
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('browse with search parameters', async () => {
@@ -976,13 +989,42 @@ describe('getRule', () => {
 describe('getSettings', () => {
   test('getSettings0', async () => {
     const req = (await client.getSettings({
-      indexName: 'theIndexName',
+      indexName: 'cts_e2e_settings',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_settings/settings');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.getSettings({ indexName: 'cts_e2e_settings' });
+
+    const expectedBody = {
+      minWordSizefor1Typo: 4,
+      minWordSizefor2Typos: 8,
+      hitsPerPage: 20,
+      maxValuesPerFacet: 100,
+      paginationLimitedTo: 10,
+      exactOnSingleWordQuery: 'attribute',
+      ranking: [
+        'typo',
+        'geo',
+        'words',
+        'filters',
+        'proximity',
+        'attribute',
+        'exact',
+        'custom',
+      ],
+      separatorsToIndex: '',
+      removeWordsIfNoResults: 'none',
+      queryType: 'prefixLast',
+      highlightPreTag: '<em>',
+      highlightPostTag: '</em>',
+      alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 
@@ -2217,15 +2259,21 @@ describe('setDictionarySettings', () => {
 describe('setSettings', () => {
   test('setSettings with minimal parameters', async () => {
     const req = (await client.setSettings({
-      indexName: 'theIndexName',
+      indexName: 'cts_e2e_settings',
       indexSettings: { paginationLimitedTo: 10 },
       forwardToReplicas: true,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_settings/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ paginationLimitedTo: 10 });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
+
+    await e2eClient.setSettings({
+      indexName: 'cts_e2e_settings',
+      indexSettings: { paginationLimitedTo: 10 },
+      forwardToReplicas: true,
+    });
   });
 
   test('setSettings allow boolean `typoTolerance`', async () => {
