@@ -15,7 +15,7 @@ public class {{client}}RequestTests
   public {{client}}RequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"), _echo);
+    _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
   }
 
   [Fact]
