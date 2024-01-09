@@ -41,6 +41,10 @@ public class TestsRequest extends TestsGenerator {
       new SupportingFile("requests/requests.mustache", outputFolder + "/requests", Helpers.createClientName(client, language) + extension)
     );
 
+    if (!language.equals("python")) {
+      return;
+    }
+
     // snippets generation
     String snippetsExtension = Helpers.getClientConfigField(language, "snippets", "extension");
     String snippetsOutputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");

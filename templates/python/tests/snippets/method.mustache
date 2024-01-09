@@ -5,7 +5,7 @@ class Snippet{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     {{#blocksRequests}}
     {{#snippets}}
     async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
-        _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+        _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
         resp = await _client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
