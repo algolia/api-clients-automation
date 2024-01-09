@@ -23,6 +23,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
+
+    additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : client);
     additionalProperties.put("enumClassPrefix", true);
     additionalProperties.put("isSearchClient", client.equals("search"));
 

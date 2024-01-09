@@ -74,9 +74,7 @@ baseSearchResponse:
           title: typo
           description: Whether the typo search was exhaustive (`true`) or approximate (`false`). An approximation is done when the typo search query part takes more than 10% of the query budget (ie. 5ms by default) to be processed (this can happen when a lot of typo alternatives exist for the query). This field will not be included when typo-tolerance is entirely disabled.
     exhaustiveFacetsCount:
-      type: boolean
-      description: See the `facetsCount` field of the `exhaustive` object in the response.
-      deprecated: true
+      $ref: '#/exhaustiveFacetsCount'
     exhaustiveNbHits:
       type: boolean
       description: See the `nbHits` field of the `exhaustive` object in the response.
@@ -149,9 +147,7 @@ baseSearchResponse:
       description: Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
       example: 'george clo'
     processingTimeMS:
-      type: integer
-      description: Time the server took to process the request, in milliseconds.
-      example: 20
+      $ref: '#/processingTimeMS'
     processingTimingsMS:
       type: object
       description: Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues.
@@ -190,6 +186,16 @@ nbPages:
   type: integer
   description: Number of pages of results for the current query.
   example: 1
+
+exhaustiveFacetsCount:
+  type: boolean
+  description: See the `facetsCount` field of the `exhaustive` object in the response.
+  deprecated: true
+
+processingTimeMS:
+  type: integer
+  description: Time the server took to process the request, in milliseconds.
+  example: 20
 
 RedirectRuleIndexMetadata:
   type: object

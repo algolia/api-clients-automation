@@ -12,7 +12,14 @@
 package algoliasearch.search
 
 /** SearchForFacetValuesResponse
+  *
+  * @param exhaustiveFacetsCount
+  *   See the `facetsCount` field of the `exhaustive` object in the response.
+  * @param processingTimeMS
+  *   Time the server took to process the request, in milliseconds.
   */
 case class SearchForFacetValuesResponse(
-    facetHits: Seq[FacetHits]
+    facetHits: Seq[FacetHits],
+    exhaustiveFacetsCount: Boolean,
+    processingTimeMS: Option[Int] = scala.None
 ) extends SearchResultTrait

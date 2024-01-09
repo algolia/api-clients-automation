@@ -34,6 +34,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     setPackageName(packageName);
     setApiPackage("");
     setModelPackage("models");
+    setOutputDir(getOutputDir() + "/algoliasearch/");
 
     super.processOpts();
 
