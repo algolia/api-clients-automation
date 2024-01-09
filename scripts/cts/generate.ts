@@ -51,12 +51,6 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       });
     }
 
-    if (lang === 'csharp') {
-      await run('dotnet build', {
-        cwd: 'tests/output/csharp',
-      });
-    }
-
     if (lang === 'ruby') {
       const spinner = createSpinner('');
       spinner.warn(`CTS not yet implemented for ${lang}`);
