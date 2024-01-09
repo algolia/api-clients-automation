@@ -213,7 +213,7 @@
     ],
     "folder": "clients/algoliasearch-client-ruby",
     "gitRepoId": "algoliasearch-client-ruby",
-    "packageVersion": "3.0.0.alpha.3",
+    "packageVersion": "3.0.0.alpha.4",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
     "customGenerator": "algolia-ruby",
