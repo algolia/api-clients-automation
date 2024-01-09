@@ -155,12 +155,12 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/vendorExtensions.x-is-custom-request}}
             {{#headerParams}}
             {{#required}}
-            requestOptions.HeaderParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // header parameter
+            requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                requestOptions.HeaderParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // header parameter
+                requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
             }
             {{/required}}
             {{/headerParams}}

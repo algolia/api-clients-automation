@@ -2,19 +2,19 @@
   {{{objectName}}} {{{key}}}{{suffix}} = null;
 {{/isNull}}
 {{#isString}}
-  var {{{key}}}{{suffix}} = "{{{value}}}";
+  const string {{{key}}}{{suffix}} = "{{{value}}}";
 {{/isString}}
 {{#isInteger}}
-  int {{{key}}}{{suffix}} = {{{value}}};
+  const int {{{key}}}{{suffix}} = {{{value}}};
 {{/isInteger}}
 {{#isLong}}
-  long {{{key}}}{{suffix}} = {{{value}}}L;
+  const long {{{key}}}{{suffix}} = {{{value}}}L;
 {{/isLong}}
 {{#isDouble}}
-  double {{{key}}}{{suffix}} = {{{value}}};
+  const double {{{key}}}{{suffix}} = {{{value}}};
 {{/isDouble}}
 {{#isBoolean}}
-  var {{{key}}}{{suffix}} = {{{value}}};
+  const bool {{{key}}}{{suffix}} = {{{value}}};
 {{/isBoolean}}
 {{#isEnum}}
   var {{{key}}}{{suffix}} = ({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}");

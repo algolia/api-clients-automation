@@ -9,8 +9,8 @@ using Quibble.Xunit;
 
 public class {{client}}RequestTests
 {
-  private {{client}} _client;
-  private EchoHttpRequester _echo;
+  private readonly {{client}} _client;
+  private readonly EchoHttpRequester _echo;
 
   public {{client}}RequestTests()
   {
@@ -18,7 +18,7 @@ public class {{client}}RequestTests
     _client = new {{client}}(new SearchConfig("appId", "apiKey"), _echo);
   }
 
-  // teardown
+  [Fact]
   public void Dispose()
   {
 
@@ -27,7 +27,7 @@ public class {{client}}RequestTests
   {{#blocksRequests}}
   {{#tests}}
   [Fact(DisplayName = "{{{testName}}}")]
-  public async Task {{method}}Test{{testIndex}}()
+  public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
     {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
     {{#hasRequestOptions}}
@@ -41,7 +41,7 @@ public class {{client}}RequestTests
     {{/hasRequestOptions}}
      await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
-     EchoResponse req = _echo.lastResponse;
+     EchoResponse req = _echo.LastResponse;
     {{#request}}
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
@@ -68,6 +68,16 @@ public class {{client}}RequestTests
           Assert.Equal(query.Value, result);
         }
     {{/queryParameters}}
+    {{#headers}}
+        var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}");
+        var actualHeaders = req.Headers;
+        foreach (var expectedHeader in expectedHeaders)
+        {
+          string actualHeaderValue;
+          actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+          Assert.Equal(expectedHeader.Value, actualHeaderValue);
+        }
+    {{/headers}}
     {{/request}}
   }
   {{/tests}}

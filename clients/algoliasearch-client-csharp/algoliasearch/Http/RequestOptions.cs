@@ -48,7 +48,12 @@ namespace Algolia.Search.Http
         QueryParameters.Add(t.Key, ClientUtils.ParameterToString(t.Value));
       }
 
-      HeaderParameters = options?.Headers ?? new Dictionary<string, string>();
+      HeaderParameters = new Dictionary<string, string>();
+      foreach (var t in options?.Headers ?? new Dictionary<string, string>())
+      {
+        HeaderParameters.Add(t.Key.ToLowerInvariant(), ClientUtils.ParameterToString(t.Value));
+      }
+
       CustomPathParameters = new Dictionary<string, string>();
       PathParameters = new Dictionary<string, string>();
       Timeout = options?.Timeout;

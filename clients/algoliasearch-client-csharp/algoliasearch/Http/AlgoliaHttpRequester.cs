@@ -143,13 +143,9 @@ namespace Algolia.Search.Http
 
   public class EchoHttpRequester : IHttpRequester
   {
-    public EchoResponse lastResponse;
+    public EchoResponse LastResponse;
 
-    public EchoHttpRequester()
-    {
-    }
-
-    public Dictionary<string, string> SplitQuery(string query)
+    private static Dictionary<string, string> SplitQuery(string query)
     {
       if (string.IsNullOrWhiteSpace(query))
       {
@@ -175,12 +171,12 @@ namespace Algolia.Search.Http
       echo.Method = request.Method;
       echo.Body = request.Body;
       echo.QueryParameters = SplitQuery(request.Uri.Query);
-      //echo.Headers = buildHeaders(request.Headers);
+      echo.Headers = new Dictionary<string, string>(request.Headers);
       //echo.ConnectTimeout = chain.connectTimeoutMillis();
       //echo.ResponseTimeout =
       //  (useReadTransporter != null || request.Method == HttpMethod.Get) ? chain.readTimeoutMillis() : chain.writeTimeoutMillis();
 
-      lastResponse = echo;
+      LastResponse = echo;
 
       return new AlgoliaHttpResponse
       {
@@ -197,7 +193,7 @@ namespace Algolia.Search.Http
     public HttpMethod Method;
     public String Body;
     public Dictionary<string, string> QueryParameters;
-    public Dictionary<String, String> Headers;
+    public Dictionary<string, string> Headers;
     public int ConnectTimeout;
     public int ResponseTimeout;
   }

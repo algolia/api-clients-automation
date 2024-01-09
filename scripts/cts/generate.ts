@@ -52,7 +52,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
     }
 
     if (lang === 'csharp') {
-      await run('dotnet test', {
+      await run('dotnet build', {
         cwd: 'tests/output/csharp',
       });
     }

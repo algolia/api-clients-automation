@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search.Tests", "Algolia.Search.Tests.csproj", "{CD452C86-E5B1-4452-A733-E040B5EA1856}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search.Tests", "src\Algolia.Search.Tests.csproj", "{CD452C86-E5B1-4452-A733-E040B5EA1856}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj", "{FC564643-21C2-4B1C-8913-A40B2311C64F}"
 EndProject
