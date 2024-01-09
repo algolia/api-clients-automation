@@ -50,14 +50,18 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{/request}}
 
         {{#response}}
-        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        {{#body}}
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
+        _expected_body = loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        {{/body}}
+        {{^body}}
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).{{#lambda.snakecase}}{{method}}_with_http_info{{/lambda.snakecase}}({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
   
         {{#statusCode}}
         assert resp.status_code == {{statusCode}}
         {{/statusCode}}
-        {{#body}}
-        _expected_body = loads("""{{{.}}}""")
-        assert self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
         {{/body}}
         {{/response}}
 
