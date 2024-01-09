@@ -83,12 +83,13 @@ public class TestsRequest extends TestsGenerator {
       Request[] op = cts.get(operationId);
 
       List<Object> tests = new ArrayList<>();
-      List<Object> snippets = new ArrayList<>();
+      Map<String, Object> snippet = new HashMap<>();
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
         test.put("method", operationId);
-        test.put("testName", req.testName == null ? operationId + i : req.testName);
+        String testName = req.testName == null ? operationId + i : req.testName;
+        test.put("testName", testName);
         test.put("testIndex", i);
 
         try {
@@ -160,7 +161,8 @@ public class TestsRequest extends TestsGenerator {
           paramsType.enhanceParameters(req.parameters, test, ope);
           tests.add(test);
           if (i == 0) {
-            snippets.add(test);
+            snippet = test;
+            snippet.put("description", testName);
           }
         } catch (CTSException e) {
           e.setTestName((String) test.get("testName"));
@@ -169,7 +171,7 @@ public class TestsRequest extends TestsGenerator {
       }
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("tests", tests);
-      testObj.put("snippets", snippets);
+      testObj.put("snippet", snippet);
       testObj.put("operationId", operationId);
       blocks.add(testObj);
     }

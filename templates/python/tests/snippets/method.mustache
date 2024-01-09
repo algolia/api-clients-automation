@@ -3,8 +3,11 @@ from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}
 
 class Snippet{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     {{#blocksRequests}}
-    {{#snippets}}
+    {{#snippet}}
     async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
+        """
+        {{{description}}}
+        """
         _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
         resp = await _client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
@@ -15,5 +18,5 @@ class Snippet{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         # print the JSON response
         print(resp.to_json())
 
-    {{/snippets}}
+    {{/snippet}}
     {{/blocksRequests}}
