@@ -209,13 +209,19 @@ class TestSearchClient < Test::Unit::TestCase
 
   # browse with minimal parameters
   def test_browse0
-    req = @client.browse_with_http_info("indexName")
+    req = @client.browse_with_http_info("cts_e2e_browse")
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/indexName/browse', req.path)
+    assert_equal('/1/indexes/cts_e2e_browse/browse', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
+
+    res = @e2e_client.browse_with_http_info("cts_e2e_browse")
+
+    assert_equal(res.status, 200)
+    expected_body = JSON.parse('{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
   end
 
   # browse with search parameters
@@ -663,14 +669,20 @@ class TestSearchClient < Test::Unit::TestCase
 
   # getSettings0
   def test_get_settings0
-    req = @client.get_settings_with_http_info("theIndexName")
+    req = @client.get_settings_with_http_info("cts_e2e_settings")
 
     assert_equal(:get, req.method)
-    assert_equal('/1/indexes/theIndexName/settings', req.path)
+    assert_equal('/1/indexes/cts_e2e_settings/settings', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_settings_with_http_info("cts_e2e_settings")
+
+    assert_equal(res.status, 200)
+    expected_body = JSON.parse('{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"version":1,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
   end
 
   # getSources0
@@ -1270,13 +1282,17 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings with minimal parameters
   def test_set_settings0
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(pagination_limited_to: 10), true)
+    req = @client.set_settings_with_http_info("cts_e2e_settings", IndexSettings.new(pagination_limited_to: 10), true)
 
     assert_equal(:put, req.method)
-    assert_equal('/1/indexes/theIndexName/settings', req.path)
+    assert_equal('/1/indexes/cts_e2e_settings/settings', req.path)
     assert(({ 'forwardToReplicas': "true" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"paginationLimitedTo":10}'), JSON.parse(req.body))
+
+    res = @e2e_client.set_settings_with_http_info("cts_e2e_settings", IndexSettings.new(pagination_limited_to: 10), true)
+
+    assert_equal(res.status, 200)
   end
 
   # setSettings allow boolean `typoTolerance`

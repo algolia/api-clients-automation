@@ -656,13 +656,13 @@ class SearchClientRequestsTests {
   @Test
   @DisplayName("browse with minimal parameters")
   void browseTest0() {
-    String indexName0 = "indexName";
+    String indexName0 = "cts_e2e_browse";
 
     assertDoesNotThrow(() -> {
       client.browse(indexName0, Object.class);
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/browse", req.path);
+    assertEquals("/1/indexes/cts_e2e_browse/browse", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
@@ -1645,13 +1645,13 @@ class SearchClientRequestsTests {
   @Test
   @DisplayName("getSettings0")
   void getSettingsTest0() {
-    String indexName0 = "theIndexName";
+    String indexName0 = "cts_e2e_settings";
 
     assertDoesNotThrow(() -> {
       client.getSettings(indexName0);
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("/1/indexes/cts_e2e_settings/settings", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
@@ -3692,7 +3692,7 @@ class SearchClientRequestsTests {
   @Test
   @DisplayName("setSettings with minimal parameters")
   void setSettingsTest0() {
-    String indexName0 = "theIndexName";
+    String indexName0 = "cts_e2e_settings";
     IndexSettings indexSettings0 = new IndexSettings();
     {
       int paginationLimitedTo1 = 10;
@@ -3704,7 +3704,7 @@ class SearchClientRequestsTests {
       client.setSettings(indexName0, indexSettings0, forwardToReplicas0);
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("/1/indexes/cts_e2e_settings/settings", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"paginationLimitedTo\":10}", req.body, JSONCompareMode.STRICT));
 

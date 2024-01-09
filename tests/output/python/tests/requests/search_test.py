@@ -434,14 +434,28 @@ class TestSearchClient:
         browse with minimal parameters
         """
         _req = await self._client.browse_with_http_info(
-            index_name="indexName",
+            index_name="cts_e2e_browse",
         )
 
-        assert _req.path == "/1/indexes/indexName/browse"
+        assert _req.path == "/1/indexes/cts_e2e_browse/browse"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
+
+        resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).browse_with_http_info(
+            index_name="cts_e2e_browse",
+        )
+
+        assert resp.status_code == 200
+        _expected_body = loads(
+            """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+        )
 
     async def test_browse_1(self):
         """
@@ -1139,14 +1153,28 @@ class TestSearchClient:
         getSettings0
         """
         _req = await self._client.get_settings_with_http_info(
-            index_name="theIndexName",
+            index_name="cts_e2e_settings",
         )
 
-        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_settings_with_http_info(
+            index_name="cts_e2e_settings",
+        )
+
+        assert resp.status_code == 200
+        _expected_body = loads(
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"version":1,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+        )
 
     async def test_get_sources_0(self):
         """
@@ -2490,18 +2518,30 @@ class TestSearchClient:
         setSettings with minimal parameters
         """
         _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
+            index_name="cts_e2e_settings",
             index_settings={
                 "paginationLimitedTo": 10,
             },
             forward_to_replicas=True,
         )
 
-        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
+
+        resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).set_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            index_settings={
+                "paginationLimitedTo": 10,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert resp.status_code == 200
 
     async def test_set_settings_1(self):
         """
