@@ -56,9 +56,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         _expected_body = loads("""{{{.}}}""")
         assert self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         {{/body}}
+        {{^body}}
         {{#statusCode}}
         assert resp.status_code == {{statusCode}}
         {{/statusCode}}
+        {{/body}}
         {{/response}}
 
     {{/tests}}
