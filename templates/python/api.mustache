@@ -13,13 +13,14 @@ class {{classname}}:
     Args:
     app_id (str): The Algolia application ID to retrieve information from.
     api_key (str): The Algolia api key bound to the given `app_id`.
+    {{#hasRegionalHost}}region ({{#allowedRegions}}"{{.}}"{{^-last}} | {{/-last}}{{/allowedRegions}}): The region of your Algolia application.{{/hasRegionalHost}}
 
     Returns:
     The initialized API client.
 
     Usage:
-    _client = {{classname}}("MY_APP_ID", "MY_API_KEY"{{#hasRegionalHost}}, "THE_REGION_TO_TARGET"{{/hasRegionalHost}})
-    _client_with_named_args = {{classname}}(app_id="MY_APP_ID", api_key="MY_API_KEY"{{#hasRegionalHost}}, region="THE_REGION_TO_TARGET"{{/hasRegionalHost}})
+    _client = {{classname}}("YOUR_ALGOLIA_APP_ID", "YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
+    _client_with_named_args = {{classname}}(app_id="YOUR_ALGOLIA_APP_ID", api_key="YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
 
     See `{{classname}}.create_with_config` for advanced configuration.
     """
