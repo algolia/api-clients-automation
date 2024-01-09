@@ -170,7 +170,7 @@ namespace Algolia.Search.Transport
     /// </summary>
     /// <param name="optionalHeaders"></param>
     /// <returns></returns>
-    private Dictionary<string, string> GenerateHeaders(Dictionary<string, string> optionalHeaders = null)
+    private IDictionary<string, string> GenerateHeaders(IDictionary<string, string> optionalHeaders = null)
     {
       return optionalHeaders != null && optionalHeaders.Any()
         ? optionalHeaders.MergeWith(_algoliaConfig.DefaultHeaders)
@@ -186,8 +186,8 @@ namespace Algolia.Search.Transport
     /// <param name="pathParameters"></param>
     /// <param name="optionalQueryParameters"></param>
     /// <returns></returns>
-    private Uri BuildUri(string url, string baseUri, Dictionary<string, string> customPathParameters = null, Dictionary<string, string> pathParameters = null,
-      Dictionary<string, string> optionalQueryParameters = null)
+    private Uri BuildUri(string url, string baseUri, IDictionary<string, string> customPathParameters = null, IDictionary<string, string> pathParameters = null,
+      IDictionary<string, string> optionalQueryParameters = null)
     {
       var path = $"{baseUri}";
       if (pathParameters != null)

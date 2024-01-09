@@ -121,7 +121,7 @@ namespace Algolia.Search.Utils
       return string.Join("&", mergedProperties.ToArray());
     }
 
-    public static string ToQueryString(this Dictionary<string, string> dic)
+    public static string ToQueryString(this IDictionary<string, string> dic)
     {
       if (dic == null)
       {

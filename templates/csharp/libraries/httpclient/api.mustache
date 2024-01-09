@@ -124,7 +124,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
-            InternalRequestOptions requestOptions = new InternalRequestOptions(options);
+            var requestOptions = new InternalRequestOptions(options);
             {{#vendorExtensions.x-is-custom-request}}
             {{#pathParams}}
             requestOptions.CustomPathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
@@ -143,17 +143,16 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/required}}
             {{/pathParams}}
             {{/x-is-custom-request}}{{/vendorExtensions}}
+            {{#vendorExtensions.x-is-custom-request}}
             {{#queryParams}}
-            {{#required}}
-            requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
-            }
-            {{/required}}
+            requestOptions.AddCustomQueryParameter({{paramName}});
             {{/queryParams}}
+            {{/vendorExtensions.x-is-custom-request}}
+            {{^vendorExtensions.x-is-custom-request}}
+            {{#queryParams}}
+            requestOptions.AddQueryParameter("{{baseName}}", {{paramName}});
+            {{/queryParams}}
+            {{/vendorExtensions.x-is-custom-request}}
             {{#headerParams}}
             {{#required}}
             requestOptions.HeaderParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // header parameter
@@ -184,7 +183,6 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             requestOptions.UseReadTransporter = true;
             {{/x-use-read-transporter}}
             {{/vendorExtensions}}
-
             return await _transport.ExecuteRequestAsync<{{> return_type}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
         }
         {{/supportsAsync}}

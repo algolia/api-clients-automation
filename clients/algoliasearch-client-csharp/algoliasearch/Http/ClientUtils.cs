@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Algolia.Search.Client
+namespace Algolia.Search.Http
 {
   /// <summary>
   /// Utility functions providing some benefit to API client consumers.
@@ -23,41 +23,16 @@ namespace Algolia.Search.Client
     /// <param name="collectionFormat">The swagger-supported collection format, one of: csv, tsv, ssv, pipes, multi</param>
     /// <param name="name">Key name.</param>
     /// <param name="value">Value object.</param>
+    /// <param name="isCustomRequest"></param>
     /// <returns>A multimap of keys with 1..n associated values.</returns>
-    public static Dictionary<string, string> ParameterToDictionary(string collectionFormat, string name, object value)
+    public static IDictionary<string, string> ParameterToDictionary(string name, object value, bool isCustomRequest)
     {
-      var parameters = new Dictionary<string, string>();
-
-      if (value is ICollection collection && collectionFormat == "multi")
+      if (isCustomRequest && value is IDictionary<string, object> collection)
       {
-        foreach (var item in collection)
-        {
-          parameters.Add(name, ParameterToString(item));
-        }
-      }
-      else if (value is IDictionary dictionary)
-      {
-        if (collectionFormat == "deepObject")
-        {
-          foreach (DictionaryEntry entry in dictionary)
-          {
-            parameters.Add(name + "[" + entry.Key + "]", ParameterToString(entry.Value));
-          }
-        }
-        else
-        {
-          foreach (DictionaryEntry entry in dictionary)
-          {
-            parameters.Add(entry.Key.ToString(), ParameterToString(entry.Value));
-          }
-        }
-      }
-      else
-      {
-        parameters.Add(name, ParameterToString(value));
+        return collection.ToDictionary(entry => entry.Key, entry => ParameterToString(entry.Value));
       }
 
-      return parameters;
+      return new Dictionary<string, string> { { name, ParameterToString(value) } };
     }
 
     /// <summary>
@@ -77,6 +52,7 @@ namespace Algolia.Search.Client
           entries.Add(ParameterToString(entry));
         return string.Join(",", entries);
       }
+
       if (obj is Enum && HasEnumMemberAttrValue(obj))
         return GetEnumMemberAttrValue(obj);
 
@@ -115,6 +91,7 @@ namespace Algolia.Search.Client
       {
         return attr.Value;
       }
+
       return null;
     }
   }

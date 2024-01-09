@@ -40,7 +40,7 @@ namespace Algolia.Search.Utils
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <returns></returns>
-    public static Dictionary<TKey, TValue> MergeWith<TKey, TValue>(this Dictionary<TKey, TValue> a,
+    public static IDictionary<TKey, TValue> MergeWith<TKey, TValue>(this IDictionary<TKey, TValue> a,
         Dictionary<TKey, TValue> b)
     {
       if (a == null && b != null)

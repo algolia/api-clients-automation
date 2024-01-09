@@ -149,6 +149,23 @@ namespace Algolia.Search.Http
     {
     }
 
+    public Dictionary<string, string> SplitQuery(string query)
+    {
+      if (string.IsNullOrWhiteSpace(query))
+      {
+        return new Dictionary<string, string>();
+      }
+
+      var dict = new Dictionary<string, string>();
+      var pairs = query.Remove(0, 1).Split('&');
+      foreach (var pair in pairs)
+      {
+        var idx = pair.IndexOf('=');
+        dict.Add(pair.Substring(0, idx), Uri.UnescapeDataString(pair.Substring(idx + 1)));
+      }
+      return dict;
+    }
+
     public async Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan totalTimeout,
       CancellationToken ct = default)
     {
@@ -157,7 +174,7 @@ namespace Algolia.Search.Http
       echo.Host = request.Uri.Host;
       echo.Method = request.Method;
       echo.Body = request.Body;
-      //echo.QueryParameters = buildQueryParameters(request);
+      echo.QueryParameters = SplitQuery(request.Uri.Query);
       //echo.Headers = buildHeaders(request.Headers);
       //echo.ConnectTimeout = chain.connectTimeoutMillis();
       //echo.ResponseTimeout =
@@ -179,7 +196,7 @@ namespace Algolia.Search.Http
     public String Host;
     public HttpMethod Method;
     public String Body;
-    public Dictionary<String, Object> QueryParameters;
+    public Dictionary<string, string> QueryParameters;
     public Dictionary<String, String> Headers;
     public int ConnectTimeout;
     public int ResponseTimeout;

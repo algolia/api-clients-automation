@@ -35,7 +35,7 @@ namespace Algolia.Search.Http
     /// <param name="headers"></param>
     /// <param name="dictionary"></param>
     /// <returns></returns>
-    internal static HttpRequestHeaders Fill(this HttpRequestHeaders headers, Dictionary<string, string> dictionary)
+    internal static HttpRequestHeaders Fill(this HttpRequestHeaders headers, IDictionary<string, string> dictionary)
     {
       foreach (var header in dictionary)
       {

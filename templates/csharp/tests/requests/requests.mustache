@@ -4,6 +4,7 @@ using Algolia.Search.Search.Client;
 using Algolia.Search.Search.Models;
 using Action = Algolia.Search.Search.Models.Action;
 using Xunit;
+using Newtonsoft.Json;
 using Quibble.Xunit;
 
 public class {{client}}RequestTests
@@ -29,25 +30,21 @@ public class {{client}}RequestTests
   public async Task {{method}}Test{{testIndex}}()
   {
     {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
-
     {{#hasRequestOptions}}
      var requestOptions = new RequestOptions();
      {{#requestOptions.queryParameters.parametersWithDataType}}
-     requestOptions.QueryParameters.Add("test", "test");
+     requestOptions.QueryParameters.Add("{{{key}}}", {{> requests/requestOptionsParams}});
       {{/requestOptions.queryParameters.parametersWithDataType}}
       {{#requestOptions.headers.parametersWithDataType}}
-     requestOptions.Headers.Add("test", "test");
+     requestOptions.Headers.Add("{{{key}}}", "{{{value}}}");
       {{/requestOptions.headers.parametersWithDataType}}
     {{/hasRequestOptions}}
-
      await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
      EchoResponse req = _echo.lastResponse;
-
     {{#request}}
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
-
     {{#body}}
         JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.Body, new JsonDiffConfig(true));
     {{/body}}
@@ -59,6 +56,18 @@ public class {{client}}RequestTests
           Assert.Equal("{}", req.Body);
       {{/assertNullBody}}
     {{/body}}
+      {{#queryParameters}}
+        var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
+        var actualQuery = req.QueryParameters;
+        Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+        foreach (var query in actualQuery)
+        {
+          string result;
+          expectedQuery.TryGetValue(query.Key, out result);
+          Assert.Equal(query.Value, result);
+        }
+    {{/queryParameters}}
     {{/request}}
   }
   {{/tests}}

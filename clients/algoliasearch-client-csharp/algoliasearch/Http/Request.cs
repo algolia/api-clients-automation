@@ -24,7 +24,7 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Headers a dictionary
     /// </summary>
-    public Dictionary<string, string> Headers { get; set; }
+    public IDictionary<string, string> Headers { get; set; }
 
     /// <summary>
     /// Body of the request
