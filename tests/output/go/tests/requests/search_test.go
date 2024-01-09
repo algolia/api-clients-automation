@@ -428,13 +428,13 @@ func TestSearch_Browse(t *testing.T) {
 		{
 			name: "browse with minimal parameters",
 			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName"}`
+				parametersStr := `{"indexName":"cts_e2e_browse"}`
 				req := search.ApiBrowseRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				_, err := client.Browse(req)
 				require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
+				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_browse/browse")
 				require.NoError(t, err)
 				require.Equal(t, expectedPath, echo.path)
 				require.Equal(t, "POST", echo.method)
@@ -1594,13 +1594,13 @@ func TestSearch_GetSettings(t *testing.T) {
 		{
 			name: "getSettings0",
 			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName"}`
+				parametersStr := `{"indexName":"cts_e2e_settings"}`
 				req := search.ApiGetSettingsRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				_, err := client.GetSettings(req)
 				require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
 				require.NoError(t, err)
 				require.Equal(t, expectedPath, echo.path)
 				require.Equal(t, "GET", echo.method)
@@ -2955,13 +2955,13 @@ func TestSearch_SetSettings(t *testing.T) {
 		{
 			name: "setSettings with minimal parameters",
 			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"paginationLimitedTo":10},"forwardToReplicas":true}`
+				parametersStr := `{"indexName":"cts_e2e_settings","indexSettings":{"paginationLimitedTo":10},"forwardToReplicas":true}`
 				req := search.ApiSetSettingsRequest{}
 				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
 				_, err := client.SetSettings(req)
 				require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
 				require.NoError(t, err)
 				require.Equal(t, expectedPath, echo.path)
 				require.Equal(t, "PUT", echo.method)

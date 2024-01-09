@@ -40,12 +40,12 @@
   ],
   "regexManagers": [
     {
-      "description": "Update openapitools-cli version in the config file",
+      "description": "Update openapitools-cli version in the generation file",
       "fileMatch": [
-        "openapitools.json"
+        "generateOpenapitools.ts"
       ],
       "matchStrings": [
-        "\\s\"version\": \"(?<currentValue>.*?)\",?\\s"
+        "\\sversion: '(?<currentValue>.*?)',?\\s"
       ],
       "depNameTemplate": "org.openapitools:openapi-generator-cli",
       "datasourceTemplate": "maven"

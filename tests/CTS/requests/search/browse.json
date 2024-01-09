@@ -2,11 +2,22 @@
   {
     "testName": "browse with minimal parameters",
     "parameters": {
-      "indexName": "indexName"
+      "indexName": "cts_e2e_browse"
     },
     "request": {
-      "path": "/1/indexes/indexName/browse",
+      "path": "/1/indexes/cts_e2e_browse/browse",
       "method": "POST"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "page": 0,
+        "nbHits": 33191,
+        "nbPages": 34,
+        "hitsPerPage": 1000,
+        "query": "",
+        "params": ""
+      }
     }
   },
   {

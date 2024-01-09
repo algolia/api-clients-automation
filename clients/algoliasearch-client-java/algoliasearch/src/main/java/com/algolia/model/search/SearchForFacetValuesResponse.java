@@ -16,6 +16,12 @@ public class SearchForFacetValuesResponse implements SearchResult {
   @JsonProperty("facetHits")
   private List<FacetHits> facetHits = new ArrayList<>();
 
+  @JsonProperty("exhaustiveFacetsCount")
+  private Boolean exhaustiveFacetsCount;
+
+  @JsonProperty("processingTimeMS")
+  private Integer processingTimeMS;
+
   public SearchForFacetValuesResponse setFacetHits(List<FacetHits> facetHits) {
     this.facetHits = facetHits;
     return this;
@@ -32,6 +38,33 @@ public class SearchForFacetValuesResponse implements SearchResult {
     return facetHits;
   }
 
+  public SearchForFacetValuesResponse setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
+    this.exhaustiveFacetsCount = exhaustiveFacetsCount;
+    return this;
+  }
+
+  /**
+   * See the `facetsCount` field of the `exhaustive` object in the response.
+   *
+   * @deprecated
+   */
+  @Deprecated
+  @javax.annotation.Nonnull
+  public Boolean getExhaustiveFacetsCount() {
+    return exhaustiveFacetsCount;
+  }
+
+  public SearchForFacetValuesResponse setProcessingTimeMS(Integer processingTimeMS) {
+    this.processingTimeMS = processingTimeMS;
+    return this;
+  }
+
+  /** Time the server took to process the request, in milliseconds. */
+  @javax.annotation.Nullable
+  public Integer getProcessingTimeMS() {
+    return processingTimeMS;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -41,12 +74,16 @@ public class SearchForFacetValuesResponse implements SearchResult {
       return false;
     }
     SearchForFacetValuesResponse searchForFacetValuesResponse = (SearchForFacetValuesResponse) o;
-    return Objects.equals(this.facetHits, searchForFacetValuesResponse.facetHits);
+    return (
+      Objects.equals(this.facetHits, searchForFacetValuesResponse.facetHits) &&
+      Objects.equals(this.exhaustiveFacetsCount, searchForFacetValuesResponse.exhaustiveFacetsCount) &&
+      Objects.equals(this.processingTimeMS, searchForFacetValuesResponse.processingTimeMS)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(facetHits);
+    return Objects.hash(facetHits, exhaustiveFacetsCount, processingTimeMS);
   }
 
   @Override
@@ -54,6 +91,8 @@ public class SearchForFacetValuesResponse implements SearchResult {
     StringBuilder sb = new StringBuilder();
     sb.append("class SearchForFacetValuesResponse {\n");
     sb.append("    facetHits: ").append(toIndentedString(facetHits)).append("\n");
+    sb.append("    exhaustiveFacetsCount: ").append(toIndentedString(exhaustiveFacetsCount)).append("\n");
+    sb.append("    processingTimeMS: ").append(toIndentedString(processingTimeMS)).append("\n");
     sb.append("}");
     return sb.toString();
   }

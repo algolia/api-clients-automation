@@ -5,6 +5,9 @@ class Helpers:
         """
         _res = {}
 
+        if not isinstance(expected, dict) or not isinstance(received, dict):
+            return received
+
         for k, v in expected.items():
             if k in received:
                 if isinstance(v, dict):

@@ -18,13 +18,28 @@ SearchForFacetValuesResponse _$SearchForFacetValuesResponseFromJson(
               (v) => (v as List<dynamic>)
                   .map((e) => FacetHits.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          exhaustiveFacetsCount:
+              $checkedConvert('exhaustiveFacetsCount', (v) => v as bool),
+          processingTimeMS:
+              $checkedConvert('processingTimeMS', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$SearchForFacetValuesResponseToJson(
-        SearchForFacetValuesResponse instance) =>
-    <String, dynamic>{
-      'facetHits': instance.facetHits.map((e) => e.toJson()).toList(),
-    };
+    SearchForFacetValuesResponse instance) {
+  final val = <String, dynamic>{
+    'facetHits': instance.facetHits.map((e) => e.toJson()).toList(),
+    'exhaustiveFacetsCount': instance.exhaustiveFacetsCount,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('processingTimeMS', instance.processingTimeMS);
+  return val;
+}

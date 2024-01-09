@@ -493,10 +493,10 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.browse(
-        indexName: "indexName",
+        indexName: "cts_e2e_browse",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/browse');
+        expectPath(request.path, '/1/indexes/cts_e2e_browse/browse');
         expect(request.method, 'post');
         expectBody(request.body, """{}""");
       },
@@ -1459,10 +1459,10 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.getSettings(
-        indexName: "theIndexName",
+        indexName: "cts_e2e_settings",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expectPath(request.path, '/1/indexes/cts_e2e_settings/settings');
         expect(request.method, 'get');
         expect(request.body, null);
       },
@@ -3034,14 +3034,14 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.setSettings(
-        indexName: "theIndexName",
+        indexName: "cts_e2e_settings",
         indexSettings: IndexSettings(
           paginationLimitedTo: 10,
         ),
         forwardToReplicas: true,
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expectPath(request.path, '/1/indexes/cts_e2e_settings/settings');
         expect(request.method, 'put');
         expectParams(
             request.queryParameters, """{"forwardToReplicas":"true"}""");

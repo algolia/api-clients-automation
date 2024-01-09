@@ -15,7 +15,6 @@ export const COMMON_DEPENDENCIES = {
     'yarn.lock',
     '.eslintrc.cjs',
     'config/generation.config.mjs',
-    'config/openapitools.json',
     'config/clients.config.json',
     'config/release.config.json',
     'generators',
