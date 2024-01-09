@@ -197,6 +197,10 @@
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
+    },
+    "snippets": {
+      "extension": ".py",
+      "outputFolder": "snippets"
     }
   },
   "ruby": {

@@ -35,8 +35,21 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
+
+    // tests generation
     supportingFiles.add(
       new SupportingFile("requests/requests.mustache", outputFolder + "/requests", Helpers.createClientName(client, language) + extension)
+    );
+
+    // snippets generation
+    String snippetsExtension = Helpers.getClientConfigField(language, "snippets", "extension");
+    String snippetsOutputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");
+
+    supportingFiles.add(
+      new SupportingFile(
+        "snippets/method.mustache",
+        "../../../" + snippetsOutputFolder + "/" + language + "/" + Helpers.createClientName(client, language) + snippetsExtension
+      )
     );
   }
 
@@ -66,6 +79,7 @@ public class TestsRequest extends TestsGenerator {
       Request[] op = cts.get(operationId);
 
       List<Object> tests = new ArrayList<>();
+      List<Object> snippets = new ArrayList<>();
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
@@ -141,6 +155,9 @@ public class TestsRequest extends TestsGenerator {
 
           paramsType.enhanceParameters(req.parameters, test, ope);
           tests.add(test);
+          if (i == 0) {
+            snippets.add(test);
+          }
         } catch (CTSException e) {
           e.setTestName((String) test.get("testName"));
           throw e;
@@ -148,6 +165,7 @@ public class TestsRequest extends TestsGenerator {
       }
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("tests", tests);
+      testObj.put("snippets", snippets);
       testObj.put("operationId", operationId);
       blocks.add(testObj);
     }

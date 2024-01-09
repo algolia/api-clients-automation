@@ -59,5 +59,9 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
     }
 
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
+
+    if (lang === 'python') {
+      await formatter(lang, toAbsolutePath(`snippets/${lang}`));
+    }
   }
 }
