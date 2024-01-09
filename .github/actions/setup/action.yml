@@ -28,7 +28,7 @@ runs:
         cache: gradle
 
     - name: Validate gradle wrapper
-      if: inputs.type != 'minimal'
+      if: ${{ inputs.language == 'java' }}
       uses: gradle/wrapper-validation-action@v1
 
     - name: Download Java formatter
