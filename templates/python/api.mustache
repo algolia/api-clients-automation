@@ -20,6 +20,8 @@ class {{classname}}:
     Usage:
     _client = {{classname}}("MY_APP_ID", "MY_API_KEY"{{#hasRegionalHost}}, "THE_REGION_TO_TARGET"{{/hasRegionalHost}})
     _client_with_named_args = {{classname}}(app_id="MY_APP_ID", api_key="MY_API_KEY"{{#hasRegionalHost}}, region="THE_REGION_TO_TARGET"{{/hasRegionalHost}})
+
+    See `{{classname}}.create_with_config` for advanced configuration.
     """
 
     _transporter: Transporter
