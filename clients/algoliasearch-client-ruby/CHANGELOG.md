@@ -1,5 +1,9 @@
 ## [3.0.0.alpha.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.2...3.0.0.alpha.3)
 
+- [b4ca09335](https://github.com/algolia/api-clients-automation/commit/b4ca09335) fix(ruby): release using Trusted Publishing ([#2504](https://github.com/algolia/api-clients-automation/pull/2504)) by [@millotp](https://github.com/millotp/)
+
+## [3.0.0.alpha.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.2...3.0.0.alpha.3)
+
 - [ae20258c6](https://github.com/algolia/api-clients-automation/commit/ae20258c6) feat(clients): deserialize in e2e and SFFV response ([#2500](https://github.com/algolia/api-clients-automation/pull/2500)) by [@shortcuts](https://github.com/shortcuts/)
 - [4dc28da98](https://github.com/algolia/api-clients-automation/commit/4dc28da98) chore(clients): add more e2e ([#2497](https://github.com/algolia/api-clients-automation/pull/2497)) by [@shortcuts](https://github.com/shortcuts/)
 
