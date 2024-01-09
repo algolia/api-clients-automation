@@ -95,7 +95,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     reservedWords.add("LogLevel");
 
-    setObjcCompatible(false);
+    setObjcCompatible(true);
     setProjectName(getClientName(CLIENT));
     setUseSPMFileStructure(true);
 
