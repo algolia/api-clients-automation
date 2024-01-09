@@ -22,7 +22,7 @@ _list_clients_for_language() {
   if [[ $1 == "all" ]]; then
     _list_clients
   else
-    echo "all $(cat $ROOT/config/clients.config.json | jq --arg lang "$1" 'with_entries(select(.key == $lang)) | .[] | .clients')"
+    echo "all $(cat $ROOT/config/clients.config.json | jq --arg lang "$1" 'with_entries(select(.key == $lang)) | .[].clients | if (.[0] | type == "object") then .[].name else .[] end')"
   fi
 }
 

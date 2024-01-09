@@ -63,7 +63,11 @@ public final class JsonSerializer {
    * @param innerType The parameterized type.
    * @return A JavaType representation of the parameterized class.
    */
-  public JavaType getJavaType(@Nonnull Class<?> returnType, @Nonnull Class<?> innerType) {
+  public JavaType getJavaType(Class<?> returnType, @Nonnull Class<?> innerType) {
+    if (returnType == null) {
+      return null;
+    }
+
     return mapper.getTypeFactory().constructParametricType(returnType, innerType);
   }
 
@@ -73,7 +77,11 @@ public final class JsonSerializer {
    * @param returnType The main class type.
    * @return A JavaType representation of the parameterized class.
    */
-  public JavaType getJavaType(@Nonnull TypeReference<?> returnType) {
+  public JavaType getJavaType(TypeReference<?> returnType) {
+    if (returnType == null) {
+      return null;
+    }
+
     return mapper.getTypeFactory().constructType(returnType);
   }
 
