@@ -11,18 +11,31 @@ final class SearchForFacetValuesResponse {
   /// Returns a new [SearchForFacetValuesResponse] instance.
   const SearchForFacetValuesResponse({
     required this.facetHits,
+    required this.exhaustiveFacetsCount,
+    this.processingTimeMS,
   });
 
   @JsonKey(name: r'facetHits')
   final List<FacetHits> facetHits;
 
+  /// See the `facetsCount` field of the `exhaustive` object in the response.
+  @Deprecated('exhaustiveFacetsCount has been deprecated')
+  @JsonKey(name: r'exhaustiveFacetsCount')
+  final bool exhaustiveFacetsCount;
+
+  /// Time the server took to process the request, in milliseconds.
+  @JsonKey(name: r'processingTimeMS')
+  final int? processingTimeMS;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SearchForFacetValuesResponse && other.facetHits == facetHits;
+      other is SearchForFacetValuesResponse &&
+          other.facetHits == facetHits &&
+          other.processingTimeMS == processingTimeMS;
 
   @override
-  int get hashCode => facetHits.hashCode;
+  int get hashCode => facetHits.hashCode + processingTimeMS.hashCode;
 
   factory SearchForFacetValuesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchForFacetValuesResponseFromJson(json);
