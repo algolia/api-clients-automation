@@ -2,7 +2,7 @@
 //  Builder.swift
 //
 //
-//  Created by Vladislav Fitc on 31/03/2020.
+//  Created by Algolia on 31/03/2020.
 //
 
 import Foundation

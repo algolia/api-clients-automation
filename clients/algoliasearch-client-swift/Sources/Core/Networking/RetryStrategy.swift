@@ -2,7 +2,7 @@
 //  RetryStrategy.swift
 //
 //
-//  Created by Vladislav Fitc on 20/02/2020.
+//  Created by Algolia on 20/02/2020.
 //
 
 import Foundation

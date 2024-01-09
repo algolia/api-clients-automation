@@ -2,7 +2,7 @@
 //  HTTPStatusCode.swift
 //
 //
-//  Created by Vladislav Fitc on 20/02/2020.
+//  Created by Algolia on 20/02/2020.
 //
 
 import Foundation
@@ -11,6 +11,7 @@ public typealias HTTPStatusСode = Int
 
 extension HTTPStatusСode {
 
+  static let badRequest: HTTPStatusСode = 400
   static let notFound: HTTPStatusСode = 404
   static let requestTimeout: HTTPStatusСode = 408
   static let tooManyRequests: HTTPStatusСode = 429

@@ -2,7 +2,7 @@
 //  StringOption.swift
 //
 //
-//  Created by Thomas Raffray on 15/12/2023.
+//  Created by Algolia on 15/12/2023.
 //
 
 import Foundation

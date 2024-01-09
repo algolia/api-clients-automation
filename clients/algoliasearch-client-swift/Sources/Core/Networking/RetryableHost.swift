@@ -2,7 +2,7 @@
 //  RetryableHost.swift
 //
 //
-//  Created by Vladislav Fitc on 19/02/2020.
+//  Created by Algolia on 19/02/2020.
 //
 
 import Foundation

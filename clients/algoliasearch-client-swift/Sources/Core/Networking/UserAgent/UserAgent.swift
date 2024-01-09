@@ -2,7 +2,7 @@
 //  UserAgent.swift
 //
 //
-//  Created by Vladislav Fitc on 14/04/2020.
+//  Created by Algolia on 14/04/2020.
 //
 
 import Foundation

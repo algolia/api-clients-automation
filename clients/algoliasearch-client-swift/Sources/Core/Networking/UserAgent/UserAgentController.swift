@@ -2,7 +2,7 @@
 //  UserAgentController.swift
 //
 //
-//  Created by Vladislav Fitc on 15/06/2020.
+//  Created by Algolia on 15/06/2020.
 //
 
 import Foundation

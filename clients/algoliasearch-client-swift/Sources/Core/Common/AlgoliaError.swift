@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  AlgoliaError.swift
 //
 //
-//  Created by Thomas Raffray on 22/12/2023.
+//  Created by Algolia on 22/12/2023.
 //
 
 import Foundation

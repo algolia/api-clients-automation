@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		597D534E2B46D385009F2B19 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = 597D534D2B46D0FD009F2B19 /* Info.plist */; };
+		59C6B1392B4D52960013A139 /* Abtesting in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1382B4D52960013A139 /* Abtesting */; };
+		59C6B13B2B4D52960013A139 /* Analytics in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B13A2B4D52960013A139 /* Analytics */; };
+		59C6B13D2B4D52960013A139 /* Ingestion in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B13C2B4D52960013A139 /* Ingestion */; };
+		59C6B13F2B4D52960013A139 /* Insights in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B13E2B4D52960013A139 /* Insights */; };
+		59C6B1412B4D52960013A139 /* Monitoring in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1402B4D52960013A139 /* Monitoring */; };
+		59C6B1432B4D52960013A139 /* Personalization in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1422B4D52960013A139 /* Personalization */; };
+		59C6B1452B4D52960013A139 /* QuerySuggestions in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1442B4D52960013A139 /* QuerySuggestions */; };
+		59C6B1472B4D52960013A139 /* Recommend in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1462B4D52960013A139 /* Recommend */; };
+		59C6B1492B4D52960013A139 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 59C6B1482B4D52960013A139 /* Search */; };
 		59EBAD432B37323200CFC677 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EBAD422B37323200CFC677 /* main.swift */; };
-		59EBAD4B2B3732AE00CFC677 /* Abtesting in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD4A2B3732AE00CFC677 /* Abtesting */; };
-		59EBAD4D2B3732AE00CFC677 /* Analytics in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD4C2B3732AE00CFC677 /* Analytics */; };
-		59EBAD4F2B3732AE00CFC677 /* Ingestion in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD4E2B3732AE00CFC677 /* Ingestion */; };
-		59EBAD512B3732AE00CFC677 /* Insights in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD502B3732AE00CFC677 /* Insights */; };
-		59EBAD532B3732AE00CFC677 /* Monitoring in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD522B3732AE00CFC677 /* Monitoring */; };
-		59EBAD552B3732AE00CFC677 /* Personalization in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD542B3732AE00CFC677 /* Personalization */; };
-		59EBAD572B3732AE00CFC677 /* QuerySuggestions in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD562B3732AE00CFC677 /* QuerySuggestions */; };
-		59EBAD592B3732AE00CFC677 /* Recommend in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD582B3732AE00CFC677 /* Recommend */; };
-		59EBAD5B2B3732AE00CFC677 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 59EBAD5A2B3732AE00CFC677 /* Search */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,15 +43,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59EBAD532B3732AE00CFC677 /* Monitoring in Frameworks */,
-				59EBAD572B3732AE00CFC677 /* QuerySuggestions in Frameworks */,
-				59EBAD4F2B3732AE00CFC677 /* Ingestion in Frameworks */,
-				59EBAD592B3732AE00CFC677 /* Recommend in Frameworks */,
-				59EBAD512B3732AE00CFC677 /* Insights in Frameworks */,
-				59EBAD5B2B3732AE00CFC677 /* Search in Frameworks */,
-				59EBAD552B3732AE00CFC677 /* Personalization in Frameworks */,
-				59EBAD4B2B3732AE00CFC677 /* Abtesting in Frameworks */,
-				59EBAD4D2B3732AE00CFC677 /* Analytics in Frameworks */,
+				59C6B1412B4D52960013A139 /* Monitoring in Frameworks */,
+				59C6B1452B4D52960013A139 /* QuerySuggestions in Frameworks */,
+				59C6B13D2B4D52960013A139 /* Ingestion in Frameworks */,
+				59C6B1472B4D52960013A139 /* Recommend in Frameworks */,
+				59C6B13F2B4D52960013A139 /* Insights in Frameworks */,
+				59C6B1492B4D52960013A139 /* Search in Frameworks */,
+				59C6B1432B4D52960013A139 /* Personalization in Frameworks */,
+				59C6B1392B4D52960013A139 /* Abtesting in Frameworks */,
+				59C6B13B2B4D52960013A139 /* Analytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,15 +100,15 @@
 			);
 			name = playground;
 			packageProductDependencies = (
-				59EBAD4A2B3732AE00CFC677 /* Abtesting */,
-				59EBAD4C2B3732AE00CFC677 /* Analytics */,
-				59EBAD4E2B3732AE00CFC677 /* Ingestion */,
-				59EBAD502B3732AE00CFC677 /* Insights */,
-				59EBAD522B3732AE00CFC677 /* Monitoring */,
-				59EBAD542B3732AE00CFC677 /* Personalization */,
-				59EBAD562B3732AE00CFC677 /* QuerySuggestions */,
-				59EBAD582B3732AE00CFC677 /* Recommend */,
-				59EBAD5A2B3732AE00CFC677 /* Search */,
+				59C6B1382B4D52960013A139 /* Abtesting */,
+				59C6B13A2B4D52960013A139 /* Analytics */,
+				59C6B13C2B4D52960013A139 /* Ingestion */,
+				59C6B13E2B4D52960013A139 /* Insights */,
+				59C6B1402B4D52960013A139 /* Monitoring */,
+				59C6B1422B4D52960013A139 /* Personalization */,
+				59C6B1442B4D52960013A139 /* QuerySuggestions */,
+				59C6B1462B4D52960013A139 /* Recommend */,
+				59C6B1482B4D52960013A139 /* Search */,
 			);
 			productName = playground;
 			productReference = 59EBAD3F2B37323200CFC677 /* playground */;
@@ -139,7 +139,7 @@
 			);
 			mainGroup = 59EBAD362B37323200CFC677;
 			packageReferences = (
-				59EBAD492B3732AE00CFC677 /* XCLocalSwiftPackageReference "../../../clients/algoliasearch-client-swift" */,
+				59C6B1372B4D52960013A139 /* XCLocalSwiftPackageReference "../../../clients/algoliasearch-client-swift" */,
 			);
 			productRefGroup = 59EBAD402B37323200CFC677 /* Products */;
 			projectDirPath = "";
@@ -333,46 +333,46 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		59EBAD492B3732AE00CFC677 /* XCLocalSwiftPackageReference "../../../clients/algoliasearch-client-swift" */ = {
+		59C6B1372B4D52960013A139 /* XCLocalSwiftPackageReference "../../../clients/algoliasearch-client-swift" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../../clients/algoliasearch-client-swift";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		59EBAD4A2B3732AE00CFC677 /* Abtesting */ = {
+		59C6B1382B4D52960013A139 /* Abtesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Abtesting;
 		};
-		59EBAD4C2B3732AE00CFC677 /* Analytics */ = {
+		59C6B13A2B4D52960013A139 /* Analytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Analytics;
 		};
-		59EBAD4E2B3732AE00CFC677 /* Ingestion */ = {
+		59C6B13C2B4D52960013A139 /* Ingestion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Ingestion;
 		};
-		59EBAD502B3732AE00CFC677 /* Insights */ = {
+		59C6B13E2B4D52960013A139 /* Insights */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Insights;
 		};
-		59EBAD522B3732AE00CFC677 /* Monitoring */ = {
+		59C6B1402B4D52960013A139 /* Monitoring */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Monitoring;
 		};
-		59EBAD542B3732AE00CFC677 /* Personalization */ = {
+		59C6B1422B4D52960013A139 /* Personalization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Personalization;
 		};
-		59EBAD562B3732AE00CFC677 /* QuerySuggestions */ = {
+		59C6B1442B4D52960013A139 /* QuerySuggestions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = QuerySuggestions;
 		};
-		59EBAD582B3732AE00CFC677 /* Recommend */ = {
+		59C6B1462B4D52960013A139 /* Recommend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Recommend;
 		};
-		59EBAD5A2B3732AE00CFC677 /* Search */ = {
+		59C6B1482B4D52960013A139 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Search;
 		};

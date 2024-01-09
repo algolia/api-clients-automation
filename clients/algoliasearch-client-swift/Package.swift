@@ -3,14 +3,8 @@
 import PackageDescription
 
 #if os(Linux)
-  let macOSVersion: SupportedPlatform.MacOSVersion = .v10_15
-#else
-  let macOSVersion: SupportedPlatform.MacOSVersion = .v10_10
-#endif
-
-#if os(Linux)
   let extraPackageDependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.2")
+    .package(url: "https://github.com/apple/swift-crypto.git", from: "3.1.0")
   ]
 #else
   let extraPackageDependencies: [Package.Dependency] = []
@@ -28,7 +22,7 @@ let package = Package(
   name: "AlgoliaSearchClient",
   platforms: [
     .iOS(.v13),
-    .macOS(macOSVersion),
+    .macOS(.v10_13),
     .tvOS(.v13),
     .watchOS(.v6),
   ],

@@ -1,7 +1,6 @@
 package com.algolia.codegen.utils;
 
 import java.util.*;
-import java.util.logging.Logger;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.model.ModelsMap;
@@ -24,19 +23,7 @@ public class OneOf {
     }
   }
 
-  public static void updateModelsOneOfForSwift(Map<String, ModelsMap> models, String modelPackage) {
-    for (ModelsMap modelContainer : models.values()) {
-      // modelContainers always have 1 and only 1 model in our specs
-      var model = modelContainer.getModels().get(0).getModel();
-      if (model.oneOf.isEmpty()) continue;
-      markOneOfChildrenForSwift(models, model);
-      generateSealedChildren(models, modelPackage, model);
-      model.vendorExtensions.put("x-is-one-of", true);
-      model.vendorExtensions.put("x-one-of-explicit-name", Helpers.shouldUseExplicitOneOfName(model.oneOf));
-    }
-  }
-
-  private static void generateSealedChildren(Map<String, ModelsMap> models, String modelPackage, CodegenModel model) {
+  public static void generateSealedChildren(Map<String, ModelsMap> models, String modelPackage, CodegenModel model) {
     var sealedChilds = new ArrayList<>();
     for (String oneOf : model.oneOf) {
       ModelsMap modelsMap = models.get(oneOf);
@@ -80,37 +67,7 @@ public class OneOf {
     model.vendorExtensions.put("x-one-of-list", oneOfList);
   }
 
-  private static void markOneOfChildrenForSwift(Map<String, ModelsMap> models, CodegenModel model) {
-    var oneOfList = new ArrayList<Map<String, Object>>();
-    for (String oneOf : model.oneOf) {
-      Logger.getGlobal().severe(oneOf);
-      var oneOfModel = new HashMap<String, Object>();
-      oneOfModel.put("type", oneOf);
-      var isList = oneOf.charAt(0) == '[' && oneOf.charAt(oneOf.length() - 1) == ']';
-      Logger.getGlobal().severe("isList: " + isList);
-      var isDictionary = isList && oneOf.contains(": ");
-      Logger.getGlobal().severe("isDictionary: " + isDictionary);
-      var name = oneOf;
-      if (isDictionary) {
-        isList = false;
-        name = oneOf.replace("[", "DictionaryOf").replace(": ", "To").replace("]", "");
-        oneOfModel.put("listElementType", oneOf.replace("[", "").replace("]", ""));
-      }
-      if (isList) {
-        name = oneOf.replace("[", "ArrayOf").replace("]", "");
-      }
-      oneOfModel.put("name", name);
-      oneOfModel.put("isList", isList);
-      oneOfModel.put("isDictionary", isDictionary);
-      markCompounds(models, oneOf, oneOfModel, model);
-      oneOfList.add(oneOfModel);
-      Logger.getGlobal().severe(name);
-    }
-    oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
-    model.vendorExtensions.put("x-one-of-list", oneOfList);
-  }
-
-  private static void markCompounds(Map<String, ModelsMap> models, String oneOf, Map<String, Object> oneOfModel, CodegenModel model) {
+  public static void markCompounds(Map<String, ModelsMap> models, String oneOf, Map<String, Object> oneOfModel, CodegenModel model) {
     // 1. Find child model
     var modelsMap = models.get(oneOf);
     if (modelsMap == null) return;
@@ -147,7 +104,7 @@ public class OneOf {
     return typeName.equals("Int") || typeName.equals("Double") || typeName.equals("Long");
   }
 
-  private static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
+  public static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
     boolean hasDiscriminatorA = mapA.containsKey("discriminators");
     boolean hasDiscriminatorB = mapB.containsKey("discriminators");
     // Maps with "discriminators" come first

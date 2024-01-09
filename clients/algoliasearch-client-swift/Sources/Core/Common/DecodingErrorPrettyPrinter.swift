@@ -2,7 +2,7 @@
 //  DecodingErrorPrettyPrinter.swift
 //
 //
-//  Created by Thomas Raffray on 18/12/2023.
+//  Created by Algolia on 18/12/2023.
 //
 
 import Foundation

@@ -2,7 +2,7 @@
 //  HostIterator.swift
 //
 //
-//  Created by Vladislav Fitc on 02/03/2020.
+//  Created by Algolia on 02/03/2020.
 //
 
 import Foundation

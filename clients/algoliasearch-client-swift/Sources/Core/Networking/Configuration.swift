@@ -2,7 +2,7 @@
 //  Configuration.swift
 //
 //
-//  Created by Vladislav Fitc on 20/02/2020.
+//  Created by Algolia on 20/02/2020.
 //
 
 import Foundation
@@ -23,8 +23,6 @@ public protocol Configuration {
 
   /// Default headers that should be applied to every request.
   var defaultHeaders: [String: String]? { get }
-
-  var batchSize: Int { get }
 
 }
 
@@ -49,7 +47,6 @@ public struct DefaultConfiguration: Configuration {
   public let readTimeout: TimeInterval = 5
   public let logLevel: LogLevel = .info
   public let defaultHeaders: [String: String]? = [:]
-  public let batchSize: Int = 1000
   public var hosts: [RetryableHost] = []
 
 }

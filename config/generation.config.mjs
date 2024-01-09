@@ -118,7 +118,8 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
 
   // Swift
-  'clients/algoliasearch-client-swift/**',
+  '!clients/algoliasearch-client-swift/*',
+  'clients/algoliasearch-client-swift/**/Sources/**',
   '!clients/algoliasearch-client-swift/.swiftformat',
   '!clients/algoliasearch-client-swift/Package.swift',
   '!clients/algoliasearch-client-swift/Package.resolved',
