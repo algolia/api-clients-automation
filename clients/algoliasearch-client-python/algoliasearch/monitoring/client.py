@@ -34,21 +34,37 @@ class MonitoringClient:
     _config: MonitoringConfig
     _request_options: RequestOptions
 
-    def app_id(self) -> str:
-        return self._config.app_id
+    def __init__(
+        self,
+        app_id: Optional[str] = None,
+        api_key: Optional[str] = None,
+        transporter: Optional[Transporter] = None,
+        config: Optional[MonitoringConfig] = None,
+    ) -> None:
+        if transporter is not None and config is None:
+            config = transporter._config
 
-    def __init__(self, transporter: Transporter, config: MonitoringConfig) -> None:
-        self._transporter = transporter
+        if config is None:
+            config = MonitoringConfig(app_id, api_key)
         self._config = config
         self._request_options = RequestOptions(config)
 
-    def create_with_config(config: MonitoringConfig) -> Self:
-        transporter = Transporter(config)
+        if transporter is None:
+            transporter = Transporter(config)
+        self._transporter = transporter
 
-        return MonitoringClient(transporter, config)
+    def create_with_config(
+        config: MonitoringConfig, transporter: Optional[Transporter] = None
+    ) -> Self:
+        if transporter is None:
+            transporter = Transporter(config)
 
-    def create(app_id: Optional[str] = None, api_key: Optional[str] = None) -> Self:
-        return MonitoringClient.create_with_config(MonitoringConfig(app_id, api_key))
+        return MonitoringClient(
+            app_id=config.app_id,
+            api_key=config.api_key,
+            transporter=transporter,
+            config=config,
+        )
 
     async def close(self) -> None:
         return await self._transporter.close()
@@ -86,27 +102,21 @@ class MonitoringClient:
             )
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_delete(
         self,
@@ -134,12 +144,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_delete_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_delete_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_get_with_http_info(
         self,
@@ -172,27 +179,21 @@ class MonitoringClient:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_get(
         self,
@@ -220,12 +221,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_get_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_get_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_post_with_http_info(
         self,
@@ -264,7 +262,6 @@ class MonitoringClient:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -274,21 +271,16 @@ class MonitoringClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.POST,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_post(
         self,
@@ -322,12 +314,11 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_post_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_post_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def custom_put_with_http_info(
         self,
@@ -366,7 +357,6 @@ class MonitoringClient:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -376,21 +366,16 @@ class MonitoringClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.PUT,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_put(
         self,
@@ -424,12 +409,11 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_put_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_put_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def get_cluster_incidents_with_http_info(
         self,
@@ -454,26 +438,17 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_cluster_incidents`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/incidents/{clusters}".replace(
                 "{clusters}", quote(str(clusters), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_cluster_incidents(
         self,
@@ -492,12 +467,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'IncidentsResponse' result object.
         """
-
-        response = await self.get_cluster_incidents_with_http_info(
-            clusters, request_options
-        )
-
-        return response.deserialize(IncidentsResponse)
+        return (
+            await self.get_cluster_incidents_with_http_info(clusters, request_options)
+        ).deserialize(IncidentsResponse)
 
     async def get_cluster_status_with_http_info(
         self,
@@ -522,26 +494,17 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_cluster_status`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/status/{clusters}".replace(
                 "{clusters}", quote(str(clusters), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_cluster_status(
         self,
@@ -560,12 +523,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'StatusResponse' result object.
         """
-
-        response = await self.get_cluster_status_with_http_info(
-            clusters, request_options
-        )
-
-        return response.deserialize(StatusResponse)
+        return (
+            await self.get_cluster_status_with_http_info(clusters, request_options)
+        ).deserialize(StatusResponse)
 
     async def get_incidents_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -579,24 +539,15 @@ class MonitoringClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/incidents",
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_incidents(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -609,10 +560,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'IncidentsResponse' result object.
         """
-
-        response = await self.get_incidents_with_http_info(request_options)
-
-        return response.deserialize(IncidentsResponse)
+        return (await self.get_incidents_with_http_info(request_options)).deserialize(
+            IncidentsResponse
+        )
 
     async def get_indexing_time_with_http_info(
         self,
@@ -637,26 +587,17 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_indexing_time`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/indexing/{clusters}".replace(
                 "{clusters}", quote(str(clusters), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_indexing_time(
         self,
@@ -675,12 +616,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'IndexingTimeResponse' result object.
         """
-
-        response = await self.get_indexing_time_with_http_info(
-            clusters, request_options
-        )
-
-        return response.deserialize(IndexingTimeResponse)
+        return (
+            await self.get_indexing_time_with_http_info(clusters, request_options)
+        ).deserialize(IndexingTimeResponse)
 
     async def get_inventory_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -694,24 +632,15 @@ class MonitoringClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/inventory/servers",
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_inventory(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -724,10 +653,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'InventoryResponse' result object.
         """
-
-        response = await self.get_inventory_with_http_info(request_options)
-
-        return response.deserialize(InventoryResponse)
+        return (await self.get_inventory_with_http_info(request_options)).deserialize(
+            InventoryResponse
+        )
 
     async def get_latency_with_http_info(
         self,
@@ -752,26 +680,17 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_latency`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/latency/{clusters}".replace(
                 "{clusters}", quote(str(clusters), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_latency(
         self,
@@ -790,10 +709,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'LatencyResponse' result object.
         """
-
-        response = await self.get_latency_with_http_info(clusters, request_options)
-
-        return response.deserialize(LatencyResponse)
+        return (
+            await self.get_latency_with_http_info(clusters, request_options)
+        ).deserialize(LatencyResponse)
 
     async def get_metrics_with_http_info(
         self,
@@ -834,26 +752,17 @@ class MonitoringClient:
                 "Parameter `period` is required when calling `get_metrics`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/infrastructure/{metric}/period/{period}".replace(
                 "{metric}", quote(str(metric), safe="")
             ).replace("{period}", quote(str(period), safe="")),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_metrics(
         self,
@@ -883,12 +792,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'InfrastructureResponse' result object.
         """
-
-        response = await self.get_metrics_with_http_info(
-            metric, period, request_options
-        )
-
-        return response.deserialize(InfrastructureResponse)
+        return (
+            await self.get_metrics_with_http_info(metric, period, request_options)
+        ).deserialize(InfrastructureResponse)
 
     async def get_reachability_with_http_info(
         self,
@@ -913,26 +819,17 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_reachability`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/reachability/{clusters}/probes".replace(
                 "{clusters}", quote(str(clusters), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_reachability(
         self,
@@ -951,10 +848,9 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Dict[str, Dict[str, bool]]' result object.
         """
-
-        response = await self.get_reachability_with_http_info(clusters, request_options)
-
-        return response.deserialize(Dict[str, Dict[str, bool]])
+        return (
+            await self.get_reachability_with_http_info(clusters, request_options)
+        ).deserialize(Dict[str, Dict[str, bool]])
 
     async def get_status_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -968,24 +864,15 @@ class MonitoringClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/status",
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_status(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -998,7 +885,6 @@ class MonitoringClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'StatusResponse' result object.
         """
-
-        response = await self.get_status_with_http_info(request_options)
-
-        return response.deserialize(StatusResponse)
+        return (await self.get_status_with_http_info(request_options)).deserialize(
+            StatusResponse
+        )

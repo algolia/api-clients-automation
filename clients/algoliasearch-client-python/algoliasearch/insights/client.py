@@ -25,26 +25,38 @@ class InsightsClient:
     _config: InsightsConfig
     _request_options: RequestOptions
 
-    def app_id(self) -> str:
-        return self._config.app_id
-
-    def __init__(self, transporter: Transporter, config: InsightsConfig) -> None:
-        self._transporter = transporter
-        self._config = config
-        self._request_options = RequestOptions(config)
-
-    def create_with_config(config: InsightsConfig) -> Self:
-        transporter = Transporter(config)
-
-        return InsightsClient(transporter, config)
-
-    def create(
+    def __init__(
+        self,
         app_id: Optional[str] = None,
         api_key: Optional[str] = None,
         region: Optional[str] = None,
+        transporter: Optional[Transporter] = None,
+        config: Optional[InsightsConfig] = None,
+    ) -> None:
+        if transporter is not None and config is None:
+            config = transporter._config
+
+        if config is None:
+            config = InsightsConfig(app_id, api_key, region)
+        self._config = config
+        self._request_options = RequestOptions(config)
+
+        if transporter is None:
+            transporter = Transporter(config)
+        self._transporter = transporter
+
+    def create_with_config(
+        config: InsightsConfig, transporter: Optional[Transporter] = None
     ) -> Self:
-        return InsightsClient.create_with_config(
-            InsightsConfig(app_id, api_key, region)
+        if transporter is None:
+            transporter = Transporter(config)
+
+        return InsightsClient(
+            app_id=config.app_id,
+            api_key=config.api_key,
+            region=config.region,
+            transporter=transporter,
+            config=config,
         )
 
     async def close(self) -> None:
@@ -83,27 +95,21 @@ class InsightsClient:
             )
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_delete(
         self,
@@ -131,12 +137,9 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_delete_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_delete_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_get_with_http_info(
         self,
@@ -169,27 +172,21 @@ class InsightsClient:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_get(
         self,
@@ -217,12 +214,9 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_get_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_get_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_post_with_http_info(
         self,
@@ -261,7 +255,6 @@ class InsightsClient:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -271,21 +264,16 @@ class InsightsClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.POST,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_post(
         self,
@@ -319,12 +307,11 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_post_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_post_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def custom_put_with_http_info(
         self,
@@ -363,7 +350,6 @@ class InsightsClient:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -373,21 +359,16 @@ class InsightsClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.PUT,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_put(
         self,
@@ -421,12 +402,11 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_put_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_put_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def push_events_with_http_info(
         self,
@@ -449,28 +429,19 @@ class InsightsClient:
                 "Parameter `insights_events` is required when calling `push_events`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
         _body = {}
         if insights_events is not None:
             _body = insights_events
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.POST,
             path="/1/events",
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def push_events(
         self,
@@ -487,9 +458,6 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'EventsResponse' result object.
         """
-
-        response = await self.push_events_with_http_info(
-            insights_events, request_options
-        )
-
-        return response.deserialize(EventsResponse)
+        return (
+            await self.push_events_with_http_info(insights_events, request_options)
+        ).deserialize(EventsResponse)

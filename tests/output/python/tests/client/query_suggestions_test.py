@@ -11,8 +11,8 @@ class TestQuerySuggestionsClient:
 
     def create_client(self) -> QuerySuggestionsClient:
         self._config = QuerySuggestionsConfig("appId", "apiKey", "us")
-        self._client = QuerySuggestionsClient(
-            EchoTransporter(self._config), self._config
+        self._client = QuerySuggestionsClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
         )
 
     async def test_common_api_0(self):
@@ -50,8 +50,9 @@ class TestQuerySuggestionsClient:
     async def test_parameters_0(self):
         try:
             self._client = QuerySuggestionsClient(
-                EchoTransporter(QuerySuggestionsConfig("my-app-id", "my-api-key", "")),
-                QuerySuggestionsConfig("my-app-id", "my-api-key", ""),
+                transporter=EchoTransporter(
+                    QuerySuggestionsConfig("my-app-id", "my-api-key", "")
+                )
             )
 
         except (ValueError, Exception) as e:
@@ -63,10 +64,9 @@ class TestQuerySuggestionsClient:
     async def test_parameters_1(self):
         try:
             self._client = QuerySuggestionsClient(
-                EchoTransporter(
+                transporter=EchoTransporter(
                     QuerySuggestionsConfig("my-app-id", "my-api-key", "not_a_region")
-                ),
-                QuerySuggestionsConfig("my-app-id", "my-api-key", "not_a_region"),
+                )
             )
 
         except (ValueError, Exception) as e:
@@ -77,6 +77,7 @@ class TestQuerySuggestionsClient:
 
     async def test_parameters_2(self):
         self._client = QuerySuggestionsClient(
-            EchoTransporter(QuerySuggestionsConfig("my-app-id", "my-api-key", "us")),
-            QuerySuggestionsConfig("my-app-id", "my-api-key", "us"),
+            transporter=EchoTransporter(
+                QuerySuggestionsConfig("my-app-id", "my-api-key", "us")
+            )
         )

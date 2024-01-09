@@ -5,8 +5,6 @@ package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /** Recommend rules search parameters. */
@@ -26,9 +24,6 @@ public class SearchRecommendRulesParams {
 
   @JsonProperty("enabled")
   private Boolean enabled;
-
-  @JsonProperty("requestOptions")
-  private List<Object> requestOptions;
 
   public SearchRecommendRulesParams setQuery(String query) {
     this.query = query;
@@ -88,25 +83,6 @@ public class SearchRecommendRulesParams {
     return enabled;
   }
 
-  public SearchRecommendRulesParams setRequestOptions(List<Object> requestOptions) {
-    this.requestOptions = requestOptions;
-    return this;
-  }
-
-  public SearchRecommendRulesParams addRequestOptions(Object requestOptionsItem) {
-    if (this.requestOptions == null) {
-      this.requestOptions = new ArrayList<>();
-    }
-    this.requestOptions.add(requestOptionsItem);
-    return this;
-  }
-
-  /** Request options to send with the API call. */
-  @javax.annotation.Nullable
-  public List<Object> getRequestOptions() {
-    return requestOptions;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -121,14 +97,13 @@ public class SearchRecommendRulesParams {
       Objects.equals(this.context, searchRecommendRulesParams.context) &&
       Objects.equals(this.page, searchRecommendRulesParams.page) &&
       Objects.equals(this.hitsPerPage, searchRecommendRulesParams.hitsPerPage) &&
-      Objects.equals(this.enabled, searchRecommendRulesParams.enabled) &&
-      Objects.equals(this.requestOptions, searchRecommendRulesParams.requestOptions)
+      Objects.equals(this.enabled, searchRecommendRulesParams.enabled)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, context, page, hitsPerPage, enabled, requestOptions);
+    return Objects.hash(query, context, page, hitsPerPage, enabled);
   }
 
   @Override
@@ -140,7 +115,6 @@ public class SearchRecommendRulesParams {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-    sb.append("    requestOptions: ").append(toIndentedString(requestOptions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

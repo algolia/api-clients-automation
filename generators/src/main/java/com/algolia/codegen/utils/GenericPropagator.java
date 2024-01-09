@@ -8,6 +8,8 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class GenericPropagator {
 
+  public String language;
+
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   // Only static use of this class
@@ -65,21 +67,23 @@ public class GenericPropagator {
     return models.get(prop.openApiType);
   }
 
-  private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model) {
+  private static boolean markPropagatedGeneric(IJsonSchemaValidationProperties model, boolean skipOneOf) {
     CodegenProperty items = model.getItems();
     // Skip one-of types
-    if (model instanceof CodegenModel codegenModel && !codegenModel.oneOf.isEmpty()) {
+    if (skipOneOf && model instanceof CodegenModel codegenModel && !codegenModel.oneOf.isEmpty()) {
       return false;
     }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items))) {
+    if (
+      items != null && ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, skipOneOf))
+    ) {
       setPropagatedGeneric(model);
       return true;
     }
     for (CodegenProperty variable : model.getVars()) {
       // same thing for the variable, if it's not a generic, we recurse on it until we find one
-      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable)) {
+      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable, skipOneOf)) {
         setPropagatedGeneric(model);
         return true;
       }
@@ -150,7 +154,7 @@ public class GenericPropagator {
   /**
    * Models and their members will be marked with either x-propagated-generic or x-has-child-generic
    */
-  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap, boolean skipOneOf) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
     // 2. We tell each parent with generic properties to pass that generic type all the way down
@@ -158,7 +162,7 @@ public class GenericPropagator {
     Map<String, CodegenModel> models = convertToMap(modelsMap);
 
     for (CodegenModel model : models.values()) {
-      markPropagatedGeneric(model);
+      markPropagatedGeneric(model, skipOneOf);
     }
 
     for (CodegenModel model : models.values()) {
@@ -187,5 +191,9 @@ public class GenericPropagator {
         }
       }
     }
+  }
+
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
+    propagateGenericsToModels(modelsMap, false);
   }
 }

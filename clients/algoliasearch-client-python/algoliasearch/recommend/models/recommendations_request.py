@@ -8,9 +8,12 @@ from __future__ import annotations
 from json import dumps
 from typing import Dict, Optional, Self, Union
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, ValidationError, model_serializer
 
 from algoliasearch.recommend.models.recommendations_query import RecommendationsQuery
+from algoliasearch.recommend.models.recommended_for_you_query import (
+    RecommendedForYouQuery,
+)
 from algoliasearch.recommend.models.trending_facets_query import TrendingFacetsQuery
 from algoliasearch.recommend.models.trending_items_query import TrendingItemsQuery
 
@@ -23,8 +26,14 @@ class RecommendationsRequest(BaseModel):
     oneof_schema_1_validator: Optional[TrendingItemsQuery] = None
     oneof_schema_2_validator: Optional[TrendingFacetsQuery] = None
     oneof_schema_3_validator: Optional[RecommendationsQuery] = None
+    oneof_schema_4_validator: Optional[RecommendedForYouQuery] = None
     actual_instance: Optional[
-        Union[RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery]
+        Union[
+            RecommendationsQuery,
+            RecommendedForYouQuery,
+            TrendingFacetsQuery,
+            TrendingItemsQuery,
+        ]
     ] = None
 
     model_config = {"validate_assignment": True}
@@ -42,6 +51,22 @@ class RecommendationsRequest(BaseModel):
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
+
+    @model_serializer
+    def unwrap_actual_instance(
+        self,
+    ) -> Optional[
+        Union[
+            RecommendationsQuery,
+            RecommendedForYouQuery,
+            TrendingFacetsQuery,
+            TrendingItemsQuery,
+        ]
+    ]:
+        """
+        Unwraps the `actual_instance` when calling the `to_json` method.
+        """
+        return self.actual_instance
 
     @classmethod
     def from_dict(cls, obj: dict) -> Self:
@@ -71,9 +96,15 @@ class RecommendationsRequest(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        try:
+            instance.actual_instance = RecommendedForYouQuery.from_json(json_str)
+
+            return instance
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
+            "No match found when deserializing the JSON string into RecommendationsRequest with oneOf schemas: RecommendationsQuery, RecommendedForYouQuery, TrendingFacetsQuery, TrendingItemsQuery. Details: "
             + ", ".join(error_messages)
         )
 

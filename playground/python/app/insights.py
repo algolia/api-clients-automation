@@ -6,7 +6,7 @@ from algoliasearch.insights import InsightsClient, __version__
 async def main():
     print("InsightsClient version", __version__)
 
-    client = InsightsClient.create("FOO", "BAR")
+    client = InsightsClient("FOO", "BAR")
 
     print("client initialized", client)
 

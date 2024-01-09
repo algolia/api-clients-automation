@@ -16,11 +16,11 @@ package algoliasearch.recommend
   * @param hits
   *   Fetched rules.
   * @param nbHits
-  *   Number of fetched rules.
+  *   Number of hits the search query matched.
   * @param page
-  *   Current page.
+  *   Page to retrieve (the first page is `0`, not `1`).
   * @param nbPages
-  *   Number of pages.
+  *   Number of pages of results for the current query.
   */
 case class SearchRecommendRulesResponse(
     hits: Seq[RuleResponse],

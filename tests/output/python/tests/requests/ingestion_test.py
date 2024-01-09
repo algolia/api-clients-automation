@@ -7,7 +7,9 @@ from algoliasearch.ingestion.config import IngestionConfig
 
 class TestIngestionClient:
     _config = IngestionConfig("test_app_id", "test_api_key", "us")
-    _client = IngestionClient(EchoTransporter(_config), _config)
+    _client = IngestionClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_create_authentication_0(self):
         """

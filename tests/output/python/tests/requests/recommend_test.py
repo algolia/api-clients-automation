@@ -7,7 +7,9 @@ from algoliasearch.recommend.config import RecommendConfig
 
 class TestRecommendClient:
     _config = RecommendConfig("test_app_id", "test_api_key")
-    _client = RecommendClient(EchoTransporter(_config), _config)
+    _client = RecommendClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_custom_delete_0(self):
         """

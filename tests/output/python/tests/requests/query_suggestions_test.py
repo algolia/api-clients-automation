@@ -7,7 +7,9 @@ from algoliasearch.query_suggestions.config import QuerySuggestionsConfig
 
 class TestQuerySuggestionsClient:
     _config = QuerySuggestionsConfig("test_app_id", "test_api_key", "us")
-    _client = QuerySuggestionsClient(EchoTransporter(_config), _config)
+    _client = QuerySuggestionsClient.create_with_config(
+        config=_config, transporter=EchoTransporter(_config)
+    )
 
     async def test_create_config_0(self):
         """

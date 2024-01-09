@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class RecommendClient
 {
-    public const VERSION = '4.0.0-alpha.88';
+    public const VERSION = '4.0.0-alpha.90';
 
     /**
      * @var ApiWrapperInterface
@@ -492,7 +492,6 @@ class RecommendClient
      *                                           - $searchRecommendRulesParams['page'] => (int) Requested page (the first page is page 0).
      *                                           - $searchRecommendRulesParams['hitsPerPage'] => (int) Maximum number of hits per page.
      *                                           - $searchRecommendRulesParams['enabled'] => (bool) Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
-     *                                           - $searchRecommendRulesParams['requestOptions'] => (array) Request options to send with the API call.
      *
      * @see \Algolia\AlgoliaSearch\Model\Recommend\SearchRecommendRulesParams
      *

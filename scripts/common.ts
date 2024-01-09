@@ -7,7 +7,7 @@ import type { ExecaError } from 'execa';
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
-import openapiConfig from '../config/openapitools.json' assert { type: 'json' };
+import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
 import { getGitAuthor } from './release/common.js';
@@ -34,24 +34,40 @@ const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
 
-// Build `GENERATORS` from the openapitools file
-export const GENERATORS = Object.entries(openapiConfig['generator-cli'].generators).reduce(
-  (current, [key, { output, ...gen }]) => {
-    const language = key.slice(0, key.indexOf('-')) as Language;
+// Build `GENERATORS` from the `clients.config.json` file
+export const GENERATORS = Object.entries(clientsConfig).reduce(
+  (current, [language, { clients, folder, ...gen }]) => {
+    for (const client of clients) {
+      let output = folder;
+      let key = '';
+      let clientName = '';
 
-    // eslint-disable-next-line no-param-reassign
-    current[key] = {
-      additionalProperties: {},
-      ...gen,
-      output: output.replace('#{cwd}/', ''),
-      client: key.slice(key.indexOf('-') + 1),
-      language,
-      key,
-    };
+      if (typeof client !== 'string') {
+        key = `${language}-${client.name}`;
+        clientName = client.name;
+        output = client.output;
+      } else {
+        key = `${language}-${client}`;
+        clientName = client;
+      }
 
-    if (language === 'javascript') {
       // eslint-disable-next-line no-param-reassign
-      current[key].additionalProperties.packageName = output.substring(output.lastIndexOf('/') + 1);
+      current[key] = {
+        additionalProperties: {},
+        ...gen,
+        output,
+        client: clientName,
+        language: language as Language,
+        key,
+      };
+
+      // guess the package name for js from the output folder variable
+      if (language === 'javascript') {
+        // eslint-disable-next-line no-param-reassign
+        current[key].additionalProperties.packageName = output.substring(
+          output.lastIndexOf('/') + 1
+        );
+      }
     }
 
     return current;

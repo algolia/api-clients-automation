@@ -45,7 +45,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /** Number of fetched rules. */
+  /** Number of hits the search query matched. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -56,7 +56,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /** Current page. */
+  /** Page to retrieve (the first page is `0`, not `1`). */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -67,7 +67,7 @@ public class SearchRecommendRulesResponse {
     return this;
   }
 
-  /** Number of pages. */
+  /** Number of pages of results for the current query. */
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;

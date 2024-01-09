@@ -18,3 +18,11 @@ ObjectID:
   type: string
   description: Unique Recommend rule identifier.
   example: 'a-recommend-rule-id'
+
+facetName:
+  type: string
+  description: Facet name for trending models.
+
+facetValue:
+  type: string
+  description: Facet value for trending models.

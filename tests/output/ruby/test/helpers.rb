@@ -1,6 +1,10 @@
 def union(expected, received)
   res = {}
 
+  if !expected.is_a?(Array) and !expected.is_a?(Hash)
+    return expected
+  end
+
   expected.each do |key, value|
     if received.key?(key)
       if value.is_a?(Array)

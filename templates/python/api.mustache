@@ -12,24 +12,32 @@ class {{classname}}:
     _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
     _request_options: RequestOptions
 
-    def app_id(self) -> str:
-        return self._config.app_id
+    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None, {{/hasRegionalHost}}transporter: Optional[Transporter] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
+        if transporter is not None and config is None:
+            config = transporter._config
 
-    def __init__(self, transporter: Transporter, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> None:
-        self._transporter = transporter
+        if config is None:
+            config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
         self._config = config
         self._request_options = RequestOptions(config)
 
-    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}) -> Self:
-        transporter = Transporter(config)
+        if transporter is None:
+            transporter = Transporter(config)
+        self._transporter = transporter
 
-        return {{classname}}(transporter, config)
+    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter] = None) -> Self:
+        if transporter is None:
+            transporter = Transporter(config)
 
-    def create(app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> Self:
-        return {{classname}}.create_with_config({{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}}))
+        return {{classname}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
     async def close(self) -> None:
         return await self._transporter.close()
+
+    {{#isSearchClient}}
+{{> search_helpers}}
+    {{/isSearchClient}}
+
     {{#operation}}
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
@@ -58,8 +66,12 @@ class {{classname}}:
         {{/required}}
         {{/allParams}}
 
+        {{#queryParams.0}}
         _query_parameters: List[Tuple[str, str]] = []
+        {{/queryParams.0}}
+        {{#headerParams.0}}
         _headers: Dict[str, Optional[str]] = {}
+        {{/headerParams.0}}
         
         {{#vendorExtensions}}
         {{#queryParams}}
@@ -85,23 +97,19 @@ class {{classname}}:
             _body = {{paramName}}
         {{/bodyParam}}
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.{{httpMethod}},
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             data={{#bodyParam}}dumps(bodySerializer(_body)){{/bodyParam}}{{^bodyParam}}None{{/bodyParam}},
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
+                {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
+                {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}
             use_read_transporter={{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}},
             {{/vendorExtensions}}
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
@@ -120,10 +128,7 @@ class {{classname}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-
-        response = await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
-
-        return {{^returnType}}None{{/returnType}}{{#returnType}}response.deserialize({{{returnType}}}){{/returnType}}
+        return (await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
 
 {{/operation}}
 {{/operations}}

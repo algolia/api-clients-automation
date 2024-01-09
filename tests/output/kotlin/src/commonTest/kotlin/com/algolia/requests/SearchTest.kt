@@ -453,11 +453,11 @@ class SearchTest {
     client.runTest(
       call = {
         browse(
-          indexName = "indexName",
+          indexName = "cts_e2e_browse",
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/browse".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_browse/browse".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{}""", it.body)
       },
@@ -1284,11 +1284,11 @@ class SearchTest {
     client.runTest(
       call = {
         getSettings(
-          indexName = "theIndexName",
+          indexName = "cts_e2e_settings",
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -2554,7 +2554,7 @@ class SearchTest {
     client.runTest(
       call = {
         setSettings(
-          indexName = "theIndexName",
+          indexName = "cts_e2e_settings",
           indexSettings = IndexSettings(
             paginationLimitedTo = 10,
           ),
@@ -2562,7 +2562,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
         assertJsonBody("""{"paginationLimitedTo":10}""", it.body)

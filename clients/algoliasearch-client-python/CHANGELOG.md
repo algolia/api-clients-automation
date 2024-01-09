@@ -1,3 +1,24 @@
+## [4.0.0a6](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0a5...4.0.0a6)
+
+- [461796bb7](https://github.com/algolia/api-clients-automation/commit/461796bb7) feat(clients): add missing clients ([#2479](https://github.com/algolia/api-clients-automation/pull/2479)) by [@shortcuts](https://github.com/shortcuts/)
+- [db1309c4d](https://github.com/algolia/api-clients-automation/commit/db1309c4d) fix(python): provide community requested changes ([#2478](https://github.com/algolia/api-clients-automation/pull/2478)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0a5](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0a4...4.0.0a5)
+
+- [ae6adfbf7](https://github.com/algolia/api-clients-automation/commit/ae6adfbf7) fix(specs): port recommend changes ([#2476](https://github.com/algolia/api-clients-automation/pull/2476)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0a4](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0a3...4.0.0a4)
+
+- [959974537](https://github.com/algolia/api-clients-automation/commit/959974537) fix(python): release ([#2472](https://github.com/algolia/api-clients-automation/pull/2472)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0a3](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0a2...4.0.0a3)
+
+- [271eb792c](https://github.com/algolia/api-clients-automation/commit/271eb792c) feat(python): add browse helpers ([#2452](https://github.com/algolia/api-clients-automation/pull/2452)) by [@shortcuts](https://github.com/shortcuts/)
+- [2dfbd502a](https://github.com/algolia/api-clients-automation/commit/2dfbd502a) feat(python): add wait helpers ([#2448](https://github.com/algolia/api-clients-automation/pull/2448)) by [@shortcuts](https://github.com/shortcuts/)
+- [5d360fe3e](https://github.com/algolia/api-clients-automation/commit/5d360fe3e) docs(python): add migration guides ([#2455](https://github.com/algolia/api-clients-automation/pull/2455)) by [@shortcuts](https://github.com/shortcuts/)
+- [cee15c7ec](https://github.com/algolia/api-clients-automation/commit/cee15c7ec) chore(python): code cleanup ([#2456](https://github.com/algolia/api-clients-automation/pull/2456)) by [@shortcuts](https://github.com/shortcuts/)
+- [8f4b4102a](https://github.com/algolia/api-clients-automation/commit/8f4b4102a) fix(python): model parsing ([#2454](https://github.com/algolia/api-clients-automation/pull/2454)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0a2](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0a1...4.0.0a2)
 
 - [6641924aa](https://github.com/algolia/api-clients-automation/commit/6641924aa) fix(python): less breaking changes ([#2442](https://github.com/algolia/api-clients-automation/pull/2442)) by [@shortcuts](https://github.com/shortcuts/)

@@ -11,7 +11,9 @@ class TestAbtestingClient:
 
     def create_client(self) -> AbtestingClient:
         self._config = AbtestingConfig("appId", "apiKey", "us")
-        self._client = AbtestingClient(EchoTransporter(self._config), self._config)
+        self._client = AbtestingClient.create_with_config(
+            config=self._config, transporter=EchoTransporter(self._config)
+        )
 
     async def test_common_api_0(self):
         self.create_client()
@@ -47,8 +49,7 @@ class TestAbtestingClient:
 
     async def test_parameters_0(self):
         self._client = AbtestingClient(
-            EchoTransporter(AbtestingConfig("my-app-id", "my-api-key")),
-            AbtestingConfig("my-app-id", "my-api-key"),
+            transporter=EchoTransporter(AbtestingConfig("my-app-id", "my-api-key"))
         )
 
         _req = await self._client.get_ab_test_with_http_info(
@@ -59,8 +60,9 @@ class TestAbtestingClient:
 
     async def test_parameters_1(self):
         self._client = AbtestingClient(
-            EchoTransporter(AbtestingConfig("my-app-id", "my-api-key", "us")),
-            AbtestingConfig("my-app-id", "my-api-key", "us"),
+            transporter=EchoTransporter(
+                AbtestingConfig("my-app-id", "my-api-key", "us")
+            )
         )
 
         _req = await self._client.get_ab_test_with_http_info(
@@ -72,10 +74,9 @@ class TestAbtestingClient:
     async def test_parameters_2(self):
         try:
             self._client = AbtestingClient(
-                EchoTransporter(
+                transporter=EchoTransporter(
                     AbtestingConfig("my-app-id", "my-api-key", "not_a_region")
-                ),
-                AbtestingConfig("my-app-id", "my-api-key", "not_a_region"),
+                )
             )
 
         except (ValueError, Exception) as e:

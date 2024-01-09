@@ -6,7 +6,7 @@ from algoliasearch.analytics import AnalyticsClient, __version__
 async def main():
     print("AnalyticsClient version", __version__)
 
-    client = AnalyticsClient()
+    client = AnalyticsClient("FOO", "BAR")
 
     print("client initialized", client)
 

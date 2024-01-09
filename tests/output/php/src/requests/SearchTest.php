@@ -488,16 +488,25 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->browse(
-            'indexName',
+            'cts_e2e_browse',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/indexName/browse',
+                'path' => '/1/indexes/cts_e2e_browse/browse',
                 'method' => 'POST',
                 'body' => json_decode('{}'),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->browse(
+            'cts_e2e_browse',
+        );
+
+        $expected = json_decode('{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -1435,16 +1444,25 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->getSettings(
-            'theIndexName',
+            'cts_e2e_settings',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/theIndexName/settings',
+                'path' => '/1/indexes/cts_e2e_settings/settings',
                 'method' => 'GET',
                 'body' => null,
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getSettings(
+            'cts_e2e_settings',
+        );
+
+        $expected = json_decode('{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"version":1,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -2971,7 +2989,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->setSettings(
-            'theIndexName',
+            'cts_e2e_settings',
             ['paginationLimitedTo' => 10,
             ],
             true,
@@ -2979,12 +2997,20 @@ class SearchTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/theIndexName/settings',
+                'path' => '/1/indexes/cts_e2e_settings/settings',
                 'method' => 'PUT',
                 'body' => json_decode('{"paginationLimitedTo":10}'),
                 'queryParameters' => json_decode('{"forwardToReplicas":"true"}', true),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->setSettings(
+            'cts_e2e_settings',
+            ['paginationLimitedTo' => 10,
+            ],
+            true,
+        );
     }
 
     /**

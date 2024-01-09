@@ -16,6 +16,7 @@ final class GetRecommendationsParams {
   /// One of types:
   /// - [TrendingItemsQuery]
   /// - [RecommendationsQuery]
+  /// - [RecommendedForYouQuery]
   /// - [TrendingFacetsQuery]
   @JsonKey(name: r'requests')
   final Iterable<dynamic> requests;

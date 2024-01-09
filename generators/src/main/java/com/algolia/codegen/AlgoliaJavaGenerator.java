@@ -75,8 +75,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
     return models;
   }

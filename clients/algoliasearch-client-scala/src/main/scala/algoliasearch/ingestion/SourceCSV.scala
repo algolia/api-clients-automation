@@ -28,5 +28,5 @@ case class SourceCSV(
     mapping: Option[Map[String, MappingTypeCSV]] = scala.None,
     method: Option[MethodType] = scala.None,
     delimiter: Option[String] = scala.None
-) extends SourceUpdateInputTrait
-    with SourceInputTrait
+) extends SourceInputTrait
+    with SourceUpdateInputTrait

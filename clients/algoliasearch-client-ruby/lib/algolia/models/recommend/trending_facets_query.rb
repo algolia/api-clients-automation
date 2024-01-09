@@ -6,11 +6,6 @@ require 'time'
 module Algolia
   module Recommend
     class TrendingFacetsQuery
-      # Facet name for trending models.
-      attr_accessor :facet_name
-
-      attr_accessor :model
-
       # Algolia index name.
       attr_accessor :index_name
 
@@ -19,6 +14,11 @@ module Algolia
 
       # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
       attr_accessor :max_recommendations
+
+      # Facet name for trending models.
+      attr_accessor :facet_name
+
+      attr_accessor :model
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -45,11 +45,11 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :facet_name => :facetName,
-          :model => :model,
           :index_name => :indexName,
           :threshold => :threshold,
-          :max_recommendations => :maxRecommendations
+          :max_recommendations => :maxRecommendations,
+          :facet_name => :facetName,
+          :model => :model
         }
       end
 
@@ -61,11 +61,11 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facet_name => :String,
-          :model => :TrendingFacetsModel,
           :index_name => :String,
           :threshold => :Integer,
-          :max_recommendations => :Integer
+          :max_recommendations => :Integer,
+          :facet_name => :String,
+          :model => :TrendingFacetsModel
         }
       end
 
@@ -99,16 +99,6 @@ module Algolia
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:facet_name)
-          self.facet_name = attributes[:facet_name]
-        else
-          self.facet_name = nil
-        end
-
-        if attributes.key?(:model)
-          self.model = attributes[:model]
-        end
-
         if attributes.key?(:index_name)
           self.index_name = attributes[:index_name]
         else
@@ -121,6 +111,16 @@ module Algolia
 
         if attributes.key?(:max_recommendations)
           self.max_recommendations = attributes[:max_recommendations]
+        end
+
+        if attributes.key?(:facet_name)
+          self.facet_name = attributes[:facet_name]
+        else
+          self.facet_name = nil
+        end
+
+        if attributes.key?(:model)
+          self.model = attributes[:model]
         end
       end
 
@@ -148,11 +148,11 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          facet_name == other.facet_name &&
-          model == other.model &&
           index_name == other.index_name &&
           threshold == other.threshold &&
-          max_recommendations == other.max_recommendations
+          max_recommendations == other.max_recommendations &&
+          facet_name == other.facet_name &&
+          model == other.model
       end
 
       # @see the `==` method
@@ -164,7 +164,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_name, model, index_name, threshold, max_recommendations].hash
+        [index_name, threshold, max_recommendations, facet_name, model].hash
       end
 
       # Builds the object from hash

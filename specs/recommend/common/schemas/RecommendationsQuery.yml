@@ -1,7 +1,7 @@
 recommendationsQuery:
   allOf:
-    - $ref: '#/baseRecommendationsQuery'
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
+    - $ref: '#/baseRecommendationsQuery'
 
 baseRecommendationsQuery:
   type: object

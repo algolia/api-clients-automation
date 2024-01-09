@@ -36,24 +36,38 @@ class PersonalizationClient:
     _config: PersonalizationConfig
     _request_options: RequestOptions
 
-    def app_id(self) -> str:
-        return self._config.app_id
+    def __init__(
+        self,
+        app_id: Optional[str] = None,
+        api_key: Optional[str] = None,
+        region: str = None,
+        transporter: Optional[Transporter] = None,
+        config: Optional[PersonalizationConfig] = None,
+    ) -> None:
+        if transporter is not None and config is None:
+            config = transporter._config
 
-    def __init__(self, transporter: Transporter, config: PersonalizationConfig) -> None:
-        self._transporter = transporter
+        if config is None:
+            config = PersonalizationConfig(app_id, api_key, region)
         self._config = config
         self._request_options = RequestOptions(config)
 
-    def create_with_config(config: PersonalizationConfig) -> Self:
-        transporter = Transporter(config)
+        if transporter is None:
+            transporter = Transporter(config)
+        self._transporter = transporter
 
-        return PersonalizationClient(transporter, config)
-
-    def create(
-        app_id: Optional[str] = None, api_key: Optional[str] = None, region: str = None
+    def create_with_config(
+        config: PersonalizationConfig, transporter: Optional[Transporter] = None
     ) -> Self:
-        return PersonalizationClient.create_with_config(
-            PersonalizationConfig(app_id, api_key, region)
+        if transporter is None:
+            transporter = Transporter(config)
+
+        return PersonalizationClient(
+            app_id=config.app_id,
+            api_key=config.api_key,
+            region=config.region,
+            transporter=transporter,
+            config=config,
         )
 
     async def close(self) -> None:
@@ -92,27 +106,21 @@ class PersonalizationClient:
             )
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_delete(
         self,
@@ -140,12 +148,9 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_delete_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_delete_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_get_with_http_info(
         self,
@@ -178,27 +183,21 @@ class PersonalizationClient:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
                 _query_parameters.append((_qpkey, _qpvalue))
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1{path}".replace("{path}", path),
             data=None,
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_get(
         self,
@@ -226,12 +225,9 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_get_with_http_info(
-            path, parameters, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_get_with_http_info(path, parameters, request_options)
+        ).deserialize(object)
 
     async def custom_post_with_http_info(
         self,
@@ -270,7 +266,6 @@ class PersonalizationClient:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -280,21 +275,16 @@ class PersonalizationClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.POST,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_post(
         self,
@@ -328,12 +318,11 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_post_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_post_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def custom_put_with_http_info(
         self,
@@ -372,7 +361,6 @@ class PersonalizationClient:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
@@ -382,21 +370,16 @@ class PersonalizationClient:
         if body is not None:
             _body = body
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.PUT,
             path="/1{path}".replace("{path}", path),
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def custom_put(
         self,
@@ -430,12 +413,11 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-
-        response = await self.custom_put_with_http_info(
-            path, parameters, body, request_options
-        )
-
-        return response.deserialize(object)
+        return (
+            await self.custom_put_with_http_info(
+                path, parameters, body, request_options
+            )
+        ).deserialize(object)
 
     async def delete_user_profile_with_http_info(
         self,
@@ -463,26 +445,17 @@ class PersonalizationClient:
                 "Parameter `user_token` is required when calling `delete_user_profile`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1/profiles/{userToken}".replace(
                 "{userToken}", quote(str(user_token), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def delete_user_profile(
         self,
@@ -504,12 +477,9 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteUserProfileResponse' result object.
         """
-
-        response = await self.delete_user_profile_with_http_info(
-            user_token, request_options
-        )
-
-        return response.deserialize(DeleteUserProfileResponse)
+        return (
+            await self.delete_user_profile_with_http_info(user_token, request_options)
+        ).deserialize(DeleteUserProfileResponse)
 
     async def get_personalization_strategy_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -523,24 +493,15 @@ class PersonalizationClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/strategies/personalization",
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_personalization_strategy(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -553,12 +514,9 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'PersonalizationStrategyParams' result object.
         """
-
-        response = await self.get_personalization_strategy_with_http_info(
-            request_options
-        )
-
-        return response.deserialize(PersonalizationStrategyParams)
+        return (
+            await self.get_personalization_strategy_with_http_info(request_options)
+        ).deserialize(PersonalizationStrategyParams)
 
     async def get_user_token_profile_with_http_info(
         self,
@@ -586,26 +544,17 @@ class PersonalizationClient:
                 "Parameter `user_token` is required when calling `get_user_token_profile`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.GET,
             path="/1/profiles/personalization/{userToken}".replace(
                 "{userToken}", quote(str(user_token), safe="")
             ),
             data=None,
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def get_user_token_profile(
         self,
@@ -627,12 +576,11 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetUserTokenResponse' result object.
         """
-
-        response = await self.get_user_token_profile_with_http_info(
-            user_token, request_options
-        )
-
-        return response.deserialize(GetUserTokenResponse)
+        return (
+            await self.get_user_token_profile_with_http_info(
+                user_token, request_options
+            )
+        ).deserialize(GetUserTokenResponse)
 
     async def set_personalization_strategy_with_http_info(
         self,
@@ -655,28 +603,19 @@ class PersonalizationClient:
                 "Parameter `personalization_strategy_params` is required when calling `set_personalization_strategy`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
-        _headers: Dict[str, Optional[str]] = {}
-
         _body = {}
         if personalization_strategy_params is not None:
             _body = personalization_strategy_params
 
-        response = await self._transporter.request(
+        return await self._transporter.request(
             verb=Verb.POST,
             path="/1/strategies/personalization",
             data=dumps(bodySerializer(_body)),
             request_options=self._request_options.merge(
-                query_parameters=_query_parameters,
-                headers=_headers,
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
         )
-
-        response.data = response.raw_data
-
-        return response
 
     async def set_personalization_strategy(
         self,
@@ -693,9 +632,8 @@ class PersonalizationClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SetPersonalizationStrategyResponse' result object.
         """
-
-        response = await self.set_personalization_strategy_with_http_info(
-            personalization_strategy_params, request_options
-        )
-
-        return response.deserialize(SetPersonalizationStrategyResponse)
+        return (
+            await self.set_personalization_strategy_with_http_info(
+                personalization_strategy_params, request_options
+            )
+        ).deserialize(SetPersonalizationStrategyResponse)

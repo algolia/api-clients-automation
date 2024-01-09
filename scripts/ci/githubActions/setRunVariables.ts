@@ -15,11 +15,9 @@ export const COMMON_DEPENDENCIES = {
     'yarn.lock',
     '.eslintrc.cjs',
     'config/generation.config.mjs',
-    'config/openapitools.json',
     'config/clients.config.json',
     'config/release.config.json',
     'generators',
-    'templates',
     'tests/CTS',
     '.nvmrc',
   ],
@@ -61,6 +59,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     // eslint-disable-next-line no-param-reassign
     finalDependencies[key] = [
       ':!**node_modules',
+      `templates/${lang}`,
       // language related files
       langFolder,
       getVersionFileForLanguage(lang),
@@ -70,9 +69,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
 
     return finalDependencies;
   },
-  {
-    ...COMMON_DEPENDENCIES,
-  } as Record<string, string[]>
+  { ...COMMON_DEPENDENCIES } as Record<string, string[]>
 );
 
 /**
