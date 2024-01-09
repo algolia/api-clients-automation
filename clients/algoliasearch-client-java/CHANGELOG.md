@@ -1,3 +1,8 @@
+## [4.0.0-beta.16](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.15...4.0.0-beta.16)
+
+- [ae20258c6](https://github.com/algolia/api-clients-automation/commit/ae20258c6) feat(clients): deserialize in e2e and SFFV response ([#2500](https://github.com/algolia/api-clients-automation/pull/2500)) by [@shortcuts](https://github.com/shortcuts/)
+- [4dc28da98](https://github.com/algolia/api-clients-automation/commit/4dc28da98) chore(clients): add more e2e ([#2497](https://github.com/algolia/api-clients-automation/pull/2497)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-beta.15](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.14...4.0.0-beta.15)
 
 - [461796bb7](https://github.com/algolia/api-clients-automation/commit/461796bb7) feat(clients): add missing clients ([#2479](https://github.com/algolia/api-clients-automation/pull/2479)) by [@shortcuts](https://github.com/shortcuts/)
