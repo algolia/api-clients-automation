@@ -3,6 +3,7 @@ export const patterns = [
   'specs/bundled/*.yml',
 
   'clients/**',
+  'snippets/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
 
@@ -16,6 +17,7 @@ export const patterns = [
   'tests/output/java/build.gradle',
 
   // JavaScript
+  '!snippets/javascript/*.json',
   '!clients/algoliasearch-client-javascript/*',
   '!clients/algoliasearch-client-javascript/.github/**',
   '!clients/algoliasearch-client-javascript/.yarn/**',
@@ -78,7 +80,6 @@ export const patterns = [
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
 
   // Python
-  'snippets/python/**',
   '!snippets/python/pyproject.toml',
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',

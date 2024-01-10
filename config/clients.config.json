@@ -75,6 +75,10 @@
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
+    },
+    "snippets": {
+      "extension": ".ts",
+      "outputFolder": "src"
     }
   },
   "php": {

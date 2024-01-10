@@ -1,5 +1,5 @@
 import { buildSpecs } from '../buildSpecs.js';
-import { buildCustomGenerators, CI, run, toAbsolutePath } from '../common.js';
+import { buildCustomGenerators, CI, exists, run, toAbsolutePath } from '../common.js';
 import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
 import { generateOpenapitools } from '../pre-gen/index.js';
@@ -60,8 +60,9 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
 
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
 
-    if (lang === 'python') {
-      await formatter(lang, toAbsolutePath(`snippets/${lang}`));
+    const snippetsPath = toAbsolutePath(`snippets/${lang}`);
+    if (await exists(snippetsPath)) {
+      await formatter(lang, snippetsPath);
     }
   }
 }

@@ -6,6 +6,8 @@ class Snippet{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     {{#snippet}}
     async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
         """
+        Snippet for the {{method}} method.
+
         {{{description}}}
         """
         _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
