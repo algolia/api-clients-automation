@@ -46,11 +46,11 @@ class {{clientPrefix}}Test extends AnyFunSuite {
 
     {{#isError}}
     assertError("{{{expectedError}}}") {
-      {{> client/step}}
+      {{> tests/client/step}}
     }
     {{/isError}}
     {{^isError}}
-    {{> client/step}}
+    {{> tests/client/step}}
     {{#match}}
     {{#testUserAgent}}
     val regexp = """{{{match}}}""".r

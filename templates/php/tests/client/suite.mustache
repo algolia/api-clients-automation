@@ -71,14 +71,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{#isError}}
                 {{#isCreateClient}}
                 try {
-                    {{> client/createClient}}
+                    {{> tests/client/createClient}}
                 } catch (\Exception $e) {
                     $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
                 }
                 {{/isCreateClient}}
                 {{#isMethod}}
                 try {
-                    {{> client/method}}
+                    {{> tests/client/method}}
                 } catch (\Exception $e) {
                     $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
                 }
@@ -86,12 +86,12 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{/isError}}
             {{^isError}}
                 {{#isCreateClient}}
-                    {{> client/createClient}}
+                    {{> tests/client/createClient}}
                     // Make sure everything went fine without errors
                     $this->assertIsObject($client);
                 {{/isCreateClient}}
                 {{#isMethod}}
-                    {{> client/method}}
+                    {{> tests/client/method}}
                     {{#match}}
                         {{#testUserAgent}}
                         $this->assertTrue(
