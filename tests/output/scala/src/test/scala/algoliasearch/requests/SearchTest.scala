@@ -423,13 +423,13 @@ class SearchTest extends AnyFunSuite {
   test("browse with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.browse(
-      indexName = "indexName"
+      indexName = "cts_e2e_browse"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/browse")
+    assert(res.path == "/1/indexes/cts_e2e_browse/browse")
     assert(res.method == "POST")
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)
@@ -1232,13 +1232,13 @@ class SearchTest extends AnyFunSuite {
   test("getSettings0") {
     val (client, echo) = testClient()
     val future = client.getSettings(
-      indexName = "theIndexName"
+      indexName = "cts_e2e_settings"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.path == "/1/indexes/cts_e2e_settings/settings")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
@@ -2563,7 +2563,7 @@ class SearchTest extends AnyFunSuite {
   test("setSettings with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.setSettings(
-      indexName = "theIndexName",
+      indexName = "cts_e2e_settings",
       indexSettings = IndexSettings(
         paginationLimitedTo = Some(10)
       ),
@@ -2573,7 +2573,7 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.path == "/1/indexes/cts_e2e_settings/settings")
     assert(res.method == "PUT")
     val expectedBody = parse("""{"paginationLimitedTo":10}""")
     val actualBody = parse(res.body.get)

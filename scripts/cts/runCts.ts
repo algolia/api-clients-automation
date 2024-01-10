@@ -40,7 +40,7 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test`, { cwd: 'tests/output/ruby' });
+      await run(`bundle install && bundle exec rake test --trace`, { cwd: 'tests/output/ruby' });
       break;
     case 'scala':
       await run('sbt test', { cwd: 'tests/output/scala' });
