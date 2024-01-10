@@ -1,9 +1,4 @@
-//
-//  Version.swift
-//
-//
-//  Created by Algolia on 14/04/2020.
-//
+// {{{generationBanner}}}
 
 public struct Version {
 
@@ -19,6 +14,19 @@ public struct Version {
     self.prereleaseIdentifier = prereleaseIdentifier
   }
 
+  public init(version: String) {
+    let components = version.components(separatedBy: ".")
+
+    guard components.count >= 3 else {
+      fatalError("version is not formatted correctly")
+    }
+
+    self.major = Int(components[0]) ?? 0
+    self.minor = Int(components[1]) ?? 0
+    self.patch = Int(components[2]) ?? 0
+    self.prereleaseIdentifier = components.count == 4 ? components[3] : nil
+  }
+
 }
 
 extension Version: CustomStringConvertible {
@@ -32,4 +40,8 @@ extension Version: CustomStringConvertible {
     }
   }
 
+}
+
+extension Version {
+  public static let current: Version = .init(version: "{{packageVersion}}")
 }

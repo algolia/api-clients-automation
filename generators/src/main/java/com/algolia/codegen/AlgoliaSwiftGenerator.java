@@ -67,6 +67,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     super.processOpts();
 
     supportingFiles.add(new SupportingFile("client_configuration.mustache", sourceFolder, "Configuration.swift"));
+    supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
+    supportingFiles.add(
+      new SupportingFile(
+        "Version.mustache",
+        "Sources" + File.separator + "Core" + File.separator + "Helpers" + File.separator + "Version.swift"
+      )
+    );
 
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("gitignore.mustache") ||
@@ -110,6 +117,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     try {
       Helpers.generateServer(CLIENT, additionalProperties);
+      additionalProperties.put("packageVersion", Helpers.getClientConfigField("swift", "packageVersion"));
+      additionalProperties.put("packageList", Helpers.getClientConfigField("swift", "clients"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
