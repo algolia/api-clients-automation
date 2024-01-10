@@ -31,9 +31,6 @@ namespace Algolia.Search.Http
       echo.Body = request.Body;
       echo.QueryParameters = SplitQuery(request.Uri.Query);
       echo.Headers = new Dictionary<string, string>(request.Headers);
-      //echo.ConnectTimeout = chain.connectTimeoutMillis();
-      //echo.ResponseTimeout =
-      //  (useReadTransporter != null || request.Method == HttpMethod.Get) ? chain.readTimeoutMillis() : chain.writeTimeoutMillis();
 
       LastResponse = echo;
 

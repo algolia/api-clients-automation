@@ -309,11 +309,8 @@ public class ParametersWithDataType {
       oneOfModel.put("type", typeName);
       oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
-      if (!language.equals("csharp")) {
-        oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
-      } else {
-        oneOfModel.put("hasWrapper", true);
-      }
+      oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
+
       testOutput.put("oneOfModel", oneOfModel);
       return;
     }

@@ -17,6 +17,11 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   // This is used for the CTS generation
   private static final AlgoliaCSharpGenerator INSTANCE = new AlgoliaCSharpGenerator();
 
+  public AlgoliaCSharpGenerator() {
+    super();
+    reservedWords.add("source");
+  }
+
   /** Convert a text to a valid csharp identifier. */
   public static String formatIdentifier(String text) {
     return INSTANCE.escapeReservedWord(text);
