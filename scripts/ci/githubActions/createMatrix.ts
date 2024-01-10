@@ -91,6 +91,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       })
       .join(' ');
 
+    const snippetsToStore = `snippets/${language}`;
+
     const toRun = matrix[language].toRun.join(' ');
     let buildCommand = `yarn cli build clients ${language} ${toRun}`;
 
@@ -118,7 +120,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;
       case 'python':
-        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock snippets/python`;
+        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock`;
         break;
       case 'ruby':
         testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;
@@ -136,6 +138,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsRootFolder,
       testsToDelete,
       testsToStore,
+      snippetsToStore,
     });
   }
 
