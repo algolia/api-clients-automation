@@ -32,9 +32,7 @@ class SearchClientClientTests {
   void apiTest0() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -45,9 +43,7 @@ class SearchClientClientTests {
   void apiTest1() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
@@ -58,9 +54,7 @@ class SearchClientClientTests {
   void commonApiTest0() {
     SearchClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -81,9 +75,7 @@ class SearchClientClientTests {
   void commonApiTest1() {
     SearchClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -95,9 +87,7 @@ class SearchClientClientTests {
   void commonApiTest2() {
     SearchClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -145,9 +135,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          ApiKey apiKey0 = null;
-
-          client.addApiKey(apiKey0);
+          client.addApiKey(null);
           EchoResponse result = echo.getLastResponse();
         }
       );
@@ -164,12 +152,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          String indexName0 = null;
-          String objectID0 = "my-object-id";
-          Map<String, Object> body0 = new HashMap<>();
-          {}
-
-          client.addOrUpdateObject(indexName0, objectID0, body0);
+          client.addOrUpdateObject(null, "my-object-id", Map.of());
           EchoResponse result = echo.getLastResponse();
         }
       );
@@ -179,12 +162,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          String indexName0 = "my-index-name";
-          String objectID0 = null;
-          Map<String, Object> body0 = new HashMap<>();
-          {}
-
-          client.addOrUpdateObject(indexName0, objectID0, body0);
+          client.addOrUpdateObject("my-index-name", null, Map.of());
           EchoResponse result = echo.getLastResponse();
         }
       );
@@ -194,11 +172,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          String indexName0 = "my-index-name";
-          String objectID0 = "my-object-id";
-          Object body0 = null;
-
-          client.addOrUpdateObject(indexName0, objectID0, body0);
+          client.addOrUpdateObject("my-index-name", "my-object-id", null);
           EchoResponse result = echo.getLastResponse();
         }
       );

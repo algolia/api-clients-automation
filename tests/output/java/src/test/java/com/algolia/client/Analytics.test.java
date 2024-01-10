@@ -32,9 +32,7 @@ class AnalyticsClientClientTests {
   void commonApiTest0() {
     AnalyticsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -55,9 +53,7 @@ class AnalyticsClientClientTests {
   void commonApiTest1() {
     AnalyticsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -69,9 +65,7 @@ class AnalyticsClientClientTests {
   void commonApiTest2() {
     AnalyticsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -83,9 +77,7 @@ class AnalyticsClientClientTests {
   void parametersTest0() {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", buildClientOptions());
 
-    String index0 = "my-index";
-
-    client.getAverageClickPosition(index0);
+    client.getAverageClickPosition("my-index");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("analytics.algolia.com", result.host);
@@ -96,9 +88,7 @@ class AnalyticsClientClientTests {
   void parametersTest1() {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", buildClientOptions());
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("analytics.de.algolia.com", result.host);
@@ -127,9 +117,7 @@ class AnalyticsClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          String index0 = null;
-
-          client.getClickPositions(index0);
+          client.getClickPositions(null);
           EchoResponse result = echo.getLastResponse();
         }
       );
