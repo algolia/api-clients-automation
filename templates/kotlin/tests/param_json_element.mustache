@@ -20,12 +20,12 @@ JsonPrimitive({{{value}}}),
 JsonPrimitive("{{{value}}}"),
 {{/isEnum}}
 {{#isArray}}
-{{> param_json_element}},
+{{> tests/param_json_element}},
 {{/isArray}}
 {{#isFreeFormObject}}
 buildJsonObject {
 {{#value}}
-  put("{{{key}}}", {{> param_json_element}})
+  put("{{{key}}}", {{> tests/param_json_element}})
 {{/value}}
 },
 {{/isFreeFormObject}}

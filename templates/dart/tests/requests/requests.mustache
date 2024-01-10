@@ -20,7 +20,7 @@ void main() {
       ),
       call: (client) => client.{{method}}(
         {{#parametersWithDataType}}
-        {{> request_param}}
+        {{> tests/request_param}}
         {{/parametersWithDataType}}
         {{#hasRequestOptions}}
         requestOptions : RequestOptions(
@@ -34,7 +34,7 @@ void main() {
             {{#requestOptions.queryParameters}}
             urlParameters: {
                 {{#requestOptions.queryParameters.parametersWithDataType}}
-                '{{{key}}}' : {{> param_value}},
+                '{{{key}}}' : {{> tests/param_value}},
                 {{/requestOptions.queryParameters.parametersWithDataType}}
             },
             {{/requestOptions.queryParameters}}

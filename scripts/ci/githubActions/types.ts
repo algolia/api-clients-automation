@@ -45,6 +45,10 @@ export type ClientMatrix = BaseMatrix & {
    * The test output path to store in the artifact.
    */
   testsToStore: string;
+  /**
+   * The snippets output path to store in the artifact.
+   */
+  snippetsToStore: string;
 };
 
 export type SpecMatrix = Pick<BaseMatrix, 'cacheKey' | 'toRun'> & {

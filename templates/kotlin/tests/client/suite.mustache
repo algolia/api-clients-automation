@@ -22,19 +22,19 @@ class {{clientPrefix}}Test {
         {{#steps}}
         {{#isError}}
         assertFails { 
-            {{> client/step}}
+            {{> tests/client/step}}
         }.let { error ->  assertError(error, "{{{expectedError}}}") }
         {{/isError}}
         {{^isError}}
         {{#isCreateClient}}
-        {{> client/createClient}}
+        {{> tests/client/createClient}}
         {{/isCreateClient}}
         {{#isMethod}}
         client.runTest(
              call = {
                 {{path}}(
                     {{#parametersWithDataType}}
-                    {{> request_param}}
+                    {{> tests/request_param}}
                     {{/parametersWithDataType}}
                 )
              },

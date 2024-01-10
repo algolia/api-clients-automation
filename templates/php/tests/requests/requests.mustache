@@ -140,7 +140,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
           $requestOptions = [
             'queryParameters' => [
               {{#requestOptions.queryParameters.parametersWithDataType}}
-                '{{{key}}}' => {{> requests/requestOptionsParams}},
+                '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
               {{/requestOptions.queryParameters.parametersWithDataType}}
             ],
             'headers' => [
@@ -151,7 +151,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
           ];
         {{/hasRequestOptions}}
         $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
-        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
+        {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
         );{{/hasParameters}}
 
         $this->assertRequests([
@@ -181,7 +181,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         {{#response}}
         $e2eClient = $this->getE2EClient();
         $resp = $e2eClient->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
-        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
+        {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
         );{{/hasParameters}}
 
         {{#body}}

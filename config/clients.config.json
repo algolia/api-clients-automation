@@ -20,6 +20,10 @@
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
+    },
+    "snippets": {
+      "extension": ".java",
+      "outputFolder": "src/test/java/com/algolia"
     }
   },
   "javascript": {
@@ -75,6 +79,10 @@
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
+    },
+    "snippets": {
+      "extension": ".ts",
+      "outputFolder": "src"
     }
   },
   "php": {
@@ -97,6 +105,10 @@
     "apiFolder": "lib/Api",
     "tests": {
       "extension": "Test.php",
+      "outputFolder": "src"
+    },
+    "snippets": {
+      "extension": ".php",
       "outputFolder": "src"
     }
   },
@@ -197,6 +209,10 @@
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
+    },
+    "snippets": {
+      "extension": ".py",
+      "outputFolder": ""
     }
   },
   "ruby": {

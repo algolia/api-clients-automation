@@ -28,17 +28,17 @@ public class {{client}}RequestTests
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-    {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
+    {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}
     {{#hasRequestOptions}}
      var requestOptions = new RequestOptions();
      {{#requestOptions.queryParameters.parametersWithDataType}}
-     requestOptions.QueryParameters.Add("{{{key}}}", {{> requests/requestOptionsParams}});
+     requestOptions.QueryParameters.Add("{{{key}}}", {{> tests/requests/requestOptionsParams}});
       {{/requestOptions.queryParameters.parametersWithDataType}}
       {{#requestOptions.headers.parametersWithDataType}}
      requestOptions.Headers.Add("{{{key}}}", "{{{value}}}");
       {{/requestOptions.headers.parametersWithDataType}}
     {{/hasRequestOptions}}
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
      EchoResponse req = _echo.LastResponse;
     {{#request}}
