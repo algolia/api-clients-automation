@@ -111,7 +111,7 @@ export const patterns = [
   // C#
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Client/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
