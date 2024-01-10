@@ -3,9 +3,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
-using Algolia.Search.Client;
+using Algolia.Search.Clients;
 using Algolia.Search.Models;
-using Algolia.Search.Search.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http.Headers;
-using Algolia.Search.Client;
+using Algolia.Search.Utils;
 
 namespace Algolia.Search.Http
 {

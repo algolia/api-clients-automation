@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Algolia.Search.Client;
+using Algolia.Search.Clients;
 using Algolia.Search.Http;
 
 [assembly: InternalsVisibleTo("Algolia.Search.Test")]

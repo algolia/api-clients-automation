@@ -117,4 +117,5 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Models/**',
 ];

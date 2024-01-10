@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Algolia.Search.{{packageName}}.Client;
-{{#hasImport}}using Algolia.Search.{{packageName}}.{{modelPackage}};
+using Algolia.Search.Clients;
+using Algolia.Search.Models;
+{{#hasImport}}using Algolia.Search.{{modelPackage}}.{{packageName}};
 {{/hasImport}}
 using Algolia.Search.Transport;
 using Algolia.Search.Http;
-using Algolia.Search.Client;
 
-namespace Algolia.Search.{{packageName}}.{{apiPackage}}
+namespace Algolia.Search.Clients
 {
     {{#operations}}
     {{#supportsAsync}}

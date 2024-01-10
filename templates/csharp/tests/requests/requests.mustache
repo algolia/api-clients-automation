@@ -1,11 +1,10 @@
 using Algolia.Search.Http;
-using Algolia.Search.{{clientPrefix}}.Api;
-using Algolia.Search.{{clientPrefix}}.Client;
-using Algolia.Search.{{clientPrefix}}.Models;
-using Action = Algolia.Search.Search.Models.Action;
+using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
 using Xunit;
 using Newtonsoft.Json;
 using Quibble.Xunit;
+using Action = Algolia.Search.Models.Search.Action;
 
 public class {{client}}RequestTests
 {
