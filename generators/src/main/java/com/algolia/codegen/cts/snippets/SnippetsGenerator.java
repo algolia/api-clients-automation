@@ -26,6 +26,9 @@ public class SnippetsGenerator extends TestsRequest {
       return;
     }
 
+    extension = Helpers.getClientConfigField(language, "snippets", "extension");
+    outputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");
+
     if (!outputFolder.equals("")) {
       outputFolder = "/" + outputFolder + "/";
     } else {

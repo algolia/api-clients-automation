@@ -59,23 +59,11 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
     testsGenerators.add(new TestsRequest(language, client));
     testsGenerators.add(new TestsClient(language, client));
+    testsGenerators.add(new SnippetsGenerator(language, client));
 
     for (TestsGenerator testGen : testsGenerators) {
       testGen.addSupportingFiles(supportingFiles, outputFolder, extension);
     }
-
-    SnippetsGenerator snippetGenerator = new SnippetsGenerator(language, client);
-
-    if (!snippetGenerator.available()) {
-      return;
-    }
-
-    String snippetsExtension = Helpers.getClientConfigField(language, "snippets", "extension");
-    String snippetsOutputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");
-
-    snippetGenerator.addSupportingFiles(supportingFiles, snippetsOutputFolder, snippetsExtension);
-
-    testsGenerators.add(snippetGenerator);
   }
 
   @Override
