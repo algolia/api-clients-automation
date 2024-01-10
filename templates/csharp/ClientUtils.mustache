@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 using KellermanSoftware.CompareNetObjects;
 {{/useCompareNetObjects}}
 
-namespace Algolia.Search.Client
+namespace Algolia.Search.Clients
 {
     /// <summary>
     /// Utility functions providing some benefit to API client consumers.
@@ -25,38 +25,9 @@ namespace Algolia.Search.Client
         /// <param name="name">Key name.</param>
         /// <param name="value">Value object.</param>
         /// <returns>A multimap of keys with 1..n associated values.</returns>
-        public static Dictionary<string, string> ParameterToDictionary(string collectionFormat, string name, object value)
+        public static KeyValuePair<string, string> ParameterToDictionary(string collectionFormat, string name, object value)
         {
-            var parameters = new Dictionary<string, string>();
-
-            if (value is ICollection collection && collectionFormat == "multi")
-            {
-                foreach (var item in collection)
-                {
-                    parameters.Add(name, ParameterToString(item));
-                }
-            }
-            else if (value is IDictionary dictionary)
-            {
-                if(collectionFormat == "deepObject") {
-                    foreach (DictionaryEntry entry in dictionary)
-                    {
-                        parameters.Add(name + "[" + entry.Key + "]", ParameterToString(entry.Value));
-                    }
-                }
-                else {
-                    foreach (DictionaryEntry entry in dictionary)
-                    {
-                        parameters.Add(entry.Key.ToString(), ParameterToString(entry.Value));
-                    }
-                }
-            }
-            else
-            {
-                parameters.Add(name, ParameterToString(value));
-            }
-
-            return parameters;
+          return new KeyValuePair<string, string>(name, ParameterToString(value));
         }
 
         /// <summary>

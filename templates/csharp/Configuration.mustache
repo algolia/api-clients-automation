@@ -1,100 +1,112 @@
   {{>partial_header}}
 
 using System;
-{{^net35}}
-using System.Collections.Concurrent;
-{{/net35}}
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Net.Http;
-using System.Net.Security;
-using Algolia.Search.Client;
+using Algolia.Search.Models;
 using Algolia.Search.Transport;
+using Algolia.Search.Utils;
 
-namespace Algolia.Search.{{packageName}}.Client
+namespace Algolia.Search.Clients
 {
   /// <summary>
   /// {{packageName}} client configuration
   /// </summary>
   public sealed class {{packageName}}Config : AlgoliaConfig
   {
+    {{#hasRegionalHost}}
     /// <summary>
     /// The configuration of the {{packageName}} client
     /// A client should have it's own configuration ie on configuration per client instance
     /// </summary>
     /// <param name="applicationId">Your application ID</param>
     /// <param name="apiKey">Your API Key</param>
-  {{#hasRegionalHost}}/// <param name="region">The region</param>{{/hasRegionalHost}}
-    public {{packageName}}Config(string applicationId, string apiKey{{#hasRegionalHost}},string region = null{{/hasRegionalHost}}) : base(applicationId, apiKey)
+    /// <param name="region">Targeted region {{#fallbackToAliasHost}}(optional){{/fallbackToAliasHost}}</param>
+    public {{packageName}}Config(string applicationId, string apiKey, string region{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}})  : base(applicationId, apiKey)
     {
-      {{#hasRegionalHost}}
-      var regions = new List<string> { {{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}} };
-      if (region != null && !regions.Contains(region))
-      {
-        throw new ArgumentException($"`region` must be one of the following {regions}");
-      }
-
-      var selectedRegion = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".Replace("{region}", region);
-
-      List<StatefulHost> hosts = new List<StatefulHost>
-      {
-        new StatefulHost
-        {
-          Url = selectedRegion, Accept = CallType.Read | CallType.Write
-        }
-      };
-      {{/hasRegionalHost}}
-      {{^hasRegionalHost}}
-      List<StatefulHost> hosts = new List<StatefulHost>
-      {
-        new StatefulHost
-        {
-          Url = $"{applicationId}-dsn.algolia.net",
-          Up = true,
-          LastUse = DateTime.UtcNow,
-          Accept = CallType.Read
-        },
-        new StatefulHost
-        {
-          Url = $"{applicationId}.algolia.net", Up = true, LastUse = DateTime.UtcNow, Accept = CallType.Write,
-        }
-      };
-
-      var commonHosts = new List<StatefulHost>
-      {
-        new StatefulHost
-        {
-          Url = $"{applicationId}-1.algolianet.com",
-          Up = true,
-          LastUse = DateTime.UtcNow,
-          Accept = CallType.Read | CallType.Write,
-        },
-        new StatefulHost
-        {
-          Url = $"{applicationId}-2.algolianet.com",
-          Up = true,
-          LastUse = DateTime.UtcNow,
-          Accept = CallType.Read | CallType.Write,
-        },
-        new StatefulHost
-        {
-          Url = $"{applicationId}-3.algolianet.com",
-          Up = true,
-          LastUse = DateTime.UtcNow,
-          Accept = CallType.Read | CallType.Write,
-        }
-      }.Shuffle();
-
-      hosts.AddRange(commonHosts);
-      {{/hasRegionalHost}}
-
-      DefaultHosts = hosts;
+      DefaultHosts = GetDefaultHosts(region);
       Compression = CompressionType.NONE;
     }
+  {{/hasRegionalHost}}
+  {{^hasRegionalHost}}
+    /// <summary>
+    /// The configuration of the {{packageName}} client
+    /// A client should have it's own configuration ie on configuration per client instance
+    /// </summary>
+    /// <param name="applicationId">Your application ID</param>
+    /// <param name="apiKey">Your API Key</param>
+    public {{packageName}}Config(string applicationId, string apiKey)  : base(applicationId, apiKey)
+    {
+      DefaultHosts = GetDefaultHosts(applicationId);
+      Compression = CompressionType.NONE;
+    }
+  {{/hasRegionalHost}}
+  {{^hasRegionalHost}}
+  private static List<StatefulHost> GetDefaultHosts(string applicationId)
+  {
+    List<StatefulHost> hosts = new List<StatefulHost>
+    {
+      new StatefulHost
+      {
+        Url = $"{applicationId}-dsn.algolia.net",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read
+      },
+      new StatefulHost
+      {
+        Url = $"{applicationId}.algolia.net", Up = true, LastUse = DateTime.UtcNow, Accept = CallType.Write,
+      }
+    };
+
+    var commonHosts = new List<StatefulHost>
+    {
+      new StatefulHost
+      {
+        Url = $"{applicationId}-1.algolianet.com",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read | CallType.Write,
+      },
+      new StatefulHost
+      {
+        Url = $"{applicationId}-2.algolianet.com",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read | CallType.Write,
+      },
+      new StatefulHost
+      {
+        Url = $"{applicationId}-3.algolianet.com",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read | CallType.Write,
+      }
+    }.Shuffle();
+
+    hosts.AddRange(commonHosts);
+    return hosts;
   }
+  {{/hasRegionalHost}}
+  {{#hasRegionalHost}}
+  private static List<StatefulHost> GetDefaultHosts(string region)
+  {
+    var regions = new List<string> { {{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}} };
+    if (region != null && !regions.Contains(region))
+    {
+      throw new ArgumentException($"`region` must be one of the following {regions}");
+    }
+
+    var selectedRegion = {{#fallbackToAliasHost}}region == null ? "{{{hostWithFallback}}}" : {{/fallbackToAliasHost}} "{{{regionalHost}}}".Replace("{region}", region);
+
+    List<StatefulHost> hosts = new List<StatefulHost>
+    {
+      new StatefulHost
+      {
+        Url = selectedRegion, Accept = CallType.Read | CallType.Write
+      }
+    };
+    return hosts;
+  }
+  {{/hasRegionalHost}}
+}
 }

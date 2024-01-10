@@ -88,6 +88,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
+    lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
     lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
     lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
     return lambdas;
