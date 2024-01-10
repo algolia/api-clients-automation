@@ -20,6 +20,10 @@
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
+    },
+    "snippets": {
+      "extension": ".java",
+      "outputFolder": "src/test/java/com/algolia"
     }
   },
   "javascript": {
