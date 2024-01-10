@@ -290,11 +290,10 @@ public class ParametersWithDataType {
       String typeName = getTypeName(current);
       boolean isList = false;
       if (language.equals("go")) {
-        typeName = typeName.replace("List", "Array").replace("Integer", "Int32").replace("Boolean", "Bool");
+        typeName = Helpers.capitalize(getObjectNameForLanguage(typeName));
         while (current.getItems() != null) {
           current = current.getItems();
-          typeName +=
-          "Of" + Helpers.capitalize(getTypeName(current).replace("List", "Array").replace("Integer", "Int32").replace("Boolean", "Bool"));
+          typeName += "Of" + Helpers.capitalize(getObjectNameForLanguage(getTypeName(current)));
           isList = true;
         }
       } else {
@@ -480,8 +479,14 @@ public class ParametersWithDataType {
             return "string";
           case "Double":
             return "float64";
+          case "Integer":
+            return "int32";
+          case "Long":
+            return "int64";
+          case "Boolean":
+            return "bool";
           case "List":
-            return "[]";
+            return "Array";
         }
     }
     return Helpers.capitalize(objectName);

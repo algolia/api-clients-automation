@@ -32,14 +32,14 @@ type _{{{classname}}} {{{classname}}}
 type {{{classname}}}Option func(f *{{{classname}}})
 
 {{/hasOptional}}
-{{#optionalVars}}
+{{#vars}}{{^required}}
 func With{{{classname}}}{{{name}}}(val {{{dataType}}}) {{{classname}}}Option {
 	return func(f *{{{classname}}}) {
 		f.{{{name}}} = {{^isNullable}}{{^isArray}}{{^isFreeFormObject}}&{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}val
 	}
 }
 
-{{/optionalVars}}
+{{/required}}{{/vars}}
 // New{{classname}} instantiates a new {{classname}} object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
