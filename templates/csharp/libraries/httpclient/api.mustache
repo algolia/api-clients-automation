@@ -146,7 +146,7 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{/x-is-custom-request}}{{/vendorExtensions}}
             {{#vendorExtensions.x-is-custom-request}}
             {{#queryParams}}
-            requestOptions.AddCustomQueryParameter({{paramName}});
+            requestOptions.AddCustomQueryParameters({{paramName}});
             {{/queryParams}}
             {{/vendorExtensions.x-is-custom-request}}
             {{^vendorExtensions.x-is-custom-request}}

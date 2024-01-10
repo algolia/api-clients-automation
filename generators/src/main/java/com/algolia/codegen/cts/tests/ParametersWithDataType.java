@@ -525,16 +525,15 @@ public class ParametersWithDataType {
   }
 
   private String getObjectNameForLanguage(String language, String objectName) {
-    if (objectName.equals("Map") && language.equals("csharp")) {
-      return "Dictionary";
-    }
-
-    if (objectName.equals("Integer") && language.equals("csharp")) {
-      return "int";
-    }
-
-    if (objectName.equals("String") && language.equals("csharp")) {
-      return "string";
+    if (language.equals("csharp")) {
+      switch (objectName) {
+        case "Map":
+          return "Dictionary";
+        case "Integer":
+          return "int";
+        case "String":
+          return "string";
+      }
     }
     return Helpers.capitalize(objectName);
   }

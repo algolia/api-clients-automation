@@ -1,28 +1,4 @@
-/*
-* Copyright (c) 2018 Algolia
-* http://www.algolia.com/
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
-
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -138,63 +114,5 @@ namespace Algolia.Search.Http
 
       return content;
     }
-  }
-
-
-  public class EchoHttpRequester : IHttpRequester
-  {
-    public EchoResponse LastResponse;
-
-    private static Dictionary<string, string> SplitQuery(string query)
-    {
-      if (string.IsNullOrWhiteSpace(query))
-      {
-        return new Dictionary<string, string>();
-      }
-
-      var dict = new Dictionary<string, string>();
-      var pairs = query.Remove(0, 1).Split('&');
-      foreach (var pair in pairs)
-      {
-        var idx = pair.IndexOf('=');
-        dict.Add(pair.Substring(0, idx), Uri.UnescapeDataString(pair.Substring(idx + 1)));
-      }
-      return dict;
-    }
-
-    public async Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan totalTimeout,
-      CancellationToken ct = default)
-    {
-      EchoResponse echo = new EchoResponse();
-      echo.Path = request.Uri.AbsolutePath;
-      echo.Host = request.Uri.Host;
-      echo.Method = request.Method;
-      echo.Body = request.Body;
-      echo.QueryParameters = SplitQuery(request.Uri.Query);
-      echo.Headers = new Dictionary<string, string>(request.Headers);
-      //echo.ConnectTimeout = chain.connectTimeoutMillis();
-      //echo.ResponseTimeout =
-      //  (useReadTransporter != null || request.Method == HttpMethod.Get) ? chain.readTimeoutMillis() : chain.writeTimeoutMillis();
-
-      LastResponse = echo;
-
-      return new AlgoliaHttpResponse
-      {
-        Body = new MemoryStream(),
-        HttpStatusCode = 200
-      };
-    }
-  }
-  public class EchoResponse
-  {
-
-    public String Path;
-    public String Host;
-    public HttpMethod Method;
-    public String Body;
-    public Dictionary<string, string> QueryParameters;
-    public Dictionary<string, string> Headers;
-    public int ConnectTimeout;
-    public int ResponseTimeout;
   }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Security;
 
 namespace Algolia.Search.Http
 {
@@ -69,7 +68,7 @@ namespace Algolia.Search.Http
       }
     }
 
-    public void AddCustomQueryParameter(IDictionary<string, object> values)
+    public void AddCustomQueryParameters(IDictionary<string, object> values)
     {
       if (values == null) return;
 

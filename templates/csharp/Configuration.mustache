@@ -13,33 +13,18 @@ namespace Algolia.Search.{{packageName}}.Client
   public sealed class {{packageName}}Config : AlgoliaConfig
   {
     {{#hasRegionalHost}}
-    {{#fallbackToAliasHost}}
     /// <summary>
     /// The configuration of the {{packageName}} client
     /// A client should have it's own configuration ie on configuration per client instance
     /// </summary>
     /// <param name="applicationId">Your application ID</param>
     /// <param name="apiKey">Your API Key</param>
-    public {{packageName}}Config(string applicationId, string apiKey)  : base(applicationId, apiKey)
-    {
-      DefaultHosts = GetDefaultHosts(null);
-      Compression = CompressionType.NONE;
-    }
-    {{/fallbackToAliasHost}}
-
-    /// <summary>
-    /// The configuration of the {{packageName}} client
-    /// A client should have it's own configuration ie on configuration per client instance
-    /// </summary>
-    /// <param name="applicationId">Your application ID</param>
-    /// <param name="apiKey">Your API Key</param>
-    /// <param name="region">The region</param>
-    public {{packageName}}Config(string applicationId, string apiKey, string region) : base(applicationId, apiKey)
+    /// <param name="region">Targeted region {{#fallbackToAliasHost}}(optional){{/fallbackToAliasHost}}</param>
+    public {{packageName}}Config(string applicationId, string apiKey, string region{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}})  : base(applicationId, apiKey)
     {
       DefaultHosts = GetDefaultHosts(region);
       Compression = CompressionType.NONE;
     }
-
   {{/hasRegionalHost}}
   {{^hasRegionalHost}}
     /// <summary>
@@ -54,8 +39,6 @@ namespace Algolia.Search.{{packageName}}.Client
       Compression = CompressionType.NONE;
     }
   {{/hasRegionalHost}}
-
-
   {{^hasRegionalHost}}
   private static List<StatefulHost> GetDefaultHosts(string applicationId)
   {

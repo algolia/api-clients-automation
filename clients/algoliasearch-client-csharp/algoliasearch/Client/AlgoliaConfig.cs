@@ -18,18 +18,18 @@ namespace Algolia.Search.Client
     /// </summary>
     /// <param name="applicationId">Your application ID</param>
     /// <param name="apiKey">Your API Key</param>
-    public AlgoliaConfig(string applicationId, string apiKey)
+    protected AlgoliaConfig(string applicationId, string apiKey)
     {
       AppId = applicationId;
       ApiKey = apiKey;
 
       DefaultHeaders = new Dictionary<string, string>
       {
-        { Defaults.AlgoliaApplicationHeader, AppId },
-        { Defaults.AlgoliaApiKeyHeader, ApiKey },
-        { Defaults.UserAgentHeader, $"Algolia For Csharp {ClientVersion}" },
-        { Defaults.Connection, Defaults.KeepAlive },
-        { Defaults.AcceptHeader, JsonConfig.JsonContentType }
+        { Defaults.AlgoliaApplicationHeader.ToLowerInvariant(), AppId },
+        { Defaults.AlgoliaApiKeyHeader.ToLowerInvariant(), ApiKey },
+        { Defaults.UserAgentHeader.ToLowerInvariant(), $"Algolia For Csharp {ClientVersion}" },
+        { Defaults.Connection.ToLowerInvariant(), Defaults.KeepAlive },
+        { Defaults.AcceptHeader.ToLowerInvariant(), JsonConfig.JsonContentType }
       };
     }
 

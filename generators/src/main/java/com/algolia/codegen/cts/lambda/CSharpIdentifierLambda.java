@@ -10,12 +10,12 @@ import java.util.Arrays;
 
 public class CSharpIdentifierLambda implements Mustache.Lambda {
 
-  private static final String[] RUBY_KEYWORDS = new String[] { "source" };
+  private static final String[] CSHARP_MODEL_KEYWORDS = new String[] { "source" };
 
   @Override
   public void execute(Template.Fragment frag, Writer out) throws IOException {
     String text = frag.execute();
-    if (Arrays.stream(RUBY_KEYWORDS).anyMatch(text::equals)) {
+    if (Arrays.stream(CSHARP_MODEL_KEYWORDS).anyMatch(text::equals)) {
       out.write("var" + Helpers.capitalize(text));
       return;
     }
