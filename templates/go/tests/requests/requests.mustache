@@ -51,8 +51,8 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
         {{/requestOptions.headers}}
       {{/hasRequestOptions}}
       _, err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
-        {{#parametersWithDataType}}{{#required}}{{> generateParams}},{{/required}}{{/parametersWithDataType}}
-      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#hasRequestOptions}}{{#hasOperationParams}},{{/hasOperationParams}} opts...{{/hasRequestOptions}})
+        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#hasRequestOptions}}{{#hasOperationParams}},{{/hasOperationParams}} opts...{{/hasRequestOptions}})
       require.NoError(t, err)
 
       expectedPath, err := url.QueryUnescape("{{{request.path}}}")
