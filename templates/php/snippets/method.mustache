@@ -1,0 +1,43 @@
+<?php
+
+namespace Algolia\AlgoliaSearch\Snippets;
+
+use Algolia\AlgoliaSearch\Api\{{client}};
+
+class Snippet{{client}}
+{
+    {{#blocksRequests}}
+    {{#snippet}}
+    /**
+    * Snippet for the {{#lambda.titlecase}}{{{method}}}{{/lambda.titlecase}} method
+    *
+    * {{{description}}}
+    */
+    public function snippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}()
+    {
+        $client = Algolia\AlgoliaSearch\Api\{{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+
+        {{#hasRequestOptions}}
+          $requestOptions = [
+            'queryParameters' => [
+              {{#requestOptions.queryParameters.parametersWithDataType}}
+                '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
+              {{/requestOptions.queryParameters.parametersWithDataType}}
+            ],
+            'headers' => [
+              {{#requestOptions.headers.parametersWithDataType}}
+                '{{{key}}}' => '{{{value}}}',
+              {{/requestOptions.headers.parametersWithDataType}}
+            ]
+          ];
+        {{/hasRequestOptions}}
+
+        $response = $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}});{{/hasParameters}}
+
+        // play with the response
+        var_dump($response);
+    }
+
+    {{/snippet}}
+    {{/blocksRequests}}
+}

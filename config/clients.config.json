@@ -102,6 +102,10 @@
     "tests": {
       "extension": "Test.php",
       "outputFolder": "src"
+    },
+    "snippets": {
+      "extension": ".php",
+      "outputFolder": "src"
     }
   },
   "go": {
