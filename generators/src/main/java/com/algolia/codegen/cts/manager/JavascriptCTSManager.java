@@ -16,7 +16,7 @@ public class JavascriptCTSManager implements CTSManager {
 
   @Override
   public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
+    supportingFiles.add(new SupportingFile("tests/package.mustache", "tests/output/javascript", "package.json"));
   }
 
   @Override

@@ -21,16 +21,16 @@
   {{{value}}},
 {{/isBoolean}}
 {{#isArray}}
-  [{{#value}}{{> generateParams}}{{/value}}],
+  [{{#value}}{{> tests/generateParams}}{{/value}}],
 {{/isArray}}
 {{#isObject}}
-  [{{#value}}{{> generateParams}}{{/value}}],
+  [{{#value}}{{> tests/generateParams}}{{/value}}],
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}
   [{{#value}}{{#entrySet}}'{{{key}}}' => '{{{value}}}'{{^-last}},{{/-last}}{{/entrySet}}{{/value}}],
   {{/isAnyType}}
   {{^isAnyType}}
-  [{{#value}}{{> generateParams}}{{/value}}],
+  [{{#value}}{{> tests/generateParams}}{{/value}}],
   {{/isAnyType}}
 {{/isFreeFormObject}}

@@ -51,9 +51,9 @@ class {{client}}RequestsTests {
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+            client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
               {{#requestOptions.queryParameters.parametersWithDataType}}
-                .addExtraQueryParameters("{{{key}}}", {{> generateInnerParams}})
+                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
               {{/requestOptions.queryParameters.parametersWithDataType}}
               {{#requestOptions.headers.parametersWithDataType}}
                 .addExtraHeader("{{{key}}}", "{{{value}}}")

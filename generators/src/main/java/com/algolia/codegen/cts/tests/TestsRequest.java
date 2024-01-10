@@ -36,7 +36,11 @@ public class TestsRequest extends TestsGenerator {
       return;
     }
     supportingFiles.add(
-      new SupportingFile("requests/requests.mustache", outputFolder + "/requests", Helpers.createClientName(client, language) + extension)
+      new SupportingFile(
+        "tests/requests/requests.mustache",
+        "tests/output/" + language + "/" + outputFolder + "/requests",
+        Helpers.createClientName(client, language) + extension
+      )
     );
   }
 
@@ -148,6 +152,11 @@ public class TestsRequest extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
+
+      Map<String, Object> snippet = (Map<String, Object>) tests.get(0);
+      snippet.put("description", snippet.get("testName"));
+      testObj.put("snippet", snippet);
+
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);

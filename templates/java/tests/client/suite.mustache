@@ -41,13 +41,13 @@ class {{client}}ClientTests {
       {{#isError}}
        {
           Exception exception = assertThrows(Exception.class, () -> {
-            {{> client/step}}
+            {{> tests/client/step}}
           });
           assertEquals("{{{expectedError}}}", exception.getMessage());
         }
       {{/isError}}
       {{^isError}}
-        {{> client/step}}
+        {{> tests/client/step}}
         {{#match}}
           {{#testUserAgent}} {
             String regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}";

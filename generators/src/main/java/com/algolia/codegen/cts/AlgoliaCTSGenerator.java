@@ -3,6 +3,7 @@ package com.algolia.codegen.cts;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
+import com.algolia.codegen.cts.snippets.*;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -53,12 +54,12 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     String outputFolder = Helpers.getClientConfigField(language, "tests", "outputFolder");
     String extension = Helpers.getClientConfigField(language, "tests", "extension");
 
-    setTemplateDir("templates/" + language + "/tests");
-    setOutputDir("tests/output/" + language);
+    setTemplateDir("templates/" + language);
     ctsManager.addSupportingFiles(supportingFiles);
 
     testsGenerators.add(new TestsRequest(language, client));
     testsGenerators.add(new TestsClient(language, client));
+    testsGenerators.add(new SnippetsGenerator(language, client));
 
     for (TestsGenerator testGen : testsGenerators) {
       testGen.addSupportingFiles(supportingFiles, outputFolder, extension);

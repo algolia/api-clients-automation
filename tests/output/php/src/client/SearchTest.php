@@ -55,7 +55,6 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             'test-app-id-dsn.algolia.net',
             $this->recordedRequest['request']->getUri()->getHost()
@@ -78,7 +77,6 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             'test-app-id.algolia.net',
             $this->recordedRequest['request']->getUri()->getHost()
@@ -94,7 +92,6 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertTrue(
             (bool) preg_match(
                 '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
@@ -112,7 +109,6 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -133,7 +129,6 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']

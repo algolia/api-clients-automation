@@ -15,9 +15,9 @@ public class PythonCTSManager implements CTSManager {
 
   @Override
   public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/", "__init__.py"));
-    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/requests", "__init__.py"));
-    supportingFiles.add(new SupportingFile("__init__.mustache", "tests/client", "__init__.py"));
+    supportingFiles.add(new SupportingFile("tests/__init__.mustache", "tests/output/python/tests/", "__init__.py"));
+    supportingFiles.add(new SupportingFile("tests/__init__.mustache", "tests/output/python/tests/requests", "__init__.py"));
+    supportingFiles.add(new SupportingFile("tests/__init__.mustache", "tests/output/python/tests/client", "__init__.py"));
   }
 
   @Override

@@ -20,8 +20,8 @@ JBool({{{value}}})
 JString("{{{value}}}")
 {{/isEnum}}
 {{#isArray}}
-JArray({{#value}}{{> param_json_element}}{{^-last}},{{/-last}}{{/value}})
+JArray({{#value}}{{> tests/param_json_element}}{{^-last}},{{/-last}}{{/value}})
 {{/isArray}}
 {{#isFreeFormObject}}
-JObject(List({{#value}}JField("{{{key}}}", {{> param_json_element}}){{^-last}},{{/-last}}{{/value}}))
+JObject(List({{#value}}JField("{{{key}}}", {{> tests/param_json_element}}){{^-last}},{{/-last}}{{/value}}))
 {{/isFreeFormObject}}

@@ -1,9 +1,9 @@
 {{#isCreateClient}}
-  {{> client/createClient}}
+  {{> tests/client/createClient}}
 {{/isCreateClient}}
 {{#isVariable}}
-  const result = {{> client/variable}}
+  const result = {{> tests/client/variable}}
 {{/isVariable}}
 {{#isMethod}}
-  const result = await ({{> client/method}}) as unknown as EchoResponse;
+  const result = await ({{> tests/client/method}}) as unknown as EchoResponse;
 {{/isMethod}}
