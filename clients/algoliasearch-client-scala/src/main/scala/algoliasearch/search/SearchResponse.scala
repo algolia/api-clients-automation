@@ -11,8 +11,6 @@
   */
 package algoliasearch.search
 
-import org.json4s.JObject
-
 /** SearchResponse
   *
   * @param abTestID
@@ -98,7 +96,7 @@ case class SearchResponse(
     serverTimeMS: Option[Int] = scala.None,
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
-    hits: Seq[JObject],
+    hits: Seq[Hit],
     query: String,
     params: String
 ) extends SearchResultTrait

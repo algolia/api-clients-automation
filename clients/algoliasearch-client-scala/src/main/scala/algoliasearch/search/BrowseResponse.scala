@@ -11,8 +11,6 @@
   */
 package algoliasearch.search
 
-import org.json4s.JObject
-
 /** BrowseResponse
   *
   * @param abTestID
@@ -102,7 +100,7 @@ case class BrowseResponse(
     serverTimeMS: Option[Int] = scala.None,
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
-    hits: Seq[JObject],
+    hits: Seq[Hit],
     query: String,
     params: String,
     cursor: Option[String] = scala.None

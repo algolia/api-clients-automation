@@ -43,10 +43,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0);
+      client.customDelete("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -57,15 +55,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0, parameters0);
+      client.customDelete("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -88,10 +79,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0);
+      client.customGet("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -102,15 +91,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0, parameters0);
+      client.customGet("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -133,10 +115,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0);
+      client.customPost("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -147,20 +127,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0);
+      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -183,23 +151,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default query parameters")
   void customPostTest2() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -225,23 +183,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges query parameters with default ones")
   void customPostTest3() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query2", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -267,23 +215,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default headers")
   void customPostTest4() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -320,23 +258,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges headers with default ones")
   void customPostTest5() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -373,23 +301,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts booleans")
   void customPostTest6() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("isItWorking", true);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("isItWorking", true)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -415,23 +333,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts integers")
   void customPostTest7() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", 2);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", 2)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -457,23 +365,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of string")
   void customPostTest8() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList("c", "d"));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -499,23 +397,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of booleans")
   void customPostTest9() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(true, true, false));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -541,23 +429,13 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of integers")
   void customPostTest10() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(1, 2));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -583,10 +461,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0);
+      client.customPut("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -597,20 +473,8 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0, parameters0, body0);
+      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -633,50 +497,24 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("pushEvents0")
   void pushEventsTest0() {
-    InsightsEvents insightsEvents0 = new InsightsEvents();
-    {
-      List<EventsItems> events1 = new ArrayList<>();
-      {
-        ClickedObjectIDsAfterSearch events_02 = new ClickedObjectIDsAfterSearch();
-        {
-          ClickEvent eventType3 = ClickEvent.fromValue("click");
-          events_02.setEventType(eventType3);
-          String eventName3 = "Product Clicked";
-          events_02.setEventName(eventName3);
-          String index3 = "products";
-          events_02.setIndex(index3);
-          String userToken3 = "user-123456";
-          events_02.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_02.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_02.setObjectIDs(objectIDs3);
-          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
-          events_02.setQueryID(queryID3);
-          List<Integer> positions3 = new ArrayList<>();
-          {
-            int positions_04 = 7;
-            positions3.add(positions_04);
-            int positions_14 = 6;
-            positions3.add(positions_14);
-          }
-          events_02.setPositions(positions3);
-        }
-        events1.add(events_02);
-      }
-      insightsEvents0.setEvents(events1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.pushEvents(insightsEvents0);
+      client.pushEvents(
+        new InsightsEvents()
+          .setEvents(
+            List.of(
+              new ClickedObjectIDsAfterSearch()
+                .setEventType(ClickEvent.fromValue("click"))
+                .setEventName("Product Clicked")
+                .setIndex("products")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+                .setPositions(List.of(7, 6))
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/events", req.path);
@@ -694,66 +532,31 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("Many events type")
   void pushEventsTest1() {
-    InsightsEvents insightsEvents0 = new InsightsEvents();
-    {
-      List<EventsItems> events1 = new ArrayList<>();
-      {
-        ConvertedObjectIDsAfterSearch events_02 = new ConvertedObjectIDsAfterSearch();
-        {
-          ConversionEvent eventType3 = ConversionEvent.fromValue("conversion");
-          events_02.setEventType(eventType3);
-          String eventName3 = "Product Purchased";
-          events_02.setEventName(eventName3);
-          String index3 = "products";
-          events_02.setIndex(index3);
-          String userToken3 = "user-123456";
-          events_02.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_02.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_02.setObjectIDs(objectIDs3);
-          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
-          events_02.setQueryID(queryID3);
-        }
-        events1.add(events_02);
-        ViewedObjectIDs events_12 = new ViewedObjectIDs();
-        {
-          ViewEvent eventType3 = ViewEvent.fromValue("view");
-          events_12.setEventType(eventType3);
-          String eventName3 = "Product Detail Page Viewed";
-          events_12.setEventName(eventName3);
-          String index3 = "products";
-          events_12.setIndex(index3);
-          String userToken3 = "user-123456";
-          events_12.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_12.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_12.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_12.setObjectIDs(objectIDs3);
-        }
-        events1.add(events_12);
-      }
-      insightsEvents0.setEvents(events1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.pushEvents(insightsEvents0);
+      client.pushEvents(
+        new InsightsEvents()
+          .setEvents(
+            List.of(
+              new ConvertedObjectIDsAfterSearch()
+                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventName("Product Purchased")
+                .setIndex("products")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
+              new ViewedObjectIDs()
+                .setEventType(ViewEvent.fromValue("view"))
+                .setEventName("Product Detail Page Viewed")
+                .setIndex("products")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/events", req.path);
@@ -773,42 +576,23 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("ConvertedObjectIDsAfterSearch")
   void pushEventsTest2() {
-    InsightsEvents insightsEvents0 = new InsightsEvents();
-    {
-      List<EventsItems> events1 = new ArrayList<>();
-      {
-        ConvertedObjectIDsAfterSearch events_02 = new ConvertedObjectIDsAfterSearch();
-        {
-          ConversionEvent eventType3 = ConversionEvent.fromValue("conversion");
-          events_02.setEventType(eventType3);
-          String eventName3 = "Product Purchased";
-          events_02.setEventName(eventName3);
-          String index3 = "products";
-          events_02.setIndex(index3);
-          String userToken3 = "user-123456";
-          events_02.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_02.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_02.setObjectIDs(objectIDs3);
-          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
-          events_02.setQueryID(queryID3);
-        }
-        events1.add(events_02);
-      }
-      insightsEvents0.setEvents(events1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.pushEvents(insightsEvents0);
+      client.pushEvents(
+        new InsightsEvents()
+          .setEvents(
+            List.of(
+              new ConvertedObjectIDsAfterSearch()
+                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventName("Product Purchased")
+                .setIndex("products")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/events", req.path);
@@ -826,40 +610,22 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("ViewedObjectIDs")
   void pushEventsTest3() {
-    InsightsEvents insightsEvents0 = new InsightsEvents();
-    {
-      List<EventsItems> events1 = new ArrayList<>();
-      {
-        ViewedObjectIDs events_02 = new ViewedObjectIDs();
-        {
-          ViewEvent eventType3 = ViewEvent.fromValue("view");
-          events_02.setEventType(eventType3);
-          String eventName3 = "Product Detail Page Viewed";
-          events_02.setEventName(eventName3);
-          String index3 = "products";
-          events_02.setIndex(index3);
-          String userToken3 = "user-123456";
-          events_02.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_02.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_02.setObjectIDs(objectIDs3);
-        }
-        events1.add(events_02);
-      }
-      insightsEvents0.setEvents(events1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.pushEvents(insightsEvents0);
+      client.pushEvents(
+        new InsightsEvents()
+          .setEvents(
+            List.of(
+              new ViewedObjectIDs()
+                .setEventType(ViewEvent.fromValue("view"))
+                .setEventName("Product Detail Page Viewed")
+                .setIndex("products")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/events", req.path);
@@ -877,70 +643,31 @@ class InsightsClientRequestsTests {
   @Test
   @DisplayName("AddedToCartObjectIDs")
   void pushEventsTest4() {
-    InsightsEvents insightsEvents0 = new InsightsEvents();
-    {
-      List<EventsItems> events1 = new ArrayList<>();
-      {
-        AddedToCartObjectIDsAfterSearch events_02 = new AddedToCartObjectIDsAfterSearch();
-        {
-          ConversionEvent eventType3 = ConversionEvent.fromValue("conversion");
-          events_02.setEventType(eventType3);
-          AddToCartEvent eventSubtype3 = AddToCartEvent.fromValue("addToCart");
-          events_02.setEventSubtype(eventSubtype3);
-          String eventName3 = "Product Added To Cart";
-          events_02.setEventName(eventName3);
-          String index3 = "products";
-          events_02.setIndex(index3);
-          String queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
-          events_02.setQueryID(queryID3);
-          String userToken3 = "user-123456";
-          events_02.setUserToken(userToken3);
-          String authenticatedUserToken3 = "user-123456";
-          events_02.setAuthenticatedUserToken(authenticatedUserToken3);
-          long timestamp3 = 1641290601962L;
-          events_02.setTimestamp(timestamp3);
-          List<String> objectIDs3 = new ArrayList<>();
-          {
-            String objectIDs_04 = "9780545139700";
-            objectIDs3.add(objectIDs_04);
-            String objectIDs_14 = "9780439784542";
-            objectIDs3.add(objectIDs_14);
-          }
-          events_02.setObjectIDs(objectIDs3);
-          List<ObjectDataAfterSearch> objectData3 = new ArrayList<>();
-          {
-            ObjectDataAfterSearch objectData_04 = new ObjectDataAfterSearch();
-            {
-              double price5 = 19.99;
-              objectData_04.setPrice(Price.of(price5));
-              int quantity5 = 10;
-              objectData_04.setQuantity(quantity5);
-              double discount5 = 2.5;
-              objectData_04.setDiscount(Discount.of(discount5));
-            }
-            objectData3.add(objectData_04);
-            ObjectDataAfterSearch objectData_14 = new ObjectDataAfterSearch();
-            {
-              String price5 = "8$";
-              objectData_14.setPrice(Price.of(price5));
-              int quantity5 = 7;
-              objectData_14.setQuantity(quantity5);
-              String discount5 = "30%";
-              objectData_14.setDiscount(Discount.of(discount5));
-            }
-            objectData3.add(objectData_14);
-          }
-          events_02.setObjectData(objectData3);
-          String currency3 = "USD";
-          events_02.setCurrency(currency3);
-        }
-        events1.add(events_02);
-      }
-      insightsEvents0.setEvents(events1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.pushEvents(insightsEvents0);
+      client.pushEvents(
+        new InsightsEvents()
+          .setEvents(
+            List.of(
+              new AddedToCartObjectIDsAfterSearch()
+                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventSubtype(AddToCartEvent.fromValue("addToCart"))
+                .setEventName("Product Added To Cart")
+                .setIndex("products")
+                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+                .setUserToken("user-123456")
+                .setAuthenticatedUserToken("user-123456")
+                .setTimestamp(1641290601962L)
+                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setObjectData(
+                  List.of(
+                    new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
+                    new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
+                  )
+                )
+                .setCurrency("USD")
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/events", req.path);

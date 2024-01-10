@@ -17,5 +17,5 @@
   {{{value}}}
 {{/isBoolean}}
 {{#isArray}}
-  Arrays.asList({{#value}}{{> requests/requestOptionsParams}}{{^-last}},{{/-last}}{{/value}})
+  new List<object>{ {{#value}}{{> requests/requestOptionsParams}}{{^-last}},{{/-last}}{{/value}} }
 {{/isArray}}

@@ -32,9 +32,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest0() {
     QuerySuggestionsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -55,9 +53,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest1() {
     QuerySuggestionsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -69,9 +65,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest2() {
     QuerySuggestionsClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

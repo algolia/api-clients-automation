@@ -11,7 +11,6 @@
   */
 package algoliasearch.search
 
-import org.json4s.JObject
 import org.json4s.MonadicJValue.jvalueToMonadic
 import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
 
@@ -23,7 +22,7 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   *   URL-encoded string of all search parameters.
   */
 case class SearchHits(
-    hits: Seq[JObject],
+    hits: Seq[Hit],
     query: String,
     params: String,
     additionalProperties: Option[List[JField]] = None

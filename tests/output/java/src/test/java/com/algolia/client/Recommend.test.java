@@ -31,9 +31,7 @@ class RecommendClientClientTests {
   void apiTest0() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -44,9 +42,7 @@ class RecommendClientClientTests {
   void apiTest1() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
@@ -57,9 +53,7 @@ class RecommendClientClientTests {
   void commonApiTest0() {
     RecommendClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -80,9 +74,7 @@ class RecommendClientClientTests {
   void commonApiTest1() {
     RecommendClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -94,9 +86,7 @@ class RecommendClientClientTests {
   void commonApiTest2() {
     RecommendClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

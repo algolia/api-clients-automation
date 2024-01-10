@@ -45,6 +45,9 @@ async function runCtsOne(language: string): Promise<void> {
     case 'scala':
       await run('sbt test', { cwd: 'tests/output/scala' });
       break;
+    case 'csharp':
+      await run('dotnet test', { cwd: 'tests/output/csharp' });
+      break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;

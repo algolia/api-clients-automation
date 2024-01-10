@@ -43,26 +43,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createAuthenticationOAuth")
   void createAuthenticationTest0() {
-    AuthenticationCreate authenticationCreate0 = new AuthenticationCreate();
-    {
-      AuthenticationType type1 = AuthenticationType.fromValue("oauth");
-      authenticationCreate0.setType(type1);
-      String name1 = "authName";
-      authenticationCreate0.setName(name1);
-      AuthOAuth input1 = new AuthOAuth();
-      {
-        String url2 = "http://test.oauth";
-        input1.setUrl(url2);
-        String client_id2 = "myID";
-        input1.setClientId(client_id2);
-        String client_secret2 = "mySecret";
-        input1.setClientSecret(client_secret2);
-      }
-      authenticationCreate0.setInput(input1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createAuthentication(authenticationCreate0);
+      client.createAuthentication(
+        new AuthenticationCreate()
+          .setType(AuthenticationType.fromValue("oauth"))
+          .setName("authName")
+          .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications", req.path);
@@ -79,24 +66,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createAuthenticationAlgolia")
   void createAuthenticationTest1() {
-    AuthenticationCreate authenticationCreate0 = new AuthenticationCreate();
-    {
-      AuthenticationType type1 = AuthenticationType.fromValue("algolia");
-      authenticationCreate0.setType(type1);
-      String name1 = "authName";
-      authenticationCreate0.setName(name1);
-      AuthAlgolia input1 = new AuthAlgolia();
-      {
-        String appID2 = "myappID";
-        input1.setAppID(appID2);
-        String apiKey2 = "randomApiKey";
-        input1.setApiKey(apiKey2);
-      }
-      authenticationCreate0.setInput(input1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createAuthentication(authenticationCreate0);
+      client.createAuthentication(
+        new AuthenticationCreate()
+          .setType(AuthenticationType.fromValue("algolia"))
+          .setName("authName")
+          .setInput(new AuthAlgolia().setAppID("myappID").setApiKey("randomApiKey"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications", req.path);
@@ -113,24 +89,14 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createDestination")
   void createDestinationTest0() {
-    DestinationCreate destinationCreate0 = new DestinationCreate();
-    {
-      DestinationType type1 = DestinationType.fromValue("search");
-      destinationCreate0.setType(type1);
-      String name1 = "destinationName";
-      destinationCreate0.setName(name1);
-      DestinationIndexPrefix input1 = new DestinationIndexPrefix();
-      {
-        String indexPrefix2 = "prefix_";
-        input1.setIndexPrefix(indexPrefix2);
-      }
-      destinationCreate0.setInput(input1);
-      String authenticationID1 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      destinationCreate0.setAuthenticationID(authenticationID1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createDestination(destinationCreate0);
+      client.createDestination(
+        new DestinationCreate()
+          .setType(DestinationType.fromValue("search"))
+          .setName("destinationName")
+          .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
+          .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations", req.path);
@@ -147,38 +113,20 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createSource")
   void createSourceTest0() {
-    SourceCreate sourceCreate0 = new SourceCreate();
-    {
-      SourceType type1 = SourceType.fromValue("commercetools");
-      sourceCreate0.setType(type1);
-      String name1 = "sourceName";
-      sourceCreate0.setName(name1);
-      SourceCommercetools input1 = new SourceCommercetools();
-      {
-        List<String> storeKeys2 = new ArrayList<>();
-        {
-          String storeKeys_03 = "myStore";
-          storeKeys2.add(storeKeys_03);
-        }
-        input1.setStoreKeys(storeKeys2);
-        List<String> locales2 = new ArrayList<>();
-        {
-          String locales_03 = "de";
-          locales2.add(locales_03);
-        }
-        input1.setLocales(locales2);
-        String url2 = "http://commercetools.com";
-        input1.setUrl(url2);
-        String projectKey2 = "keyID";
-        input1.setProjectKey(projectKey2);
-      }
-      sourceCreate0.setInput(input1);
-      String authenticationID1 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      sourceCreate0.setAuthenticationID(authenticationID1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createSource(sourceCreate0);
+      client.createSource(
+        new SourceCreate()
+          .setType(SourceType.fromValue("commercetools"))
+          .setName("sourceName")
+          .setInput(
+            new SourceCommercetools()
+              .setStoreKeys(List.of("myStore"))
+              .setLocales(List.of("de"))
+              .setUrl("http://commercetools.com")
+              .setProjectKey("keyID")
+          )
+          .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources", req.path);
@@ -195,24 +143,14 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createTaskOnDemand")
   void createTaskTest0() {
-    TaskCreate taskCreate0 = new TaskCreate();
-    {
-      String sourceID1 = "search";
-      taskCreate0.setSourceID(sourceID1);
-      String destinationID1 = "destinationName";
-      taskCreate0.setDestinationID(destinationID1);
-      OnDemandTriggerInput trigger1 = new OnDemandTriggerInput();
-      {
-        OnDemandTriggerType type2 = OnDemandTriggerType.fromValue("onDemand");
-        trigger1.setType(type2);
-      }
-      taskCreate0.setTrigger(trigger1);
-      ActionType action1 = ActionType.fromValue("replace");
-      taskCreate0.setAction(action1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createTask(taskCreate0);
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.fromValue("onDemand")))
+          .setAction(ActionType.fromValue("replace"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks", req.path);
@@ -229,26 +167,14 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createTaskSchedule")
   void createTaskTest1() {
-    TaskCreate taskCreate0 = new TaskCreate();
-    {
-      String sourceID1 = "search";
-      taskCreate0.setSourceID(sourceID1);
-      String destinationID1 = "destinationName";
-      taskCreate0.setDestinationID(destinationID1);
-      ScheduleTriggerInput trigger1 = new ScheduleTriggerInput();
-      {
-        ScheduleTriggerType type2 = ScheduleTriggerType.fromValue("schedule");
-        trigger1.setType(type2);
-        String cron2 = "* * * * *";
-        trigger1.setCron(cron2);
-      }
-      taskCreate0.setTrigger(trigger1);
-      ActionType action1 = ActionType.fromValue("replace");
-      taskCreate0.setAction(action1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createTask(taskCreate0);
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.fromValue("schedule")).setCron("* * * * *"))
+          .setAction(ActionType.fromValue("replace"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks", req.path);
@@ -266,24 +192,14 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("createTaskSubscription")
   void createTaskTest2() {
-    TaskCreate taskCreate0 = new TaskCreate();
-    {
-      String sourceID1 = "search";
-      taskCreate0.setSourceID(sourceID1);
-      String destinationID1 = "destinationName";
-      taskCreate0.setDestinationID(destinationID1);
-      OnDemandTriggerInput trigger1 = new OnDemandTriggerInput();
-      {
-        OnDemandTriggerType type2 = OnDemandTriggerType.fromValue("onDemand");
-        trigger1.setType(type2);
-      }
-      taskCreate0.setTrigger(trigger1);
-      ActionType action1 = ActionType.fromValue("replace");
-      taskCreate0.setAction(action1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.createTask(taskCreate0);
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.fromValue("onDemand")))
+          .setAction(ActionType.fromValue("replace"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks", req.path);
@@ -300,10 +216,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0);
+      client.customDelete("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -314,15 +228,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0, parameters0);
+      client.customDelete("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -345,10 +252,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0);
+      client.customGet("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -359,15 +264,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0, parameters0);
+      client.customGet("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -390,10 +288,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0);
+      client.customPost("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -404,20 +300,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0);
+      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -440,23 +324,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default query parameters")
   void customPostTest2() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -482,23 +356,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges query parameters with default ones")
   void customPostTest3() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query2", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -524,23 +388,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default headers")
   void customPostTest4() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -577,23 +431,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges headers with default ones")
   void customPostTest5() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -630,23 +474,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts booleans")
   void customPostTest6() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("isItWorking", true);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("isItWorking", true)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -672,23 +506,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts integers")
   void customPostTest7() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", 2);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", 2)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -714,23 +538,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of string")
   void customPostTest8() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList("c", "d"));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -756,23 +570,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of booleans")
   void customPostTest9() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(true, true, false));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -798,23 +602,13 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of integers")
   void customPostTest10() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(1, 2));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -840,10 +634,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0);
+      client.customPut("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -854,20 +646,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0, parameters0, body0);
+      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -890,10 +670,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("deleteAuthentication")
   void deleteAuthenticationTest0() {
-    String authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.deleteAuthentication(authenticationID0);
+      client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -904,10 +682,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("deleteDestination")
   void deleteDestinationTest0() {
-    String destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.deleteDestination(destinationID0);
+      client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -918,10 +694,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("deleteSource")
   void deleteSourceTest0() {
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.deleteSource(sourceID0);
+      client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -932,10 +706,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("deleteTask")
   void deleteTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.deleteTask(taskID0);
+      client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -946,10 +718,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("disableTask")
   void disableTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.disableTask(taskID0);
+      client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path);
@@ -960,10 +730,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("enableTask")
   void enableTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.enableTask(taskID0);
+      client.enableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable", req.path);
@@ -974,10 +742,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getAuthentication")
   void getAuthenticationTest0() {
-    String authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getAuthentication(authenticationID0);
+      client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1000,10 +766,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getDestination")
   void getDestinationTest0() {
-    String destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getDestination(destinationID0);
+      client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1026,10 +790,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getDockerSourceStreams")
   void getDockerSourceStreamsTest0() {
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getDockerSourceStreams(sourceID0);
+      client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
@@ -1040,11 +802,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getEvent")
   void getEventTest0() {
-    String runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    String eventID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0c";
-
     assertDoesNotThrow(() -> {
-      client.getEvent(runID0, eventID0);
+      client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c", req.path);
@@ -1055,10 +814,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getEvents")
   void getEventsTest0() {
-    String runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getEvents(runID0);
+      client.getEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.path);
@@ -1069,10 +826,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getRun")
   void getRunTest0() {
-    String runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getRun(runID0);
+      client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1095,10 +850,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getSource")
   void getSourceTest0() {
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getSource(sourceID0);
+      client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1121,10 +874,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("getTask")
   void getTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.getTask(taskID0);
+      client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1147,10 +898,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("runTask")
   void runTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.runTask(taskID0);
+      client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
@@ -1161,20 +910,11 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("searchAuthentications")
   void searchAuthenticationsTest0() {
-    AuthenticationSearch authenticationSearch0 = new AuthenticationSearch();
-    {
-      List<String> authenticationIDs1 = new ArrayList<>();
-      {
-        String authenticationIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-        authenticationIDs1.add(authenticationIDs_02);
-        String authenticationIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-        authenticationIDs1.add(authenticationIDs_12);
-      }
-      authenticationSearch0.setAuthenticationIDs(authenticationIDs1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.searchAuthentications(authenticationSearch0);
+      client.searchAuthentications(
+        new AuthenticationSearch()
+          .setAuthenticationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications/search", req.path);
@@ -1191,20 +931,10 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("searchDestinations")
   void searchDestinationsTest0() {
-    DestinationSearch destinationSearch0 = new DestinationSearch();
-    {
-      List<String> destinationIDs1 = new ArrayList<>();
-      {
-        String destinationIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-        destinationIDs1.add(destinationIDs_02);
-        String destinationIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-        destinationIDs1.add(destinationIDs_12);
-      }
-      destinationSearch0.setDestinationIDs(destinationIDs1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.searchDestinations(destinationSearch0);
+      client.searchDestinations(
+        new DestinationSearch().setDestinationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations/search", req.path);
@@ -1221,20 +951,10 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("searchSources")
   void searchSourcesTest0() {
-    SourceSearch sourceSearch0 = new SourceSearch();
-    {
-      List<String> sourceIDs1 = new ArrayList<>();
-      {
-        String sourceIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-        sourceIDs1.add(sourceIDs_02);
-        String sourceIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-        sourceIDs1.add(sourceIDs_12);
-      }
-      sourceSearch0.setSourceIDs(sourceIDs1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.searchSources(sourceSearch0);
+      client.searchSources(
+        new SourceSearch().setSourceIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/search", req.path);
@@ -1251,20 +971,10 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("searchTasks")
   void searchTasksTest0() {
-    TaskSearch taskSearch0 = new TaskSearch();
-    {
-      List<String> taskIDs1 = new ArrayList<>();
-      {
-        String taskIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-        taskIDs1.add(taskIDs_02);
-        String taskIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-        taskIDs1.add(taskIDs_12);
-      }
-      taskSearch0.setTaskIDs(taskIDs1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.searchTasks(taskSearch0);
+      client.searchTasks(
+        new TaskSearch().setTaskIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/search", req.path);
@@ -1281,10 +991,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("triggerDockerSourceDiscover")
   void triggerDockerSourceDiscoverTest0() {
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
     assertDoesNotThrow(() -> {
-      client.triggerDockerSourceDiscover(sourceID0);
+      client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
@@ -1295,15 +1003,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("updateAuthentication")
   void updateAuthenticationTest0() {
-    String authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    AuthenticationUpdate authenticationUpdate0 = new AuthenticationUpdate();
-    {
-      String name1 = "newName";
-      authenticationUpdate0.setName(name1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.updateAuthentication(authenticationID0, authenticationUpdate0);
+      client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new AuthenticationUpdate().setName("newName"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1314,15 +1015,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("updateDestination")
   void updateDestinationTest0() {
-    String destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    DestinationUpdate destinationUpdate0 = new DestinationUpdate();
-    {
-      String name1 = "newName";
-      destinationUpdate0.setName(name1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.updateDestination(destinationID0, destinationUpdate0);
+      client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new DestinationUpdate().setName("newName"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1333,15 +1027,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("updateSource")
   void updateSourceTest0() {
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    SourceUpdate sourceUpdate0 = new SourceUpdate();
-    {
-      String name1 = "newName";
-      sourceUpdate0.setName(name1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.updateSource(sourceID0, sourceUpdate0);
+      client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
@@ -1352,15 +1039,8 @@ class IngestionClientRequestsTests {
   @Test
   @DisplayName("updateTask")
   void updateTaskTest0() {
-    String taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    TaskUpdate taskUpdate0 = new TaskUpdate();
-    {
-      boolean enabled1 = false;
-      taskUpdate0.setEnabled(enabled1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.updateTask(taskID0, taskUpdate0);
+      client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);

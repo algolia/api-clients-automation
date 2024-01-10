@@ -265,7 +265,7 @@
     "customGenerator": "algolia-csharp",
     "tests": {
       "extension": ".test.cs",
-      "outputFolder": "test"
+      "outputFolder": "src/tests"
     }
   },
   "swift": {
