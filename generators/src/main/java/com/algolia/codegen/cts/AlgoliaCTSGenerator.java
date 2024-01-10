@@ -3,6 +3,7 @@ package com.algolia.codegen.cts;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
+import com.algolia.codegen.cts.snippets.*;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -53,8 +54,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     String outputFolder = Helpers.getClientConfigField(language, "tests", "outputFolder");
     String extension = Helpers.getClientConfigField(language, "tests", "extension");
 
-    setTemplateDir("templates/" + language + "/tests");
-    setOutputDir("tests/output/" + language);
+    setTemplateDir("templates/" + language);
     ctsManager.addSupportingFiles(supportingFiles);
 
     testsGenerators.add(new TestsRequest(language, client));
@@ -63,6 +63,19 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     for (TestsGenerator testGen : testsGenerators) {
       testGen.addSupportingFiles(supportingFiles, outputFolder, extension);
     }
+
+    SnippetsGenerator snippetGenerator = new SnippetsGenerator(language, client);
+
+    if (!snippetGenerator.available()) {
+      return;
+    }
+
+    String snippetsExtension = Helpers.getClientConfigField(language, "snippets", "extension");
+    String snippetsOutputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");
+
+    snippetGenerator.addSupportingFiles(supportingFiles, snippetsOutputFolder, snippetsExtension);
+
+    testsGenerators.add(snippetGenerator);
   }
 
   @Override

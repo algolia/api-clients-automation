@@ -200,7 +200,7 @@
     },
     "snippets": {
       "extension": ".py",
-      "outputFolder": "snippets"
+      "outputFolder": ""
     }
   },
   "ruby": {

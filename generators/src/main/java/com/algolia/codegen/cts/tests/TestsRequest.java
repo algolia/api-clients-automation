@@ -36,23 +36,11 @@ public class TestsRequest extends TestsGenerator {
       return;
     }
 
-    // tests generation
-    supportingFiles.add(
-      new SupportingFile("requests/requests.mustache", outputFolder + "/requests", Helpers.createClientName(client, language) + extension)
-    );
-
-    if (!language.equals("python")) {
-      return;
-    }
-
-    // snippets generation
-    String snippetsExtension = Helpers.getClientConfigField(language, "snippets", "extension");
-    String snippetsOutputFolder = Helpers.getClientConfigField(language, "snippets", "outputFolder");
-
     supportingFiles.add(
       new SupportingFile(
-        "snippets/method.mustache",
-        "../../../" + snippetsOutputFolder + "/" + language + "/" + Helpers.createClientName(client, language) + snippetsExtension
+        "tests/requests/requests.mustache",
+        "tests/output/" + language + "/" + outputFolder + "/requests",
+        Helpers.createClientName(client, language) + extension
       )
     );
   }
