@@ -49,6 +49,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
     additionalProperties.put(CodegenConstants.API_NAME_SUFFIX, Helpers.API_SUFFIX);
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
+    additionalProperties.put(OBJC_COMPATIBLE, true);
 
     additionalProperties.put("swiftUseClientNamespace", false);
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
@@ -102,7 +103,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     reservedWords.add("LogLevel");
 
-    setObjcCompatible(true);
     setProjectName(getClientName(CLIENT));
     setUseSPMFileStructure(true);
 
@@ -118,7 +118,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     try {
       Helpers.generateServer(CLIENT, additionalProperties);
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("swift", "packageVersion"));
-      additionalProperties.put("packageList", Helpers.getClientConfigField("swift", "clients"));
+      additionalProperties.put("packageList", Helpers.getClientListForLanguage("swift"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
