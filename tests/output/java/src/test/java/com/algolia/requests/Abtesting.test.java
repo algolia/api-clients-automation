@@ -43,36 +43,18 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("addABTests with minimal parameters")
   void addABTestsTest0() {
-    AddABTestsRequest addABTestsRequest0 = new AddABTestsRequest();
-    {
-      String endAt1 = "2022-12-31T00:00:00.000Z";
-      addABTestsRequest0.setEndAt(endAt1);
-      String name1 = "myABTest";
-      addABTestsRequest0.setName(name1);
-      List<AddABTestsVariant> variants1 = new ArrayList<>();
-      {
-        AbTestsVariant variants_02 = new AbTestsVariant();
-        {
-          String index3 = "AB_TEST_1";
-          variants_02.setIndex(index3);
-          int trafficPercentage3 = 30;
-          variants_02.setTrafficPercentage(trafficPercentage3);
-        }
-        variants1.add(variants_02);
-        AbTestsVariant variants_12 = new AbTestsVariant();
-        {
-          String index3 = "AB_TEST_2";
-          variants_12.setIndex(index3);
-          int trafficPercentage3 = 50;
-          variants_12.setTrafficPercentage(trafficPercentage3);
-        }
-        variants1.add(variants_12);
-      }
-      addABTestsRequest0.setVariants(variants1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.addABTests(addABTestsRequest0);
+      client.addABTests(
+        new AddABTestsRequest()
+          .setEndAt("2022-12-31T00:00:00.000Z")
+          .setName("myABTest")
+          .setVariants(
+            List.of(
+              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+            )
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests", req.path);
@@ -89,10 +71,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0);
+      client.customDelete("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -103,15 +83,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0, parameters0);
+      client.customDelete("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -134,10 +107,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0);
+      client.customGet("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -148,15 +119,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0, parameters0);
+      client.customGet("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -179,10 +143,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0);
+      client.customPost("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -193,20 +155,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0);
+      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -229,23 +179,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default query parameters")
   void customPostTest2() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -271,23 +211,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges query parameters with default ones")
   void customPostTest3() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query2", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -313,23 +243,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default headers")
   void customPostTest4() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -366,23 +286,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges headers with default ones")
   void customPostTest5() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -419,23 +329,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts booleans")
   void customPostTest6() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("isItWorking", true);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("isItWorking", true)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -461,23 +361,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts integers")
   void customPostTest7() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", 2);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", 2)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -503,23 +393,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of string")
   void customPostTest8() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList("c", "d"));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -545,23 +425,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of booleans")
   void customPostTest9() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(true, true, false));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -587,23 +457,13 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of integers")
   void customPostTest10() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(1, 2));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -629,10 +489,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0);
+      client.customPut("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -643,20 +501,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0, parameters0, body0);
+      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -679,10 +525,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("deleteABTest")
   void deleteABTestTest0() {
-    int id0 = 42;
-
     assertDoesNotThrow(() -> {
-      client.deleteABTest(id0);
+      client.deleteABTest(42);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests/42", req.path);
@@ -693,10 +537,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("getABTest")
   void getABTestTest0() {
-    int id0 = 42;
-
     assertDoesNotThrow(() -> {
-      client.getABTest(id0);
+      client.getABTest(42);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests/42", req.path);
@@ -719,13 +561,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("listABTests with parameters")
   void listABTestsTest1() {
-    int offset0 = 42;
-    int limit0 = 21;
-    String indexPrefix0 = "foo";
-    String indexSuffix0 = "bar";
-
     assertDoesNotThrow(() -> {
-      client.listABTests(offset0, limit0, indexPrefix0, indexSuffix0);
+      client.listABTests(42, 21, "foo", "bar");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests", req.path);
@@ -751,10 +588,8 @@ class AbtestingClientRequestsTests {
   @Test
   @DisplayName("stopABTest")
   void stopABTestTest0() {
-    int id0 = 42;
-
     assertDoesNotThrow(() -> {
-      client.stopABTest(id0);
+      client.stopABTest(42);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests/42/stop", req.path);

@@ -32,9 +32,7 @@ class IngestionClientClientTests {
   void commonApiTest0() {
     IngestionClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -55,9 +53,7 @@ class IngestionClientClientTests {
   void commonApiTest1() {
     IngestionClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -69,9 +65,7 @@ class IngestionClientClientTests {
   void commonApiTest2() {
     IngestionClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -83,9 +77,7 @@ class IngestionClientClientTests {
   void parametersTest0() {
     IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", buildClientOptions());
 
-    String sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-    client.getSource(sourceID0);
+    client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("data.us.algolia.com", result.host);

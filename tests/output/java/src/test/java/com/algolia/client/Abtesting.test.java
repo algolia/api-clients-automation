@@ -32,9 +32,7 @@ class AbtestingClientClientTests {
   void commonApiTest0() {
     AbtestingClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -55,9 +53,7 @@ class AbtestingClientClientTests {
   void commonApiTest1() {
     AbtestingClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -69,9 +65,7 @@ class AbtestingClientClientTests {
   void commonApiTest2() {
     AbtestingClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -83,9 +77,7 @@ class AbtestingClientClientTests {
   void parametersTest0() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", buildClientOptions());
 
-    int id0 = 123;
-
-    client.getABTest(id0);
+    client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("analytics.algolia.com", result.host);
@@ -96,9 +88,7 @@ class AbtestingClientClientTests {
   void parametersTest1() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "us", buildClientOptions());
 
-    int id0 = 123;
-
-    client.getABTest(id0);
+    client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("analytics.us.algolia.com", result.host);
