@@ -58,7 +58,7 @@ public class {{classname}}(
    {{/allParams}}
    * @param requestOptions additional request configuration.
    */
-  public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): {{#returnType}}{{{.}}}{{/returnType}} {{^returnType}}Nothing{{/returnType}}{
+  public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): {{#returnType}}{{{.}}}{{/returnType}} {
       {{#requiredParams}}
       {{#isString}}
       require({{paramName}}.isNotBlank()) { "Parameter `{{paramName}}` is required when calling `{{operationId}}`." }
