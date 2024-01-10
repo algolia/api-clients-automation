@@ -43,7 +43,7 @@ func With{{{classname}}}{{{name}}}(val {{{dataType}}}) {{{classname}}}Option {
 // New{{classname}} instantiates a new {{classname}} object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
+// will change when the set of required properties is changed.
 func New{{classname}}({{#requiredVars}}{{nameInCamelCase}} {{dataType}}{{^-last}}, {{/-last}}{{/requiredVars}}{{#hasOptional}}{{#requiredVars.0}}, {{/requiredVars.0}}opts ...{{{classname}}}Option{{/hasOptional}}) *{{classname}} {
 	this := &{{classname}}{}
 {{#allVars}}
@@ -61,36 +61,16 @@ for _, opt := range opts {
 	return this
 }
 
-// New{{classname}}WithDefaults instantiates a new {{classname}} object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func New{{classname}}WithDefaults() *{{classname}} {
-	this := &{{classname}}{}
-{{#vars}}
-{{#defaultValue}}
-{{^vendorExtensions.x-golang-is-container}}
-{{^isReadOnly}}
-{{#isNullable}}
-{{!we use datatypeWithEnum here, since it will represent the non-nullable name of the datatype, e.g. int64 for NullableInt64}}
-	var {{nameInCamelCase}} {{{datatypeWithEnum}}} = {{{.}}}
-	this.{{name}} = *New{{{dataType}}}(&{{nameInCamelCase}})
-{{/isNullable}}
-{{^isNullable}}
-	var {{nameInCamelCase}} {{{dataType}}} = {{{.}}}
-	this.{{name}} = {{^required}}&{{/required}}{{nameInCamelCase}}
-{{/isNullable}}
-{{/isReadOnly}}
-{{/vendorExtensions.x-golang-is-container}}
-{{/defaultValue}}
-{{/vars}}
-	return this
+// NewEmpty{{classname}} return a pointer to an empty {{classname}} object.
+func NewEmpty{{classname}}() *{{classname}} {
+  return &{{classname}}{}
 }
 
 {{#vars}}
 {{#required}}
-// Get{{name}} returns the {{name}} field value
+// Get{{name}} returns the {{name}} field value.
 {{#isNullable}}
-// If the value is explicit nil, the zero value for {{vendorExtensions.x-go-base-type}} will be returned
+// If the value is explicit nil, the zero value for {{vendorExtensions.x-go-base-type}} will be returned.
 {{/isNullable}}
 {{#deprecated}}
 // Deprecated
@@ -117,7 +97,7 @@ func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 // Get{{name}}Ok returns a tuple with the {{name}} field value
 // and a boolean to check if the value has been set.
 {{#isNullable}}
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
 {{/isNullable}}
 {{#deprecated}}
 // Deprecated
@@ -139,22 +119,23 @@ func (o *{{classname}}) Get{{name}}Ok() ({{^isArray}}{{^isFreeFormObject}}*{{/is
 {{/isNullable}}
 }
 
-// Set{{name}} sets field value
+// Set{{name}} sets field value.
 {{#deprecated}}
 // Deprecated
 {{/deprecated}}
-func (o *{{classname}}) Set{{name}}(v {{vendorExtensions.x-go-base-type}}) {
+func (o *{{classname}}) Set{{name}}(v {{#isModel}}*{{/isModel}}{{vendorExtensions.x-go-base-type}}) *{{classname}} {
 {{#isNullable}}
 {{#vendorExtensions.x-golang-is-container}}
 	o.{{name}} = v
 {{/vendorExtensions.x-golang-is-container}}
 {{^vendorExtensions.x-golang-is-container}}
-	o.{{name}}.Set(&v)
+	o.{{name}}.Set({{^isModel}}&{{/isModel}}v)
 {{/vendorExtensions.x-golang-is-container}}
 {{/isNullable}}
 {{^isNullable}}
-	o.{{name}} = v
+	o.{{name}} = {{#isModel}}*{{/isModel}}v
 {{/isNullable}}
+  return o
 }
 
 {{/required}}
@@ -184,7 +165,7 @@ func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 // Get{{name}}Ok returns a tuple with the {{name}} field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 {{#isNullable}}
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
 {{/isNullable}}
 {{#deprecated}}
 // Deprecated
@@ -219,18 +200,19 @@ func (o *{{classname}}) Has{{name}}() bool {
 {{#deprecated}}
 // Deprecated
 {{/deprecated}}
-func (o *{{classname}}) Set{{name}}(v {{vendorExtensions.x-go-base-type}}) {
+func (o *{{classname}}) Set{{name}}(v {{#isModel}}*{{/isModel}}{{vendorExtensions.x-go-base-type}}) *{{classname}} {
 {{#isNullable}}
 {{#vendorExtensions.x-golang-is-container}}
 	o.{{name}} = v
 {{/vendorExtensions.x-golang-is-container}}
 {{^vendorExtensions.x-golang-is-container}}
-	o.{{name}}.Set({{^isArray}}{{^isFreeFormObject}}&{{/isFreeFormObject}}{{/isArray}}v)
+	o.{{name}}.Set({{^isArray}}{{^isModel}}{{^isFreeFormObject}}&{{/isFreeFormObject}}{{/isModel}}{{/isArray}}v)
 {{/vendorExtensions.x-golang-is-container}}
 {{/isNullable}}
 {{^isNullable}}
-	o.{{name}} = {{^isArray}}{{^isFreeFormObject}}&{{/isFreeFormObject}}{{/isArray}}v
+	o.{{name}} = {{^isArray}}{{^isModel}}{{^isFreeFormObject}}&{{/isFreeFormObject}}{{/isModel}}{{/isArray}}v
 {{/isNullable}}
+  return o
 }
 {{#isNullable}}
 {{^vendorExtensions.x-golang-is-container}}
@@ -248,6 +230,19 @@ func (o *{{classname}}) Unset{{name}}() {
 
 {{/required}}
 {{/vars}}
+
+{{#isAdditionalPropertiesTrue}}
+func (o *{{{classname}}}) SetAdditionalProperty(key string, value any) *{{{classname}}} {
+  if o.AdditionalProperties == nil {
+    o.AdditionalProperties = make(map[string]any)
+  }
+
+  o.AdditionalProperties[key] = value
+
+  return o
+}
+{{/isAdditionalPropertiesTrue}}
+
 func (o {{classname}}) MarshalJSON() ([]byte, error) {
 	toSerialize := {{#isArray}}make([]any, len(o.Items)){{/isArray}}{{^isArray}}map[string]any{}{{/isArray}}
 	{{#parent}}

@@ -1,6 +1,1 @@
-{{^isOptional}}
-{{> param_value}}
-{{/isOptional}}
-{{#isOptional}}
-Some({{> param_value}})
-{{/isOptional}}
+{{^required}}Some({{/required}}{{> param_value}}{{^required}})({{/required}}

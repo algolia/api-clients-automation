@@ -31,19 +31,8 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client()
 
-    tests := []struct {
-    name     string
-    testFunc func(t *testing.T)
-  }{
-{{#tests}} {
-    name: "{{{testName}}}",
-    testFunc: func(t *testing.T) { {{#extras}}{{#skipForGo}}
-      t.Skip("skipping test for go client"){{/skipForGo}}{{/extras}}
-      {{#hasOperationParams}}
-      parametersStr := `{{{parameters}}}`
-      req := {{clientPrefix}}.Api{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request{}
-      require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-      {{/hasOperationParams}}
+    {{#tests}} 
+    t.Run("{{{testName}}}", func(t *testing.T) {
       {{#hasRequestOptions}}
         var opts []{{clientPrefix}}.Option
         {{#requestOptions.queryParameters}}
@@ -61,7 +50,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
         }
         {{/requestOptions.headers}}
       {{/hasRequestOptions}}
-      _, err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}req{{/hasOperationParams}}{{#hasRequestOptions}}{{#hasOperationParams}},{{/hasOperationParams}} opts...{{/hasRequestOptions}})
+      _, err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
+        {{#parametersWithDataType}}{{#required}}{{> generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#hasRequestOptions}}{{#hasOperationParams}},{{/hasOperationParams}} opts...{{/hasRequestOptions}})
       require.NoError(t, err)
 
       expectedPath, err := url.QueryUnescape("{{{request.path}}}")
@@ -95,16 +86,8 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
             require.Equal(t, v, echo.query.Get(k))
         }
       {{/request.queryParameters}}
-      },
-    },
-{{/tests}}
-  }
-    for _, test := range tests {
-    test := test
-    t.Run(test.name, func(t *testing.T) {
-      test.testFunc(t)
     })
-  }
+{{/tests}}
 }
 
 {{/blocksRequests}}
