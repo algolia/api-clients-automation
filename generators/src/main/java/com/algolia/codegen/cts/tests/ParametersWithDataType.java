@@ -316,7 +316,7 @@ public class ParametersWithDataType {
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
       oneOfModel.put("type", typeName);
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
-      oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
+      oneOfModel.put("hasWrapper", isList || isString(current) || current.getIsNumber() || current.getIsBoolean());
       testOutput.put("oneOfModel", oneOfModel);
       return;
     }
