@@ -141,7 +141,7 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
-    testOutput.put("objectName", Helpers.capitalize(baseType));
+    testOutput.put("objectName", getObjectNameForLanguage(language, baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
     if (param == null) {
@@ -310,12 +310,15 @@ public class ParametersWithDataType {
       oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
       oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
+
       testOutput.put("oneOfModel", oneOfModel);
       return;
     }
 
     Map<String, Object> vars = (Map<String, Object>) param;
     List<Object> values = new ArrayList<>();
+    List<Object> requiredValues = new ArrayList<>();
+    List<Object> optionalValues = new ArrayList<>();
     for (Entry<String, Object> entry : vars.entrySet()) {
       IJsonSchemaValidationProperties varSpec = null;
       for (CodegenProperty vs : spec.getVars()) {
@@ -354,11 +357,22 @@ public class ParametersWithDataType {
           );
         }
       } else {
-        values.add(traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false));
+        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false);
+        values.add(transformedParam);
+
+        if (varSpec instanceof CodegenProperty property) {
+          if (property.required) {
+            requiredValues.add(transformedParam);
+          } else {
+            optionalValues.add(transformedParam);
+          }
+        }
       }
     }
     testOutput.put("isObject", true);
     testOutput.put("value", values);
+    testOutput.put("requiredValue", requiredValues);
+    testOutput.put("optionalValue", optionalValues);
   }
 
   private void handleObject(String paramName, Object param, Map<String, Object> testOutput, int suffix) throws CTSException {
@@ -505,6 +519,20 @@ public class ParametersWithDataType {
       return parameter.isBoolean;
     }
     return false;
+  }
+
+  private String getObjectNameForLanguage(String language, String objectName) {
+    if (language.equals("csharp")) {
+      switch (objectName) {
+        case "Map":
+          return "Dictionary";
+        case "Integer":
+          return "int";
+        case "String":
+          return "string";
+      }
+    }
+    return Helpers.capitalize(objectName);
   }
 
   private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output) throws CTSException {

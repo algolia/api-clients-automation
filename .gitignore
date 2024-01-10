@@ -41,3 +41,8 @@ pubspec.lock
 
 # Python
 **/__pycache__
+
+#CSharp
+**/csharp/src/bin
+**/csharp/src/obj
+*.DotSettings.user

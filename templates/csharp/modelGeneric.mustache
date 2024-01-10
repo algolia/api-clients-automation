@@ -16,7 +16,7 @@
     {{/mappedModels}}
     {{/discriminator}}
     {{/useUnityWebRequest}}
-    {{>visibility}} partial class {{classname}}{{#lambda.firstDot}}{{#parent}} : .{{/parent}}{{#validatable}} : .{{/validatable}}{{#equatable}} : .{{/equatable}}{{/lambda.firstDot}}{{#lambda.joinWithComma}}{{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
+    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}
     {
         {{#vars}}
         {{#items.isEnum}}
@@ -44,7 +44,7 @@
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
-        public {{{complexType}}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }
+        public {{> generic_type}} {{name}} { get; set; }
         {{#isReadOnly}}
 
         /// <summary>
@@ -63,7 +63,7 @@
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
-        public {{{complexType}}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }
+        public {{> generic_type}} {{name}} { get; set; }
 
 
         /// <summary>
@@ -112,10 +112,10 @@
         /// </summary>
         [JsonConstructorAttribute]
         {{^isAdditionalPropertiesTrue}}
-        protected {{classname}}() { }
+        public {{classname}}() { }
         {{/isAdditionalPropertiesTrue}}
         {{#isAdditionalPropertiesTrue}}
-        protected {{classname}}()
+        public {{classname}}()
         {
             this.AdditionalProperties = new Dictionary<string, object>();
         }
@@ -126,12 +126,14 @@
         /// Initializes a new instance of the <see cref="{{classname}}" /> class.
         /// </summary>
         {{#readWriteVars}}
+        {{#required}}
         /// <param name="{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}">{{description}}{{^description}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{.}}){{/defaultValue}}.</param>
+        {{/required}}
         {{/readWriteVars}}
     {{#hasOnlyReadOnly}}
         [JsonConstructorAttribute]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} = {{#defaultValue}}{{^isDateTime}}{{#isString}}{{^isEnum}}@{{/isEnum}}{{/isString}}{{{defaultValue}}}{{/isDateTime}}{{#isDateTime}}default({{{datatypeWithEnum}}}){{/isDateTime}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/parentVars}}){{/parent}}
+        public {{classname}}({{#requiredVars}}{{> generic_type}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/requiredVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
             {{^isInherited}}
@@ -139,12 +141,7 @@
             {{#required}}
             {{^conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
-            // to ensure "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" is required (not null)
-            if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
-            {
-                throw new ArgumentNullException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
-            }
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} ?? throw new ArgumentNullException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
             {{/vendorExtensions.x-csharp-value-type}}
             {{#vendorExtensions.x-csharp-value-type}}
             this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
@@ -152,7 +149,6 @@
             {{/conditionalSerialization}}
             {{#conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
-            // to ensure "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" is required (not null)
             if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
             {
                 throw new ArgumentNullException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
@@ -163,37 +159,6 @@
             this._{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{/conditionalSerialization}}
-            {{/required}}
-            {{/isReadOnly}}
-            {{/isInherited}}
-            {{/vars}}
-            {{#vars}}
-            {{^isInherited}}
-            {{^isReadOnly}}
-            {{^required}}
-            {{#defaultValue}}
-            {{^conditionalSerialization}}
-            {{^vendorExtensions.x-csharp-value-type}}
-            // use default value if no "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" provided
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} ?? {{#isString}}@{{/isString}}{{{defaultValue}}};
-            {{/vendorExtensions.x-csharp-value-type}}
-            {{#vendorExtensions.x-csharp-value-type}}
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
-            {{/vendorExtensions.x-csharp-value-type}}
-            {{/conditionalSerialization}}
-            {{/defaultValue}}
-            {{^defaultValue}}
-            {{^conditionalSerialization}}
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
-            {{/conditionalSerialization}}
-            {{#conditionalSerialization}}
-            this._{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
-            if (this.{{name}} != null)
-            {
-                this._flag{{name}} = true;
-            }
-            {{/conditionalSerialization}}
-            {{/defaultValue}}
             {{/required}}
             {{/isReadOnly}}
             {{/isInherited}}
@@ -218,7 +183,7 @@
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
-        public {{{dataType}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        public {{> generic_type}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{#isReadOnly}}
         /// <summary>
@@ -331,10 +296,10 @@
         public override bool Equals(object input)
         {
             {{#useCompareNetObjects}}
-            return OpenAPIClientUtils.compareLogic.Compare(this, input as {{classname}}).AreEqual;
+            return OpenAPIClientUtils.compareLogic.Compare(this, input as {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}).AreEqual;
             {{/useCompareNetObjects}}
             {{^useCompareNetObjects}}
-            return this.Equals(input as {{classname}});
+            return this.Equals(input as {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}});
             {{/useCompareNetObjects}}
         }
 
@@ -343,7 +308,7 @@
         /// </summary>
         /// <param name="input">Instance of {{classname}} to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals({{classname}} input)
+        public bool Equals({{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} input)
         {
             {{#useCompareNetObjects}}
             return OpenAPIClientUtils.compareLogic.Compare(this, input).AreEqual;
