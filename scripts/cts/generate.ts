@@ -43,6 +43,9 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', {
         cwd: 'tests/output/javascript',
       });
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', {
+        cwd: 'snippets/javascript',
+      });
     }
 
     if (lang === 'go') {

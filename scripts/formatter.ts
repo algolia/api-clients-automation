@@ -6,7 +6,7 @@ export async function formatter(language: string, folder: string): Promise<void>
   let cmd = '';
   switch (language) {
     case 'javascript':
-      cmd = `YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn eslint --ext=ts,json ${folder} --fix --no-error-on-unmatched-pattern`;
+      cmd = `yarn eslint --ext=ts,json ${folder} --fix --no-error-on-unmatched-pattern`;
       break;
     case 'java':
       cmd = `find ${folder} -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
