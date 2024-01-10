@@ -31,9 +31,7 @@ class MonitoringClientClientTests {
   void commonApiTest0() {
     MonitoringClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     {
@@ -54,9 +52,7 @@ class MonitoringClientClientTests {
   void commonApiTest1() {
     MonitoringClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customGet(path0);
+    client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -68,9 +64,7 @@ class MonitoringClientClientTests {
   void commonApiTest2() {
     MonitoringClient client = createClient();
 
-    String path0 = "/test";
-
-    client.customPost(path0);
+    client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

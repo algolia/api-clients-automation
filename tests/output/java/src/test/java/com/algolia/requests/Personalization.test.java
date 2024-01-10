@@ -43,10 +43,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0);
+      client.customDelete("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -57,15 +55,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0, parameters0);
+      client.customDelete("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -88,10 +79,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0);
+      client.customGet("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -102,15 +91,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0, parameters0);
+      client.customGet("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -133,10 +115,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0);
+      client.customPost("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -147,20 +127,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0);
+      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -183,23 +151,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default query parameters")
   void customPostTest2() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -225,23 +183,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges query parameters with default ones")
   void customPostTest3() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query2", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -267,23 +215,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default headers")
   void customPostTest4() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -320,23 +258,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges headers with default ones")
   void customPostTest5() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -373,23 +301,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts booleans")
   void customPostTest6() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("isItWorking", true);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("isItWorking", true)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -415,23 +333,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts integers")
   void customPostTest7() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", 2);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", 2)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -457,23 +365,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of string")
   void customPostTest8() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList("c", "d"));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -499,23 +397,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of booleans")
   void customPostTest9() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(true, true, false));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -541,23 +429,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of integers")
   void customPostTest10() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(1, 2));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -583,10 +461,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0);
+      client.customPut("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -597,20 +473,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0, parameters0, body0);
+      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -633,10 +497,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("delete deleteUserProfile")
   void deleteUserProfileTest0() {
-    String userToken0 = "UserToken";
-
     assertDoesNotThrow(() -> {
-      client.deleteUserProfile(userToken0);
+      client.deleteUserProfile("UserToken");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/profiles/UserToken", req.path);
@@ -659,10 +521,8 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("get getUserTokenProfile")
   void getUserTokenProfileTest0() {
-    String userToken0 = "UserToken";
-
     assertDoesNotThrow(() -> {
-      client.getUserTokenProfile(userToken0);
+      client.getUserTokenProfile("UserToken");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/profiles/personalization/UserToken", req.path);
@@ -673,40 +533,13 @@ class PersonalizationClientRequestsTests {
   @Test
   @DisplayName("set setPersonalizationStrategy")
   void setPersonalizationStrategyTest0() {
-    PersonalizationStrategyParams personalizationStrategyParams0 = new PersonalizationStrategyParams();
-    {
-      List<EventScoring> eventScoring1 = new ArrayList<>();
-      {
-        EventScoring eventScoring_02 = new EventScoring();
-        {
-          int score3 = 42;
-          eventScoring_02.setScore(score3);
-          String eventName3 = "Algolia";
-          eventScoring_02.setEventName(eventName3);
-          String eventType3 = "Event";
-          eventScoring_02.setEventType(eventType3);
-        }
-        eventScoring1.add(eventScoring_02);
-      }
-      personalizationStrategyParams0.setEventScoring(eventScoring1);
-      List<FacetScoring> facetScoring1 = new ArrayList<>();
-      {
-        FacetScoring facetScoring_02 = new FacetScoring();
-        {
-          int score3 = 42;
-          facetScoring_02.setScore(score3);
-          String facetName3 = "Event";
-          facetScoring_02.setFacetName(facetName3);
-        }
-        facetScoring1.add(facetScoring_02);
-      }
-      personalizationStrategyParams0.setFacetScoring(facetScoring1);
-      int personalizationImpact1 = 42;
-      personalizationStrategyParams0.setPersonalizationImpact(personalizationImpact1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.setPersonalizationStrategy(personalizationStrategyParams0);
+      client.setPersonalizationStrategy(
+        new PersonalizationStrategyParams()
+          .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType("Event")))
+          .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
+          .setPersonalizationImpact(42)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/strategies/personalization", req.path);

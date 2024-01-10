@@ -20,18 +20,17 @@
   {{{objectName}}}.fromValue("{{{value}}}")
 {{/isEnum}}
 {{#isArray}}
-  List.of({{#value}}{{> generateParamsValue}}{{^-last}},{{/-last}}{{/value}})
+  List.of({{#value}}{{> generateParams}}{{^-last}},{{/-last}}{{/value}})
 {{/isArray}}
 {{#isObject}}
   new {{{objectName}}}()
-      /** {{#value}}{{> generateParams}}{{#isAdditionalProperty}}{{parent}}{{parentSuffix}}.setAdditionalProperty("{{{key}}}", {{> maybeConvertOneOf}}){{/isAdditionalProperty}}{{^isAdditionalProperty}}{{parent}}{{parentSuffix}}.set{{#lambda.titlecase}}{{{key}}}{{/lambda.titlecase}}({{> maybeConvertOneOf}}){{/isAdditionalProperty}}{{/value}} */
+    {{#value}}{{#isAdditionalProperty}}.setAdditionalProperty("{{{key}}}", {{> generateParams}}){{/isAdditionalProperty}}{{^isAdditionalProperty}}.set{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> generateParams}}){{/isAdditionalProperty}}{{/value}}
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}
   Map.of({{#value}}{{#entrySet}}"{{{key}}}", "{{{value}}}"{{^-last}},{{/-last}}{{/entrySet}}{{/value}})
   {{/isAnyType}}
   {{^isAnyType}}
-  /** {{#value}}{{> generateParams}}{{/value}} */
-  Map.of({{#value}}"{{{key}}}", {{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/value}})
+  Map.of({{#value}}"{{{key}}}", {{> generateParams}}{{^-last}},{{/-last}}{{/value}})
   {{/isAnyType}}
 {{/isFreeFormObject}}
