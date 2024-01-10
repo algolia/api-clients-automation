@@ -443,18 +443,21 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).browse_with_http_info(
             index_name="cts_e2e_browse",
         )
+        assert raw_resp.status_code == 200
 
-        assert resp.status_code == 200
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).browse(
+            index_name="cts_e2e_browse",
+        )
         _expected_body = loads(
             """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
         )
         assert (
-            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         )
 
     async def test_browse_1(self):
@@ -1162,18 +1165,21 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).get_settings_with_http_info(
             index_name="cts_e2e_settings",
         )
+        assert raw_resp.status_code == 200
 
-        assert resp.status_code == 200
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).get_settings(
+            index_name="cts_e2e_settings",
+        )
         _expected_body = loads(
-            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"version":1,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
         )
         assert (
-            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         )
 
     async def test_get_sources_0(self):
@@ -1809,7 +1815,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}"""
         )
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_with_http_info(
             search_method_params={
@@ -1820,13 +1826,22 @@ class TestSearchClient:
                 ],
             },
         )
+        assert raw_resp.status_code == 200
 
-        assert resp.status_code == 200
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_empty_index",
+                    },
+                ],
+            },
+        )
         _expected_body = loads(
             """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
         )
         assert (
-            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         )
 
     async def test_search_1(self):
@@ -1854,7 +1869,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_with_http_info(
             search_method_params={
@@ -1868,13 +1883,25 @@ class TestSearchClient:
                 "strategy": "stopIfEnoughMatches",
             },
         )
+        assert raw_resp.status_code == 200
 
-        assert resp.status_code == 200
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "type": "facet",
+                        "facet": "editor",
+                    },
+                ],
+                "strategy": "stopIfEnoughMatches",
+            },
+        )
         _expected_body = loads(
             """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
         )
         assert (
-            self._helpers.union(_expected_body, loads(resp.raw_data)) == _expected_body
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         )
 
     async def test_search_2(self):
@@ -2371,13 +2398,12 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).search_single_index_with_http_info(
             index_name="cts_e2e_space in index",
         )
-
-        assert resp.status_code == 200
+        assert raw_resp.status_code == 200
 
     async def test_search_single_index_2(self):
         """
@@ -2531,7 +2557,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
 
-        resp = await SearchClient(
+        raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
         ).set_settings_with_http_info(
             index_name="cts_e2e_settings",
@@ -2540,8 +2566,7 @@ class TestSearchClient:
             },
             forward_to_replicas=True,
         )
-
-        assert resp.status_code == 200
+        assert raw_resp.status_code == 200
 
     async def test_set_settings_1(self):
         """

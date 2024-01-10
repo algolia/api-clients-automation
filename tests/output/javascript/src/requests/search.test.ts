@@ -1004,7 +1004,6 @@ describe('getSettings', () => {
       minWordSizefor2Typos: 8,
       hitsPerPage: 20,
       maxValuesPerFacet: 100,
-      version: 1,
       paginationLimitedTo: 10,
       exactOnSingleWordQuery: 'attribute',
       ranking: [

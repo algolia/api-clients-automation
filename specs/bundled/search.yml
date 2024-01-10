@@ -1260,6 +1260,10 @@ components:
       oneOf:
         - $ref: '#/components/schemas/searchParamsString'
         - $ref: '#/components/schemas/searchParamsObject'
+    exhaustiveFacetsCount:
+      type: boolean
+      description: See the `facetsCount` field of the `exhaustive` object in the response.
+      deprecated: true
     nbHits:
       type: integer
       description: Number of hits the search query matched.
@@ -1268,6 +1272,10 @@ components:
       type: integer
       description: Number of pages of results for the current query.
       example: 1
+    processingTimeMS:
+      type: integer
+      description: Time the server took to process the request, in milliseconds.
+      example: 20
     RedirectRuleIndexMetadata:
       type: object
       properties:
@@ -1384,11 +1392,7 @@ components:
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
         exhaustiveFacetsCount:
-          type: boolean
-          description: >-
-            See the `facetsCount` field of the `exhaustive` object in the
-            response.
-          deprecated: true
+          $ref: '#/components/schemas/exhaustiveFacetsCount'
         exhaustiveNbHits:
           type: boolean
           description: See the `nbHits` field of the `exhaustive` object in the response.
@@ -1465,9 +1469,7 @@ components:
             query string that will be searched.
           example: george clo
         processingTimeMS:
-          type: integer
-          description: Time the server took to process the request, in milliseconds.
-          example: 20
+          $ref: '#/components/schemas/processingTimeMS'
         processingTimingsMS:
           type: object
           description: >-
@@ -1800,6 +1802,7 @@ components:
       additionalProperties: false
       required:
         - facetHits
+        - exhaustiveFacetsCount
       x-discriminator-fields:
         - facetHits
       properties:
@@ -1827,6 +1830,10 @@ components:
                   Like for a regular search query, the [counts may not be
                   exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
                 type: integer
+        exhaustiveFacetsCount:
+          $ref: '#/components/schemas/exhaustiveFacetsCount'
+        processingTimeMS:
+          $ref: '#/components/schemas/processingTimeMS'
     searchResult:
       oneOf:
         - $ref: '#/components/schemas/searchResponse'

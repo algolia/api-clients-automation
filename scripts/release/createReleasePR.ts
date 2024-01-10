@@ -176,11 +176,13 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
 
   let nextVersion: string | null = current;
 
-  // python alpha releases have a pattern like X.Y.ZaN
-  // where a means alpha and N can be any digit representing the alpha version
+  // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
   // see https://peps.python.org/pep-0440/
-  // It also support ruby alpha like `X.Y.Z.alpha.N`
-  if (releaseType !== 'major' && /\d\.\d\.\d\.?a(lpha\.)?\d+$/.test(current)) {
+  // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
+  if (
+    releaseType !== 'major' &&
+    (/\d\.\d\.\d\.?a(lpha\.)?\d+$/.test(current) || /\d\.\d\.\d\.?b(eta\.)?\d+$/.test(current))
+  ) {
     nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
   } else if (current.endsWith('-SNAPSHOT')) {
     // snapshots should not be bumped

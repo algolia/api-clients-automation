@@ -43,10 +43,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0);
+      client.customDelete("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -57,15 +55,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customDelete(path0, parameters0);
+      client.customDelete("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -88,10 +79,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0);
+      client.customGet("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -102,15 +91,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customGet(path0, parameters0);
+      client.customGet("/test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -133,10 +115,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0);
+      client.customPost("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -147,20 +127,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0);
+      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -183,23 +151,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default query parameters")
   void customPostTest2() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -225,23 +183,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges query parameters with default ones")
   void customPostTest3() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("query2", "myQueryParameter");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -267,23 +215,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions can override default headers")
   void customPostTest4() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -320,23 +258,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions merges headers with default ones")
   void customPostTest5() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraHeader("x-algolia-api-key", "myApiKey");
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -373,23 +301,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts booleans")
   void customPostTest6() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("isItWorking", true);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("isItWorking", true)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -415,23 +333,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts integers")
   void customPostTest7() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", 2);
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", 2)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -457,23 +365,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of string")
   void customPostTest8() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList("c", "d"));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -499,23 +397,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of booleans")
   void customPostTest9() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(true, true, false));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -541,23 +429,13 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("requestOptions queryParameters accepts list of integers")
   void customPostTest10() {
-    String path0 = "/test/requestOptions";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String facet1 = "filters";
-      body0.put("facet", facet1);
-    }
-
-    RequestOptions requestOptions = new RequestOptions();
-    requestOptions.addExtraQueryParameters("myParam", Arrays.asList(1, 2));
-
     assertDoesNotThrow(() -> {
-      client.customPost(path0, parameters0, body0, requestOptions);
+      client.customPost(
+        "/test/requestOptions",
+        Map.of("query", "parameters"),
+        Map.of("facet", "filters"),
+        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/requestOptions", req.path);
@@ -583,10 +461,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
-    String path0 = "/test/minimal";
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0);
+      client.customPut("/test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/minimal", req.path);
@@ -597,20 +473,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
-    String path0 = "/test/all";
-    Map<String, Object> parameters0 = new HashMap<>();
-    {
-      String query1 = "parameters";
-      parameters0.put("query", query1);
-    }
-    Map<String, String> body0 = new HashMap<>();
-    {
-      String body1 = "parameters";
-      body0.put("body", body1);
-    }
-
     assertDoesNotThrow(() -> {
-      client.customPut(path0, parameters0, body0);
+      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -633,10 +497,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getAverageClickPosition with minimal parameters")
   void getAverageClickPositionTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getAverageClickPosition(index0);
+      client.getAverageClickPosition("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/averageClickPosition", req.path);
@@ -659,13 +521,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getAverageClickPosition with all parameters")
   void getAverageClickPositionTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getAverageClickPosition(index0, startDate0, endDate0, tags0);
+      client.getAverageClickPosition("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/averageClickPosition", req.path);
@@ -691,10 +548,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getClickPositions with minimal parameters")
   void getClickPositionsTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getClickPositions(index0);
+      client.getClickPositions("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/positions", req.path);
@@ -717,13 +572,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getClickPositions with all parameters")
   void getClickPositionsTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getClickPositions(index0, startDate0, endDate0, tags0);
+      client.getClickPositions("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/positions", req.path);
@@ -749,10 +599,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getClickThroughRate with minimal parameters")
   void getClickThroughRateTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getClickThroughRate(index0);
+      client.getClickThroughRate("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/clickThroughRate", req.path);
@@ -775,13 +623,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getClickThroughRate with all parameters")
   void getClickThroughRateTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getClickThroughRate(index0, startDate0, endDate0, tags0);
+      client.getClickThroughRate("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/clicks/clickThroughRate", req.path);
@@ -807,10 +650,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getConversationRate with minimal parameters")
   void getConversationRateTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getConversationRate(index0);
+      client.getConversationRate("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/conversions/conversionRate", req.path);
@@ -833,13 +674,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getConversationRate with all parameters")
   void getConversationRateTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getConversationRate(index0, startDate0, endDate0, tags0);
+      client.getConversationRate("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/conversions/conversionRate", req.path);
@@ -865,10 +701,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getNoClickRate with minimal parameters")
   void getNoClickRateTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getNoClickRate(index0);
+      client.getNoClickRate("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noClickRate", req.path);
@@ -891,13 +725,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getNoClickRate with all parameters")
   void getNoClickRateTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getNoClickRate(index0, startDate0, endDate0, tags0);
+      client.getNoClickRate("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noClickRate", req.path);
@@ -923,10 +752,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getNoResultsRate with minimal parameters")
   void getNoResultsRateTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getNoResultsRate(index0);
+      client.getNoResultsRate("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noResultRate", req.path);
@@ -949,13 +776,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getNoResultsRate with all parameters")
   void getNoResultsRateTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getNoResultsRate(index0, startDate0, endDate0, tags0);
+      client.getNoResultsRate("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noResultRate", req.path);
@@ -981,10 +803,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesCount with minimal parameters")
   void getSearchesCountTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesCount(index0);
+      client.getSearchesCount("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/count", req.path);
@@ -1007,13 +827,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesCount with all parameters")
   void getSearchesCountTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesCount(index0, startDate0, endDate0, tags0);
+      client.getSearchesCount("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/count", req.path);
@@ -1039,10 +854,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesNoClicks with minimal parameters")
   void getSearchesNoClicksTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesNoClicks(index0);
+      client.getSearchesNoClicks("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noClicks", req.path);
@@ -1065,15 +878,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesNoClicks with all parameters")
   void getSearchesNoClicksTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesNoClicks(index0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getSearchesNoClicks("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noClicks", req.path);
@@ -1099,10 +905,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesNoResults with minimal parameters")
   void getSearchesNoResultsTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesNoResults(index0);
+      client.getSearchesNoResults("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noResults", req.path);
@@ -1125,15 +929,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getSearchesNoResults with all parameters")
   void getSearchesNoResultsTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getSearchesNoResults(index0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getSearchesNoResults("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noResults", req.path);
@@ -1159,10 +956,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getStatus with minimal parameters")
   void getStatusTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getStatus(index0);
+      client.getStatus("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/status", req.path);
@@ -1185,10 +980,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopCountries with minimal parameters")
   void getTopCountriesTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopCountries(index0);
+      client.getTopCountries("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/countries", req.path);
@@ -1211,15 +1004,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopCountries with all parameters")
   void getTopCountriesTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopCountries(index0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopCountries("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/countries", req.path);
@@ -1245,10 +1031,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterAttributes with minimal parameters")
   void getTopFilterAttributesTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterAttributes(index0);
+      client.getTopFilterAttributes("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters", req.path);
@@ -1271,16 +1055,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterAttributes with all parameters")
   void getTopFilterAttributesTest1() {
-    String index0 = "index";
-    String search0 = "mySearch";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterAttributes(index0, search0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopFilterAttributes("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters", req.path);
@@ -1306,11 +1082,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterForAttribute with minimal parameters")
   void getTopFilterForAttributeTest0() {
-    String attribute0 = "myAttribute";
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterForAttribute(attribute0, index0);
+      client.getTopFilterForAttribute("myAttribute", "index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/myAttribute", req.path);
@@ -1333,11 +1106,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterForAttribute with minimal parameters and multiple attributes")
   void getTopFilterForAttributeTest1() {
-    String attribute0 = "myAttribute1,myAttribute2";
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterForAttribute(attribute0, index0);
+      client.getTopFilterForAttribute("myAttribute1,myAttribute2", "index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/myAttribute1%2CmyAttribute2", req.path);
@@ -1360,17 +1130,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterForAttribute with all parameters")
   void getTopFilterForAttributeTest2() {
-    String attribute0 = "myAttribute";
-    String index0 = "index";
-    String search0 = "mySearch";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterForAttribute(attribute0, index0, search0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopFilterForAttribute("myAttribute", "index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/myAttribute", req.path);
@@ -1396,17 +1157,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFilterForAttribute with all parameters and multiple attributes")
   void getTopFilterForAttributeTest3() {
-    String attribute0 = "myAttribute1,myAttribute2";
-    String index0 = "index";
-    String search0 = "mySearch";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopFilterForAttribute(attribute0, index0, search0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopFilterForAttribute("myAttribute1,myAttribute2", "index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/myAttribute1%2CmyAttribute2", req.path);
@@ -1432,10 +1184,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFiltersNoResults with minimal parameters")
   void getTopFiltersNoResultsTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopFiltersNoResults(index0);
+      client.getTopFiltersNoResults("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/noResults", req.path);
@@ -1458,16 +1208,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopFiltersNoResults with all parameters")
   void getTopFiltersNoResultsTest1() {
-    String index0 = "index";
-    String search0 = "mySearch";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopFiltersNoResults(index0, search0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopFiltersNoResults("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/filters/noResults", req.path);
@@ -1493,10 +1235,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopHits with minimal parameters")
   void getTopHitsTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopHits(index0);
+      client.getTopHits("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/hits", req.path);
@@ -1519,17 +1259,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopHits with all parameters")
   void getTopHitsTest1() {
-    String index0 = "index";
-    String search0 = "mySearch";
-    boolean clickAnalytics0 = true;
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopHits(index0, search0, clickAnalytics0, startDate0, endDate0, limit0, offset0, tags0);
+      client.getTopHits("index", "mySearch", true, "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/hits", req.path);
@@ -1555,10 +1286,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopSearches with minimal parameters")
   void getTopSearchesTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getTopSearches(index0);
+      client.getTopSearches("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches", req.path);
@@ -1581,18 +1310,18 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getTopSearches with all parameters")
   void getTopSearchesTest1() {
-    String index0 = "index";
-    boolean clickAnalytics0 = true;
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    OrderBy orderBy0 = OrderBy.fromValue("searchCount");
-    Direction direction0 = Direction.fromValue("asc");
-    int limit0 = 21;
-    int offset0 = 42;
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getTopSearches(index0, clickAnalytics0, startDate0, endDate0, orderBy0, direction0, limit0, offset0, tags0);
+      client.getTopSearches(
+        "index",
+        true,
+        "1999-09-19",
+        "2001-01-01",
+        OrderBy.fromValue("searchCount"),
+        Direction.fromValue("asc"),
+        21,
+        42,
+        "tag"
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches", req.path);
@@ -1618,10 +1347,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getUsersCount with minimal parameters")
   void getUsersCountTest0() {
-    String index0 = "index";
-
     assertDoesNotThrow(() -> {
-      client.getUsersCount(index0);
+      client.getUsersCount("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/users/count", req.path);
@@ -1644,13 +1371,8 @@ class AnalyticsClientRequestsTests {
   @Test
   @DisplayName("get getUsersCount with all parameters")
   void getUsersCountTest1() {
-    String index0 = "index";
-    String startDate0 = "1999-09-19";
-    String endDate0 = "2001-01-01";
-    String tags0 = "tag";
-
     assertDoesNotThrow(() -> {
-      client.getUsersCount(index0, startDate0, endDate0, tags0);
+      client.getUsersCount("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/users/count", req.path);

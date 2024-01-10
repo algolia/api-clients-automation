@@ -107,7 +107,8 @@ async function spreadGeneration(): Promise<void> {
       await run('git push', { cwd: tempGitDir });
 
       // In case of a release commit, we also want to update tags on the clients repositories
-      if (IS_RELEASE_COMMIT) {
+      // ruby tag is already pushed by `rake release`
+      if (IS_RELEASE_COMMIT && lang !== 'ruby') {
         // Go needs a 'v' prefix for tags.
         const tagVersion = lang === 'go' ? `v${version}` : version;
 
