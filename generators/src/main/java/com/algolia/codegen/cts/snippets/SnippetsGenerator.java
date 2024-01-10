@@ -14,10 +14,6 @@ public class SnippetsGenerator extends TestsRequest {
     super(language, client);
   }
 
-  protected Map<String, Request[]> loadRequestCTS() throws Exception {
-    return super.loadRequestCTS();
-  }
-
   @Override
   public boolean available() {
     File templates = new File("templates/" + language + "/snippets/method.mustache");
