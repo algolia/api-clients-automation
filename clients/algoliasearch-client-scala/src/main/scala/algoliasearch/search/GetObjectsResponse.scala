@@ -11,13 +11,11 @@
   */
 package algoliasearch.search
 
-import org.json4s.JObject
-
 /** GetObjectsResponse
   *
   * @param results
   *   Retrieved results.
   */
 case class GetObjectsResponse(
-    results: Seq[JObject]
+    results: Seq[Any]
 )
