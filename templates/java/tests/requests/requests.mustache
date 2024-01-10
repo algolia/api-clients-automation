@@ -50,20 +50,15 @@ class {{client}}RequestsTests {
     @Test
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
-        {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
-
-        {{#hasRequestOptions}}
-          RequestOptions requestOptions = new RequestOptions();
-          {{#requestOptions.queryParameters.parametersWithDataType}}
-            requestOptions.addExtraQueryParameters("{{{key}}}", {{> requests/requestOptionsParams}});
-          {{/requestOptions.queryParameters.parametersWithDataType}}
-          {{#requestOptions.headers.parametersWithDataType}}
-            requestOptions.addExtraHeader("{{{key}}}", "{{{value}}}");
-          {{/requestOptions.headers.parametersWithDataType}}
-        {{/hasRequestOptions}}
-
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+            client.{{method}}({{#parametersWithDataType}}{{> generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+              {{#requestOptions.queryParameters.parametersWithDataType}}
+                .addExtraQueryParameters("{{{key}}}", {{> generateInnerParams}})
+              {{/requestOptions.queryParameters.parametersWithDataType}}
+              {{#requestOptions.headers.parametersWithDataType}}
+                .addExtraHeader("{{{key}}}", "{{{value}}}")
+              {{/requestOptions.headers.parametersWithDataType}}
+            {{/hasRequestOptions}});
         });
         EchoResponse req = echo.getLastResponse();
         {{#request}}
