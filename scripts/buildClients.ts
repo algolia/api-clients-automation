@@ -21,8 +21,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run('poetry build', { cwd });
       break;
     case 'csharp':
-      const cmd = `find . -type f -name "*.sln" | xargs -I % sh -c 'echo Building %;dotnet build % --configuration Release'`;
-      await run(cmd, { cwd });
+      await run('dotnet build --configuration Release', { cwd });
       break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
