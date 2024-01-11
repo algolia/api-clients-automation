@@ -23,7 +23,7 @@ public class OneOf {
     }
   }
 
-  private static void generateSealedChildren(Map<String, ModelsMap> models, String modelPackage, CodegenModel model) {
+  public static void generateSealedChildren(Map<String, ModelsMap> models, String modelPackage, CodegenModel model) {
     var sealedChilds = new ArrayList<>();
     for (String oneOf : model.oneOf) {
       ModelsMap modelsMap = models.get(oneOf);
@@ -67,7 +67,7 @@ public class OneOf {
     model.vendorExtensions.put("x-one-of-list", oneOfList);
   }
 
-  private static void markCompounds(Map<String, ModelsMap> models, String oneOf, Map<String, Object> oneOfModel, CodegenModel model) {
+  public static void markCompounds(Map<String, ModelsMap> models, String oneOf, Map<String, Object> oneOfModel, CodegenModel model) {
     // 1. Find child model
     var modelsMap = models.get(oneOf);
     if (modelsMap == null) return;
@@ -104,7 +104,7 @@ public class OneOf {
     return typeName.equals("Int") || typeName.equals("Double") || typeName.equals("Long");
   }
 
-  private static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
+  public static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
     boolean hasDiscriminatorA = mapA.containsKey("discriminators");
     boolean hasDiscriminatorB = mapB.containsKey("discriminators");
     // Maps with "discriminators" come first

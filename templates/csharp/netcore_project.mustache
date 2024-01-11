@@ -46,18 +46,4 @@
     {{/validatable}}
   </ItemGroup>
 
-{{^useGenericHost}}
-  <ItemGroup>
-    <None Remove="System.Web" />
-    {{#net48}}
-    <None Remove="System.Net.Http" />
-    {{/net48}}
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Web" />
-    {{#net48}}
-    <Reference Include="System.Net.Http" />
-    {{/net48}}
-  </ItemGroup>
-{{/useGenericHost}}
 {{>netcore_project.additions}}</Project>
