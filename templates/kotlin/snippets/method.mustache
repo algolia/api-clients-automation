@@ -12,7 +12,7 @@ class Snippet{{client}} {
   suspend fun snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
       // Initialize the client
       val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
-  
+
       // Call the API
       var response = client.{{method}}(
         {{#parametersWithDataType}}
@@ -28,22 +28,22 @@ class Snippet{{client}} {
             },
             {{/requestOptions.queryParameters}}
             {{#requestOptions.headers}}
-            headers = buildMap { 
+            headers = buildMap {
             {{#requestOptions.headers.parametersWithDataType}}
-                put("{{{key}}}", {{> tests/param_value}})    
+                put("{{{key}}}", {{> tests/param_value}})
             {{/requestOptions.headers.parametersWithDataType}}
             },
             {{/requestOptions.headers}}
         )
         {{/hasRequestOptions}}
       )
-  
+
       // Use the response
       println(response)
-  
+
       exitProcess(0)
   }
-  
+
   {{/snippet}}
   {{/blocksRequests}}
 }
