@@ -182,7 +182,7 @@ program
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
-      clientsArg,
+      clientArg,
     });
 
     setVerbose(Boolean(verbose));
