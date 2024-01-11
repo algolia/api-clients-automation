@@ -193,7 +193,7 @@
     },
     "snippets": {
       "extension": ".dart",
-      "outputFolder": "bin"
+      "outputFolder": "lib"
     }
   },
   "python": {
