@@ -473,6 +473,7 @@ public class ParametersWithDataType {
           case "String":
             return "string";
         }
+        break;
       case "go":
         switch (objectName) {
           case "String":
