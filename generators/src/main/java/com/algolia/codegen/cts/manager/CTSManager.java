@@ -9,6 +9,10 @@ public interface CTSManager {
     // NO-OP
   }
 
+  public default void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
+    // NO-OP
+  }
+
   public default void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     // NO-OP
   }

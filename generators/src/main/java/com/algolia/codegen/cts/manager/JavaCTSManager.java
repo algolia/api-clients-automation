@@ -16,6 +16,10 @@ public class JavaCTSManager implements CTSManager {
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/build.mustache", "tests/output/java", "build.gradle"));
+  }
+
+  @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/build.mustache", "snippets/java", "build.gradle"));
   }
 

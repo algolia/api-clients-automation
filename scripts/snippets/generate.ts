@@ -1,37 +1,14 @@
-import { buildSpecs } from '../buildSpecs.js';
-import { buildCustomGenerators, CI, exists, run, toAbsolutePath } from '../common.js';
+import { callCTSGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.js';
 import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
-import { generateOpenapitools } from '../pre-gen/index.js';
-import { createSpinner } from '../spinners.js';
 import type { Generator } from '../types.js';
 
-async function snippetsGenerate(gen: Generator): Promise<void> {
-  const spinner = createSpinner(`generating code snippets for ${gen.key}`);
-
-  await run(
-    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate \
-     -g algolia-cts -i specs/bundled/${gen.client}.yml --additional-properties="language=${gen.language},client=${gen.client},mode=snippets"`
-  );
-  spinner.succeed();
-}
-
 export async function snippetsGenerateMany(generators: Generator[]): Promise<void> {
-  if (!CI) {
-    const clients = [...new Set(generators.map((gen) => gen.client))];
-    await buildSpecs(clients, 'yml', true);
-  }
-
-  await generateOpenapitools(generators);
-  await buildCustomGenerators();
-
-  for (const gen of generators) {
-    if (!getTestOutputFolder(gen.language)) {
-      continue;
+  await setupAndGen(generators, async (gen) => {
+    if (getTestOutputFolder(gen.language)) {
+      await callCTSGenerator(gen, 'snippets');
     }
-
-    await snippetsGenerate(gen);
-  }
+  });
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
