@@ -10,8 +10,10 @@ class Snippet{{client}} {
   //
   // {{{description}}}
   void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
+    // Initialize the client
     {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
+    // Call the API
     client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
       {{#requestOptions.queryParameters.parametersWithDataType}}
         .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
