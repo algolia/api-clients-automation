@@ -17,6 +17,11 @@ public class CSharpCTSManager implements CTSManager {
   }
 
   @Override
+  public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("globaljson.mustache", "tests/output/csharp", "global.json"));
+  }
+
+  @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", Helpers.getClientConfigField("csharp", "packageVersion"));
 
@@ -26,10 +31,5 @@ public class CSharpCTSManager implements CTSManager {
       e.printStackTrace();
       System.exit(1);
     }
-  }
-
-  @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("globaljson.mustache", "tests/output/csharp", "global.json"));
   }
 }
