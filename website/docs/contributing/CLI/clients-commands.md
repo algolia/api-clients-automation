@@ -18,10 +18,9 @@ apic generate <language | all> <client... | all>
 
 ### Available options
 
-| Option      | Command           | Description                                                   |
-|-------------|:------------------|:--------------------------------------------------------------|
-| verbose     | -v, --verbose     | Make the process verbose, display logs from third party tools |
-| interactive | -i, --interactive | Open prompt to query parameters                               |
+| Option  | Command       | Description                                                   |
+|---------|:--------------|:--------------------------------------------------------------|
+| verbose | -v, --verbose | Make the process verbose, display logs from third party tools |
 
 ## Generate
 
