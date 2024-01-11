@@ -124,9 +124,9 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
         false
       )
-      .filter(node -> node.get("name").asText().equals(client))
+      .filter(node -> node.get("name").asText().equals((String) additionalProperties.get("client")))
       .findFirst()
-      .orElseThrow(() -> new ConfigException("Cannot find client " + client + " in config/clients.config.json"))
+      .orElseThrow(() -> new ConfigException("Cannot find client " + additionalProperties.get("client") + " in config/clients.config.json"))
       .get("output")
       .asText();
 
@@ -136,6 +136,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
     String apiName = CLIENT + Helpers.API_SUFFIX;
+    System.out.println(CLIENT);
     String packageName = getPackageName(CLIENT);
 
     additionalProperties.put("apiName", apiName);
