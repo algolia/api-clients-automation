@@ -190,6 +190,10 @@
     "tests": {
       "extension": "_test.dart",
       "outputFolder": "test"
+    },
+    "snippets": {
+      "extension": ".dart",
+      "outputFolder": "bin"
     }
   },
   "python": {

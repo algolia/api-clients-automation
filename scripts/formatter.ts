@@ -31,7 +31,7 @@ export async function formatter(language: string, folder: string): Promise<void>
       cmd = `cd ${folder} && dotnet format`;
       break;
     case 'dart':
-      if (folder.includes('tests')) {
+      if (folder.includes('tests') || folder.includes('snippets')) {
         cmd = `(cd ${folder} && dart pub get && dart fix --apply && dart format .)`;
       } else {
         cmd = `(cd ${folder} && dart pub get && melos bs && melos build --no-select && melos lint)`;
