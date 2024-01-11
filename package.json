@@ -50,15 +50,11 @@
     "eslint-plugin-unused-imports": "3.0.0",
     "eslint-plugin-yml": "1.11.0",
     "husky": "8.0.3",
-    "js-yaml": "4.1.0",
-    "json": "11.0.0",
     "lint-staged": "15.2.0",
-    "mustache": "4.2.0",
     "pinst": "3.0.0",
     "prettier": "3.1.1",
     "prettier-plugin-java": "2.5.0",
-    "renovate-config-algolia": "2.1.10",
-    "typescript": "5.3.3"
+    "renovate-config-algolia": "2.1.10"
   },
   "engines": {
     "node": "^20.0.0",
