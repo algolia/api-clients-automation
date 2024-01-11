@@ -17,15 +17,17 @@
   {{{value}}}
 {{/isBoolean}}
 {{#isEnum}}
-  {{> tests/maybeConvertOneOf}}(({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}"))
+  {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}"){{#oneOfModel}}){{/oneOfModel}}
 {{/isEnum}}
 {{#isArray}}
-  new List{{> tests/generateGenerics}}(){ {{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}} }
+  new List{{> tests/generateGenerics}}{ {{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}} }
 {{/isArray}}
 {{#isObject}}
-  {{> tests/maybeConvertOneOf}}(new {{{objectName}}}(){
-  {{#value}}{{#isAdditionalProperty}}AdditionalProperties = new Dictionary<string, object>{ {"{{{key}}}", {{> tests/generateParams}} } }{{/isAdditionalProperty}}{{^isAdditionalProperty}}{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/generateParams}},{{/isAdditionalProperty}}{{/value}}
-  })
+  {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}new {{{objectName}}}{
+    {{#value}}
+      {{#isAdditionalProperty}}AdditionalProperties = new Dictionary<string, object>{ {"{{{key}}}", {{> tests/generateParams}} } }{{/isAdditionalProperty}}
+      {{^isAdditionalProperty}}{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/generateParams}},{{/isAdditionalProperty}}{{/value}}
+  }{{#oneOfModel}}){{/oneOfModel}}
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}

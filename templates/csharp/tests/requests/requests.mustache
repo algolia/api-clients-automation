@@ -37,7 +37,7 @@ public class {{client}}RequestTests
       {{/requestOptions.headers.parametersWithDataType}}
     }{{/hasRequestOptions}});
 
-     EchoResponse req = _echo.LastResponse;
+     var req = _echo.LastResponse;
     {{#request}}
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
