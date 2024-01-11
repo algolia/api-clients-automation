@@ -1,0 +1,101 @@
+// {{{generationBanner}}}
+
+import Foundation
+import Core
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
+
+public struct Configuration: Core.Configuration, Credentials {
+{{#hasRegionalHost}}
+
+  private let authorizedRegions: [Region] = [
+    {{#allowedRegions}}Region.{{.}}{{^-last}}, {{/-last}}{{/allowedRegions}}
+  ]
+{{/hasRegionalHost}}
+
+  public let applicationID: String
+  public let apiKey: String
+  public var writeTimeout: TimeInterval
+  public var readTimeout: TimeInterval
+  public var logLevel: LogLevel
+  public var defaultHeaders: [String: String]?
+  public var hosts: [RetryableHost]{{#isSearchClient}}
+
+  public let batchSize: Int{{/isSearchClient}}
+
+  init(applicationID: String,
+       apiKey: String,{{#hasRegionalHost}}
+       region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
+       writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
+       readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
+       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
+       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders{{#isSearchClient}},
+       batchSize: Int = 1000{{/isSearchClient}}) {
+    self.applicationID = applicationID
+    self.apiKey = apiKey
+    self.writeTimeout = writeTimeout
+    self.readTimeout = readTimeout
+    self.logLevel = logLevel
+    self.defaultHeaders = [
+      "X-Algolia-Application-Id": applicationID,
+      "X-Algolia-API-Key": apiKey,
+      "Content-Type": "application/json"
+    ].merging(defaultHeaders ?? [:]) { (_, new) in new }{{#isSearchClient}}
+
+    self.batchSize = batchSize{{/isSearchClient}}
+
+    {{^hasRegionalHost}}
+    func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport))
+      -> RetryableHost
+    {
+      let url = URL(string: "https://\(applicationID)\(components.suffix)")!
+      return RetryableHost(url: url, callType: components.callType)
+    }
+
+    let hosts = [
+      ("-dsn.algolia.net", .read),
+      (".algolia.net", .write),
+    ].map(buildHost)
+
+    let commonHosts = [
+      ("-1.algolianet.com", .universal),
+      ("-2.algolianet.com", .universal),
+      ("-3.algolianet.com", .universal),
+    ].map(buildHost).shuffled()
+
+    self.hosts = hosts + commonHosts
+{{/hasRegionalHost}}
+{{#hasRegionalHost}}
+    guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {
+        fatalError(
+          "Region {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
+        )
+      }
+
+    {{#fallbackToAliasHost}}
+      if let region = region {
+    {{/fallbackToAliasHost}}
+        guard let url = URL(string: "https://{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
+                    fatalError("Malformed URL")
+                }
+
+            self.hosts = [
+                .init(url: url)
+            ]
+    {{#fallbackToAliasHost}}
+      } else {
+        guard let url = URL(string: "https://{{{hostWithFallback}}}") else {
+          fatalError("Malformed URL")
+        }
+
+        self.hosts = [
+          .init(url: url)
+        ]
+      }
+    {{/fallbackToAliasHost}}
+    {{/hasRegionalHost}}
+
+    UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
+  }
+}

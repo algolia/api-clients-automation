@@ -37,6 +37,9 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
     case 'scala':
       await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd });
       break;
+    case 'swift':
+      await run(`swift build`, { cwd });
+      break;
     default:
   }
   spinner.succeed();

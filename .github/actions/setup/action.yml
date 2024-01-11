@@ -76,6 +76,7 @@ runs:
         echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
         echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
         echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
+        echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
 
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
@@ -178,3 +179,29 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
+
+    # Swift deps
+    - name: Install swift
+      if: ${{ inputs.language == 'swift' }}
+      uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
+
+    - name: Set up Homebrew
+      if: ${{ inputs.language == 'swift' }}
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
+    - name: Cache Homebrew Bundler RubyGems
+      if: ${{ inputs.language == 'swift' }}
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+        key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+        restore-keys: ${{ runner.os }}-rubygems-
+
+    - name: Install swift-format
+      if: ${{ inputs.language == 'swift' && steps.cache.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: brew install swift-format
