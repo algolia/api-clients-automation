@@ -120,10 +120,11 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/**',
 
   // Swift
+  'clients/algoliasearch-client-swift/**',
   '!clients/algoliasearch-client-swift/*',
+  'clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec',
+  'clients/algoliasearch-client-swift/Package.swift',
   'clients/algoliasearch-client-swift/**/Sources/**',
-  '!clients/algoliasearch-client-swift/.swiftformat',
-  '!clients/algoliasearch-client-swift/Package.resolved',
   '!clients/algoliasearch-client-swift/Sources/Core/**',
   'clients/algoliasearch-client-swift/Sources/Core/Helpers/Version.swift',
 ];
