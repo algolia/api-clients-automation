@@ -5,7 +5,7 @@ import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
 public interface CTSManager {
-  public default void addSupportingFiles(List<SupportingFile> supportingFiles) {
+  public default void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     // NO-OP
   }
 

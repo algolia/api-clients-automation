@@ -2,11 +2,13 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import java.util.Map;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.StreamSupport;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
@@ -18,7 +20,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
-  private static JsonNode cacheOpenApiToolsConfig;
 
   @Override
   public String getName() {
@@ -116,16 +117,16 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
-  /** Get the packageName from the output field in the runtime generated `openapitools.json` file */
+  // Get the packageName from the output field in clients.config.json
   public String getPackageName(String client) throws ConfigException {
-    if (cacheOpenApiToolsConfig == null) {
-      cacheOpenApiToolsConfig = Helpers.readJsonFile("openapitools.json");
-    }
-
-    String output = cacheOpenApiToolsConfig
-      .get("generator-cli")
-      .get("generators")
-      .get("javascript-" + (String) additionalProperties.get("client"))
+    String output = StreamSupport
+      .stream(
+        Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
+        false
+      )
+      .filter(node -> node.get("name").asText().equals(client))
+      .findFirst()
+      .orElseThrow(() -> new ConfigException("Cannot find client " + client + " in config/clients.config.json"))
       .get("output")
       .asText();
 
