@@ -6,9 +6,7 @@ import FoundationNetworking
 #endif
 #if canImport(AnyCodable)
 import AnyCodable
-#endif{{#usePromiseKit}}
-import PromiseKit{{/usePromiseKit}}{{#useVapor}}
-import Vapor{{/useVapor}}{{^useVapor}}
+#endif
 
 extension Bool: JSONEncodable {
     public func encodeToJSON() -> Any { self }
@@ -103,7 +101,7 @@ extension JSONEncodable where Self: Encodable {
         }
         return data.encodeToJSON()
     }
-}{{/useVapor}}{{#generateModelAdditionalProperties}}
+}{{#generateModelAdditionalProperties}}
 
 extension String: CodingKey {
 
@@ -222,58 +220,10 @@ extension KeyedDecodingContainerProtocol {
         return decimalValue
     }
 
-}{{/generateModelAdditionalProperties}}{{^useVapor}}
+}{{/generateModelAdditionalProperties}}
 
 extension HTTPURLResponse {
     var isStatusCodeSuccessful: Bool {
         return Configuration.successfulStatusCodeRange.contains(statusCode)
     }
-}{{/useVapor}}{{#usePromiseKit}}
-
-extension RequestBuilder {
-    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} func execute() -> Promise<Response<T>> {
-        let deferred = Promise<Response<T>>.pending()
-        self.execute { result in
-            switch result {
-            case let .success(response):
-                deferred.resolver.fulfill(response)
-            case let .failure(error):
-                deferred.resolver.reject(error)
-            }
-        }
-        return deferred.promise
-    }
-}{{/usePromiseKit}}{{#useVapor}}
-
-extension UUID: Content { }
-
-extension URL: Content { }
-
-extension Bool: Content { }
-
-extension Set: ResponseEncodable where Element: Content {
-    public func encodeResponse(for request: Vapor.Request) -> EventLoopFuture<Vapor.Response> {
-        let response = Vapor.Response()
-        do {
-            try response.content.encode(Array(self))
-        } catch {
-            return request.eventLoop.makeFailedFuture(error)
-        }
-        return request.eventLoop.makeSucceededFuture(response)
-    }
 }
-
-extension Set: RequestDecodable where Element: Content {
-    public static func decodeRequest(_ request: Vapor.Request) -> EventLoopFuture<Self> {
-        do {
-            let content = try request.content.decode([Element].self)
-            return request.eventLoop.makeSucceededFuture(Set(content))
-        } catch {
-            return request.eventLoop.makeFailedFuture(error)
-        }
-    }
-}
-
-extension Set: Content where Element: Content { }
-
-extension AnyCodable: Content {}{{/useVapor}}

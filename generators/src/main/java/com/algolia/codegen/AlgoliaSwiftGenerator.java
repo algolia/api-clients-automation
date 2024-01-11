@@ -51,7 +51,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
     additionalProperties.put(OBJC_COMPATIBLE, true);
 
-    additionalProperties.put("swiftUseClientNamespace", false);
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     additionalProperties.put(
       "lambda.client-to-name",

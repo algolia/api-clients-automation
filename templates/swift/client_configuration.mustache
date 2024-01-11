@@ -1,23 +1,10 @@
 // {{{generationBanner}}}
 
 import Foundation
-import Core{{#usePromiseKit}}
-  import PromiseKit{{/usePromiseKit}}{{#useRxSwift}}
-  import RxSwift{{/useRxSwift}}{{#useCombine}}
-  #if canImport(Combine)
-  import Combine
-  #endif{{/useCombine}}{{#useVapor}}
-  import Vapor{{/useVapor}}
+import Core
 #if canImport(AnyCodable)
 import AnyCodable
-#endif{{#swiftUseApiNamespace}}{{^swiftUseClientNamespace}}
-
-  extension {{projectName}}API {
-{{/swiftUseClientNamespace}}{{/swiftUseApiNamespace}}
-{{#swiftUseClientNamespace}}{{^swiftUseApiNamespace}}
-
-  extension {{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}} {
-{{/swiftUseApiNamespace}}{{/swiftUseClientNamespace}}
+#endif
 
 public struct Configuration: Core.Configuration, Credentials {
 {{#hasRegionalHost}}
@@ -112,13 +99,3 @@ public struct Configuration: Core.Configuration, Credentials {
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
   }
 }
-{{#swiftUseApiNamespace}}
-{{^swiftUseClientNamespace}}
-}
-{{/swiftUseClientNamespace}}
-{{/swiftUseApiNamespace}}
-{{#swiftUseClientNamespace}}
-{{^swiftUseApiNamespace}}
-}
-{{/swiftUseApiNamespace}}
-{{/swiftUseClientNamespace}}
