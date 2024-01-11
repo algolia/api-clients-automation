@@ -1,5 +1,3 @@
-import inquirer from 'inquirer';
-
 import { CLIENTS, GENERATORS, LANGUAGES } from '../common.js';
 import type { Generator, Language } from '../types.js';
 
@@ -10,16 +8,15 @@ export const PROMPT_CLIENTS = [ALL, ...CLIENTS];
 export type AllLanguage = Language | typeof ALL;
 export type LangArg = AllLanguage | undefined;
 
-type PromptDecision = {
+type Selection = {
   language: AllLanguage;
   client: string[];
   clientList: string[];
 };
 
-type Prompt = {
+type Args = {
   langArg: LangArg;
   clientArg: string[];
-  interactive: boolean;
 };
 
 export function getClientChoices(language?: LangArg, clientList = PROMPT_CLIENTS): string[] {
@@ -47,60 +44,28 @@ export function generatorList({
     .filter(Boolean);
 }
 
-export async function prompt({ langArg, clientArg, interactive }: Prompt): Promise<PromptDecision> {
-  const decision: PromptDecision = {
+export function transformSelection({ langArg, clientArg }: Args): Selection {
+  const selection: Selection = {
     client: [ALL],
-    language: ALL,
+    language: langArg || ALL,
     clientList: [],
   };
 
-  if (!langArg) {
-    if (interactive) {
-      const { language } = await inquirer.prompt<PromptDecision>([
-        {
-          type: 'list',
-          name: 'language',
-          message: 'Select a language',
-          default: ALL,
-          choices: LANGUAGES,
-        },
-      ]);
+  selection.clientList = getClientChoices(selection.language, CLIENTS);
 
-      decision.language = language;
-    }
-  } else {
-    decision.language = langArg;
-  }
-
-  decision.clientList = getClientChoices(decision.language, CLIENTS);
-
-  if (!clientArg?.length) {
-    if (interactive) {
-      const { client } = await inquirer.prompt<{ client: string }>([
-        {
-          type: 'list',
-          name: 'client',
-          message: 'Select a client',
-          default: ALL,
-          choices: getClientChoices(decision.language),
-        },
-      ]);
-
-      decision.client = [client];
-    }
-  } else {
+  if (clientArg?.length) {
     clientArg.forEach((client) => {
-      if (![ALL, ...decision.clientList].includes(client)) {
+      if (![ALL, ...selection.clientList].includes(client)) {
         throw new Error(
           `The '${clientArg}' client does not exist for ${
-            decision.language
-          }.\n\nAllowed choices are: ${decision.clientList.join(', ')}`
+            selection.language
+          }.\n\nAllowed choices are: ${selection.clientList.join(', ')}`
         );
       }
     });
 
-    decision.client = clientArg;
+    selection.client = clientArg;
   }
 
-  return decision;
+  return selection;
 }
