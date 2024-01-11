@@ -55,6 +55,8 @@ export const patterns = [
   'tests/output/go/go.sum',
 
   // Kotlin
+  '!snippets/kotlin/**',
+  'snippets/kotlin/src/**',
   '!clients/algoliasearch-client-kotlin/**',
   'clients/algoliasearch-client-kotlin/gradle.properties',
   'clients/algoliasearch-client-kotlin/client/README.md',

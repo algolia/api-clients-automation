@@ -156,6 +156,10 @@
     "tests": {
       "extension": "Test.kt",
       "outputFolder": "src/commonTest/kotlin/com/algolia"
+    },
+    "snippets": {
+      "extension": ".kt",
+      "outputFolder": "src/main/kotlin/com/algolia/snippets"
     }
   },
   "dart": {
