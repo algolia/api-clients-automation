@@ -22,13 +22,13 @@ void main() {
     expectError(
       '{{{expectedError}}}',
       () {
-        {{> client/step}}
+        {{> tests/client/step}}
       },
     );
     {{/isError}}
     {{^isError}}
     {{#isCreateClient}}
-    {{> client/create_client}}
+    {{> tests/client/create_client}}
     {{/isCreateClient}}
     {{#isMethod}}
      runTest(
@@ -42,7 +42,7 @@ void main() {
         ),
         call: (client) => client.{{path}}(
               {{#parametersWithDataType}}
-              {{> request_param}}
+              {{> tests/request_param}}
               {{/parametersWithDataType}}
         ),
         intercept: (request) {  

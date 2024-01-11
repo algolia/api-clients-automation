@@ -48,7 +48,6 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertTrue(
             (bool) preg_match(
                 '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Monitoring (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
@@ -66,7 +65,6 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -87,7 +85,6 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']

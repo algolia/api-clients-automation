@@ -47,7 +47,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertTrue(
             (bool) preg_match(
                 '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
@@ -65,7 +64,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -86,7 +84,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -114,7 +111,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->getSource(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
-
         $this->assertEquals(
             'data.us.algolia.com',
             $this->recordedRequest['request']->getUri()->getHost()

@@ -20,13 +20,13 @@
   var {{{key}}}{{suffix}} = ({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}");
 {{/isEnum}}
 {{#isArray}}
-  var {{{key}}}{{suffix}} = new List{{> generateGenerics}}();
-  {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.Add({{> maybeConvertOneOf}});{{/value}}
+  var {{{key}}}{{suffix}} = new List{{> tests/generateGenerics}}();
+  {{#value}}{{> tests/generateParams}}{{parent}}{{parentSuffix}}.Add({{> tests/maybeConvertOneOf}});{{/value}}
 {{/isArray}}
 {{#isObject}}
   var {{{key}}}{{suffix}} = new {{{objectName}}}();
   {
-    {{#value}}{{> generateParams}}{{#isAdditionalProperty}}{{parent}}{{parentSuffix}}.AdditionalProperties.Add("{{{key}}}", {{> maybeConvertOneOf}});{{/isAdditionalProperty}}{{^isAdditionalProperty}}{{parent}}{{parentSuffix}}.{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> maybeConvertOneOf}};{{/isAdditionalProperty}}{{/value}}
+    {{#value}}{{> tests/generateParams}}{{#isAdditionalProperty}}{{parent}}{{parentSuffix}}.AdditionalProperties.Add("{{{key}}}", {{> tests/maybeConvertOneOf}});{{/isAdditionalProperty}}{{^isAdditionalProperty}}{{parent}}{{parentSuffix}}.{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/maybeConvertOneOf}};{{/isAdditionalProperty}}{{/value}}
   }
 {{/isObject}}
 {{#isFreeFormObject}}
@@ -34,9 +34,9 @@
   var {{{key}}}{{suffix}} = new Dictionary<string, string> {{ {{#value}}{{#entrySet}}"{{{key}}}", "{{{value}}}"{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }};
   {{/isAnyType}}
   {{^isAnyType}}
-  var {{{key}}}{{suffix}} = new Dictionary{{> forceMapGenerics}}();
+  var {{{key}}}{{suffix}} = new Dictionary{{> tests/forceMapGenerics}}();
   {
-    {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.Add("{{{key}}}", {{> maybeConvertOneOf}});{{/value}}
+    {{#value}}{{> tests/generateParams}}{{parent}}{{parentSuffix}}.Add("{{{key}}}", {{> tests/maybeConvertOneOf}});{{/value}}
   }
   {{/isAnyType}}
 {{/isFreeFormObject}}

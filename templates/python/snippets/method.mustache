@@ -1,0 +1,24 @@
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+
+
+class Snippet{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+    {{#blocksRequests}}
+    {{#snippet}}
+    async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
+        """
+        Snippet for the {{method}} method.
+
+        {{{description}}}
+        """
+        _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+
+        resp = await _client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
+        # use the class directly
+        print(resp)
+
+        # print the JSON response
+        print(resp.to_json())
+
+    {{/snippet}}
+    {{/blocksRequests}}

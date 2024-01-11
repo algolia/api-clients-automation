@@ -91,6 +91,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       })
       .join(' ');
 
+    const snippetsToStore = `snippets/${language}`;
+
     const toRun = matrix[language].toRun.join(' ');
     let buildCommand = `yarn cli build clients ${language} ${toRun}`;
 
@@ -136,6 +138,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsRootFolder,
       testsToDelete,
       testsToStore,
+      snippetsToStore,
     });
   }
 

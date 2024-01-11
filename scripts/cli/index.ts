@@ -14,7 +14,7 @@ import {
   ALL,
   getClientChoices,
   generatorList,
-  prompt,
+  transformSelection,
   PROMPT_CLIENTS,
   PROMPT_LANGUAGES,
 } from './utils.js';
@@ -37,10 +37,6 @@ const flags = {
     flag: '-v, --verbose',
     description: 'make the generation verbose',
   },
-  interactive: {
-    flag: '-i, --interactive',
-    description: 'open prompt to query parameters',
-  },
   skipCache: {
     flag: '-s, --skip-cache',
     description: 'skip cache checking to force building specs',
@@ -59,12 +55,10 @@ program
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -80,12 +74,10 @@ buildCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -98,14 +90,12 @@ buildCommand
   .description('Build a specified spec')
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
   .option(flags.outputType.flag, flags.outputType.description)
-  .action(async (clientArg: string[], { verbose, interactive, skipCache, outputJson }) => {
-    const { client, clientList } = await prompt({
+  .action(async (clientArg: string[], { verbose, skipCache, outputJson }) => {
+    const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -124,12 +114,10 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -142,12 +130,10 @@ ctsCommand
   .description('Run the tests for the CTS')
   .addArgument(args.language)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, { verbose, interactive }) => {
-    const { language } = await prompt({
+  .action(async (langArg: LangArg, { verbose }) => {
+    const { language } = transformSelection({
       langArg,
       clientArg: [ALL],
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -160,12 +146,10 @@ program
   .description('Run the playground')
   .addArgument(args.language)
   .addArgument(args.client)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, cliClient: string, { interactive }) => {
-    const { language, client } = await prompt({
+  .action(async (langArg: LangArg, cliClient: string) => {
+    const { language, client } = transformSelection({
       langArg,
       clientArg: [cliClient],
-      interactive,
     });
 
     setVerbose(true);
