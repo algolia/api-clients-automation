@@ -266,7 +266,7 @@
     },
     "snippets": {
       "extension": ".scala",
-      "outputFolder": "src/snippets/scala/algoliasearch"
+      "outputFolder": "src/main/scala"
     }
   },
   "csharp": {
