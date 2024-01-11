@@ -1,8 +1,6 @@
 ARG DART_VERSION
 ARG GO_VERSION
-ARG NODE_VERSION
 ARG PHP_VERSION
-ARG PYTHON_VERSION
 ARG CSHARP_VERSION
 ARG SWIFT_VERSION
 
@@ -12,6 +10,8 @@ FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM swift:${SWIFT_VERSION}-jammy AS builder
 
 ENV DOCKER=true
+ARG NODE_VERSION
+ARG PYTHON_VERSION
 
 # use bash for subsequent commands
 SHELL ["/bin/bash", "--login", "-c"]
@@ -24,8 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # JavaScript
 RUN mkdir -p /etc/apt/keyrings \
     && curl -sL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor | tee /etc/apt/keyrings/nodesource.gpg >/dev/null \
-    && NODE_MAJOR=$(echo $NODE_VERSION | sed -E -n 's/v?([0-9]+)\..*/\1/p') \
-    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x jammy main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x jammy main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update && apt-get install -y --no-install-recommends nodejs
 RUN npm install -g yarn
 

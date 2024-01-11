@@ -9,7 +9,7 @@ fi
 cd $ROOT
 
 JAVA_VERSION=$(cat config/.java-version)
-NODE_VERSION=$(cat .nvmrc)
+NODE_VERSION=$(cat .nvmrc | sed -E -n 's/v?([0-9]+)\..*/\1/p')
 PHP_VERSION=$(cat config/.php-version)
 GO_VERSION=$(cat config/.go-version)
 DART_VERSION=$(cat config/.dart-version)
