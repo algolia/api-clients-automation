@@ -17,9 +17,9 @@ void snippetFor{{method}}() async {
     {{#hasRequestOptions}}
     requestOptions : RequestOptions(
         {{#requestOptions.headers}}
-        headers: { 
+        headers: {
         {{#requestOptions.headers.parametersWithDataType}}
-            '{{{key}}}' : '{{value}}',    
+            '{{{key}}}' : '{{value}}',
         {{/requestOptions.headers.parametersWithDataType}}
         },
         {{/requestOptions.headers}}

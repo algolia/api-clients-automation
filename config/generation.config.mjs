@@ -69,6 +69,8 @@ export const patterns = [
   'tests/output/kotlin/src/commonTest/kotlin/com/algolia/requests/**',
 
   // Dart
+  '!snippets/dart/**',
+  'snippets/dart/bin/**',
   '!clients/algoliasearch-client-dart/**',
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
