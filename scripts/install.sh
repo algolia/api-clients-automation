@@ -77,10 +77,10 @@ _apic_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   if [[ COMP_CWORD -eq 1 ]]; then
-    COMPREPLY=($(compgen -W "generate build cts playground format" -- "$cur"))
+    COMPREPLY=($(compgen -W "generate build cts playground format snippets" -- "$cur"))
   else
     first="${COMP_WORDS[1]}"
-    if [[ $first == "generate" || $first == "playground" ]]; then
+    if [[ $first == "generate" || $first == "playground" || $first == "snippets" ]]; then
       _apic_lang_client_complete 2
     elif [[ $first == "format" ]]; then
       _apic_format_complete
