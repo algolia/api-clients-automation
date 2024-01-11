@@ -2,6 +2,7 @@ package com.algolia.codegen.utils;
 
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.io.FileInputStream;
@@ -177,6 +178,27 @@ public class Helpers {
       throw new ConfigException(fields[fields.length - 1] + " is not a string");
     }
     return value.asText();
+  }
+
+  public static List<String> getClientListForLanguage(String language) throws ConfigException {
+    if (cacheConfig == null) {
+      cacheConfig = readJsonFile("config/clients.config.json");
+    }
+    JsonNode value = cacheConfig.get(language);
+    value = value.get("clients");
+    if (value == null || !value.isArray()) {
+      throw new ConfigException("'clients' is not an array");
+    }
+
+    ArrayNode arrayNode = (ArrayNode) value;
+    List<String> resultList = new ArrayList<>();
+    for (JsonNode node : arrayNode) {
+      if (!node.isTextual()) {
+        throw new ConfigException("Elements in 'clients' are not strings");
+      }
+      resultList.add(node.asText());
+    }
+    return resultList;
   }
 
   /**
