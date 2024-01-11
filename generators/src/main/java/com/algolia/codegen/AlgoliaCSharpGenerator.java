@@ -5,7 +5,11 @@ import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -41,10 +45,20 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   @Override
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
+
+    Stream<String> stream = null;
+    try {
+      stream = Files.lines(Paths.get("config/.csharp-version"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+
     setLibrary("httpclient");
 
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
+    additionalProperties.put("dotnetSdkMajorVersion", stream.findFirst().get());
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("validatable", false);
@@ -106,6 +120,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
     // repository
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
+    supportingFiles.add(new SupportingFile("globaljson.mustache", "../", "global.json"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
     supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
