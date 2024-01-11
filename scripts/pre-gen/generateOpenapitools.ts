@@ -1,13 +1,8 @@
 import { writeFile } from 'fs/promises';
 
-import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
 import { toAbsolutePath } from '../common.js';
 import { getClientsConfigField } from '../config.js';
 import type { Generator } from '../types.js';
-
-const AVAILABLE_CUSTOM_GEN = Object.values(clientsConfig)
-  .map((gen) => ('customGenerator' in gen ? gen.customGenerator : null))
-  .filter(Boolean);
 
 /**
  * Create an on the fly openapitools.json file with default options for all generators.
@@ -30,9 +25,7 @@ export async function generateOpenapitools(gens: Generator[]): Promise<void> {
       gitRepoId: getClientsConfigField(language, 'gitRepoId'),
       glob: `specs/bundled/${client}.yml`,
       templateDir,
-      generatorName: AVAILABLE_CUSTOM_GEN.includes(`algolia-${language}`)
-        ? `algolia-${language}`
-        : rest.generatorName,
+      generatorName: `algolia-${language}`,
       output: `#{cwd}/${rest.output}`,
       additionalProperties: {
         client,

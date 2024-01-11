@@ -36,10 +36,6 @@ export function getTestOutputFolder(language: Language): string {
   return getClientsConfigField(language, ['tests', 'outputFolder']);
 }
 
-export function getCustomGenerator(language: Language): string {
-  return getClientsConfigField(language, 'customGenerator');
-}
-
 /**
  * Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search.
  */
