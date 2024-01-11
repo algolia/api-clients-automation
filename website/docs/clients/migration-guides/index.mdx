@@ -156,7 +156,10 @@ ab_test = await abtesting_client.get_ab_test(id=42);
 <TabItem value="php">
 
 ```php
-// TODO
+- $client = AnalyticsClient::create('YOUR_APP_ID', 'YOUR_API_KEY');
++ $client = AbtestingClient::create('YOUR_APP_ID', 'YOUR_API_KEY');
+
+$abTest = $client->getABTest(42);
 ```
 
 </TabItem>
