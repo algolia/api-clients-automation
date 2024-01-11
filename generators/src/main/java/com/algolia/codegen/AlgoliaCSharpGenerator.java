@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -46,19 +45,17 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
 
-    Stream<String> stream = null;
+    setLibrary("httpclient");
+
     try {
-      stream = Files.lines(Paths.get("config/.csharp-version"));
+      additionalProperties.put("dotnetSdkMajorVersion", Files.readString(Paths.get("config/.csharp-version")).trim());
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);
     }
 
-    setLibrary("httpclient");
-
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
-    additionalProperties.put("dotnetSdkMajorVersion", stream.findFirst().get());
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("validatable", false);
