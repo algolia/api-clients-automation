@@ -4,24 +4,24 @@ import com.algolia.model.{{import}}.*;
 import com.algolia.api.{{client}};
 
 class Snippet{{client}} {
-    {{#blocksRequests}}
-    {{#snippet}}
-    // Snippet for the {{method}} method.
-    //
-    // {{{description}}}
-    void SnippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
-      {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
+  {{#blocksRequests}}
+  {{#snippet}}
+  // Snippet for the {{method}} method.
+  //
+  // {{{description}}}
+  void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
+    {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
-      client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-        {{#requestOptions.queryParameters.parametersWithDataType}}
-          .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-        {{/requestOptions.queryParameters.parametersWithDataType}}
-        {{#requestOptions.headers.parametersWithDataType}}
-          .addExtraHeader("{{{key}}}", "{{{value}}}")
-        {{/requestOptions.headers.parametersWithDataType}}
-      {{/hasRequestOptions}});
-    }
+    client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+      {{#requestOptions.queryParameters.parametersWithDataType}}
+        .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+      {{#requestOptions.headers.parametersWithDataType}}
+        .addExtraHeader("{{{key}}}", "{{{value}}}")
+      {{/requestOptions.headers.parametersWithDataType}}
+    {{/hasRequestOptions}});
+  }
 
-    {{/snippet}}
-    {{/blocksRequests}}
+  {{/snippet}}
+  {{/blocksRequests}}
 }

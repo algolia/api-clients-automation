@@ -236,6 +236,10 @@
     "tests": {
       "extension": "_test.rb",
       "outputFolder": "test"
+    },
+    "snippets": {
+      "extension": ".rb",
+      "outputFolder": ""
     }
   },
   "scala": {
@@ -259,6 +263,10 @@
     "tests": {
       "extension": "Test.scala",
       "outputFolder": "src/test/scala/algoliasearch"
+    },
+    "snippets": {
+      "extension": ".scala",
+      "outputFolder": "src/snippets/scala/algoliasearch"
     }
   },
   "csharp": {

@@ -1,0 +1,36 @@
+package algoliasearch.methods.snippets
+
+import scala.concurrent.duration.Duration
+
+import algoliasearch.api.{{client}}
+import algoliasearch.{{import}}.*
+
+{{#blocksRequests}}
+{{#snippet}}
+/** Snippet for the {{method}} method.
+  *
+  * {{{description}}}
+  */
+def snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}(): Unit = {
+  val client = {{client}}(appId = "YOUR_APP_ID", apiKey = YOUR_API_KEY{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+
+  val res = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
+  {{#parametersWithDataType}}
+  {{> tests/request_param}}{{^-last}},{{/-last}}
+  {{/parametersWithDataType}}    
+  {{#hasRequestOptions}}
+  , requestOptions = Some(RequestOptions.builder()
+  {{#requestOptions.queryParameters.parametersWithDataType}}
+    .withQueryParameter("{{{key}}}", {{> tests/requests/requestOptionsParams}})
+  {{/requestOptions.queryParameters.parametersWithDataType}}
+  {{#requestOptions.headers.parametersWithDataType}}
+    .withHeader("{{{key}}}", "{{{value}}}")
+  {{/requestOptions.headers.parametersWithDataType}}
+    .build())
+  {{/hasRequestOptions}}
+  )
+  val value = Await.result(res, Duration(100, "sec"))
+}
+
+{{/snippet}}
+{{/blocksRequests}}

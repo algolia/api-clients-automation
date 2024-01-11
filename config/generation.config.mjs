@@ -104,6 +104,8 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   // Scala
+  '!snippets/scala/**',
+  'snippets/scala/src/**',
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
