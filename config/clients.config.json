@@ -298,6 +298,10 @@
     "tests": {
       "extension": ".test.cs",
       "outputFolder": "src/tests"
+    },
+    "snippets": {
+      "extension": ".cs",
+      "outputFolder": "src"
     }
   }
 }

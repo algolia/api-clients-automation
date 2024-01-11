@@ -120,6 +120,9 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
 
   // C#
+  '!snippets/csharp/**',
+  'snippets/csharp/src/**',
+  '!snippets/csharp/src.csproj',
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
