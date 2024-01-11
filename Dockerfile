@@ -1,6 +1,5 @@
 ARG DART_VERSION
 ARG GO_VERSION
-ARG PHP_VERSION
 ARG CSHARP_VERSION
 ARG SWIFT_VERSION
 
@@ -10,8 +9,6 @@ FROM golang:${GO_VERSION}-bullseye AS go-builder
 FROM swift:${SWIFT_VERSION}-jammy AS builder
 
 ENV DOCKER=true
-ARG NODE_VERSION
-ARG PYTHON_VERSION
 
 # use bash for subsequent commands
 SHELL ["/bin/bash", "--login", "-c"]
@@ -22,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential bison zlib1g-dev libyaml-dev libssl-dev openssl libgdbm-dev libreadline-dev libncurses5-dev libffi-dev
 
 # JavaScript
+ARG NODE_VERSION
 RUN mkdir -p /etc/apt/keyrings \
     && curl -sL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor | tee /etc/apt/keyrings/nodesource.gpg >/dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x jammy main" | tee /etc/apt/sources.list.d/nodesource.list \
@@ -29,6 +27,7 @@ RUN mkdir -p /etc/apt/keyrings \
 RUN npm install -g yarn
 
 # Python
+ARG PYTHON_VERSION
 RUN curl -L "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz" -o python.tgz \
     && tar -xvf python.tgz && cd Python-$PYTHON_VERSION \
     && ./configure --enable-optimizations \
@@ -52,6 +51,7 @@ RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >> ~/.profil
     && dart pub global activate melos
 
 # PHP
+ARG PHP_VERSION
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     php${PHP_VERSION}-cli php${PHP_VERSION}-curl php${PHP_VERSION}-mbstring php${PHP_VERSION}-xml php${PHP_VERSION}-zip \
