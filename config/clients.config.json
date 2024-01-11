@@ -16,7 +16,6 @@
     "packageVersion": "4.0.0-beta.16",
     "modelFolder": "algoliasearch/src/main/java/com/algolia/model",
     "apiFolder": "algoliasearch/src/main/java/com/algolia/api",
-    "customGenerator": "algolia-java",
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
@@ -75,7 +74,6 @@
     "packageVersion": "5.0.0-alpha.97",
     "modelFolder": "model",
     "apiFolder": "src",
-    "customGenerator": "algolia-javascript",
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
@@ -101,7 +99,6 @@
     "gitRepoId": "algoliasearch-client-php",
     "packageVersion": "4.0.0-alpha.91",
     "modelFolder": "lib/Model",
-    "customGenerator": "algolia-php",
     "apiFolder": "lib/Api",
     "tests": {
       "extension": "Test.php",
@@ -129,7 +126,6 @@
     "packageVersion": "4.0.0-alpha.41",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
-    "customGenerator": "algolia-go",
     "tests": {
       "extension": "_test.go",
       "outputFolder": "tests"
@@ -152,7 +148,6 @@
     "packageVersion": "3.0.0-beta.10",
     "modelFolder": "client/src/commonMain/kotlin/com/algolia/client/model",
     "apiFolder": "client/src/commonMain/kotlin/com/algolia/client/api",
-    "customGenerator": "algolia-kotlin",
     "tests": {
       "extension": "Test.kt",
       "outputFolder": "src/commonTest/kotlin/com/algolia"
@@ -186,7 +181,6 @@
     "packageVersion": "1.3.0",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
-    "customGenerator": "algolia-dart",
     "tests": {
       "extension": "_test.dart",
       "outputFolder": "test"
@@ -213,7 +207,6 @@
     "packageVersion": "4.0.0b1",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
-    "customGenerator": "algolia-python",
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
@@ -240,7 +233,6 @@
     "packageVersion": "3.0.0.alpha.4",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
-    "customGenerator": "algolia-ruby",
     "tests": {
       "extension": "_test.rb",
       "outputFolder": "test"
@@ -267,7 +259,6 @@
     "packageVersion": "2.0.0-alpha.4",
     "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
-    "customGenerator": "algolia-scala",
     "tests": {
       "extension": "Test.scala",
       "outputFolder": "src/test/scala/algoliasearch"
@@ -294,7 +285,6 @@
     "packageVersion": "7.0.0-alpha.3",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
-    "customGenerator": "algolia-csharp",
     "tests": {
       "extension": ".test.cs",
       "outputFolder": "src/tests"
@@ -321,7 +311,6 @@
     "packageVersion": "9.0.0-alpha.0",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
-    "customGenerator": "algolia-swift",
     "tests": {
       "extension": ".swift",
       "outputFolder": "Tests"

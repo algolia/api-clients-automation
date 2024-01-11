@@ -10,6 +10,8 @@ import { remove } from 'fs-extra';
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
+import { buildSpecs } from './buildSpecs';
+import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
 import type {
@@ -175,7 +177,7 @@ export async function checkForCache({
   return cache;
 }
 
-export async function buildCustomGenerators(): Promise<void> {
+async function buildCustomGenerators(): Promise<void> {
   const spinner = createSpinner('building custom generators');
 
   const cacheFile = toAbsolutePath('generators/.cache');
@@ -294,4 +296,34 @@ export function setVerbose(v: boolean): void {
 
 export function isVerbose(): boolean {
   return verbose;
+}
+
+export async function callCTSGenerator(gen: Generator, mode: 'snippets' | 'tests'): Promise<void> {
+  const spinner = createSpinner(
+    `generating ${mode === 'tests' ? 'CTS' : 'code snippets'} for ${gen.key}`
+  );
+
+  await run(
+    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate \
+     -g algolia-cts -i specs/bundled/${gen.client}.yml --additional-properties="language=${gen.language},client=${gen.client},mode=${mode}"`
+  );
+
+  spinner.succeed();
+}
+
+export async function setupAndGen(
+  generators: Generator[],
+  fn: (gen: Generator) => Promise<void>
+): Promise<void> {
+  if (!CI) {
+    const clients = [...new Set(generators.map((gen) => gen.client))];
+    await buildSpecs(clients, 'yml', true);
+  }
+
+  await generateOpenapitools(generators);
+  await buildCustomGenerators();
+
+  for (const gen of generators) {
+    await fn(gen);
+  }
 }

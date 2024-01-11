@@ -65,6 +65,10 @@ runs:
       shell: bash
       run: yarn install
 
+    - name: Build scripts
+      shell: bash
+      run: yarn workspace scripts build:cli
+
     - name: Get all languages versions
       id: versions
       shell: bash
