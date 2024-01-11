@@ -46,6 +46,9 @@ export async function formatter(language: string, folder: string): Promise<void>
     case 'scala':
       cmd = `(cd ${folder} && sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt)`;
       break;
+    case 'swift':
+      cmd = `cd ${folder} && swift-format --recursive --in-place .`;
+      break;
     default:
       spinner.warn(`no formatter for '${language}'`);
       return;

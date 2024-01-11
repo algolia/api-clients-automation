@@ -303,5 +303,28 @@
       "extension": ".cs",
       "outputFolder": "src"
     }
+  },
+  "swift": {
+    "clients": [
+      "abtesting",
+      "analytics",
+      "ingestion",
+      "insights",
+      "monitoring",
+      "personalization",
+      "query-suggestions",
+      "recommend",
+      "search"
+    ],
+    "folder": "clients/algoliasearch-client-swift",
+    "gitRepoId": "algoliasearch-client-swift",
+    "packageVersion": "9.0.0-alpha.0",
+    "modelFolder": "Sources",
+    "apiFolder": "Sources",
+    "customGenerator": "algolia-swift",
+    "tests": {
+      "extension": ".swift",
+      "outputFolder": "Tests"
+    }
   }
 }
