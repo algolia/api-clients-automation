@@ -1,5 +1,5 @@
 import type { AllLanguage } from './cli/utils.js';
-import { createClientName, run } from './common.js';
+import { createClientName, run, runComposerInstall } from './common.js';
 
 export async function playground({
   language,
@@ -17,7 +17,8 @@ export async function playground({
         `./gradle/gradlew -p playground/java -PmainClass=com.algolia.playground.${createClientName(
           client,
           'java'
-        )} run`
+        )} run`,
+        { language }
       );
       break;
     case 'kotlin':
@@ -25,27 +26,28 @@ export async function playground({
         `./gradle/gradlew -p playground/kotlin -PmainClass=com.algolia.playground.${createClientName(
           client,
           'kotlin'
-        )}Kt run`
+        )}Kt run`,
+        { language }
       );
       break;
     case 'php':
-      await run(
-        `cd clients/algoliasearch-client-php/ && \
-       composer install && \
-       composer dump-autoload && \
-       cd ../../playground/php/src && \
-       php ${client}.php`
-      );
+      await runComposerInstall();
+      await run(`php ${client}.php`, { cwd: 'playground/php/src', language });
       break;
     case 'go':
-      // eslint-disable-next-line no-console
-      console.log(await run(`cd playground/go && /usr/local/go/bin/go run . --client ${client}`));
+      await run(`go run . --client ${client}`, { cwd: 'playground/go', language });
       break;
     case 'python':
-      await run(`poetry install --sync && poetry run ${client}`, { cwd: 'playground/python' });
+      await run(`poetry install --sync && poetry run ${client}`, {
+        cwd: 'playground/python',
+        language,
+      });
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec ruby ${client}.rb`, { cwd: 'playground/ruby' });
+      await run(`bundle install && bundle exec ruby ${client}.rb`, {
+        cwd: 'playground/ruby',
+        language,
+      });
       break;
     case 'scala':
       // run scala playground

@@ -42,6 +42,7 @@ export type CheckForCache = {
 export type RunOptions = {
   errorMessage?: string;
   cwd?: string;
+  language?: Language;
 };
 
 export type Language = keyof typeof config;

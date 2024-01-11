@@ -10,6 +10,7 @@
   },
   "tsc-alias": {
     "resolveFullPaths": true,
+    "outDir": "dist",
     "replacers": {
       "configReplacer": {
         "enabled": true,

@@ -12,12 +12,7 @@
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle **/vendor || true",
     "cli": "yarn workspace scripts start",
-    "docker": "docker exec -it api-clients-automation bash -lc \"yarn cli $*\"",
-    "docker:build": "./scripts/docker/build.sh",
-    "docker:clean": "docker stop api-clients-automation; docker rm -f api-clients-automation; docker image rm -f api-clients-automation",
-    "docker:exec": "docker exec -it api-clients-automation bash -lc \"$*\"",
-    "docker:mount": "./scripts/docker/mount.sh",
-    "docker:setup": "yarn docker:clean && yarn docker:build && yarn docker:mount && yarn workspace scripts tsc",
+    "docker:setup": "CSHARP_VERSION=$(cat config/.csharp-version) DART_VERSION=$(cat config/.dart-version) GO_VERSION=$(cat config/.go-version) JAVA_VERSION=$(cat config/.java-version) NODE_VERSION=$(cat .nvmrc) PHP_VERSION=$(cat config/.php-version) PYTHON_VERSION=$(cat config/.python-version) RUBY_VERSION=$(cat config/.ruby-version) SWIFT_VERSION=$(cat config/.swift-version) docker compose up -d",
     "fix:json": "eslint --ext=json . --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
     "postinstall": "husky install && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts tsc",
@@ -28,7 +23,7 @@
     "scripts:test": "yarn workspace scripts test",
     "specs:fix": "eslint --ext=yml specs/$0 --fix",
     "specs:lint": "eslint --ext=yml specs/$0",
-    "website": "DOCKER=true yarn cli build specs all -s && cd website && yarn start",
+    "website": "yarn cli build specs all -s && cd website && yarn start",
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {

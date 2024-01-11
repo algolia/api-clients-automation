@@ -16,9 +16,7 @@ Make sure to have Docker installed so you don't have to install the tooling for 
 nvm use && yarn
 ```
 
-## Mounting the docker image
-
-> You can also execute docker commands one by one, see [Docker commands](#docker)
+## Mounting the docker images
 
 ```bash
 yarn docker:setup
@@ -28,26 +26,25 @@ yarn docker:setup
 
 #### Build
 
-> Image is built from the [Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/Dockerfile)
+We use 1 docker image per language to simplify the build, and reuse them on the CI.
+There is one base image containing node, java, scala and kotlin, located in [scripts/docker/Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile)
 
 ```bash
-yarn docker:build
+yarn docker:setup
 ```
 
-#### Mount
+:::caution
 
-> Mount docker image on `api-clients-automation` container
+The swift images takes a really long time to build (~5 minutes) because of swift-format, but it's only needed when you want to format swift.
 
-```bash
-yarn docker:mount
-```
+:::
 
 #### Clean
 
-> Stops `api-clients-automation` container and clean the built image
+> Stops all containers and clean the images
 
 ```bash
-yarn docker:clean
+docker compose down --rmi all
 ```
 
 ## Contribute

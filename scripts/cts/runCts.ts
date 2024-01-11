@@ -1,4 +1,4 @@
-import { DOCKER, run, runComposerInstall } from '../common.js';
+import { run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -10,43 +10,44 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     case 'java':
-      await run('./gradle/gradlew --no-daemon -p tests/output/java test');
+      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
       break;
     case 'php': {
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`);
+      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`, {
+        language,
+      });
       break;
     }
     case 'kotlin':
-      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests');
+      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
       break;
     case 'go':
-      if (DOCKER) {
-        await run('/usr/local/go/bin/go test -count 1 ./...', {
-          cwd: 'tests/output/go',
-        });
-      } else {
-        await run('go test -count 1 ./...', {
-          cwd: 'tests/output/go',
-        });
-      }
+      await run('go test -count 1 ./...', {
+        cwd: 'tests/output/go',
+        language,
+      });
       break;
     case 'dart':
-      await run('(cd tests/output/dart && dart test)');
+      await run('dart test', { cwd: 'tests/output/dart', language });
       break;
     case 'python':
       await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
         cwd: 'tests/output/python',
+        language,
       });
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, { cwd: 'tests/output/ruby' });
+      await run(`bundle install && bundle exec rake test --trace`, {
+        cwd: 'tests/output/ruby',
+        language,
+      });
       break;
     case 'scala':
-      await run('sbt test', { cwd: 'tests/output/scala' });
+      await run('sbt test', { cwd: 'tests/output/scala', language });
       break;
     case 'csharp':
-      await run('dotnet test', { cwd: 'tests/output/csharp' });
+      await run('dotnet test', { cwd: 'tests/output/csharp', language });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

@@ -3,7 +3,7 @@
 # treat website as independant yarn project
 touch website/yarn.lock
 
-DOCKER=true yarn cli build specs all -s
+yarn cli build specs all -s
 
 # Generate the file with constants
 mkdir -p website/src/generated
