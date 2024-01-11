@@ -98,6 +98,9 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     // some clients have specific files required for testing
     switch (language) {
+      case 'csharp':
+        testsToStore = `${testsToStore} ${testsOutputBase}/global.json`;
+        break;
       case 'java':
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
