@@ -9,71 +9,60 @@ services:
         - NODE_VERSION=${NODE_VERSION}
     command: tail -f /dev/null
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   csharp:
     container_name: apic_csharp
     image: mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION}
     command: tail -f /dev/null
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   dart:
     container_name: apic_dart
     image: dart:${DART_VERSION}
     command: |
-      bash -c "dart pub global activate melos && mv /root/.pub-cache/bin/melos /usr/local/bin && tail -f /dev/null"
+      bash -c 'dart pub global activate melos \
+               && mv /root/.pub-cache/bin/melos /usr/local/bin \
+               && tail -f /dev/null'
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   go:
     container_name: apic_go
     image: golang:${GO_VERSION}-bullseye
-    command: bash -c "curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2 && go install golang.org/x/tools/cmd/goimports@latest && tail -f /dev/null"
+    command: |
+      bash -c 'curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh |\
+               sh -s -- -b $(go env GOPATH)/bin v1.55.2 && go install golang.org/x/tools/cmd/goimports@latest \
+               && tail -f /dev/null'
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   php:
     container_name: apic_php
     image: composer:latest
-    command: bash -c "tail -f /dev/null"
+    command: tail -f /dev/null
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   python:
     container_name: apic_python
     image: python:${PYTHON_VERSION}-bullseye
-    command: bash -c "pip install --upgrade pip pipx && pipx ensurepath && pipx install poetry && tail -f /dev/null"
+    command: |
+      bash -c 'pip install --upgrade pip pipx && pipx ensurepath \
+               && pipx install poetry \
+               && tail -f /dev/null'
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   ruby:
     container_name: apic_ruby
     image: ruby:${RUBY_VERSION}-bullseye
     command: tail -f /dev/null
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]
   swift:
     container_name: apic_swift
     image: swift:${SWIFT_VERSION}-jammy
-    command: bash -c "git clone --depth 1 -b "release/$SWIFT_VERSION" https://github.com/apple/swift-format.git /tmp/swift-format && cd /tmp/swift-format && swift build -c release && mv .build/release/swift-format /usr/bin && cd /app && rm -rf /tmp/swift-format && tail -f /dev/null"
+    command: |
+      bash -c 'git clone --depth 1 -b '"release/$SWIFT_VERSION"' https://github.com/apple/swift-format.git /tmp/swift-format \
+               && cd /tmp/swift-format && swift build -c release \
+               && mv .build/release/swift-format /usr/bin \
+               && cd /app && rm -rf /tmp/swift-format \
+               && tail -f /dev/null'
     working_dir: /app
-    volumes:
-      - type: bind
-        source: ./
-        target: /app
+    volumes: [./:/app]

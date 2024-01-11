@@ -8,7 +8,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('dotnet format', { cwd, language });
       break;
     case 'javascript':
-      await run('yarn eslint --ext=ts,json . --fix --no-error-on-unmatched-pattern', { cwd });
+      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
       break;
     case 'java':
       await run(

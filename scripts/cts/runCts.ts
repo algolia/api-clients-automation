@@ -15,8 +15,7 @@ async function runCtsOne(language: string): Promise<void> {
       break;
     case 'php': {
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit .`, {
-        cwd,
+      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit ${cwd}`, {
         language,
       });
       break;
