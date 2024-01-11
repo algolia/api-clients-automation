@@ -121,8 +121,7 @@ export const patterns = [
 
   // C#
   '!snippets/csharp/**',
-  'snippets/csharp/src/**',
-  '!snippets/csharp/src.csproj',
+  'snippets/csharp/src/**.cs',
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
