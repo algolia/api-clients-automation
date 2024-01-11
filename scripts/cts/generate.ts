@@ -54,6 +54,13 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       });
     }
 
+    if (lang === 'swift') {
+      const spinner = createSpinner('');
+      spinner.warn(`CTS not yet implemented for ${lang}`);
+
+      continue;
+    }
+
     await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
 
     const snippetsPath = toAbsolutePath(`snippets/${lang}`);
