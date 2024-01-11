@@ -54,13 +54,14 @@ public class {{client}}RequestTests
     {{/body}}
       {{#queryParameters}}
         var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
+        Assert.NotNull(expectedQuery);
+
         var actualQuery = req.QueryParameters;
         Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
         foreach (var query in actualQuery)
         {
-          string result;
-          expectedQuery.TryGetValue(query.Key, out result);
+          expectedQuery.TryGetValue(query.Key, out var result);
           Assert.Equal(query.Value, result);
         }
     {{/queryParameters}}
