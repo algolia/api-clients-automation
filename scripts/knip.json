@@ -3,7 +3,17 @@
   "workspaces": {
     ".": {
       "entry": [
-        "**/index.ts"
+        "cli/index.ts",
+        "ci/codegen/cleanGeneratedBranch.ts",
+        "ci/codegen/pushGeneratedCode.ts",
+        "ci/codegen/spreadGeneration.ts",
+        "ci/codegen/upsertGenerationComment.ts",
+        "ci/actions/restore-artifacts/src/index.ts",
+        "ci/githubActions/createMatrix.ts",
+        "ci/githubActions/setRunVariables.ts",
+        "configReplacer.cjs",
+        "husky/pre-commit.mjs",
+        "release/createReleasePR.ts"
       ],
       "project": [
         "**/*.test.ts",
@@ -12,5 +22,9 @@
         "**/*.mjs"
       ]
     }
-  }
+  },
+  "ignore": [
+    "dist",
+    "**/builddir"
+  ]
 }

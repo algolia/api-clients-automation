@@ -52,7 +52,7 @@ async function updateChangelog(
   await fsp.writeFile(changelogPath, [changelogHeader, changelog, content].join('\n\n'));
 }
 
-export function getVersionsToRelease(versions: Versions): VersionsToRelease {
+function getVersionsToRelease(versions: Versions): VersionsToRelease {
   const versionsToRelease: VersionsToRelease = {};
 
   Object.entries(versions).forEach(
