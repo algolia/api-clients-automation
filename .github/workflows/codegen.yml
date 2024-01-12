@@ -7,6 +7,9 @@ on:
 jobs:
   notification:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     if: (github.event.action == 'opened' || github.event.action == 'synchronize') && github.event.number
     steps:
@@ -17,8 +20,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          type: minimal
 
       - name: Add notification comment
         run: yarn workspace scripts upsertGenerationComment notification
@@ -29,6 +30,9 @@ jobs:
 
   cleanup:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     if: github.event.action == 'closed'
     steps:
@@ -39,8 +43,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          type: minimal
 
       - name: Add cleanup comment
         run: yarn workspace scripts upsertGenerationComment cleanup

@@ -84,10 +84,12 @@ export async function run(
   { errorMessage, cwd, language }: RunOptions = {}
 ): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
-  const dockerImage = getDockerImage(language);
   let wrappedCmd = command;
-  if (dockerImage) {
-    wrappedCmd = `docker exec ${dockerImage} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
+  const wrappedInDocker = language && !CI;
+  if (wrappedInDocker) {
+    wrappedCmd = `docker exec ${getDockerImage(language)} bash -lc "cd ${
+      cwd ?? '.'
+    } && ${command}"`;
   }
   try {
     if (isVerbose()) {
@@ -99,7 +101,7 @@ export async function run(
             stdin: 'inherit',
             all: true,
             shell: 'bash',
-            cwd: dockerImage ? ROOT_DIR : realCwd,
+            cwd: wrappedInDocker ? ROOT_DIR : realCwd,
           })
         ).all ?? ''
       );
@@ -109,7 +111,7 @@ export async function run(
         await execaCommand(wrappedCmd, {
           shell: 'bash',
           all: true,
-          cwd: dockerImage ? ROOT_DIR : realCwd,
+          cwd: wrappedInDocker ? ROOT_DIR : realCwd,
         })
       ).all ?? ''
     );

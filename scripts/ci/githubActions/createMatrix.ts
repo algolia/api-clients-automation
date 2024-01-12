@@ -4,6 +4,7 @@ import * as core from '@actions/core';
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
 import {
   getClientsConfigField,
+  getDockerImage,
   getLanguageFolder,
   getTestExtension,
   getTestOutputFolder,
@@ -142,6 +143,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
       snippetsToStore,
+      dockerImage: getDockerImage(language),
     });
   }
 

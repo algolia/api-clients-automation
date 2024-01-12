@@ -20,6 +20,9 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     steps:
       - name: debugging - dump GitHub context
@@ -34,6 +37,9 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
 
       # Computing jobs that should run
       - name: Setting diff outputs variables
@@ -98,6 +104,9 @@ jobs:
 
   scripts:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -106,8 +115,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          type: minimal
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -120,6 +127,9 @@ jobs:
 
   specs:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     needs: setup
     steps:
@@ -135,8 +145,6 @@ jobs:
       - name: Setup
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
-        with:
-          type: minimal
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -152,6 +160,9 @@ jobs:
   client_javascript_utils:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     needs: setup
     if: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
     strategy:
@@ -184,8 +195,7 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
         with:
-          type: minimal
-          language: javascript
+          javascript-utils: true
 
       - name: Build '${{ matrix.client }}' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -198,6 +208,9 @@ jobs:
   client_gen_javascript:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     needs:
       - setup
       - client_javascript_utils
@@ -239,7 +252,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          language: javascript
+          javascript-utils: true
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -303,7 +316,10 @@ jobs:
 
   client_gen:
     timeout-minutes: 20
-    runs-on: ${{ matrix.client.language == 'swift' && 'macos-12' || 'ubuntu-22.04' }}
+    runs-on: 'ubuntu-22.04'
+    container:
+      image: ${{ format('ghcr.io/algolia/{0}', matrix.client.dockerImage }}
+      volumes: [./:/app]
     needs:
       - setup
       - specs
@@ -337,8 +353,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          language: ${{ matrix.client.language }}
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -384,6 +398,9 @@ jobs:
 
   codegen:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic_base
+      volumes: [./:/app]
     timeout-minutes: 10
     needs:
       - setup
@@ -408,8 +425,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          type: minimal
 
       - name: Push generated code
         id: pushGeneratedCode
