@@ -3,7 +3,7 @@
 export NODE_VERSION=$(cat .nvmrc)
 eval $(find config -name '.*-version' | xargs -I{} sh -c 'l=$(echo "{}" | sed -e "s/-/_/;s/config\/\.//" | tr "[a-z]" "[A-Z]");echo "export $l=$(cat {})"')
 
-docker buildx build --load \
+docker buildx build --push \
   --platform linux/amd64 \
   --build-arg CSHARP_VERSION \
   --build-arg DART_VERSION \
