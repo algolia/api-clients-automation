@@ -156,6 +156,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   const shouldRun = clientMatrix.client.length > 0;
 
+  const swiftIndex = clientMatrix.client.findIndex((c) => c.language === 'swift');
+  if (swiftIndex !== -1) {
+    clientMatrix.client.splice(swiftIndex, 1);
+  }
+
   core.setOutput('RUN_GEN', shouldRun);
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
 }
