@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, closed]
 
-defaults:
-  run:
-    shell: bash -ileo pipefail {0}
-
 jobs:
   notification:
     runs-on: ubuntu-22.04
