@@ -11,13 +11,6 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
   const cwd = getLanguageFolder(language);
   const spinner = createSpinner(`building '${language}'`);
   switch (language) {
-    case 'java':
-    case 'kotlin':
-      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
-      break;
-    case 'python':
-      await run('poetry build', { cwd, language });
-      break;
     case 'csharp':
       await run('dotnet build --configuration Release', { cwd, language });
       break;
@@ -30,6 +23,13 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
       await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
 
+      break;
+    case 'java':
+    case 'kotlin':
+      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
+      break;
+    case 'python':
+      await run('poetry build', { cwd, language });
       break;
     case 'scala':
       await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });

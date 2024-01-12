@@ -12,7 +12,7 @@
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
     "clean": "rm -rf **/dist **/build **/node_modules **/.gradle **/vendor || true",
     "cli": "yarn workspace scripts start",
-    "docker:setup": "CSHARP_VERSION=$(cat config/.csharp-version) DART_VERSION=$(cat config/.dart-version) GO_VERSION=$(cat config/.go-version) JAVA_VERSION=$(cat config/.java-version) NODE_VERSION=$(cat .nvmrc) PHP_VERSION=$(cat config/.php-version) PYTHON_VERSION=$(cat config/.python-version) RUBY_VERSION=$(cat config/.ruby-version) SWIFT_VERSION=$(cat config/.swift-version) docker compose up -d",
+    "docker:setup": "./scripts/docker/setup.sh",
     "fix:json": "eslint --ext=json . --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
     "postinstall": "husky install && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts tsc",

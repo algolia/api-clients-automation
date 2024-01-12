@@ -5,13 +5,29 @@ async function runCtsOne(language: string): Promise<void> {
   const spinner = createSpinner(`running cts for '${language}'`);
   const cwd = `tests/output/${language}`;
   switch (language) {
+    case 'csharp':
+      await run('dotnet test', { cwd, language });
+      break;
+    case 'dart':
+      await run('dart test', { cwd, language });
+      break;
+    case 'go':
+      await run('go test -count 1 ./...', {
+        cwd,
+        language,
+      });
+      break;
+    case 'java':
+      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
+      break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
         cwd,
       });
       break;
-    case 'java':
-      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
+
+    case 'kotlin':
+      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
       break;
     case 'php': {
       await runComposerInstall();
@@ -20,18 +36,6 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     }
-    case 'kotlin':
-      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
-      break;
-    case 'go':
-      await run('go test -count 1 ./...', {
-        cwd,
-        language,
-      });
-      break;
-    case 'dart':
-      await run('dart test', { cwd, language });
-      break;
     case 'python':
       await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
         cwd,
@@ -46,9 +50,6 @@ async function runCtsOne(language: string): Promise<void> {
       break;
     case 'scala':
       await run('sbt test', { cwd, language });
-      break;
-    case 'csharp':
-      await run('dotnet test', { cwd, language });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

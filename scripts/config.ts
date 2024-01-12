@@ -45,14 +45,6 @@ export function getDockerImage(language?: Language): string | undefined {
   return getClientsConfigField(language, 'dockerImage');
 }
 
-export function getDockerNeedBashLogin(language?: Language): boolean {
-  if (CI || !language || !('dockerNeedBashLogin' in clientsConfig[language])) {
-    return false;
-  }
-
-  return getClientsConfigField(language, 'dockerNeedBashLogin');
-}
-
 /**
  * Returns the version of the package from clients.config.json, except for JavaScript where it returns the version of javascript-search.
  */

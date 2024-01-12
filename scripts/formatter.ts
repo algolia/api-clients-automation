@@ -7,6 +7,19 @@ export async function formatter(language: string, cwd: string): Promise<void> {
     case 'csharp':
       await run('dotnet format', { cwd, language });
       break;
+    case 'dart':
+      if (cwd.includes('tests')) {
+        await run('dart pub get && dart fix --apply && dart format .', { cwd, language });
+      } else {
+        await run('dart pub get && melos bs && melos build --no-select && melos lint', {
+          cwd,
+          language,
+        });
+      }
+      break;
+    case 'go':
+      await run('goimports -w . && golangci-lint run --fix', { cwd, language });
+      break;
     case 'javascript':
       await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
       break;
@@ -22,28 +35,15 @@ export async function formatter(language: string, cwd: string): Promise<void> {
         { cwd, language }
       );
       break;
+    case 'kotlin':
+      await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
+      break;
     case 'php':
       await runComposerInstall();
       await run(
         `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
         { language }
       );
-      break;
-    case 'go':
-      await run('goimports -w . && golangci-lint run --fix', { cwd, language });
-      break;
-    case 'kotlin':
-      await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
-      break;
-    case 'dart':
-      if (cwd.includes('tests')) {
-        await run('dart pub get && dart fix --apply && dart format .', { cwd, language });
-      } else {
-        await run('dart pub get && melos bs && melos build --no-select && melos lint', {
-          cwd,
-          language,
-        });
-      }
       break;
     case 'python':
       await run(

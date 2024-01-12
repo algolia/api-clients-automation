@@ -11,7 +11,7 @@ import clientsConfig from '../config/clients.config.json' assert { type: 'json' 
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
 import { buildSpecs } from './buildSpecs';
-import { getDockerImage, getDockerNeedBashLogin } from './config';
+import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
@@ -89,9 +89,7 @@ export async function run(
   const dockerImage = getDockerImage(language);
   let wrappedCmd = command;
   if (dockerImage) {
-    wrappedCmd = `docker exec ${dockerImage} bash ${
-      getDockerNeedBashLogin(language) ? '-lc' : '-c'
-    } "cd ${cwd ?? '.'} && ${command}"`;
+    wrappedCmd = `docker exec ${dockerImage} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
   }
   try {
     if (isVerbose()) {

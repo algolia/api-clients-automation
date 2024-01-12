@@ -9,6 +9,9 @@ export async function playground({
   client: string;
 }): Promise<void> {
   switch (language) {
+    case 'go':
+      await run(`go run . --client ${client}`, { cwd: 'playground/go', language });
+      break;
     case 'javascript':
       await run(`yarn workspace javascript-playground start:${client}`);
       break;
@@ -33,9 +36,6 @@ export async function playground({
     case 'php':
       await runComposerInstall();
       await run(`php ${client}.php`, { cwd: 'playground/php/src', language });
-      break;
-    case 'go':
-      await run(`go run . --client ${client}`, { cwd: 'playground/go', language });
       break;
     case 'python':
       await run(`poetry install --sync && poetry run ${client}`, {
