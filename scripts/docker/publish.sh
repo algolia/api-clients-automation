@@ -1,7 +1,7 @@
 #! /bin/bash
 
 export NODE_VERSION=$(cat .nvmrc)
-find config -name '.*-version' | xargs -I{} sh -c 'l=$(echo "{}" | sed -e "s/-/_/;s/config\/\.//" | tr "[a-z]" "[A-Z]");echo "export $l=$(cat {})"'
+eval $(find config -name '.*-version' | xargs -I{} sh -c 'l=$(echo "{}" | sed -e "s/-/_/;s/config\/\.//" | tr "[a-z]" "[A-Z]");echo "export $l=$(cat {})"')
 
 docker buildx build --load \
   --platform linux/amd64 \
@@ -14,3 +14,19 @@ docker buildx build --load \
   --build-arg PYTHON_VERSION \
   -t ghcr.io/algolia/apic-base:latest \
   -f scripts/docker/Dockerfile.base . 
+
+docker buildx build --push \
+  --platform linux/amd64 \
+  --build-arg RUBY_VERSION \
+  --build-arg JAVA_VERSION \
+  --build-arg NODE_VERSION \
+  -t ghcr.io/algolia/apic-ruby:latest \
+  -f scripts/docker/Dockerfile.ruby . 
+
+docker buildx build --push \
+  --platform linux/arm64 \
+  --build-arg SWIFT_VERSION \
+  --build-arg JAVA_VERSION \
+  --build-arg NODE_VERSION \
+  -t ghcr.io/algolia/apic-swift:latest \
+  -f scripts/docker/Dockerfile.swift .

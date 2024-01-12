@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Java
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends  curl zip unzip \
+    && apt-get install -y --no-install-recommends curl zip unzip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN curl -s "https://get.sdkman.io" | bash
