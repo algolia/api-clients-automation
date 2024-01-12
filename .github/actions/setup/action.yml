@@ -15,10 +15,11 @@ runs:
       run: |
         echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
-    - name: Edit path for docker
+    - name: Edit config for docker
       shell: bash
       run: |
         echo "PATH=$PATH:/usr/lib/dart/bin:/root/.pub-cache/bin:/root/.sdkman/candidates/sbt/current/bin:/root/.sdkman/candidates/java/current/bin:/root/.nvm/versions/node/v20.10.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/pip:/root/.local/bin:/usr/local/go/bin:/root/go/bin:/usr/share/dotnet" >> $GITHUB_ENV
+        git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
 
     # JavaScript for monorepo and tooling
     - name: Get yarn cache directory path
