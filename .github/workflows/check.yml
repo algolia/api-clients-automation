@@ -288,6 +288,9 @@ jobs:
       - name: Run CTS
         run: yarn cli cts run javascript
 
+      - name: Generate code snippets for documentation
+        run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
       - name: Zip artifact before storing
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).snippetsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
 
@@ -365,6 +368,9 @@ jobs:
 
       - name: Run CTS
         run: yarn cli cts run ${{ matrix.client.language }}
+
+      - name: Generate code snippets for documentation
+        run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Zip artifact before storing
         run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.snippetsToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"

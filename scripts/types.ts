@@ -8,7 +8,6 @@ export type LanguageConfig = {
   gitRepoId: string;
   modelFolder: string;
   apiFolder: string;
-  customGenerator: string;
   packageVersion?: string;
   tests: {
     extension: string;

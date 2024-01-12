@@ -7,7 +7,7 @@ import org.openapitools.codegen.SupportingFile;
 public class GoCTSManager implements CTSManager {
 
   @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
+  public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/common.mustache", "tests/output/go/tests/requests", "common.go"));
   }
 

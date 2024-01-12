@@ -8,6 +8,7 @@ import { runCts } from '../cts/runCts.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
+import { snippetsGenerateMany } from '../snippets/generate.js';
 
 import type { LangArg } from './utils.js';
 import {
@@ -170,6 +171,23 @@ program
     setVerbose(Boolean(verbose));
 
     await formatter(language, folder);
+  });
+
+program
+  .command('snippets')
+  .description('Generate the snippets')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await snippetsGenerateMany(generatorList({ language, client, clientList }));
   });
 
 program.parse();
