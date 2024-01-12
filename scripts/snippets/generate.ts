@@ -22,8 +22,8 @@ export async function snippetsGenerateMany(generators: Generator[]): Promise<voi
       });
     }
 
-    const snippetsPath = toAbsolutePath(`snippets/${lang}`);
-    if (await exists(snippetsPath)) {
+    const snippetsPath = `snippets/${lang}`;
+    if (await exists(toAbsolutePath(snippetsPath))) {
       await formatter(lang, snippetsPath);
     }
   }
