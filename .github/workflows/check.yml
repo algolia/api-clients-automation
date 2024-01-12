@@ -15,7 +15,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash -leo {0}
+    shell: bash -ileo pipefail {0}
 
 # Uncomment the line below to enable artifacts debugging
 # env:
@@ -49,7 +49,7 @@ jobs:
       # Computing jobs that should run
       - name: Setting diff outputs variables
         id: diff
-        shell: bash -leo {0}
+        shell: bash -ileo pipefail {0}
         run: |
           previousCommit=${{ github.event.before }}
           baseRef=${{ github.base_ref }}
@@ -59,12 +59,12 @@ jobs:
 
       - name: Compute specs matrix
         id: spec-matrix
-        shell: bash -leo {0}
+        shell: bash -ileo pipefail {0}
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
       - name: Compute the client codegen matrix
         id: gen-matrix
-        shell: bash -leo {0}
+        shell: bash -ileo pipefail {0}
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
 
       - name: check that custom actions are built
@@ -290,7 +290,7 @@ jobs:
 
         # JavaScript test deps (needs to be cached because they are huge and inefficient)
       - name: Get yarn js test cache directory path
-        shell: bash -leo {0}
+        shell: bash -ileo pipefail {0}
         id: yarn-cache-dir-tests
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
