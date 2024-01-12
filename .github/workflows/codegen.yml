@@ -6,7 +6,7 @@ on:
 
 defaults:
   run:
-    shell: bash -leoc {0}
+    shell: bash -leo {0}
 
 jobs:
   notification:
