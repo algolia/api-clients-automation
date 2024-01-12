@@ -37,5 +37,3 @@ RUN git clone --depth 1 -b release/${SWIFT_VERSION} https://github.com/apple/swi
 # Autolink repository https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package
 LABEL org.opencontainers.image.source=https://github.com/algolia/api-clients-automation
 LABEL org.opencontainers.image.revision=latest
-
-ENTRYPOINT ["/bin/bash", "-l", "-c"]

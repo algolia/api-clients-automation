@@ -11,13 +11,13 @@ runs:
   using: composite
   steps:
     - name: Read current GitHub Actions cache version
-      shell: bash
+      shell: bash -l
       run: |
         echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
     # JavaScript for monorepo and tooling
     - name: Get yarn cache directory path
-      shell: bash
+      shell: bash -l
       id: yarn-cache-dir
       run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
@@ -35,17 +35,17 @@ runs:
         key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
-      shell: bash
+      shell: bash -l
       run: yarn install
 
     - name: Build scripts
-      shell: bash
+      shell: bash -l
       run: yarn workspace scripts build:cli
 
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
       if: ${{ inputs.javascript-utils == 'true' }}
-      shell: bash
+      shell: bash -l
       id: yarn-cache-dir-client
       run: echo "dir=$(cd clients/algoliasearch-client-javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
@@ -66,5 +66,5 @@ runs:
 
     - name: Install JavaScript client dependencies
       if: ${{ inputs.javascript-utils == 'true' }}
-      shell: bash
+      shell: bash -l
       run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

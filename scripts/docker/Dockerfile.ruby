@@ -28,5 +28,3 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
 # Autolink repository https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package
 LABEL org.opencontainers.image.source=https://github.com/algolia/api-clients-automation
 LABEL org.opencontainers.image.revision=latest
-
-ENTRYPOINT ["/bin/bash", "-l", "-c"]

@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, closed]
 
+defaults:
+  run:
+    shell: bash -l
+
 jobs:
   notification:
     runs-on: ubuntu-22.04
