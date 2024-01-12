@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     if: (github.event.action == 'opened' || github.event.action == 'synchronize') && github.event.number
     steps:
@@ -37,8 +35,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     if: github.event.action == 'closed'
     steps:

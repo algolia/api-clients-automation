@@ -26,8 +26,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     steps:
       - name: debugging - dump GitHub context
@@ -111,8 +109,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -135,8 +131,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     needs: setup
     steps:
@@ -169,8 +163,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     needs: setup
     if: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
     strategy:
@@ -218,8 +210,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     needs:
       - setup
       - client_javascript_utils
@@ -328,8 +318,6 @@ jobs:
     runs-on: 'ubuntu-22.04'
     container:
       image: ${{ format('ghcr.io/algolia/{0}', matrix.client.dockerImage) }}
-      volumes:
-        - ./:/app
     needs:
       - setup
       - specs
@@ -410,8 +398,6 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/algolia/apic-base
-      volumes:
-        - ./:/app
     timeout-minutes: 10
     needs:
       - setup
