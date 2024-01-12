@@ -24,3 +24,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && nvm alias default ${NODE_VERSION} \
     && nvm use default \
     && npm install -g yarn
+
+# Autolink repository https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package
+LABEL org.opencontainers.image.source=https://github.com/algolia/api-clients-automation
+LABEL org.opencontainers.image.revision=latest
