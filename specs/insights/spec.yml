@@ -31,10 +31,15 @@ tags:
     description: >-
       Events represent user interactions with your website or app.
       They include details like the event's name, type, a timestamp or a user token.
+  - name: usertokens
+    x-displayName: User tokens
+    description: |
+      Delete events related to a specific user token.
 x-tagGroups:
   - name: General
     tags:
       - events
+      - usertokens
 paths:
   # ######################
   # ### Custom request ###
@@ -44,3 +49,6 @@ paths:
 
   /1/events:
     $ref: 'paths/pushEvents.yml'
+
+  /1/usertokens/{userToken}:
+    $ref: 'paths/deleteUserToken.yml'
