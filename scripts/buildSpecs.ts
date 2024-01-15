@@ -2,7 +2,8 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import { checkForCache, exists, run, toAbsolutePath } from './common.js';
+import { Cache } from './cache.js';
+import { exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
 import type { Spec } from './types.js';
 
@@ -96,29 +97,23 @@ async function transformBundle({
 async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
 
-  let hash = '';
-  const cacheFile = toAbsolutePath(`specs/dist/common.cache`);
-  if (useCache) {
-    const { cacheExists, hash: newCache } = await checkForCache({
-      folder: toAbsolutePath('specs/'),
-      generatedFiles: [],
-      filesToCache: ['common'],
-      cacheFile,
-    });
+  const cache = new Cache({
+    folder: toAbsolutePath('specs/'),
+    generatedFiles: [],
+    filesToCache: ['common'],
+    cacheFile: toAbsolutePath('specs/dist/common.cache'),
+  });
 
-    if (cacheExists) {
-      spinner.succeed("job skipped, cache found for 'common' spec");
-      return;
-    }
-
-    hash = newCache;
+  if (useCache && (await cache.isValid())) {
+    spinner.succeed("job skipped, cache found for 'common' spec");
+    return;
   }
 
   await run(`yarn specs:lint common`);
 
-  if (hash) {
+  if (useCache) {
     spinner.text = 'storing common spec cache';
-    await fsp.writeFile(cacheFile, hash);
+    await cache.store();
   }
 
   spinner.succeed();
@@ -171,28 +166,27 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
   const isAlgoliasearch = spec === 'algoliasearch';
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isAlgoliasearch ? 'search' : spec;
-  const cacheFile = toAbsolutePath(`specs/dist/${spec}.cache`);
-  let hash = '';
+  const cache = new Cache({
+    folder: toAbsolutePath('specs/'),
+    generatedFiles: [
+      `bundled/${spec}.yml`,
+      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`]),
+    ],
+    filesToCache: [specBase, 'common'],
+    cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
+  });
 
   const spinner = createSpinner(`starting '${spec}' spec`);
 
   if (useCache) {
     spinner.text = `checking cache for '${specBase}'`;
 
-    const { cacheExists, hash: newCache } = await checkForCache({
-      folder: toAbsolutePath('specs/'),
-      generatedFiles: [`bundled/${spec}.yml`],
-      filesToCache: [specBase, 'common'],
-      cacheFile,
-    });
-
-    if (cacheExists) {
+    if (await cache.isValid()) {
       spinner.succeed(`job skipped, cache found for '${specBase}'`);
       return;
     }
 
     spinner.text = `cache not found for '${specBase}'`;
-    hash = newCache;
   }
 
   // First linting the base
@@ -232,9 +226,9 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     await run(`yarn specs:fix bundled/${spec}.doc.yml`);
   }
 
-  if (hash) {
+  if (useCache) {
     spinner.text = `storing '${spec}' spec cache`;
-    await fsp.writeFile(cacheFile, hash);
+    await cache.store();
   }
 
   spinner.succeed(`building complete for '${spec}' spec`);
