@@ -36,7 +36,11 @@ public class TestsClient extends TestsGenerator {
       return;
     }
     supportingFiles.add(
-      new SupportingFile("client/suite.mustache", outputFolder + "/client", Helpers.createClientName(client, language) + extension)
+      new SupportingFile(
+        "tests/client/suite.mustache",
+        "tests/output/" + language + "/" + outputFolder + "/client",
+        Helpers.createClientName(client, language) + extension
+      )
     );
   }
 

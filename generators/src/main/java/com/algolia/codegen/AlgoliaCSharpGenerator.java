@@ -2,11 +2,33 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import com.algolia.codegen.utils.OneOf;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.servers.Server;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
+import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
+import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
+
+  // This is used for the CTS generation
+  private static final AlgoliaCSharpGenerator INSTANCE = new AlgoliaCSharpGenerator();
+
+  public AlgoliaCSharpGenerator() {
+    super();
+    reservedWords.add("source");
+  }
+
+  /** Convert a text to a valid csharp identifier. */
+  public static String formatIdentifier(String text) {
+    return INSTANCE.escapeReservedWord(text);
+  }
 
   private String CLIENT;
 
@@ -22,7 +44,15 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   @Override
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
+
     setLibrary("httpclient");
+
+    try {
+      additionalProperties.put("dotnetSdkMajorVersion", Files.readString(Paths.get("config/.csharp-version")).trim());
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
@@ -30,6 +60,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("validatable", false);
     additionalProperties.put("equatable", false);
+    additionalProperties.put("disallowAdditionalPropertiesIfNotPresent", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     setApiNameSuffix(Helpers.API_SUFFIX);
@@ -76,6 +107,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("RequestOptions.mustache") ||
       file.getTemplateFile().equals("AbstractOpenAPISchema.mustache") ||
       file.getTemplateFile().equals("ApiResponse.mustache") ||
+      file.getTemplateFile().equals("Multimap.mustache") ||
+      file.getTemplateFile().equals("ApiException.mustache") ||
       file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
       file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
       file.getTemplateFile().equals("ClientUtils.mustache") ||
@@ -84,10 +117,9 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
     // repository
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
+    supportingFiles.add(new SupportingFile("globaljson.mustache", "../", "global.json"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
-    supportingFiles.add(new SupportingFile("RequestOptions.mustache", "Lib", "RequestOptions.cs"));
     supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
-    supportingFiles.add(new SupportingFile("ClientUtils.mustache", "Lib", "ClientUtils.cs"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
 
     try {
@@ -96,5 +128,26 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
+    OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    GenericPropagator.propagateGenericsToOperations(operations, models);
+    return operations;
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    GenericPropagator.propagateGenericsToModels(models);
+    OneOf.addOneOfMetadata(models);
+    return models;
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 }

@@ -10,6 +10,9 @@ import { remove } from 'fs-extra';
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
+import { buildSpecs } from './buildSpecs';
+import { getDockerImage } from './config';
+import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
 import type {
@@ -27,7 +30,6 @@ export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const TODAY = new Date().toISOString().split('T')[0];
 
 export const CI = Boolean(process.env.CI);
-export const DOCKER = Boolean(process.env.DOCKER);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -81,25 +83,38 @@ export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.cl
 
 export async function run(
   command: string,
-  { errorMessage, cwd }: RunOptions = {}
+  { errorMessage, cwd, language }: RunOptions = {}
 ): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
+  const dockerImage = getDockerImage(language);
+  let wrappedCmd = command;
+  if (dockerImage) {
+    wrappedCmd = `docker exec ${dockerImage} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
+  }
   try {
     if (isVerbose()) {
       return (
         (
-          await execaCommand(command, {
+          await execaCommand(wrappedCmd, {
             stdout: 'inherit',
             stderr: 'inherit',
             stdin: 'inherit',
             all: true,
             shell: 'bash',
-            cwd: realCwd,
+            cwd: dockerImage ? ROOT_DIR : realCwd,
           })
         ).all ?? ''
       );
     }
-    return (await execaCommand(command, { shell: 'bash', all: true, cwd: realCwd })).all ?? '';
+    return (
+      (
+        await execaCommand(wrappedCmd, {
+          shell: 'bash',
+          all: true,
+          cwd: dockerImage ? ROOT_DIR : realCwd,
+        })
+      ).all ?? ''
+    );
   } catch (err) {
     if (errorMessage) {
       throw new Error(`[ERROR] ${errorMessage}`);
@@ -175,7 +190,7 @@ export async function checkForCache({
   return cache;
 }
 
-export async function buildCustomGenerators(): Promise<void> {
+async function buildCustomGenerators(): Promise<void> {
   const spinner = createSpinner('building custom generators');
 
   const cacheFile = toAbsolutePath('generators/.cache');
@@ -191,7 +206,7 @@ export async function buildCustomGenerators(): Promise<void> {
     return;
   }
 
-  await run('./gradle/gradlew --no-daemon -p generators assemble');
+  await run('./gradle/gradlew --no-daemon -p generators assemble', { language: 'java' });
 
   if (hash) {
     spinner.text = 'storing custom generators cache';
@@ -215,9 +230,10 @@ export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
 
 export async function runComposerInstall(): Promise<void> {
   if (!CI) {
-    await run(
-      'composer install --working-dir=clients/algoliasearch-client-php && composer dump-autoload --working-dir=clients/algoliasearch-client-php'
-    );
+    await run('composer install && composer dump-autoload', {
+      cwd: 'clients/algoliasearch-client-php',
+      language: 'php',
+    });
   }
 }
 
@@ -294,4 +310,35 @@ export function setVerbose(v: boolean): void {
 
 export function isVerbose(): boolean {
   return verbose;
+}
+
+export async function callCTSGenerator(gen: Generator, mode: 'snippets' | 'tests'): Promise<void> {
+  const spinner = createSpinner(
+    `generating ${mode === 'tests' ? 'CTS' : 'code snippets'} for ${gen.key}`
+  );
+
+  await run(
+    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate \
+     -g algolia-cts -i specs/bundled/${gen.client}.yml --additional-properties="language=${gen.language},client=${gen.client},mode=${mode}"`,
+    { language: 'java' }
+  );
+
+  spinner.succeed();
+}
+
+export async function setupAndGen(
+  generators: Generator[],
+  fn: (gen: Generator) => Promise<void>
+): Promise<void> {
+  if (!CI) {
+    const clients = [...new Set(generators.map((gen) => gen.client))];
+    await buildSpecs(clients, 'yml', true);
+  }
+
+  await generateOpenapitools(generators);
+  await buildCustomGenerators();
+
+  for (const gen of generators) {
+    await fn(gen);
+  }
 }

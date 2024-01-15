@@ -47,7 +47,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertTrue(
             (bool) preg_match(
                 '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Abtesting (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
@@ -65,7 +64,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -86,7 +84,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -114,7 +111,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client->getABTest(
             123,
         );
-
         $this->assertEquals(
             'analytics.algolia.com',
             $this->recordedRequest['request']->getUri()->getHost()
@@ -137,7 +133,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client->getABTest(
             123,
         );
-
         $this->assertEquals(
             'analytics.us.algolia.com',
             $this->recordedRequest['request']->getUri()->getHost()

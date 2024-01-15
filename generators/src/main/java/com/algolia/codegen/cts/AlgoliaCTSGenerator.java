@@ -3,6 +3,7 @@ package com.algolia.codegen.cts;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
+import com.algolia.codegen.cts.snippets.*;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -42,6 +43,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
+    String mode = (String) additionalProperties.get("mode");
     ctsManager = CTSManagerFactory.getManager(language, client);
 
     if (ctsManager == null) {
@@ -53,12 +55,20 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     String outputFolder = Helpers.getClientConfigField(language, "tests", "outputFolder");
     String extension = Helpers.getClientConfigField(language, "tests", "extension");
 
-    setTemplateDir("templates/" + language + "/tests");
-    setOutputDir("tests/output/" + language);
-    ctsManager.addSupportingFiles(supportingFiles);
+    setTemplateDir("templates/" + language);
 
-    testsGenerators.add(new TestsRequest(language, client));
-    testsGenerators.add(new TestsClient(language, client));
+    if (mode.equals("tests")) {
+      ctsManager.addTestsSupportingFiles(supportingFiles);
+
+      testsGenerators.add(new TestsRequest(language, client));
+      testsGenerators.add(new TestsClient(language, client));
+    } else if (mode.equals("snippets")) {
+      ctsManager.addSnippetsSupportingFiles(supportingFiles);
+
+      testsGenerators.add(new SnippetsGenerator(language, client));
+    } else {
+      throw new RuntimeException("Unknown mode: " + mode);
+    }
 
     for (TestsGenerator testGen : testsGenerators) {
       testGen.addSupportingFiles(supportingFiles, outputFolder, extension);
@@ -87,6 +97,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
+    lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
     lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
     lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
     return lambdas;

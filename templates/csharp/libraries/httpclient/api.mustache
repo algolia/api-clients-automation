@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Algolia.Search.{{packageName}}.Client;
-{{#hasImport}}using Algolia.Search.{{packageName}}.{{modelPackage}};
+using Algolia.Search.Clients;
+using Algolia.Search.Models;
+{{#hasImport}}using Algolia.Search.{{modelPackage}}.{{packageName}};
 {{/hasImport}}
 using Algolia.Search.Transport;
 using Algolia.Search.Http;
-using Algolia.Search.Client;
 
-namespace Algolia.Search.{{packageName}}.{{apiPackage}}
+namespace Algolia.Search.Clients
 {
     {{#operations}}
-
     {{#supportsAsync}}
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
@@ -27,19 +26,19 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// {{{summary}}}
         /// </summary>
         /// <remarks>
-        /// {{notes}}
+        /// {{{notes}}}
         /// </remarks>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
-        /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+        /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
         {{/allParams}}
         /// <param name="options">Add extra http header or query parameters to Algolia.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of {{#returnType}}{{.}}{{/returnType}}</returns>
+        /// <returns>Task of {{> return_type}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        {{#returnType}}Task<{{{.}}}>{{/returnType}}{{^returnType}}Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+        Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -58,7 +57,8 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="applicationId">Your application</param>
         /// <param name="apiKey">Your API key</param>
-        public {{classname}}(string applicationId, string apiKey) : this(new {{packageName}}Config(applicationId, apiKey), new AlgoliaHttpRequester())
+        {{#hasRegionalHost}}/// <param name="region">The targeted region</param>{{/hasRegionalHost}}
+        public {{classname}}(string applicationId, string apiKey{{#hasRegionalHost}}, string region{{/hasRegionalHost}}{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}}) : this(new {{packageName}}Config(applicationId, apiKey{{#hasRegionalHost}}, region{{/hasRegionalHost}}), new AlgoliaHttpRequester())
         {
         }
 
@@ -81,17 +81,14 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
           {
             throw new ArgumentNullException(nameof(httpRequester), "An httpRequester is required");
           }
-
           if (config == null)
           {
             throw new ArgumentNullException(nameof(config), "A config is required");
           }
-
           if (string.IsNullOrWhiteSpace(config.AppId))
           {
             throw new ArgumentNullException(nameof(config.AppId), "Application ID is required");
           }
-
           if (string.IsNullOrWhiteSpace(config.ApiKey))
           {
             throw new ArgumentNullException(nameof(config.ApiKey), "An API key is required");
@@ -113,24 +110,28 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
         {{/allParams}}
         /// <param name="options">Add extra http header or query parameters to Algolia.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of {{#returnType}}{{.}}{{/returnType}}</returns>
+        /// <returns>Task of {{> return_type}}</returns>
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        {{#returnType}}public async Task<{{{.}}}>{{/returnType}}{{^returnType}}public async Task{{/returnType}} {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}
             {{^vendorExtensions.x-csharp-value-type}}
-            // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
                 throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
 
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
-
-            RequestOptions requestOptions = new RequestOptions();
+            var requestOptions = new InternalRequestOptions(options);
+            {{#vendorExtensions.x-is-custom-request}}
+            {{#pathParams}}
+            requestOptions.CustomPathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+            {{/pathParams}}
+            {{/vendorExtensions.x-is-custom-request}}
+            {{#vendorExtensions}}{{^x-is-custom-request}}
             {{#pathParams}}
             {{#required}}
             requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
@@ -142,25 +143,25 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             }
             {{/required}}
             {{/pathParams}}
+            {{/x-is-custom-request}}{{/vendorExtensions}}
+            {{#vendorExtensions.x-is-custom-request}}
             {{#queryParams}}
-            {{#required}}
-            requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
-            {{/required}}
-            {{^required}}
-            if ({{paramName}} != null)
-            {
-                requestOptions.QueryParameters = ClientUtils.ParameterToDictionary("{{collectionFormat}}", "{{baseName}}", {{paramName}});
-            }
-            {{/required}}
+            requestOptions.AddCustomQueryParameters({{paramName}});
             {{/queryParams}}
+            {{/vendorExtensions.x-is-custom-request}}
+            {{^vendorExtensions.x-is-custom-request}}
+            {{#queryParams}}
+            requestOptions.AddQueryParameter("{{baseName}}", {{paramName}});
+            {{/queryParams}}
+            {{/vendorExtensions.x-is-custom-request}}
             {{#headerParams}}
             {{#required}}
-            requestOptions.HeaderParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // header parameter
+            requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
             {{/required}}
             {{^required}}
             if ({{paramName}} != null)
             {
-                requestOptions.HeaderParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // header parameter
+                requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
             }
             {{/required}}
             {{/headerParams}}
@@ -178,16 +179,13 @@ namespace Algolia.Search.{{packageName}}.{{apiPackage}}
             {{#bodyParam}}
             requestOptions.Data = {{paramName}};
             {{/bodyParam}}
-
             {{#vendorExtensions}}
             {{#x-use-read-transporter}}
             requestOptions.UseReadTransporter = true;
             {{/x-use-read-transporter}}
             {{/vendorExtensions}}
-
-            return await _transport.ExecuteRequestAsync<{{{returnType}}}{{^returnType}}Object{{/returnType}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+            return await _transport.ExecuteRequestAsync<{{> return_type}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
         }
-
         {{/supportsAsync}}
         {{/operation}}
     }

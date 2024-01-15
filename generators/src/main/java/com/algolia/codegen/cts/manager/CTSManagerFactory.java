@@ -17,6 +17,7 @@ public class CTSManagerFactory {
       case "ruby" -> new RubyCTSManager(client);
       case "scala" -> new ScalaCTSManager(client);
       case "python" -> new PythonCTSManager(client);
+      case "csharp" -> new CSharpCTSManager(client);
       default -> null;
     };
   }

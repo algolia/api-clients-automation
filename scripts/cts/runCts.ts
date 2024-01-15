@@ -1,49 +1,55 @@
-import { DOCKER, run, runComposerInstall } from '../common.js';
+import { run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
 async function runCtsOne(language: string): Promise<void> {
   const spinner = createSpinner(`running cts for '${language}'`);
+  const cwd = `tests/output/${language}`;
   switch (language) {
-    case 'javascript':
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
-        cwd: 'tests/output/javascript',
+    case 'csharp':
+      await run('dotnet test', { cwd, language });
+      break;
+    case 'dart':
+      await run('dart test', { cwd, language });
+      break;
+    case 'go':
+      await run('go test -count 1 ./...', {
+        cwd,
+        language,
       });
       break;
     case 'java':
-      await run('./gradle/gradlew --no-daemon -p tests/output/java test');
+      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
+      break;
+    case 'javascript':
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
+        cwd,
+      });
+      break;
+
+    case 'kotlin':
+      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
       break;
     case 'php': {
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit tests/output/php`);
+      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit ${cwd}`, {
+        language,
+      });
       break;
     }
-    case 'kotlin':
-      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests');
-      break;
-    case 'go':
-      if (DOCKER) {
-        await run('/usr/local/go/bin/go test -count 1 ./...', {
-          cwd: 'tests/output/go',
-        });
-      } else {
-        await run('go test -count 1 ./...', {
-          cwd: 'tests/output/go',
-        });
-      }
-      break;
-    case 'dart':
-      await run('(cd tests/output/dart && dart test)');
-      break;
     case 'python':
       await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
-        cwd: 'tests/output/python',
+        cwd,
+        language,
       });
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, { cwd: 'tests/output/ruby' });
+      await run(`bundle install && bundle exec rake test --trace`, {
+        cwd,
+        language,
+      });
       break;
     case 'scala':
-      await run('sbt test', { cwd: 'tests/output/scala' });
+      await run('sbt test', { cwd, language });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

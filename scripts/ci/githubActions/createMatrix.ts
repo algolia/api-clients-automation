@@ -91,16 +91,21 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       })
       .join(' ');
 
+    const snippetsToStore = `snippets/${language}`;
+
     const toRun = matrix[language].toRun.join(' ');
     let buildCommand = `yarn cli build clients ${language} ${toRun}`;
 
     // some clients have specific files required for testing
     switch (language) {
-      case 'java':
-        testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
+      case 'csharp':
+        testsToStore = `${testsToStore} ${testsRootFolder}/global.json`;
         break;
       case 'go':
         testsToStore = `${testsToStore} ${testsOutputBase}/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        break;
+      case 'java':
+        testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
         const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
@@ -118,7 +123,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;
       case 'python':
-        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock`;
+        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock ${testsRootFolder}/requirements.txt`;
         break;
       case 'ruby':
         testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;
@@ -136,6 +141,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsRootFolder,
       testsToDelete,
       testsToStore,
+      snippetsToStore,
     });
   }
 

@@ -3,9 +3,9 @@
 {{#isNumber}}{{{value}}}{{/isNumber}}
 {{#isBoolean}}{{{value}}}{{/isBoolean}}
 {{#isEnum}}{{{objectName}}}.fromJson("{{value}}"){{/isEnum}}
-{{#isArray}}[{{#value}}{{> param_value}},{{/value}}]{{/isArray}}
+{{#isArray}}[{{#value}}{{> tests/param_value}},{{/value}}]{{/isArray}}
 {{#isFreeFormObject}}
 {{#isAnyType}}{ {{#value}}{{#entrySet}}'{{{key}}}' : '{{{value}}}',{{/entrySet}}}{{/value}}{{/isAnyType}}
-{{^isAnyType}}{{> param_map}}{{/isAnyType}}
+{{^isAnyType}}{{> tests/param_map}}{{/isAnyType}}
 {{/isFreeFormObject}}
-{{#isObject}}{{> param_object}}{{/isObject}}
+{{#isObject}}{{> tests/param_object}}{{/isObject}}

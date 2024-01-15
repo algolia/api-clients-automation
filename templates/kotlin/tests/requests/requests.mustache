@@ -31,21 +31,21 @@ class {{clientPrefix}}Test {
             call = {
                 {{method}}(
                     {{#parametersWithDataType}}
-                    {{> request_param}}
+                    {{> tests/request_param}}
                     {{/parametersWithDataType}}
                     {{#hasRequestOptions}}
                     requestOptions = RequestOptions(
                         {{#requestOptions.queryParameters}}
                         urlParameters = buildMap {
                             {{#requestOptions.queryParameters.parametersWithDataType}}
-                            put("{{{key}}}", {{> param_value}})
+                            put("{{{key}}}", {{> tests/param_value}})
                             {{/requestOptions.queryParameters.parametersWithDataType}}
                         },
                         {{/requestOptions.queryParameters}}
                         {{#requestOptions.headers}}
                         headers = buildMap { 
                         {{#requestOptions.headers.parametersWithDataType}}
-                            put("{{{key}}}", {{> param_value}})    
+                            put("{{{key}}}", {{> tests/param_value}})    
                         {{/requestOptions.headers.parametersWithDataType}}
                         },
                         {{/requestOptions.headers}}

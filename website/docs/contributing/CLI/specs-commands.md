@@ -18,11 +18,10 @@ apic build specs <client... | all>
 
 ### Available options
 
-| Option      | Command           | Description                                                   |
-| ----------- | :---------------- | :------------------------------------------------------------ |
-| verbose     | -v, --verbose     | Make the process verbose, display logs from third party tools |
-| interactive | -i, --interactive | Open prompt to query parameters                               |
-| skip cache  | -s, --skip-cache  | Skip cache checking to force building specs                   |
+| Option     | Command          | Description                                                   |
+|------------|:-----------------|:--------------------------------------------------------------|
+| verbose    | -v, --verbose    | Make the process verbose, display logs from third party tools |
+| skip cache | -s, --skip-cache | Skip cache checking to force building specs                   |
 
 ## Build
 

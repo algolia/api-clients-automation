@@ -47,7 +47,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertTrue(
             (bool) preg_match(
                 '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
@@ -65,7 +64,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
         $client->customGet(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -86,7 +84,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
         $client->customPost(
             '/test',
         );
-
         $this->assertEquals(
             2000,
             $this->recordedRequest['connectTimeout']
@@ -134,7 +131,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
             ],
             ],
         );
-
         $this->assertEquals(
             'insights.algolia.io',
             $this->recordedRequest['request']->getUri()->getHost()
@@ -157,7 +153,6 @@ class InsightsTest extends TestCase implements HttpClientInterface
         $client->customDelete(
             '/test',
         );
-
         $this->assertEquals(
             'insights.us.algolia.io',
             $this->recordedRequest['request']->getUri()->getHost()

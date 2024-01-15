@@ -2,11 +2,9 @@ package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
-import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
-import org.openapitools.codegen.SupportingFile;
 
 public class DartCTSManager implements CTSManager {
 
@@ -14,11 +12,6 @@ public class DartCTSManager implements CTSManager {
 
   public DartCTSManager(String clientName) {
     this.clientName = clientName;
-  }
-
-  @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
-    // NO-OP
   }
 
   @Override

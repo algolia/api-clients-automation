@@ -2,29 +2,23 @@ import { Argument, program } from 'commander';
 
 import { buildClients } from '../buildClients.js';
 import { buildSpecs } from '../buildSpecs.js';
-import { CI, DOCKER, LANGUAGES, setVerbose } from '../common.js';
+import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
+import { snippetsGenerateMany } from '../snippets/generate.js';
 
 import type { LangArg } from './utils.js';
 import {
   ALL,
   getClientChoices,
   generatorList,
-  prompt,
+  transformSelection,
   PROMPT_CLIENTS,
   PROMPT_LANGUAGES,
 } from './utils.js';
-
-if (!CI && !DOCKER) {
-  // eslint-disable-next-line no-console
-  console.log('You should run scripts via the docker container, see README.md');
-  // eslint-disable-next-line no-process-exit
-  process.exit(1);
-}
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
@@ -36,10 +30,6 @@ const flags = {
   verbose: {
     flag: '-v, --verbose',
     description: 'make the generation verbose',
-  },
-  interactive: {
-    flag: '-i, --interactive',
-    description: 'open prompt to query parameters',
   },
   skipCache: {
     flag: '-s, --skip-cache',
@@ -59,12 +49,10 @@ program
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -80,12 +68,10 @@ buildCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -98,14 +84,12 @@ buildCommand
   .description('Build a specified spec')
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
   .option(flags.outputType.flag, flags.outputType.description)
-  .action(async (clientArg: string[], { verbose, interactive, skipCache, outputJson }) => {
-    const { client, clientList } = await prompt({
+  .action(async (clientArg: string[], { verbose, skipCache, outputJson }) => {
+    const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -124,12 +108,10 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, interactive }) => {
-    const { language, client, clientList } = await prompt({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -142,12 +124,10 @@ ctsCommand
   .description('Run the tests for the CTS')
   .addArgument(args.language)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, { verbose, interactive }) => {
-    const { language } = await prompt({
+  .action(async (langArg: LangArg, { verbose }) => {
+    const { language } = transformSelection({
       langArg,
       clientArg: [ALL],
-      interactive,
     });
 
     setVerbose(Boolean(verbose));
@@ -160,12 +140,10 @@ program
   .description('Run the playground')
   .addArgument(args.language)
   .addArgument(args.client)
-  .option(flags.interactive.flag, flags.interactive.description)
-  .action(async (langArg: LangArg, cliClient: string, { interactive }) => {
-    const { language, client } = await prompt({
+  .action(async (langArg: LangArg, cliClient: string) => {
+    const { language, client } = transformSelection({
       langArg,
       clientArg: [cliClient],
-      interactive,
     });
 
     setVerbose(true);
@@ -186,6 +164,23 @@ program
     setVerbose(Boolean(verbose));
 
     await formatter(language, folder);
+  });
+
+program
+  .command('snippets')
+  .description('Generate the snippets')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await snippetsGenerateMany(generatorList({ language, client, clientList }));
   });
 
 program.parse();

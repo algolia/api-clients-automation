@@ -9,6 +9,7 @@ module.exports = {
     '**/target',
     '**/.yarn',
     'website/specs',
+    '**/project.packagespec.json'
   ],
 
   overrides: [

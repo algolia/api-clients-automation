@@ -42,7 +42,7 @@ using System.Reflection;
 {{/anyOf}}
 using Algolia.Search.Models;
 
-namespace Algolia.Search.{{packageName}}.{{modelPackage}}
+namespace Algolia.Search.{{modelPackage}}.{{packageName}}
 {
 {{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{#anyOf}}{{#-first}}{{>modelAnyOf}}{{/-first}}{{/anyOf}}{{^oneOf}}{{^anyOf}}{{>modelGeneric}}{{/anyOf}}{{/oneOf}}{{/isEnum}}
 {{/model}}

@@ -1,0 +1,42 @@
+{{#isNull}}
+  {{{objectName}}} {{{key}}}{{suffix}} = null;
+{{/isNull}}
+{{#isString}}
+  const string {{{key}}}{{suffix}} = "{{{value}}}";
+{{/isString}}
+{{#isInteger}}
+  const int {{{key}}}{{suffix}} = {{{value}}};
+{{/isInteger}}
+{{#isLong}}
+  const long {{{key}}}{{suffix}} = {{{value}}}L;
+{{/isLong}}
+{{#isDouble}}
+  const double {{{key}}}{{suffix}} = {{{value}}};
+{{/isDouble}}
+{{#isBoolean}}
+  const bool {{{key}}}{{suffix}} = {{{value}}};
+{{/isBoolean}}
+{{#isEnum}}
+  var {{{key}}}{{suffix}} = ({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}");
+{{/isEnum}}
+{{#isArray}}
+  var {{{key}}}{{suffix}} = new List{{> tests/generateGenerics}}();
+  {{#value}}{{> tests/generateParams}}{{parent}}{{parentSuffix}}.Add({{> tests/maybeConvertOneOf}});{{/value}}
+{{/isArray}}
+{{#isObject}}
+  var {{{key}}}{{suffix}} = new {{{objectName}}}();
+  {
+    {{#value}}{{> tests/generateParams}}{{#isAdditionalProperty}}{{parent}}{{parentSuffix}}.AdditionalProperties.Add("{{{key}}}", {{> tests/maybeConvertOneOf}});{{/isAdditionalProperty}}{{^isAdditionalProperty}}{{parent}}{{parentSuffix}}.{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/maybeConvertOneOf}};{{/isAdditionalProperty}}{{/value}}
+  }
+{{/isObject}}
+{{#isFreeFormObject}}
+  {{#isAnyType}}
+  var {{{key}}}{{suffix}} = new Dictionary<string, string> {{ {{#value}}{{#entrySet}}"{{{key}}}", "{{{value}}}"{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }};
+  {{/isAnyType}}
+  {{^isAnyType}}
+  var {{{key}}}{{suffix}} = new Dictionary{{> tests/forceMapGenerics}}();
+  {
+    {{#value}}{{> tests/generateParams}}{{parent}}{{parentSuffix}}.Add("{{{key}}}", {{> tests/maybeConvertOneOf}});{{/value}}
+  }
+  {{/isAnyType}}
+{{/isFreeFormObject}}

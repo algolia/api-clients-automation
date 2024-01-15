@@ -40,12 +40,12 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
     {{#parametersWithDataType}}
-    {{> request_param}}{{^-last}},{{/-last}}
+    {{> tests/request_param}}{{^-last}},{{/-last}}
     {{/parametersWithDataType}}    
     {{#hasRequestOptions}}
     , requestOptions = Some(RequestOptions.builder()
     {{#requestOptions.queryParameters.parametersWithDataType}}
-      .withQueryParameter("{{{key}}}", {{> requests/requestOptionsParams}})
+      .withQueryParameter("{{{key}}}", {{> tests/requests/requestOptionsParams}})
     {{/requestOptions.queryParameters.parametersWithDataType}}
     {{#requestOptions.headers.parametersWithDataType}}
       .withHeader("{{{key}}}", "{{{value}}}")

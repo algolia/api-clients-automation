@@ -69,7 +69,7 @@ describe('createReleasePR', () => {
 
   it('reads versions of the current language', () => {
     expect(readVersions()).toEqual({
-      java: {current: expect.any(String)},
+      java: { current: expect.any(String) },
       javascript: { current: expect.any(String) },
       php: { current: expect.any(String) },
       go: { current: expect.any(String) },
@@ -78,7 +78,8 @@ describe('createReleasePR', () => {
       python: { current: expect.any(String) },
       csharp: { current: expect.any(String) },
       ruby: { current: expect.any(String) },
-      scala: { current: expect.any(String)}
+      scala: { current: expect.any(String) },
+      swift: { current: expect.any(String) }
     });
   });
 
@@ -215,18 +216,25 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
+
+          swift: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
         })
       ).toMatchInlineSnapshot(`
-        "- java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        "- csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+        - swift: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
       `);
     });
 
@@ -294,18 +302,25 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
+
+          swift: {
+            current: '0.0.1',
+            releaseType: 'patch',
+            next: getNextVersion('0.0.1', 'patch'),
+          },
         })
       ).toMatchInlineSnapshot(`
-        "- java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - ~php: 0.0.1 (no commit)~
-        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        "- csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ~php: 0.0.1 (no commit)~
         - ~python: 0.0.1 (no commit)~
         - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
+        - swift: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
       `);
     });
 
@@ -379,25 +394,34 @@ describe('createReleasePR', () => {
             skipRelease: true,
             next: getNextVersion('0.0.1', null),
           },
+
+          swift: {
+            current: '0.0.1',
+            releaseType: null,
+            skipRelease: true,
+            next: getNextVersion('0.0.1', null),
+          },
         })
       ).toMatchInlineSnapshot(`
-        "- ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
-        - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~kotlin: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+        "- ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
         - ~dart: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ~kotlin: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+          - No \`feat\` or \`fix\` commit, thus unchecked by default.
+        - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
         - ~python: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
         - ~ruby: 3.0.0.alpha.0 -> **\`null\` _(e.g. 3.0.0.alpha.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
         - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
+        - ~swift: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
           - No \`feat\` or \`fix\` commit, thus unchecked by default."
       `);
     });

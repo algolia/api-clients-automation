@@ -11,18 +11,8 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
   const cwd = getLanguageFolder(language);
   const spinner = createSpinner(`building '${language}'`);
   switch (language) {
-    case 'java':
-    case 'kotlin':
-      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`);
-      break;
-    case 'php':
-      break;
-    case 'python':
-      await run('poetry build', { cwd });
-      break;
     case 'csharp':
-      const cmd = `find ${cwd} -type f -name "*.sln" | xargs -I % sh -c 'echo Building %;dotnet build % --configuration Release'`;
-      await run(cmd, { cwd });
+      await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
@@ -34,8 +24,18 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
 
       break;
+    case 'java':
+    case 'kotlin':
+      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
+      break;
+    case 'python':
+      await run('poetry build', { cwd, language });
+      break;
     case 'scala':
-      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd });
+      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
+      break;
+    case 'swift':
+      await run(`swift build`, { cwd, language });
       break;
     default:
   }
