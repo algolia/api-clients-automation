@@ -30,1536 +30,1064 @@ func createAnalyticsClient() (*analytics.APIClient, *echoRequester) {
 func TestAnalytics_CustomDelete(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow del method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := analytics.ApiCustomDeleteRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomDelete(req)
-				require.NoError(t, err)
+	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "allow del method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := analytics.ApiCustomDeleteRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomDelete(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_CustomGet(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow get method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := analytics.ApiCustomGetRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomGet(req)
-				require.NoError(t, err)
+	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "allow get method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := analytics.ApiCustomGetRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomGet(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_CustomPost(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow post method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPost(req)
-				require.NoError(t, err)
+	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "allow post method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPost(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"body":"parameters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions can override default query parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("query", "myQueryParameter"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions merges query parameters with default ones",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query2":"myQueryParameter"}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("query2", "myQueryParameter"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions can override default headers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionHeaders := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &requestOptionHeaders))
-				for k, v := range requestOptionHeaders {
-					opts = append(opts, analytics.HeaderParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions can override default headers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions merges headers with default ones",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionHeaders := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &requestOptionHeaders))
-				for k, v := range requestOptionHeaders {
-					opts = append(opts, analytics.HeaderParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts booleans",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"isItWorking":true}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("isItWorking", true),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts integers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":2}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("myParam", 2),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of string",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":["c","d"]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("myParam",
+				[]string{"c", "d"}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of booleans",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":[true,true,false]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("myParam",
+				[]bool{true, true, false}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of integers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := analytics.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []analytics.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":[1,2]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, analytics.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			analytics.QueryParamOption("myParam",
+				[]int32{1, 2}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_CustomPut(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow put method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := analytics.ApiCustomPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPut(req)
-				require.NoError(t, err)
+	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomPut(client.NewApiCustomPutRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "allow put method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := analytics.ApiCustomPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPut(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomPut(client.NewApiCustomPutRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"body":"parameters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getAverageClickPosition with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetAverageClickPositionRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetAverageClickPosition(req)
-				require.NoError(t, err)
+	t.Run("get getAverageClickPosition with minimal parameters", func(t *testing.T) {
+		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getAverageClickPosition with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetAverageClickPositionRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetAverageClickPosition(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getAverageClickPosition with all parameters", func(t *testing.T) {
+		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetClickPositions(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getClickPositions with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetClickPositionsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetClickPositions(req)
-				require.NoError(t, err)
+	t.Run("get getClickPositions with minimal parameters", func(t *testing.T) {
+		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/positions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/positions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getClickPositions with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetClickPositionsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetClickPositions(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getClickPositions with all parameters", func(t *testing.T) {
+		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/positions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/positions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetClickThroughRate(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getClickThroughRate with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetClickThroughRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetClickThroughRate(req)
-				require.NoError(t, err)
+	t.Run("get getClickThroughRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getClickThroughRate with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetClickThroughRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetClickThroughRate(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getClickThroughRate with all parameters", func(t *testing.T) {
+		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetConversationRate(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getConversationRate with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetConversationRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetConversationRate(req)
-				require.NoError(t, err)
+	t.Run("get getConversationRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getConversationRate with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetConversationRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetConversationRate(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getConversationRate with all parameters", func(t *testing.T) {
+		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetNoClickRate(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getNoClickRate with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetNoClickRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetNoClickRate(req)
-				require.NoError(t, err)
+	t.Run("get getNoClickRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getNoClickRate with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetNoClickRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetNoClickRate(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getNoClickRate with all parameters", func(t *testing.T) {
+		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetNoResultsRate(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getNoResultsRate with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetNoResultsRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetNoResultsRate(req)
-				require.NoError(t, err)
+	t.Run("get getNoResultsRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getNoResultsRate with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetNoResultsRateRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetNoResultsRate(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getNoResultsRate with all parameters", func(t *testing.T) {
+		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetSearchesCount(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getSearchesCount with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetSearchesCountRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesCount(req)
-				require.NoError(t, err)
+	t.Run("get getSearchesCount with minimal parameters", func(t *testing.T) {
+		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/count")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/count")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getSearchesCount with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetSearchesCountRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesCount(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getSearchesCount with all parameters", func(t *testing.T) {
+		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/count")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/count")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getSearchesNoClicks with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetSearchesNoClicksRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesNoClicks(req)
-				require.NoError(t, err)
+	t.Run("get getSearchesNoClicks with minimal parameters", func(t *testing.T) {
+		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getSearchesNoClicks with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetSearchesNoClicksRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesNoClicks(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getSearchesNoClicks with all parameters", func(t *testing.T) {
+		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getSearchesNoResults with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetSearchesNoResultsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesNoResults(req)
-				require.NoError(t, err)
+	t.Run("get getSearchesNoResults with minimal parameters", func(t *testing.T) {
+		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noResults")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noResults")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getSearchesNoResults with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetSearchesNoResultsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSearchesNoResults(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getSearchesNoResults with all parameters", func(t *testing.T) {
+		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches/noResults")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches/noResults")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetStatus(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getStatus with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetStatusRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetStatus(req)
-				require.NoError(t, err)
+	t.Run("get getStatus with minimal parameters", func(t *testing.T) {
+		_, err := client.GetStatus(client.NewApiGetStatusRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/status")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/status")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopCountries(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopCountries with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetTopCountriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopCountries(req)
-				require.NoError(t, err)
+	t.Run("get getTopCountries with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/countries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/countries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopCountries with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopCountriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopCountries(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopCountries with all parameters", func(t *testing.T) {
+		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/countries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/countries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopFilterAttributes with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetTopFilterAttributesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterAttributes(req)
-				require.NoError(t, err)
+	t.Run("get getTopFilterAttributes with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopFilterAttributes with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopFilterAttributesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterAttributes(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopFilterAttributes with all parameters", func(t *testing.T) {
+		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
+			"index",
+		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopFilterForAttribute with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"attribute":"myAttribute","index":"index"}`
-				req := analytics.ApiGetTopFilterForAttributeRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterForAttribute(req)
-				require.NoError(t, err)
+	t.Run("get getTopFilterForAttribute with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+			"myAttribute", "index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopFilterForAttribute with minimal parameters and multiple attributes",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"attribute":"myAttribute1,myAttribute2","index":"index"}`
-				req := analytics.ApiGetTopFilterForAttributeRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterForAttribute(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopFilterForAttribute with minimal parameters and multiple attributes", func(t *testing.T) {
+		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+			"myAttribute1,myAttribute2", "index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopFilterForAttribute with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"attribute":"myAttribute","index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopFilterForAttributeRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterForAttribute(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopFilterForAttribute with all parameters", func(t *testing.T) {
+		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+			"myAttribute", "index",
+		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopFilterForAttribute with all parameters and multiple attributes",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"attribute":"myAttribute1,myAttribute2","index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopFilterForAttributeRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFilterForAttribute(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopFilterForAttribute with all parameters and multiple attributes", func(t *testing.T) {
+		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+			"myAttribute1,myAttribute2", "index",
+		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopFiltersNoResults with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetTopFiltersNoResultsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFiltersNoResults(req)
-				require.NoError(t, err)
+	t.Run("get getTopFiltersNoResults with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/noResults")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/noResults")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopFiltersNoResults with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopFiltersNoResultsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopFiltersNoResults(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopFiltersNoResults with all parameters", func(t *testing.T) {
+		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
+			"index",
+		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/filters/noResults")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/filters/noResults")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopHits(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopHits with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetTopHitsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopHits(req)
-				require.NoError(t, err)
+	t.Run("get getTopHits with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/hits")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/hits")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopHits with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","search":"mySearch","clickAnalytics":true,"startDate":"1999-09-19","endDate":"2001-01-01","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopHitsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopHits(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopHits with all parameters", func(t *testing.T) {
+		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
+			"index",
+		).WithSearch("mySearch").WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/hits")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/hits")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetTopSearches(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getTopSearches with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetTopSearchesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopSearches(req)
-				require.NoError(t, err)
+	t.Run("get getTopSearches with minimal parameters", func(t *testing.T) {
+		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getTopSearches with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","clickAnalytics":true,"startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":21,"offset":42,"tags":"tag"}`
-				req := analytics.ApiGetTopSearchesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTopSearches(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getTopSearches with all parameters", func(t *testing.T) {
+		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
+			"index",
+		).WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/searches")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/searches")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_GetUsersCount(t *testing.T) {
 	client, echo := createAnalyticsClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getUsersCount with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index"}`
-				req := analytics.ApiGetUsersCountRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetUsersCount(req)
-				require.NoError(t, err)
+	t.Run("get getUsersCount with minimal parameters", func(t *testing.T) {
+		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
+			"index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/users/count")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/users/count")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "get getUsersCount with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`
-				req := analytics.ApiGetUsersCountRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetUsersCount(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("get getUsersCount with all parameters", func(t *testing.T) {
+		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/2/users/count")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/2/users/count")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
