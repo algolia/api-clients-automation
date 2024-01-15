@@ -3,6 +3,9 @@ name: Setup
 description: Setup CI environment.
 
 inputs:
+  install-node:
+    description: If true, it will install the node with the version from .nvmrc.
+    required: false
   javascript-utils:
     description: If true, it will also restore the cache of the javascript util packages.
     required: false
@@ -22,6 +25,13 @@ runs:
         git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
 
     # JavaScript for monorepo and tooling
+    - name: Install Node
+      if: ${{ inputs.install-node == 'true' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: yarn
+
     - name: Get yarn cache directory path
       shell: bash
       id: yarn-cache-dir

@@ -22,6 +22,8 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+        with:
+          install-node: true
 
       - run: yarn release
         env:

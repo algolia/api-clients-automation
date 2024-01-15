@@ -20,8 +20,6 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/algolia/apic-base
     defaults:
       run:
         shell: bash
@@ -39,6 +37,8 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+        with:
+          install-node: true
 
       - name: Validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
@@ -103,8 +103,6 @@ jobs:
 
   scripts:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/algolia/apic-base
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -113,6 +111,8 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          install-node: true
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -125,8 +125,6 @@ jobs:
 
   specs:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/algolia/apic-base
     timeout-minutes: 10
     needs: setup
     steps:
@@ -142,6 +140,8 @@ jobs:
       - name: Setup
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
+        with:
+          install-node: true
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -392,8 +392,6 @@ jobs:
 
   codegen:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/algolia/apic-base
     timeout-minutes: 10
     needs:
       - setup
@@ -418,6 +416,8 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          install-node: true
 
       - name: Push generated code
         id: pushGeneratedCode
