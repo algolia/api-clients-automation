@@ -476,6 +476,20 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
+  test("deleteUserToken0") {
+    val (client, echo) = testClient()
+    val future = client.deleteUserToken(
+      userToken = "test-user-1"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/usertokens/test-user-1")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
   test("pushEvents0") {
     val (client, echo) = testClient()
     val future = client.pushEvents(

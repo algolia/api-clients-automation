@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** Absolute value of the discount in effect for this object, measured in `currency`. */
+/** The absolute value of the discount for this product, in units of `currency`. */
 @JsonDeserialize(using = Discount.Deserializer.class)
 public interface Discount {
   /** Discount as Double wrapper. */

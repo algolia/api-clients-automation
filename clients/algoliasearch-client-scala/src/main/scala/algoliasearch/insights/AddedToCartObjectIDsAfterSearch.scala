@@ -16,30 +16,31 @@ import algoliasearch.insights.ConversionEvent._
   * building your category pages with Algolia, you'll also use this event.
   *
   * @param eventName
-  *   Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by adopting Segment's
+  *   The name of the event, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting
+  *   Segment's
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   Name of the Algolia index.
+  *   The name of an Algolia index.
   * @param queryID
   *   Unique identifier for a search query. The query ID is required for events related to search or browse requests. If
   *   you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
   * @param objectIDs
-  *   List of object identifiers for items of an Algolia index.
-  * @param objectData
-  *   Extra information about the records involved in the event—for example, to add price and quantities of purchased
-  *   products. If provided, must be the same length as `objectIDs`.
-  * @param currency
-  *   If you include pricing information in the `objectData` parameter, you must also specify the currency as ISO-4217
-  *   currency code, such as USD or EUR.
+  *   The object IDs of the records that are part of the event.
   * @param userToken
-  *   Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in user
-  *   tokens.
-  * @param timestamp
-  *   Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the
-  *   Insights API uses the time it receives an event as its timestamp.
+  *   An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in
+  *   user tokens.
   * @param authenticatedUserToken
-  *   User token for authenticated users.
+  *   An identifier for authenticated users. > **Note**: Never include personally identifiable information in user
+  *   tokens.
+  * @param currency
+  *   Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+  * @param objectData
+  *   Extra information about the records involved in a purchase or add-to-cart events. If provided, it must be the same
+  *   length as `objectIDs`.
+  * @param timestamp
+  *   The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default,
+  *   the Insights API uses the time it receives an event as its timestamp.
   */
 case class AddedToCartObjectIDsAfterSearch(
     eventName: String,
@@ -48,9 +49,10 @@ case class AddedToCartObjectIDsAfterSearch(
     index: String,
     queryID: String,
     objectIDs: Seq[String],
-    objectData: Option[Seq[ObjectDataAfterSearch]] = scala.None,
-    currency: Option[String] = scala.None,
     userToken: String,
+    authenticatedUserToken: Option[String] = scala.None,
+    currency: Option[String] = scala.None,
+    objectData: Option[Seq[ObjectDataAfterSearch]] = scala.None,
     timestamp: Option[Long] = scala.None,
-    authenticatedUserToken: Option[String] = scala.None
+    value: Option[Value] = scala.None
 ) extends EventsItemsTrait

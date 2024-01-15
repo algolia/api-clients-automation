@@ -479,6 +479,63 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
+   * Delete all events related to a certain user token from events metrics and analytics. To delete
+   * a personalization user profile, see [Delete a user
+   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   *
+   * @param userToken The user token for which to delete all associated events. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void deleteUserToken(@Nonnull String userToken, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    LaunderThrowable.await(deleteUserTokenAsync(userToken, requestOptions));
+    return;
+  }
+
+  /**
+   * Delete all events related to a certain user token from events metrics and analytics. To delete
+   * a personalization user profile, see [Delete a user
+   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   *
+   * @param userToken The user token for which to delete all associated events. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void deleteUserToken(@Nonnull String userToken) throws AlgoliaRuntimeException {
+    this.deleteUserToken(userToken, null);
+  }
+
+  /**
+   * (asynchronously) Delete all events related to a certain user token from events metrics and
+   * analytics. To delete a personalization user profile, see [Delete a user
+   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   *
+   * @param userToken The user token for which to delete all associated events. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> deleteUserTokenAsync(@Nonnull String userToken, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `deleteUserToken`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/usertokens/{userToken}", userToken).setMethod("DELETE").build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Delete all events related to a certain user token from events metrics and
+   * analytics. To delete a personalization user profile, see [Delete a user
+   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   *
+   * @param userToken The user token for which to delete all associated events. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> deleteUserTokenAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
+    return this.deleteUserTokenAsync(userToken, null);
+  }
+
+  /**
    * Send a list of events to the Insights API. You can include up to 1,000 events in a single
    * request, but the request body must be smaller than 2&nbsp;MB.
    *

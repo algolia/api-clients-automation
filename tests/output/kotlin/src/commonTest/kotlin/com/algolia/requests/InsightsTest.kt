@@ -437,6 +437,24 @@ class InsightsTest {
     )
   }
 
+  // deleteUserToken
+
+  @Test
+  fun `deleteUserToken0`() = runTest {
+    client.runTest(
+      call = {
+        deleteUserToken(
+          userToken = "test-user-1",
+        )
+      },
+      intercept = {
+        assertEquals("/1/usertokens/test-user-1".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // pushEvents
 
   @Test

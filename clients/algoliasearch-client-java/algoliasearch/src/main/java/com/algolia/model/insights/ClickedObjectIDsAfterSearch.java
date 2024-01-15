@@ -37,11 +37,11 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   @JsonProperty("userToken")
   private String userToken;
 
-  @JsonProperty("timestamp")
-  private Long timestamp;
-
   @JsonProperty("authenticatedUserToken")
   private String authenticatedUserToken;
+
+  @JsonProperty("timestamp")
+  private Long timestamp;
 
   public ClickedObjectIDsAfterSearch setEventName(String eventName) {
     this.eventName = eventName;
@@ -49,8 +49,8 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   }
 
   /**
-   * Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by
-   * adopting Segment's
+   * The name of the event, up to 64 ASCII characters. Consider naming events consistently—for
+   * example, by adopting Segment's
    * [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
    * framework.
    */
@@ -75,7 +75,7 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
     return this;
   }
 
-  /** Name of the Algolia index. */
+  /** The name of an Algolia index. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
@@ -91,7 +91,7 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
     return this;
   }
 
-  /** List of object identifiers for items of an Algolia index. */
+  /** The object IDs of the records that are part of the event. */
   @javax.annotation.Nonnull
   public List<String> getObjectIDs() {
     return objectIDs;
@@ -108,8 +108,8 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   }
 
   /**
-   * Position of the clicked objects in the search results. The first search result has a position
-   * of 1 (not 0). You must provide 1 `position` for each `objectID`.
+   * The position of the clicked item the search results. The first search result has a position of
+   * 1 (not 0). You must provide 1 `position` for each `objectID`.
    */
   @javax.annotation.Nonnull
   public List<Integer> getPositions() {
@@ -137,12 +137,26 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   }
 
   /**
-   * Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
+   * An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
    * information in user tokens.
    */
   @javax.annotation.Nonnull
   public String getUserToken() {
     return userToken;
+  }
+
+  public ClickedObjectIDsAfterSearch setAuthenticatedUserToken(String authenticatedUserToken) {
+    this.authenticatedUserToken = authenticatedUserToken;
+    return this;
+  }
+
+  /**
+   * An identifier for authenticated users. > **Note**: Never include personally identifiable
+   * information in user tokens.
+   */
+  @javax.annotation.Nullable
+  public String getAuthenticatedUserToken() {
+    return authenticatedUserToken;
   }
 
   public ClickedObjectIDsAfterSearch setTimestamp(Long timestamp) {
@@ -151,23 +165,13 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   }
 
   /**
-   * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
-   * By default, the Insights API uses the time it receives an event as its timestamp.
+   * The timestamp of the event in milliseconds in [Unix epoch
+   * time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it
+   * receives an event as its timestamp.
    */
   @javax.annotation.Nullable
   public Long getTimestamp() {
     return timestamp;
-  }
-
-  public ClickedObjectIDsAfterSearch setAuthenticatedUserToken(String authenticatedUserToken) {
-    this.authenticatedUserToken = authenticatedUserToken;
-    return this;
-  }
-
-  /** User token for authenticated users. */
-  @javax.annotation.Nullable
-  public String getAuthenticatedUserToken() {
-    return authenticatedUserToken;
   }
 
   @Override
@@ -187,14 +191,14 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
       Objects.equals(this.positions, clickedObjectIDsAfterSearch.positions) &&
       Objects.equals(this.queryID, clickedObjectIDsAfterSearch.queryID) &&
       Objects.equals(this.userToken, clickedObjectIDsAfterSearch.userToken) &&
-      Objects.equals(this.timestamp, clickedObjectIDsAfterSearch.timestamp) &&
-      Objects.equals(this.authenticatedUserToken, clickedObjectIDsAfterSearch.authenticatedUserToken)
+      Objects.equals(this.authenticatedUserToken, clickedObjectIDsAfterSearch.authenticatedUserToken) &&
+      Objects.equals(this.timestamp, clickedObjectIDsAfterSearch.timestamp)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(eventName, eventType, index, objectIDs, positions, queryID, userToken, timestamp, authenticatedUserToken);
+    return Objects.hash(eventName, eventType, index, objectIDs, positions, queryID, userToken, authenticatedUserToken, timestamp);
   }
 
   @Override
@@ -208,8 +212,8 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
     sb.append("    positions: ").append(toIndentedString(positions)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    authenticatedUserToken: ").append(toIndentedString(authenticatedUserToken)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -11,7 +11,7 @@ package algoliasearch.insights
 
 import org.json4s._
 
-/** The price of the item. This should be the final price, inclusive of any discounts in effect.
+/** The total price of a product, including any discounts, in units of `currency`.
   */
 sealed trait Price
 

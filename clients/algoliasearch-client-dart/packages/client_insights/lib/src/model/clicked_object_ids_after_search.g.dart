@@ -23,9 +23,9 @@ ClickedObjectIDsAfterSearch _$ClickedObjectIDsAfterSearchFromJson(
               (v) => (v as List<dynamic>).map((e) => e as int).toList()),
           queryID: $checkedConvert('queryID', (v) => v as String),
           userToken: $checkedConvert('userToken', (v) => v as String),
-          timestamp: $checkedConvert('timestamp', (v) => v as int?),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
+          timestamp: $checkedConvert('timestamp', (v) => v as int?),
         );
         return val;
       },
@@ -49,8 +49,8 @@ Map<String, dynamic> _$ClickedObjectIDsAfterSearchToJson(
     }
   }
 
-  writeNotNull('timestamp', instance.timestamp);
   writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('timestamp', instance.timestamp);
   return val;
 }
 

@@ -15,29 +15,34 @@ final class ClickedObjectIDs {
     required this.index,
     required this.objectIDs,
     required this.userToken,
+    this.authenticatedUserToken,
     this.timestamp,
   });
 
-  /// Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+  /// The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
   @JsonKey(name: r'eventName')
   final String eventName;
 
   @JsonKey(name: r'eventType')
   final ClickEvent eventType;
 
-  /// Name of the Algolia index.
+  /// The name of an Algolia index.
   @JsonKey(name: r'index')
   final String index;
 
-  /// List of object identifiers for items of an Algolia index.
+  /// The object IDs of the records that are part of the event.
   @JsonKey(name: r'objectIDs')
   final List<String> objectIDs;
 
-  /// Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+  /// An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
   @JsonKey(name: r'userToken')
   final String userToken;
 
-  /// Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+  /// An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
+  @JsonKey(name: r'authenticatedUserToken')
+  final String? authenticatedUserToken;
+
+  /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
   @JsonKey(name: r'timestamp')
   final int? timestamp;
 
@@ -50,6 +55,7 @@ final class ClickedObjectIDs {
           other.index == index &&
           other.objectIDs == objectIDs &&
           other.userToken == userToken &&
+          other.authenticatedUserToken == authenticatedUserToken &&
           other.timestamp == timestamp;
 
   @override
@@ -59,6 +65,7 @@ final class ClickedObjectIDs {
       index.hashCode +
       objectIDs.hashCode +
       userToken.hashCode +
+      authenticatedUserToken.hashCode +
       timestamp.hashCode;
 
   factory ClickedObjectIDs.fromJson(Map<String, dynamic> json) =>

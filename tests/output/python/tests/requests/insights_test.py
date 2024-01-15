@@ -366,6 +366,20 @@ class TestInsightsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
+    async def test_delete_user_token_0(self):
+        """
+        deleteUserToken0
+        """
+        _req = await self._client.delete_user_token_with_http_info(
+            user_token="test-user-1",
+        )
+
+        assert _req.path == "/1/usertokens/test-user-1"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() >= {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_push_events_0(self):
         """
         pushEvents0

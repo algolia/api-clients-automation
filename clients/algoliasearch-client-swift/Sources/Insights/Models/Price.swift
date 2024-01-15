@@ -7,7 +7,7 @@ import Foundation
   import AnyCodable
 #endif
 
-/// The price of the item. This should be the final price, inclusive of any discounts in effect.
+/// The total price of a product, including any discounts, in units of &#x60;currency&#x60;.
 public enum Price: Codable, JSONEncodable, Hashable {
   case double(Double)
   case string(String)

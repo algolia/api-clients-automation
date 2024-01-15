@@ -68,6 +68,23 @@ def snippet_for_custom_put
   puts resp.to_json
 end
 
+# Snippet for the deleteUserToken method.
+#
+# deleteUserToken0
+def snippet_for_delete_user_token
+  # Initialize the client
+  client = Algolia::InsightsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  resp = client.delete_user_token("test-user-1")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+end
+
 # Snippet for the pushEvents method.
 #
 # pushEvents0

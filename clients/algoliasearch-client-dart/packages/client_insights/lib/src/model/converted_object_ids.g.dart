@@ -19,9 +19,9 @@ ConvertedObjectIDs _$ConvertedObjectIDsFromJson(Map<String, dynamic> json) =>
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
           userToken: $checkedConvert('userToken', (v) => v as String),
-          timestamp: $checkedConvert('timestamp', (v) => v as int?),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
+          timestamp: $checkedConvert('timestamp', (v) => v as int?),
         );
         return val;
       },
@@ -42,8 +42,8 @@ Map<String, dynamic> _$ConvertedObjectIDsToJson(ConvertedObjectIDs instance) {
     }
   }
 
-  writeNotNull('timestamp', instance.timestamp);
   writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('timestamp', instance.timestamp);
   return val;
 }
 

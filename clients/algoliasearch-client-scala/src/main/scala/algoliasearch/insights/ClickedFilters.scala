@@ -14,21 +14,23 @@ import algoliasearch.insights.ClickEvent._
 /** Use this event to track when users click facet filters in your user interface.
   *
   * @param eventName
-  *   Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by adopting Segment's
+  *   The name of the event, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting
+  *   Segment's
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   Name of the Algolia index.
+  *   The name of an Algolia index.
   * @param filters
   *   Facet filters. Each facet filter string must be URL-encoded, such as, `discount:10%25`.
   * @param userToken
-  *   Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in user
+  *   An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in
+  *   user tokens.
+  * @param authenticatedUserToken
+  *   An identifier for authenticated users. > **Note**: Never include personally identifiable information in user
   *   tokens.
   * @param timestamp
-  *   Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the
-  *   Insights API uses the time it receives an event as its timestamp.
-  * @param authenticatedUserToken
-  *   User token for authenticated users.
+  *   The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default,
+  *   the Insights API uses the time it receives an event as its timestamp.
   */
 case class ClickedFilters(
     eventName: String,
@@ -36,6 +38,6 @@ case class ClickedFilters(
     index: String,
     filters: Seq[String],
     userToken: String,
-    timestamp: Option[Long] = scala.None,
-    authenticatedUserToken: Option[String] = scala.None
+    authenticatedUserToken: Option[String] = scala.None,
+    timestamp: Option[Long] = scala.None
 ) extends EventsItemsTrait

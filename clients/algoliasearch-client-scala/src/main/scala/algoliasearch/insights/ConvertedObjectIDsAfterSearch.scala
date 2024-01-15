@@ -16,24 +16,26 @@ import algoliasearch.insights.ConversionEvent._
   * you're building your category pages with Algolia, you'll also use this event.
   *
   * @param eventName
-  *   Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by adopting Segment's
+  *   The name of the event, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting
+  *   Segment's
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   Name of the Algolia index.
+  *   The name of an Algolia index.
   * @param objectIDs
-  *   List of object identifiers for items of an Algolia index.
+  *   The object IDs of the records that are part of the event.
   * @param queryID
   *   Unique identifier for a search query. The query ID is required for events related to search or browse requests. If
   *   you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
   * @param userToken
-  *   Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in user
+  *   An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in
+  *   user tokens.
+  * @param authenticatedUserToken
+  *   An identifier for authenticated users. > **Note**: Never include personally identifiable information in user
   *   tokens.
   * @param timestamp
-  *   Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the
-  *   Insights API uses the time it receives an event as its timestamp.
-  * @param authenticatedUserToken
-  *   User token for authenticated users.
+  *   The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default,
+  *   the Insights API uses the time it receives an event as its timestamp.
   */
 case class ConvertedObjectIDsAfterSearch(
     eventName: String,
@@ -42,6 +44,6 @@ case class ConvertedObjectIDsAfterSearch(
     objectIDs: Seq[String],
     queryID: String,
     userToken: String,
-    timestamp: Option[Long] = scala.None,
-    authenticatedUserToken: Option[String] = scala.None
+    authenticatedUserToken: Option[String] = scala.None,
+    timestamp: Option[Long] = scala.None
 ) extends EventsItemsTrait
