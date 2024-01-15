@@ -183,6 +183,9 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
+    - run: dotnet tool install csharpier --global
+      if: ${{ inputs.language == 'csharp' }}
+      shell: bash
 
     # Swift deps
     - name: Install swift
