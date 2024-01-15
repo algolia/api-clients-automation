@@ -65,17 +65,21 @@ runs:
       shell: bash
       run: yarn install
 
+    - name: Build scripts
+      shell: bash
+      run: yarn workspace scripts build:cli
+
     - name: Get all languages versions
       id: versions
       shell: bash
       run: |
         # remove patch from php version
-        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
-        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
+        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
         echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
+        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
+        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
         echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
         echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
-        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
         echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
 
     # JavaScript client deps

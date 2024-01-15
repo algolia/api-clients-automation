@@ -15,7 +15,7 @@ public class JavascriptCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSupportingFiles(List<SupportingFile> supportingFiles) {
+  public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/package.mustache", "tests/output/javascript", "package.json"));
   }
 
@@ -26,41 +26,26 @@ public class JavascriptCTSManager implements CTSManager {
     bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
     bundle.put("npmNamespace", npmNamespace);
 
-    JsonNode openApiToolsConfig = Helpers.readJsonFile("openapitools.json").get("generator-cli").get("generators");
-    Iterator<Map.Entry<String, JsonNode>> fields = openApiToolsConfig.fields();
     List<Map<String, String>> clients = new ArrayList<>();
+    String importName = "";
 
-    while (fields.hasNext()) {
-      Map.Entry<String, JsonNode> field = fields.next();
-
-      if (!field.getKey().startsWith("javascript-")) {
-        continue;
-      }
-
-      Map<String, String> client = new HashMap<>();
-      String output = field.getValue().get("output").asText();
+    Iterator<JsonNode> clientIterator = Helpers.getClientConfig("javascript").get("clients").elements();
+    while (clientIterator.hasNext()) {
+      JsonNode c = clientIterator.next();
+      String output = c.get("output").asText();
       String packageName = output.substring(output.lastIndexOf("/") + 1);
-
-      client.put("packagePath", "link:../../../" + output.replace("#{cwd}/", ""));
-
       if (!packageName.equals("algoliasearch")) {
         packageName = npmNamespace + "/" + packageName;
       }
 
-      client.put("packageName", packageName);
+      clients.add(Map.of("packageName", packageName, "packagePath", "link:../../../" + output.replace("#{cwd}/", "")));
 
-      clients.add(client);
+      if (c.get("name").asText().equals(client)) {
+        importName = packageName.replace("algoliasearch", "algoliasearch/lite");
+      }
     }
-
-    String output = openApiToolsConfig.get("javascript-" + client).get("output").asText();
-    String clientName = output.substring(output.lastIndexOf('/') + 1);
 
     bundle.put("packageDependencies", clients);
-
-    if (clientName.equals("algoliasearch")) {
-      bundle.put("import", "algoliasearch/lite");
-    } else {
-      bundle.put("import", npmNamespace + "/" + clientName);
-    }
+    bundle.put("import", importName);
   }
 }

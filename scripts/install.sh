@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
-# This scripts installs the apic cli shortcut, instead of doing `yarn docker ...` which takes a long time to start
+# This scripts installs the apic cli shortcut, instead of doing `yarn cli ...` which takes a long time to start
 # You can install this by running `source scripts/install.sh` or by adding this to your .bashrc/.zshrc:
 # [[ -s "$HOME/<path to api-clients-automation>/scripts/install.sh" ]] && source "$HOME/<path to api-clients-automation>/scripts/install.sh"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 export apic() {
-  docker exec -it api-clients-automation bash -lc "cd scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*";
+  (cd scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+}
+
+export apicb() {
+  (cd scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
 _list_languages() {
@@ -77,10 +81,10 @@ _apic_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   if [[ COMP_CWORD -eq 1 ]]; then
-    COMPREPLY=($(compgen -W "generate build cts playground format" -- "$cur"))
+    COMPREPLY=($(compgen -W "generate build cts playground format snippets" -- "$cur"))
   else
     first="${COMP_WORDS[1]}"
-    if [[ $first == "generate" || $first == "playground" ]]; then
+    if [[ $first == "generate" || $first == "playground" || $first == "snippets" ]]; then
       _apic_lang_client_complete 2
     elif [[ $first == "format" ]]; then
       _apic_format_complete
@@ -93,3 +97,4 @@ _apic_complete() {
 }
 
 complete -F _apic_complete apic
+complete -F _apic_complete apicb

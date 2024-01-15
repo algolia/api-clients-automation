@@ -11,8 +11,10 @@ class SnippetSearchClient
      */
     public function snippetForAddApiKey()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->addApiKey(
             ['acl' => [
                 'search',
@@ -37,8 +39,10 @@ class SnippetSearchClient
      */
     public function snippetForAddOrUpdateObject()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->addOrUpdateObject(
             'indexName',
             'uniqueID',
@@ -57,8 +61,10 @@ class SnippetSearchClient
      */
     public function snippetForAppendSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->appendSource(
             ['source' => 'theSource',
                 'description' => 'theDescription',
@@ -76,8 +82,10 @@ class SnippetSearchClient
      */
     public function snippetForAssignUserId()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->assignUserId(
             'userID',
             ['cluster' => 'theCluster',
@@ -95,8 +103,10 @@ class SnippetSearchClient
      */
     public function snippetForBatch()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->batch(
             'theIndexName',
             ['requests' => [
@@ -119,8 +129,10 @@ class SnippetSearchClient
      */
     public function snippetForBatchAssignUserIds()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->batchAssignUserIds(
             'userID',
             ['cluster' => 'theCluster',
@@ -143,8 +155,10 @@ class SnippetSearchClient
      */
     public function snippetForBatchDictionaryEntries()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->batchDictionaryEntries(
             'compounds',
             ['requests' => [
@@ -174,8 +188,10 @@ class SnippetSearchClient
      */
     public function snippetForBrowse()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->browse(
             'cts_e2e_browse',
         );
@@ -191,8 +207,10 @@ class SnippetSearchClient
      */
     public function snippetForClearAllSynonyms()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->clearAllSynonyms(
             'indexName',
         );
@@ -208,8 +226,10 @@ class SnippetSearchClient
      */
     public function snippetForClearObjects()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->clearObjects(
             'theIndexName',
         );
@@ -225,8 +245,10 @@ class SnippetSearchClient
      */
     public function snippetForClearRules()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->clearRules(
             'indexName',
         );
@@ -242,8 +264,10 @@ class SnippetSearchClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -259,8 +283,10 @@ class SnippetSearchClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -276,8 +302,10 @@ class SnippetSearchClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -293,8 +321,10 @@ class SnippetSearchClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -310,8 +340,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteApiKey()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteApiKey(
             'myTestApiKey',
         );
@@ -327,8 +359,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteBy()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteBy(
             'theIndexName',
             ['filters' => 'brand:brandName',
@@ -346,8 +380,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteIndex()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteIndex(
             'theIndexName',
         );
@@ -363,8 +399,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteObject()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteObject(
             'theIndexName',
             'uniqueID',
@@ -381,8 +419,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteRule()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteRule(
             'indexName',
             'id1',
@@ -399,8 +439,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteSource(
             'theSource',
         );
@@ -416,8 +458,10 @@ class SnippetSearchClient
      */
     public function snippetForDeleteSynonym()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteSynonym(
             'indexName',
             'id1',
@@ -434,8 +478,10 @@ class SnippetSearchClient
      */
     public function snippetForGetApiKey()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getApiKey(
             'myTestApiKey',
         );
@@ -451,8 +497,10 @@ class SnippetSearchClient
      */
     public function snippetForGetDictionaryLanguages()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getDictionaryLanguages();
 
         // play with the response
@@ -466,8 +514,10 @@ class SnippetSearchClient
      */
     public function snippetForGetDictionarySettings()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getDictionarySettings();
 
         // play with the response
@@ -481,8 +531,10 @@ class SnippetSearchClient
      */
     public function snippetForGetLogs()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getLogs();
 
         // play with the response
@@ -496,8 +548,10 @@ class SnippetSearchClient
      */
     public function snippetForGetObject()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getObject(
             'theIndexName',
             'uniqueID',
@@ -519,8 +573,10 @@ class SnippetSearchClient
      */
     public function snippetForGetObjects()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getObjects(
             ['requests' => [
                 ['attributesToRetrieve' => [
@@ -546,8 +602,10 @@ class SnippetSearchClient
      */
     public function snippetForGetRule()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getRule(
             'indexName',
             'id1',
@@ -564,8 +622,10 @@ class SnippetSearchClient
      */
     public function snippetForGetSettings()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getSettings(
             'cts_e2e_settings',
         );
@@ -581,8 +641,10 @@ class SnippetSearchClient
      */
     public function snippetForGetSources()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getSources();
 
         // play with the response
@@ -596,8 +658,10 @@ class SnippetSearchClient
      */
     public function snippetForGetSynonym()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getSynonym(
             'indexName',
             'id1',
@@ -614,8 +678,10 @@ class SnippetSearchClient
      */
     public function snippetForGetTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getTask(
             'theIndexName',
             123,
@@ -632,8 +698,10 @@ class SnippetSearchClient
      */
     public function snippetForGetTopUserIds()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getTopUserIds();
 
         // play with the response
@@ -647,8 +715,10 @@ class SnippetSearchClient
      */
     public function snippetForGetUserId()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getUserId(
             'uniqueID',
         );
@@ -664,8 +734,10 @@ class SnippetSearchClient
      */
     public function snippetForHasPendingMappings()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->hasPendingMappings();
 
         // play with the response
@@ -679,8 +751,10 @@ class SnippetSearchClient
      */
     public function snippetForListApiKeys()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->listApiKeys();
 
         // play with the response
@@ -694,8 +768,10 @@ class SnippetSearchClient
      */
     public function snippetForListClusters()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->listClusters();
 
         // play with the response
@@ -709,8 +785,10 @@ class SnippetSearchClient
      */
     public function snippetForListIndices()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->listIndices();
 
         // play with the response
@@ -724,8 +802,10 @@ class SnippetSearchClient
      */
     public function snippetForListUserIds()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->listUserIds();
 
         // play with the response
@@ -739,8 +819,10 @@ class SnippetSearchClient
      */
     public function snippetForMultipleBatch()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->multipleBatch(
             ['requests' => [
                 ['action' => 'addObject',
@@ -763,8 +845,10 @@ class SnippetSearchClient
      */
     public function snippetForOperationIndex()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->operationIndex(
             'theIndexName',
             ['operation' => 'copy',
@@ -788,8 +872,10 @@ class SnippetSearchClient
      */
     public function snippetForPartialUpdateObject()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
@@ -812,8 +898,10 @@ class SnippetSearchClient
      */
     public function snippetForRemoveUserId()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->removeUserId(
             'uniqueID',
         );
@@ -829,8 +917,10 @@ class SnippetSearchClient
      */
     public function snippetForReplaceSources()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->replaceSources(
             [
                 ['source' => 'theSource',
@@ -850,8 +940,10 @@ class SnippetSearchClient
      */
     public function snippetForRestoreApiKey()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->restoreApiKey(
             'myApiKey',
         );
@@ -867,8 +959,10 @@ class SnippetSearchClient
      */
     public function snippetForSaveObject()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->saveObject(
             'theIndexName',
             ['objectID' => 'id',
@@ -887,8 +981,10 @@ class SnippetSearchClient
      */
     public function snippetForSaveRule()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->saveRule(
             'indexName',
             'id1',
@@ -912,8 +1008,10 @@ class SnippetSearchClient
      */
     public function snippetForSaveRules()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->saveRules(
             'indexName',
             [
@@ -946,8 +1044,10 @@ class SnippetSearchClient
      */
     public function snippetForSaveSynonym()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->saveSynonym(
             'indexName',
             'id1',
@@ -975,8 +1075,10 @@ class SnippetSearchClient
      */
     public function snippetForSaveSynonyms()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->saveSynonyms(
             'indexName',
             [
@@ -1018,8 +1120,10 @@ class SnippetSearchClient
      */
     public function snippetForSearch()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->search(
             ['requests' => [
                 ['indexName' => 'cts_e2e_search_empty_index',
@@ -1039,8 +1143,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchDictionaryEntries()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchDictionaryEntries(
             'compounds',
             ['query' => 'foo',
@@ -1058,8 +1164,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchForFacetValues()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchForFacetValues(
             'indexName',
             'facetName',
@@ -1076,8 +1184,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchRules()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchRules(
             'indexName',
             ['query' => 'something',
@@ -1095,8 +1205,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchSingleIndex()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchSingleIndex(
             'indexName',
         );
@@ -1112,8 +1224,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchSynonyms()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchSynonyms(
             'indexName',
         );
@@ -1129,8 +1243,10 @@ class SnippetSearchClient
      */
     public function snippetForSearchUserIds()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchUserIds(
             ['query' => 'test',
                 'clusterName' => 'theClusterName',
@@ -1150,8 +1266,10 @@ class SnippetSearchClient
      */
     public function snippetForSetDictionarySettings()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->setDictionarySettings(
             ['disableStandardEntries' => ['plurals' => ['fr' => false,
                 'en' => false,
@@ -1172,8 +1290,10 @@ class SnippetSearchClient
      */
     public function snippetForSetSettings()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->setSettings(
             'cts_e2e_settings',
             ['paginationLimitedTo' => 10,
@@ -1192,8 +1312,10 @@ class SnippetSearchClient
      */
     public function snippetForUpdateApiKey()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->updateApiKey(
             'myApiKey',
             ['acl' => [

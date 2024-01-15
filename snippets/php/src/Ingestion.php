@@ -11,8 +11,10 @@ class SnippetIngestionClient
      */
     public function snippetForCreateAuthentication()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->createAuthentication(
             ['type' => 'oauth',
                 'name' => 'authName',
@@ -34,8 +36,10 @@ class SnippetIngestionClient
      */
     public function snippetForCreateDestination()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->createDestination(
             ['type' => 'search',
                 'name' => 'destinationName',
@@ -56,8 +60,10 @@ class SnippetIngestionClient
      */
     public function snippetForCreateSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->createSource(
             ['type' => 'commercetools',
                 'name' => 'sourceName',
@@ -85,8 +91,10 @@ class SnippetIngestionClient
      */
     public function snippetForCreateTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->createTask(
             ['sourceID' => 'search',
                 'destinationID' => 'destinationName',
@@ -107,8 +115,10 @@ class SnippetIngestionClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -124,8 +134,10 @@ class SnippetIngestionClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -141,8 +153,10 @@ class SnippetIngestionClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -158,8 +172,10 @@ class SnippetIngestionClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -175,8 +191,10 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteAuthentication()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteAuthentication(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -192,8 +210,10 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteDestination()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteDestination(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -209,8 +229,10 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteSource(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -226,8 +248,10 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -243,8 +267,10 @@ class SnippetIngestionClient
      */
     public function snippetForDisableTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->disableTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -260,8 +286,10 @@ class SnippetIngestionClient
      */
     public function snippetForEnableTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->enableTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -277,8 +305,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetAuthentication()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getAuthentication(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -294,8 +324,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetAuthentications()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getAuthentications();
 
         // play with the response
@@ -309,8 +341,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetDestination()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getDestination(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -326,8 +360,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetDestinations()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getDestinations();
 
         // play with the response
@@ -341,8 +377,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetDockerSourceStreams()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getDockerSourceStreams(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -358,8 +396,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetEvent()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getEvent(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
@@ -376,8 +416,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetEvents()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getEvents(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -393,8 +435,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetRun()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getRun(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -410,8 +454,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetRuns()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getRuns();
 
         // play with the response
@@ -425,8 +471,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getSource(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -442,8 +490,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetSources()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getSources();
 
         // play with the response
@@ -457,8 +507,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -474,8 +526,10 @@ class SnippetIngestionClient
      */
     public function snippetForGetTasks()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTasks();
 
         // play with the response
@@ -489,8 +543,10 @@ class SnippetIngestionClient
      */
     public function snippetForRunTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->runTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -506,8 +562,10 @@ class SnippetIngestionClient
      */
     public function snippetForSearchAuthentications()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->searchAuthentications(
             ['authenticationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -528,8 +586,10 @@ class SnippetIngestionClient
      */
     public function snippetForSearchDestinations()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->searchDestinations(
             ['destinationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -550,8 +610,10 @@ class SnippetIngestionClient
      */
     public function snippetForSearchSources()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->searchSources(
             ['sourceIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -572,8 +634,10 @@ class SnippetIngestionClient
      */
     public function snippetForSearchTasks()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->searchTasks(
             ['taskIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -594,8 +658,10 @@ class SnippetIngestionClient
      */
     public function snippetForTriggerDockerSourceDiscover()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->triggerDockerSourceDiscover(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
@@ -611,8 +677,10 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateAuthentication()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->updateAuthentication(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['name' => 'newName',
@@ -630,8 +698,10 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateDestination()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->updateDestination(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['name' => 'newName',
@@ -649,8 +719,10 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateSource()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->updateSource(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['name' => 'newName',
@@ -668,8 +740,10 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateTask()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->updateTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['enabled' => false,

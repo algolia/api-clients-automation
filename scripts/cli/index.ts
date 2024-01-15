@@ -2,12 +2,13 @@ import { Argument, program } from 'commander';
 
 import { buildClients } from '../buildClients.js';
 import { buildSpecs } from '../buildSpecs.js';
-import { CI, DOCKER, LANGUAGES, setVerbose } from '../common.js';
+import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
+import { snippetsGenerateMany } from '../snippets/generate.js';
 
 import type { LangArg } from './utils.js';
 import {
@@ -18,13 +19,6 @@ import {
   PROMPT_CLIENTS,
   PROMPT_LANGUAGES,
 } from './utils.js';
-
-if (!CI && !DOCKER) {
-  // eslint-disable-next-line no-console
-  console.log('You should run scripts via the docker container, see README.md');
-  // eslint-disable-next-line no-process-exit
-  process.exit(1);
-}
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
@@ -170,6 +164,23 @@ program
     setVerbose(Boolean(verbose));
 
     await formatter(language, folder);
+  });
+
+program
+  .command('snippets')
+  .description('Generate the snippets')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await snippetsGenerateMany(generatorList({ language, client, clientList }));
   });
 
 program.parse();

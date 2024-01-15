@@ -1,176 +1,182 @@
 from algoliasearch.personalization.client import PersonalizationClient
 
 
-class SnippetPersonalizationClient:
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # use the class directly
-        print(resp)
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # use the class directly
+    print(resp)
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_delete_user_profile():
-        """
-        Snippet for the deleteUserProfile method.
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        delete deleteUserProfile
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+    # use the class directly
+    print(resp)
 
-        resp = await _client.delete_user_profile(
-            user_token="UserToken",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_delete_user_profile():
+    """
+    Snippet for the deleteUserProfile method.
 
-    async def snippet_for_get_personalization_strategy():
-        """
-        Snippet for the getPersonalizationStrategy method.
+    delete deleteUserProfile
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        get getPersonalizationStrategy
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+    # Call the API
+    resp = await _client.delete_user_profile(
+        user_token="UserToken",
+    )
 
-        resp = await _client.get_personalization_strategy()
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_user_token_profile():
-        """
-        Snippet for the getUserTokenProfile method.
+async def snippet_for_get_personalization_strategy():
+    """
+    Snippet for the getPersonalizationStrategy method.
 
-        get getUserTokenProfile
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+    get getPersonalizationStrategy
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_user_token_profile(
-            user_token="UserToken",
-        )
+    # Call the API
+    resp = await _client.get_personalization_strategy()
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_set_personalization_strategy():
-        """
-        Snippet for the setPersonalizationStrategy method.
 
-        set setPersonalizationStrategy
-        """
-        _client = PersonalizationClient(
-            "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
-        )
+async def snippet_for_get_user_token_profile():
+    """
+    Snippet for the getUserTokenProfile method.
 
-        resp = await _client.set_personalization_strategy(
-            personalization_strategy_params={
-                "eventScoring": [
-                    {
-                        "score": 42,
-                        "eventName": "Algolia",
-                        "eventType": "Event",
-                    },
-                ],
-                "facetScoring": [
-                    {
-                        "score": 42,
-                        "facetName": "Event",
-                    },
-                ],
-                "personalizationImpact": 42,
-            },
-        )
+    get getUserTokenProfile
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_user_token_profile(
+        user_token="UserToken",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_set_personalization_strategy():
+    """
+    Snippet for the setPersonalizationStrategy method.
+
+    set setPersonalizationStrategy
+    """
+    # Initialize the client
+    _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.set_personalization_strategy(
+        personalization_strategy_params={
+            "eventScoring": [
+                {
+                    "score": 42,
+                    "eventName": "Algolia",
+                    "eventType": "Event",
+                },
+            ],
+            "facetScoring": [
+                {
+                    "score": 42,
+                    "facetName": "Event",
+                },
+            ],
+            "personalizationImpact": 42,
+        },
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

@@ -1,113 +1,126 @@
 from algoliasearch.insights.client import InsightsClient
 
 
-class SnippetInsightsClient:
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # use the class directly
-        print(resp)
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # use the class directly
+    print(resp)
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_push_events():
-        """
-        Snippet for the pushEvents method.
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        pushEvents0
-        """
-        _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.push_events(
-            insights_events={
-                "events": [
-                    {
-                        "eventType": "click",
-                        "eventName": "Product Clicked",
-                        "index": "products",
-                        "userToken": "user-123456",
-                        "authenticatedUserToken": "user-123456",
-                        "timestamp": 1641290601962,
-                        "objectIDs": [
-                            "9780545139700",
-                            "9780439784542",
-                        ],
-                        "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
-                        "positions": [
-                            7,
-                            6,
-                        ],
-                    },
-                ],
-            },
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_push_events():
+    """
+    Snippet for the pushEvents method.
+
+    pushEvents0
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.push_events(
+        insights_events={
+            "events": [
+                {
+                    "eventType": "click",
+                    "eventName": "Product Clicked",
+                    "index": "products",
+                    "userToken": "user-123456",
+                    "authenticatedUserToken": "user-123456",
+                    "timestamp": 1641290601962,
+                    "objectIDs": [
+                        "9780545139700",
+                        "9780439784542",
+                    ],
+                    "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                    "positions": [
+                        7,
+                        6,
+                    ],
+                },
+            ],
+        },
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

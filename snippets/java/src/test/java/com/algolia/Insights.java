@@ -8,45 +8,55 @@ class SnippetInsightsClient {
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters
-  void SnippetForCustomDelete() {
+  void snippetForCustomDelete() {
+    // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customDelete("/test/minimal");
   }
 
   // Snippet for the customGet method.
   //
   // allow get method for a custom path with minimal parameters
-  void SnippetForCustomGet() {
+  void snippetForCustomGet() {
+    // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customGet("/test/minimal");
   }
 
   // Snippet for the customPost method.
   //
   // allow post method for a custom path with minimal parameters
-  void SnippetForCustomPost() {
+  void snippetForCustomPost() {
+    // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customPost("/test/minimal");
   }
 
   // Snippet for the customPut method.
   //
   // allow put method for a custom path with minimal parameters
-  void SnippetForCustomPut() {
+  void snippetForCustomPut() {
+    // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customPut("/test/minimal");
   }
 
   // Snippet for the pushEvents method.
   //
   // pushEvents0
-  void SnippetForPushEvents() {
+  void snippetForPushEvents() {
+    // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.pushEvents(
       new InsightsEvents()
         .setEvents(

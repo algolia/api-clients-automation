@@ -8,7 +8,6 @@ export type LanguageConfig = {
   gitRepoId: string;
   modelFolder: string;
   apiFolder: string;
-  customGenerator: string;
   packageVersion?: string;
   tests: {
     extension: string;
@@ -43,6 +42,7 @@ export type CheckForCache = {
 export type RunOptions = {
   errorMessage?: string;
   cwd?: string;
+  language?: Language;
 };
 
 export type Language = keyof typeof config;

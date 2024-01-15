@@ -11,8 +11,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -28,8 +30,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -45,8 +49,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -62,8 +68,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -79,8 +87,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForDeleteUserProfile()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteUserProfile(
             'UserToken',
         );
@@ -96,8 +106,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForGetPersonalizationStrategy()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getPersonalizationStrategy();
 
         // play with the response
@@ -111,8 +123,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForGetUserTokenProfile()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getUserTokenProfile(
             'UserToken',
         );
@@ -128,8 +142,10 @@ class SnippetPersonalizationClient
      */
     public function snippetForSetPersonalizationStrategy()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->setPersonalizationStrategy(
             ['eventScoring' => [
                 ['score' => 42,

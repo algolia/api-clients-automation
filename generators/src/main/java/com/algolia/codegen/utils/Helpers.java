@@ -21,7 +21,6 @@ public class Helpers {
   public static final Set<String> CUSTOM_METHODS = Set.of("customDelete", "customGet", "customPost", "customPut");
 
   private static JsonNode cacheConfig;
-  private static JsonNode cacheOpenApiToolsConfig;
 
   private Helpers() {}
 
@@ -167,10 +166,7 @@ public class Helpers {
     if (fields.length == 0) {
       throw new ConfigException("getClientConfigField requires at least one field");
     }
-    if (cacheConfig == null) {
-      cacheConfig = readJsonFile("config/clients.config.json");
-    }
-    JsonNode value = cacheConfig.get(language);
+    JsonNode value = getClientConfig(language);
     for (String field : fields) {
       value = value.get(field);
     }
@@ -181,10 +177,7 @@ public class Helpers {
   }
 
   public static List<String> getClientListForLanguage(String language) throws ConfigException {
-    if (cacheConfig == null) {
-      cacheConfig = readJsonFile("config/clients.config.json");
-    }
-    JsonNode value = cacheConfig.get(language);
+    JsonNode value = getClientConfig(language);
     value = value.get("clients");
     if (value == null || !value.isArray()) {
       throw new ConfigException("'clients' is not an array");
@@ -194,36 +187,20 @@ public class Helpers {
     List<String> resultList = new ArrayList<>();
     for (JsonNode node : arrayNode) {
       if (!node.isTextual()) {
-        throw new ConfigException("Elements in 'clients' are not strings");
+        resultList.add(node.get("name").asText());
+      } else {
+        resultList.add(node.asText());
       }
-      resultList.add(node.asText());
     }
     return resultList;
   }
 
-  /**
-   * Get the `field` value in the runtime generator `openapitools.json` file for the current
-   * language
-   */
-  public static String getOpenApiToolsField(String language, String client, String... fields) throws ConfigException {
-    if (fields.length == 0) {
-      throw new ConfigException("getOpenApiToolsField requires at least one field");
+  public static JsonNode getClientConfig(String language) {
+    if (cacheConfig == null) {
+      cacheConfig = readJsonFile("config/clients.config.json");
     }
-    if (cacheOpenApiToolsConfig == null) {
-      cacheOpenApiToolsConfig = readJsonFile("openapitools.json");
-    }
-    JsonNode value = cacheOpenApiToolsConfig
-      .get("generator-cli")
-      .get("generators")
-      .get(language + "-" + client)
-      .get("additionalProperties");
-    for (String field : fields) {
-      value = value.get(field);
-    }
-    if (!value.isTextual()) {
-      throw new ConfigException(fields[fields.length - 1] + " is not a string");
-    }
-    return value.asText();
+
+    return cacheConfig.get(language);
   }
 
   public static JsonNode readJsonFile(String filePath) throws ConfigException {
