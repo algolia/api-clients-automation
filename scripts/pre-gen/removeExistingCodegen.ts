@@ -21,13 +21,19 @@ export async function removeExistingCodegen({
   let clientApi = '';
 
   switch (language) {
+    case 'csharp':
+      clientModel = clientName;
+      clientApi = clientName;
+      baseModelFolder = '';
+      baseApiFolder = '';
+      break;
+    case 'go':
+      clientModel = clientName.toLowerCase();
+      clientApi = clientName.toLowerCase();
+      break;
     case 'java':
       clientModel = client.replace('-', '');
       clientApi = `${clientName}*.java`;
-      break;
-    case 'php':
-      clientModel = clientName;
-      clientApi = `${clientName}*.php`;
       break;
     case 'javascript':
       // We want to also delete the nested `lite` client or folders that only exists in JS
@@ -48,9 +54,9 @@ export async function removeExistingCodegen({
       clientModel = clientName.toLowerCase();
       clientApi = `${clientName}*.kt`;
       break;
-    case 'go':
-      clientModel = clientName.toLowerCase();
-      clientApi = clientName.toLowerCase();
+    case 'php':
+      clientModel = clientName;
+      clientApi = `${clientName}*.php`;
       break;
     case 'python':
       clientModel = toSnakeCase(clientName);
@@ -58,7 +64,6 @@ export async function removeExistingCodegen({
       baseModelFolder = '';
       baseApiFolder = '';
       break;
-
     case 'ruby':
       clientModel = clientName.toLowerCase();
       clientApi = `${toSnakeCase(clientName)}_client.rb`;
@@ -67,12 +72,7 @@ export async function removeExistingCodegen({
       clientModel = client.replace('-', '');
       clientApi = `${clientName}*.scala`;
       break;
-    case 'csharp':
-      clientModel = clientName;
-      clientApi = clientName;
-      baseModelFolder = '';
-      baseApiFolder = '';
-      break;
+
     case 'swift':
       clientModel = `${clientName}/Models`;
       clientApi = clientName;

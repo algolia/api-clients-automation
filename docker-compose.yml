@@ -1,0 +1,38 @@
+services:
+  base:
+    container_name: apic_base
+    build:
+      context: .
+      dockerfile: scripts/docker/Dockerfile.base
+      args:
+        - CSHARP_VERSION=${CSHARP_VERSION}
+        - DART_VERSION=${DART_VERSION}
+        - GO_VERSION=${GO_VERSION}
+        - JAVA_VERSION=${JAVA_VERSION}
+        - NODE_VERSION=${NODE_VERSION}
+        - PHP_VERSION=${PHP_VERSION}
+        - PYTHON_VERSION=${PYTHON_VERSION}
+    command: tail -f /dev/null
+    volumes: [./:/app]
+  ruby:
+    container_name: apic_ruby
+    build:
+      context: .
+      dockerfile: scripts/docker/Dockerfile.ruby
+      args:
+        - JAVA_VERSION=${JAVA_VERSION}
+        - NODE_VERSION=${NODE_VERSION}
+        - RUBY_VERSION=${RUBY_VERSION}
+    command: tail -f /dev/null
+    volumes: [./:/app]
+  swift:
+    container_name: apic_swift
+    build:
+      context: .
+      dockerfile: scripts/docker/Dockerfile.swift
+      args:
+        - JAVA_VERSION=${JAVA_VERSION}
+        - NODE_VERSION=${NODE_VERSION}
+        - SWIFT_VERSION=${SWIFT_VERSION}
+    command: tail -f /dev/null
+    volumes: [./:/app]

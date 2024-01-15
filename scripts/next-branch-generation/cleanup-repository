@@ -18,7 +18,7 @@ rm -rf .codesandbox \
   .redocly.yaml \
   .yarn/ \
   .yarnrc.yml \
-  Dockerfile \
+  docker-compose.yml \
   clients/ \
   config/ \
   eslint/ \

@@ -7,6 +7,47 @@ export const patterns = [
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
 
+  // C#
+  '!snippets/csharp/**',
+  'snippets/csharp/src/**.cs',
+  'clients/algoliasearch-client-csharp/**',
+  '!clients/algoliasearch-client-csharp/*',
+  'clients/algoliasearch-client-csharp/global.json',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Models/**',
+  'tests/output/csharp/global.json',
+
+  // Dart
+  '!snippets/dart/**',
+  'snippets/dart/lib/**',  
+  '!clients/algoliasearch-client-dart/**',
+  'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
+  'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
+  'clients/algoliasearch-client-dart/packages/*/lib/src/*.dart',
+  'clients/algoliasearch-client-dart/packages/client_core/pubspec.yaml',
+  'clients/algoliasearch-client-dart/packages/*/lib/src/api/**',
+  'clients/algoliasearch-client-dart/packages/*/lib/src/model/**',
+  '!clients/algoliasearch-client-dart/packages/client_core/**',
+  'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
+  '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
+  '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
+
+  // GO
+  'clients/algoliasearch-client-go/algolia/**',
+  '!clients/algoliasearch-client-go/.github/**',
+  '!clients/algoliasearch-client-go/*',
+  '!clients/algoliasearch-client-go/algolia/internal/**',
+  '!clients/algoliasearch-client-go/algolia/call/*',
+  '!clients/algoliasearch-client-go/algolia/compression/*',
+  '!clients/algoliasearch-client-go/algolia/debug/*',
+
+  'tests/output/go/go.sum',
+
   // Java
   '!clients/algoliasearch-client-java/**',
   'clients/algoliasearch-client-java/gradle.properties',
@@ -33,27 +74,6 @@ export const patterns = [
 
   'tests/output/javascript/package.json',
 
-  // PHP
-  '!clients/algoliasearch-client-php/**',
-  'clients/algoliasearch-client-php/lib/Api/*',
-  'clients/algoliasearch-client-php/lib/Model/**',
-  'clients/algoliasearch-client-php/lib/Configuration/*',
-  'clients/algoliasearch-client-php/lib/ApiException.php',
-  'clients/algoliasearch-client-php/lib/ObjectSerializer.php',
-  'clients/algoliasearch-client-php/lib/Algolia.php',
-  'clients/algoliasearch-client-php/composer.json',
-
-  // GO
-  'clients/algoliasearch-client-go/algolia/**',
-  '!clients/algoliasearch-client-go/.github/**',
-  '!clients/algoliasearch-client-go/*',
-  '!clients/algoliasearch-client-go/algolia/internal/**',
-  '!clients/algoliasearch-client-go/algolia/call/*',
-  '!clients/algoliasearch-client-go/algolia/compression/*',
-  '!clients/algoliasearch-client-go/algolia/debug/*',
-
-  'tests/output/go/go.sum',
-
   // Kotlin
   '!snippets/kotlin/**',
   'snippets/kotlin/src/**',
@@ -68,20 +88,15 @@ export const patterns = [
   'tests/output/kotlin/src/commonTest/kotlin/com/algolia/client/**',
   'tests/output/kotlin/src/commonTest/kotlin/com/algolia/requests/**',
 
-  // Dart
-  '!snippets/dart/**',
-  'snippets/dart/bin/**',
-  '!clients/algoliasearch-client-dart/**',
-  'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
-  'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
-  'clients/algoliasearch-client-dart/packages/*/lib/src/*.dart',
-  'clients/algoliasearch-client-dart/packages/client_core/pubspec.yaml',
-  'clients/algoliasearch-client-dart/packages/*/lib/src/api/**',
-  'clients/algoliasearch-client-dart/packages/*/lib/src/model/**',
-  '!clients/algoliasearch-client-dart/packages/client_core/**',
-  'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
-  '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
-  '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
+  // PHP
+  '!clients/algoliasearch-client-php/**',
+  'clients/algoliasearch-client-php/lib/Api/*',
+  'clients/algoliasearch-client-php/lib/Model/**',
+  'clients/algoliasearch-client-php/lib/Configuration/*',
+  'clients/algoliasearch-client-php/lib/ApiException.php',
+  'clients/algoliasearch-client-php/lib/ObjectSerializer.php',
+  'clients/algoliasearch-client-php/lib/Algolia.php',
+  'clients/algoliasearch-client-php/composer.json',
 
   // Python
   '!snippets/python/pyproject.toml',
@@ -97,7 +112,7 @@ export const patterns = [
 
   // Ruby
   '!snippets/ruby/Gemfile',
-  '!snippets/ruby/.rubocop.yml',
+  '!snippets/ruby/.rubocop.yml',  
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
@@ -111,28 +126,13 @@ export const patterns = [
 
   // Scala
   '!snippets/scala/**',
-  'snippets/scala/src/**',
+  'snippets/scala/src/**',  
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
-
-  // C#
-  '!snippets/csharp/**',
-  'snippets/csharp/src/**.cs',
-  'clients/algoliasearch-client-csharp/**',
-  '!clients/algoliasearch-client-csharp/*',
-  'clients/algoliasearch-client-csharp/global.json',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Models/**',
-  'tests/output/csharp/global.json',
 
   // Swift
   'clients/algoliasearch-client-swift/**',
