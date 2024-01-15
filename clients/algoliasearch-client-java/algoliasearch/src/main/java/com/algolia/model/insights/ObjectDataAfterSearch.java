@@ -28,8 +28,8 @@ public class ObjectDataAfterSearch {
   }
 
   /**
-   * ID of the query that this specific record is attributable to. Used to track purchase events
-   * with multiple items originating from different searches.
+   * Unique identifier for a search query, used to track purchase events with multiple records that
+   * originate from different searches.
    */
   @javax.annotation.Nullable
   public String getQueryID() {
@@ -53,8 +53,8 @@ public class ObjectDataAfterSearch {
   }
 
   /**
-   * The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum
-   * of `quantity` multiplied with the `price` for each purchased item.
+   * The quantity of a product that has been purchased or added to the cart. The total value of a
+   * purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
    */
   @javax.annotation.Nullable
   public Integer getQuantity() {

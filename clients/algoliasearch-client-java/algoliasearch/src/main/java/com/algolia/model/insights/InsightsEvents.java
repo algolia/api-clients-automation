@@ -28,8 +28,7 @@ public class InsightsEvents {
   /**
    * List of click and conversion events. An event is an object representing a user interaction.
    * Events have attributes that describe the interaction, such as an event name, a type, or a user
-   * token. Some attributes require other attributes to be declared, and some attributes can't be
-   * declared at the same time. **All** events must be valid, otherwise the API returns an error.
+   * token. **All** events must be valid, otherwise the API returns an error.
    */
   @javax.annotation.Nonnull
   public List<EventsItems> getEvents() {

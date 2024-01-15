@@ -13,30 +13,29 @@ properties:
     $ref: './PurchaseEvent.yml'
   index:
     $ref: './EventAttributes.yml#/index'
-  queryID:
-    $ref: './EventAttributes.yml#/queryID'
   objectIDs:
     $ref: './EventAttributes.yml#/objectIDs'
-  objectData:
-    $ref: './EventAttributes.yml#/objectDataAfterSearchList'
-  currency:
-    $ref: './EventAttributes.yml#/currency'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
-  timestamp:
-    $ref: './EventAttributes.yml#/timestamp'
   authenticatedUserToken:
     $ref: './EventAttributes.yml#/authenticatedUserToken'
+  currency:
+    $ref: './EventAttributes.yml#/currency'
+  objectData:
+    $ref: './EventAttributes.yml#/objectDataAfterSearchList'
+  timestamp:
+    $ref: './EventAttributes.yml#/timestamp'
+  value:
+    $ref: './EventAttributes.yml#/value'
 required:
   - eventName
   - eventType
   - eventSubtype
-  - queryID
   - index
   - objectIDs
   - userToken
 x-discriminator-fields:
   - eventType
   - eventSubtype
-  - queryID
   - objectIDs
+  - objectData

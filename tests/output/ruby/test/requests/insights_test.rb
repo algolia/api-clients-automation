@@ -216,6 +216,18 @@ class TestInsightsClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
+  # deleteUserToken0
+  def test_delete_user_token0
+    req = @client.delete_user_token_with_http_info("test-user-1")
+
+    assert_equal(:delete, req.method)
+    assert_equal('/1/usertokens/test-user-1', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # pushEvents0
   def test_push_events0
     req = @client.push_events_with_http_info(InsightsEvents.new(events: [ClickedObjectIDsAfterSearch.new(event_type: 'click', event_name: "Product Clicked",

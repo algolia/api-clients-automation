@@ -64,6 +64,22 @@ void snippetForcustomPut() async {
   );
 }
 
+// Snippet for the deleteUserToken method.
+//
+// deleteUserToken0
+void snippetFordeleteUserToken() async {
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_API_KEY',
+      region: 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  final response = await client.deleteUserToken(
+    userToken: "test-user-1",
+  );
+}
+
 // Snippet for the pushEvents method.
 //
 // pushEvents0

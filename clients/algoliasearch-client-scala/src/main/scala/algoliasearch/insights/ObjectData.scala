@@ -12,8 +12,8 @@ package algoliasearch.insights
 /** ObjectData
   *
   * @param quantity
-  *   The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity`
-  *   multiplied with the `price` for each purchased item.
+  *   The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum
+  *   of `quantity` multiplied with the `price` for each purchased item.
   */
 case class ObjectData(
     price: Option[Price] = scala.None,

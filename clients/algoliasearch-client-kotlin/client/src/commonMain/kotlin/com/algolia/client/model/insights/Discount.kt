@@ -11,7 +11,7 @@ import kotlinx.serialization.json.*
 import kotlin.jvm.JvmInline
 
 /**
- * Absolute value of the discount in effect for this object, measured in `currency`.
+ * The absolute value of the discount for this product, in units of `currency`.
  *
  * Implementations:
  * - [Double] - *[Discount.of]*

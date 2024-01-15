@@ -1,0 +1,11 @@
+[
+  {
+    "parameters": {
+      "userToken": "test-user-1"
+    },
+    "request": {
+      "path": "/1/usertokens/test-user-1",
+      "method": "DELETE"
+    }
+  }
+]

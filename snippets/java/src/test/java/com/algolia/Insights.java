@@ -49,6 +49,17 @@ class SnippetInsightsClient {
     client.customPut("/test/minimal");
   }
 
+  // Snippet for the deleteUserToken method.
+  //
+  // deleteUserToken0
+  void snippetForDeleteUserToken() {
+    // Initialize the client
+    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.deleteUserToken("test-user-1");
+  }
+
   // Snippet for the pushEvents method.
   //
   // pushEvents0

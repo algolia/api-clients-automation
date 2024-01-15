@@ -574,12 +574,20 @@ public class ParametersWithDataType {
       // for object, check which has the most of property in common
       int maxCount = 0;
       CodegenModel bestOneOf = model.interfaceModels.get(0);
-      for (CodegenModel oneOf : model.interfaceModels) {
+      oneOfLoop:for (CodegenModel oneOf : model.interfaceModels) {
         if (oneOf.vars.size() == 0) {
           continue;
         }
 
         Map<String, Object> map = (Map<String, Object>) param;
+
+        // if a required property is not in param, it's not a match
+        for (CodegenProperty prop : oneOf.requiredVars) {
+          if (!map.containsKey(prop.baseName)) {
+            continue oneOfLoop;
+          }
+        }
+
         int commonCount = 0;
         for (String prop : map.keySet()) {
           for (CodegenProperty propOneOf : oneOf.vars) {

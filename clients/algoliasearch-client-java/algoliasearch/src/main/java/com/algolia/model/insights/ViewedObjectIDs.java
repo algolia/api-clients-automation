@@ -28,11 +28,11 @@ public class ViewedObjectIDs implements EventsItems {
   @JsonProperty("userToken")
   private String userToken;
 
-  @JsonProperty("timestamp")
-  private Long timestamp;
-
   @JsonProperty("authenticatedUserToken")
   private String authenticatedUserToken;
+
+  @JsonProperty("timestamp")
+  private Long timestamp;
 
   public ViewedObjectIDs setEventName(String eventName) {
     this.eventName = eventName;
@@ -40,8 +40,8 @@ public class ViewedObjectIDs implements EventsItems {
   }
 
   /**
-   * Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by
-   * adopting Segment's
+   * The name of the event, up to 64 ASCII characters. Consider naming events consistently—for
+   * example, by adopting Segment's
    * [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
    * framework.
    */
@@ -66,7 +66,7 @@ public class ViewedObjectIDs implements EventsItems {
     return this;
   }
 
-  /** Name of the Algolia index. */
+  /** The name of an Algolia index. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
@@ -82,7 +82,7 @@ public class ViewedObjectIDs implements EventsItems {
     return this;
   }
 
-  /** List of object identifiers for items of an Algolia index. */
+  /** The object IDs of the records that are part of the event. */
   @javax.annotation.Nonnull
   public List<String> getObjectIDs() {
     return objectIDs;
@@ -94,12 +94,26 @@ public class ViewedObjectIDs implements EventsItems {
   }
 
   /**
-   * Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
+   * An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
    * information in user tokens.
    */
   @javax.annotation.Nonnull
   public String getUserToken() {
     return userToken;
+  }
+
+  public ViewedObjectIDs setAuthenticatedUserToken(String authenticatedUserToken) {
+    this.authenticatedUserToken = authenticatedUserToken;
+    return this;
+  }
+
+  /**
+   * An identifier for authenticated users. > **Note**: Never include personally identifiable
+   * information in user tokens.
+   */
+  @javax.annotation.Nullable
+  public String getAuthenticatedUserToken() {
+    return authenticatedUserToken;
   }
 
   public ViewedObjectIDs setTimestamp(Long timestamp) {
@@ -108,23 +122,13 @@ public class ViewedObjectIDs implements EventsItems {
   }
 
   /**
-   * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
-   * By default, the Insights API uses the time it receives an event as its timestamp.
+   * The timestamp of the event in milliseconds in [Unix epoch
+   * time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it
+   * receives an event as its timestamp.
    */
   @javax.annotation.Nullable
   public Long getTimestamp() {
     return timestamp;
-  }
-
-  public ViewedObjectIDs setAuthenticatedUserToken(String authenticatedUserToken) {
-    this.authenticatedUserToken = authenticatedUserToken;
-    return this;
-  }
-
-  /** User token for authenticated users. */
-  @javax.annotation.Nullable
-  public String getAuthenticatedUserToken() {
-    return authenticatedUserToken;
   }
 
   @Override
@@ -142,14 +146,14 @@ public class ViewedObjectIDs implements EventsItems {
       Objects.equals(this.index, viewedObjectIDs.index) &&
       Objects.equals(this.objectIDs, viewedObjectIDs.objectIDs) &&
       Objects.equals(this.userToken, viewedObjectIDs.userToken) &&
-      Objects.equals(this.timestamp, viewedObjectIDs.timestamp) &&
-      Objects.equals(this.authenticatedUserToken, viewedObjectIDs.authenticatedUserToken)
+      Objects.equals(this.authenticatedUserToken, viewedObjectIDs.authenticatedUserToken) &&
+      Objects.equals(this.timestamp, viewedObjectIDs.timestamp)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(eventName, eventType, index, objectIDs, userToken, timestamp, authenticatedUserToken);
+    return Objects.hash(eventName, eventType, index, objectIDs, userToken, authenticatedUserToken, timestamp);
   }
 
   @Override
@@ -161,8 +165,8 @@ public class ViewedObjectIDs implements EventsItems {
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    objectIDs: ").append(toIndentedString(objectIDs)).append("\n");
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    authenticatedUserToken: ").append(toIndentedString(authenticatedUserToken)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("}");
     return sb.toString();
   }
