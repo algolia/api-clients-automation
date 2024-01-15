@@ -5,7 +5,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
   const spinner = createSpinner(`running formatter for '${language}' in '${cwd}'`);
   switch (language) {
     case 'csharp':
-      if (cwd.includes('tests')) {
+      if (cwd.includes('tests') || cwd.includes('snippets')) {
         await run('dotnet format && dotnet-csharpier .', { cwd, language });
       } else {
         await run('dotnet format', { cwd, language });
