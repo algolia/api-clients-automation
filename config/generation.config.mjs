@@ -8,6 +8,8 @@ export const patterns = [
   '!clients/**/.openapi-generator-ignore',
 
   // C#
+  '!snippets/csharp/**',
+  'snippets/csharp/src/**.cs',
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   'clients/algoliasearch-client-csharp/global.json',
@@ -21,6 +23,8 @@ export const patterns = [
   'tests/output/csharp/global.json',
 
   // Dart
+  '!snippets/dart/**',
+  'snippets/dart/lib/**',  
   '!clients/algoliasearch-client-dart/**',
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
@@ -71,6 +75,8 @@ export const patterns = [
   'tests/output/javascript/package.json',
 
   // Kotlin
+  '!snippets/kotlin/**',
+  'snippets/kotlin/src/**',
   '!clients/algoliasearch-client-kotlin/**',
   'clients/algoliasearch-client-kotlin/gradle.properties',
   'clients/algoliasearch-client-kotlin/client/README.md',
@@ -105,6 +111,8 @@ export const patterns = [
   'clients/algoliasearch-client-python/.gitignore',
 
   // Ruby
+  '!snippets/ruby/Gemfile',
+  '!snippets/ruby/.rubocop.yml',  
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
@@ -117,6 +125,8 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   // Scala
+  '!snippets/scala/**',
+  'snippets/scala/src/**',  
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',

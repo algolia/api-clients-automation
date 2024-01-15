@@ -20,6 +20,10 @@
     "tests": {
       "extension": ".test.cs",
       "outputFolder": "src/tests"
+    },
+    "snippets": {
+      "extension": ".cs",
+      "outputFolder": "src"
     }
   },
   "dart": {
@@ -50,6 +54,10 @@
     "tests": {
       "extension": "_test.dart",
       "outputFolder": "test"
+    },
+    "snippets": {
+      "extension": ".dart",
+      "outputFolder": "lib"
     }
   },
   "go": {
@@ -182,6 +190,10 @@
     "tests": {
       "extension": "Test.kt",
       "outputFolder": "src/commonTest/kotlin/com/algolia"
+    },
+    "snippets": {
+      "extension": ".kt",
+      "outputFolder": "src/main/kotlin/com/algolia/snippets"
     }
   },
   "php": {
@@ -259,6 +271,10 @@
     "tests": {
       "extension": "_test.rb",
       "outputFolder": "test"
+    },
+    "snippets": {
+      "extension": ".rb",
+      "outputFolder": ""
     }
   },
   "scala": {
@@ -282,6 +298,10 @@
     "tests": {
       "extension": "Test.scala",
       "outputFolder": "src/test/scala/algoliasearch"
+    },
+    "snippets": {
+      "extension": ".scala",
+      "outputFolder": "src/main/scala"
     }
   },
   "swift": {

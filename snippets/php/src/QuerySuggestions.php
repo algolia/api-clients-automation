@@ -11,8 +11,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCreateConfig()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->createConfig(
             ['indexName' => 'theIndexName',
                 'sourceIndices' => [
@@ -54,8 +56,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -71,8 +75,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -88,8 +94,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -105,8 +113,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -122,8 +132,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForDeleteConfig()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->deleteConfig(
             'theIndexName',
         );
@@ -139,8 +151,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetAllConfigs()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getAllConfigs();
 
         // play with the response
@@ -154,8 +168,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetConfig()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getConfig(
             'theIndexName',
         );
@@ -171,8 +187,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetConfigStatus()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getConfigStatus(
             'theIndexName',
         );
@@ -188,8 +206,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetLogFile()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getLogFile(
             'theIndexName',
         );
@@ -205,8 +225,10 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForUpdateConfig()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->updateConfig(
             'theIndexName',
             ['sourceIndices' => [

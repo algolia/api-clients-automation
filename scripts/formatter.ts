@@ -8,7 +8,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('dotnet format', { cwd, language });
       break;
     case 'dart':
-      if (cwd.includes('tests')) {
+      if (cwd.includes('tests') || cwd.includes('snippets')) {
         await run('dart pub get && dart fix --apply && dart format .', { cwd, language });
       } else {
         await run('dart pub get && melos bs && melos build --no-select && melos lint', {

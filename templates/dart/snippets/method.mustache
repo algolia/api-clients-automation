@@ -1,0 +1,39 @@
+import '{{{import}}}';
+
+{{#blocksRequests}}
+{{#snippet}}
+// Snippet for the {{{method}}} method.
+//
+// {{{description}}}
+void snippetFor{{method}}() async {
+  // Initialize the client
+  final client = {{client}}(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY'{{#hasRegionalHost}}, region: 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+
+  // Call the API
+  final response = await client.{{method}}(
+    {{#parametersWithDataType}}
+    {{> tests/request_param}}
+    {{/parametersWithDataType}}
+    {{#hasRequestOptions}}
+    requestOptions : RequestOptions(
+        {{#requestOptions.headers}}
+        headers: {
+        {{#requestOptions.headers.parametersWithDataType}}
+            '{{{key}}}' : '{{value}}',
+        {{/requestOptions.headers.parametersWithDataType}}
+        },
+        {{/requestOptions.headers}}
+        {{#requestOptions.queryParameters}}
+        urlParameters: {
+            {{#requestOptions.queryParameters.parametersWithDataType}}
+            '{{{key}}}' : {{> tests/param_value}},
+            {{/requestOptions.queryParameters.parametersWithDataType}}
+        },
+        {{/requestOptions.queryParameters}}
+    ),
+    {{/hasRequestOptions}}
+  );
+}
+
+{{/snippet}}
+{{/blocksRequests}}

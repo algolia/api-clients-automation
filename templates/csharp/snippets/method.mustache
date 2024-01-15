@@ -1,0 +1,43 @@
+using Algolia.Search.Http;
+using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
+using Action = Algolia.Search.Models.Search.Action;
+
+public class Snippet{{client}}
+{
+  [Fact]
+  public void Dispose()
+  {
+
+  }
+
+  {{#blocksRequests}}
+  {{#snippet}}
+  /// <summary>
+  /// Snippet for the {{method}} method.
+  ///
+  /// {{{description}}}
+  /// </summary>
+  public async Task SnippetFor{{#lambda.pascalcase}}{{method}}{{testIndex}}{{/lambda.pascalcase}}()
+  {
+    // Initialize the client
+    var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));
+
+    // Call the API
+    {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}
+    {{#hasRequestOptions}}
+     var requestOptions = new RequestOptions();
+     {{#requestOptions.queryParameters.parametersWithDataType}}
+     requestOptions.QueryParameters.Add("{{{key}}}", {{> tests/requests/requestOptionsParams}});
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+      {{#requestOptions.headers.parametersWithDataType}}
+     requestOptions.Headers.Add("{{{key}}}", "{{{value}}}");
+      {{/requestOptions.headers.parametersWithDataType}}
+    {{/hasRequestOptions}}
+
+     var response = await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+  }
+
+  {{/snippet}}
+  {{/blocksRequests}}
+}

@@ -5,13 +5,13 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  algoliasearch: ^0.1.0
-  algolia_client_search: ^0.1.0
-  algolia_client_insights: ^0.1.0
-  algolia_client_recommend: ^0.1.0
+  algoliasearch: ^1.0.0
+  algolia_client_search: ^1.0.0
+  algolia_client_insights: ^1.0.0
+  algolia_client_recommend: ^1.0.0
   test: ^1.24.3
   collection: ^1.17.2
   test_api: ^0.6.0
 
 dev_dependencies:
-  lints: ^2.0.0
+  lints: ^3.0.0

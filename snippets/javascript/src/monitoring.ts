@@ -6,11 +6,13 @@ import { monitoringClient } from '@algolia/monitoring';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -18,11 +20,13 @@ export async function snippetForcustomDelete(): Promise<void> {
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -30,11 +34,13 @@ export async function snippetForcustomGet(): Promise<void> {
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -42,11 +48,13 @@ export async function snippetForcustomPost(): Promise<void> {
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -54,11 +62,13 @@ export async function snippetForcustomPut(): Promise<void> {
 //
 // getClusterIncidents
 export async function snippetForgetClusterIncidents(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getClusterIncidents({ clusters: 'c1-de' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -66,11 +76,13 @@ export async function snippetForgetClusterIncidents(): Promise<void> {
 //
 // getClusterStatus
 export async function snippetForgetClusterStatus(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getClusterStatus({ clusters: 'c1-de' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -78,11 +90,13 @@ export async function snippetForgetClusterStatus(): Promise<void> {
 //
 // getIncidents
 export async function snippetForgetIncidents(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getIncidents();
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -90,11 +104,13 @@ export async function snippetForgetIncidents(): Promise<void> {
 //
 // getIndexingTime
 export async function snippetForgetIndexingTime(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getIndexingTime({ clusters: 'c1-de' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -102,11 +118,13 @@ export async function snippetForgetIndexingTime(): Promise<void> {
 //
 // getInventory
 export async function snippetForgetInventory(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getInventory();
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -114,11 +132,13 @@ export async function snippetForgetInventory(): Promise<void> {
 //
 // getLatency
 export async function snippetForgetLatency(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getLatency({ clusters: 'c1-de' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -126,14 +146,16 @@ export async function snippetForgetLatency(): Promise<void> {
 //
 // getMetrics
 export async function snippetForgetMetrics(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getMetrics({
     metric: 'avg_build_time',
     period: 'minute',
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -141,11 +163,13 @@ export async function snippetForgetMetrics(): Promise<void> {
 //
 // getReachability
 export async function snippetForgetReachability(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getReachability({ clusters: 'c1-de' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -153,10 +177,12 @@ export async function snippetForgetReachability(): Promise<void> {
 //
 // getStatus
 export async function snippetForgetStatus(): Promise<void> {
+  // Initialize the client
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getStatus();
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
