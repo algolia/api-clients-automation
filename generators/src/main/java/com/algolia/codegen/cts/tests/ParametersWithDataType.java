@@ -625,7 +625,7 @@ public class ParametersWithDataType {
 
         // if a required property is not in param, it's not a match
         for (CodegenProperty prop : oneOf.requiredVars) {
-          if (!map.containsKey(prop.name)) {
+          if (!map.containsKey(prop.baseName)) {
             continue oneOfLoop;
           }
         }
