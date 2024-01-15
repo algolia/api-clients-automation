@@ -4,24 +4,18 @@ import path from 'path';
 import { Octokit } from '@octokit/rest';
 import { execaCommand, execa } from 'execa';
 import type { ExecaError } from 'execa';
-import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
 import { buildSpecs } from './buildSpecs';
+import { Cache } from './cache';
 import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
-import type {
-  CheckForCache,
-  CheckForCacheOptions,
-  Generator,
-  Language,
-  RunOptions,
-} from './types.js';
+import type { Generator, Language, RunOptions } from './types.js';
 
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;
@@ -156,50 +150,16 @@ export async function gitCommit({
   await execa('git', ['commit', '-m', messageWithCoAuthors], { cwd });
 }
 
-export async function checkForCache({
-  folder,
-  generatedFiles,
-  filesToCache,
-  cacheFile,
-}: CheckForCacheOptions): Promise<CheckForCache> {
-  const cache: CheckForCache = {
-    cacheExists: false,
-    hash: '',
-  };
-  const generatedFilesExists = (
-    await Promise.all(generatedFiles.map((generatedFile) => exists(`${folder}/${generatedFile}`)))
-  ).every((exist) => exist);
-
-  for (const fileToCache of filesToCache) {
-    const fileHash = (await hashElement(`${folder}/${fileToCache}`)).hash;
-
-    cache.hash = `${cache.hash}-${fileHash}`;
-  }
-
-  // We only skip if both the cache and the generated file exists
-  if (generatedFilesExists && (await exists(cacheFile))) {
-    const storedHash = (await fsp.readFile(cacheFile)).toString();
-    if (storedHash === cache.hash) {
-      return {
-        cacheExists: true,
-        hash: cache.hash,
-      };
-    }
-  }
-
-  return cache;
-}
-
 async function buildCustomGenerators(): Promise<void> {
   const spinner = createSpinner('building custom generators');
-
-  const cacheFile = toAbsolutePath('generators/.cache');
-  const { cacheExists, hash } = await checkForCache({
+  const cache = new Cache({
     folder: toAbsolutePath('generators/'),
-    generatedFiles: ['build'],
+    generatedFiles: ['build/classes'],
     filesToCache: ['src', 'build.gradle', 'settings.gradle'],
-    cacheFile,
+    cacheFile: toAbsolutePath('generators/.cache'),
   });
+
+  const cacheExists = await cache.isValid();
 
   if (cacheExists) {
     spinner.succeed('job skipped, cache found for custom generators');
@@ -208,10 +168,8 @@ async function buildCustomGenerators(): Promise<void> {
 
   await run('./gradle/gradlew --no-daemon -p generators assemble', { language: 'java' });
 
-  if (hash) {
-    spinner.text = 'storing custom generators cache';
-    await fsp.writeFile(cacheFile, hash);
-  }
+  spinner.text = 'storing custom generators cache';
+  await cache.store();
 
   spinner.succeed();
 }

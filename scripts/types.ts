@@ -27,18 +27,6 @@ export type Generator = Record<string, any> & {
   additionalProperties: AdditionalProperties;
 };
 
-export type CheckForCacheOptions = {
-  folder: string;
-  generatedFiles: string[];
-  filesToCache: string[];
-  cacheFile: string;
-};
-
-export type CheckForCache = {
-  cacheExists: boolean;
-  hash: string;
-};
-
 export type RunOptions = {
   errorMessage?: string;
   cwd?: string;
