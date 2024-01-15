@@ -8,9 +8,11 @@ class SnippetQuerySuggestionsClient {
   // Snippet for the createConfig method.
   //
   // createConfig0
-  void SnippetForCreateConfig() {
+  void snippetForCreateConfig() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.createConfig(
       new QuerySuggestionsConfigurationWithIndex()
         .setIndexName("theIndexName")
@@ -30,90 +32,110 @@ class SnippetQuerySuggestionsClient {
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters
-  void SnippetForCustomDelete() {
+  void snippetForCustomDelete() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customDelete("/test/minimal");
   }
 
   // Snippet for the customGet method.
   //
   // allow get method for a custom path with minimal parameters
-  void SnippetForCustomGet() {
+  void snippetForCustomGet() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customGet("/test/minimal");
   }
 
   // Snippet for the customPost method.
   //
   // allow post method for a custom path with minimal parameters
-  void SnippetForCustomPost() {
+  void snippetForCustomPost() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customPost("/test/minimal");
   }
 
   // Snippet for the customPut method.
   //
   // allow put method for a custom path with minimal parameters
-  void SnippetForCustomPut() {
+  void snippetForCustomPut() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.customPut("/test/minimal");
   }
 
   // Snippet for the deleteConfig method.
   //
   // deleteConfig0
-  void SnippetForDeleteConfig() {
+  void snippetForDeleteConfig() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.deleteConfig("theIndexName");
   }
 
   // Snippet for the getAllConfigs method.
   //
   // getAllConfigs0
-  void SnippetForGetAllConfigs() {
+  void snippetForGetAllConfigs() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.getAllConfigs();
   }
 
   // Snippet for the getConfig method.
   //
   // getConfig0
-  void SnippetForGetConfig() {
+  void snippetForGetConfig() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.getConfig("theIndexName");
   }
 
   // Snippet for the getConfigStatus method.
   //
   // getConfigStatus0
-  void SnippetForGetConfigStatus() {
+  void snippetForGetConfigStatus() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.getConfigStatus("theIndexName");
   }
 
   // Snippet for the getLogFile method.
   //
   // getLogFile0
-  void SnippetForGetLogFile() {
+  void snippetForGetLogFile() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.getLogFile("theIndexName");
   }
 
   // Snippet for the updateConfig method.
   //
   // updateConfig0
-  void SnippetForUpdateConfig() {
+  void snippetForUpdateConfig() {
+    // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
+    // Call the API
     client.updateConfig(
       "theIndexName",
       new QuerySuggestionsConfiguration()
