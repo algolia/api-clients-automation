@@ -37,22 +37,23 @@ Task {
 
         let client = SearchClient(applicationID: applicationID, apiKey: apiKey)
 
-        for contact in contacts {
-            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contact)
-            _ = try await client.getTask(indexName: "contacts", taskID: saveObjRes.taskID)
-        }
+//        for contact in contacts {
+//            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contact, requestOptions: RequestOptions(headers: ["X-Algolia-Test": "True"], body: ["age": 42]))
+//            _ = try await client.getTask(indexName: "contacts", taskID: saveObjRes.taskID)
+//        }
 
         let searchParams = SearchParamsObject(query: "Jimmy")
 
-        let res = try await client.searchSingleIndex(indexName: "contacts", searchParams: .searchParamsObject(searchParams))
+        let res = try await client.searchSingleIndex(
+            indexName: "contacts",
+            searchParams: .searchParamsObject(searchParams)
+        )
 
         dump(res.hits[0])
         
-        let indexSettings = IndexSettings(searchableAttributes: ["lastname", "firstname", "company"])
-        _ = try await client.setSettings(indexName: "contacts", indexSettings: indexSettings)
-        
         exit(EXIT_SUCCESS)
     } catch {
+        dump(error.localizedDescription)
         exit(EXIT_FAILURE)
     }
 }

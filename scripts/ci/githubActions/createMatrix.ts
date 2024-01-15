@@ -101,11 +101,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       case 'csharp':
         testsToStore = `${testsToStore} ${testsRootFolder}/global.json`;
         break;
-      case 'java':
-        testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
-        break;
       case 'go':
         testsToStore = `${testsToStore} ${testsOutputBase}/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        break;
+      case 'java':
+        testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
         const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
@@ -123,7 +123,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;
       case 'python':
-        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock`;
+        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock ${testsRootFolder}/requirements.txt`;
         break;
       case 'ruby':
         testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;

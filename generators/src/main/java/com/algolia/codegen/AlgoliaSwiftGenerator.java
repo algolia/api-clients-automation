@@ -49,7 +49,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(CodegenConstants.PROJECT_NAME, "AlgoliaSearchClient");
     additionalProperties.put(CodegenConstants.API_NAME_SUFFIX, Helpers.API_SUFFIX);
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
-    additionalProperties.put(OBJC_COMPATIBLE, true);
+    additionalProperties.put(OBJC_COMPATIBLE, false);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     additionalProperties.put(

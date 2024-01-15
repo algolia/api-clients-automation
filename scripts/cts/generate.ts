@@ -1,4 +1,4 @@
-import { callCTSGenerator, run, setupAndGen, toAbsolutePath } from '../common.js';
+import { callCTSGenerator, run, setupAndGen } from '../common.js';
 import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
 import { createSpinner } from '../spinners.js';
@@ -26,6 +26,7 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
     if (lang === 'go') {
       await run('go mod tidy', {
         cwd: 'tests/output/go',
+        language: 'go',
       });
     }
 
@@ -36,6 +37,6 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
       continue;
     }
 
-    await formatter(lang, toAbsolutePath(`tests/output/${lang}`));
+    await formatter(lang, `tests/output/${lang}`);
   }
 }
