@@ -17,7 +17,7 @@
   {{{value}}}
 {{/isBoolean}}
 {{#isEnum}}
-  {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}({{{objectName}}})Enum.Parse(typeof({{{objectName}}}), "{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}"){{#oneOfModel}}){{/oneOfModel}}
+  {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}Enum.Parse<{{{objectName}}}>("{{#lambda.pascalcase}}{{{value}}}{{/lambda.pascalcase}}"){{#oneOfModel}}){{/oneOfModel}}
 {{/isEnum}}
 {{#isArray}}
   new List{{> tests/generateGenerics}}{ {{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}} }
