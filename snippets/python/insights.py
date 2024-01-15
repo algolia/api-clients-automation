@@ -85,6 +85,27 @@ async def snippet_for_custom_put():
     print(resp.to_json())
 
 
+async def snippet_for_delete_user_token():
+    """
+    Snippet for the deleteUserToken method.
+
+    deleteUserToken0
+    """
+    # Initialize the client
+    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.delete_user_token(
+        user_token="test-user-1",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
 async def snippet_for_push_events():
     """
     Snippet for the pushEvents method.

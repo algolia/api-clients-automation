@@ -189,6 +189,31 @@ final class InsightsClient implements ApiClient {
     );
   }
 
+  /// Delete user token.
+  /// Delete all events related to a certain user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+  ///
+  /// Parameters:
+  /// * [userToken] The user token for which to delete all associated events.
+  /// * [requestOptions] additional request configuration.
+  Future<void> deleteUserToken({
+    required String userToken,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      userToken.isNotEmpty,
+      'Parameter `userToken` is required when calling `deleteUserToken`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.delete,
+      path: r'/1/usertokens/{userToken}'.replaceAll(
+          '{' r'userToken' '}', Uri.encodeComponent(userToken.toString())),
+    );
+    await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+  }
+
   /// Send events.
   /// Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
   ///

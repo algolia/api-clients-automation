@@ -525,6 +525,18 @@ public class InsightsClientRequestTests
       Assert.Equal(query.Value, result);
     }
   }
+  [Fact(DisplayName = "deleteUserToken0")]
+  public async Task DeleteUserTokenTest0()
+  {
+    const string userToken0 = "test-user-1";
+
+    await _client.DeleteUserTokenAsync(userToken0);
+
+    EchoResponse req = _echo.LastResponse;
+    Assert.Equal("/1/usertokens/test-user-1", req.Path);
+    Assert.Equal("DELETE", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
   [Fact(DisplayName = "pushEvents0")]
   public async Task PushEventsTest0()
   {

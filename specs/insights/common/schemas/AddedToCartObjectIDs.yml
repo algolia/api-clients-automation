@@ -16,16 +16,18 @@ properties:
     $ref: './EventAttributes.yml#/index'
   objectIDs:
     $ref: './EventAttributes.yml#/objectIDs'
-  objectData:
-    $ref: './EventAttributes.yml#/objectDataList'
-  currency:
-    $ref: './EventAttributes.yml#/currency'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
+  currency:
+    $ref: './EventAttributes.yml#/currency'
+  objectData:
+    $ref: './EventAttributes.yml#/objectDataList'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
-  authenticatedUserToken:
-    $ref: './EventAttributes.yml#/authenticatedUserToken'  
+  value:
+    $ref: './EventAttributes.yml#/value'
 required:
   - eventName
   - eventType

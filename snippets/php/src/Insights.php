@@ -81,6 +81,25 @@ class SnippetInsightsClient
     }
 
     /**
+     * Snippet for the DeleteUserToken method.
+     *
+     * deleteUserToken0
+     */
+    public function snippetForDeleteUserToken()
+    {
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->deleteUserToken(
+            'test-user-1',
+        );
+
+        // play with the response
+        var_dump($response);
+    }
+
+    /**
      * Snippet for the PushEvents method.
      *
      * pushEvents0

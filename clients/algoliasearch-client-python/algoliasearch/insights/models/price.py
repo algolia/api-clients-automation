@@ -20,7 +20,7 @@ from pydantic import (
 
 class Price(BaseModel):
     """
-    The price of the item. This should be the final price, inclusive of any discounts in effect.
+    The total price of a product, including any discounts, in units of `currency`.
     """
 
     oneof_schema_1_validator: Optional[Union[StrictFloat, StrictInt]] = None

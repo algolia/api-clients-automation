@@ -315,6 +315,19 @@ describe('customPut', () => {
   });
 });
 
+describe('deleteUserToken', () => {
+  test('deleteUserToken0', async () => {
+    const req = (await client.deleteUserToken({
+      userToken: 'test-user-1',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/usertokens/test-user-1');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('pushEvents', () => {
   test('pushEvents0', async () => {
     const req = (await client.pushEvents({

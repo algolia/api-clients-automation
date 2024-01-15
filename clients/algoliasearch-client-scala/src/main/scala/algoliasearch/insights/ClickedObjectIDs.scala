@@ -16,19 +16,23 @@ import algoliasearch.insights.ClickEvent._
   * \"Clicked object IDs after search\" event.
   *
   * @param eventName
-  *   Can contain up to 64 ASCII characters. Consider naming events consistently—for example, by adopting Segment's
+  *   The name of the event, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting
+  *   Segment's
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   Name of the Algolia index.
+  *   The name of an Algolia index.
   * @param objectIDs
-  *   List of object identifiers for items of an Algolia index.
+  *   The object IDs of the records that are part of the event.
   * @param userToken
-  *   Anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in user
+  *   An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in
+  *   user tokens.
+  * @param authenticatedUserToken
+  *   An identifier for authenticated users. > **Note**: Never include personally identifiable information in user
   *   tokens.
   * @param timestamp
-  *   Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the
-  *   Insights API uses the time it receives an event as its timestamp.
+  *   The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default,
+  *   the Insights API uses the time it receives an event as its timestamp.
   */
 case class ClickedObjectIDs(
     eventName: String,
@@ -36,5 +40,6 @@ case class ClickedObjectIDs(
     index: String,
     objectIDs: Seq[String],
     userToken: String,
+    authenticatedUserToken: Option[String] = scala.None,
     timestamp: Option[Long] = scala.None
 ) extends EventsItemsTrait

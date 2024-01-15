@@ -11,7 +11,7 @@ package algoliasearch.insights
 
 import org.json4s._
 
-/** Absolute value of the discount in effect for this object, measured in `currency`.
+/** The absolute value of the discount for this product, in units of `currency`.
   */
 sealed trait Discount
 

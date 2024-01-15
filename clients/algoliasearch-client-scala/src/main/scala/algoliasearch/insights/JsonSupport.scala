@@ -22,7 +22,8 @@ object JsonSupport {
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     DiscountSerializer :+
     EventsItemsSerializer :+
-    PriceSerializer
+    PriceSerializer :+
+    ValueSerializer
 
   private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
     new ErrorBaseSerializer()

@@ -20,7 +20,7 @@ using Algolia.Search.Models;
 namespace Algolia.Search.Models.Insights
 {
   /// <summary>
-  /// The price of the item. This should be the final price, inclusive of any discounts in effect.
+  /// The total price of a product, including any discounts, in units of &#x60;currency&#x60;. 
   /// </summary>
   [JsonConverter(typeof(PriceJsonConverter))]
   [DataContract(Name = "price")]

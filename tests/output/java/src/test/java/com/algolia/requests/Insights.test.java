@@ -495,6 +495,18 @@ class InsightsClientRequestsTests {
   }
 
   @Test
+  @DisplayName("deleteUserToken0")
+  void deleteUserTokenTest0() {
+    assertDoesNotThrow(() -> {
+      client.deleteUserToken("test-user-1");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/usertokens/test-user-1", req.path);
+    assertEquals("DELETE", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("pushEvents0")
   void pushEventsTest0() {
     assertDoesNotThrow(() -> {

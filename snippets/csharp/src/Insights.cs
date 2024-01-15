@@ -80,6 +80,23 @@ public class SnippetInsightsClient
   }
 
   /// <summary>
+  /// Snippet for the deleteUserToken method.
+  ///
+  /// deleteUserToken0
+  /// </summary>
+  public async Task SnippetForDeleteUserToken0()
+  {
+    // Initialize the client
+    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+
+    // Call the API
+    const string userToken0 = "test-user-1";
+
+
+    var response = await _client.DeleteUserTokenAsync(userToken0);
+  }
+
+  /// <summary>
   /// Snippet for the pushEvents method.
   ///
   /// pushEvents0

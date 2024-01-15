@@ -15,18 +15,18 @@ final class ClickedFilters {
     required this.index,
     required this.filters,
     required this.userToken,
-    this.timestamp,
     this.authenticatedUserToken,
+    this.timestamp,
   });
 
-  /// Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+  /// The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
   @JsonKey(name: r'eventName')
   final String eventName;
 
   @JsonKey(name: r'eventType')
   final ClickEvent eventType;
 
-  /// Name of the Algolia index.
+  /// The name of an Algolia index.
   @JsonKey(name: r'index')
   final String index;
 
@@ -34,17 +34,17 @@ final class ClickedFilters {
   @JsonKey(name: r'filters')
   final List<String> filters;
 
-  /// Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+  /// An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
   @JsonKey(name: r'userToken')
   final String userToken;
 
-  /// Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
-  @JsonKey(name: r'timestamp')
-  final int? timestamp;
-
-  /// User token for authenticated users.
+  /// An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
   @JsonKey(name: r'authenticatedUserToken')
   final String? authenticatedUserToken;
+
+  /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+  @JsonKey(name: r'timestamp')
+  final int? timestamp;
 
   @override
   bool operator ==(Object other) =>
@@ -55,8 +55,8 @@ final class ClickedFilters {
           other.index == index &&
           other.filters == filters &&
           other.userToken == userToken &&
-          other.timestamp == timestamp &&
-          other.authenticatedUserToken == authenticatedUserToken;
+          other.authenticatedUserToken == authenticatedUserToken &&
+          other.timestamp == timestamp;
 
   @override
   int get hashCode =>
@@ -65,8 +65,8 @@ final class ClickedFilters {
       index.hashCode +
       filters.hashCode +
       userToken.hashCode +
-      timestamp.hashCode +
-      authenticatedUserToken.hashCode;
+      authenticatedUserToken.hashCode +
+      timestamp.hashCode;
 
   factory ClickedFilters.fromJson(Map<String, dynamic> json) =>
       _$ClickedFiltersFromJson(json);

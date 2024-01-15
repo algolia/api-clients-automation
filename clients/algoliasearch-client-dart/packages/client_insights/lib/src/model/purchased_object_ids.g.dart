@@ -20,16 +20,17 @@ PurchasedObjectIDs _$PurchasedObjectIDsFromJson(Map<String, dynamic> json) =>
           index: $checkedConvert('index', (v) => v as String),
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
+          userToken: $checkedConvert('userToken', (v) => v as String),
+          authenticatedUserToken:
+              $checkedConvert('authenticatedUserToken', (v) => v as String?),
+          currency: $checkedConvert('currency', (v) => v as String?),
           objectData: $checkedConvert(
               'objectData',
               (v) => (v as List<dynamic>?)
                   ?.map((e) => ObjectData.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          currency: $checkedConvert('currency', (v) => v as String?),
-          userToken: $checkedConvert('userToken', (v) => v as String),
           timestamp: $checkedConvert('timestamp', (v) => v as int?),
-          authenticatedUserToken:
-              $checkedConvert('authenticatedUserToken', (v) => v as String?),
+          value: $checkedConvert('value', (v) => v),
         );
         return val;
       },
@@ -42,6 +43,7 @@ Map<String, dynamic> _$PurchasedObjectIDsToJson(PurchasedObjectIDs instance) {
     'eventSubtype': instance.eventSubtype.toJson(),
     'index': instance.index,
     'objectIDs': instance.objectIDs,
+    'userToken': instance.userToken,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -50,12 +52,12 @@ Map<String, dynamic> _$PurchasedObjectIDsToJson(PurchasedObjectIDs instance) {
     }
   }
 
+  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('currency', instance.currency);
   writeNotNull(
       'objectData', instance.objectData?.map((e) => e.toJson()).toList());
-  writeNotNull('currency', instance.currency);
-  val['userToken'] = instance.userToken;
   writeNotNull('timestamp', instance.timestamp);
-  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('value', instance.value);
   return val;
 }
 

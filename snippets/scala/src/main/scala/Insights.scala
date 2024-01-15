@@ -81,6 +81,23 @@ class SnippetInsightsClient {
     val value = Await.result(res, Duration(100, "sec"))
   }
 
+  /** Snippet for the deleteUserToken method.
+    *
+    * deleteUserToken0
+    */
+  def snippetForInsightsClientDeleteUserToken(): Unit = {
+    // Initialize the client
+    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+    // Call the API
+    val res = client.deleteUserToken(
+      userToken = "test-user-1"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+  }
+
   /** Snippet for the pushEvents method.
     *
     * pushEvents0
