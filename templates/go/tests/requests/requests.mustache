@@ -31,37 +31,13 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client()
 
-    tests := []struct {
-    name     string
-    testFunc func(t *testing.T)
-  }{
-{{#tests}} {
-    name: "{{{testName}}}",
-    testFunc: func(t *testing.T) { {{#extras}}{{#skipForGo}}
-      t.Skip("skipping test for go client"){{/skipForGo}}{{/extras}}
-      {{#hasOperationParams}}
-      parametersStr := `{{{parameters}}}`
-      req := {{clientPrefix}}.Api{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request{}
-      require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-      {{/hasOperationParams}}
-      {{#hasRequestOptions}}
-        var opts []{{clientPrefix}}.Option
-        {{#requestOptions.queryParameters}}
-        requestOptionParameters := map[string]any{}
-        require.NoError(t, json.Unmarshal([]byte(`{{{parameters}}}`), &requestOptionParameters))
-        for k, v := range requestOptionParameters {
-          opts = append(opts, {{clientPrefix}}.QueryParamOption(k, v))
-        }
-        {{/requestOptions.queryParameters}}
-        {{#requestOptions.headers}}
-        requestOptionHeaders := map[string]any{}
-        require.NoError(t, json.Unmarshal([]byte(`{{{parameters}}}`), &requestOptionHeaders))
-        for k, v := range requestOptionHeaders {
-          opts = append(opts, {{clientPrefix}}.HeaderParamOption(k, v))
-        }
-        {{/requestOptions.headers}}
-      {{/hasRequestOptions}}
-      {{#hasResponsePayload}}_, {{/hasResponsePayload}}err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}req{{/hasOperationParams}}{{#hasRequestOptions}}{{#hasOperationParams}},{{/hasOperationParams}} opts...{{/hasRequestOptions}})
+    {{#tests}} 
+    t.Run("{{{testName}}}", func(t *testing.T) {
+      {{#hasResponsePayload}}_, {{/hasResponsePayload}}err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
+        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
+      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
+      {{/requestOptions}})
       require.NoError(t, err)
 
       expectedPath, err := url.QueryUnescape("{{{request.path}}}")
@@ -95,16 +71,8 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
             require.Equal(t, v, echo.query.Get(k))
         }
       {{/request.queryParameters}}
-      },
-    },
-{{/tests}}
-  }
-    for _, test := range tests {
-    test := test
-    t.Run(test.name, func(t *testing.T) {
-      test.testFunc(t)
     })
-  }
+{{/tests}}
 }
 
 {{/blocksRequests}}

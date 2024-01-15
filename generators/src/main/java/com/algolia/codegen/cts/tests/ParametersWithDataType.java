@@ -94,7 +94,7 @@ public class ParametersWithDataType {
     boolean isParentFreeFormObject
   ) throws CTSException {
     if (spec == null) {
-      return traverseParams(paramName, param, parent, suffix);
+      return traverseParamsWithoutSpec(paramName, param, parent, suffix);
     }
     String baseType = getTypeName(spec);
     if (baseType == null) {
@@ -106,9 +106,9 @@ public class ParametersWithDataType {
     Map<String, Object> testOutput = createDefaultOutput();
 
     if (spec instanceof CodegenParameter parameter) {
-      testOutput.put("isOptional", !parameter.required);
+      testOutput.put("required", parameter.required);
     } else if (spec instanceof CodegenProperty property) {
-      testOutput.put("isOptional", !property.required);
+      testOutput.put("required", property.required);
     }
 
     if (!isCodegenModel) {
@@ -141,14 +141,14 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
-    testOutput.put("objectName", getObjectNameForLanguage(language, baseType));
+    testOutput.put("objectName", getObjectNameForLanguage(baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
     if (param == null) {
       handleNull(testOutput);
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
-    } else if (isEnum(spec)) {
+    } else if (spec.getIsEnum()) {
       handleEnum(param, testOutput);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
@@ -166,7 +166,7 @@ public class ParametersWithDataType {
   }
 
   /** Same method but with inference only */
-  private Map<String, Object> traverseParams(String paramName, Object param, String parent, int suffix) throws CTSException {
+  private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int suffix) throws CTSException {
     String finalParamName = paramName;
     if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
@@ -179,8 +179,13 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
-    // cannot determine objectName with inference
-    // testOutput.put("objectName", Helpers.capitalize(baseType));
+    // try to infer the type
+    try {
+      String dataType = inferDataType(param, null, testOutput);
+      testOutput.put("objectName", getObjectNameForLanguage(dataType));
+    } catch (CTSException e) {
+      // ignore the error
+    }
 
     if (param == null) {
       handleNull(testOutput);
@@ -288,13 +293,20 @@ public class ParametersWithDataType {
       HashMap<String, Object> oneOfModel = new HashMap<>();
       IJsonSchemaValidationProperties current = match;
       String typeName = getTypeName(current);
-      StringBuilder capitalizedTypeName = new StringBuilder(typeName);
       boolean isList = false;
-      while (current.getItems() != null) {
-        current = current.getItems();
-        typeName += "Of" + getTypeName(current);
-        capitalizedTypeName.append("Of").append(StringUtils.capitalize(getTypeName(current)));
-        isList = true;
+      if (language.equals("go")) {
+        typeName = Helpers.capitalize(getObjectNameForLanguage(typeName));
+        while (current.getItems() != null) {
+          current = current.getItems();
+          typeName += "Of" + Helpers.capitalize(getObjectNameForLanguage(getTypeName(current)));
+          isList = true;
+        }
+      } else {
+        while (current.getItems() != null) {
+          current = current.getItems();
+          typeName += "Of" + getTypeName(current);
+          isList = true;
+        }
       }
 
       boolean useExplicitName;
@@ -307,10 +319,8 @@ public class ParametersWithDataType {
 
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
       oneOfModel.put("type", typeName);
-      oneOfModel.put("type-capitalized", capitalizedTypeName.toString());
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
-      oneOfModel.put("hasWrapper", isList || isString(current) || isNumber(current) || isBoolean(current));
-
+      oneOfModel.put("hasWrapper", isList || isString(current) || current.getIsNumber() || current.getIsBoolean());
       testOutput.put("oneOfModel", oneOfModel);
       return;
     }
@@ -428,11 +438,11 @@ public class ParametersWithDataType {
   }
 
   private void handlePrimitive(Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec) throws CTSException {
-    if (spec != null && isPrimitiveType(spec)) {
+    if (spec != null && spec.getIsPrimitiveType()) {
       transferPrimitiveData(spec, testOutput);
     } else {
       inferDataType(param, null, testOutput);
-      if (isAnyType(spec)) {
+      if (spec != null && spec.getIsAnyType()) {
         testOutput.put("isAnyType", true);
       }
     }
@@ -440,65 +450,11 @@ public class ParametersWithDataType {
   }
 
   private String getTypeName(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.dataType;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.dataType;
-    }
     if (param instanceof CodegenModel parameter) {
       return parameter.classname;
     }
-    if (param instanceof CodegenResponse parameter) {
-      return parameter.dataType;
-    }
-    return null;
-  }
 
-  private boolean isAnyType(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.isAnyType;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.isAnyType;
-    }
-    if (param instanceof CodegenResponse parameter) {
-      return parameter.isAnyType;
-    }
-    return false;
-  }
-
-  private boolean isEnum(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.isEnum;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.isEnum;
-    }
-    if (param instanceof CodegenModel parameter) {
-      return parameter.isEnum;
-    }
-    return false;
-  }
-
-  private boolean isPrimitiveType(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.isPrimitiveType;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.isPrimitiveType;
-    }
-    return false;
-  }
-
-  private boolean isNumber(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.isNumber;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.isNumber;
-    }
-    return false;
+    return param.getDataType();
   }
 
   private boolean isString(IJsonSchemaValidationProperties param) {
@@ -511,26 +467,33 @@ public class ParametersWithDataType {
     return false;
   }
 
-  private boolean isBoolean(IJsonSchemaValidationProperties param) {
-    if (param instanceof CodegenParameter parameter) {
-      return parameter.isBoolean;
-    }
-    if (param instanceof CodegenProperty parameter) {
-      return parameter.isBoolean;
-    }
-    return false;
-  }
-
-  private String getObjectNameForLanguage(String language, String objectName) {
-    if (language.equals("csharp")) {
-      switch (objectName) {
-        case "Map":
-          return "Dictionary";
-        case "Integer":
-          return "int";
-        case "String":
-          return "string";
-      }
+  private String getObjectNameForLanguage(String objectName) {
+    switch (language) {
+      case "csharp":
+        switch (objectName) {
+          case "Map":
+            return "Dictionary";
+          case "Integer":
+            return "int";
+          case "String":
+            return "string";
+        }
+        break;
+      case "go":
+        switch (objectName) {
+          case "String":
+            return "string";
+          case "Double":
+            return "float64";
+          case "Integer":
+            return "int32";
+          case "Long":
+            return "int64";
+          case "Boolean":
+            return "bool";
+          case "List":
+            return "Array";
+        }
     }
     return Helpers.capitalize(objectName);
   }
@@ -633,7 +596,7 @@ public class ParametersWithDataType {
         int commonCount = 0;
         for (String prop : map.keySet()) {
           for (CodegenProperty propOneOf : oneOf.vars) {
-            if (prop.equals(propOneOf.name) && couldMatchEnum(map.get(prop), propOneOf)) {
+            if (prop.equals(propOneOf.baseName) && couldMatchEnum(map.get(prop), propOneOf)) {
               commonCount++;
             }
           }
@@ -653,7 +616,7 @@ public class ParametersWithDataType {
 
         // Somehow this is not yet enough
         if (oneOf != null && !oneOf.isEmpty()) {
-          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).name + " (this won't stay correct forever)");
+          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).baseName + " (this won't stay correct forever)");
           return oneOf.get(0);
         }
       }

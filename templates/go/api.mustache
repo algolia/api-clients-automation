@@ -76,7 +76,7 @@ func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/
 // {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request represents the request with all the parameters for the API call.
 type {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request struct {
 {{#allParams}}
-	{{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}}
+	{{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}}
 {{/allParams}}
 }
 
@@ -84,7 +84,7 @@ type {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/stru
 // Deprecated
 {{/isDeprecated}}
 //New{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request creates an instance of the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request to be used for the API call.
-func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}} {{^-last}},{{/-last}}{{/requiredParams}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}} {{^-last}},{{/-last}}{{/requiredParams}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
 	return {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request{
 		{{#requiredParams}}
 		{{paramName}}: {{paramName}},
@@ -94,11 +94,11 @@ func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}
 
 {{#allParams}}
 {{^required}}
-// With{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
+// With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
 {{#isDeprecated}}
 // Deprecated
 {{/isDeprecated}}
-func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
 	r.{{paramName}} = {{paramName}}
 	return r
 }
@@ -223,22 +223,22 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
   {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !isNilorEmpty(r.{{paramName}}) {
-    queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+    queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}
   {{/vendorExtensions.x-is-custom-request}}
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
   if !isNilorEmpty(r.{{paramName}}) {
-    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}*{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
 {{/headerParams}}
