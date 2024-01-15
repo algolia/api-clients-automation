@@ -1,382 +1,443 @@
 from algoliasearch.analytics.client import AnalyticsClient
 
 
-class SnippetAnalyticsClient:
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # use the class directly
-        print(resp)
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # use the class directly
+    print(resp)
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_get_average_click_position():
-        """
-        Snippet for the getAverageClickPosition method.
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        get getAverageClickPosition with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.get_average_click_position(
-            index="index",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_get_average_click_position():
+    """
+    Snippet for the getAverageClickPosition method.
 
-    async def snippet_for_get_click_positions():
-        """
-        Snippet for the getClickPositions method.
+    get getAverageClickPosition with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        get getClickPositions with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # Call the API
+    resp = await _client.get_average_click_position(
+        index="index",
+    )
 
-        resp = await _client.get_click_positions(
-            index="index",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_click_through_rate():
-        """
-        Snippet for the getClickThroughRate method.
+async def snippet_for_get_click_positions():
+    """
+    Snippet for the getClickPositions method.
 
-        get getClickThroughRate with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    get getClickPositions with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_click_through_rate(
-            index="index",
-        )
+    # Call the API
+    resp = await _client.get_click_positions(
+        index="index",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_get_conversation_rate():
-        """
-        Snippet for the getConversationRate method.
 
-        get getConversationRate with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_get_click_through_rate():
+    """
+    Snippet for the getClickThroughRate method.
 
-        resp = await _client.get_conversation_rate(
-            index="index",
-        )
+    get getClickThroughRate with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_click_through_rate(
+        index="index",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_get_no_click_rate():
-        """
-        Snippet for the getNoClickRate method.
+    # print the JSON response
+    print(resp.to_json())
 
-        get getNoClickRate with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_no_click_rate(
-            index="index",
-        )
+async def snippet_for_get_conversation_rate():
+    """
+    Snippet for the getConversationRate method.
 
-        # use the class directly
-        print(resp)
+    get getConversationRate with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.get_conversation_rate(
+        index="index",
+    )
 
-    async def snippet_for_get_no_results_rate():
-        """
-        Snippet for the getNoResultsRate method.
+    # use the class directly
+    print(resp)
 
-        get getNoResultsRate with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.get_no_results_rate(
-            index="index",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_get_no_click_rate():
+    """
+    Snippet for the getNoClickRate method.
 
-        # print the JSON response
-        print(resp.to_json())
+    get getNoClickRate with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_get_searches_count():
-        """
-        Snippet for the getSearchesCount method.
+    # Call the API
+    resp = await _client.get_no_click_rate(
+        index="index",
+    )
 
-        get getSearchesCount with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.get_searches_count(
-            index="index",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_get_no_results_rate():
+    """
+    Snippet for the getNoResultsRate method.
 
-    async def snippet_for_get_searches_no_clicks():
-        """
-        Snippet for the getSearchesNoClicks method.
+    get getNoResultsRate with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        get getSearchesNoClicks with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # Call the API
+    resp = await _client.get_no_results_rate(
+        index="index",
+    )
 
-        resp = await _client.get_searches_no_clicks(
-            index="index",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_searches_no_results():
-        """
-        Snippet for the getSearchesNoResults method.
+async def snippet_for_get_searches_count():
+    """
+    Snippet for the getSearchesCount method.
 
-        get getSearchesNoResults with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    get getSearchesCount with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_searches_no_results(
-            index="index",
-        )
+    # Call the API
+    resp = await _client.get_searches_count(
+        index="index",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_get_status():
-        """
-        Snippet for the getStatus method.
 
-        get getStatus with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_get_searches_no_clicks():
+    """
+    Snippet for the getSearchesNoClicks method.
 
-        resp = await _client.get_status(
-            index="index",
-        )
+    get getSearchesNoClicks with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_searches_no_clicks(
+        index="index",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_get_top_countries():
-        """
-        Snippet for the getTopCountries method.
+    # print the JSON response
+    print(resp.to_json())
 
-        get getTopCountries with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_top_countries(
-            index="index",
-        )
+async def snippet_for_get_searches_no_results():
+    """
+    Snippet for the getSearchesNoResults method.
 
-        # use the class directly
-        print(resp)
+    get getSearchesNoResults with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.get_searches_no_results(
+        index="index",
+    )
 
-    async def snippet_for_get_top_filter_attributes():
-        """
-        Snippet for the getTopFilterAttributes method.
+    # use the class directly
+    print(resp)
 
-        get getTopFilterAttributes with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.get_top_filter_attributes(
-            index="index",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_get_status():
+    """
+    Snippet for the getStatus method.
 
-        # print the JSON response
-        print(resp.to_json())
+    get getStatus with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_get_top_filter_for_attribute():
-        """
-        Snippet for the getTopFilterForAttribute method.
+    # Call the API
+    resp = await _client.get_status(
+        index="index",
+    )
 
-        get getTopFilterForAttribute with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.get_top_filter_for_attribute(
-            attribute="myAttribute",
-            index="index",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_get_top_countries():
+    """
+    Snippet for the getTopCountries method.
 
-    async def snippet_for_get_top_filters_no_results():
-        """
-        Snippet for the getTopFiltersNoResults method.
+    get getTopCountries with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        get getTopFiltersNoResults with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # Call the API
+    resp = await _client.get_top_countries(
+        index="index",
+    )
 
-        resp = await _client.get_top_filters_no_results(
-            index="index",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_top_hits():
-        """
-        Snippet for the getTopHits method.
+async def snippet_for_get_top_filter_attributes():
+    """
+    Snippet for the getTopFilterAttributes method.
 
-        get getTopHits with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    get getTopFilterAttributes with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_top_hits(
-            index="index",
-        )
+    # Call the API
+    resp = await _client.get_top_filter_attributes(
+        index="index",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_get_top_searches():
-        """
-        Snippet for the getTopSearches method.
 
-        get getTopSearches with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_get_top_filter_for_attribute():
+    """
+    Snippet for the getTopFilterForAttribute method.
 
-        resp = await _client.get_top_searches(
-            index="index",
-        )
+    get getTopFilterForAttribute with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_top_filter_for_attribute(
+        attribute="myAttribute",
+        index="index",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_get_users_count():
-        """
-        Snippet for the getUsersCount method.
+    # print the JSON response
+    print(resp.to_json())
 
-        get getUsersCount with minimal parameters
-        """
-        _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_users_count(
-            index="index",
-        )
+async def snippet_for_get_top_filters_no_results():
+    """
+    Snippet for the getTopFiltersNoResults method.
 
-        # use the class directly
-        print(resp)
+    get getTopFiltersNoResults with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.get_top_filters_no_results(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_get_top_hits():
+    """
+    Snippet for the getTopHits method.
+
+    get getTopHits with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_top_hits(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_get_top_searches():
+    """
+    Snippet for the getTopSearches method.
+
+    get getTopSearches with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_top_searches(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_get_users_count():
+    """
+    Snippet for the getUsersCount method.
+
+    get getUsersCount with minimal parameters
+    """
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_users_count(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

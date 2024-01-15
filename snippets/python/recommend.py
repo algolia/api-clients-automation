@@ -1,181 +1,206 @@
 from algoliasearch.recommend.client import RecommendClient
 
 
-class SnippetRecommendClient:
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # use the class directly
-        print(resp)
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # use the class directly
+    print(resp)
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-    async def snippet_for_delete_recommend_rule():
-        """
-        Snippet for the deleteRecommendRule method.
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        deleteRecommendRule0
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.delete_recommend_rule(
-            index_name="indexName",
-            model="related-products",
-            object_id="objectID",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_delete_recommend_rule():
+    """
+    Snippet for the deleteRecommendRule method.
 
-    async def snippet_for_get_recommend_rule():
-        """
-        Snippet for the getRecommendRule method.
+    deleteRecommendRule0
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        getRecommendRule0
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # Call the API
+    resp = await _client.delete_recommend_rule(
+        index_name="indexName",
+        model="related-products",
+        object_id="objectID",
+    )
 
-        resp = await _client.get_recommend_rule(
-            index_name="indexName",
-            model="related-products",
-            object_id="objectID",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_recommend_status():
-        """
-        Snippet for the getRecommendStatus method.
+async def snippet_for_get_recommend_rule():
+    """
+    Snippet for the getRecommendRule method.
 
-        getRecommendStatus0
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    getRecommendRule0
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.get_recommend_status(
-            index_name="indexName",
-            model="related-products",
-            task_id=12345,
-        )
+    # Call the API
+    resp = await _client.get_recommend_rule(
+        index_name="indexName",
+        model="related-products",
+        object_id="objectID",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_get_recommendations():
-        """
-        Snippet for the getRecommendations method.
 
-        get recommendations for recommend model with minimal parameters
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+async def snippet_for_get_recommend_status():
+    """
+    Snippet for the getRecommendStatus method.
 
-        resp = await _client.get_recommendations(
-            get_recommendations_params={
-                "requests": [
-                    {
-                        "indexName": "indexName",
-                        "objectID": "objectID",
-                        "model": "related-products",
-                        "threshold": 42,
-                    },
-                ],
-            },
-        )
+    getRecommendStatus0
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_recommend_status(
+        index_name="indexName",
+        model="related-products",
+        task_id=12345,
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_search_recommend_rules():
-        """
-        Snippet for the searchRecommendRules method.
+    # print the JSON response
+    print(resp.to_json())
 
-        searchRecommendRules0
-        """
-        _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.search_recommend_rules(
-            index_name="indexName",
-            model="related-products",
-        )
+async def snippet_for_get_recommendations():
+    """
+    Snippet for the getRecommendations method.
 
-        # use the class directly
-        print(resp)
+    get recommendations for recommend model with minimal parameters
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.get_recommendations(
+        get_recommendations_params={
+            "requests": [
+                {
+                    "indexName": "indexName",
+                    "objectID": "objectID",
+                    "model": "related-products",
+                    "threshold": 42,
+                },
+            ],
+        },
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_search_recommend_rules():
+    """
+    Snippet for the searchRecommendRules method.
+
+    searchRecommendRules0
+    """
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    resp = await _client.search_recommend_rules(
+        index_name="indexName",
+        model="related-products",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

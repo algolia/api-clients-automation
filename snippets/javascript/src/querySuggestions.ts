@@ -6,12 +6,14 @@ import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 //
 // createConfig0
 export async function snippetForcreateConfig(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.createConfig({
     indexName: 'theIndexName',
     sourceIndices: [
@@ -25,7 +27,7 @@ export async function snippetForcreateConfig(): Promise<void> {
     exclude: ['test'],
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -33,15 +35,17 @@ export async function snippetForcreateConfig(): Promise<void> {
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -49,15 +53,17 @@ export async function snippetForcustomDelete(): Promise<void> {
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -65,15 +71,17 @@ export async function snippetForcustomGet(): Promise<void> {
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -81,15 +89,17 @@ export async function snippetForcustomPost(): Promise<void> {
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -97,15 +107,17 @@ export async function snippetForcustomPut(): Promise<void> {
 //
 // deleteConfig0
 export async function snippetFordeleteConfig(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.deleteConfig({ indexName: 'theIndexName' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -113,15 +125,17 @@ export async function snippetFordeleteConfig(): Promise<void> {
 //
 // getAllConfigs0
 export async function snippetForgetAllConfigs(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.getAllConfigs();
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -129,15 +143,17 @@ export async function snippetForgetAllConfigs(): Promise<void> {
 //
 // getConfig0
 export async function snippetForgetConfig(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.getConfig({ indexName: 'theIndexName' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -145,15 +161,17 @@ export async function snippetForgetConfig(): Promise<void> {
 //
 // getConfigStatus0
 export async function snippetForgetConfigStatus(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.getConfigStatus({ indexName: 'theIndexName' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -161,15 +179,17 @@ export async function snippetForgetConfigStatus(): Promise<void> {
 //
 // getLogFile0
 export async function snippetForgetLogFile(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.getLogFile({ indexName: 'theIndexName' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -177,12 +197,14 @@ export async function snippetForgetLogFile(): Promise<void> {
 //
 // updateConfig0
 export async function snippetForupdateConfig(): Promise<void> {
+  // Initialize the client
   const client = querySuggestionsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.updateConfig({
     indexName: 'theIndexName',
     querySuggestionsConfiguration: {
@@ -198,6 +220,6 @@ export async function snippetForupdateConfig(): Promise<void> {
     },
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }

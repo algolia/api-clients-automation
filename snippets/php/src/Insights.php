@@ -11,8 +11,10 @@ class SnippetInsightsClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -28,8 +30,10 @@ class SnippetInsightsClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -45,8 +49,10 @@ class SnippetInsightsClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -62,8 +68,10 @@ class SnippetInsightsClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -79,8 +87,10 @@ class SnippetInsightsClient
      */
     public function snippetForPushEvents()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->pushEvents(
             ['events' => [
                 ['eventType' => 'click',

@@ -11,8 +11,10 @@ class SnippetRecommendClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -28,8 +30,10 @@ class SnippetRecommendClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -45,8 +49,10 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -62,8 +68,10 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -79,8 +87,10 @@ class SnippetRecommendClient
      */
     public function snippetForDeleteRecommendRule()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->deleteRecommendRule(
             'indexName',
             'related-products',
@@ -98,8 +108,10 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendRule()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getRecommendRule(
             'indexName',
             'related-products',
@@ -117,8 +129,10 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendStatus()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getRecommendStatus(
             'indexName',
             'related-products',
@@ -136,8 +150,10 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendations()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->getRecommendations(
             ['requests' => [
                 ['indexName' => 'indexName',
@@ -160,8 +176,10 @@ class SnippetRecommendClient
      */
     public function snippetForSearchRecommendRules()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
+        // Call the API
         $response = $client->searchRecommendRules(
             'indexName',
             'related-products',

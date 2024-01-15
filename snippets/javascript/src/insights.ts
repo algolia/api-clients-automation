@@ -6,15 +6,17 @@ import { insightsClient } from '@algolia/client-insights';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // Initialize the client
   const client = insightsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -22,15 +24,17 @@ export async function snippetForcustomDelete(): Promise<void> {
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // Initialize the client
   const client = insightsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -38,15 +42,17 @@ export async function snippetForcustomGet(): Promise<void> {
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // Initialize the client
   const client = insightsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -54,15 +60,17 @@ export async function snippetForcustomPost(): Promise<void> {
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // Initialize the client
   const client = insightsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -70,12 +78,14 @@ export async function snippetForcustomPut(): Promise<void> {
 //
 // pushEvents0
 export async function snippetForpushEvents(): Promise<void> {
+  // Initialize the client
   const client = insightsClient(
     'YOUR_APP_ID',
     'YOUR_API_KEY',
     'YOUR_APP_ID_REGION'
   );
 
+  // Call the API
   const response = await client.pushEvents({
     events: [
       {
@@ -92,6 +102,6 @@ export async function snippetForpushEvents(): Promise<void> {
     ],
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }

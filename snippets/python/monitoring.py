@@ -1,232 +1,269 @@
 from algoliasearch.monitoring.client import MonitoringClient
 
 
-class SnippetMonitoringClient:
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # use the class directly
-        print(resp)
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # use the class directly
+    print(resp)
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-    async def snippet_for_get_cluster_incidents():
-        """
-        Snippet for the getClusterIncidents method.
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        getClusterIncidents
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.get_cluster_incidents(
-            clusters="c1-de",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_get_cluster_incidents():
+    """
+    Snippet for the getClusterIncidents method.
 
-    async def snippet_for_get_cluster_status():
-        """
-        Snippet for the getClusterStatus method.
+    getClusterIncidents
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        getClusterStatus
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # Call the API
+    resp = await _client.get_cluster_incidents(
+        clusters="c1-de",
+    )
 
-        resp = await _client.get_cluster_status(
-            clusters="c1-de",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_incidents():
-        """
-        Snippet for the getIncidents method.
+async def snippet_for_get_cluster_status():
+    """
+    Snippet for the getClusterStatus method.
 
-        getIncidents
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    getClusterStatus
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.get_incidents()
+    # Call the API
+    resp = await _client.get_cluster_status(
+        clusters="c1-de",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_get_indexing_time():
-        """
-        Snippet for the getIndexingTime method.
 
-        getIndexingTime
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+async def snippet_for_get_incidents():
+    """
+    Snippet for the getIncidents method.
 
-        resp = await _client.get_indexing_time(
-            clusters="c1-de",
-        )
+    getIncidents
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_incidents()
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_get_inventory():
-        """
-        Snippet for the getInventory method.
+    # print the JSON response
+    print(resp.to_json())
 
-        getInventory
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.get_inventory()
+async def snippet_for_get_indexing_time():
+    """
+    Snippet for the getIndexingTime method.
 
-        # use the class directly
-        print(resp)
+    getIndexingTime
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.get_indexing_time(
+        clusters="c1-de",
+    )
 
-    async def snippet_for_get_latency():
-        """
-        Snippet for the getLatency method.
+    # use the class directly
+    print(resp)
 
-        getLatency
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.get_latency(
-            clusters="c1-de",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_get_inventory():
+    """
+    Snippet for the getInventory method.
 
-        # print the JSON response
-        print(resp.to_json())
+    getInventory
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-    async def snippet_for_get_metrics():
-        """
-        Snippet for the getMetrics method.
+    # Call the API
+    resp = await _client.get_inventory()
 
-        getMetrics
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.get_metrics(
-            metric="avg_build_time",
-            period="minute",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_get_latency():
+    """
+    Snippet for the getLatency method.
 
-    async def snippet_for_get_reachability():
-        """
-        Snippet for the getReachability method.
+    getLatency
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        getReachability
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    # Call the API
+    resp = await _client.get_latency(
+        clusters="c1-de",
+    )
 
-        resp = await _client.get_reachability(
-            clusters="c1-de",
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_status():
-        """
-        Snippet for the getStatus method.
+async def snippet_for_get_metrics():
+    """
+    Snippet for the getMetrics method.
 
-        getStatus
-        """
-        _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    getMetrics
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-        resp = await _client.get_status()
+    # Call the API
+    resp = await _client.get_metrics(
+        metric="avg_build_time",
+        period="minute",
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_get_reachability():
+    """
+    Snippet for the getReachability method.
+
+    getReachability
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    resp = await _client.get_reachability(
+        clusters="c1-de",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_get_status():
+    """
+    Snippet for the getStatus method.
+
+    getStatus
+    """
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    resp = await _client.get_status()
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

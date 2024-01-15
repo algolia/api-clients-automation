@@ -11,8 +11,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomDelete()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customDelete(
             '/test/minimal',
         );
@@ -28,8 +30,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomGet()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customGet(
             '/test/minimal',
         );
@@ -45,8 +49,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomPost()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPost(
             '/test/minimal',
         );
@@ -62,8 +68,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomPut()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->customPut(
             '/test/minimal',
         );
@@ -79,8 +87,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetAverageClickPosition()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getAverageClickPosition(
             'index',
         );
@@ -96,8 +106,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetClickPositions()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getClickPositions(
             'index',
         );
@@ -113,8 +125,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetClickThroughRate()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getClickThroughRate(
             'index',
         );
@@ -130,8 +144,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetConversationRate()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getConversationRate(
             'index',
         );
@@ -147,8 +163,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetNoClickRate()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getNoClickRate(
             'index',
         );
@@ -164,8 +182,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetNoResultsRate()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getNoResultsRate(
             'index',
         );
@@ -181,8 +201,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesCount()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getSearchesCount(
             'index',
         );
@@ -198,8 +220,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesNoClicks()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getSearchesNoClicks(
             'index',
         );
@@ -215,8 +239,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesNoResults()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getSearchesNoResults(
             'index',
         );
@@ -232,8 +258,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetStatus()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getStatus(
             'index',
         );
@@ -249,8 +277,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopCountries()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopCountries(
             'index',
         );
@@ -266,8 +296,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFilterAttributes()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopFilterAttributes(
             'index',
         );
@@ -283,8 +315,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFilterForAttribute()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopFilterForAttribute(
             'myAttribute',
             'index',
@@ -301,8 +335,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFiltersNoResults()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopFiltersNoResults(
             'index',
         );
@@ -318,8 +354,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopHits()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopHits(
             'index',
         );
@@ -335,8 +373,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopSearches()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getTopSearches(
             'index',
         );
@@ -352,8 +392,10 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetUsersCount()
     {
+        // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
+        // Call the API
         $response = $client->getUsersCount(
             'index',
         );

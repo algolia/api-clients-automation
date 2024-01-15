@@ -1,176 +1,201 @@
 from algoliasearch.abtesting.client import AbtestingClient
 
 
-class SnippetAbtestingClient:
-    async def snippet_for_add_ab_tests():
-        """
-        Snippet for the addABTests method.
+async def snippet_for_add_ab_tests():
+    """
+    Snippet for the addABTests method.
 
-        addABTests with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    addABTests with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.add_ab_tests(
-            add_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
-                "name": "myABTest",
-                "variants": [
-                    {
-                        "index": "AB_TEST_1",
-                        "trafficPercentage": 30,
-                    },
-                    {
-                        "index": "AB_TEST_2",
-                        "trafficPercentage": 50,
-                    },
-                ],
-            },
-        )
+    # Call the API
+    resp = await _client.add_ab_tests(
+        add_ab_tests_request={
+            "endAt": "2022-12-31T00:00:00.000Z",
+            "name": "myABTest",
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 30,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_custom_delete():
-        """
-        Snippet for the customDelete method.
 
-        allow del method for a custom path with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_custom_delete():
+    """
+    Snippet for the customDelete method.
 
-        resp = await _client.custom_delete(
-            path="/test/minimal",
-        )
+    allow del method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.custom_delete(
+        path="/test/minimal",
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_custom_get():
-        """
-        Snippet for the customGet method.
+    # print the JSON response
+    print(resp.to_json())
 
-        allow get method for a custom path with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.custom_get(
-            path="/test/minimal",
-        )
+async def snippet_for_custom_get():
+    """
+    Snippet for the customGet method.
 
-        # use the class directly
-        print(resp)
+    allow get method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.custom_get(
+        path="/test/minimal",
+    )
 
-    async def snippet_for_custom_post():
-        """
-        Snippet for the customPost method.
+    # use the class directly
+    print(resp)
 
-        allow post method for a custom path with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # print the JSON response
+    print(resp.to_json())
 
-        resp = await _client.custom_post(
-            path="/test/minimal",
-        )
 
-        # use the class directly
-        print(resp)
+async def snippet_for_custom_post():
+    """
+    Snippet for the customPost method.
 
-        # print the JSON response
-        print(resp.to_json())
+    allow post method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-    async def snippet_for_custom_put():
-        """
-        Snippet for the customPut method.
+    # Call the API
+    resp = await _client.custom_post(
+        path="/test/minimal",
+    )
 
-        allow put method for a custom path with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # use the class directly
+    print(resp)
 
-        resp = await _client.custom_put(
-            path="/test/minimal",
-        )
+    # print the JSON response
+    print(resp.to_json())
 
-        # use the class directly
-        print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+async def snippet_for_custom_put():
+    """
+    Snippet for the customPut method.
 
-    async def snippet_for_delete_ab_test():
-        """
-        Snippet for the deleteABTest method.
+    allow put method for a custom path with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        deleteABTest
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    # Call the API
+    resp = await _client.custom_put(
+        path="/test/minimal",
+    )
 
-        resp = await _client.delete_ab_test(
-            id=42,
-        )
+    # use the class directly
+    print(resp)
 
-        # use the class directly
-        print(resp)
+    # print the JSON response
+    print(resp.to_json())
 
-        # print the JSON response
-        print(resp.to_json())
 
-    async def snippet_for_get_ab_test():
-        """
-        Snippet for the getABTest method.
+async def snippet_for_delete_ab_test():
+    """
+    Snippet for the deleteABTest method.
 
-        getABTest
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    deleteABTest
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.get_ab_test(
-            id=42,
-        )
+    # Call the API
+    resp = await _client.delete_ab_test(
+        id=42,
+    )
 
-        # use the class directly
-        print(resp)
+    # use the class directly
+    print(resp)
 
-        # print the JSON response
-        print(resp.to_json())
+    # print the JSON response
+    print(resp.to_json())
 
-    async def snippet_for_list_ab_tests():
-        """
-        Snippet for the listABTests method.
 
-        listABTests with minimal parameters
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+async def snippet_for_get_ab_test():
+    """
+    Snippet for the getABTest method.
 
-        resp = await _client.list_ab_tests()
+    getABTest
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # use the class directly
-        print(resp)
+    # Call the API
+    resp = await _client.get_ab_test(
+        id=42,
+    )
 
-        # print the JSON response
-        print(resp.to_json())
+    # use the class directly
+    print(resp)
 
-    async def snippet_for_stop_ab_test():
-        """
-        Snippet for the stopABTest method.
+    # print the JSON response
+    print(resp.to_json())
 
-        stopABTest
-        """
-        _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        resp = await _client.stop_ab_test(
-            id=42,
-        )
+async def snippet_for_list_ab_tests():
+    """
+    Snippet for the listABTests method.
 
-        # use the class directly
-        print(resp)
+    listABTests with minimal parameters
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
-        # print the JSON response
-        print(resp.to_json())
+    # Call the API
+    resp = await _client.list_ab_tests()
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_stop_ab_test():
+    """
+    Snippet for the stopABTest method.
+
+    stopABTest
+    """
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.stop_ab_test(
+        id=42,
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())

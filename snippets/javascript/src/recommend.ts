@@ -6,11 +6,13 @@ import { recommendClient } from '@algolia/recommend';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -18,11 +20,13 @@ export async function snippetForcustomDelete(): Promise<void> {
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -30,11 +34,13 @@ export async function snippetForcustomGet(): Promise<void> {
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -42,11 +48,13 @@ export async function snippetForcustomPost(): Promise<void> {
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -54,15 +62,17 @@ export async function snippetForcustomPut(): Promise<void> {
 //
 // deleteRecommendRule0
 export async function snippetFordeleteRecommendRule(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.deleteRecommendRule({
     indexName: 'indexName',
     model: 'related-products',
     objectID: 'objectID',
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -70,15 +80,17 @@ export async function snippetFordeleteRecommendRule(): Promise<void> {
 //
 // getRecommendRule0
 export async function snippetForgetRecommendRule(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getRecommendRule({
     indexName: 'indexName',
     model: 'related-products',
     objectID: 'objectID',
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -86,15 +98,17 @@ export async function snippetForgetRecommendRule(): Promise<void> {
 //
 // getRecommendStatus0
 export async function snippetForgetRecommendStatus(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getRecommendStatus({
     indexName: 'indexName',
     model: 'related-products',
     taskID: 12345,
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -102,8 +116,10 @@ export async function snippetForgetRecommendStatus(): Promise<void> {
 //
 // get recommendations for recommend model with minimal parameters
 export async function snippetForgetRecommendations(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.getRecommendations({
     requests: [
       {
@@ -115,7 +131,7 @@ export async function snippetForgetRecommendations(): Promise<void> {
     ],
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
 
@@ -123,13 +139,15 @@ export async function snippetForgetRecommendations(): Promise<void> {
 //
 // searchRecommendRules0
 export async function snippetForsearchRecommendRules(): Promise<void> {
+  // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+  // Call the API
   const response = await client.searchRecommendRules({
     indexName: 'indexName',
     model: 'related-products',
   });
 
-  // use typed response
+  // Use typed response
   console.log(response);
 }
