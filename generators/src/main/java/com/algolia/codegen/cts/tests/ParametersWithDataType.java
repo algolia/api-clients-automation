@@ -94,7 +94,7 @@ public class ParametersWithDataType {
     boolean isParentFreeFormObject
   ) throws CTSException {
     if (spec == null) {
-      return traverseParams(paramName, param, parent, suffix);
+      return traverseParamsWithoutSpec(paramName, param, parent, suffix);
     }
     String baseType = getTypeName(spec);
     if (baseType == null) {
@@ -166,7 +166,7 @@ public class ParametersWithDataType {
   }
 
   /** Same method but with inference only */
-  private Map<String, Object> traverseParams(String paramName, Object param, String parent, int suffix) throws CTSException {
+  private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int suffix) throws CTSException {
     String finalParamName = paramName;
     if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
@@ -179,8 +179,13 @@ public class ParametersWithDataType {
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
-    // cannot determine objectName with inference
-    // testOutput.put("objectName", Helpers.capitalize(baseType));
+    // try to infer the type
+    try {
+      String dataType = inferDataType(param, null, testOutput);
+      testOutput.put("objectName", getObjectNameForLanguage(dataType));
+    } catch (CTSException e) {
+      // ignore the error
+    }
 
     if (param == null) {
       handleNull(testOutput);
@@ -591,7 +596,7 @@ public class ParametersWithDataType {
         int commonCount = 0;
         for (String prop : map.keySet()) {
           for (CodegenProperty propOneOf : oneOf.vars) {
-            if (prop.equals(propOneOf.name) && couldMatchEnum(map.get(prop), propOneOf)) {
+            if (prop.equals(propOneOf.baseName) && couldMatchEnum(map.get(prop), propOneOf)) {
               commonCount++;
             }
           }
@@ -611,7 +616,7 @@ public class ParametersWithDataType {
 
         // Somehow this is not yet enough
         if (oneOf != null && !oneOf.isEmpty()) {
-          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).name + " (this won't stay correct forever)");
+          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).baseName + " (this won't stay correct forever)");
           return oneOf.get(0);
         }
       }
