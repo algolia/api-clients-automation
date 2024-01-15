@@ -74,6 +74,24 @@ export async function snippetForcustomPut(): Promise<void> {
   console.log(response);
 }
 
+// Snippet for the deleteUserToken method.
+//
+// deleteUserToken0
+export async function snippetFordeleteUserToken(): Promise<void> {
+  // Initialize the client
+  const client = insightsClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.deleteUserToken({ userToken: 'test-user-1' });
+
+  // Use typed response
+  console.log(response);
+}
+
 // Snippet for the pushEvents method.
 //
 // pushEvents0

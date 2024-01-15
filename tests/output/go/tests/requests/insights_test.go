@@ -522,6 +522,39 @@ func TestInsights_CustomPut(t *testing.T) {
 	}
 }
 
+func TestInsights_DeleteUserToken(t *testing.T) {
+	client, echo := createInsightsClient()
+
+	tests := []struct {
+		name     string
+		testFunc func(t *testing.T)
+	}{
+		{
+			name: "deleteUserToken0",
+			testFunc: func(t *testing.T) {
+				parametersStr := `{"userToken":"test-user-1"}`
+				req := insights.ApiDeleteUserTokenRequest{}
+				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
+				err := client.DeleteUserToken(req)
+				require.NoError(t, err)
+
+				expectedPath, err := url.QueryUnescape("/1/usertokens/test-user-1")
+				require.NoError(t, err)
+				require.Equal(t, expectedPath, echo.path)
+				require.Equal(t, "DELETE", echo.method)
+
+				require.Nil(t, echo.body)
+			},
+		},
+	}
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			test.testFunc(t)
+		})
+	}
+}
+
 func TestInsights_PushEvents(t *testing.T) {
 	client, echo := createInsightsClient()
 

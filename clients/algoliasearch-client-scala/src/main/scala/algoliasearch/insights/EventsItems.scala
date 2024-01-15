@@ -9,8 +9,8 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ConversionEvent._
-import algoliasearch.insights.PurchaseEvent._
+import algoliasearch.insights.AddToCartEvent._
+import algoliasearch.insights.ViewEvent._
 
 import org.json4s._
 
@@ -30,10 +30,26 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
         case value: JObject
             if value.obj.contains("positions") && value.obj.contains("queryID") && value.obj.contains("eventType") =>
           Extraction.extract[ClickedObjectIDsAfterSearch](value)
+        case value: JObject
+            if value.obj.contains("eventType") && value.obj
+              .contains("eventSubtype") && value.obj.contains("queryID") && value.obj.contains("objectIDs") =>
+          Extraction.extract[AddedToCartObjectIDsAfterSearch](value)
+        case value: JObject
+            if value.obj.contains("eventType") && value.obj
+              .contains("eventSubtype") && value.obj.contains("objectIDs") && value.obj.contains("objectData") =>
+          Extraction.extract[PurchasedObjectIDsAfterSearch](value)
         case value: JObject if value.obj.contains("queryID") && value.obj.contains("eventType") =>
           Extraction.extract[ConvertedObjectIDsAfterSearch](value)
         case value: JObject if value.obj.contains("eventType") && value.obj.contains("objectIDs") =>
           Extraction.extract[ClickedObjectIDs](value)
+        case value: JObject
+            if value.obj.contains("eventType") && value.obj
+              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
+          Extraction.extract[PurchasedObjectIDs](value)
+        case value: JObject
+            if value.obj.contains("eventType") && value.obj
+              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
+          Extraction.extract[AddedToCartObjectIDs](value)
         case value: JObject if value.obj.contains("eventType") && value.obj.contains("objectIDs") =>
           Extraction.extract[ConvertedObjectIDs](value)
         case value: JObject if value.obj.contains("eventType") && value.obj.contains("filters") =>
@@ -44,22 +60,6 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
           Extraction.extract[ViewedObjectIDs](value)
         case value: JObject if value.obj.contains("eventType") && value.obj.contains("filters") =>
           Extraction.extract[ViewedFilters](value)
-        case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("queryID") && value.obj.contains("objectIDs") =>
-          Extraction.extract[AddedToCartObjectIDsAfterSearch](value)
-        case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
-          Extraction.extract[AddedToCartObjectIDs](value)
-        case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
-          Extraction.extract[PurchasedObjectIDs](value)
-        case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("queryID") && value.obj.contains("objectIDs") =>
-          Extraction.extract[PurchasedObjectIDsAfterSearch](value)
         case _ => throw new MappingException("Can't convert " + json + " to EventsItems")
       }
   }
@@ -67,17 +67,17 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: EventsItems =>
     value match {
       case value: ClickedObjectIDsAfterSearch     => Extraction.decompose(value)(format - this)
+      case value: AddedToCartObjectIDsAfterSearch => Extraction.decompose(value)(format - this)
+      case value: PurchasedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
       case value: ConvertedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
       case value: ClickedObjectIDs                => Extraction.decompose(value)(format - this)
+      case value: PurchasedObjectIDs              => Extraction.decompose(value)(format - this)
+      case value: AddedToCartObjectIDs            => Extraction.decompose(value)(format - this)
       case value: ConvertedObjectIDs              => Extraction.decompose(value)(format - this)
       case value: ClickedFilters                  => Extraction.decompose(value)(format - this)
       case value: ConvertedFilters                => Extraction.decompose(value)(format - this)
       case value: ViewedObjectIDs                 => Extraction.decompose(value)(format - this)
       case value: ViewedFilters                   => Extraction.decompose(value)(format - this)
-      case value: AddedToCartObjectIDsAfterSearch => Extraction.decompose(value)(format - this)
-      case value: AddedToCartObjectIDs            => Extraction.decompose(value)(format - this)
-      case value: PurchasedObjectIDs              => Extraction.decompose(value)(format - this)
-      case value: PurchasedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
     }
   }
 }

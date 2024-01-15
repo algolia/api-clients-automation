@@ -509,6 +509,27 @@ void main() {
     ),
   );
 
+  // deleteUserToken
+  test(
+    'deleteUserToken0',
+    () => runTest(
+      builder: (requester) => InsightsClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.deleteUserToken(
+        userToken: "test-user-1",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/usertokens/test-user-1');
+        expect(request.method, 'delete');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // pushEvents
   test(
     'pushEvents0',

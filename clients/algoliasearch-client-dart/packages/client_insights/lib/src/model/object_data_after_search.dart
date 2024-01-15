@@ -15,7 +15,7 @@ final class ObjectDataAfterSearch {
     this.discount,
   });
 
-  /// ID of the query that this specific record is attributable to. Used to track purchase events with multiple items originating from different searches.
+  /// Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
   @JsonKey(name: r'queryID')
   final String? queryID;
 
@@ -25,7 +25,7 @@ final class ObjectDataAfterSearch {
   @JsonKey(name: r'price')
   final dynamic price;
 
-  /// The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+  /// The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
   @JsonKey(name: r'quantity')
   final int? quantity;
 

@@ -66,6 +66,21 @@ class SnippetInsightsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForDeleteUserToken() {
+    // Initialize the client
+    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.deleteUserToken(
+      userToken = "test-user-1",
+    )
+
+    // Use the response
+    println(response)
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForPushEvents() {
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")

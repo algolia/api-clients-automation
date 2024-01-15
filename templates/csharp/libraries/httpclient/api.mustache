@@ -38,7 +38,7 @@ namespace Algolia.Search.Clients
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+        Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
         {{/operation}}
     }
     {{/supportsAsync}}
@@ -114,7 +114,7 @@ namespace Algolia.Search.Clients
         {{#isDeprecated}}
         [Obsolete]
         {{/isDeprecated}}
-        public async Task<{{> return_type}}> {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+        public async Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
         {
             {{#allParams}}
             {{#required}}
@@ -184,7 +184,7 @@ namespace Algolia.Search.Clients
             requestOptions.UseReadTransporter = true;
             {{/x-use-read-transporter}}
             {{/vendorExtensions}}
-            return await _transport.ExecuteRequestAsync<{{> return_type}}>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+            {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
         }
         {{/supportsAsync}}
         {{/operation}}

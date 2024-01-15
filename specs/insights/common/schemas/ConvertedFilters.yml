@@ -12,10 +12,10 @@ properties:
     $ref: './EventAttributes.yml#/filters'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
-  timestamp:
-    $ref: './EventAttributes.yml#/timestamp'
   authenticatedUserToken:
     $ref: './EventAttributes.yml#/authenticatedUserToken'
+  timestamp:
+    $ref: './EventAttributes.yml#/timestamp'
 required:
   - eventName
   - eventType

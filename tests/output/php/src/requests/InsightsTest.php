@@ -514,6 +514,26 @@ class InsightsTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for DeleteUserToken
+     * deleteUserToken0.
+     */
+    public function testDeleteUserToken0()
+    {
+        $client = $this->getClient();
+        $client->deleteUserToken(
+            'test-user-1',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/usertokens/test-user-1',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
      * Test case for PushEvents
      * pushEvents0.
      */

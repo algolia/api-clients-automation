@@ -17,14 +17,15 @@ final class PurchasedObjectIDs {
     required this.eventSubtype,
     required this.index,
     required this.objectIDs,
-    this.objectData,
-    this.currency,
     required this.userToken,
-    this.timestamp,
     this.authenticatedUserToken,
+    this.currency,
+    this.objectData,
+    this.timestamp,
+    this.value,
   });
 
-  /// Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+  /// The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
   @JsonKey(name: r'eventName')
   final String eventName;
 
@@ -34,33 +35,39 @@ final class PurchasedObjectIDs {
   @JsonKey(name: r'eventSubtype')
   final PurchaseEvent eventSubtype;
 
-  /// Name of the Algolia index.
+  /// The name of an Algolia index.
   @JsonKey(name: r'index')
   final String index;
 
-  /// List of object identifiers for items of an Algolia index.
+  /// The object IDs of the records that are part of the event.
   @JsonKey(name: r'objectIDs')
   final List<String> objectIDs;
 
-  /// Extra information about the records involved in the event—for example, to add price and quantities of purchased products.  If provided, must be the same length as `objectIDs`.
-  @JsonKey(name: r'objectData')
-  final List<ObjectData>? objectData;
-
-  /// If you include pricing information in the `objectData` parameter, you must also specify the currency as ISO-4217 currency code, such as USD or EUR.
-  @JsonKey(name: r'currency')
-  final String? currency;
-
-  /// Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+  /// An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
   @JsonKey(name: r'userToken')
   final String userToken;
 
-  /// Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+  /// An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
+  @JsonKey(name: r'authenticatedUserToken')
+  final String? authenticatedUserToken;
+
+  /// Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+  @JsonKey(name: r'currency')
+  final String? currency;
+
+  /// Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the same length as `objectIDs`.
+  @JsonKey(name: r'objectData')
+  final List<ObjectData>? objectData;
+
+  /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
   @JsonKey(name: r'timestamp')
   final int? timestamp;
 
-  /// User token for authenticated users.
-  @JsonKey(name: r'authenticatedUserToken')
-  final String? authenticatedUserToken;
+  /// One of types:
+  /// - [double]
+  /// - [String]
+  @JsonKey(name: r'value')
+  final dynamic value;
 
   @override
   bool operator ==(Object other) =>
@@ -71,11 +78,12 @@ final class PurchasedObjectIDs {
           other.eventSubtype == eventSubtype &&
           other.index == index &&
           other.objectIDs == objectIDs &&
-          other.objectData == objectData &&
-          other.currency == currency &&
           other.userToken == userToken &&
+          other.authenticatedUserToken == authenticatedUserToken &&
+          other.currency == currency &&
+          other.objectData == objectData &&
           other.timestamp == timestamp &&
-          other.authenticatedUserToken == authenticatedUserToken;
+          other.value == value;
 
   @override
   int get hashCode =>
@@ -84,11 +92,12 @@ final class PurchasedObjectIDs {
       eventSubtype.hashCode +
       index.hashCode +
       objectIDs.hashCode +
-      objectData.hashCode +
-      currency.hashCode +
       userToken.hashCode +
+      authenticatedUserToken.hashCode +
+      currency.hashCode +
+      objectData.hashCode +
       timestamp.hashCode +
-      authenticatedUserToken.hashCode;
+      value.hashCode;
 
   factory PurchasedObjectIDs.fromJson(Map<String, dynamic> json) =>
       _$PurchasedObjectIDsFromJson(json);
