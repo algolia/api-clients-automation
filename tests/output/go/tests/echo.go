@@ -2,7 +2,6 @@ package tests
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -21,7 +20,6 @@ type EchoRequester struct {
 }
 
 func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
-	fmt.Printf("%#v\n", req)
 	e.Host = req.URL.Host
 	e.Path = req.URL.Path
 	e.Method = req.Method
@@ -41,4 +39,9 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 		StatusCode: 200,
 		Body:       io.NopCloser(bytes.NewBufferString("")),
 	}, nil
+}
+
+func ZeroValue[T any]() T {
+	var v T
+	return v
 }

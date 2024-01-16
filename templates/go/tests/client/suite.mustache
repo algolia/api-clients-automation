@@ -12,29 +12,27 @@ import (
   "gotests/tests"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
   echo := &tests.EchoRequester{}
   cfg := {{clientPrefix}}.Configuration{
-    AppID:     "appID",
-    ApiKey:    "apiKey",{{#hasRegionalHost}}
+    Configuration: transport.Configuration{
+      AppID:     "appID",
+      ApiKey:    "apiKey",
+      Requester: echo,
+    },{{#hasRegionalHost}}
     Region:    {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}}
-    Requester: echo,
   }
   client, _ := {{clientPrefix}}.NewClientWithConfig(cfg)
 
   return client, echo
 }
 
-func zeroValue[T any]() T {
-    var v T
-    return v
-}
-
 {{#blocksClient}}
 {{#tests}}
-func Test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
+func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
   var err error
   _ = err
   {{#autoCreateClient}}
