@@ -117,17 +117,6 @@ class SnippetSearchClient {
     client.browse("cts_e2e_browse", Object.class);
   }
 
-  // Snippet for the clearAllSynonyms method.
-  //
-  // clearAllSynonyms0
-  void snippetForClearAllSynonyms() {
-    // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
-
-    // Call the API
-    client.clearAllSynonyms("indexName");
-  }
-
   // Snippet for the clearObjects method.
   //
   // clearObjects0
@@ -148,6 +137,17 @@ class SnippetSearchClient {
 
     // Call the API
     client.clearRules("indexName");
+  }
+
+  // Snippet for the clearSynonyms method.
+  //
+  // clearSynonyms0
+  void snippetForClearSynonyms() {
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.clearSynonyms("indexName");
   }
 
   // Snippet for the customDelete method.

@@ -4229,7 +4229,7 @@ paths:
     post:
       tags:
         - Synonyms
-      operationId: clearAllSynonyms
+      operationId: clearSynonyms
       summary: Delete all synonyms.
       description: Delete all synonyms in the index.
       parameters:

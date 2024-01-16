@@ -142,23 +142,6 @@ def snippet_for_browse
   puts resp.to_json
 end
 
-# Snippet for the clearAllSynonyms method.
-#
-# clearAllSynonyms0
-def snippet_for_clear_all_synonyms
-  # Initialize the client
-  client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
-
-  # Call the API
-  resp = client.clear_all_synonyms("indexName")
-
-  # use the class directly
-  puts resp
-
-  # print the JSON response
-  puts resp.to_json
-end
-
 # Snippet for the clearObjects method.
 #
 # clearObjects0
@@ -185,6 +168,23 @@ def snippet_for_clear_rules
 
   # Call the API
   resp = client.clear_rules("indexName")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+end
+
+# Snippet for the clearSynonyms method.
+#
+# clearSynonyms0
+def snippet_for_clear_synonyms
+  # Initialize the client
+  client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+  # Call the API
+  resp = client.clear_synonyms("indexName")
 
   # use the class directly
   puts resp

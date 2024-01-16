@@ -201,25 +201,6 @@ class SnippetSearchClient
     }
 
     /**
-     * Snippet for the ClearAllSynonyms method.
-     *
-     * clearAllSynonyms0
-     */
-    public function snippetForClearAllSynonyms()
-    {
-        // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-        // Call the API
-        $response = $client->clearAllSynonyms(
-            'indexName',
-        );
-
-        // play with the response
-        var_dump($response);
-    }
-
-    /**
      * Snippet for the ClearObjects method.
      *
      * clearObjects0
@@ -250,6 +231,25 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->clearRules(
+            'indexName',
+        );
+
+        // play with the response
+        var_dump($response);
+    }
+
+    /**
+     * Snippet for the ClearSynonyms method.
+     *
+     * clearSynonyms0
+     */
+    public function snippetForClearSynonyms()
+    {
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->clearSynonyms(
             'indexName',
         );
 

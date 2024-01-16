@@ -193,23 +193,6 @@ class SnippetSearchClient {
     val value = Await.result(res, Duration(100, "sec"))
   }
 
-  /** Snippet for the clearAllSynonyms method.
-    *
-    * clearAllSynonyms0
-    */
-  def snippetForSearchClientClearAllSynonyms(): Unit = {
-    // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
-
-    // Call the API
-    val res = client.clearAllSynonyms(
-      indexName = "indexName"
-    )
-
-    // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
-  }
-
   /** Snippet for the clearObjects method.
     *
     * clearObjects0
@@ -237,6 +220,23 @@ class SnippetSearchClient {
 
     // Call the API
     val res = client.clearRules(
+      indexName = "indexName"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+  }
+
+  /** Snippet for the clearSynonyms method.
+    *
+    * clearSynonyms0
+    */
+  def snippetForSearchClientClearSynonyms(): Unit = {
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    val res = client.clearSynonyms(
       indexName = "indexName"
     )
 
