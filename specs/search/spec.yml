@@ -65,11 +65,11 @@ tags:
   - name: Vaults
     description: >
       Vault operations.
-      
+
       Algolia Vault allows you to restrict network-level access to your cluster to a specific set of IP addresses: for non-authorized IP addresses, the cluster is invisible.
 
       You should authorize the IP addresses of team members who need to access the Alglolia dashboard, as it's also affected by the restricted list you set up.
-      
+
       To access this feature, [Algolia Vault](https://www.algolia.com/doc/guides/security/algolia-vault/) must be enabled on your server. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
 
       > **Note**: The maximum number of allowed sources is 1,000.
@@ -150,7 +150,7 @@ paths:
   /1/indexes/{indexName}/synonyms/batch:
     $ref: 'paths/synonyms/saveSynonyms.yml'
   /1/indexes/{indexName}/synonyms/clear:
-    $ref: 'paths/synonyms/clearAllSynonyms.yml'
+    $ref: 'paths/synonyms/clearSynonyms.yml'
   /1/indexes/{indexName}/synonyms/search:
     $ref: 'paths/synonyms/searchSynonyms.yml'
 
