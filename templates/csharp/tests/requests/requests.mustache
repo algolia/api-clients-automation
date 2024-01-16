@@ -28,19 +28,16 @@ public class {{client}}RequestTests
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-    {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}
-    {{#hasRequestOptions}}
-     var requestOptions = new RequestOptions();
-     {{#requestOptions.queryParameters.parametersWithDataType}}
-     requestOptions.QueryParameters.Add("{{{key}}}", {{> tests/requests/requestOptionsParams}});
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+      {{#requestOptions.queryParameters.parametersWithDataType}}
+        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
       {{/requestOptions.queryParameters.parametersWithDataType}}
       {{#requestOptions.headers.parametersWithDataType}}
-     requestOptions.Headers.Add("{{{key}}}", "{{{value}}}");
+        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
       {{/requestOptions.headers.parametersWithDataType}}
-    {{/hasRequestOptions}}
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+    }{{/hasRequestOptions}});
 
-     EchoResponse req = _echo.LastResponse;
+     var req = _echo.LastResponse;
     {{#request}}
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
@@ -57,13 +54,14 @@ public class {{client}}RequestTests
     {{/body}}
       {{#queryParameters}}
         var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
+        Assert.NotNull(expectedQuery);
+
         var actualQuery = req.QueryParameters;
         Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
         foreach (var query in actualQuery)
         {
-          string result;
-          expectedQuery.TryGetValue(query.Key, out result);
+          expectedQuery.TryGetValue(query.Key, out var result);
           Assert.Equal(query.Value, result);
         }
     {{/queryParameters}}
