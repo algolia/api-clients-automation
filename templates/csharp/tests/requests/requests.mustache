@@ -95,7 +95,9 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
     {{/headers}}
     {{/request}}
 
+
     {{#response}}
+      // e2e
       try {
         var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
       {{#requestOptions.queryParameters.parametersWithDataType}}
