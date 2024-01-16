@@ -60,8 +60,8 @@ func Test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *
   require.Regexp(t, regexp.MustCompile(`{{{match}}}`), echo.Header.Get("User-Agent"))
   {{/testUserAgent}}
   {{#testTimeouts}}
-  //require.Equal(t, {{{match.parametersWithDataTypeMap.connectTimeout.value}}}, echo.connect_timeout)
-  //require.Equal(t, {{{match.parametersWithDataTypeMap.responseTimeout.value}}}, echo.timeout)
+  require.Equal(t, {{{match.parametersWithDataTypeMap.connectTimeout.value}}}, echo.ConnectTimeout.Milliseconds())
+  require.Equal(t, {{{match.parametersWithDataTypeMap.responseTimeout.value}}}, echo.Timeout.Milliseconds())
   {{/testTimeouts}}
   {{#testHost}}
   require.Equal(t, "{{{match}}}", echo.Host)

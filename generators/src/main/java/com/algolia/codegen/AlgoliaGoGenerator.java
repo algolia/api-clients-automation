@@ -51,8 +51,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
-    supportingFiles.add(new SupportingFile("response.mustache", "", "response.go"));
-    supportingFiles.add(new SupportingFile("utils.mustache", "", "utils.go"));
 
     try {
       Helpers.generateServer(client, additionalProperties);
@@ -76,11 +74,11 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
     for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
       String modelName = entry.getKey();
-      ModelsMap model = entry.getValue();
+      CodegenModel model = entry.getValue().getModels().get(0).getModel();
 
       // for some reason the property additionalPropertiesIsAnyType is not propagated to the
       // property
-      for (CodegenProperty prop : model.getModels().get(0).getModel().getVars()) {
+      for (CodegenProperty prop : model.getVars()) {
         ModelsMap propertyModel = models.get(prop.datatypeWithEnum);
         if (propertyModel != null && propertyModel.getModels().get(0).getModel().getAdditionalPropertiesIsAnyType()) {
           // consider it the same as model for our purpose
@@ -92,6 +90,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
           prop.dataType = prop.dataType.replace("[]*[]", "[][]");
           prop.vendorExtensions.put("x-go-base-type", prop.dataType);
         }
+
+        prop.dataType = prop.dataType.replace("NullableBool", "utils.NullableBool");
       }
     }
     return models;

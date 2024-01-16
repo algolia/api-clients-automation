@@ -13,9 +13,10 @@ import (
   {{#isSearchClient}}
   "slices"
   "time"
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/internal/errs"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
   {{/isSearchClient}}
 
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
@@ -210,7 +211,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
   {{#vendorExtensions.x-is-custom-request}}
     {{#queryParams}}
-      {{^required}}if !isNilorEmpty(r.{{paramName}}) { {{/required}}
+      {{^required}}if !utils.IsNilorEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
            queryParams.Set(k, parameterToString(v))
           }
@@ -223,7 +224,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
-  if !isNilorEmpty(r.{{paramName}}) {
+  if !utils.IsNilorEmpty(r.{{paramName}}) {
     queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
@@ -234,7 +235,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
-  if !isNilorEmpty(r.{{paramName}}) {
+  if !utils.IsNilorEmpty(r.{{paramName}}) {
     headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
@@ -252,7 +253,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
 {{#bodyParams}}
   // body params{{^required}}
-  if isNilorEmpty(r.{{paramName}}) {
+  if utils.IsNilorEmpty(r.{{paramName}}) {
     postBody = "{}"
   } else { {{/required}}
     postBody = r.{{paramName}}{{^required}}
@@ -374,7 +375,7 @@ func (c *APIClient) WaitForTaskWithContext(
   maxDelay *time.Duration,
   opts ...Option,
 ) (*GetTaskResponse, error) {
-  return RetryUntil(
+  return utils.RetryUntil(
     func() (*GetTaskResponse, error) {
       return c.GetTaskWithContext(ctx, c.NewApiGetTaskRequest(indexName, taskID), opts...)
     },
@@ -487,7 +488,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
       return nil, &errs.WaitKeyUpdateError{}
     }
 
-    return RetryUntil(
+    return utils.RetryUntil(
       func() (*GetApiKeyResponse, error) {
         return c.GetApiKeyWithContext(ctx, c.NewApiGetApiKeyRequest(key), opts...)
       },
@@ -545,7 +546,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
     )
   }
 
-  return RetryUntil(
+  return utils.RetryUntil(
     func() (*GetApiKeyResponse, error) {
       return c.GetApiKeyWithContext(ctx, c.NewApiGetApiKeyRequest(key), opts...)
     },

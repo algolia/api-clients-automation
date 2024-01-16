@@ -24,7 +24,7 @@ export const patterns = [
 
   // Dart
   '!snippets/dart/**',
-  'snippets/dart/lib/**',  
+  'snippets/dart/lib/**',
   '!clients/algoliasearch-client-dart/**',
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
@@ -41,10 +41,12 @@ export const patterns = [
   'clients/algoliasearch-client-go/algolia/**',
   '!clients/algoliasearch-client-go/.github/**',
   '!clients/algoliasearch-client-go/*',
-  '!clients/algoliasearch-client-go/algolia/internal/**',
+  '!clients/algoliasearch-client-go/algolia/transport/**',
+  '!clients/algoliasearch-client-go/algolia/errs/**',
   '!clients/algoliasearch-client-go/algolia/call/*',
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
+  '!clients/algoliasearch-client-go/algolia/utils/*',
 
   'tests/output/go/go.sum',
 
@@ -112,7 +114,7 @@ export const patterns = [
 
   // Ruby
   '!snippets/ruby/Gemfile',
-  '!snippets/ruby/.rubocop.yml',  
+  '!snippets/ruby/.rubocop.yml',
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
@@ -126,7 +128,7 @@ export const patterns = [
 
   // Scala
   '!snippets/scala/**',
-  'snippets/scala/src/**',  
+  'snippets/scala/src/**',
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
