@@ -57,10 +57,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       (Mustache.Lambda) (fragment, writer) -> writer.write(getClientName(fragment.execute()))
     );
     additionalProperties.put(
-      "lambda.to-encodable",
+      "lambda.to-codable",
       (Mustache.Lambda) (fragment, writer) -> {
         String initialType = fragment.execute();
-        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Encodable" : initialType);
+        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
       }
     );
 
