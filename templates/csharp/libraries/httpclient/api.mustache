@@ -79,19 +79,19 @@ namespace Algolia.Search.Clients
         {
           if (httpRequester == null)
           {
-            throw new ArgumentNullException(nameof(httpRequester), "An httpRequester is required");
+            throw new ArgumentException("An httpRequester is required");
           }
           if (config == null)
           {
-            throw new ArgumentNullException(nameof(config), "A config is required");
+            throw new ArgumentException("A config is required");
           }
           if (string.IsNullOrWhiteSpace(config.AppId))
           {
-            throw new ArgumentNullException(nameof(config.AppId), "Application ID is required");
+            throw new ArgumentException("`AppId` is missing.");
           }
           if (string.IsNullOrWhiteSpace(config.ApiKey))
           {
-            throw new ArgumentNullException(nameof(config.ApiKey), "An API key is required");
+            throw new ArgumentException("`ApiKey` is missing.");
           }
 
           _config = config;
@@ -120,8 +120,7 @@ namespace Algolia.Search.Clients
             {{#required}}
             {{^vendorExtensions.x-csharp-value-type}}
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
-
+                throw new ApiException(400, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
             {{/vendorExtensions.x-csharp-value-type}}
             {{/required}}
             {{/allParams}}
