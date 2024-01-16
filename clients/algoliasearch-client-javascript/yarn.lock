@@ -3010,7 +3010,6 @@ __metadata:
     "@babel/plugin-proposal-class-properties": "npm:7.18.6"
     "@babel/plugin-transform-runtime": "npm:7.23.7"
     "@babel/preset-env": "npm:7.23.8"
-    "@babel/preset-typescript": "npm:7.23.3"
     "@babel/runtime": "npm:7.23.8"
     "@rollup/plugin-babel": "npm:6.0.4"
     "@rollup/plugin-node-resolve": "npm:15.2.3"
