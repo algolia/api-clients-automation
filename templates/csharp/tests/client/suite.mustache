@@ -1,0 +1,40 @@
+using Algolia.Search.Clients;
+using Algolia.Search.Http;
+using Xunit;
+
+public class {{client}}Tests
+{
+private readonly {{client}} _client;
+private readonly EchoHttpRequester _echo;
+private Exception _ex;
+
+public {{client}}Tests()
+{
+_echo = new EchoHttpRequester();
+_client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
+}
+
+[Fact]
+public void Dispose()
+{
+
+}
+
+{{#blocksClient}}
+  {{#tests}}
+    [Fact(DisplayName = "{{{testName}}}")]
+    public async Task {{#lambda.pascalcase}}{{testType}}Test{{testIndex}}{{/lambda.pascalcase}}()
+    {
+    {{#steps}}
+      {{#isError}}
+        _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{> tests/client/step}} });
+        Assert.Equal("{{{expectedError}}}".ToLowerInvariant(), _ex.Message.ToLowerInvariant());
+
+      {{/isError}}
+      {{^isError}}
+      {{/isError}}
+    {{/steps}}
+    }
+  {{/tests}}
+{{/blocksClient}}
+  }
