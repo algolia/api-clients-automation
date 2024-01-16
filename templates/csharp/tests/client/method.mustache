@@ -1,4 +1,4 @@
-await _client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
 {{#requestOptions.queryParameters.parametersWithDataType}}
         QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
 {{/requestOptions.queryParameters.parametersWithDataType}}

@@ -1,17 +1,17 @@
 using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
 using Algolia.Search.Http;
+using System.Text.RegularExpressions;
 using Xunit;
 
 public class {{client}}Tests
 {
-private readonly {{client}} _client;
 private readonly EchoHttpRequester _echo;
 private Exception _ex;
 
 public {{client}}Tests()
 {
 _echo = new EchoHttpRequester();
-_client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
 }
 
 [Fact]
@@ -25,6 +25,9 @@ public void Dispose()
     [Fact(DisplayName = "{{{testName}}}")]
     public async Task {{#lambda.pascalcase}}{{testType}}Test{{testIndex}}{{/lambda.pascalcase}}()
     {
+    {{#autoCreateClient}}
+    var client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
+    {{/autoCreateClient}}
     {{#steps}}
       {{#isError}}
         _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{> tests/client/step}} });
@@ -32,6 +35,20 @@ public void Dispose()
 
       {{/isError}}
       {{^isError}}
+        {{> tests/client/step}}
+        {{#match}}
+          {{#testUserAgent}} {
+            var regexp = new Regex("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}");
+            Assert.Matches(regexp,result.Headers["user-agent"]);
+            }{{/testUserAgent}}
+          {{#testTimeouts}}
+              Assert.Equal({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, result.ConnectTimeout.TotalMilliseconds);
+              Assert.Equal({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, result.ResponseTimeout.TotalMilliseconds);
+          {{/testTimeouts}}
+          {{#testHost}}
+              Assert.Equal("{{{match}}}", result.Host);
+          {{/testHost}}
+        {{/match}}
       {{/isError}}
     {{/steps}}
     }
