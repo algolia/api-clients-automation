@@ -10,7 +10,7 @@ public class SnippetPersonalizationClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForPersonalizationClientCustomDelete()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -26,7 +26,7 @@ public class SnippetPersonalizationClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForPersonalizationClientCustomGet()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -42,7 +42,7 @@ public class SnippetPersonalizationClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForPersonalizationClientCustomPost()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -58,7 +58,7 @@ public class SnippetPersonalizationClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForPersonalizationClientCustomPut()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -74,7 +74,7 @@ public class SnippetPersonalizationClient
   ///
   /// delete deleteUserProfile
   /// </summary>
-  public async Task SnippetForDeleteUserProfile0()
+  public async Task SnippetForPersonalizationClientDeleteUserProfile()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -90,7 +90,7 @@ public class SnippetPersonalizationClient
   ///
   /// get getPersonalizationStrategy
   /// </summary>
-  public async Task SnippetForGetPersonalizationStrategy0()
+  public async Task SnippetForPersonalizationClientGetPersonalizationStrategy()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -106,7 +106,7 @@ public class SnippetPersonalizationClient
   ///
   /// get getUserTokenProfile
   /// </summary>
-  public async Task SnippetForGetUserTokenProfile0()
+  public async Task SnippetForPersonalizationClientGetUserTokenProfile()
   {
     // Initialize the client
     var client = new PersonalizationClient(
@@ -122,7 +122,7 @@ public class SnippetPersonalizationClient
   ///
   /// set setPersonalizationStrategy
   /// </summary>
-  public async Task SnippetForSetPersonalizationStrategy0()
+  public async Task SnippetForPersonalizationClientSetPersonalizationStrategy()
   {
     // Initialize the client
     var client = new PersonalizationClient(

@@ -10,7 +10,7 @@ public class SnippetMonitoringClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForMonitoringClientCustomDelete()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -24,7 +24,7 @@ public class SnippetMonitoringClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForMonitoringClientCustomGet()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -38,7 +38,7 @@ public class SnippetMonitoringClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForMonitoringClientCustomPost()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -52,7 +52,7 @@ public class SnippetMonitoringClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForMonitoringClientCustomPut()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -66,7 +66,7 @@ public class SnippetMonitoringClient
   ///
   /// getClusterIncidents
   /// </summary>
-  public async Task SnippetForGetClusterIncidents0()
+  public async Task SnippetForMonitoringClientGetClusterIncidents()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -80,7 +80,7 @@ public class SnippetMonitoringClient
   ///
   /// getClusterStatus
   /// </summary>
-  public async Task SnippetForGetClusterStatus0()
+  public async Task SnippetForMonitoringClientGetClusterStatus()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -94,7 +94,7 @@ public class SnippetMonitoringClient
   ///
   /// getIncidents
   /// </summary>
-  public async Task SnippetForGetIncidents0()
+  public async Task SnippetForMonitoringClientGetIncidents()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -108,7 +108,7 @@ public class SnippetMonitoringClient
   ///
   /// getIndexingTime
   /// </summary>
-  public async Task SnippetForGetIndexingTime0()
+  public async Task SnippetForMonitoringClientGetIndexingTime()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -122,7 +122,7 @@ public class SnippetMonitoringClient
   ///
   /// getInventory
   /// </summary>
-  public async Task SnippetForGetInventory0()
+  public async Task SnippetForMonitoringClientGetInventory()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -136,7 +136,7 @@ public class SnippetMonitoringClient
   ///
   /// getLatency
   /// </summary>
-  public async Task SnippetForGetLatency0()
+  public async Task SnippetForMonitoringClientGetLatency()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -150,7 +150,7 @@ public class SnippetMonitoringClient
   ///
   /// getMetrics
   /// </summary>
-  public async Task SnippetForGetMetrics0()
+  public async Task SnippetForMonitoringClientGetMetrics()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -167,7 +167,7 @@ public class SnippetMonitoringClient
   ///
   /// getReachability
   /// </summary>
-  public async Task SnippetForGetReachability0()
+  public async Task SnippetForMonitoringClientGetReachability()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -181,7 +181,7 @@ public class SnippetMonitoringClient
   ///
   /// getStatus
   /// </summary>
-  public async Task SnippetForGetStatus0()
+  public async Task SnippetForMonitoringClientGetStatus()
   {
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
