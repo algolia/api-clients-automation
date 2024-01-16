@@ -145,7 +145,7 @@ public class ParametersWithDataType {
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
     if (param == null) {
-      handleNull(testOutput);
+      handleNull(spec, testOutput);
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
     } else if (spec.getIsEnum()) {
@@ -155,7 +155,7 @@ public class ParametersWithDataType {
       handleModel(paramName, param, testOutput, spec, baseType, parent, suffix);
     } else if (baseType.equals("Object")) {
       // not var, no item, pure free form
-      handleObject(paramName, param, testOutput, suffix);
+      handleObject(paramName, param, testOutput, true, suffix);
     } else if (spec.getIsMap()) {
       // free key but only one type
       handleMap(paramName, param, testOutput, spec, suffix);
@@ -188,11 +188,11 @@ public class ParametersWithDataType {
     }
 
     if (param == null) {
-      handleNull(testOutput);
+      handleNull(null, testOutput);
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, suffix);
     } else if (param instanceof Map) {
-      handleObject(paramName, param, testOutput, suffix);
+      handleObject(paramName, param, testOutput, false, suffix);
     } else {
       handlePrimitive(param, testOutput, null);
     }
@@ -205,6 +205,7 @@ public class ParametersWithDataType {
     // we need to set all types to false otherwise mustache will read the one from the parent
     // context and run into a infinite loop
     testOutput.put("isObject", false);
+    testOutput.put("isNullObject", false);
     testOutput.put("isArray", false);
     testOutput.put("isNull", false);
     testOutput.put("isFreeFormObject", false);
@@ -224,8 +225,11 @@ public class ParametersWithDataType {
     return testOutput;
   }
 
-  private void handleNull(Map<String, Object> testOutput) {
+  private void handleNull(IJsonSchemaValidationProperties spec, Map<String, Object> testOutput) {
     testOutput.put("isNull", true);
+    if (spec.getIsModel() || spec instanceof CodegenModel) {
+      testOutput.put("isNullObject", true);
+    }
   }
 
   private void handleArray(
@@ -385,7 +389,8 @@ public class ParametersWithDataType {
     testOutput.put("optionalValue", optionalValues);
   }
 
-  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, int suffix) throws CTSException {
+  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
+    throws CTSException {
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
@@ -394,11 +399,8 @@ public class ParametersWithDataType {
       objSpec.dataType = inferDataType(entry.getValue(), objSpec, null);
       values.add(traverseParams(entry.getKey(), entry.getValue(), objSpec, paramName, suffix + 1, true));
     }
-    // sometimes it's really just an object
-    if (testOutput.getOrDefault("objectName", "").equals("Object")) {
-      testOutput.put("isSimpleObject", true);
-    }
 
+    testOutput.put("isSimpleObject", isSimpleObject);
     testOutput.put("isFreeFormObject", true);
     testOutput.put("value", values);
   }
@@ -493,6 +495,8 @@ public class ParametersWithDataType {
             return "bool";
           case "List":
             return "Array";
+          case "Object":
+            return "map[string]any";
         }
     }
     return Helpers.capitalize(objectName);

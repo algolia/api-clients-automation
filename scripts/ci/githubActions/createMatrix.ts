@@ -102,7 +102,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/global.json`;
         break;
       case 'go':
-        testsToStore = `${testsToStore} ${testsOutputBase}/requests/common.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        testsToStore = `${testsToStore} ${testsOutputBase}/echo.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
         break;
       case 'java':
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;

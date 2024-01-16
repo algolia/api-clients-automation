@@ -9,18 +9,14 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-  {{#isSearchClient}}
-  "slices"
-  {{/isSearchClient}}
   "strings"
   {{#isSearchClient}}
+  "slices"
   "time"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/internal/errs"
   {{/isSearchClient}}
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
-  {{#isSearchClient}}
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/internal/errs"
-  {{/isSearchClient}}
 )
 
 type Option struct {
@@ -156,24 +152,25 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	)
 
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, "{"+"{{baseName}}"+"}", url.PathEscape(parameterToString(r.{{paramName}}))){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, url.PathEscape(parameterToString(r.{{paramName}}))){{/pathParams}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
 	{{#allParams}}
 	{{#required}}
-	{{^isPathParam}}
-  {{^isPrimitiveType}}
-	if r.{{paramName}} == nil {
-	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
-	}
-  {{/isPrimitiveType}}
   {{#isString}}
-	if r.{{paramName}} == "" {
-	  return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} is required and must be specified")
-	}
-  {{/isString}}
-	{{/isPathParam}}
+	if r.{{paramName}} == "" { 
+    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isString}}{{#isContainer}}
+  if len(r.{{paramName}}) == 0 { 
+    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isContainer}}{{#isMap}}
+  if len(r.{{paramName}}) == 0 { 
+    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isMap}}{{^isPrimitiveType}}{{^isContainer}}{{^isMap}}{{^isEnumRef}}
+  if r.{{paramName}} == nil {
+	  return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
 	{{#minItems}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minItems}} {
 		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")

@@ -1,0 +1,7 @@
+cfg = {{clientPrefix}}.Configuration{
+  AppID:     "{{parametersWithDataTypeMap.appId.value}}",
+  ApiKey:    "{{parametersWithDataTypeMap.apiKey.value}}",{{#hasRegionalHost}}
+  Region:    {{#parametersWithDataTypeMap.region}}{{#lambda.uppercase}}{{parametersWithDataTypeMap.region.value}}{{/lambda.uppercase}},{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
+  Requester: echo,
+}
+client, {{#isError}}err{{/isError}}{{^isError}}_{{/isError}} ={{clientPrefix}}.NewClientWithConfig(cfg)

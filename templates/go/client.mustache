@@ -37,7 +37,7 @@ type APIClient struct {
 }
 
 // NewClient creates a new API client with {{#hasRegionalHost}}appID, apiKey and region.{{/hasRegionalHost}}{{^hasRegionalHost}}appID and apiKey.{{/hasRegionalHost}}
-func NewClient(appID, apiKey string{{#hasRegionalHost}}, region Region{{/hasRegionalHost}}) *APIClient {
+func NewClient(appID, apiKey string{{#hasRegionalHost}}, region Region{{/hasRegionalHost}}) (*APIClient, error) {
 return NewClientWithConfig(Configuration{
 		AppID:         appID,
 		ApiKey:        apiKey,{{#hasRegionalHost}}
@@ -50,18 +50,18 @@ return NewClientWithConfig(Configuration{
 }
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
-func NewClientWithConfig(cfg Configuration) *APIClient {
+func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
   var hosts []*transport.StatefulHost
 
   if cfg.AppID == "" {
-    panic("appID is required")
+    return nil, errors.New("`appId` is missing.")
   }
   if cfg.ApiKey == "" {
-    panic("apiKey is required")
+    return nil, errors.New("`apiKey` is missing.")
   }
   if len(cfg.Hosts) == 0 { {{#hasRegionalHost}}
     if cfg.Region == "" {
-      panic("region is required")
+      return nil, errors.New("region is required")
     }{{/hasRegionalHost}}
     hosts = getDefaultHosts({{#hasRegionalHost}}cfg.Region{{/hasRegionalHost}}{{^hasRegionalHost}}cfg.AppID{{/hasRegionalHost}})
   } else {
@@ -86,7 +86,7 @@ func NewClientWithConfig(cfg Configuration) *APIClient {
 			cfg.WriteTimeout,
 			cfg.Compression,
 		),
-	}
+	}, nil
 }
 
 {{#hasRegionalHost}}

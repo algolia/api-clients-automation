@@ -80,7 +80,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 response, err := searchClient.SaveRules(
   searchClient.NewApiSaveRulesRequest(
@@ -183,7 +183,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 response, err := searchClient.SaveSynonyms(
   searchClient.NewApiSaveSynonymsRequest(

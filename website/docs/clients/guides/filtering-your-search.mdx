@@ -97,7 +97,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 response, err := searchClient.SetSettings(searchClient.NewApiSetSettingsRequest(
   indexName,
@@ -354,7 +354,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 // Only "Scarlett Johansson" actor
 results, err := searchClient.Search(
@@ -575,7 +575,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 // Only "Scarlett Johansson" actor
 results, err := searchClient.Search(

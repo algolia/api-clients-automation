@@ -1,0 +1,5 @@
+_, err = client.{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}(client.NewApi{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}Request(
+        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{#requestOptions}},
+      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
+      {{/requestOptions}})
