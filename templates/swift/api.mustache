@@ -72,7 +72,7 @@ typealias Client = {{classname}}
     {{/isDeprecated}}
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) async throws{{#returnType}} -> {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{/returnType}} {
-      {{#returnType}}return {{/returnType}}try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions){{#returnType}}.body{{/returnType}}
+        return try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions).body
     }
 
     /**
