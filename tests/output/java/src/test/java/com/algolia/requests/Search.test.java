@@ -439,18 +439,6 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearAllSynonyms0")
-  void clearAllSynonymsTest0() {
-    assertDoesNotThrow(() -> {
-      client.clearAllSynonyms("indexName");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/synonyms/clear", req.path);
-    assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
-  }
-
-  @Test
   @DisplayName("clearObjects0")
   void clearObjectsTest0() {
     assertDoesNotThrow(() -> {
@@ -470,6 +458,18 @@ class SearchClientRequestsTests {
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/rules/clear", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("clearSynonyms0")
+  void clearSynonymsTest0() {
+    assertDoesNotThrow(() -> {
+      client.clearSynonyms("indexName");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/synonyms/clear", req.path);
     assertEquals("POST", req.method);
     assertEquals("{}", req.body);
   }

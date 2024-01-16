@@ -307,29 +307,6 @@ class SearchClient(
     execute[BrowseResponse](request, requestOptions)
   }
 
-  /** Delete all synonyms in the index.
-    *
-    * @param indexName
-    *   Index on which to perform the request.
-    * @param forwardToReplicas
-    *   Indicates whether changed index settings are forwarded to the replica indices.
-    */
-  def clearAllSynonyms(
-      indexName: String,
-      forwardToReplicas: Option[Boolean] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
-    requireNotNull(indexName, "Parameter `indexName` is required when calling `clearAllSynonyms`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("POST")
-      .withPath(s"/1/indexes/${escape(indexName)}/synonyms/clear")
-      .withQueryParameter("forwardToReplicas", forwardToReplicas)
-      .build()
-    execute[UpdatedAtResponse](request, requestOptions)
-  }
-
   /** Delete the records but leave settings and index-specific API keys untouched.
     *
     * @param indexName
@@ -366,6 +343,29 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/clear")
+      .withQueryParameter("forwardToReplicas", forwardToReplicas)
+      .build()
+    execute[UpdatedAtResponse](request, requestOptions)
+  }
+
+  /** Delete all synonyms in the index.
+    *
+    * @param indexName
+    *   Index on which to perform the request.
+    * @param forwardToReplicas
+    *   Indicates whether changed index settings are forwarded to the replica indices.
+    */
+  def clearSynonyms(
+      indexName: String,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    requireNotNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/indexes/${escape(indexName)}/synonyms/clear")
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
     execute[UpdatedAtResponse](request, requestOptions)

@@ -10,7 +10,7 @@ public class SnippetIngestionClient
   ///
   /// createAuthenticationOAuth
   /// </summary>
-  public async Task SnippetForCreateAuthentication0()
+  public async Task SnippetForIngestionClientCreateAuthentication()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -40,7 +40,7 @@ public class SnippetIngestionClient
   ///
   /// createDestination
   /// </summary>
-  public async Task SnippetForCreateDestination0()
+  public async Task SnippetForIngestionClientCreateDestination()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -64,7 +64,7 @@ public class SnippetIngestionClient
   ///
   /// createSource
   /// </summary>
-  public async Task SnippetForCreateSource0()
+  public async Task SnippetForIngestionClientCreateSource()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -96,7 +96,7 @@ public class SnippetIngestionClient
   ///
   /// createTaskOnDemand
   /// </summary>
-  public async Task SnippetForCreateTask0()
+  public async Task SnippetForIngestionClientCreateTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -122,7 +122,7 @@ public class SnippetIngestionClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForIngestionClientCustomDelete()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -138,7 +138,7 @@ public class SnippetIngestionClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForIngestionClientCustomGet()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -154,7 +154,7 @@ public class SnippetIngestionClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForIngestionClientCustomPost()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -170,7 +170,7 @@ public class SnippetIngestionClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForIngestionClientCustomPut()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -186,7 +186,7 @@ public class SnippetIngestionClient
   ///
   /// deleteAuthentication
   /// </summary>
-  public async Task SnippetForDeleteAuthentication0()
+  public async Task SnippetForIngestionClientDeleteAuthentication()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -202,7 +202,7 @@ public class SnippetIngestionClient
   ///
   /// deleteDestination
   /// </summary>
-  public async Task SnippetForDeleteDestination0()
+  public async Task SnippetForIngestionClientDeleteDestination()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -218,7 +218,7 @@ public class SnippetIngestionClient
   ///
   /// deleteSource
   /// </summary>
-  public async Task SnippetForDeleteSource0()
+  public async Task SnippetForIngestionClientDeleteSource()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -234,7 +234,7 @@ public class SnippetIngestionClient
   ///
   /// deleteTask
   /// </summary>
-  public async Task SnippetForDeleteTask0()
+  public async Task SnippetForIngestionClientDeleteTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -250,7 +250,7 @@ public class SnippetIngestionClient
   ///
   /// disableTask
   /// </summary>
-  public async Task SnippetForDisableTask0()
+  public async Task SnippetForIngestionClientDisableTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -266,7 +266,7 @@ public class SnippetIngestionClient
   ///
   /// enableTask
   /// </summary>
-  public async Task SnippetForEnableTask0()
+  public async Task SnippetForIngestionClientEnableTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -282,7 +282,7 @@ public class SnippetIngestionClient
   ///
   /// getAuthentication
   /// </summary>
-  public async Task SnippetForGetAuthentication0()
+  public async Task SnippetForIngestionClientGetAuthentication()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -298,7 +298,7 @@ public class SnippetIngestionClient
   ///
   /// getAuthentications
   /// </summary>
-  public async Task SnippetForGetAuthentications0()
+  public async Task SnippetForIngestionClientGetAuthentications()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -314,7 +314,7 @@ public class SnippetIngestionClient
   ///
   /// getDestination
   /// </summary>
-  public async Task SnippetForGetDestination0()
+  public async Task SnippetForIngestionClientGetDestination()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -330,7 +330,7 @@ public class SnippetIngestionClient
   ///
   /// getDestinations
   /// </summary>
-  public async Task SnippetForGetDestinations0()
+  public async Task SnippetForIngestionClientGetDestinations()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -346,7 +346,7 @@ public class SnippetIngestionClient
   ///
   /// getDockerSourceStreams
   /// </summary>
-  public async Task SnippetForGetDockerSourceStreams0()
+  public async Task SnippetForIngestionClientGetDockerSourceStreams()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -362,7 +362,7 @@ public class SnippetIngestionClient
   ///
   /// getEvent
   /// </summary>
-  public async Task SnippetForGetEvent0()
+  public async Task SnippetForIngestionClientGetEvent()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -381,7 +381,7 @@ public class SnippetIngestionClient
   ///
   /// getEvents
   /// </summary>
-  public async Task SnippetForGetEvents0()
+  public async Task SnippetForIngestionClientGetEvents()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -397,7 +397,7 @@ public class SnippetIngestionClient
   ///
   /// getRun
   /// </summary>
-  public async Task SnippetForGetRun0()
+  public async Task SnippetForIngestionClientGetRun()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -413,7 +413,7 @@ public class SnippetIngestionClient
   ///
   /// getRuns
   /// </summary>
-  public async Task SnippetForGetRuns0()
+  public async Task SnippetForIngestionClientGetRuns()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -429,7 +429,7 @@ public class SnippetIngestionClient
   ///
   /// getSource
   /// </summary>
-  public async Task SnippetForGetSource0()
+  public async Task SnippetForIngestionClientGetSource()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -445,7 +445,7 @@ public class SnippetIngestionClient
   ///
   /// getSources
   /// </summary>
-  public async Task SnippetForGetSources0()
+  public async Task SnippetForIngestionClientGetSources()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -461,7 +461,7 @@ public class SnippetIngestionClient
   ///
   /// getTask
   /// </summary>
-  public async Task SnippetForGetTask0()
+  public async Task SnippetForIngestionClientGetTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -477,7 +477,7 @@ public class SnippetIngestionClient
   ///
   /// getTasks
   /// </summary>
-  public async Task SnippetForGetTasks0()
+  public async Task SnippetForIngestionClientGetTasks()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -493,7 +493,7 @@ public class SnippetIngestionClient
   ///
   /// runTask
   /// </summary>
-  public async Task SnippetForRunTask0()
+  public async Task SnippetForIngestionClientRunTask()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -509,7 +509,7 @@ public class SnippetIngestionClient
   ///
   /// searchAuthentications
   /// </summary>
-  public async Task SnippetForSearchAuthentications0()
+  public async Task SnippetForIngestionClientSearchAuthentications()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -534,7 +534,7 @@ public class SnippetIngestionClient
   ///
   /// searchDestinations
   /// </summary>
-  public async Task SnippetForSearchDestinations0()
+  public async Task SnippetForIngestionClientSearchDestinations()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -559,7 +559,7 @@ public class SnippetIngestionClient
   ///
   /// searchSources
   /// </summary>
-  public async Task SnippetForSearchSources0()
+  public async Task SnippetForIngestionClientSearchSources()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -584,7 +584,7 @@ public class SnippetIngestionClient
   ///
   /// searchTasks
   /// </summary>
-  public async Task SnippetForSearchTasks0()
+  public async Task SnippetForIngestionClientSearchTasks()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -609,7 +609,7 @@ public class SnippetIngestionClient
   ///
   /// triggerDockerSourceDiscover
   /// </summary>
-  public async Task SnippetForTriggerDockerSourceDiscover0()
+  public async Task SnippetForIngestionClientTriggerDockerSourceDiscover()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -627,7 +627,7 @@ public class SnippetIngestionClient
   ///
   /// updateAuthentication
   /// </summary>
-  public async Task SnippetForUpdateAuthentication0()
+  public async Task SnippetForIngestionClientUpdateAuthentication()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -646,7 +646,7 @@ public class SnippetIngestionClient
   ///
   /// updateDestination
   /// </summary>
-  public async Task SnippetForUpdateDestination0()
+  public async Task SnippetForIngestionClientUpdateDestination()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -665,7 +665,7 @@ public class SnippetIngestionClient
   ///
   /// updateSource
   /// </summary>
-  public async Task SnippetForUpdateSource0()
+  public async Task SnippetForIngestionClientUpdateSource()
   {
     // Initialize the client
     var client = new IngestionClient(
@@ -684,7 +684,7 @@ public class SnippetIngestionClient
   ///
   /// updateTask
   /// </summary>
-  public async Task SnippetForUpdateTask0()
+  public async Task SnippetForIngestionClientUpdateTask()
   {
     // Initialize the client
     var client = new IngestionClient(

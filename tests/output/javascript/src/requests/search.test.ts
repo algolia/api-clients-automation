@@ -409,19 +409,6 @@ describe('browse', () => {
   });
 });
 
-describe('clearAllSynonyms', () => {
-  test('clearAllSynonyms0', async () => {
-    const req = (await client.clearAllSynonyms({
-      indexName: 'indexName',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/indexName/synonyms/clear');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('clearObjects', () => {
   test('clearObjects0', async () => {
     const req = (await client.clearObjects({
@@ -442,6 +429,19 @@ describe('clearRules', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/rules/clear');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('clearSynonyms', () => {
+  test('clearSynonyms0', async () => {
+    const req = (await client.clearSynonyms({
+      indexName: 'indexName',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/synonyms/clear');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);

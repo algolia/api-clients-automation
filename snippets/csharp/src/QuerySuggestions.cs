@@ -10,7 +10,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// createConfig0
   /// </summary>
-  public async Task SnippetForCreateConfig0()
+  public async Task SnippetForQuerySuggestionsClientCreateConfig()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -46,7 +46,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForQuerySuggestionsClientCustomDelete()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -62,7 +62,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForQuerySuggestionsClientCustomGet()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -78,7 +78,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForQuerySuggestionsClientCustomPost()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -94,7 +94,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForQuerySuggestionsClientCustomPut()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -110,7 +110,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// deleteConfig0
   /// </summary>
-  public async Task SnippetForDeleteConfig0()
+  public async Task SnippetForQuerySuggestionsClientDeleteConfig()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -126,7 +126,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// getAllConfigs0
   /// </summary>
-  public async Task SnippetForGetAllConfigs0()
+  public async Task SnippetForQuerySuggestionsClientGetAllConfigs()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -142,7 +142,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// getConfig0
   /// </summary>
-  public async Task SnippetForGetConfig0()
+  public async Task SnippetForQuerySuggestionsClientGetConfig()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -158,7 +158,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// getConfigStatus0
   /// </summary>
-  public async Task SnippetForGetConfigStatus0()
+  public async Task SnippetForQuerySuggestionsClientGetConfigStatus()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -174,7 +174,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// getLogFile0
   /// </summary>
-  public async Task SnippetForGetLogFile0()
+  public async Task SnippetForQuerySuggestionsClientGetLogFile()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
@@ -190,7 +190,7 @@ public class SnippetQuerySuggestionsClient
   ///
   /// updateConfig0
   /// </summary>
-  public async Task SnippetForUpdateConfig0()
+  public async Task SnippetForQuerySuggestionsClientUpdateConfig()
   {
     // Initialize the client
     var client = new QuerySuggestionsClient(
