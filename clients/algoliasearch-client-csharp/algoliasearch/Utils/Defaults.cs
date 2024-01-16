@@ -18,7 +18,7 @@ namespace Algolia.Search.Utils
     public static TimeSpan WriteTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Connect timeout
+    /// TLS Handshake timeout
     /// </summary>
     public static TimeSpan ConnectTimeout = TimeSpan.FromSeconds(2);
 

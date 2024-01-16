@@ -121,7 +121,7 @@ namespace Algolia.Search.Transport
         }
 
         AlgoliaHttpResponse response = await _httpClient
-          .SendRequestAsync(request, requestTimeout, _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout, ct)
+          .SendRequestAsync(request, requestTimeout, GetConnectTimeout(), ct)
           .ConfigureAwait(false);
 
         _errorMessage = response.Error;
@@ -229,6 +229,11 @@ namespace Algolia.Search.Transport
         default:
           return Defaults.WriteTimeout;
       }
+    }
+
+    private TimeSpan GetConnectTimeout()
+    {
+      return _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout;
     }
   }
 }
