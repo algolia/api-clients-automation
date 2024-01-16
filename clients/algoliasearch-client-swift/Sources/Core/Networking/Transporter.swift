@@ -113,13 +113,13 @@ open class Transporter {
         }
       }
 
-        do {
-            let response: Response<T> = try await self.requestBuilder.execute(
-                urlRequest: request, timeout: timeout)
-            self.retryStrategy.notify(host: host, error: nil)
-            return response
-        } catch let cancellationError as CancellationError {
-            throw TransportError.requestError(cancellationError)
+      do {
+        let response: Response<T> = try await self.requestBuilder.execute(
+          urlRequest: request, timeout: timeout)
+        self.retryStrategy.notify(host: host, error: nil)
+        return response
+      } catch let cancellationError as CancellationError {
+        throw TransportError.requestError(cancellationError)
       } catch {
         intermediateErrors.append(error)
         self.retryStrategy.notify(host: host, error: error)

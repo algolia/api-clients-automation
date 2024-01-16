@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+  import FoundationNetworking
+#endif
+
 open class URLSessionRequestBuilder: RequestBuilder {
 
   private(set) var sessionManager: URLSession
@@ -31,7 +35,11 @@ open class URLSessionRequestBuilder: RequestBuilder {
 
     var (responseData, httpResponse): (Data?, URLResponse?) = (nil, nil)
     do {
-      (responseData, httpResponse) = try await self.sessionManager.data(for: urlRequest)
+      #if canImport(FoundationNetworking)
+        (responseData, httpResponse) = try await self.sessionManager.asyncData(for: urlRequest)
+      #else
+        (responseData, httpResponse) = try await self.sessionManager.data(for: urlRequest)
+      #endif
     } catch {
       throw TransportError.requestError(error)
     }
@@ -84,7 +92,9 @@ open class URLSessionRequestBuilder: RequestBuilder {
         return Response(response: httpResponse, body: decodableObj, bodyData: unwrappedData)
       case let .failure(error):
         throw TransportError.decodingFailure(
-            AlgoliaError(errorMessage: "Unable to decode response decodable object: " + error.localizedDescription))
+          AlgoliaError(
+            errorMessage: "Unable to decode response decodable object: "
+              + error.localizedDescription))
       }
     }
   }

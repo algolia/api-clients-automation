@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+  import FoundationNetworking
+#endif
+
 public struct EchoResponse<T: Decodable>: Decodable {
   let statusCode: HTTPStatusСode
   let url: String
@@ -68,12 +72,26 @@ final class EchoRequestBuilder: RequestBuilder {
 
     let headers = urlRequest.allHTTPHeaderFields ?? [:]
 
+    let queryItems = processQueryItems(from: url.query)
+
     return EchoResponse(
       statusCode: self.statusCode, url: url.absoluteString, timeout: timeout,
       data: response.body, path: url.path, host: url.host ?? "",
       algoliaAgent: headers["X-Algolia-Agent"] ?? "",
-      queryItems: url.query?.propertyListFromStringsFileFormat()
+      queryItems: queryItems
     )
+  }
+
+  fileprivate func processQueryItems(from query: String?) -> [String: String?]? {
+    guard let query = query else {
+      return nil
+    }
+
+    let components = URLComponents(string: "?" + query)
+
+    return components?.queryItems?.reduce(into: [String: String?]()) { acc, cur in
+      acc.updateValue(cur.value, forKey: cur.name)
+    }
   }
 
 }
