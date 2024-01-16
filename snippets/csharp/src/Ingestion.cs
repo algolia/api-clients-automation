@@ -1,739 +1,700 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Ingestion;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetIngestionClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the createAuthentication method.
+  /// Snippet for the CreateAuthentication method.
   ///
   /// createAuthenticationOAuth
   /// </summary>
   public async Task SnippetForCreateAuthentication0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var authenticationCreate0 = new AuthenticationCreate();
-    {
-      var type1 = (AuthenticationType)Enum.Parse(typeof(AuthenticationType), "Oauth");
-      authenticationCreate0.Type = type1; const string name1 = "authName";
-      authenticationCreate0.Name = name1; var input1 = new AuthOAuth();
+    var response = await client.CreateAuthenticationAsync(
+      new AuthenticationCreate
       {
-        const string url2 = "http://test.oauth";
-        input1.Url = url2; const string client_id2 = "myID";
-        input1.ClientId = client_id2; const string client_secret2 = "mySecret";
-        input1.ClientSecret = client_secret2;
+        Type = Enum.Parse<AuthenticationType>("Oauth"),
+        Name = "authName",
+        Input = new AuthInput(
+          new AuthOAuth
+          {
+            Url = "http://test.oauth",
+            ClientId = "myID",
+            ClientSecret = "mySecret",
+          }
+        ),
       }
-      authenticationCreate0.Input = new AuthInput(input1);
-    }
-
-
-    var response = await _client.CreateAuthenticationAsync(authenticationCreate0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the createDestination method.
+  /// Snippet for the CreateDestination method.
   ///
   /// createDestination
   /// </summary>
   public async Task SnippetForCreateDestination0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var destinationCreate0 = new DestinationCreate();
-    {
-      var type1 = (DestinationType)Enum.Parse(typeof(DestinationType), "Search");
-      destinationCreate0.Type = type1; const string name1 = "destinationName";
-      destinationCreate0.Name = name1; var input1 = new DestinationIndexPrefix();
+    var response = await client.CreateDestinationAsync(
+      new DestinationCreate
       {
-        const string indexPrefix2 = "prefix_";
-        input1.IndexPrefix = indexPrefix2;
+        Type = Enum.Parse<DestinationType>("Search"),
+        Name = "destinationName",
+        Input = new DestinationInput(new DestinationIndexPrefix { IndexPrefix = "prefix_", }),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
-      destinationCreate0.Input = new DestinationInput(input1); const string authenticationID1 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      destinationCreate0.AuthenticationID = authenticationID1;
-    }
-
-
-    var response = await _client.CreateDestinationAsync(destinationCreate0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the createSource method.
+  /// Snippet for the CreateSource method.
   ///
   /// createSource
   /// </summary>
   public async Task SnippetForCreateSource0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var sourceCreate0 = new SourceCreate();
-    {
-      var type1 = (SourceType)Enum.Parse(typeof(SourceType), "Commercetools");
-      sourceCreate0.Type = type1; const string name1 = "sourceName";
-      sourceCreate0.Name = name1; var input1 = new SourceCommercetools();
+    var response = await client.CreateSourceAsync(
+      new SourceCreate
       {
-        var storeKeys2 = new List<string>();
-        const string storeKeys_03 = "myStore";
-        storeKeys2.Add(storeKeys_03);
-        input1.StoreKeys = storeKeys2; var locales2 = new List<string>();
-        const string locales_03 = "de";
-        locales2.Add(locales_03);
-        input1.Locales = locales2; const string url2 = "http://commercetools.com";
-        input1.Url = url2; const string projectKey2 = "keyID";
-        input1.ProjectKey = projectKey2;
+        Type = Enum.Parse<SourceType>("Commercetools"),
+        Name = "sourceName",
+        Input = new SourceInput(
+          new SourceCommercetools
+          {
+            StoreKeys = new List<string> { "myStore" },
+            Locales = new List<string> { "de" },
+            Url = "http://commercetools.com",
+            ProjectKey = "keyID",
+          }
+        ),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
-      sourceCreate0.Input = new SourceInput(input1); const string authenticationID1 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      sourceCreate0.AuthenticationID = authenticationID1;
-    }
-
-
-    var response = await _client.CreateSourceAsync(sourceCreate0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the createTask method.
+  /// Snippet for the CreateTask method.
   ///
   /// createTaskOnDemand
   /// </summary>
   public async Task SnippetForCreateTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var taskCreate0 = new TaskCreate();
-    {
-      const string sourceID1 = "search";
-      taskCreate0.SourceID = sourceID1; const string destinationID1 = "destinationName";
-      taskCreate0.DestinationID = destinationID1; var trigger1 = new OnDemandTriggerInput();
+    var response = await client.CreateTaskAsync(
+      new TaskCreate
       {
-        var type2 = (OnDemandTriggerType)Enum.Parse(typeof(OnDemandTriggerType), "OnDemand");
-        trigger1.Type = type2;
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Trigger = new TaskCreateTrigger(
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+        ),
+        Action = Enum.Parse<ActionType>("Replace"),
       }
-      taskCreate0.Trigger = new TaskCreateTrigger(trigger1); var action1 = (ActionType)Enum.Parse(typeof(ActionType), "Replace");
-      taskCreate0.Action = action1;
-    }
-
-
-    var response = await _client.CreateTaskAsync(taskCreate0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomDelete0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomGet0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPost0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPut0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the deleteAuthentication method.
+  /// Snippet for the DeleteAuthentication method.
   ///
   /// deleteAuthentication
   /// </summary>
   public async Task SnippetForDeleteAuthentication0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.DeleteAuthenticationAsync(authenticationID0);
+    var response = await client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the deleteDestination method.
+  /// Snippet for the DeleteDestination method.
   ///
   /// deleteDestination
   /// </summary>
   public async Task SnippetForDeleteDestination0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.DeleteDestinationAsync(destinationID0);
+    var response = await client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the deleteSource method.
+  /// Snippet for the DeleteSource method.
   ///
   /// deleteSource
   /// </summary>
   public async Task SnippetForDeleteSource0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.DeleteSourceAsync(sourceID0);
+    var response = await client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the deleteTask method.
+  /// Snippet for the DeleteTask method.
   ///
   /// deleteTask
   /// </summary>
   public async Task SnippetForDeleteTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.DeleteTaskAsync(taskID0);
+    var response = await client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the disableTask method.
+  /// Snippet for the DisableTask method.
   ///
   /// disableTask
   /// </summary>
   public async Task SnippetForDisableTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.DisableTaskAsync(taskID0);
+    var response = await client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the enableTask method.
+  /// Snippet for the EnableTask method.
   ///
   /// enableTask
   /// </summary>
   public async Task SnippetForEnableTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.EnableTaskAsync(taskID0);
+    var response = await client.EnableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getAuthentication method.
+  /// Snippet for the GetAuthentication method.
   ///
   /// getAuthentication
   /// </summary>
   public async Task SnippetForGetAuthentication0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetAuthenticationAsync(authenticationID0);
+    var response = await client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getAuthentications method.
+  /// Snippet for the GetAuthentications method.
   ///
   /// getAuthentications
   /// </summary>
   public async Task SnippetForGetAuthentications0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-
-
-    var response = await _client.GetAuthenticationsAsync();
+    var response = await client.GetAuthenticationsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getDestination method.
+  /// Snippet for the GetDestination method.
   ///
   /// getDestination
   /// </summary>
   public async Task SnippetForGetDestination0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetDestinationAsync(destinationID0);
+    var response = await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getDestinations method.
+  /// Snippet for the GetDestinations method.
   ///
   /// getDestinations
   /// </summary>
   public async Task SnippetForGetDestinations0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-
-
-    var response = await _client.GetDestinationsAsync();
+    var response = await client.GetDestinationsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getDockerSourceStreams method.
+  /// Snippet for the GetDockerSourceStreams method.
   ///
   /// getDockerSourceStreams
   /// </summary>
   public async Task SnippetForGetDockerSourceStreams0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetDockerSourceStreamsAsync(sourceID0);
+    var response = await client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getEvent method.
+  /// Snippet for the GetEvent method.
   ///
   /// getEvent
   /// </summary>
   public async Task SnippetForGetEvent0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    const string eventID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0c";
-
-
-    var response = await _client.GetEventAsync(runID0, eventID0);
+    var response = await client.GetEventAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+    );
   }
 
   /// <summary>
-  /// Snippet for the getEvents method.
+  /// Snippet for the GetEvents method.
   ///
   /// getEvents
   /// </summary>
   public async Task SnippetForGetEvents0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetEventsAsync(runID0);
+    var response = await client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getRun method.
+  /// Snippet for the GetRun method.
   ///
   /// getRun
   /// </summary>
   public async Task SnippetForGetRun0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string runID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetRunAsync(runID0);
+    var response = await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getRuns method.
+  /// Snippet for the GetRuns method.
   ///
   /// getRuns
   /// </summary>
   public async Task SnippetForGetRuns0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-
-
-    var response = await _client.GetRunsAsync();
+    var response = await client.GetRunsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getSource method.
+  /// Snippet for the GetSource method.
   ///
   /// getSource
   /// </summary>
   public async Task SnippetForGetSource0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetSourceAsync(sourceID0);
+    var response = await client.GetSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getSources method.
+  /// Snippet for the GetSources method.
   ///
   /// getSources
   /// </summary>
   public async Task SnippetForGetSources0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-
-
-    var response = await _client.GetSourcesAsync();
+    var response = await client.GetSourcesAsync();
   }
 
   /// <summary>
-  /// Snippet for the getTask method.
+  /// Snippet for the GetTask method.
   ///
   /// getTask
   /// </summary>
   public async Task SnippetForGetTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.GetTaskAsync(taskID0);
+    var response = await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the getTasks method.
+  /// Snippet for the GetTasks method.
   ///
   /// getTasks
   /// </summary>
   public async Task SnippetForGetTasks0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-
-
-    var response = await _client.GetTasksAsync();
+    var response = await client.GetTasksAsync();
   }
 
   /// <summary>
-  /// Snippet for the runTask method.
+  /// Snippet for the RunTask method.
   ///
   /// runTask
   /// </summary>
   public async Task SnippetForRunTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.RunTaskAsync(taskID0);
+    var response = await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
   }
 
   /// <summary>
-  /// Snippet for the searchAuthentications method.
+  /// Snippet for the SearchAuthentications method.
   ///
   /// searchAuthentications
   /// </summary>
   public async Task SnippetForSearchAuthentications0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var authenticationSearch0 = new AuthenticationSearch();
-    {
-      var authenticationIDs1 = new List<string>();
-      const string authenticationIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      authenticationIDs1.Add(authenticationIDs_02); const string authenticationIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-      authenticationIDs1.Add(authenticationIDs_12);
-      authenticationSearch0.AuthenticationIDs = authenticationIDs1;
-    }
-
-
-    var response = await _client.SearchAuthenticationsAsync(authenticationSearch0);
+    var response = await client.SearchAuthenticationsAsync(
+      new AuthenticationSearch
+      {
+        AuthenticationIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchDestinations method.
+  /// Snippet for the SearchDestinations method.
   ///
   /// searchDestinations
   /// </summary>
   public async Task SnippetForSearchDestinations0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var destinationSearch0 = new DestinationSearch();
-    {
-      var destinationIDs1 = new List<string>();
-      const string destinationIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      destinationIDs1.Add(destinationIDs_02); const string destinationIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-      destinationIDs1.Add(destinationIDs_12);
-      destinationSearch0.DestinationIDs = destinationIDs1;
-    }
-
-
-    var response = await _client.SearchDestinationsAsync(destinationSearch0);
+    var response = await client.SearchDestinationsAsync(
+      new DestinationSearch
+      {
+        DestinationIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchSources method.
+  /// Snippet for the SearchSources method.
   ///
   /// searchSources
   /// </summary>
   public async Task SnippetForSearchSources0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var sourceSearch0 = new SourceSearch();
-    {
-      var sourceIDs1 = new List<string>();
-      const string sourceIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      sourceIDs1.Add(sourceIDs_02); const string sourceIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-      sourceIDs1.Add(sourceIDs_12);
-      sourceSearch0.SourceIDs = sourceIDs1;
-    }
-
-
-    var response = await _client.SearchSourcesAsync(sourceSearch0);
+    var response = await client.SearchSourcesAsync(
+      new SourceSearch
+      {
+        SourceIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchTasks method.
+  /// Snippet for the SearchTasks method.
   ///
   /// searchTasks
   /// </summary>
   public async Task SnippetForSearchTasks0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var taskSearch0 = new TaskSearch();
-    {
-      var taskIDs1 = new List<string>();
-      const string taskIDs_02 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-      taskIDs1.Add(taskIDs_02); const string taskIDs_12 = "947ac9c4-7e58-4c87-b1e7-14a68e99699a";
-      taskIDs1.Add(taskIDs_12);
-      taskSearch0.TaskIDs = taskIDs1;
-    }
-
-
-    var response = await _client.SearchTasksAsync(taskSearch0);
+    var response = await client.SearchTasksAsync(
+      new TaskSearch
+      {
+        TaskIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the triggerDockerSourceDiscover method.
+  /// Snippet for the TriggerDockerSourceDiscover method.
   ///
   /// triggerDockerSourceDiscover
   /// </summary>
   public async Task SnippetForTriggerDockerSourceDiscover0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-
-
-    var response = await _client.TriggerDockerSourceDiscoverAsync(sourceID0);
+    var response = await client.TriggerDockerSourceDiscoverAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    );
   }
 
   /// <summary>
-  /// Snippet for the updateAuthentication method.
+  /// Snippet for the UpdateAuthentication method.
   ///
   /// updateAuthentication
   /// </summary>
   public async Task SnippetForUpdateAuthentication0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string authenticationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    var authenticationUpdate0 = new AuthenticationUpdate();
-    {
-      const string name1 = "newName";
-      authenticationUpdate0.Name = name1;
-    }
-
-
-    var response = await _client.UpdateAuthenticationAsync(authenticationID0, authenticationUpdate0);
+    var response = await client.UpdateAuthenticationAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new AuthenticationUpdate { Name = "newName", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the updateDestination method.
+  /// Snippet for the UpdateDestination method.
   ///
   /// updateDestination
   /// </summary>
   public async Task SnippetForUpdateDestination0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string destinationID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    var destinationUpdate0 = new DestinationUpdate();
-    {
-      const string name1 = "newName";
-      destinationUpdate0.Name = name1;
-    }
-
-
-    var response = await _client.UpdateDestinationAsync(destinationID0, destinationUpdate0);
+    var response = await client.UpdateDestinationAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new DestinationUpdate { Name = "newName", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the updateSource method.
+  /// Snippet for the UpdateSource method.
   ///
   /// updateSource
   /// </summary>
   public async Task SnippetForUpdateSource0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string sourceID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    var sourceUpdate0 = new SourceUpdate();
-    {
-      const string name1 = "newName";
-      sourceUpdate0.Name = name1;
-    }
-
-
-    var response = await _client.UpdateSourceAsync(sourceID0, sourceUpdate0);
+    var response = await client.UpdateSourceAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the updateTask method.
+  /// Snippet for the UpdateTask method.
   ///
   /// updateTask
   /// </summary>
   public async Task SnippetForUpdateTask0()
   {
     // Initialize the client
-    var client = new IngestionClient(new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string taskID0 = "6c02aeb1-775e-418e-870b-1faccd4b2c0f";
-    var taskUpdate0 = new TaskUpdate();
-    {
-      const bool enabled1 = false;
-      taskUpdate0.Enabled = enabled1;
-    }
-
-
-    var response = await _client.UpdateTaskAsync(taskID0, taskUpdate0);
+    var response = await client.UpdateTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskUpdate { Enabled = false, }
+    );
   }
-
 }

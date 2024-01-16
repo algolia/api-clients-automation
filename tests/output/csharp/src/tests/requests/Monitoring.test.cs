@@ -1,9 +1,9 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Monitoring;
-using Xunit;
 using Newtonsoft.Json;
 using Quibble.Xunit;
+using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class MonitoringClientRequestTests
@@ -18,237 +18,224 @@ public class MonitoringClientRequestTests
   }
 
   [Fact]
-  public void Dispose()
-  {
-
-  }
+  public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest0()
   {
-    const string path0 = "/test/minimal";
+    await _client.CustomDeleteAsync("/test/minimal");
 
-    await _client.CustomDeleteAsync(path0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    const string path0 = "/test/all";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
+    await _client.CustomDeleteAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "parameters" } }
+    );
 
-    await _client.CustomDeleteAsync(path0, parameters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest0()
   {
-    const string path0 = "/test/minimal";
+    await _client.CustomGetAsync("/test/minimal");
 
-    await _client.CustomGetAsync(path0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    const string path0 = "/test/all";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
+    await _client.CustomGetAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "parameters" } }
+    );
 
-    await _client.CustomGetAsync(path0, parameters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest0()
   {
-    const string path0 = "/test/minimal";
+    await _client.CustomPostAsync("/test/minimal");
 
-    await _client.CustomPostAsync(path0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
   }
+
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    const string path0 = "/test/all";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string body1 = "parameters";
-      body0.Add("body", body1);
-    }
+    await _client.CustomPostAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "body", "parameters" } }
+    );
 
-    await _client.CustomPostAsync(path0, parameters0, body0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"body\":\"parameters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    JsonAssert.EqualOverrideDefault(
+      "{\"body\":\"parameters\"}",
+      req.Body,
+      new JsonDiffConfig(true)
+    );
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>() { { "query", "myQueryParameter" } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("query", "myQueryParameter"
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"myQueryParameter\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"myQueryParameter\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>() { { "query2", "myQueryParameter" } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("query2", "myQueryParameter"
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.Headers.Add("x-algolia-api-key", "myApiKey");
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"x-algolia-api-key\":\"myApiKey\"}");
+    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"x-algolia-api-key\":\"myApiKey\"}"
+    );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
     {
@@ -257,40 +244,40 @@ public class MonitoringClientRequestTests
       Assert.Equal(expectedHeader.Value, actualHeaderValue);
     }
   }
+
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.Headers.Add("x-algolia-api-key", "myApiKey");
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"x-algolia-api-key\":\"myApiKey\"}");
+    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"x-algolia-api-key\":\"myApiKey\"}"
+    );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
     {
@@ -299,334 +286,322 @@ public class MonitoringClientRequestTests
       Assert.Equal(expectedHeader.Value, actualHeaderValue);
     }
   }
+
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>() { { "isItWorking", true } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("isItWorking", true
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"isItWorking\":\"true\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>() { { "myParam", 2 } },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("myParam", 2
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"myParam\":\"2\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"myParam\":\"2\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>()
+        {
+          {
+            "myParam",
+            new List<object> { "c", "d" }
+          }
+        },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("myParam", new List<object>{   "c"
-,  "d"
- }
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"myParam\":\"c,d\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>()
+        {
+          {
+            "myParam",
+            new List<object> { true, true, false }
+          }
+        },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("myParam", new List<object>{   true
-,  true
-,  false
- }
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    const string path0 = "/test/requestOptions";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string facet1 = "filters";
-      body0.Add("facet", facet1);
-    }
+    await _client.CustomPostAsync(
+      "/test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptions()
+      {
+        QueryParameters = new Dictionary<string, object>()
+        {
+          {
+            "myParam",
+            new List<object> { 1, 2 }
+          }
+        },
+      }
+    );
 
-    var requestOptions = new RequestOptions();
-    requestOptions.QueryParameters.Add("myParam", new List<object>{   1
-,  2
- }
-);
-    await _client.CustomPostAsync(path0, parameters0, body0, requestOptions);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\",\"myParam\":\"1,2\"}");
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest0()
   {
-    const string path0 = "/test/minimal";
+    await _client.CustomPutAsync("/test/minimal");
 
-    await _client.CustomPutAsync(path0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
   }
+
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    const string path0 = "/test/all";
-    var parameters0 = new Dictionary<string, object>();
-    {
-      const string query1 = "parameters";
-      parameters0.Add("query", query1);
-    }
-    var body0 = new Dictionary<string, string>();
-    {
-      const string body1 = "parameters";
-      body0.Add("body", body1);
-    }
+    await _client.CustomPutAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "body", "parameters" } }
+    );
 
-    await _client.CustomPutAsync(path0, parameters0, body0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"body\":\"parameters\"}", req.Body, new JsonDiffConfig(true));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{\"query\":\"parameters\"}");
+    JsonAssert.EqualOverrideDefault(
+      "{\"body\":\"parameters\"}",
+      req.Body,
+      new JsonDiffConfig(true)
+    );
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
     foreach (var query in actualQuery)
     {
-      string result;
-      expectedQuery.TryGetValue(query.Key, out result);
+      expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
     }
   }
+
   [Fact(DisplayName = "getClusterIncidents")]
   public async Task GetClusterIncidentsTest0()
   {
-    const string clusters0 = "c1-de";
+    await _client.GetClusterIncidentsAsync("c1-de");
 
-    await _client.GetClusterIncidentsAsync(clusters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/incidents/c1-de", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getClusterStatus")]
   public async Task GetClusterStatusTest0()
   {
-    const string clusters0 = "c1-de";
+    await _client.GetClusterStatusAsync("c1-de");
 
-    await _client.GetClusterStatusAsync(clusters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/status/c1-de", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getIncidents")]
   public async Task GetIncidentsTest0()
   {
-
     await _client.GetIncidentsAsync();
 
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/incidents", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getIndexingTime")]
   public async Task GetIndexingTimeTest0()
   {
-    const string clusters0 = "c1-de";
+    await _client.GetIndexingTimeAsync("c1-de");
 
-    await _client.GetIndexingTimeAsync(clusters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/indexing/c1-de", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getInventory")]
   public async Task GetInventoryTest0()
   {
-
     await _client.GetInventoryAsync();
 
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/inventory/servers", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getLatency")]
   public async Task GetLatencyTest0()
   {
-    const string clusters0 = "c1-de";
+    await _client.GetLatencyAsync("c1-de");
 
-    await _client.GetLatencyAsync(clusters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/latency/c1-de", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getMetrics")]
   public async Task GetMetricsTest0()
   {
-    var metric0 = (Metric)Enum.Parse(typeof(Metric), "AvgBuildTime");
-    var period0 = (Period)Enum.Parse(typeof(Period), "Minute");
+    await _client.GetMetricsAsync(Enum.Parse<Metric>("AvgBuildTime"), Enum.Parse<Period>("Minute"));
 
-    await _client.GetMetricsAsync(metric0, period0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/infrastructure/avg_build_time/period/minute", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getReachability")]
   public async Task GetReachabilityTest0()
   {
-    const string clusters0 = "c1-de";
+    await _client.GetReachabilityAsync("c1-de");
 
-    await _client.GetReachabilityAsync(clusters0);
-
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/reachability/c1-de/probes", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
+
   [Fact(DisplayName = "getStatus")]
   public async Task GetStatusTest0()
   {
-
     await _client.GetStatusAsync();
 
-    EchoResponse req = _echo.LastResponse;
+    var req = _echo.LastResponse;
     Assert.Equal("/1/status", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);

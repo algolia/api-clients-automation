@@ -1,18 +1,12 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Monitoring;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetMonitoringClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
@@ -22,14 +16,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
@@ -39,14 +30,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
@@ -56,14 +44,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
@@ -73,14 +58,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the getClusterIncidents method.
+  /// Snippet for the GetClusterIncidents method.
   ///
   /// getClusterIncidents
   /// </summary>
@@ -90,14 +72,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string clusters0 = "c1-de";
-
-
-    var response = await _client.GetClusterIncidentsAsync(clusters0);
+    var response = await client.GetClusterIncidentsAsync("c1-de");
   }
 
   /// <summary>
-  /// Snippet for the getClusterStatus method.
+  /// Snippet for the GetClusterStatus method.
   ///
   /// getClusterStatus
   /// </summary>
@@ -107,14 +86,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string clusters0 = "c1-de";
-
-
-    var response = await _client.GetClusterStatusAsync(clusters0);
+    var response = await client.GetClusterStatusAsync("c1-de");
   }
 
   /// <summary>
-  /// Snippet for the getIncidents method.
+  /// Snippet for the GetIncidents method.
   ///
   /// getIncidents
   /// </summary>
@@ -124,13 +100,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetIncidentsAsync();
+    var response = await client.GetIncidentsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getIndexingTime method.
+  /// Snippet for the GetIndexingTime method.
   ///
   /// getIndexingTime
   /// </summary>
@@ -140,14 +114,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string clusters0 = "c1-de";
-
-
-    var response = await _client.GetIndexingTimeAsync(clusters0);
+    var response = await client.GetIndexingTimeAsync("c1-de");
   }
 
   /// <summary>
-  /// Snippet for the getInventory method.
+  /// Snippet for the GetInventory method.
   ///
   /// getInventory
   /// </summary>
@@ -157,13 +128,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetInventoryAsync();
+    var response = await client.GetInventoryAsync();
   }
 
   /// <summary>
-  /// Snippet for the getLatency method.
+  /// Snippet for the GetLatency method.
   ///
   /// getLatency
   /// </summary>
@@ -173,14 +142,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string clusters0 = "c1-de";
-
-
-    var response = await _client.GetLatencyAsync(clusters0);
+    var response = await client.GetLatencyAsync("c1-de");
   }
 
   /// <summary>
-  /// Snippet for the getMetrics method.
+  /// Snippet for the GetMetrics method.
   ///
   /// getMetrics
   /// </summary>
@@ -190,15 +156,14 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var metric0 = (Metric)Enum.Parse(typeof(Metric), "AvgBuildTime");
-    var period0 = (Period)Enum.Parse(typeof(Period), "Minute");
-
-
-    var response = await _client.GetMetricsAsync(metric0, period0);
+    var response = await client.GetMetricsAsync(
+      Enum.Parse<Metric>("AvgBuildTime"),
+      Enum.Parse<Period>("Minute")
+    );
   }
 
   /// <summary>
-  /// Snippet for the getReachability method.
+  /// Snippet for the GetReachability method.
   ///
   /// getReachability
   /// </summary>
@@ -208,14 +173,11 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string clusters0 = "c1-de";
-
-
-    var response = await _client.GetReachabilityAsync(clusters0);
+    var response = await client.GetReachabilityAsync("c1-de");
   }
 
   /// <summary>
-  /// Snippet for the getStatus method.
+  /// Snippet for the GetStatus method.
   ///
   /// getStatus
   /// </summary>
@@ -225,9 +187,6 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetStatusAsync();
+    var response = await client.GetStatusAsync();
   }
-
 }

@@ -1,18 +1,12 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetSearchClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the addApiKey method.
+  /// Snippet for the AddApiKey method.
   ///
   /// addApiKey0
   /// </summary>
@@ -22,25 +16,20 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var apiKey0 = new ApiKey();
-    {
-      var acl1 = new List<Acl>();
-      var acl_02 = (Acl)Enum.Parse(typeof(Acl), "Search");
-      acl1.Add(acl_02); var acl_12 = (Acl)Enum.Parse(typeof(Acl), "AddObject");
-      acl1.Add(acl_12);
-      apiKey0.Acl = acl1; const string description1 = "my new api key";
-      apiKey0.Description = description1; const int validity1 = 300;
-      apiKey0.Validity = validity1; const int maxQueriesPerIPPerHour1 = 100;
-      apiKey0.MaxQueriesPerIPPerHour = maxQueriesPerIPPerHour1; const int maxHitsPerQuery1 = 20;
-      apiKey0.MaxHitsPerQuery = maxHitsPerQuery1;
-    }
-
-
-    var response = await _client.AddApiKeyAsync(apiKey0);
+    var response = await client.AddApiKeyAsync(
+      new ApiKey
+      {
+        Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+        Description = "my new api key",
+        Validity = 300,
+        MaxQueriesPerIPPerHour = 100,
+        MaxHitsPerQuery = 20,
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the addOrUpdateObject method.
+  /// Snippet for the AddOrUpdateObject method.
   ///
   /// addOrUpdateObject0
   /// </summary>
@@ -50,20 +39,15 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "uniqueID";
-    var body0 = new Dictionary<string, string>();
-    {
-      const string key1 = "value";
-      body0.Add("key", key1);
-    }
-
-
-    var response = await _client.AddOrUpdateObjectAsync(indexName0, objectID0, body0);
+    var response = await client.AddOrUpdateObjectAsync(
+      "indexName",
+      "uniqueID",
+      new Dictionary<string, string> { { "key", "value" } }
+    );
   }
 
   /// <summary>
-  /// Snippet for the appendSource method.
+  /// Snippet for the AppendSource method.
   ///
   /// appendSource0
   /// </summary>
@@ -73,19 +57,13 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var source0 = new Source();
-    {
-      const string source1 = "theSource";
-      source0.VarSource = source1; const string description1 = "theDescription";
-      source0.Description = description1;
-    }
-
-
-    var response = await _client.AppendSourceAsync(source0);
+    var response = await client.AppendSourceAsync(
+      new Source { VarSource = "theSource", Description = "theDescription", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the assignUserId method.
+  /// Snippet for the AssignUserId method.
   ///
   /// assignUserId0
   /// </summary>
@@ -95,19 +73,14 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string xAlgoliaUserID0 = "userID";
-    var assignUserIdParams0 = new AssignUserIdParams();
-    {
-      const string cluster1 = "theCluster";
-      assignUserIdParams0.Cluster = cluster1;
-    }
-
-
-    var response = await _client.AssignUserIdAsync(xAlgoliaUserID0, assignUserIdParams0);
+    var response = await client.AssignUserIdAsync(
+      "userID",
+      new AssignUserIdParams { Cluster = "theCluster", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the batch method.
+  /// Snippet for the Batch method.
   ///
   /// allows batch method with `addObject` action
   /// </summary>
@@ -117,30 +90,24 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    var batchWriteParams0 = new BatchWriteParams();
-    {
-      var requests1 = new List<BatchRequest>();
-      var requests_02 = new BatchRequest();
+    var response = await client.BatchAsync(
+      "theIndexName",
+      new BatchWriteParams
       {
-        var action3 = (Action)Enum.Parse(typeof(Action), "AddObject");
-        requests_02.Action = action3; var body3 = new Dictionary<string, string>();
+        Requests = new List<BatchRequest>
         {
-          const string key4 = "value";
-          body3.Add("key", key4);
-        }
-        requests_02.Body = body3;
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "value" } },
+          }
+        },
       }
-      requests1.Add(requests_02);
-      batchWriteParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.BatchAsync(indexName0, batchWriteParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the batchAssignUserIds method.
+  /// Snippet for the BatchAssignUserIds method.
   ///
   /// batchAssignUserIds0
   /// </summary>
@@ -150,23 +117,18 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string xAlgoliaUserID0 = "userID";
-    var batchAssignUserIdsParams0 = new BatchAssignUserIdsParams();
-    {
-      const string cluster1 = "theCluster";
-      batchAssignUserIdsParams0.Cluster = cluster1; var users1 = new List<string>();
-      const string users_02 = "user1";
-      users1.Add(users_02); const string users_12 = "user2";
-      users1.Add(users_12);
-      batchAssignUserIdsParams0.Users = users1;
-    }
-
-
-    var response = await _client.BatchAssignUserIdsAsync(xAlgoliaUserID0, batchAssignUserIdsParams0);
+    var response = await client.BatchAssignUserIdsAsync(
+      "userID",
+      new BatchAssignUserIdsParams
+      {
+        Cluster = "theCluster",
+        Users = new List<string> { "user1", "user2" },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the batchDictionaryEntries method.
+  /// Snippet for the BatchDictionaryEntries method.
   ///
   /// get batchDictionaryEntries results with minimal parameters
   /// </summary>
@@ -176,42 +138,29 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var dictionaryName0 = (DictionaryType)Enum.Parse(typeof(DictionaryType), "Compounds");
-    var batchDictionaryEntriesParams0 = new BatchDictionaryEntriesParams();
-    {
-      var requests1 = new List<BatchDictionaryEntriesRequest>();
-      var requests_02 = new BatchDictionaryEntriesRequest();
+    var response = await client.BatchDictionaryEntriesAsync(
+      Enum.Parse<DictionaryType>("Compounds"),
+      new BatchDictionaryEntriesParams
       {
-        var action3 = (DictionaryAction)Enum.Parse(typeof(DictionaryAction), "AddEntry");
-        requests_02.Action = action3; var body3 = new DictionaryEntry();
+        Requests = new List<BatchDictionaryEntriesRequest>
         {
-          const string objectID4 = "1";
-          body3.ObjectID = objectID4; const string language4 = "en";
-          body3.Language = language4;
-        }
-        requests_02.Body = body3;
+          new BatchDictionaryEntriesRequest
+          {
+            Action = Enum.Parse<DictionaryAction>("AddEntry"),
+            Body = new DictionaryEntry { ObjectID = "1", Language = "en", },
+          },
+          new BatchDictionaryEntriesRequest
+          {
+            Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
+            Body = new DictionaryEntry { ObjectID = "2", Language = "fr", },
+          }
+        },
       }
-      requests1.Add(requests_02); var requests_12 = new BatchDictionaryEntriesRequest();
-      {
-        var action3 = (DictionaryAction)Enum.Parse(typeof(DictionaryAction), "DeleteEntry");
-        requests_12.Action = action3; var body3 = new DictionaryEntry();
-        {
-          const string objectID4 = "2";
-          body3.ObjectID = objectID4; const string language4 = "fr";
-          body3.Language = language4;
-        }
-        requests_12.Body = body3;
-      }
-      requests1.Add(requests_12);
-      batchDictionaryEntriesParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.BatchDictionaryEntriesAsync(dictionaryName0, batchDictionaryEntriesParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the browse method.
+  /// Snippet for the Browse method.
   ///
   /// browse with minimal parameters
   /// </summary>
@@ -221,14 +170,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "cts_e2e_browse";
-
-
-    var response = await _client.BrowseAsync<Object>(indexName0);
+    var response = await client.BrowseAsync<Object>("cts_e2e_browse");
   }
 
   /// <summary>
-  /// Snippet for the clearAllSynonyms method.
+  /// Snippet for the ClearAllSynonyms method.
   ///
   /// clearAllSynonyms0
   /// </summary>
@@ -238,14 +184,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-
-
-    var response = await _client.ClearAllSynonymsAsync(indexName0);
+    var response = await client.ClearAllSynonymsAsync("indexName");
   }
 
   /// <summary>
-  /// Snippet for the clearObjects method.
+  /// Snippet for the ClearObjects method.
   ///
   /// clearObjects0
   /// </summary>
@@ -255,14 +198,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-
-
-    var response = await _client.ClearObjectsAsync(indexName0);
+    var response = await client.ClearObjectsAsync("theIndexName");
   }
 
   /// <summary>
-  /// Snippet for the clearRules method.
+  /// Snippet for the ClearRules method.
   ///
   /// clearRules0
   /// </summary>
@@ -272,14 +212,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-
-
-    var response = await _client.ClearRulesAsync(indexName0);
+    var response = await client.ClearRulesAsync("indexName");
   }
 
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
@@ -289,14 +226,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
@@ -306,14 +240,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
@@ -323,14 +254,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
@@ -340,14 +268,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the deleteApiKey method.
+  /// Snippet for the DeleteApiKey method.
   ///
   /// deleteApiKey0
   /// </summary>
@@ -357,14 +282,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string key0 = "myTestApiKey";
-
-
-    var response = await _client.DeleteApiKeyAsync(key0);
+    var response = await client.DeleteApiKeyAsync("myTestApiKey");
   }
 
   /// <summary>
-  /// Snippet for the deleteBy method.
+  /// Snippet for the DeleteBy method.
   ///
   /// deleteBy0
   /// </summary>
@@ -374,19 +296,14 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    var deleteByParams0 = new DeleteByParams();
-    {
-      const string filters1 = "brand:brandName";
-      deleteByParams0.Filters = filters1;
-    }
-
-
-    var response = await _client.DeleteByAsync(indexName0, deleteByParams0);
+    var response = await client.DeleteByAsync(
+      "theIndexName",
+      new DeleteByParams { Filters = "brand:brandName", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the deleteIndex method.
+  /// Snippet for the DeleteIndex method.
   ///
   /// deleteIndex0
   /// </summary>
@@ -396,14 +313,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-
-
-    var response = await _client.DeleteIndexAsync(indexName0);
+    var response = await client.DeleteIndexAsync("theIndexName");
   }
 
   /// <summary>
-  /// Snippet for the deleteObject method.
+  /// Snippet for the DeleteObject method.
   ///
   /// deleteObject0
   /// </summary>
@@ -413,15 +327,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    const string objectID0 = "uniqueID";
-
-
-    var response = await _client.DeleteObjectAsync(indexName0, objectID0);
+    var response = await client.DeleteObjectAsync("theIndexName", "uniqueID");
   }
 
   /// <summary>
-  /// Snippet for the deleteRule method.
+  /// Snippet for the DeleteRule method.
   ///
   /// delete rule simple case
   /// </summary>
@@ -431,15 +341,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-
-
-    var response = await _client.DeleteRuleAsync(indexName0, objectID0);
+    var response = await client.DeleteRuleAsync("indexName", "id1");
   }
 
   /// <summary>
-  /// Snippet for the deleteSource method.
+  /// Snippet for the DeleteSource method.
   ///
   /// deleteSource0
   /// </summary>
@@ -449,14 +355,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string source0 = "theSource";
-
-
-    var response = await _client.DeleteSourceAsync(source0);
+    var response = await client.DeleteSourceAsync("theSource");
   }
 
   /// <summary>
-  /// Snippet for the deleteSynonym method.
+  /// Snippet for the DeleteSynonym method.
   ///
   /// deleteSynonym0
   /// </summary>
@@ -466,15 +369,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-
-
-    var response = await _client.DeleteSynonymAsync(indexName0, objectID0);
+    var response = await client.DeleteSynonymAsync("indexName", "id1");
   }
 
   /// <summary>
-  /// Snippet for the getApiKey method.
+  /// Snippet for the GetApiKey method.
   ///
   /// getApiKey0
   /// </summary>
@@ -484,14 +383,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string key0 = "myTestApiKey";
-
-
-    var response = await _client.GetApiKeyAsync(key0);
+    var response = await client.GetApiKeyAsync("myTestApiKey");
   }
 
   /// <summary>
-  /// Snippet for the getDictionaryLanguages method.
+  /// Snippet for the GetDictionaryLanguages method.
   ///
   /// get getDictionaryLanguages
   /// </summary>
@@ -501,13 +397,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetDictionaryLanguagesAsync();
+    var response = await client.GetDictionaryLanguagesAsync();
   }
 
   /// <summary>
-  /// Snippet for the getDictionarySettings method.
+  /// Snippet for the GetDictionarySettings method.
   ///
   /// get getDictionarySettings results
   /// </summary>
@@ -517,13 +411,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetDictionarySettingsAsync();
+    var response = await client.GetDictionarySettingsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getLogs method.
+  /// Snippet for the GetLogs method.
   ///
   /// getLogs with minimal parameters
   /// </summary>
@@ -533,13 +425,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetLogsAsync();
+    var response = await client.GetLogsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getObject method.
+  /// Snippet for the GetObject method.
   ///
   /// getObject0
   /// </summary>
@@ -549,19 +439,15 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    const string objectID0 = "uniqueID";
-    var attributesToRetrieve0 = new List<string>();
-    const string attributesToRetrieve_01 = "attr1";
-    attributesToRetrieve0.Add(attributesToRetrieve_01); const string attributesToRetrieve_11 = "attr2";
-    attributesToRetrieve0.Add(attributesToRetrieve_11);
-
-
-    var response = await _client.GetObjectAsync(indexName0, objectID0, attributesToRetrieve0);
+    var response = await client.GetObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new List<string> { "attr1", "attr2" }
+    );
   }
 
   /// <summary>
-  /// Snippet for the getObjects method.
+  /// Snippet for the GetObjects method.
   ///
   /// getObjects0
   /// </summary>
@@ -571,29 +457,24 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var getObjectsParams0 = new GetObjectsParams();
-    {
-      var requests1 = new List<GetObjectsRequest>();
-      var requests_02 = new GetObjectsRequest();
+    var response = await client.GetObjectsAsync<Object>(
+      new GetObjectsParams
       {
-        var attributesToRetrieve3 = new List<string>();
-        const string attributesToRetrieve_04 = "attr1";
-        attributesToRetrieve3.Add(attributesToRetrieve_04); const string attributesToRetrieve_14 = "attr2";
-        attributesToRetrieve3.Add(attributesToRetrieve_14);
-        requests_02.AttributesToRetrieve = attributesToRetrieve3; const string objectID3 = "uniqueID";
-        requests_02.ObjectID = objectID3; const string indexName3 = "theIndexName";
-        requests_02.IndexName = indexName3;
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest
+          {
+            AttributesToRetrieve = new List<string> { "attr1", "attr2" },
+            ObjectID = "uniqueID",
+            IndexName = "theIndexName",
+          }
+        },
       }
-      requests1.Add(requests_02);
-      getObjectsParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.GetObjectsAsync<Object>(getObjectsParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the getRule method.
+  /// Snippet for the GetRule method.
   ///
   /// getRule0
   /// </summary>
@@ -603,15 +484,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-
-
-    var response = await _client.GetRuleAsync(indexName0, objectID0);
+    var response = await client.GetRuleAsync("indexName", "id1");
   }
 
   /// <summary>
-  /// Snippet for the getSettings method.
+  /// Snippet for the GetSettings method.
   ///
   /// getSettings0
   /// </summary>
@@ -621,14 +498,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "cts_e2e_settings";
-
-
-    var response = await _client.GetSettingsAsync(indexName0);
+    var response = await client.GetSettingsAsync("cts_e2e_settings");
   }
 
   /// <summary>
-  /// Snippet for the getSources method.
+  /// Snippet for the GetSources method.
   ///
   /// getSources0
   /// </summary>
@@ -638,13 +512,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetSourcesAsync();
+    var response = await client.GetSourcesAsync();
   }
 
   /// <summary>
-  /// Snippet for the getSynonym method.
+  /// Snippet for the GetSynonym method.
   ///
   /// getSynonym0
   /// </summary>
@@ -654,15 +526,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-
-
-    var response = await _client.GetSynonymAsync(indexName0, objectID0);
+    var response = await client.GetSynonymAsync("indexName", "id1");
   }
 
   /// <summary>
-  /// Snippet for the getTask method.
+  /// Snippet for the GetTask method.
   ///
   /// getTask0
   /// </summary>
@@ -672,15 +540,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    const long taskID0 = 123L;
-
-
-    var response = await _client.GetTaskAsync(indexName0, taskID0);
+    var response = await client.GetTaskAsync("theIndexName", 123L);
   }
 
   /// <summary>
-  /// Snippet for the getTopUserIds method.
+  /// Snippet for the GetTopUserIds method.
   ///
   /// getTopUserIds0
   /// </summary>
@@ -690,13 +554,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.GetTopUserIdsAsync();
+    var response = await client.GetTopUserIdsAsync();
   }
 
   /// <summary>
-  /// Snippet for the getUserId method.
+  /// Snippet for the GetUserId method.
   ///
   /// getUserId0
   /// </summary>
@@ -706,14 +568,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string userID0 = "uniqueID";
-
-
-    var response = await _client.GetUserIdAsync(userID0);
+    var response = await client.GetUserIdAsync("uniqueID");
   }
 
   /// <summary>
-  /// Snippet for the hasPendingMappings method.
+  /// Snippet for the HasPendingMappings method.
   ///
   /// hasPendingMappings with minimal parameters
   /// </summary>
@@ -723,13 +582,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.HasPendingMappingsAsync();
+    var response = await client.HasPendingMappingsAsync();
   }
 
   /// <summary>
-  /// Snippet for the listApiKeys method.
+  /// Snippet for the ListApiKeys method.
   ///
   /// listApiKeys0
   /// </summary>
@@ -739,13 +596,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.ListApiKeysAsync();
+    var response = await client.ListApiKeysAsync();
   }
 
   /// <summary>
-  /// Snippet for the listClusters method.
+  /// Snippet for the ListClusters method.
   ///
   /// listClusters0
   /// </summary>
@@ -755,13 +610,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.ListClustersAsync();
+    var response = await client.ListClustersAsync();
   }
 
   /// <summary>
-  /// Snippet for the listIndices method.
+  /// Snippet for the ListIndices method.
   ///
   /// listIndices with minimal parameters
   /// </summary>
@@ -771,13 +624,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.ListIndicesAsync();
+    var response = await client.ListIndicesAsync();
   }
 
   /// <summary>
-  /// Snippet for the listUserIds method.
+  /// Snippet for the ListUserIds method.
   ///
   /// listUserIds with minimal parameters
   /// </summary>
@@ -787,13 +638,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-
-
-    var response = await _client.ListUserIdsAsync();
+    var response = await client.ListUserIdsAsync();
   }
 
   /// <summary>
-  /// Snippet for the multipleBatch method.
+  /// Snippet for the MultipleBatch method.
   ///
   /// multipleBatch0
   /// </summary>
@@ -803,30 +652,24 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var batchParams0 = new BatchParams();
-    {
-      var requests1 = new List<MultipleBatchRequest>();
-      var requests_02 = new MultipleBatchRequest();
+    var response = await client.MultipleBatchAsync(
+      new BatchParams
       {
-        var action3 = (Action)Enum.Parse(typeof(Action), "AddObject");
-        requests_02.Action = action3; var body3 = new Dictionary<string, string>();
+        Requests = new List<MultipleBatchRequest>
         {
-          const string key4 = "value";
-          body3.Add("key", key4);
-        }
-        requests_02.Body = body3; const string indexName3 = "theIndexName";
-        requests_02.IndexName = indexName3;
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "value" } },
+            IndexName = "theIndexName",
+          }
+        },
       }
-      requests1.Add(requests_02);
-      batchParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.MultipleBatchAsync(batchParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the operationIndex method.
+  /// Snippet for the OperationIndex method.
   ///
   /// operationIndex0
   /// </summary>
@@ -836,24 +679,23 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    var operationIndexParams0 = new OperationIndexParams();
-    {
-      var operation1 = (OperationType)Enum.Parse(typeof(OperationType), "Copy");
-      operationIndexParams0.Operation = operation1; const string destination1 = "dest";
-      operationIndexParams0.Destination = destination1; var scope1 = new List<ScopeType>();
-      var scope_02 = (ScopeType)Enum.Parse(typeof(ScopeType), "Rules");
-      scope1.Add(scope_02); var scope_12 = (ScopeType)Enum.Parse(typeof(ScopeType), "Settings");
-      scope1.Add(scope_12);
-      operationIndexParams0.Scope = scope1;
-    }
-
-
-    var response = await _client.OperationIndexAsync(indexName0, operationIndexParams0);
+    var response = await client.OperationIndexAsync(
+      "theIndexName",
+      new OperationIndexParams
+      {
+        Operation = Enum.Parse<OperationType>("Copy"),
+        Destination = "dest",
+        Scope = new List<ScopeType>
+        {
+          Enum.Parse<ScopeType>("Rules"),
+          Enum.Parse<ScopeType>("Settings")
+        },
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the partialUpdateObject method.
+  /// Snippet for the PartialUpdateObject method.
   ///
   /// partialUpdateObject0
   /// </summary>
@@ -863,27 +705,29 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    const string objectID0 = "uniqueID";
-    var attributesToUpdate0 = new Dictionary<string, AttributeToUpdate>();
-    {
-      const string id11 = "test";
-      attributesToUpdate0.Add("id1", new AttributeToUpdate(id11)); var id21 = new BuiltInOperation();
+    var response = await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, AttributeToUpdate>
       {
-        var _operation2 = (BuiltInOperationType)Enum.Parse(typeof(BuiltInOperationType), "AddUnique");
-        id21.Operation = _operation2; const string value2 = "test2";
-        id21.Value = value2;
-      }
-      attributesToUpdate0.Add("id2", new AttributeToUpdate(id21));
-    }
-    const bool createIfNotExists0 = true;
-
-
-    var response = await _client.PartialUpdateObjectAsync(indexName0, objectID0, attributesToUpdate0, createIfNotExists0);
+        { "id1", new AttributeToUpdate("test") },
+        {
+          "id2",
+          new AttributeToUpdate(
+            new BuiltInOperation
+            {
+              Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
+              Value = "test2",
+            }
+          )
+        }
+      },
+      true
+    );
   }
 
   /// <summary>
-  /// Snippet for the removeUserId method.
+  /// Snippet for the RemoveUserId method.
   ///
   /// removeUserId0
   /// </summary>
@@ -893,14 +737,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string userID0 = "uniqueID";
-
-
-    var response = await _client.RemoveUserIdAsync(userID0);
+    var response = await client.RemoveUserIdAsync("uniqueID");
   }
 
   /// <summary>
-  /// Snippet for the replaceSources method.
+  /// Snippet for the ReplaceSources method.
   ///
   /// replaceSources0
   /// </summary>
@@ -910,21 +751,16 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var source0 = new List<Source>();
-    var source_01 = new Source();
-    {
-      const string source2 = "theSource";
-      source_01.VarSource = source2; const string description2 = "theDescription";
-      source_01.Description = description2;
-    }
-    source0.Add(source_01);
-
-
-    var response = await _client.ReplaceSourcesAsync(source0);
+    var response = await client.ReplaceSourcesAsync(
+      new List<Source>
+      {
+        new Source { VarSource = "theSource", Description = "theDescription", }
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the restoreApiKey method.
+  /// Snippet for the RestoreApiKey method.
   ///
   /// restoreApiKey0
   /// </summary>
@@ -934,14 +770,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string key0 = "myApiKey";
-
-
-    var response = await _client.RestoreApiKeyAsync(key0);
+    var response = await client.RestoreApiKeyAsync("myApiKey");
   }
 
   /// <summary>
-  /// Snippet for the saveObject method.
+  /// Snippet for the SaveObject method.
   ///
   /// saveObject0
   /// </summary>
@@ -951,20 +784,14 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "theIndexName";
-    var body0 = new Dictionary<string, string>();
-    {
-      const string objectID1 = "id";
-      body0.Add("objectID", objectID1); const string test1 = "val";
-      body0.Add("test", test1);
-    }
-
-
-    var response = await _client.SaveObjectAsync(indexName0, body0);
+    var response = await client.SaveObjectAsync(
+      "theIndexName",
+      new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
+    );
   }
 
   /// <summary>
-  /// Snippet for the saveRule method.
+  /// Snippet for the SaveRule method.
   ///
   /// saveRule with minimal parameters
   /// </summary>
@@ -974,28 +801,22 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-    var rule0 = new Rule();
-    {
-      const string objectID1 = "id1";
-      rule0.ObjectID = objectID1; var conditions1 = new List<Condition>();
-      var conditions_02 = new Condition();
+    var response = await client.SaveRuleAsync(
+      "indexName",
+      "id1",
+      new Rule
       {
-        const string pattern3 = "apple";
-        conditions_02.Pattern = pattern3; var anchoring3 = (Anchoring)Enum.Parse(typeof(Anchoring), "Contains");
-        conditions_02.Anchoring = anchoring3;
+        ObjectID = "id1",
+        Conditions = new List<Condition>
+        {
+          new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+        },
       }
-      conditions1.Add(conditions_02);
-      rule0.Conditions = conditions1;
-    }
-
-
-    var response = await _client.SaveRuleAsync(indexName0, objectID0, rule0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the saveRules method.
+  /// Snippet for the SaveRules method.
   ///
   /// saveRules with minimal parameters
   /// </summary>
@@ -1005,42 +826,32 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var rules0 = new List<Rule>();
-    var rules_01 = new Rule();
-    {
-      const string objectID2 = "a-rule-id";
-      rules_01.ObjectID = objectID2; var conditions2 = new List<Condition>();
-      var conditions_03 = new Condition();
+    var response = await client.SaveRulesAsync(
+      "indexName",
+      new List<Rule>
       {
-        const string pattern4 = "smartphone";
-        conditions_03.Pattern = pattern4; var anchoring4 = (Anchoring)Enum.Parse(typeof(Anchoring), "Contains");
-        conditions_03.Anchoring = anchoring4;
+        new Rule
+        {
+          ObjectID = "a-rule-id",
+          Conditions = new List<Condition>
+          {
+            new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+          },
+        },
+        new Rule
+        {
+          ObjectID = "a-second-rule-id",
+          Conditions = new List<Condition>
+          {
+            new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+          },
+        }
       }
-      conditions2.Add(conditions_03);
-      rules_01.Conditions = conditions2;
-    }
-    rules0.Add(rules_01); var rules_11 = new Rule();
-    {
-      const string objectID2 = "a-second-rule-id";
-      rules_11.ObjectID = objectID2; var conditions2 = new List<Condition>();
-      var conditions_03 = new Condition();
-      {
-        const string pattern4 = "apple";
-        conditions_03.Pattern = pattern4; var anchoring4 = (Anchoring)Enum.Parse(typeof(Anchoring), "Contains");
-        conditions_03.Anchoring = anchoring4;
-      }
-      conditions2.Add(conditions_03);
-      rules_11.Conditions = conditions2;
-    }
-    rules0.Add(rules_11);
-
-
-    var response = await _client.SaveRulesAsync(indexName0, rules0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the saveSynonym method.
+  /// Snippet for the SaveSynonym method.
   ///
   /// saveSynonym0
   /// </summary>
@@ -1050,27 +861,21 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string objectID0 = "id1";
-    var synonymHit0 = new SynonymHit();
-    {
-      const string objectID1 = "id1";
-      synonymHit0.ObjectID = objectID1; var type1 = (SynonymType)Enum.Parse(typeof(SynonymType), "Synonym");
-      synonymHit0.Type = type1; var synonyms1 = new List<string>();
-      const string synonyms_02 = "car";
-      synonyms1.Add(synonyms_02); const string synonyms_12 = "vehicule";
-      synonyms1.Add(synonyms_12); const string synonyms_22 = "auto";
-      synonyms1.Add(synonyms_22);
-      synonymHit0.Synonyms = synonyms1;
-    }
-    const bool forwardToReplicas0 = true;
-
-
-    var response = await _client.SaveSynonymAsync(indexName0, objectID0, synonymHit0, forwardToReplicas0);
+    var response = await client.SaveSynonymAsync(
+      "indexName",
+      "id1",
+      new SynonymHit
+      {
+        ObjectID = "id1",
+        Type = Enum.Parse<SynonymType>("Synonym"),
+        Synonyms = new List<string> { "car", "vehicule", "auto" },
+      },
+      true
+    );
   }
 
   /// <summary>
-  /// Snippet for the saveSynonyms method.
+  /// Snippet for the SaveSynonyms method.
   ///
   /// saveSynonyms0
   /// </summary>
@@ -1080,41 +885,31 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var synonymHit0 = new List<SynonymHit>();
-    var synonymHit_01 = new SynonymHit();
-    {
-      const string objectID2 = "id1";
-      synonymHit_01.ObjectID = objectID2; var type2 = (SynonymType)Enum.Parse(typeof(SynonymType), "Synonym");
-      synonymHit_01.Type = type2; var synonyms2 = new List<string>();
-      const string synonyms_03 = "car";
-      synonyms2.Add(synonyms_03); const string synonyms_13 = "vehicule";
-      synonyms2.Add(synonyms_13); const string synonyms_23 = "auto";
-      synonyms2.Add(synonyms_23);
-      synonymHit_01.Synonyms = synonyms2;
-    }
-    synonymHit0.Add(synonymHit_01); var synonymHit_11 = new SynonymHit();
-    {
-      const string objectID2 = "id2";
-      synonymHit_11.ObjectID = objectID2; var type2 = (SynonymType)Enum.Parse(typeof(SynonymType), "Onewaysynonym");
-      synonymHit_11.Type = type2; const string input2 = "iphone";
-      synonymHit_11.Input = input2; var synonyms2 = new List<string>();
-      const string synonyms_03 = "ephone";
-      synonyms2.Add(synonyms_03); const string synonyms_13 = "aphone";
-      synonyms2.Add(synonyms_13); const string synonyms_23 = "yphone";
-      synonyms2.Add(synonyms_23);
-      synonymHit_11.Synonyms = synonyms2;
-    }
-    synonymHit0.Add(synonymHit_11);
-    const bool forwardToReplicas0 = true;
-    const bool replaceExistingSynonyms0 = false;
-
-
-    var response = await _client.SaveSynonymsAsync(indexName0, synonymHit0, forwardToReplicas0, replaceExistingSynonyms0);
+    var response = await client.SaveSynonymsAsync(
+      "indexName",
+      new List<SynonymHit>
+      {
+        new SynonymHit
+        {
+          ObjectID = "id1",
+          Type = Enum.Parse<SynonymType>("Synonym"),
+          Synonyms = new List<string> { "car", "vehicule", "auto" },
+        },
+        new SynonymHit
+        {
+          ObjectID = "id2",
+          Type = Enum.Parse<SynonymType>("Onewaysynonym"),
+          Input = "iphone",
+          Synonyms = new List<string> { "ephone", "aphone", "yphone" },
+        }
+      },
+      true,
+      false
+    );
   }
 
   /// <summary>
-  /// Snippet for the search method.
+  /// Snippet for the Search method.
   ///
   /// search for a single hits request with minimal parameters
   /// </summary>
@@ -1124,24 +919,19 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var searchMethodParams0 = new SearchMethodParams();
-    {
-      var requests1 = new List<SearchQuery>();
-      var requests_02 = new SearchForHits();
+    var response = await client.SearchAsync<Object>(
+      new SearchMethodParams
       {
-        const string indexName3 = "cts_e2e_search_empty_index";
-        requests_02.IndexName = indexName3;
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index", })
+        },
       }
-      requests1.Add(new SearchQuery(requests_02));
-      searchMethodParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.SearchAsync<Object>(searchMethodParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchDictionaryEntries method.
+  /// Snippet for the SearchDictionaryEntries method.
   ///
   /// get searchDictionaryEntries results with minimal parameters
   /// </summary>
@@ -1151,19 +941,14 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var dictionaryName0 = (DictionaryType)Enum.Parse(typeof(DictionaryType), "Compounds");
-    var searchDictionaryEntriesParams0 = new SearchDictionaryEntriesParams();
-    {
-      const string query1 = "foo";
-      searchDictionaryEntriesParams0.Query = query1;
-    }
-
-
-    var response = await _client.SearchDictionaryEntriesAsync(dictionaryName0, searchDictionaryEntriesParams0);
+    var response = await client.SearchDictionaryEntriesAsync(
+      Enum.Parse<DictionaryType>("Compounds"),
+      new SearchDictionaryEntriesParams { Query = "foo", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchForFacetValues method.
+  /// Snippet for the SearchForFacetValues method.
   ///
   /// get searchForFacetValues results with minimal parameters
   /// </summary>
@@ -1173,15 +958,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    const string facetName0 = "facetName";
-
-
-    var response = await _client.SearchForFacetValuesAsync(indexName0, facetName0);
+    var response = await client.SearchForFacetValuesAsync("indexName", "facetName");
   }
 
   /// <summary>
-  /// Snippet for the searchRules method.
+  /// Snippet for the SearchRules method.
   ///
   /// searchRules0
   /// </summary>
@@ -1191,19 +972,14 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var searchRulesParams0 = new SearchRulesParams();
-    {
-      const string query1 = "something";
-      searchRulesParams0.Query = query1;
-    }
-
-
-    var response = await _client.SearchRulesAsync(indexName0, searchRulesParams0);
+    var response = await client.SearchRulesAsync(
+      "indexName",
+      new SearchRulesParams { Query = "something", }
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchSingleIndex method.
+  /// Snippet for the SearchSingleIndex method.
   ///
   /// search with minimal parameters
   /// </summary>
@@ -1213,14 +989,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-
-
-    var response = await _client.SearchSingleIndexAsync<Object>(indexName0);
+    var response = await client.SearchSingleIndexAsync<Object>("indexName");
   }
 
   /// <summary>
-  /// Snippet for the searchSynonyms method.
+  /// Snippet for the SearchSynonyms method.
   ///
   /// searchSynonyms with minimal parameters
   /// </summary>
@@ -1230,14 +1003,11 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-
-
-    var response = await _client.SearchSynonymsAsync(indexName0);
+    var response = await client.SearchSynonymsAsync("indexName");
   }
 
   /// <summary>
-  /// Snippet for the searchUserIds method.
+  /// Snippet for the SearchUserIds method.
   ///
   /// searchUserIds0
   /// </summary>
@@ -1247,21 +1017,19 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var searchUserIdsParams0 = new SearchUserIdsParams();
-    {
-      const string query1 = "test";
-      searchUserIdsParams0.Query = query1; const string clusterName1 = "theClusterName";
-      searchUserIdsParams0.ClusterName = clusterName1; const int page1 = 5;
-      searchUserIdsParams0.Page = page1; const int hitsPerPage1 = 10;
-      searchUserIdsParams0.HitsPerPage = hitsPerPage1;
-    }
-
-
-    var response = await _client.SearchUserIdsAsync(searchUserIdsParams0);
+    var response = await client.SearchUserIdsAsync(
+      new SearchUserIdsParams
+      {
+        Query = "test",
+        ClusterName = "theClusterName",
+        Page = 5,
+        HitsPerPage = 10,
+      }
+    );
   }
 
   /// <summary>
-  /// Snippet for the setDictionarySettings method.
+  /// Snippet for the SetDictionarySettings method.
   ///
   /// get setDictionarySettings results with minimal parameters
   /// </summary>
@@ -1271,28 +1039,24 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var dictionarySettingsParams0 = new DictionarySettingsParams();
-    {
-      var disableStandardEntries1 = new StandardEntries();
+    var response = await client.SetDictionarySettingsAsync(
+      new DictionarySettingsParams
       {
-        var plurals2 = new Dictionary<string, Boolean>();
+        DisableStandardEntries = new StandardEntries
         {
-          const bool fr3 = false;
-          plurals2.Add("fr", fr3); const bool en3 = false;
-          plurals2.Add("en", en3); const bool ru3 = true;
-          plurals2.Add("ru", ru3);
-        }
-        disableStandardEntries1.Plurals = plurals2;
+          Plurals = new Dictionary<string, Boolean>
+          {
+            { "fr", false },
+            { "en", false },
+            { "ru", true }
+          },
+        },
       }
-      dictionarySettingsParams0.DisableStandardEntries = disableStandardEntries1;
-    }
-
-
-    var response = await _client.SetDictionarySettingsAsync(dictionarySettingsParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the setSettings method.
+  /// Snippet for the SetSettings method.
   ///
   /// setSettings with minimal parameters
   /// </summary>
@@ -1302,20 +1066,15 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "cts_e2e_settings";
-    var indexSettings0 = new IndexSettings();
-    {
-      const int paginationLimitedTo1 = 10;
-      indexSettings0.PaginationLimitedTo = paginationLimitedTo1;
-    }
-    const bool forwardToReplicas0 = true;
-
-
-    var response = await _client.SetSettingsAsync(indexName0, indexSettings0, forwardToReplicas0);
+    var response = await client.SetSettingsAsync(
+      "cts_e2e_settings",
+      new IndexSettings { PaginationLimitedTo = 10, },
+      true
+    );
   }
 
   /// <summary>
-  /// Snippet for the updateApiKey method.
+  /// Snippet for the UpdateApiKey method.
   ///
   /// updateApiKey0
   /// </summary>
@@ -1325,21 +1084,15 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string key0 = "myApiKey";
-    var apiKey0 = new ApiKey();
-    {
-      var acl1 = new List<Acl>();
-      var acl_02 = (Acl)Enum.Parse(typeof(Acl), "Search");
-      acl1.Add(acl_02); var acl_12 = (Acl)Enum.Parse(typeof(Acl), "AddObject");
-      acl1.Add(acl_12);
-      apiKey0.Acl = acl1; const int validity1 = 300;
-      apiKey0.Validity = validity1; const int maxQueriesPerIPPerHour1 = 100;
-      apiKey0.MaxQueriesPerIPPerHour = maxQueriesPerIPPerHour1; const int maxHitsPerQuery1 = 20;
-      apiKey0.MaxHitsPerQuery = maxHitsPerQuery1;
-    }
-
-
-    var response = await _client.UpdateApiKeyAsync(key0, apiKey0);
+    var response = await client.UpdateApiKeyAsync(
+      "myApiKey",
+      new ApiKey
+      {
+        Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+        Validity = 300,
+        MaxQueriesPerIPPerHour = 100,
+        MaxHitsPerQuery = 20,
+      }
+    );
   }
-
 }

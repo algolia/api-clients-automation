@@ -1,372 +1,343 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Analytics;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetAnalyticsClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomDelete0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomGet0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPost0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPut0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the getAverageClickPosition method.
+  /// Snippet for the GetAverageClickPosition method.
   ///
   /// get getAverageClickPosition with minimal parameters
   /// </summary>
   public async Task SnippetForGetAverageClickPosition0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetAverageClickPositionAsync(index0);
+    var response = await client.GetAverageClickPositionAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getClickPositions method.
+  /// Snippet for the GetClickPositions method.
   ///
   /// get getClickPositions with minimal parameters
   /// </summary>
   public async Task SnippetForGetClickPositions0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetClickPositionsAsync(index0);
+    var response = await client.GetClickPositionsAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getClickThroughRate method.
+  /// Snippet for the GetClickThroughRate method.
   ///
   /// get getClickThroughRate with minimal parameters
   /// </summary>
   public async Task SnippetForGetClickThroughRate0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetClickThroughRateAsync(index0);
+    var response = await client.GetClickThroughRateAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getConversationRate method.
+  /// Snippet for the GetConversationRate method.
   ///
   /// get getConversationRate with minimal parameters
   /// </summary>
   public async Task SnippetForGetConversationRate0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetConversationRateAsync(index0);
+    var response = await client.GetConversationRateAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getNoClickRate method.
+  /// Snippet for the GetNoClickRate method.
   ///
   /// get getNoClickRate with minimal parameters
   /// </summary>
   public async Task SnippetForGetNoClickRate0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetNoClickRateAsync(index0);
+    var response = await client.GetNoClickRateAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getNoResultsRate method.
+  /// Snippet for the GetNoResultsRate method.
   ///
   /// get getNoResultsRate with minimal parameters
   /// </summary>
   public async Task SnippetForGetNoResultsRate0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetNoResultsRateAsync(index0);
+    var response = await client.GetNoResultsRateAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getSearchesCount method.
+  /// Snippet for the GetSearchesCount method.
   ///
   /// get getSearchesCount with minimal parameters
   /// </summary>
   public async Task SnippetForGetSearchesCount0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetSearchesCountAsync(index0);
+    var response = await client.GetSearchesCountAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getSearchesNoClicks method.
+  /// Snippet for the GetSearchesNoClicks method.
   ///
   /// get getSearchesNoClicks with minimal parameters
   /// </summary>
   public async Task SnippetForGetSearchesNoClicks0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetSearchesNoClicksAsync(index0);
+    var response = await client.GetSearchesNoClicksAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getSearchesNoResults method.
+  /// Snippet for the GetSearchesNoResults method.
   ///
   /// get getSearchesNoResults with minimal parameters
   /// </summary>
   public async Task SnippetForGetSearchesNoResults0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetSearchesNoResultsAsync(index0);
+    var response = await client.GetSearchesNoResultsAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getStatus method.
+  /// Snippet for the GetStatus method.
   ///
   /// get getStatus with minimal parameters
   /// </summary>
   public async Task SnippetForGetStatus0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetStatusAsync(index0);
+    var response = await client.GetStatusAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getTopCountries method.
+  /// Snippet for the GetTopCountries method.
   ///
   /// get getTopCountries with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopCountries0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopCountriesAsync(index0);
+    var response = await client.GetTopCountriesAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getTopFilterAttributes method.
+  /// Snippet for the GetTopFilterAttributes method.
   ///
   /// get getTopFilterAttributes with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopFilterAttributes0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopFilterAttributesAsync(index0);
+    var response = await client.GetTopFilterAttributesAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getTopFilterForAttribute method.
+  /// Snippet for the GetTopFilterForAttribute method.
   ///
   /// get getTopFilterForAttribute with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopFilterForAttribute0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string attribute0 = "myAttribute";
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopFilterForAttributeAsync(attribute0, index0);
+    var response = await client.GetTopFilterForAttributeAsync("myAttribute", "index");
   }
 
   /// <summary>
-  /// Snippet for the getTopFiltersNoResults method.
+  /// Snippet for the GetTopFiltersNoResults method.
   ///
   /// get getTopFiltersNoResults with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopFiltersNoResults0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopFiltersNoResultsAsync(index0);
+    var response = await client.GetTopFiltersNoResultsAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getTopHits method.
+  /// Snippet for the GetTopHits method.
   ///
   /// get getTopHits with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopHits0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopHitsAsync(index0);
+    var response = await client.GetTopHitsAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getTopSearches method.
+  /// Snippet for the GetTopSearches method.
   ///
   /// get getTopSearches with minimal parameters
   /// </summary>
   public async Task SnippetForGetTopSearches0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetTopSearchesAsync(index0);
+    var response = await client.GetTopSearchesAsync("index");
   }
 
   /// <summary>
-  /// Snippet for the getUsersCount method.
+  /// Snippet for the GetUsersCount method.
   ///
   /// get getUsersCount with minimal parameters
   /// </summary>
   public async Task SnippetForGetUsersCount0()
   {
     // Initialize the client
-    var client = new AnalyticsClient(new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string index0 = "index";
-
-
-    var response = await _client.GetUsersCountAsync(index0);
+    var response = await client.GetUsersCountAsync("index");
   }
-
 }

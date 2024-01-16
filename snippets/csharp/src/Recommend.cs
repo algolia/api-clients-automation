@@ -1,18 +1,12 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Recommend;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetRecommendClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
@@ -22,14 +16,11 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
@@ -39,14 +30,11 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
@@ -56,14 +44,11 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
@@ -73,14 +58,11 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the deleteRecommendRule method.
+  /// Snippet for the DeleteRecommendRule method.
   ///
   /// deleteRecommendRule0
   /// </summary>
@@ -90,16 +72,15 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var model0 = (RecommendModels)Enum.Parse(typeof(RecommendModels), "RelatedProducts");
-    const string objectID0 = "objectID";
-
-
-    var response = await _client.DeleteRecommendRuleAsync(indexName0, model0, objectID0);
+    var response = await client.DeleteRecommendRuleAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts"),
+      "objectID"
+    );
   }
 
   /// <summary>
-  /// Snippet for the getRecommendRule method.
+  /// Snippet for the GetRecommendRule method.
   ///
   /// getRecommendRule0
   /// </summary>
@@ -109,16 +90,15 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var model0 = (RecommendModels)Enum.Parse(typeof(RecommendModels), "RelatedProducts");
-    const string objectID0 = "objectID";
-
-
-    var response = await _client.GetRecommendRuleAsync(indexName0, model0, objectID0);
+    var response = await client.GetRecommendRuleAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts"),
+      "objectID"
+    );
   }
 
   /// <summary>
-  /// Snippet for the getRecommendStatus method.
+  /// Snippet for the GetRecommendStatus method.
   ///
   /// getRecommendStatus0
   /// </summary>
@@ -128,16 +108,15 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var model0 = (RecommendModels)Enum.Parse(typeof(RecommendModels), "RelatedProducts");
-    const long taskID0 = 12345L;
-
-
-    var response = await _client.GetRecommendStatusAsync(indexName0, model0, taskID0);
+    var response = await client.GetRecommendStatusAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts"),
+      12345L
+    );
   }
 
   /// <summary>
-  /// Snippet for the getRecommendations method.
+  /// Snippet for the GetRecommendations method.
   ///
   /// get recommendations for recommend model with minimal parameters
   /// </summary>
@@ -147,27 +126,27 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var getRecommendationsParams0 = new GetRecommendationsParams();
-    {
-      var requests1 = new List<RecommendationsRequest>();
-      var requests_02 = new RecommendationsQuery();
+    var response = await client.GetRecommendationsAsync(
+      new GetRecommendationsParams
       {
-        const string indexName3 = "indexName";
-        requests_02.IndexName = indexName3; const string objectID3 = "objectID";
-        requests_02.ObjectID = objectID3; var model3 = (RecommendationModels)Enum.Parse(typeof(RecommendationModels), "RelatedProducts");
-        requests_02.Model = model3; const int threshold3 = 42;
-        requests_02.Threshold = threshold3;
+        Requests = new List<RecommendationsRequest>
+        {
+          new RecommendationsRequest(
+            new RecommendationsQuery
+            {
+              IndexName = "indexName",
+              ObjectID = "objectID",
+              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
+              Threshold = 42,
+            }
+          )
+        },
       }
-      requests1.Add(new RecommendationsRequest(requests_02));
-      getRecommendationsParams0.Requests = requests1;
-    }
-
-
-    var response = await _client.GetRecommendationsAsync(getRecommendationsParams0);
+    );
   }
 
   /// <summary>
-  /// Snippet for the searchRecommendRules method.
+  /// Snippet for the SearchRecommendRules method.
   ///
   /// searchRecommendRules0
   /// </summary>
@@ -177,11 +156,9 @@ public class SnippetRecommendClient
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    const string indexName0 = "indexName";
-    var model0 = (RecommendModels)Enum.Parse(typeof(RecommendModels), "RelatedProducts");
-
-
-    var response = await _client.SearchRecommendRulesAsync(indexName0, model0);
+    var response = await client.SearchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts")
+    );
   }
-
 }

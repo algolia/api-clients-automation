@@ -1,140 +1,124 @@
-using Algolia.Search.Http;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Insights;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class SnippetInsightsClient
 {
-  [Fact]
-  public void Dispose()
-  {
-
-  }
-
   /// <summary>
-  /// Snippet for the customDelete method.
+  /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomDelete0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomDeleteAsync(path0);
+    var response = await client.CustomDeleteAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customGet method.
+  /// Snippet for the CustomGet method.
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomGet0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomGetAsync(path0);
+    var response = await client.CustomGetAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPost method.
+  /// Snippet for the CustomPost method.
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPost0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPostAsync(path0);
+    var response = await client.CustomPostAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the customPut method.
+  /// Snippet for the CustomPut method.
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
   public async Task SnippetForCustomPut0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string path0 = "/test/minimal";
-
-
-    var response = await _client.CustomPutAsync(path0);
+    var response = await client.CustomPutAsync("/test/minimal");
   }
 
   /// <summary>
-  /// Snippet for the deleteUserToken method.
+  /// Snippet for the DeleteUserToken method.
   ///
   /// deleteUserToken0
   /// </summary>
   public async Task SnippetForDeleteUserToken0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    const string userToken0 = "test-user-1";
-
-
-    var response = await _client.DeleteUserTokenAsync(userToken0);
+    var response = await client.DeleteUserTokenAsync("test-user-1");
   }
 
   /// <summary>
-  /// Snippet for the pushEvents method.
+  /// Snippet for the PushEvents method.
   ///
   /// pushEvents0
   /// </summary>
   public async Task SnippetForPushEvents0()
   {
     // Initialize the client
-    var client = new InsightsClient(new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"));
+    var client = new InsightsClient(
+      new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
 
     // Call the API
-    var insightsEvents0 = new InsightsEvents();
-    {
-      var events1 = new List<EventsItems>();
-      var events_02 = new ClickedObjectIDsAfterSearch();
+    var response = await client.PushEventsAsync(
+      new InsightsEvents
       {
-        var eventType3 = (ClickEvent)Enum.Parse(typeof(ClickEvent), "Click");
-        events_02.EventType = eventType3; const string eventName3 = "Product Clicked";
-        events_02.EventName = eventName3; const string index3 = "products";
-        events_02.Index = index3; const string userToken3 = "user-123456";
-        events_02.UserToken = userToken3; const string authenticatedUserToken3 = "user-123456";
-        events_02.AuthenticatedUserToken = authenticatedUserToken3; const long timestamp3 = 1641290601962L;
-        events_02.Timestamp = timestamp3; var objectIDs3 = new List<string>();
-        const string objectIDs_04 = "9780545139700";
-        objectIDs3.Add(objectIDs_04); const string objectIDs_14 = "9780439784542";
-        objectIDs3.Add(objectIDs_14);
-        events_02.ObjectIDs = objectIDs3; const string queryID3 = "43b15df305339e827f0ac0bdc5ebcaa7";
-        events_02.QueryID = queryID3; var positions3 = new List<int>();
-        const int positions_04 = 7;
-        positions3.Add(positions_04); const int positions_14 = 6;
-        positions3.Add(positions_14);
-        events_02.Positions = positions3;
+        Events = new List<EventsItems>
+        {
+          new EventsItems(
+            new ClickedObjectIDsAfterSearch
+            {
+              EventType = Enum.Parse<ClickEvent>("Click"),
+              EventName = "Product Clicked",
+              Index = "products",
+              UserToken = "user-123456",
+              AuthenticatedUserToken = "user-123456",
+              Timestamp = 1641290601962L,
+              ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
+              QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              Positions = new List<int> { 7, 6 },
+            }
+          )
+        },
       }
-      events1.Add(new EventsItems(events_02));
-      insightsEvents0.Events = events1;
-    }
-
-
-    var response = await _client.PushEventsAsync(insightsEvents0);
+    );
   }
-
 }
