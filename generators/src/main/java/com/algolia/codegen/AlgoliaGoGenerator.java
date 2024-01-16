@@ -73,6 +73,27 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+
+    for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
+      String modelName = entry.getKey();
+      ModelsMap model = entry.getValue();
+
+      // for some reason the property additionalPropertiesIsAnyType is not propagated to the
+      // property
+      for (CodegenProperty prop : model.getModels().get(0).getModel().getVars()) {
+        ModelsMap propertyModel = models.get(prop.datatypeWithEnum);
+        if (propertyModel != null && propertyModel.getModels().get(0).getModel().getAdditionalPropertiesIsAnyType()) {
+          // consider it the same as model for our purpose
+          prop.isModel = true;
+        }
+
+        // simplify some dataTypes
+        if (prop.dataType.contains("[]*[]")) {
+          prop.dataType = prop.dataType.replace("[]*[]", "[][]");
+          prop.vendorExtensions.put("x-go-base-type", prop.dataType);
+        }
+      }
+    }
     return models;
   }
 

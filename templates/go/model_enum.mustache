@@ -49,7 +49,7 @@ func New{{{classname}}}FromValue(v {{{format}}}{{^format}}{{dataType}}{{/format}
 	}
 }
 
-// IsValid return true if the value is valid for the enum, false otherwise
+// IsValid return true if the value is valid for the enum, false otherwise.
 func (v {{{classname}}}) IsValid() bool {
 	for _, existing := range Allowed{{{classname}}}EnumValues {
 		if existing == v {

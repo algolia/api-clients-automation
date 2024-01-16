@@ -1,6 +1,1 @@
-{{^isOptional}}
-{{> tests/param_value}}
-{{/isOptional}}
-{{#isOptional}}
-Some({{> tests/param_value}})
-{{/isOptional}}
+{{^required}}Some({{/required}}{{> tests/param_value}}{{^required}}){{/required}}

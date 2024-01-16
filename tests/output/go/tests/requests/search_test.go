@@ -29,3193 +29,2240 @@ func createSearchClient() (*search.APIClient, *echoRequester) {
 func TestSearch_AddApiKey(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "addApiKey0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`
-				req := search.ApiAddApiKeyRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.AddApiKey(req)
-				require.NoError(t, err)
+	t.Run("addApiKey0", func(t *testing.T) {
+		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/keys")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptyApiKey().SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/keys")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`)
+	})
 }
 
 func TestSearch_AddOrUpdateObject(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "addOrUpdateObject0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"uniqueID","body":{"key":"value"}}`
-				req := search.ApiAddOrUpdateObjectRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.AddOrUpdateObject(req)
-				require.NoError(t, err)
+	t.Run("addOrUpdateObject0", func(t *testing.T) {
+		_, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
+			"indexName", "uniqueID", map[string]any{"key": "value"},
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/uniqueID")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/uniqueID")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"key":"value"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"key":"value"}`)
+	})
 }
 
 func TestSearch_AppendSource(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "appendSource0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"source":"theSource","description":"theDescription"}`
-				req := search.ApiAppendSourceRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.AppendSource(req)
-				require.NoError(t, err)
+	t.Run("appendSource0", func(t *testing.T) {
+		_, err := client.AppendSource(client.NewApiAppendSourceRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/security/sources/append")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"source":"theSource","description":"theDescription"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/security/sources/append")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"source":"theSource","description":"theDescription"}`)
+	})
 }
 
 func TestSearch_AssignUserId(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "assignUserId0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"xAlgoliaUserID":"userID","assignUserIdParams":{"cluster":"theCluster"}}`
-				req := search.ApiAssignUserIdRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.AssignUserId(req)
-				require.NoError(t, err)
+	t.Run("assignUserId0", func(t *testing.T) {
+		_, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
+			"userID",
+			search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"cluster":"theCluster"}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-user-id":"userID"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"cluster":"theCluster"}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-user-id":"userID"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+	})
 }
 
 func TestSearch_Batch(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allows batch method with `addObject` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"addObject","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+	t.Run("allows batch method with `addObject` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"addObject","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `clear` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"clear","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"addObject","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `clear` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("clear")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"clear","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `delete` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"delete","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"clear","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `delete` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("delete")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"delete","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `deleteObject` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"delete","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `deleteObject` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("deleteObject")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `partialUpdateObject` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `partialUpdateObject` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `partialUpdateObjectNoCreate` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `partialUpdateObjectNoCreate` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}`)
-			},
-		},
-		{
-			name: "allows batch method with `updateObject` action",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","batchWriteParams":{"requests":[{"action":"updateObject","body":{"key":"value"}}]}}`
-				req := search.ApiBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Batch(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}`)
+	})
+	t.Run("allows batch method with `updateObject` action", func(t *testing.T) {
+		_, err := client.Batch(client.NewApiBatchRequest(
+			"theIndexName",
+			search.NewEmptyBatchWriteParams().SetRequests(
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("updateObject")).SetBody(map[string]any{"key": "value"})}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"updateObject","body":{"key":"value"}}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"updateObject","body":{"key":"value"}}]}`)
+	})
 }
 
 func TestSearch_BatchAssignUserIds(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "batchAssignUserIds0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"xAlgoliaUserID":"userID","batchAssignUserIdsParams":{"cluster":"theCluster","users":["user1","user2"]}}`
-				req := search.ApiBatchAssignUserIdsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.BatchAssignUserIds(req)
-				require.NoError(t, err)
+	t.Run("batchAssignUserIds0", func(t *testing.T) {
+		_, err := client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
+			"userID",
+			search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
+				[]string{"user1", "user2"}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"cluster":"theCluster","users":["user1","user2"]}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-user-id":"userID"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"cluster":"theCluster","users":["user1","user2"]}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-user-id":"userID"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+	})
 }
 
 func TestSearch_BatchDictionaryEntries(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get batchDictionaryEntries results with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"dictionaryName":"compounds","batchDictionaryEntriesParams":{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}}`
-				req := search.ApiBatchDictionaryEntriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.BatchDictionaryEntries(req)
-				require.NoError(t, err)
+	t.Run("get batchDictionaryEntries results with minimal parameters", func(t *testing.T) {
+		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
+			search.DictionaryType("compounds"),
+			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
+				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en")), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr"))}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}`)
-			},
-		},
-		{
-			name: "get batchDictionaryEntries results with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"dictionaryName":"compounds","batchDictionaryEntriesParams":{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}}`
-				req := search.ApiBatchDictionaryEntriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.BatchDictionaryEntries(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}`)
+	})
+	t.Run("get batchDictionaryEntries results with all parameters", func(t *testing.T) {
+		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
+			search.DictionaryType("compounds"),
+			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(false).SetRequests(
+				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en").SetWord("fancy").SetWords(
+						[]string{"believe", "algolia"}).SetDecomposition(
+						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr").SetWord("humility").SetWords(
+						[]string{"candor", "algolia"}).SetDecomposition(
+						[]string{"grit", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}`)
-			},
-		},
-		{
-			name: "get batchDictionaryEntries results additional properties",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"dictionaryName":"compounds","batchDictionaryEntriesParams":{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}}`
-				req := search.ApiBatchDictionaryEntriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.BatchDictionaryEntries(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}`)
+	})
+	t.Run("get batchDictionaryEntries results additional properties", func(t *testing.T) {
+		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
+			search.DictionaryType("compounds"),
+			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
+				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en").SetAdditionalProperty("additional", "try me"))}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}`)
+	})
 }
 
 func TestSearch_Browse(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "browse with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"cts_e2e_browse"}`
-				req := search.ApiBrowseRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Browse(req)
-				require.NoError(t, err)
+	t.Run("browse with minimal parameters", func(t *testing.T) {
+		_, err := client.Browse(client.NewApiBrowseRequest(
+			"cts_e2e_browse",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_browse/browse")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_browse/browse")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "browse with search parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","browseParams":{"query":"myQuery","facetFilters":["tags:algolia"]}}`
-				req := search.ApiBrowseRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Browse(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("browse with search parameters", func(t *testing.T) {
+		_, err := client.Browse(client.NewApiBrowseRequest(
+			"indexName",
+		).WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
+			search.NewEmptyBrowseParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
+				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
-			},
-		},
-		{
-			name: "browse allow a cursor in parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","browseParams":{"cursor":"test"}}`
-				req := search.ApiBrowseRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Browse(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
+	})
+	t.Run("browse allow a cursor in parameters", func(t *testing.T) {
+		_, err := client.Browse(client.NewApiBrowseRequest(
+			"indexName",
+		).WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
+			search.NewEmptyBrowseParamsObject().SetCursor("test"))))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"cursor":"test"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"cursor":"test"}`)
+	})
 }
 
 func TestSearch_ClearAllSynonyms(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "clearAllSynonyms0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName"}`
-				req := search.ApiClearAllSynonymsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ClearAllSynonyms(req)
-				require.NoError(t, err)
+	t.Run("clearAllSynonyms0", func(t *testing.T) {
+		_, err := client.ClearAllSynonyms(client.NewApiClearAllSynonymsRequest(
+			"indexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/clear")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/clear")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				require.Empty(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Empty(t, echo.body)
+	})
 }
 
 func TestSearch_ClearObjects(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "clearObjects0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName"}`
-				req := search.ApiClearObjectsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ClearObjects(req)
-				require.NoError(t, err)
+	t.Run("clearObjects0", func(t *testing.T) {
+		_, err := client.ClearObjects(client.NewApiClearObjectsRequest(
+			"theIndexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/clear")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/clear")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				require.Empty(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Empty(t, echo.body)
+	})
 }
 
 func TestSearch_ClearRules(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "clearRules0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName"}`
-				req := search.ApiClearRulesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ClearRules(req)
-				require.NoError(t, err)
+	t.Run("clearRules0", func(t *testing.T) {
+		_, err := client.ClearRules(client.NewApiClearRulesRequest(
+			"indexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/clear")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/clear")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				require.Empty(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Empty(t, echo.body)
+	})
 }
 
 func TestSearch_CustomDelete(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow del method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := search.ApiCustomDeleteRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomDelete(req)
-				require.NoError(t, err)
+	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "allow del method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := search.ApiCustomDeleteRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomDelete(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_CustomGet(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow get method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := search.ApiCustomGetRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomGet(req)
-				require.NoError(t, err)
+	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "allow get method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"}}`
-				req := search.ApiCustomGetRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomGet(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_CustomPost(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow post method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPost(req)
-				require.NoError(t, err)
+	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "allow post method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPost(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"body":"parameters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions can override default query parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("query", "myQueryParameter"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions merges query parameters with default ones",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query2":"myQueryParameter"}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("query2", "myQueryParameter"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions can override default headers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionHeaders := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &requestOptionHeaders))
-				for k, v := range requestOptionHeaders {
-					opts = append(opts, search.HeaderParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions can override default headers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions merges headers with default ones",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionHeaders := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &requestOptionHeaders))
-				for k, v := range requestOptionHeaders {
-					opts = append(opts, search.HeaderParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				headers := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
-				for k, v := range headers {
-					require.Equal(t, v, echo.header.Get(k))
-				}
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts booleans",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"isItWorking":true}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("isItWorking", true),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts integers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":2}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("myParam", 2),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of string",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":["c","d"]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("myParam",
+				[]string{"c", "d"}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of booleans",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":[true,true,false]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("myParam",
+				[]bool{true, true, false}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "requestOptions queryParameters accepts list of integers",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/requestOptions","parameters":{"query":"parameters"},"body":{"facet":"filters"}}`
-				req := search.ApiCustomPostRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				var opts []search.Option
-				requestOptionParameters := map[string]any{}
-				require.NoError(t, json.Unmarshal([]byte(`{"myParam":[1,2]}`), &requestOptionParameters))
-				for k, v := range requestOptionParameters {
-					opts = append(opts, search.QueryParamOption(k, v))
-				}
-				_, err := client.CustomPost(req, opts...)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
+		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+			"/test/requestOptions",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			search.QueryParamOption("myParam",
+				[]int32{1, 2}),
+		)
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"facet":"filters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_CustomPut(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "allow put method for a custom path with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/minimal"}`
-				req := search.ApiCustomPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPut(req)
-				require.NoError(t, err)
+	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
+		_, err := client.CustomPut(client.NewApiCustomPutRequest(
+			"/test/minimal",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/minimal")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/minimal")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "allow put method for a custom path with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"path":"/test/all","parameters":{"query":"parameters"},"body":{"body":"parameters"}}`
-				req := search.ApiCustomPutRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.CustomPut(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
+		_, err := client.CustomPut(client.NewApiCustomPutRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/test/all")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/test/all")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"body":"parameters"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_DeleteApiKey(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteApiKey0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"key":"myTestApiKey"}`
-				req := search.ApiDeleteApiKeyRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteApiKey(req)
-				require.NoError(t, err)
+	t.Run("deleteApiKey0", func(t *testing.T) {
+		_, err := client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
+			"myTestApiKey",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_DeleteBy(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteBy0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","deleteByParams":{"filters":"brand:brandName"}}`
-				req := search.ApiDeleteByRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteBy(req)
-				require.NoError(t, err)
+	t.Run("deleteBy0", func(t *testing.T) {
+		_, err := client.DeleteBy(client.NewApiDeleteByRequest(
+			"theIndexName",
+			search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/deleteByQuery")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/deleteByQuery")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"filters":"brand:brandName"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"filters":"brand:brandName"}`)
+	})
 }
 
 func TestSearch_DeleteIndex(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteIndex0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName"}`
-				req := search.ApiDeleteIndexRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteIndex(req)
-				require.NoError(t, err)
+	t.Run("deleteIndex0", func(t *testing.T) {
+		_, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
+			"theIndexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_DeleteObject(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteObject0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID"}`
-				req := search.ApiDeleteObjectRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteObject(req)
-				require.NoError(t, err)
+	t.Run("deleteObject0", func(t *testing.T) {
+		_, err := client.DeleteObject(client.NewApiDeleteObjectRequest(
+			"theIndexName", "uniqueID",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_DeleteRule(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "delete rule simple case",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
-				req := search.ApiDeleteRuleRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteRule(req)
-				require.NoError(t, err)
+	t.Run("delete rule simple case", func(t *testing.T) {
+		_, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
+			"indexName", "id1",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "delete rule with simple characters to encode in objectID",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"test/with/slash"}`
-				req := search.ApiDeleteRuleRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteRule(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("delete rule with simple characters to encode in objectID", func(t *testing.T) {
+		_, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
+			"indexName", "test/with/slash",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/test%2Fwith%2Fslash")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/test%2Fwith%2Fslash")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_DeleteSource(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteSource0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"source":"theSource"}`
-				req := search.ApiDeleteSourceRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteSource(req)
-				require.NoError(t, err)
+	t.Run("deleteSource0", func(t *testing.T) {
+		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
+			"theSource",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/security/sources/theSource")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/security/sources/theSource")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_DeleteSynonym(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "deleteSynonym0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
-				req := search.ApiDeleteSynonymRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.DeleteSynonym(req)
-				require.NoError(t, err)
+	t.Run("deleteSynonym0", func(t *testing.T) {
+		_, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
+			"indexName", "id1",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetApiKey(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getApiKey0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"key":"myTestApiKey"}`
-				req := search.ApiGetApiKeyRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetApiKey(req)
-				require.NoError(t, err)
+	t.Run("getApiKey0", func(t *testing.T) {
+		_, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
+			"myTestApiKey",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetDictionaryLanguages(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getDictionaryLanguages",
-			testFunc: func(t *testing.T) {
-				_, err := client.GetDictionaryLanguages()
-				require.NoError(t, err)
+	t.Run("get getDictionaryLanguages", func(t *testing.T) {
+		_, err := client.GetDictionaryLanguages()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/*/languages")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/languages")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetDictionarySettings(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get getDictionarySettings results",
-			testFunc: func(t *testing.T) {
-				_, err := client.GetDictionarySettings()
-				require.NoError(t, err)
+	t.Run("get getDictionarySettings results", func(t *testing.T) {
+		_, err := client.GetDictionarySettings()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetLogs(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getLogs with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{}`
-				req := search.ApiGetLogsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetLogs(req)
-				require.NoError(t, err)
+	t.Run("getLogs with minimal parameters", func(t *testing.T) {
+		_, err := client.GetLogs(client.NewApiGetLogsRequest())
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/logs")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/logs")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "getLogs with parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"offset":5,"length":10,"indexName":"theIndexName","type":"all"}`
-				req := search.ApiGetLogsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetLogs(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("getLogs with parameters", func(t *testing.T) {
+		_, err := client.GetLogs(client.NewApiGetLogsRequest().WithOffset(5).WithLength(10).WithIndexName("theIndexName").WithType(search.LogType("all")))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/logs")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/logs")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"offset":"5","length":"10","indexName":"theIndexName","type":"all"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"offset":"5","length":"10","indexName":"theIndexName","type":"all"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_GetObject(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getObject0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID","attributesToRetrieve":["attr1","attr2"]}`
-				req := search.ApiGetObjectRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetObject(req)
-				require.NoError(t, err)
+	t.Run("getObject0", func(t *testing.T) {
+		_, err := client.GetObject(client.NewApiGetObjectRequest(
+			"theIndexName", "uniqueID",
+		).WithAttributesToRetrieve(
+			[]string{"attr1", "attr2"}))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"attributesToRetrieve":"attr1,attr2"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"attributesToRetrieve":"attr1,attr2"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_GetObjects(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getObjects0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}`
-				req := search.ApiGetObjectsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetObjects(req)
-				require.NoError(t, err)
+	t.Run("getObjects0", func(t *testing.T) {
+		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/objects")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptyGetObjectsParams().SetRequests(
+				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
+					[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")}),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/objects")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}`)
+	})
 }
 
 func TestSearch_GetRule(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getRule0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
-				req := search.ApiGetRuleRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetRule(req)
-				require.NoError(t, err)
+	t.Run("getRule0", func(t *testing.T) {
+		_, err := client.GetRule(client.NewApiGetRuleRequest(
+			"indexName", "id1",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetSettings(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getSettings0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"cts_e2e_settings"}`
-				req := search.ApiGetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSettings(req)
-				require.NoError(t, err)
+	t.Run("getSettings0", func(t *testing.T) {
+		_, err := client.GetSettings(client.NewApiGetSettingsRequest(
+			"cts_e2e_settings",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetSources(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getSources0",
-			testFunc: func(t *testing.T) {
-				_, err := client.GetSources()
-				require.NoError(t, err)
+	t.Run("getSources0", func(t *testing.T) {
+		_, err := client.GetSources()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/security/sources")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/security/sources")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetSynonym(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getSynonym0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1"}`
-				req := search.ApiGetSynonymRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetSynonym(req)
-				require.NoError(t, err)
+	t.Run("getSynonym0", func(t *testing.T) {
+		_, err := client.GetSynonym(client.NewApiGetSynonymRequest(
+			"indexName", "id1",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetTask(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getTask0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","taskID":123}`
-				req := search.ApiGetTaskRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetTask(req)
-				require.NoError(t, err)
+	t.Run("getTask0", func(t *testing.T) {
+		_, err := client.GetTask(client.NewApiGetTaskRequest(
+			"theIndexName", 123,
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/task/123")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/task/123")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetTopUserIds(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getTopUserIds0",
-			testFunc: func(t *testing.T) {
-				_, err := client.GetTopUserIds()
-				require.NoError(t, err)
+	t.Run("getTopUserIds0", func(t *testing.T) {
+		_, err := client.GetTopUserIds()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/top")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/top")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_GetUserId(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "getUserId0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"userID":"uniqueID"}`
-				req := search.ApiGetUserIdRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.GetUserId(req)
-				require.NoError(t, err)
+	t.Run("getUserId0", func(t *testing.T) {
+		_, err := client.GetUserId(client.NewApiGetUserIdRequest(
+			"uniqueID",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_HasPendingMappings(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "hasPendingMappings with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{}`
-				req := search.ApiHasPendingMappingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.HasPendingMappings(req)
-				require.NoError(t, err)
+	t.Run("hasPendingMappings with minimal parameters", func(t *testing.T) {
+		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "hasPendingMappings with parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"getClusters":true}`
-				req := search.ApiHasPendingMappingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.HasPendingMappings(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("hasPendingMappings with parameters", func(t *testing.T) {
+		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest().WithGetClusters(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"getClusters":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"getClusters":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_ListApiKeys(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "listApiKeys0",
-			testFunc: func(t *testing.T) {
-				_, err := client.ListApiKeys()
-				require.NoError(t, err)
+	t.Run("listApiKeys0", func(t *testing.T) {
+		_, err := client.ListApiKeys()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/keys")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/keys")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_ListClusters(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "listClusters0",
-			testFunc: func(t *testing.T) {
-				_, err := client.ListClusters()
-				require.NoError(t, err)
+	t.Run("listClusters0", func(t *testing.T) {
+		_, err := client.ListClusters()
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_ListIndices(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "listIndices with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{}`
-				req := search.ApiListIndicesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ListIndices(req)
-				require.NoError(t, err)
+	t.Run("listIndices with minimal parameters", func(t *testing.T) {
+		_, err := client.ListIndices(client.NewApiListIndicesRequest())
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "listIndices with parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"page":8,"hitsPerPage":3}`
-				req := search.ApiListIndicesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ListIndices(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("listIndices with parameters", func(t *testing.T) {
+		_, err := client.ListIndices(client.NewApiListIndicesRequest().WithPage(8).WithHitsPerPage(3))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"3"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"3"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_ListUserIds(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "listUserIds with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{}`
-				req := search.ApiListUserIdsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ListUserIds(req)
-				require.NoError(t, err)
+	t.Run("listUserIds with minimal parameters", func(t *testing.T) {
+		_, err := client.ListUserIds(client.NewApiListUserIdsRequest())
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-		{
-			name: "listUserIds with parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"page":8,"hitsPerPage":100}`
-				req := search.ApiListUserIdsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ListUserIds(req)
-				require.NoError(t, err)
+		require.Nil(t, echo.body)
+	})
+	t.Run("listUserIds with parameters", func(t *testing.T) {
+		_, err := client.ListUserIds(client.NewApiListUserIdsRequest().WithPage(8).WithHitsPerPage(100))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "GET", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "GET", echo.method)
 
-				require.Nil(t, echo.body)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"100"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"100"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_MultipleBatch(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "multipleBatch0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}`
-				req := search.ApiMultipleBatchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.MultipleBatch(req)
-				require.NoError(t, err)
+	t.Run("multipleBatch0", func(t *testing.T) {
+		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptyBatchParams().SetRequests(
+				[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("theIndexName")}),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}`)
+	})
 }
 
 func TestSearch_OperationIndex(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "operationIndex0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","operationIndexParams":{"operation":"copy","destination":"dest","scope":["rules","settings"]}}`
-				req := search.ApiOperationIndexRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.OperationIndex(req)
-				require.NoError(t, err)
+	t.Run("operationIndex0", func(t *testing.T) {
+		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
+			"theIndexName",
+			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("dest").SetScope(
+				[]search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/operation")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/operation")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"operation":"copy","destination":"dest","scope":["rules","settings"]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"operation":"copy","destination":"dest","scope":["rules","settings"]}`)
+	})
 }
 
 func TestSearch_PartialUpdateObject(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "partialUpdateObject0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","objectID":"uniqueID","attributesToUpdate":{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}},"createIfNotExists":true}`
-				req := search.ApiPartialUpdateObjectRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.PartialUpdateObject(req)
-				require.NoError(t, err)
+	t.Run("partialUpdateObject0", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
+				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue("test2"))},
+		).WithCreateIfNotExists(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID/partial")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID/partial")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"createIfNotExists":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"createIfNotExists":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_RemoveUserId(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "removeUserId0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"userID":"uniqueID"}`
-				req := search.ApiRemoveUserIdRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.RemoveUserId(req)
-				require.NoError(t, err)
+	t.Run("removeUserId0", func(t *testing.T) {
+		_, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
+			"uniqueID",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "DELETE", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "DELETE", echo.method)
 
-				require.Nil(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Nil(t, echo.body)
+	})
 }
 
 func TestSearch_ReplaceSources(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "replaceSources0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"source":[{"source":"theSource","description":"theDescription"}]}`
-				req := search.ApiReplaceSourcesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.ReplaceSources(req)
-				require.NoError(t, err)
+	t.Run("replaceSources0", func(t *testing.T) {
+		_, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/security/sources")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+			[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `[{"source":"theSource","description":"theDescription"}]`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/security/sources")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `[{"source":"theSource","description":"theDescription"}]`)
+	})
 }
 
 func TestSearch_RestoreApiKey(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "restoreApiKey0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"key":"myApiKey"}`
-				req := search.ApiRestoreApiKeyRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.RestoreApiKey(req)
-				require.NoError(t, err)
+	t.Run("restoreApiKey0", func(t *testing.T) {
+		_, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
+			"myApiKey",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/keys/myApiKey/restore")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/keys/myApiKey/restore")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				require.Empty(t, echo.body)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		require.Empty(t, echo.body)
+	})
 }
 
 func TestSearch_SaveObject(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "saveObject0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","body":{"objectID":"id","test":"val"}}`
-				req := search.ApiSaveObjectRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveObject(req)
-				require.NoError(t, err)
+	t.Run("saveObject0", func(t *testing.T) {
+		_, err := client.SaveObject(client.NewApiSaveObjectRequest(
+			"theIndexName", map[string]any{"objectID": "id", "test": "val"},
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"objectID":"id","test":"val"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"objectID":"id","test":"val"}`)
+	})
 }
 
 func TestSearch_SaveRule(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "saveRule with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1","rule":{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}}`
-				req := search.ApiSaveRuleRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveRule(req)
-				require.NoError(t, err)
+	t.Run("saveRule with minimal parameters", func(t *testing.T) {
+		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
+			"indexName", "id1",
+			search.NewEmptyRule().SetObjectID("id1").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}`)
-			},
-		},
-		{
-			name: "saveRule with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1","rule":{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]},"forwardToReplicas":true}`
-				req := search.ApiSaveRuleRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveRule(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}`)
+	})
+	t.Run("saveRule with all parameters", func(t *testing.T) {
+		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
+			"indexName", "id1",
+			search.NewEmptyRule().SetObjectID("id1").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+						search.NewEmptyConsequenceQueryObject().SetRemove(
+							[]string{"algolia"}).SetEdits(
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde")})))).SetHide(
+					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("321")}).SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
+					[]search.Promote{*search.PromoteObjectIDAsPromote(
+						search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
+						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
+							[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)}),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_SaveRules(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "saveRules with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","rules":[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]}`
-				req := search.ApiSaveRulesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveRules(req)
-				require.NoError(t, err)
+	t.Run("saveRules with minimal parameters", func(t *testing.T) {
+		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
+			"indexName",
+			[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]`)
-			},
-		},
-		{
-			name: "saveRules with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","rules":[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}],"forwardToReplicas":true,"clearExistingRules":true}`
-				req := search.ApiSaveRulesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveRules(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]`)
+	})
+	t.Run("saveRules with all parameters", func(t *testing.T) {
+		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
+			"indexName",
+			[]search.Rule{*search.NewEmptyRule().SetObjectID("id1").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+						search.NewEmptyConsequenceQueryObject().SetRemove(
+							[]string{"algolia"}).SetEdits(
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde")})))).SetHide(
+					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("321")}).SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
+					[]search.Promote{*search.PromoteObjectIDAsPromote(
+						search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
+						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
+							[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)})},
+		).WithForwardToReplicas(true).WithClearExistingRules(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","clearExistingRules":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","clearExistingRules":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_SaveSynonym(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "saveSynonym0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","objectID":"id1","synonymHit":{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},"forwardToReplicas":true}`
-				req := search.ApiSaveSynonymRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveSynonym(req)
-				require.NoError(t, err)
+	t.Run("saveSynonym0", func(t *testing.T) {
+		_, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
+			"indexName", "id1",
+			search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
+				[]string{"car", "vehicule", "auto"}),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_SaveSynonyms(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "saveSynonyms0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","synonymHit":[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}],"forwardToReplicas":true,"replaceExistingSynonyms":false}`
-				req := search.ApiSaveSynonymsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SaveSynonyms(req)
-				require.NoError(t, err)
+	t.Run("saveSynonyms0", func(t *testing.T) {
+		_, err := client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
+			"indexName",
+			[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
+				[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
+				[]string{"ephone", "aphone", "yphone"})},
+		).WithForwardToReplicas(true).WithReplaceExistingSynonyms(false))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/batch")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/batch")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_Search(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "search for a single hits request with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+	t.Run("search for a single hits request with minimal parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))}),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
-			},
-		},
-		{
-			name: "search for a single facet request with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
+	})
+	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`)
-			},
-		},
-		{
-			name: "search for a single hits request with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+					search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SearchTypeFacet("facet")).SetFacet("editor"))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}`)
-			},
-		},
-		{
-			name: "search for a single facet request with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`)
+	})
+	t.Run("search for a single hits request with all parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SearchTypeDefault("default")))}),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}`)
-			},
-		},
-		{
-			name: "search for multiple mixed requests in multiple indices with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}`)
+	})
+	t.Run("search for a single facet request with all parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}`)
-			},
-		},
-		{
-			name: "search for multiple mixed requests in multiple indices with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+					search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}`)
-			},
-		},
-		{
-			name: "search filters accept all of the possible shapes",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}`)
+	})
+	t.Run("search for multiple mixed requests in multiple indices with minimal parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName")), *search.SearchForFacetsAsSearchQuery(
+					search.NewEmptySearchForFacets().SetIndexName("theIndexName2").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet")), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetType(search.SearchTypeDefault("default")))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`)
-			},
-		},
-		{
-			name: "search with all search parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`
-				req := search.ApiSearchRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.Search(req)
-				require.NoError(t, err)
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}`)
+	})
+	t.Run("search for multiple mixed requests in multiple indices with all parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+					search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50)), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SearchTypeDefault("default")))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
+		))
+		require.NoError(t, err)
+
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}`)
+	})
+	t.Run("search filters accept all of the possible shapes", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.StringAsFacetFilters("mySearch:filters")).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetTagFilters(search.StringAsTagFilters("mySearch:filters")).SetNumericFilters(search.StringAsNumericFilters("mySearch:filters")).SetOptionalFilters(search.StringAsOptionalFilters("mySearch:filters"))), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
+							[]string{"mySearch:filters"})})).SetReRankingApplyFilter(search.ArrayOfMixedSearchFiltersAsReRankingApplyFilter(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
+							[]string{"mySearch:filters"})})).SetTagFilters(search.ArrayOfMixedSearchFiltersAsTagFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
+							[]string{"mySearch:filters"})})).SetNumericFilters(search.ArrayOfMixedSearchFiltersAsNumericFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
+							[]string{"mySearch:filters"})})).SetOptionalFilters(search.ArrayOfMixedSearchFiltersAsOptionalFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
+							[]string{"mySearch:filters"})})))}),
+		))
+		require.NoError(t, err)
+
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`)
+	})
+	t.Run("search with all search parameters", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
+						[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
+						[]search.AlternativesAsExact{search.AlternativesAsExact("multiWordsSynonym")}).SetAnalytics(true).SetAnalyticsTags(
+						[]string{""}).SetAroundLatLng("").SetAroundLatLngViaIP(true).SetAroundPrecision(search.Int32AsAroundPrecision(0)).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetAttributeCriteriaComputedByMinProximity(true).SetAttributesForFaceting(
+						[]string{""}).SetAttributesToHighlight(
+						[]string{""}).SetAttributesToRetrieve(
+						[]string{""}).SetAttributesToSnippet(
+						[]string{""}).SetClickAnalytics(true).SetCustomRanking(
+						[]string{""}).SetDecompoundQuery(true).SetDisableExactOnAttributes(
+						[]string{""}).SetDisableTypoToleranceOnAttributes(
+						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetExplain(
+						[]string{"foo", "bar"}).SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
+						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(
+						[][]float64{
+							[]float64{47.3165, 4.9665, 47.3424, 5.0201},
+							[]float64{40.9234, 2.1185, 38.643, 1.9916}}).SetInsidePolygon(
+						[][]float64{
+							[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
+							[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetKeepDiacriticsOnCharacters("").SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
+						[]string{""}).SetNumericFilters(search.ArrayOfMixedSearchFiltersAsNumericFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfMixedSearchFiltersAsOptionalFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOptionalWords(
+						[]string{""}).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
+						[]string{""}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
+						[]string{""}).SetReRankingApplyFilter(search.ArrayOfMixedSearchFiltersAsReRankingApplyFilter(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
+						search.NewEmptyRenderingContent().SetFacetOrdering(
+							search.NewEmptyFacetOrdering().SetFacets(
+								search.NewEmptyFacets().SetOrder(
+									[]string{"a", "b"})).SetValues(map[string]search.Value{"a": *search.NewEmptyValue().SetOrder(
+								[]string{"b"}).SetSortRemainingBy(search.SortRemainingBy("count"))}))).SetReplaceSynonymsInHighlight(true).SetResponseFields(
+						[]string{""}).SetRestrictHighlightAndSnippetArrays(true).SetRestrictSearchableAttributes(
+						[]string{""}).SetRuleContexts(
+						[]string{""}).SetSimilarQuery("").SetSnippetEllipsisText("").SetSortFacetValuesBy("").SetSumOrFiltersScores(true).SetSynonyms(true).SetTagFilters(search.ArrayOfMixedSearchFiltersAsTagFilters(
+						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetType(search.SearchTypeDefault("default")).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))).SetUserToken(""))}),
+		))
+		require.NoError(t, err)
+
+		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
+	})
 }
 
 func TestSearch_SearchDictionaryEntries(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get searchDictionaryEntries results with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"dictionaryName":"compounds","searchDictionaryEntriesParams":{"query":"foo"}}`
-				req := search.ApiSearchDictionaryEntriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchDictionaryEntries(req)
-				require.NoError(t, err)
+	t.Run("get searchDictionaryEntries results with minimal parameters", func(t *testing.T) {
+		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
+			search.DictionaryType("compounds"),
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo"),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"foo"}`)
-			},
-		},
-		{
-			name: "get searchDictionaryEntries results with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"dictionaryName":"compounds","searchDictionaryEntriesParams":{"query":"foo","page":4,"hitsPerPage":2,"language":"fr"}}`
-				req := search.ApiSearchDictionaryEntriesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchDictionaryEntries(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"foo"}`)
+	})
+	t.Run("get searchDictionaryEntries results with all parameters", func(t *testing.T) {
+		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
+			search.DictionaryType("compounds"),
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo").SetPage(4).SetHitsPerPage(2).SetLanguage("fr"),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"foo","page":4,"hitsPerPage":2,"language":"fr"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"foo","page":4,"hitsPerPage":2,"language":"fr"}`)
+	})
 }
 
 func TestSearch_SearchForFacetValues(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get searchForFacetValues results with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","facetName":"facetName"}`
-				req := search.ApiSearchForFacetValuesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchForFacetValues(req)
-				require.NoError(t, err)
+	t.Run("get searchForFacetValues results with minimal parameters", func(t *testing.T) {
+		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
+			"indexName", "facetName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "get searchForFacetValues results with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","facetName":"facetName","searchForFacetValuesRequest":{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}}`
-				req := search.ApiSearchForFacetValuesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchForFacetValues(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("get searchForFacetValues results with all parameters", func(t *testing.T) {
+		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
+			"indexName", "facetName",
+		).WithSearchForFacetValuesRequest(
+			search.NewEmptySearchForFacetValuesRequest().SetParams("query=foo&facetFilters=['bar']").SetFacetQuery("foo").SetMaxFacetHits(42)))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}`)
+	})
 }
 
 func TestSearch_SearchRules(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "searchRules0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","searchRulesParams":{"query":"something"}}`
-				req := search.ApiSearchRulesRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchRules(req)
-				require.NoError(t, err)
+	t.Run("searchRules0", func(t *testing.T) {
+		_, err := client.SearchRules(client.NewApiSearchRulesRequest(
+			"indexName",
+		).WithSearchRulesParams(
+			search.NewEmptySearchRulesParams().SetQuery("something")))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"something"}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"something"}`)
+	})
 }
 
 func TestSearch_SearchSingleIndex(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "search with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName"}`
-				req := search.ApiSearchSingleIndexRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchSingleIndex(req)
-				require.NoError(t, err)
+	t.Run("search with minimal parameters", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "search with special characters in indexName",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"cts_e2e_space in index"}`
-				req := search.ApiSearchSingleIndexRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchSingleIndex(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("search with special characters in indexName", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"cts_e2e_space in index",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_space%20in%20index/query")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_space%20in%20index/query")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "search with searchParams",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","searchParams":{"query":"myQuery","facetFilters":["tags:algolia"]}}`
-				req := search.ApiSearchSingleIndexRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchSingleIndex(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("search with searchParams", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName",
+		).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
+				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
+	})
 }
 
 func TestSearch_SearchSynonyms(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "searchSynonyms with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName"}`
-				req := search.ApiSearchSynonymsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchSynonyms(req)
-				require.NoError(t, err)
+	t.Run("searchSynonyms with minimal parameters", func(t *testing.T) {
+		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
+			"indexName",
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{}`)
-			},
-		},
-		{
-			name: "searchSynonyms with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"indexName","type":"altcorrection1","page":10,"hitsPerPage":10,"searchSynonymsParams":{"query":"myQuery"}}`
-				req := search.ApiSearchSynonymsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchSynonyms(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{}`)
+	})
+	t.Run("searchSynonyms with all parameters", func(t *testing.T) {
+		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
+			"indexName",
+		).WithType(search.SynonymType("altcorrection1")).WithPage(10).WithHitsPerPage(10).WithSearchSynonymsParams(
+			search.NewEmptySearchSynonymsParams().SetQuery("myQuery")))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"myQuery"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"type":"altcorrection1","page":"10","hitsPerPage":"10"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"myQuery"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"type":"altcorrection1","page":"10","hitsPerPage":"10"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
 }
 
 func TestSearch_SearchUserIds(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "searchUserIds0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}`
-				req := search.ApiSearchUserIdsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SearchUserIds(req)
-				require.NoError(t, err)
+	t.Run("searchUserIds0", func(t *testing.T) {
+		_, err := client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/clusters/mapping/search")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "POST", echo.method)
+			search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/search")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}`)
+	})
 }
 
 func TestSearch_SetDictionarySettings(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "get setDictionarySettings results with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}`
-				req := search.ApiSetDictionarySettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetDictionarySettings(req)
-				require.NoError(t, err)
+	t.Run("get setDictionarySettings results with minimal parameters", func(t *testing.T) {
+		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
+				search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true})),
+		))
+		require.NoError(t, err)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}`)
-			},
-		},
-		{
-			name: "get setDictionarySettings results with all parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}`
-				req := search.ApiSetDictionarySettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetDictionarySettings(req)
-				require.NoError(t, err)
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}`)
+	})
+	t.Run("get setDictionarySettings results with all parameters", func(t *testing.T) {
+		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
+				search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).SetStopwords(map[string]bool{"fr": false}).SetCompounds(map[string]bool{"ru": true})),
+		))
+		require.NoError(t, err)
+
+		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}`)
+	})
 }
 
 func TestSearch_SetSettings(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "setSettings with minimal parameters",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"cts_e2e_settings","indexSettings":{"paginationLimitedTo":10},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+	t.Run("setSettings with minimal parameters", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"cts_e2e_settings",
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"paginationLimitedTo":10}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow boolean `typoTolerance`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"typoTolerance":true},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"paginationLimitedTo":10}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow boolean `typoTolerance`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true)),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"typoTolerance":true}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow enum `typoTolerance`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"typoTolerance":"min"},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"typoTolerance":true}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow enum `typoTolerance`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"typoTolerance":"min"}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow boolean `ignorePlurals`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"ignorePlurals":true},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"typoTolerance":"min"}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow boolean `ignorePlurals`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetIgnorePlurals(search.BoolAsIgnorePlurals(true)),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"ignorePlurals":true}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow list of string `ignorePlurals`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"ignorePlurals":["algolia"]},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"ignorePlurals":true}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow list of string `ignorePlurals`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetIgnorePlurals(search.ArrayOfStringAsIgnorePlurals(
+				[]string{"algolia"})),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"ignorePlurals":["algolia"]}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow boolean `removeStopWords`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"removeStopWords":true},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"ignorePlurals":["algolia"]}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow boolean `removeStopWords`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true)),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"removeStopWords":true}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow list of string `removeStopWords`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"removeStopWords":["algolia"]},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"removeStopWords":true}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow list of string `removeStopWords`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetRemoveStopWords(search.ArrayOfStringAsRemoveStopWords(
+				[]string{"algolia"})),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"removeStopWords":["algolia"]}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow boolean `distinct`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"distinct":true},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"removeStopWords":["algolia"]}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow boolean `distinct`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true)),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"distinct":true}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow integers for `distinct`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"distinct":1},"forwardToReplicas":true}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"distinct":true}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow integers for `distinct`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.Int32AsDistinct(1)),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"distinct":1}`)
-				queryParams := map[string]string{}
-				require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
-				for k, v := range queryParams {
-					require.Equal(t, v, echo.query.Get(k))
-				}
-			},
-		},
-		{
-			name: "setSettings allow all `indexSettings`",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"indexName":"theIndexName","indexSettings":{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}}`
-				req := search.ApiSetSettingsRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.SetSettings(req)
-				require.NoError(t, err)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"distinct":1}`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.query.Get(k))
+		}
+	})
+	t.Run("setSettings allow all `indexSettings`", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
+				[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowCompressionOfIntegerArray(true).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
+				[]search.AlternativesAsExact{search.AlternativesAsExact("singleWordSynonym")}).SetAttributeCriteriaComputedByMinProximity(true).SetAttributeForDistinct("test").SetAttributesForFaceting(
+				[]string{"algolia"}).SetAttributesToHighlight(
+				[]string{"algolia"}).SetAttributesToRetrieve(
+				[]string{"algolia"}).SetAttributesToSnippet(
+				[]string{"algolia"}).SetAttributesToTransliterate(
+				[]string{"algolia"}).SetCamelCaseAttributes(
+				[]string{"algolia"}).SetCustomNormalization(map[string]map[string]string{"algolia": map[string]string{"aloglia": "aglolia"}}).SetCustomRanking(
+				[]string{"algolia"}).SetDecompoundQuery(false).SetDecompoundedAttributes(map[string]any{"algolia": "aloglia"}).SetDisableExactOnAttributes(
+				[]string{"algolia"}).SetDisablePrefixOnAttributes(
+				[]string{"algolia"}).SetDisableTypoToleranceOnAttributes(
+				[]string{"algolia"}).SetDisableTypoToleranceOnWords(
+				[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
+				[]string{"algolia"}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
+				[]string{"algolia"}).SetOptionalWords(
+				[]string{"myspace"}).SetPaginationLimitedTo(0).SetQueryLanguages(
+				[]string{"algolia"}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
+				[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
+				search.NewEmptyRenderingContent().SetFacetOrdering(
+					search.NewEmptyFacetOrdering().SetFacets(
+						search.NewEmptyFacets().SetOrder(
+							[]string{"a", "b"})).SetValues(map[string]search.Value{"a": *search.NewEmptyValue().SetOrder(
+						[]string{"b"}).SetSortRemainingBy(search.SortRemainingBy("count"))}))).SetReplaceSynonymsInHighlight(true).SetReplicas(
+				[]string{""}).SetResponseFields(
+				[]string{"algolia"}).SetRestrictHighlightAndSnippetArrays(true).SetSearchableAttributes(
+				[]string{"foo"}).SetSemanticSearch(
+				search.NewEmptySemanticSearch().SetEventSources(
+					[]string{"foo"})).SetSeparatorsToIndex("bar").SetSnippetEllipsisText("---").SetSortFacetValuesBy("date").SetTypoTolerance(search.BoolAsTypoTolerance(false)).SetUnretrievableAttributes(
+				[]string{"foo"}).SetUserData(map[string]any{"user": "data"}),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}`)
+	})
 }
 
 func TestSearch_UpdateApiKey(t *testing.T) {
 	client, echo := createSearchClient()
 
-	tests := []struct {
-		name     string
-		testFunc func(t *testing.T)
-	}{
-		{
-			name: "updateApiKey0",
-			testFunc: func(t *testing.T) {
-				parametersStr := `{"key":"myApiKey","apiKey":{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}}`
-				req := search.ApiUpdateApiKeyRequest{}
-				require.NoError(t, json.Unmarshal([]byte(parametersStr), &req))
-				_, err := client.UpdateApiKey(req)
-				require.NoError(t, err)
+	t.Run("updateApiKey0", func(t *testing.T) {
+		_, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
+			"myApiKey",
+			search.NewEmptyApiKey().SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
+		))
+		require.NoError(t, err)
 
-				expectedPath, err := url.QueryUnescape("/1/keys/myApiKey")
-				require.NoError(t, err)
-				require.Equal(t, expectedPath, echo.path)
-				require.Equal(t, "PUT", echo.method)
+		expectedPath, err := url.QueryUnescape("/1/keys/myApiKey")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "PUT", echo.method)
 
-				ja := jsonassert.New(t)
-				ja.Assertf(*echo.body, `{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`)
-			},
-		},
-	}
-	for _, test := range tests {
-		test := test
-		t.Run(test.name, func(t *testing.T) {
-			test.testFunc(t)
-		})
-	}
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.body, `{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`)
+	})
 }
