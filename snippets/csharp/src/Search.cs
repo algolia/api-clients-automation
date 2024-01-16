@@ -174,20 +174,6 @@ public class SnippetSearchClient
   }
 
   /// <summary>
-  /// Snippet for the ClearAllSynonyms method.
-  ///
-  /// clearAllSynonyms0
-  /// </summary>
-  public async Task SnippetForClearAllSynonyms0()
-  {
-    // Initialize the client
-    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
-
-    // Call the API
-    var response = await client.ClearAllSynonymsAsync("indexName");
-  }
-
-  /// <summary>
   /// Snippet for the ClearObjects method.
   ///
   /// clearObjects0
@@ -213,6 +199,20 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ClearRulesAsync("indexName");
+  }
+
+  /// <summary>
+  /// Snippet for the ClearSynonyms method.
+  ///
+  /// clearSynonyms0
+  /// </summary>
+  public async Task SnippetForClearSynonyms0()
+  {
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.ClearSynonymsAsync("indexName");
   }
 
   /// <summary>

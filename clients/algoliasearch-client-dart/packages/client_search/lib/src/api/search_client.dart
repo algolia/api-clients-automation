@@ -372,41 +372,6 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Delete all synonyms.
-  /// Delete all synonyms in the index.
-  ///
-  /// Parameters:
-  /// * [indexName] Index on which to perform the request.
-  /// * [forwardToReplicas] Indicates whether changed index settings are forwarded to the replica indices.
-  /// * [requestOptions] additional request configuration.
-  Future<UpdatedAtResponse> clearAllSynonyms({
-    required String indexName,
-    bool? forwardToReplicas,
-    RequestOptions? requestOptions,
-  }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `clearAllSynonyms`.',
-    );
-    final request = ApiRequest(
-      method: RequestMethod.post,
-      path: r'/1/indexes/{indexName}/synonyms/clear'.replaceAll(
-          '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
-      queryParams: {
-        if (forwardToReplicas != null) 'forwardToReplicas': forwardToReplicas,
-      },
-    );
-    final response = await _retryStrategy.execute(
-      request: request,
-      options: requestOptions,
-    );
-    return deserialize<UpdatedAtResponse, UpdatedAtResponse>(
-      response,
-      'UpdatedAtResponse',
-      growable: true,
-    );
-  }
-
   /// Delete all records from an index.
   /// Delete the records but leave settings and index-specific API keys untouched.
   ///
@@ -456,6 +421,41 @@ final class SearchClient implements ApiClient {
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/rules/clear'.replaceAll(
+          '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
+      queryParams: {
+        if (forwardToReplicas != null) 'forwardToReplicas': forwardToReplicas,
+      },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<UpdatedAtResponse, UpdatedAtResponse>(
+      response,
+      'UpdatedAtResponse',
+      growable: true,
+    );
+  }
+
+  /// Delete all synonyms.
+  /// Delete all synonyms in the index.
+  ///
+  /// Parameters:
+  /// * [indexName] Index on which to perform the request.
+  /// * [forwardToReplicas] Indicates whether changed index settings are forwarded to the replica indices.
+  /// * [requestOptions] additional request configuration.
+  Future<UpdatedAtResponse> clearSynonyms({
+    required String indexName,
+    bool? forwardToReplicas,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      indexName.isNotEmpty,
+      'Parameter `indexName` is required when calling `clearSynonyms`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/indexes/{indexName}/synonyms/clear'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       queryParams: {
         if (forwardToReplicas != null) 'forwardToReplicas': forwardToReplicas,

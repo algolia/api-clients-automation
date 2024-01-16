@@ -180,21 +180,6 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForClearAllSynonyms() {
-    // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
-
-    // Call the API
-    var response = client.clearAllSynonyms(
-      indexName = "indexName",
-    )
-
-    // Use the response
-    println(response)
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForClearObjects() {
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -216,6 +201,21 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.clearRules(
+      indexName = "indexName",
+    )
+
+    // Use the response
+    println(response)
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForClearSynonyms() {
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.clearSynonyms(
       indexName = "indexName",
     )
 

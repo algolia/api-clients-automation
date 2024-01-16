@@ -496,17 +496,6 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault("{\"cursor\":\"test\"}", req.Body, new JsonDiffConfig(true));
   }
 
-  [Fact(DisplayName = "clearAllSynonyms0")]
-  public async Task ClearAllSynonymsTest0()
-  {
-    await _client.ClearAllSynonymsAsync("indexName");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/synonyms/clear", req.Path);
-    Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
-  }
-
   [Fact(DisplayName = "clearObjects0")]
   public async Task ClearObjectsTest0()
   {
@@ -525,6 +514,17 @@ public class SearchClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/clear", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "clearSynonyms0")]
+  public async Task ClearSynonymsTest0()
+  {
+    await _client.ClearSynonymsAsync("indexName");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/synonyms/clear", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     Assert.Equal("{}", req.Body);
   }

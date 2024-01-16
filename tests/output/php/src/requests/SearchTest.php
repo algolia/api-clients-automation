@@ -557,26 +557,6 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for ClearAllSynonyms
-     * clearAllSynonyms0.
-     */
-    public function testClearAllSynonyms0()
-    {
-        $client = $this->getClient();
-        $client->clearAllSynonyms(
-            'indexName',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/indexes/indexName/synonyms/clear',
-                'method' => 'POST',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    /**
      * Test case for ClearObjects
      * clearObjects0.
      */
@@ -610,6 +590,26 @@ class SearchTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/1/indexes/indexName/rules/clear',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for ClearSynonyms
+     * clearSynonyms0.
+     */
+    public function testClearSynonyms0()
+    {
+        $client = $this->getClient();
+        $client->clearSynonyms(
+            'indexName',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/synonyms/clear',
                 'method' => 'POST',
                 'body' => json_decode(''),
             ],

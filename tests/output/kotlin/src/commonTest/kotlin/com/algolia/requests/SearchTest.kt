@@ -503,24 +503,6 @@ class SearchTest {
     )
   }
 
-  // clearAllSynonyms
-
-  @Test
-  fun `clearAllSynonyms0`() = runTest {
-    client.runTest(
-      call = {
-        clearAllSynonyms(
-          indexName = "indexName",
-        )
-      },
-      intercept = {
-        assertEquals("/1/indexes/indexName/synonyms/clear".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
-      },
-    )
-  }
-
   // clearObjects
 
   @Test
@@ -551,6 +533,24 @@ class SearchTest {
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/clear".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  // clearSynonyms
+
+  @Test
+  fun `clearSynonyms0`() = runTest {
+    client.runTest(
+      call = {
+        clearSynonyms(
+          indexName = "indexName",
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/synonyms/clear".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertEmptyBody(it.body)
       },
