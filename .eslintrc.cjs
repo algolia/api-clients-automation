@@ -62,6 +62,7 @@ module.exports = {
                 'automation-custom/out-of-line-one-of': 'error',
                 'automation-custom/out-of-line-all-of': 'error',
                 'automation-custom/out-of-line-any-of': 'error',
+                'automation-custom/valid-acl': 'error',
               },
             },
           ],
