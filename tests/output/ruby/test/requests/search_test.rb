@@ -220,8 +220,9 @@ class TestSearchClient < Test::Unit::TestCase
     res = @e2e_client.browse_with_http_info("cts_e2e_browse")
 
     assert_equal(res.status, 200)
+    res = @e2e_client.browse("cts_e2e_browse")
     expected_body = JSON.parse('{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}')
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # browse with search parameters
@@ -681,8 +682,9 @@ class TestSearchClient < Test::Unit::TestCase
     res = @e2e_client.get_settings_with_http_info("cts_e2e_settings")
 
     assert_equal(res.status, 200)
+    res = @e2e_client.get_settings("cts_e2e_settings")
     expected_body = JSON.parse('{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}')
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getSources0
@@ -1014,8 +1016,9 @@ class TestSearchClient < Test::Unit::TestCase
     res = @e2e_client.search_with_http_info(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")]))
 
     assert_equal(res.status, 200)
+    res = @e2e_client.search(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")]))
     expected_body = JSON.parse('{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}')
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # search for a single facet request with minimal parameters
@@ -1034,8 +1037,10 @@ class TestSearchClient < Test::Unit::TestCase
                                             ))
 
     assert_equal(res.status, 200)
+    res = @e2e_client.search(SearchMethodParams.new(requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: 'facet', facet: "editor")],
+                                                    strategy: 'stopIfEnoughMatches'))
     expected_body = JSON.parse('{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}')
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.body)))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # search for a single hits request with all parameters
