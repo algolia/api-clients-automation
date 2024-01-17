@@ -14,6 +14,10 @@ x-acl:
   - browse
     `,
     `
+x-acl:
+  - admin
+    `,
+    `
 x-acl: ['search', 'settings']
     `,
     `

@@ -16,6 +16,7 @@ const ACLs = [
   'usage',
   'logs',
   'setUnretrievableAttributes',
+  'admin'
 ];
 
 export const validACL: Rule.RuleModule = {
