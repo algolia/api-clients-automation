@@ -21,11 +21,11 @@ const ACLs = [
 export const validACL: Rule.RuleModule = {
   meta: {
     docs: {
-      description: 'x-acl must contains valid ACL',
+      description: 'x-acl enum must contains valid Algolia ACLs',
     },
     messages: {
       validString: `is not a string`,
-      validACL: `{{entry}} is not a valid ACL, must be one of: ${ACLs.join(', ')}.`,
+      validACL: `{{entry}} is not a valid Algolia ACL, must be one of: ${ACLs.join(', ')}.`,
       validArray: `is not an array of string`,
     },
   },
