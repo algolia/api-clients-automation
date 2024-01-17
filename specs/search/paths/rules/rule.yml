@@ -2,6 +2,8 @@ get:
   tags:
     - Rules
   operationId: getRule
+  x-acl:
+    - settings
   summary: Get a rule.
   description: Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:
@@ -27,6 +29,8 @@ put:
   tags:
     - Rules
   operationId: saveRule
+  x-acl:
+    - editSettings
   summary: Create or update a rule.
   description: To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
   parameters:
@@ -59,6 +63,8 @@ delete:
   tags:
     - Rules
   operationId: deleteRule
+  x-acl:
+    - editSettings
   summary: Delete a rule.
   description: Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:

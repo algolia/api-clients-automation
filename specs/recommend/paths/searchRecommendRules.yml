@@ -4,6 +4,8 @@ post:
   operationId: searchRecommendRules
   x-use-read-transporter: true
   x-cacheable: true
+  x-acl:
+    - settings
   summary: List Recommend rules.
   description: List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
   parameters:

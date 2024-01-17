@@ -2,6 +2,8 @@ get:
   tags:
     - Synonyms
   operationId: getSynonym
+  x-acl:
+    - settings
   summary: Get a synonym object.
   description: Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:
@@ -27,14 +29,16 @@ put:
   tags:
     - Synonyms
   operationId: saveSynonym
+  x-acl:
+    - editSettings
   summary: Save a synonym.
   description: >
     Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it.
 
     If the synonym `objectID` doesn't exist, Algolia adds a new one.
-    
+
     If you use an existing synonym `objectID`, the existing synonym is replaced with the new one.
-    
+
     To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -79,6 +83,8 @@ delete:
   tags:
     - Synonyms
   operationId: deleteSynonym
+  x-acl:
+    - editSettings
   summary: Delete a synonym.
   description: Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:

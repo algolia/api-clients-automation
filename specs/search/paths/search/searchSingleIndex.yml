@@ -4,6 +4,8 @@ post:
   operationId: searchSingleIndex
   x-use-read-transporter: true
   x-cacheable: true
+  x-acl:
+    - search
   summary: Search an index.
   description: Return records that match the query.
   parameters:

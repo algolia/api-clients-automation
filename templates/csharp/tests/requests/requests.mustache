@@ -4,17 +4,35 @@ using Algolia.Search.Models.{{clientPrefix}};
 using Xunit;
 using Newtonsoft.Json;
 using Quibble.Xunit;
+using dotenv.net;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class {{client}}RequestTests
 {
-  private readonly {{client}} _client;
+private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
   private readonly EchoHttpRequester _echo;
 
   public {{client}}RequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
+
+    {{#hasE2E}}
+      DotEnv.Load();
+      var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+      if (e2EAppId == null)
+      {
+        throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+      }
+
+      var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
+      if (e2EApiKey == null)
+      {
+        throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+      }
+
+      _e2eClient = new SearchClient(new SearchConfig(e2EAppId, e2EApiKey));
+    {{/hasE2E}}
   }
 
   [Fact]
@@ -42,7 +60,7 @@ public class {{client}}RequestTests
      Assert.Equal("{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
     {{#body}}
-        JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.Body, new JsonDiffConfig(true));
+        JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.Body, new JsonDiffConfig(false));
     {{/body}}
     {{^body}}
       {{#assertNullBody}}
@@ -76,6 +94,32 @@ public class {{client}}RequestTests
         }
     {{/headers}}
     {{/request}}
+
+
+    {{#response}}
+      // e2e
+      try {
+        var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+      {{#requestOptions.queryParameters.parametersWithDataType}}
+          QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+      {{#requestOptions.headers.parametersWithDataType}}
+          Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
+      {{/requestOptions.headers.parametersWithDataType}}
+        }{{/hasRequestOptions}});
+      {{#statusCode}}
+          // Check status code {{statusCode}}
+          Assert.NotNull(resp);
+      {{/statusCode}}
+
+      {{#body}}
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp), new JsonDiffConfig(true));
+      {{/body}}
+      } catch (Exception e)
+      {
+        Assert.Fail("An exception was thrown: " + e.Message);
+      }
+    {{/response}}
   }
   {{/tests}}
   {{/blocksRequests}}

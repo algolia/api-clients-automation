@@ -4,6 +4,10 @@ get:
   summary: Get a list of destinations.
   description: Get a list of destinations for the given query parameters, with pagination details.
   operationId: getDestinations
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
@@ -39,6 +43,10 @@ post:
   summary: Create a destination.
   description: Create a destination.
   operationId: createDestination
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     description: ''
     content:

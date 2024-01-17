@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getUsersCount
+  x-acl:
+    - analytics
   summary: Get user count.
   description: Return the count of unique users.
   parameters:

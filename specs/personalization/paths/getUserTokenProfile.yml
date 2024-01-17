@@ -2,6 +2,8 @@ get:
   tags:
     - profiles
   operationId: getUserTokenProfile
+  x-acl:
+    - recommendation
   summary: Get a user profile.
   description: |
     Get the user profile built from Personalization strategy.
