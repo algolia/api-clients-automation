@@ -133,7 +133,8 @@ public class Helpers {
       }
 
       if (servers.size() == 1 && hostWithFallback.isEmpty()) {
-        additionalProperties.put("uniqueHost", servers.get(0).get("url"));
+        URL url = new URL((String) servers.get(0).get("url"));
+        additionalProperties.put("uniqueHost", url.getHost());
       }
 
       additionalProperties.put("hostWithFallback", hostWithFallback);

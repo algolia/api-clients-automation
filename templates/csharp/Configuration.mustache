@@ -40,22 +40,9 @@ namespace Algolia.Search.Clients
       Compression = CompressionType.NONE;
     }
   {{/hasRegionalHost}}
-  {{^hasRegionalHost}}
-  private static List<StatefulHost> GetDefaultHosts({{^uniqueHost}}string appId{{/uniqueHost}})
+  {{^hasRegionalHost}}{{^uniqueHost}}
+  private static List<StatefulHost> GetDefaultHosts(string appId)
   {
-    {{#uniqueHost}}
-    List<StatefulHost> hosts = new List<StatefulHost>
-    {
-      new StatefulHost
-      {
-        Url = "{{{uniqueHost}}}",
-        Up = true,
-        LastUse = DateTime.UtcNow,
-        Accept =  CallType.Read | CallType.Write
-      }
-    };
-    {{/uniqueHost}}
-    {{^uniqueHost}}
     List<StatefulHost> hosts = new List<StatefulHost>
     {
       new StatefulHost
@@ -97,9 +84,9 @@ namespace Algolia.Search.Clients
     }.Shuffle();
 
     hosts.AddRange(commonHosts);
-    {{/uniqueHost}}
     return hosts;
   }
+  {{/uniqueHost}}
   {{/hasRegionalHost}}
   {{#hasRegionalHost}}
   private static List<StatefulHost> GetDefaultHosts(string region)
@@ -130,5 +117,20 @@ namespace Algolia.Search.Clients
     return hosts;
   }
   {{/hasRegionalHost}}
+  {{#uniqueHost}}
+  private static List<StatefulHost> GetDefaultHosts()
+  {
+    return new List<StatefulHost>
+    {
+      new StatefulHost
+      {
+        Url = "{{{uniqueHost}}}",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept =  CallType.Read | CallType.Write
+      }
+    };
+  }
+  {{/uniqueHost}}
 }
 }
