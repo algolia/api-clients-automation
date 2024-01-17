@@ -2,6 +2,8 @@ post:
   tags:
     - Clusters
   operationId: batchAssignUserIds
+  x-acl:
+    - admin
   summary: Batch assign userIDs.
   description: >
     Assign multiple user IDs to a cluster.
@@ -24,7 +26,7 @@ post:
             users:
               type: array
               description: User IDs to assign.
-              example: ['einstein','bohr','feynman']
+              example: ['einstein', 'bohr', 'feynman']
               items:
                 type: string
           required:

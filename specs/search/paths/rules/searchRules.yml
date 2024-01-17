@@ -4,6 +4,8 @@ post:
   operationId: searchRules
   x-use-read-transporter: true
   x-cacheable: true
+  x-acl:
+    - settings
   summary: Search for rules.
   description: Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
   parameters:

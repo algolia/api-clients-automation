@@ -4,6 +4,8 @@ post:
   operationId: getRecommendations
   x-use-read-transporter: true
   x-cacheable: true
+  x-acl:
+    - search
   summary: Get recommendations and trending items.
   description: >
     Returns results from either recommendation or trending models:

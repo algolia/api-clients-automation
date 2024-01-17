@@ -2,6 +2,8 @@ post:
   tags:
     - Records
   operationId: clearObjects
+  x-acl:
+    - deleteIndex
   summary: Delete all records from an index.
   description: Delete the records but leave settings and index-specific API keys untouched.
   parameters:

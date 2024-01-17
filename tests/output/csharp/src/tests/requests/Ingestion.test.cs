@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Ingestion;
+using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
@@ -45,7 +46,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -67,7 +68,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -90,7 +91,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -121,7 +122,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -146,7 +147,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -175,7 +176,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"schedule\",\"cron\":\"* * * * *\"},\"action\":\"replace\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -200,7 +201,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -288,7 +289,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
@@ -306,7 +307,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -339,7 +340,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
@@ -371,7 +372,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
@@ -403,7 +404,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -445,7 +446,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -487,7 +488,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
@@ -519,7 +520,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
@@ -557,7 +558,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
     );
@@ -595,7 +596,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
     );
@@ -633,7 +634,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
     );
@@ -657,7 +658,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
@@ -675,7 +676,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -938,7 +939,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"authenticationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -962,7 +963,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"destinationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -986,7 +987,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"sourceIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1010,7 +1011,7 @@ public class IngestionClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1036,7 +1037,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "updateDestination")]
@@ -1050,7 +1051,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "updateSource")]
@@ -1064,7 +1065,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "updateTask")]
@@ -1078,6 +1079,6 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"enabled\":false}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"enabled\":false}", req.Body, new JsonDiffConfig(false));
   }
 }

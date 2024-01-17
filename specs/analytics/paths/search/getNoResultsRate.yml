@@ -2,8 +2,10 @@ get:
   tags:
     - search
   operationId: getNoResultsRate
+  x-acl:
+    - analytics
   summary: Get no results rate.
-  description: Returns the rate at which searches didn't return any results. 
+  description: Returns the rate at which searches didn't return any results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

@@ -2,6 +2,8 @@ post:
   tags:
     - Records
   operationId: saveObject
+  x-acl:
+    - addObject
   description: >
     Add a record (object) to an index or replace it.
 
@@ -54,6 +56,8 @@ delete:
   tags:
     - Indices
   operationId: deleteIndex
+  x-acl:
+    - deleteIndex
   summary: Delete index.
   description: Delete an existing index.
   parameters:

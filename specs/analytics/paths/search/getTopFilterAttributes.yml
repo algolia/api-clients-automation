@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getTopFilterAttributes
+  x-acl:
+    - analytics
   summary: Get top filterable attributes.
   description: Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
   parameters:

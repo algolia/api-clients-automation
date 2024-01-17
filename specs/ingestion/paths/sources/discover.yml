@@ -4,6 +4,10 @@ get:
   summary: Retrieve a stream listing.
   description: Retrieve a stream listing for a given Singer specification compatible docker type source ID.
   operationId: getDockerSourceStreams
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
@@ -31,6 +35,10 @@ post:
   summary: Trigger a stream listing request.
   description: Trigger a stream listing request for a Singer specification compatible docker type source.
   operationId: triggerDockerSourceDiscover
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
