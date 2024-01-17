@@ -132,7 +132,7 @@ public class Helpers {
         regionalHost = url.getHost();
       }
 
-      if (servers.size() == 1 && hostWithFallback.isEmpty()) {
+      if (servers.size() == 1 && hostWithFallback.isEmpty() && !hasRegionalHost) {
         URL url = new URL((String) servers.get(0).get("url"));
         additionalProperties.put("uniqueHost", url.getHost());
       }
