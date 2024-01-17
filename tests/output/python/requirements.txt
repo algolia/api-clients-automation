@@ -1,6 +1,0 @@
-argcomplete==3.2.1
-click==8.1.7
-packaging==23.2
-pipx==1.4.2
-platformdirs==4.1.0
-userpath==1.9.1
