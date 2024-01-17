@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getTopFiltersNoResults
+  x-acl:
+    - analytics
   summary: Get top filters for a no result search.
   description: Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
   parameters:

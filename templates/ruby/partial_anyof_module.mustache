@@ -72,7 +72,7 @@
             return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
           end
         else # model
-          const = {{moduleName}}.const_get(klass)
+          const = {{moduleName}}::{{modelModule}}.const_get(klass)
           if const
             if const.respond_to?(:openapi_any_of) # nested anyOf model
               model = const.build(data)

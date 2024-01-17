@@ -4,6 +4,10 @@ get:
   summary: Get a list of runs.
   description: Get a list of runs for the given query parameters, with pagination details.
   operationId: getRuns
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'

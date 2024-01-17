@@ -2238,6 +2238,8 @@ paths:
       operationId: getRecommendations
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - search
       summary: Get recommendations and trending items.
       description: |
         Returns results from either recommendation or trending models:
@@ -2290,6 +2292,8 @@ paths:
       tags:
         - recommendations
       operationId: getRecommendRule
+      x-acl:
+        - settings
       summary: Get a Recommend rule.
       description: >-
         Return a [Recommend
@@ -2317,6 +2321,8 @@ paths:
       tags:
         - recommendations
       operationId: deleteRecommendRule
+      x-acl:
+        - editSettings
       summary: Delete a Recommend rule.
       description: >-
         Delete a [Recommend
@@ -2341,6 +2347,8 @@ paths:
       tags:
         - recommendations
       operationId: getRecommendStatus
+      x-acl:
+        - editSettings
       summary: Get a Recommend task's status.
       description: >-
         Some operations, such as deleting a Recommend rule, will respond with a
@@ -2385,6 +2393,8 @@ paths:
       operationId: searchRecommendRules
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - settings
       summary: List Recommend rules.
       description: >-
         List [Recommend

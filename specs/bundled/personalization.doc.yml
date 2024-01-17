@@ -262,6 +262,8 @@ paths:
       tags:
         - profiles
       operationId: getUserTokenProfile
+      x-acl:
+        - recommendation
       summary: Get a user profile.
       description: >
         Get the user profile built from Personalization strategy.
@@ -310,6 +312,8 @@ paths:
       tags:
         - profiles
       operationId: deleteUserProfile
+      x-acl:
+        - recommendation
       summary: Delete a user profile.
       description: >
         Delete the user profile and all its associated data.
@@ -361,6 +365,8 @@ paths:
       tags:
         - strategies
       operationId: getPersonalizationStrategy
+      x-acl:
+        - recommendation
       summary: Get the current strategy.
       description: >-
         The strategy contains information on the events and facets that impact
@@ -384,6 +390,8 @@ paths:
       tags:
         - strategies
       operationId: setPersonalizationStrategy
+      x-acl:
+        - recommendation
       summary: Set a new strategy.
       description: >-
         A strategy defines the events and facets that impact user profiles and

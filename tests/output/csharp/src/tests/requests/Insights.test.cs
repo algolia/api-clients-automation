@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Insights;
+using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
@@ -104,7 +105,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
@@ -122,7 +123,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -155,7 +156,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
@@ -187,7 +188,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
@@ -219,7 +220,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -261,7 +262,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -303,7 +304,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
@@ -335,7 +336,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
@@ -373,7 +374,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
     );
@@ -411,7 +412,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
     );
@@ -449,7 +450,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
     );
@@ -473,7 +474,7 @@ public class InsightsClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
@@ -491,7 +492,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -551,7 +552,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"events\":[{\"eventType\":\"click\",\"eventName\":\"Product Clicked\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"positions\":[7,6]}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -598,7 +599,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -633,7 +634,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -667,7 +668,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"events\":[{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -719,7 +720,7 @@ public class InsightsClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"events\":[{\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"eventName\":\"Product Added To Cart\",\"index\":\"products\",\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"objectData\":[{\"price\":19.99,\"quantity\":10,\"discount\":2.5},{\"price\":\"8$\",\"quantity\":7,\"discount\":\"30%\"}],\"currency\":\"USD\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 }

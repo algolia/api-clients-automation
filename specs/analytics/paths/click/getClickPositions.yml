@@ -2,6 +2,8 @@ get:
   tags:
     - click
   operationId: getClickPositions
+  x-acl:
+    - analytics
   summary: Get click positions.
   description: |
     Show the number of clicks events and their associated position in the search results.
@@ -46,7 +48,7 @@ get:
                         - For positions 11 to 20, all click events are grouped
                         - For positions 21 and up, all click events are grouped.
                       type: array
-                      example: [10,10]
+                      example: [10, 10]
                       items:
                         type: integer
                     clickCount:

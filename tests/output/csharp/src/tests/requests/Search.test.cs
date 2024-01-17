@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
@@ -8,13 +9,29 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public class SearchClientRequestTests
 {
-  private readonly SearchClient _client;
+  private readonly SearchClient _client,
+    _e2eClient;
   private readonly EchoHttpRequester _echo;
 
   public SearchClientRequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+
+    DotEnv.Load();
+    var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    if (e2EAppId == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
+    if (e2EApiKey == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+    }
+
+    _e2eClient = new SearchClient(new SearchConfig(e2EAppId, e2EApiKey));
   }
 
   [Fact]
@@ -40,7 +57,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -56,7 +73,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/uniqueID", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"key\":\"value\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"key\":\"value\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "appendSource0")]
@@ -72,7 +89,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"source\":\"theSource\",\"description\":\"theDescription\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -87,7 +104,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"cluster\":\"theCluster\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"x-algolia-user-id\":\"userID\"}"
@@ -125,7 +142,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -153,7 +170,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -181,7 +198,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -209,7 +226,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"deleteObject\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -237,7 +254,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"partialUpdateObject\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -265,7 +282,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -293,7 +310,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"updateObject\",\"body\":{\"key\":\"value\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -315,7 +332,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"cluster\":\"theCluster\",\"users\":[\"user1\",\"user2\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"x-algolia-user-id\":\"userID\"}"
@@ -358,7 +375,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -408,7 +425,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -441,7 +458,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -453,7 +470,25 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_browse/browse", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.BrowseAsync<Object>("cts_e2e_browse");
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
+        JsonConvert.SerializeObject(resp),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "browse with search parameters")]
@@ -478,7 +513,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -493,7 +528,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/browse", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"cursor\":\"test\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"cursor\":\"test\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "clearObjects0")]
@@ -613,7 +648,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
@@ -631,7 +666,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -664,7 +699,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
@@ -696,7 +731,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
@@ -728,7 +763,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -770,7 +805,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -812,7 +847,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
@@ -844,7 +879,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
@@ -882,7 +917,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
     );
@@ -920,7 +955,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
     );
@@ -958,7 +993,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
     );
@@ -982,7 +1017,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
@@ -1000,7 +1035,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -1042,7 +1077,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"filters\":\"brand:brandName\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1228,7 +1263,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1252,6 +1287,24 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/cts_e2e_settings/settings", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.GetSettingsAsync("cts_e2e_settings");
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":20,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
+        JsonConvert.SerializeObject(resp),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "getSources0")]
@@ -1460,7 +1513,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"},\"indexName\":\"theIndexName\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1487,7 +1540,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1520,7 +1573,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"createIfNotExists\":\"true\"}"
@@ -1564,7 +1617,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "[{\"source\":\"theSource\",\"description\":\"theDescription\"}]",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1593,7 +1646,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"id\",\"test\":\"val\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1619,7 +1672,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1700,7 +1753,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -1749,7 +1802,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -1833,7 +1886,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
@@ -1871,7 +1924,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -1919,7 +1972,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}"
@@ -1955,8 +2008,34 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SearchAsync<Object>(
+        new SearchMethodParams
+        {
+          Requests = new List<SearchQuery>
+          {
+            new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index", })
+          },
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}",
+        JsonConvert.SerializeObject(resp),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
@@ -1986,8 +2065,42 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SearchAsync<Object>(
+        new SearchMethodParams
+        {
+          Requests = new List<SearchQuery>
+          {
+            new SearchQuery(
+              new SearchForFacets
+              {
+                IndexName = "cts_e2e_search_facet",
+                Type = Enum.Parse<SearchTypeFacet>("Facet"),
+                Facet = "editor",
+              }
+            )
+          },
+          Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
+        JsonConvert.SerializeObject(resp),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "search for a single hits request with all parameters")]
@@ -2017,7 +2130,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2051,7 +2164,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50}],\"strategy\":\"stopIfEnoughMatches\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2092,7 +2205,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"theIndexName\"},{\"indexName\":\"theIndexName2\",\"type\":\"facet\",\"facet\":\"theFacet\"},{\"indexName\":\"theIndexName\",\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2135,7 +2248,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50},{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2209,7 +2322,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2357,7 +2470,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesForFaceting\":[\"\"],\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"explain\":[\"foo\",\"bar\"],\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2372,7 +2485,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/dictionaries/compounds/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"query\":\"foo\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"query\":\"foo\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "get searchDictionaryEntries results with all parameters")]
@@ -2395,7 +2508,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2407,7 +2520,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/facets/facetName/query", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "get searchForFacetValues results with all parameters")]
@@ -2430,7 +2543,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"params\":\"query=foo&facetFilters=['bar']\",\"facetQuery\":\"foo\",\"maxFacetHits\":42}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2445,7 +2558,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"query\":\"something\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2457,7 +2570,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/query", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "search with special characters in indexName")]
@@ -2468,7 +2581,19 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_space%20in%20index/query", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SearchSingleIndexAsync<Object>("cts_e2e_space in index");
+      // Check status code 200
+      Assert.NotNull(resp);
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "search with searchParams")]
@@ -2493,7 +2618,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2505,7 +2630,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "searchSynonyms with all parameters")]
@@ -2522,7 +2647,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"query\":\"myQuery\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"query\":\"myQuery\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"type\":\"altcorrection1\",\"page\":\"10\",\"hitsPerPage\":\"10\"}"
     );
@@ -2557,7 +2682,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"query\":\"test\",\"clusterName\":\"theClusterName\",\"page\":5,\"hitsPerPage\":10}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2585,7 +2710,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2615,7 +2740,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -2634,7 +2759,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"paginationLimitedTo\":10}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -2648,6 +2773,22 @@ public class SearchClientRequestTests
     {
       expectedQuery.TryGetValue(query.Key, out var result);
       Assert.Equal(query.Value, result);
+    }
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SetSettingsAsync(
+        "cts_e2e_settings",
+        new IndexSettings { PaginationLimitedTo = 10, },
+        true
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
     }
   }
 
@@ -2663,7 +2804,11 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"typoTolerance\":true}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault(
+      "{\"typoTolerance\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
@@ -2697,7 +2842,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"typoTolerance\":\"min\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -2726,7 +2871,11 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"ignorePlurals\":true}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault(
+      "{\"ignorePlurals\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
@@ -2757,7 +2906,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"ignorePlurals\":[\"algolia\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -2789,7 +2938,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"removeStopWords\":true}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -2821,7 +2970,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"removeStopWords\":[\"algolia\"]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
@@ -2850,7 +2999,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"distinct\":true}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"distinct\":true}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
@@ -2878,7 +3027,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"distinct\":1}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"distinct\":1}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
@@ -3003,7 +3152,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"algolia\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"algolia\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -3027,7 +3176,7 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 }

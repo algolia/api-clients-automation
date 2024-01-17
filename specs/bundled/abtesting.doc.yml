@@ -581,6 +581,8 @@ paths:
       tags:
         - abtest
       operationId: addABTests
+      x-acl:
+        - editSettings
       summary: Create an A/B test.
       description: Creates an A/B test.
       requestBody:
@@ -626,6 +628,8 @@ paths:
       tags:
         - abtest
       operationId: listABTests
+      x-acl:
+        - analytics
       summary: List all A/B tests.
       description: List all A/B tests.
       parameters:
@@ -680,6 +684,8 @@ paths:
       tags:
         - abtest
       operationId: getABTest
+      x-acl:
+        - analytics
       summary: Get A/B test details.
       description: >
         Get specific details for an A/B test.
@@ -707,6 +713,8 @@ paths:
       tags:
         - abtest
       operationId: deleteABTest
+      x-acl:
+        - editSettings
       summary: Delete an A/B test.
       description: >
         Delete an A/B test.
@@ -735,6 +743,8 @@ paths:
       tags:
         - abtest
       operationId: stopABTest
+      x-acl:
+        - editSettings
       summary: Stop an A/B test.
       description: >
         If stopped, the test is over and can't be restarted. There is now only

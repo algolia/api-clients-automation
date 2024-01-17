@@ -2,6 +2,8 @@ post:
   tags:
     - Records
   operationId: partialUpdateObject
+  x-acl:
+    - addObject
   summary: Update record attributes.
   x-codegen-request-body-name: attributesToUpdate
   description: >

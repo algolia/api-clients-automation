@@ -140,6 +140,13 @@ runs:
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
         go install golang.org/x/tools/cmd/goimports@latest
 
+    - name: Cache golangci-lint analysis
+      if: ${{ inputs.language == 'go' }}
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/golangci-lint
+        key: golangci-lint-${{ env.CACHE_VERSION }}-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
+
     # Dart
     - name: Install dart
       if: ${{ inputs.language == 'dart' }}

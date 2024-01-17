@@ -4,6 +4,10 @@ get:
   summary: Get an event.
   description: Get a single event for a specific runID.
   operationId: getEvent
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../../common/parameters.yml#/pathRunID'
     - $ref: '../../../common/parameters.yml#/pathEventID'

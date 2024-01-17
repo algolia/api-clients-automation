@@ -2,11 +2,13 @@ post:
   tags:
     - abtest
   operationId: stopABTest
+  x-acl:
+    - editSettings
   summary: Stop an A/B test.
   description: >
     If stopped, the test is over and can't be restarted.
     There is now only one index, receiving 100% of all search requests.
-    
+
     The data gathered for stopped A/B tests is retained.
 
     To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).

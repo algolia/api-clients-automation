@@ -2,6 +2,8 @@ get:
   tags:
     - Clusters
   operationId: getTopUserIds
+  x-acl:
+    - admin
   summary: Get top userID.
   description: >
     Get the IDs of the 10 users with the highest number of records per cluster.

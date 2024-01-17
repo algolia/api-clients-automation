@@ -2,6 +2,8 @@ post:
   tags:
     - abtest
   operationId: addABTests
+  x-acl:
+    - editSettings
   summary: Create an A/B test.
   description: Creates an A/B test.
   requestBody:
@@ -48,6 +50,8 @@ get:
   tags:
     - abtest
   operationId: listABTests
+  x-acl:
+    - analytics
   summary: List all A/B tests.
   description: List all A/B tests.
   parameters:
