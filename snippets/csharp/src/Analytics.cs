@@ -10,7 +10,7 @@ public class SnippetAnalyticsClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForAnalyticsClientCustomDelete()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -26,7 +26,7 @@ public class SnippetAnalyticsClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForAnalyticsClientCustomGet()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -42,7 +42,7 @@ public class SnippetAnalyticsClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForAnalyticsClientCustomPost()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -58,7 +58,7 @@ public class SnippetAnalyticsClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForAnalyticsClientCustomPut()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -74,7 +74,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getAverageClickPosition with minimal parameters
   /// </summary>
-  public async Task SnippetForGetAverageClickPosition0()
+  public async Task SnippetForAnalyticsClientGetAverageClickPosition()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -90,7 +90,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getClickPositions with minimal parameters
   /// </summary>
-  public async Task SnippetForGetClickPositions0()
+  public async Task SnippetForAnalyticsClientGetClickPositions()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -106,7 +106,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getClickThroughRate with minimal parameters
   /// </summary>
-  public async Task SnippetForGetClickThroughRate0()
+  public async Task SnippetForAnalyticsClientGetClickThroughRate()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -122,7 +122,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getConversationRate with minimal parameters
   /// </summary>
-  public async Task SnippetForGetConversationRate0()
+  public async Task SnippetForAnalyticsClientGetConversationRate()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -138,7 +138,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getNoClickRate with minimal parameters
   /// </summary>
-  public async Task SnippetForGetNoClickRate0()
+  public async Task SnippetForAnalyticsClientGetNoClickRate()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -154,7 +154,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getNoResultsRate with minimal parameters
   /// </summary>
-  public async Task SnippetForGetNoResultsRate0()
+  public async Task SnippetForAnalyticsClientGetNoResultsRate()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -170,7 +170,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getSearchesCount with minimal parameters
   /// </summary>
-  public async Task SnippetForGetSearchesCount0()
+  public async Task SnippetForAnalyticsClientGetSearchesCount()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -186,7 +186,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getSearchesNoClicks with minimal parameters
   /// </summary>
-  public async Task SnippetForGetSearchesNoClicks0()
+  public async Task SnippetForAnalyticsClientGetSearchesNoClicks()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -202,7 +202,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getSearchesNoResults with minimal parameters
   /// </summary>
-  public async Task SnippetForGetSearchesNoResults0()
+  public async Task SnippetForAnalyticsClientGetSearchesNoResults()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -218,7 +218,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getStatus with minimal parameters
   /// </summary>
-  public async Task SnippetForGetStatus0()
+  public async Task SnippetForAnalyticsClientGetStatus()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -234,7 +234,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopCountries with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopCountries0()
+  public async Task SnippetForAnalyticsClientGetTopCountries()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -250,7 +250,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopFilterAttributes with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopFilterAttributes0()
+  public async Task SnippetForAnalyticsClientGetTopFilterAttributes()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -266,7 +266,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopFilterForAttribute with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopFilterForAttribute0()
+  public async Task SnippetForAnalyticsClientGetTopFilterForAttribute()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -282,7 +282,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopFiltersNoResults with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopFiltersNoResults0()
+  public async Task SnippetForAnalyticsClientGetTopFiltersNoResults()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -298,7 +298,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopHits with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopHits0()
+  public async Task SnippetForAnalyticsClientGetTopHits()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -314,7 +314,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getTopSearches with minimal parameters
   /// </summary>
-  public async Task SnippetForGetTopSearches0()
+  public async Task SnippetForAnalyticsClientGetTopSearches()
   {
     // Initialize the client
     var client = new AnalyticsClient(
@@ -330,7 +330,7 @@ public class SnippetAnalyticsClient
   ///
   /// get getUsersCount with minimal parameters
   /// </summary>
-  public async Task SnippetForGetUsersCount0()
+  public async Task SnippetForAnalyticsClientGetUsersCount()
   {
     // Initialize the client
     var client = new AnalyticsClient(
