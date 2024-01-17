@@ -8,8 +8,14 @@ def snippet_for_add_ab_tests
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.add_ab_tests(AddABTestsRequest.new(end_at: "2022-12-31T00:00:00.000Z", name: "myABTest",
-                                                   variants: [AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30), AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)]))
+  resp = client.add_ab_tests(
+    AddABTestsRequest.new(
+      end_at: "2022-12-31T00:00:00.000Z",
+      name: "myABTest",
+      variants: [AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+        AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)]
+    )
+  )
 
   # use the class directly
   puts resp

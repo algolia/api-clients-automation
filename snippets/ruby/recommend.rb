@@ -127,8 +127,13 @@ def snippet_for_get_recommendations
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.get_recommendations(GetRecommendationsParams.new(requests: [RecommendationsQuery.new(index_name: "indexName", object_id: "objectID",
-                                                                                                     model: 'related-products', threshold: 42)]))
+  resp = client.get_recommendations(
+    GetRecommendationsParams.new(
+      requests: [RecommendationsQuery.new(
+        index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
+      )]
+    )
+  )
 
   # use the class directly
   puts resp

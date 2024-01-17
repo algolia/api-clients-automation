@@ -71,8 +71,8 @@ typealias Client = {{classname}}
     @available(*, deprecated, message: "This operation is deprecated.")
     {{/isDeprecated}}
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-encodable}}{{{dataType}}}{{/lambda.to-encodable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) async throws{{#returnType}} -> {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{/returnType}} {
-        return try await {{operationId}}WithRequestBuilder({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions).execute().body
+    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) async throws{{#returnType}} -> {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{/returnType}} {
+      {{#returnType}}return {{/returnType}}try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions){{#returnType}}.body{{/returnType}}
     }
 
     /**
@@ -96,35 +96,38 @@ typealias Client = {{classname}}
     {{#isDeprecated}}
     @available(*, deprecated, message: "This operation is deprecated.")
     {{/isDeprecated}}
-    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithRequestBuilder({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-encodable}}{{{dataType}}}{{/lambda.to-encodable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) -> RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
-        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} localVariablePath = "{{{path}}}"{{#pathParams}}
+    {{^returnType}}@discardableResult{{/returnType}}
+    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}AnyCodable{{/returnType}}> {
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
         let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"
         let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}PostEscape, options: .literal, range: nil){{/pathParams}}
+        path = path.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}PostEscape, options: .literal, range: nil){{/pathParams}}
         {{#bodyParam}}
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: {{paramName}})
+        let body = {{paramName}}
         {{/bodyParam}}
         {{^bodyParam}}
-          let localVariableParameters: [String: Any?]? = nil
+          let body: AnyCodable? = nil
 {{/bodyParam}}{{#hasQueryParams}}
-        let localVariableQueryItems = APIHelper.mapValuesToQueryItems([{{^queryParams}}:{{/queryParams}}
+        let queryItems = APIHelper.mapValuesToQueryItems([{{^queryParams}}:{{/queryParams}}
             {{#queryParams}}
             {{> _param}},
             {{/queryParams}}
         ]){{/hasQueryParams}}{{^hasQueryParams}}
-        let localVariableQueryItems: [URLQueryItem]? = nil{{/hasQueryParams}}
+        let queryItems: [URLQueryItem]? = nil{{/hasQueryParams}}
 
-        let localVariableNillableHeaders: [String: Any?] = [{{^headerParams}}{{^hasFormParams}}
-            :{{/hasFormParams}}{{/headerParams}}{{#hasFormParams}}
-            "Content-Type": {{^consumes}}"multipart/form-data"{{/consumes}}{{#consumes.0}}"{{{mediaType}}}"{{/consumes.0}},{{/hasFormParams}}{{#headerParams}}
+        let nillableHeaders: [String: Any?]? = [{{^headerParams}}{{^hasFormParams}}
+            :{{/hasFormParams}}{{/headerParams}}{{#headerParams}}
             {{> _param}},{{/headerParams}}
         ]
 
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}>.Type = Transporter.requestBuilderFactory.{{#returnType}}getBuilder(){{/returnType}}{{^returnType}}getNonDecodableBuilder(){{/returnType}}
-
-        return localVariableRequestBuilder.init(method: "{{httpMethod}}", path: localVariablePath, queryItems: localVariableQueryItems, parameters: localVariableParameters, headers: localVariableHeaderParameters, transporter: self.transporter, requestOptions: requestOptions)
+        return try await self.transporter.send(
+          method: "{{httpMethod}}",
+          path: path,
+          data: body,
+          requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
     }
 {{/operation}}
 }

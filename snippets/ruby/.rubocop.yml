@@ -18,8 +18,82 @@ Style/SymbolArray:
 Style/Documentation:
   Enabled: false
 
+# This is very low to split the parameters on multiple lines
 Layout/LineLength:
-  Max: 180
+  Enabled: true
+  Max: 100
+
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ArrayAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/ExtraSpacing:
+  Enabled: true
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/HashAlignment:
+  Enabled: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/SpaceAfterColon:
+  Enabled: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+  EnforcedStyle: compact
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+Layout/TrailingWhitespace:
+  Enabled: true
 
 Metrics/PerceivedComplexity:
   Enabled: false

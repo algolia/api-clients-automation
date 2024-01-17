@@ -66,8 +66,6 @@ public class TestsClient extends TestsGenerator {
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("isCreateClient", true);
-            } else if (step.type.equals("variable")) {
-              stepOut.put("isVariable", true);
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
