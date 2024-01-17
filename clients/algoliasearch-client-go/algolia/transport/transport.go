@@ -29,6 +29,10 @@ func New(
 	connectTimeout time.Duration,
 	compression compression.Compression,
 ) *Transport {
+	if connectTimeout == 0 {
+		connectTimeout = DefaultConnectTimeout
+	}
+
 	if requester == nil {
 		requester = NewDefaultRequester(&connectTimeout)
 	}

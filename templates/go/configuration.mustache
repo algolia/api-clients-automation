@@ -6,6 +6,8 @@ import (
 )
 
 {{#hasRegionalHost}}
+var allowedRegions = [...]string{ {{#allowedRegions}}"{{.}}",{{/allowedRegions}} }
+
 type Region string
 
 const (

@@ -3,7 +3,7 @@ cfg = {{clientPrefix}}.Configuration{
     AppID:     "{{parametersWithDataTypeMap.appId.value}}",
     ApiKey:    "{{parametersWithDataTypeMap.apiKey.value}}",
     Requester: echo,
-  },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value.size}}
-  Region: {{clientPrefix}}.{{#lambda.uppercase}}{{parametersWithDataTypeMap.region.value}}{{/lambda.uppercase}},{{/parametersWithDataTypeMap.region.value.size}}{{/hasRegionalHost}}
+  },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
+  Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
 }
-client, {{#isError}}err{{/isError}}{{^isError}}_{{/isError}} ={{clientPrefix}}.NewClientWithConfig(cfg)
+client, err = {{clientPrefix}}.NewClientWithConfig(cfg)

@@ -264,7 +264,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
 
-	res, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}call.Read{{/x-use-read-transporter}}{{^x-use-read-transporter}}call.Write{{/x-use-read-transporter}}{{/vendorExtensions}})
+	res, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
 	if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
