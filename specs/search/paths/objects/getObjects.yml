@@ -4,6 +4,8 @@ post:
   operationId: getObjects
   x-use-read-transporter: true
   x-cacheable: true
+  x-acl:
+    - search
   summary: Get multiple records.
   description: >
     Retrieve one or more records, potentially from different indices, in a single API operation.
@@ -35,7 +37,7 @@ post:
                     items:
                       type: string
                     description: Attributes to retrieve. If not specified, all retrievable attributes are returned.
-                    example: ['author','title','content']
+                    example: ['author', 'title', 'content']
                   objectID:
                     type: string
                     description: Record's objectID.

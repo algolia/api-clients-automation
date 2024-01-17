@@ -1819,6 +1819,10 @@ paths:
         Get a list of authentications for the given query parameters, with
         pagination details.
       operationId: getAuthentications
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
@@ -1853,6 +1857,10 @@ paths:
       summary: Create a authentication.
       description: Create a authentication.
       operationId: createAuthentication
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         description: ''
         content:
@@ -1876,6 +1884,10 @@ paths:
       summary: Search among authentications.
       description: Search among authentications with a defined set of parameters.
       operationId: searchAuthentications
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         content:
           application/json:
@@ -1901,6 +1913,10 @@ paths:
       summary: Get a authentication.
       description: Get the authentication of the given authenticationID.
       operationId: getAuthentication
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathAuthenticationID'
       responses:
@@ -1918,6 +1934,10 @@ paths:
       summary: Update a authentication.
       description: Update the authentication of the given authenticationID.
       operationId: updateAuthentication
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathAuthenticationID'
       requestBody:
@@ -1941,6 +1961,10 @@ paths:
       summary: Delete a authentication.
       description: Soft delete the authentication of the given authenticationID.
       operationId: deleteAuthentication
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathAuthenticationID'
       responses:
@@ -1961,6 +1985,10 @@ paths:
         Get a list of destinations for the given query parameters, with
         pagination details.
       operationId: getDestinations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
@@ -1995,6 +2023,10 @@ paths:
       summary: Create a destination.
       description: Create a destination.
       operationId: createDestination
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         description: ''
         content:
@@ -2018,6 +2050,10 @@ paths:
       summary: Search among destinations.
       description: Search among destinations with a defined set of parameters.
       operationId: searchDestinations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         content:
           application/json:
@@ -2043,6 +2079,10 @@ paths:
       summary: Get a destination.
       description: Get the destination of the given destinationID.
       operationId: getDestination
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathDestinationID'
       responses:
@@ -2060,6 +2100,10 @@ paths:
       summary: Update a destination.
       description: Update the destination of the given destinationID.
       operationId: updateDestination
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathDestinationID'
       requestBody:
@@ -2083,6 +2127,10 @@ paths:
       summary: Delete a destination.
       description: Soft delete the destination of the given destinationID.
       operationId: deleteDestination
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathDestinationID'
       responses:
@@ -2103,6 +2151,10 @@ paths:
         Get a list of sources for the given query parameters, with pagination
         details.
       operationId: getSources
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
@@ -2137,6 +2189,10 @@ paths:
       summary: Create a source.
       description: Create a source.
       operationId: createSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         description: ''
         content:
@@ -2160,6 +2216,10 @@ paths:
       summary: Search among sources.
       description: Search among sources with a defined set of parameters.
       operationId: searchSources
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         content:
           application/json:
@@ -2185,6 +2245,10 @@ paths:
       summary: Get a source.
       description: Get the source of the given sourceID.
       operationId: getSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -2202,6 +2266,10 @@ paths:
       summary: Update a source.
       description: Update the source of the given sourceID.
       operationId: updateSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       requestBody:
@@ -2225,6 +2293,10 @@ paths:
       summary: Delete a source.
       description: Soft delete the source of the given sourceID.
       operationId: deleteSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -2245,6 +2317,10 @@ paths:
         Retrieve a stream listing for a given Singer specification compatible
         docker type source ID.
       operationId: getDockerSourceStreams
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -2273,6 +2349,10 @@ paths:
         Trigger a stream listing request for a Singer specification compatible
         docker type source.
       operationId: triggerDockerSourceDiscover
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -2303,6 +2383,10 @@ paths:
         Get a list of tasks for the given query parameters, with pagination
         details.
       operationId: getTasks
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
@@ -2364,6 +2448,10 @@ paths:
       summary: Search among tasks.
       description: Search among tasks with a defined set of parameters.
       operationId: searchTasks
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         content:
           application/json:
@@ -2389,6 +2477,10 @@ paths:
       summary: Get a task.
       description: Get the task of the given taskID.
       operationId: getTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
       responses:
@@ -2447,6 +2539,10 @@ paths:
       summary: Run a task.
       description: Run the task of the given taskID.
       operationId: runTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
       responses:
@@ -2465,6 +2561,10 @@ paths:
       summary: Enable a task.
       description: Enable the task of the given taskID.
       operationId: enableTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
       responses:
@@ -2483,6 +2583,10 @@ paths:
       summary: Disable a task.
       description: Disable the task of the given taskID.
       operationId: disableTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
       responses:
@@ -2503,6 +2607,10 @@ paths:
         Get a list of runs for the given query parameters, with pagination
         details.
       operationId: getRuns
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
@@ -2540,6 +2648,10 @@ paths:
       summary: Get a run.
       description: Get a single run for the given ID.
       operationId: getRun
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathRunID'
       responses:
@@ -2560,6 +2672,10 @@ paths:
         Get a list of events associated to the given runID, for the given query
         parameters.
       operationId: getEvents
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathRunID'
         - $ref: '#/components/parameters/itemsPerPage'
@@ -2613,6 +2729,10 @@ paths:
       summary: Get an event.
       description: Get a single event for a specific runID.
       operationId: getEvent
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathRunID'
         - $ref: '#/components/parameters/pathEventID'

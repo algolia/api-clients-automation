@@ -4,6 +4,10 @@ get:
   summary: Get a list of sources.
   description: Get a list of sources for the given query parameters, with pagination details.
   operationId: getSources
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/itemsPerPage'
     - $ref: '../../common/parameters.yml#/page'
@@ -39,6 +43,10 @@ post:
   summary: Create a source.
   description: Create a source.
   operationId: createSource
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     description: ''
     content:

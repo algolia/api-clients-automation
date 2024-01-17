@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getSearchesNoClicks
+  x-acl:
+    - analytics
   summary: Get top searches with no clicks.
   description: Return the most popular of the last 1,000 searches that didn't lead to any clicks.
   parameters:

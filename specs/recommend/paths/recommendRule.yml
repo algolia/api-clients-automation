@@ -2,6 +2,8 @@ get:
   tags:
     - recommendations
   operationId: getRecommendRule
+  x-acl:
+    - settings
   summary: Get a Recommend rule.
   description: Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
   parameters:
@@ -28,6 +30,8 @@ delete:
   tags:
     - recommendations
   operationId: deleteRecommendRule
+  x-acl:
+    - editSettings
   summary: Delete a Recommend rule.
   description: Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
   parameters:

@@ -4,6 +4,10 @@ get:
   summary: Get a source.
   description: Get the source of the given sourceID.
   operationId: getSource
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:
@@ -22,6 +26,10 @@ patch:
   summary: Update a source.
   description: Update the source of the given sourceID.
   operationId: updateSource
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   requestBody:
@@ -46,6 +54,10 @@ delete:
   summary: Delete a source.
   description: Soft delete the source of the given sourceID.
   operationId: deleteSource
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   responses:

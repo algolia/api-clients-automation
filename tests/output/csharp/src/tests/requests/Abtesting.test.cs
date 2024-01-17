@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Abtesting;
+using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
@@ -44,7 +45,7 @@ public class AbtestingClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
   }
 
@@ -132,7 +133,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
@@ -150,7 +151,7 @@ public class AbtestingClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
@@ -183,7 +184,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
@@ -215,7 +216,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
@@ -247,7 +248,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -289,7 +290,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
@@ -331,7 +332,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
@@ -363,7 +364,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
@@ -401,7 +402,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
     );
@@ -439,7 +440,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
     );
@@ -477,7 +478,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
     );
@@ -501,7 +502,7 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(true));
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
@@ -519,7 +520,7 @@ public class AbtestingClientRequestTests
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
       req.Body,
-      new JsonDiffConfig(true)
+      new JsonDiffConfig(false)
     );
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"

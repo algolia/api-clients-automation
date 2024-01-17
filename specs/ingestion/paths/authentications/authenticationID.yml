@@ -4,6 +4,10 @@ get:
   summary: Get a authentication.
   description: Get the authentication of the given authenticationID.
   operationId: getAuthentication
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   responses:
@@ -22,6 +26,10 @@ patch:
   summary: Update a authentication.
   description: Update the authentication of the given authenticationID.
   operationId: updateAuthentication
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   requestBody:
@@ -46,6 +54,10 @@ delete:
   summary: Delete a authentication.
   description: Soft delete the authentication of the given authenticationID.
   operationId: deleteAuthentication
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathAuthenticationID'
   responses:

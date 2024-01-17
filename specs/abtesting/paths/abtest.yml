@@ -2,6 +2,8 @@ get:
   tags:
     - abtest
   operationId: getABTest
+  x-acl:
+    - analytics
   summary: Get A/B test details.
   description: >
     Get specific details for an A/B test.
@@ -29,6 +31,8 @@ delete:
   tags:
     - abtest
   operationId: deleteABTest
+  x-acl:
+    - editSettings
   summary: Delete an A/B test.
   description: >
     Delete an A/B test.

@@ -2,6 +2,8 @@ get:
   tags:
     - click
   operationId: getClickThroughRate
+  x-acl:
+    - analytics
   summary: Get click-through rate (CTR).
   description: Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
   parameters:

@@ -260,7 +260,7 @@
         /// <param name="serializer">JSON Serializer</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson").Invoke(value, null)));
+            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<object>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson").Invoke(value, null)));
         }
 
         /// <summary>

@@ -3288,6 +3288,8 @@ paths:
       x-use-read-transporter: true
       x-cacheable: true
       x-legacy-signature: true
+      x-acl:
+        - search
       summary: Search multiple indices.
       description: Send multiple search queries to one or more indices.
       requestBody:
