@@ -131,6 +131,11 @@ public class Helpers {
         URL url = new URL((String) server.get("url"));
         regionalHost = url.getHost();
       }
+
+      if (servers.size() == 1 && hostWithFallback.isEmpty()) {
+        additionalProperties.put("uniqueHost", servers.get(0).get("url"));
+      }
+
       additionalProperties.put("hostWithFallback", hostWithFallback);
       additionalProperties.put("hasRegionalHost", hasRegionalHost);
       additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
