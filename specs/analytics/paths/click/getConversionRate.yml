@@ -2,6 +2,8 @@ get:
   tags:
     - click
   operationId: getConversationRate
+  x-acl:
+    - analytics
   summary: Get conversion rate (CR).
   description: Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
   parameters:

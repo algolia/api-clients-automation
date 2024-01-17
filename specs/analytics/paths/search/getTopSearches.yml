@@ -2,6 +2,8 @@ get:
   tags:
     - search
   operationId: getTopSearches
+  x-acl:
+    - analytics
   summary: Get top searches.
   description: Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
   parameters:

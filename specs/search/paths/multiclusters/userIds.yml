@@ -2,6 +2,8 @@ post:
   tags:
     - Clusters
   operationId: assignUserId
+  x-acl:
+    - admin
   summary: Assign or move a user ID.
   description: >
     Assign or move a user ID to a cluster.
@@ -39,6 +41,8 @@ get:
   tags:
     - Clusters
   operationId: listUserIds
+  x-acl:
+    - admin
   summary: List userIDs.
   description: >
     List the userIDs assigned to a multi-cluster application.

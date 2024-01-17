@@ -2,6 +2,8 @@ delete:
   tags:
     - profiles
   operationId: deleteUserProfile
+  x-acl:
+    - recommendation
   summary: Delete a user profile.
   description: |
     Delete the user profile and all its associated data.
