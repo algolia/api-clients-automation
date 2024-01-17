@@ -5,7 +5,11 @@ require 'algolia'
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_delete("/test/minimal")
@@ -22,7 +26,11 @@ end
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_get("/test/minimal")
@@ -39,7 +47,11 @@ end
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_post("/test/minimal")
@@ -56,7 +68,11 @@ end
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_put("/test/minimal")
@@ -73,7 +89,11 @@ end
 # delete deleteUserProfile
 def snippet_for_delete_user_profile
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.delete_user_profile("UserToken")
@@ -90,7 +110,11 @@ end
 # get getPersonalizationStrategy
 def snippet_for_get_personalization_strategy
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_personalization_strategy
@@ -107,7 +131,11 @@ end
 # get getUserTokenProfile
 def snippet_for_get_user_token_profile
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_user_token_profile("UserToken")
@@ -124,13 +152,24 @@ end
 # set setPersonalizationStrategy
 def snippet_for_set_personalization_strategy
   # Initialize the client
-  client = Algolia::PersonalizationClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::PersonalizationClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
-  resp = client.set_personalization_strategy(PersonalizationStrategyParams.new(
-                                               event_scoring: [EventScoring.new(score: 42, event_name: "Algolia",
-                                                                                event_type: "Event")], facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")], personalization_impact: 42
-                                             ))
+  resp = client.set_personalization_strategy(
+    PersonalizationStrategyParams.new(
+      event_scoring: [EventScoring.new(
+        score: 42,
+        event_name: "Algolia",
+        event_type: "Event"
+      )],
+      facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
+      personalization_impact: 42
+    )
+  )
 
   # use the class directly
   puts resp

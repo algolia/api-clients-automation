@@ -48,8 +48,23 @@ class TestClientInsightsClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
 
-    req = client.push_events_with_http_info(InsightsEvents.new(events: [ClickedObjectIDsAfterSearch.new(event_type: 'click', event_name: "Product Clicked",
-                                                                                                        index: "products", user_token: "user-123456", authenticated_user_token: "user-123456", timestamp: 1_641_290_601_962, object_ids: ["9780545139700", "9780439784542"], query_id: "43b15df305339e827f0ac0bdc5ebcaa7", positions: [7, 6])]))
+    req = client.push_events_with_http_info(
+      InsightsEvents.new(
+        events: [ClickedObjectIDsAfterSearch.new(
+          event_type: 'click',
+          event_name: "Product Clicked",
+          index: "products",
+          user_token: "user-123456",
+          authenticated_user_token: "user-123456",
+          timestamp: 1_641_290_601_962,
+          object_ids: [
+            "9780545139700", "9780439784542"
+          ],
+          query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
+          positions: [7, 6]
+        )]
+      )
+    )
 
     assert_equal('insights.algolia.io', req.host.url)
   end

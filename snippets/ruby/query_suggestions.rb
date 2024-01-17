@@ -5,11 +5,25 @@ require 'algolia'
 # createConfig0
 def snippet_for_create_config
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
-  resp = client.create_config(QuerySuggestionsConfigurationWithIndex.new(index_name: "theIndexName",
-                                                                         source_indices: [SourceIndex.new(index_name: "testIndex", facets: [Facet.new(attribute: "test")], generate: [["facetA", "facetB"], ["facetC"]])], languages: ["french"], exclude: ["test"]))
+  resp = client.create_config(
+    QuerySuggestionsConfigurationWithIndex.new(
+      index_name: "theIndexName",
+      source_indices: [SourceIndex.new(
+        index_name: "testIndex",
+        facets: [Facet.new(attribute: "test")],
+        generate: [["facetA", "facetB"], ["facetC"]]
+      )],
+      languages: ["french"],
+      exclude: ["test"]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -23,7 +37,11 @@ end
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_delete("/test/minimal")
@@ -40,7 +58,11 @@ end
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_get("/test/minimal")
@@ -57,7 +79,11 @@ end
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_post("/test/minimal")
@@ -74,7 +100,11 @@ end
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.custom_put("/test/minimal")
@@ -91,7 +121,11 @@ end
 # deleteConfig0
 def snippet_for_delete_config
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.delete_config("theIndexName")
@@ -108,7 +142,11 @@ end
 # getAllConfigs0
 def snippet_for_get_all_configs
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_all_configs
@@ -125,7 +163,11 @@ end
 # getConfig0
 def snippet_for_get_config
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_config("theIndexName")
@@ -142,7 +184,11 @@ end
 # getConfigStatus0
 def snippet_for_get_config_status
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_config_status("theIndexName")
@@ -159,7 +205,11 @@ end
 # getLogFile0
 def snippet_for_get_log_file
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
   resp = client.get_log_file("theIndexName")
@@ -176,12 +226,25 @@ end
 # updateConfig0
 def snippet_for_update_config
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+  client = Algolia::QuerySuggestionsClient.create(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  )
 
   # Call the API
-  resp = client.update_config("theIndexName",
-                              QuerySuggestionsConfiguration.new(source_indices: [SourceIndex.new(index_name: "testIndex", facets: [Facet.new(attribute: "test")], generate: [["facetA", "facetB"], ["facetC"]])],
-                                                                languages: ["french"], exclude: ["test"]))
+  resp = client.update_config(
+    "theIndexName",
+    QuerySuggestionsConfiguration.new(
+      source_indices: [SourceIndex.new(
+        index_name: "testIndex",
+        facets: [Facet.new(attribute: "test")],
+        generate: [["facetA", "facetB"], ["facetC"]]
+      )],
+      languages: ["french"],
+      exclude: ["test"]
+    )
+  )
 
   # use the class directly
   puts resp
