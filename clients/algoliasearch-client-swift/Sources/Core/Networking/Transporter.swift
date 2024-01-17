@@ -30,11 +30,9 @@ open class Transporter {
       sessionConfiguration.timeoutIntervalForRequest = configuration.readTimeout
       sessionConfiguration.timeoutIntervalForResource = configuration.writeTimeout
 
-      self.requestBuilder =
-        requestBuilder
-        ?? URLSessionRequestBuilder(
-          sessionConfiguration: sessionConfiguration
-        )
+      self.requestBuilder = URLSessionRequestBuilder(
+        sessionConfiguration: sessionConfiguration
+      )
 
       return
     }
@@ -119,14 +117,15 @@ open class Transporter {
         self.retryStrategy.notify(host: host, error: nil)
         return response
       } catch let cancellationError as CancellationError {
-        throw TransportError.requestError(cancellationError)
+        throw cancellationError
       } catch {
-        intermediateErrors.append(error)
         self.retryStrategy.notify(host: host, error: error)
 
         guard self.retryStrategy.canRetry(inCaseOf: error) else {
-          break
+          throw TransportError.requestError(error)
         }
+
+        intermediateErrors.append(error)
       }
 
     }
