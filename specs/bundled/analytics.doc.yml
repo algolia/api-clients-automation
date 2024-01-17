@@ -625,6 +625,8 @@ paths:
       tags:
         - search
       operationId: getTopSearches
+      x-acl:
+        - analytics
       summary: Get top searches.
       description: >-
         Returns the most popular of the latest 1,000 searches. For each search,
@@ -659,6 +661,8 @@ paths:
       tags:
         - search
       operationId: getSearchesCount
+      x-acl:
+        - analytics
       summary: Get number of searches.
       description: Returns the number of searches within a time range.
       parameters:
@@ -709,6 +713,8 @@ paths:
       tags:
         - search
       operationId: getSearchesNoResults
+      x-acl:
+        - analytics
       summary: Get top searches with no results.
       description: >-
         Returns the most popular of the latest 1,000 searches that didn't return
@@ -763,6 +769,8 @@ paths:
       tags:
         - search
       operationId: getSearchesNoClicks
+      x-acl:
+        - analytics
       summary: Get top searches with no clicks.
       description: >-
         Return the most popular of the last 1,000 searches that didn't lead to
@@ -817,6 +825,8 @@ paths:
       tags:
         - search
       operationId: getNoResultsRate
+      x-acl:
+        - analytics
       summary: Get no results rate.
       description: Returns the rate at which searches didn't return any results.
       parameters:
@@ -881,6 +891,8 @@ paths:
       tags:
         - search
       operationId: getNoClickRate
+      x-acl:
+        - analytics
       summary: Get no click rate.
       description: >-
         Returns the rate at which searches don't lead to any clicks. The
@@ -949,6 +961,8 @@ paths:
       tags:
         - search
       operationId: getTopHits
+      x-acl:
+        - analytics
       summary: Get top hits.
       description: Return the most popular clicked results in the last 1,000 searches.
       parameters:
@@ -980,6 +994,8 @@ paths:
       tags:
         - search
       operationId: getUsersCount
+      x-acl:
+        - analytics
       summary: Get user count.
       description: Return the count of unique users.
       parameters:
@@ -1030,6 +1046,8 @@ paths:
       tags:
         - search
       operationId: getTopFilterAttributes
+      x-acl:
+        - analytics
       summary: Get top filterable attributes.
       description: >-
         Return the most popular [filterable
@@ -1063,6 +1081,8 @@ paths:
       tags:
         - search
       operationId: getTopFilterForAttribute
+      x-acl:
+        - analytics
       summary: Get top filter values for an attribute.
       description: >-
         Returns the most popular filter values for an attribute in the 1,000
@@ -1096,6 +1116,8 @@ paths:
       tags:
         - search
       operationId: getTopFiltersNoResults
+      x-acl:
+        - analytics
       summary: Get top filters for a no result search.
       description: >-
         Returns top filters for filter-enabled searches that don't return
@@ -1128,6 +1150,8 @@ paths:
       tags:
         - search
       operationId: getTopCountries
+      x-acl:
+        - analytics
       summary: Get top countries.
       description: Returns top countries. Limited to the 1,000 most frequent ones.
       parameters:
@@ -1179,6 +1203,8 @@ paths:
       tags:
         - click
       operationId: getAverageClickPosition
+      x-acl:
+        - analytics
       summary: Get average click position.
       description: >
         Return the average click position for the complete time range and for
@@ -1242,6 +1268,8 @@ paths:
       tags:
         - click
       operationId: getClickPositions
+      x-acl:
+        - analytics
       summary: Get click positions.
       description: >
         Show the number of clicks events and their associated position in the
@@ -1311,6 +1339,8 @@ paths:
       tags:
         - click
       operationId: getClickThroughRate
+      x-acl:
+        - analytics
       summary: Get click-through rate (CTR).
       description: >-
         Returns a [click-through rate
@@ -1375,6 +1405,8 @@ paths:
       tags:
         - click
       operationId: getConversationRate
+      x-acl:
+        - analytics
       summary: Get conversion rate (CR).
       description: >-
         Return a [conversion
@@ -1439,6 +1471,8 @@ paths:
       tags:
         - advanced
       operationId: getStatus
+      x-acl:
+        - analytics
       summary: Get Analytics API status.
       description: >
         Return the latest update time of the Analytics API for an index. If the
