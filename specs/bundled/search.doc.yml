@@ -3357,6 +3357,8 @@ paths:
       operationId: searchSingleIndex
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - search
       summary: Search an index.
       description: Return records that match the query.
       parameters:
@@ -3389,6 +3391,8 @@ paths:
       x-use-read-transporter: true
       x-cacheable: true
       x-legacy-signature: true
+      x-acl:
+        - search
       summary: Search multiple indices.
       description: Send multiple search queries to one or more indices.
       requestBody:
@@ -3442,6 +3446,8 @@ paths:
       operationId: searchForFacetValues
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - search
       summary: Search for facet values.
       description: >
         [Search for a facet's
@@ -3494,6 +3500,8 @@ paths:
       tags:
         - Search
       operationId: browse
+      x-acl:
+        - browse
       summary: Get all records from an index.
       description: >
         Retrieve up to 1,000 records per call.
@@ -3530,6 +3538,8 @@ paths:
       tags:
         - Records
       operationId: saveObject
+      x-acl:
+        - addObject
       description: >
         Add a record (object) to an index or replace it.
 
@@ -3584,6 +3594,8 @@ paths:
       tags:
         - Indices
       operationId: deleteIndex
+      x-acl:
+        - deleteIndex
       summary: Delete index.
       description: Delete an existing index.
       parameters:
@@ -3604,6 +3616,8 @@ paths:
       tags:
         - Records
       operationId: getObject
+      x-acl:
+        - search
       summary: Get a record.
       description: >-
         To get more than one record, use the [`objects`
@@ -3650,6 +3664,8 @@ paths:
       tags:
         - Records
       operationId: addOrUpdateObject
+      x-acl:
+        - addObject
       summary: Add or update a record (using objectID).
       description: >
         If you use an existing `objectID`, the existing record will be replaced
@@ -3687,6 +3703,8 @@ paths:
       tags:
         - Records
       operationId: deleteObject
+      x-acl:
+        - deleteObject
       summary: Delete a record.
       description: >-
         To delete a set of records matching a query, use the [`deleteByQuery`
@@ -3710,6 +3728,8 @@ paths:
       tags:
         - Records
       operationId: deleteBy
+      x-acl:
+        - deleteIndex
       summary: Delete all records matching a query.
       description: >
         This operation doesn't support all the query options, only its filters
@@ -3740,6 +3760,8 @@ paths:
       tags:
         - Records
       operationId: clearObjects
+      x-acl:
+        - deleteIndex
       summary: Delete all records from an index.
       description: >-
         Delete the records but leave settings and index-specific API keys
@@ -3762,6 +3784,8 @@ paths:
       tags:
         - Records
       operationId: partialUpdateObject
+      x-acl:
+        - addObject
       summary: Update record attributes.
       x-codegen-request-body-name: attributesToUpdate
       description: >
@@ -3960,6 +3984,8 @@ paths:
       operationId: getObjects
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - search
       summary: Get multiple records.
       description: >
         Retrieve one or more records, potentially from different indices, in a
@@ -4040,6 +4066,8 @@ paths:
       tags:
         - Indices
       operationId: getSettings
+      x-acl:
+        - search
       description: >-
         Return an object containing an index's [configuration
         settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
@@ -4065,6 +4093,8 @@ paths:
       tags:
         - Indices
       operationId: setSettings
+      x-acl:
+        - editSettings
       description: >-
         Update the specified [index
         settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
@@ -4095,6 +4125,8 @@ paths:
       tags:
         - Synonyms
       operationId: getSynonym
+      x-acl:
+        - settings
       summary: Get a synonym object.
       description: >-
         Get a syonym by its `objectID`. To find the object IDs for your
@@ -4122,6 +4154,8 @@ paths:
       tags:
         - Synonyms
       operationId: saveSynonym
+      x-acl:
+        - editSettings
       summary: Save a synonym.
       description: >
         Add a
@@ -4177,6 +4211,8 @@ paths:
       tags:
         - Synonyms
       operationId: deleteSynonym
+      x-acl:
+        - editSettings
       summary: Delete a synonym.
       description: >-
         Delete a synonym by its `objectID`. To find the object IDs of your
@@ -4202,6 +4238,8 @@ paths:
       tags:
         - Synonyms
       operationId: saveSynonyms
+      x-acl:
+        - editSettings
       summary: Save a batch of synonyms.
       description: Create or update multiple synonyms.
       parameters:
@@ -4230,6 +4268,8 @@ paths:
       tags:
         - Synonyms
       operationId: clearSynonyms
+      x-acl:
+        - editSettings
       summary: Delete all synonyms.
       description: Delete all synonyms in the index.
       parameters:
@@ -4253,6 +4293,8 @@ paths:
       operationId: searchSynonyms
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - settings
       summary: Search for synonyms.
       description: >-
         Search for synonyms in your index. You can control and filter the search
@@ -4293,6 +4335,8 @@ paths:
       tags:
         - Api Keys
       operationId: listApiKeys
+      x-acl:
+        - admin
       summary: List API keys.
       description: >-
         List all API keys associated with your Algolia application, including
@@ -4326,6 +4370,8 @@ paths:
       tags:
         - Api Keys
       operationId: addApiKey
+      x-acl:
+        - admin
       summary: Add API key.
       description: |
         Add a new API key with specific permissions and restrictions.
@@ -4385,6 +4431,8 @@ paths:
       tags:
         - Api Keys
       operationId: updateApiKey
+      x-acl:
+        - admin
       summary: Update an API key.
       description: |
         Replace the permissions of an existing API key.
@@ -4427,6 +4475,8 @@ paths:
       tags:
         - Api Keys
       operationId: deleteApiKey
+      x-acl:
+        - admin
       summary: Delete API key.
       description: |
         Delete an existing API key.
@@ -4460,6 +4510,8 @@ paths:
       tags:
         - Api Keys
       operationId: restoreApiKey
+      x-acl:
+        - admin
       summary: Restore API key.
       description: |
         Restore a deleted API key, along with its associated permissions.
@@ -4486,6 +4538,8 @@ paths:
       tags:
         - Rules
       operationId: getRule
+      x-acl:
+        - settings
       summary: Get a rule.
       description: >-
         Get a rule by its `objectID`. To find the `objectID` for rules, use the
@@ -4512,6 +4566,8 @@ paths:
       tags:
         - Rules
       operationId: saveRule
+      x-acl:
+        - editSettings
       summary: Create or update a rule.
       description: >-
         To create or update more than one rule, use the [`batch`
@@ -4545,6 +4601,8 @@ paths:
       tags:
         - Rules
       operationId: deleteRule
+      x-acl:
+        - editSettings
       summary: Delete a rule.
       description: >-
         Delete a rule by its `objectID`. To find the `objectID` for rules, use
@@ -4569,6 +4627,8 @@ paths:
       tags:
         - Rules
       operationId: saveRules
+      x-acl:
+        - editSettings
       summary: Save a batch of rules.
       description: Create or update multiple rules.
       x-codegen-request-body-name: rules
@@ -4601,6 +4661,8 @@ paths:
       tags:
         - Rules
       operationId: clearRules
+      x-acl:
+        - editSettings
       summary: Delete all rules.
       description: Delete all rules in the index.
       parameters:
@@ -4624,6 +4686,8 @@ paths:
       operationId: searchRules
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - settings
       summary: Search for rules.
       description: >-
         Search for rules in your index. You can control the search with
@@ -4710,6 +4774,8 @@ paths:
       tags:
         - Dictionaries
       operationId: batchDictionaryEntries
+      x-acl:
+        - editSettings
       description: Add or remove a batch of dictionary entries.
       summary: Batch dictionary entries.
       parameters:
@@ -4766,6 +4832,8 @@ paths:
       operationId: searchDictionaryEntries
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - settings
       description: >-
         Search for standard and
         [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/)
@@ -4815,6 +4883,8 @@ paths:
       tags:
         - Dictionaries
       operationId: getDictionarySettings
+      x-acl:
+        - settings
       description: >-
         Get the languages for which [stop words are turned
         off](#tag/Dictionaries/operation/setDictionarySettings).
@@ -4845,6 +4915,8 @@ paths:
       tags:
         - Dictionaries
       operationId: setDictionarySettings
+      x-acl:
+        - editSettings
       description: Set stop word settings for a specific language.
       summary: Set stop word settings.
       requestBody:
@@ -4879,6 +4951,8 @@ paths:
       tags:
         - Dictionaries
       operationId: getDictionaryLanguages
+      x-acl:
+        - settings
       description: >-
         Lists Algolia's [supported
         languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -4912,6 +4986,8 @@ paths:
       tags:
         - Clusters
       operationId: assignUserId
+      x-acl:
+        - admin
       summary: Assign or move a user ID.
       description: >
         Assign or move a user ID to a cluster.
@@ -4949,6 +5025,8 @@ paths:
       tags:
         - Clusters
       operationId: listUserIds
+      x-acl:
+        - admin
       summary: List userIDs.
       description: >
         List the userIDs assigned to a multi-cluster application.
@@ -4988,6 +5066,8 @@ paths:
       tags:
         - Clusters
       operationId: batchAssignUserIds
+      x-acl:
+        - admin
       summary: Batch assign userIDs.
       description: |
         Assign multiple user IDs to a cluster.
@@ -5034,6 +5114,8 @@ paths:
       tags:
         - Clusters
       operationId: getTopUserIds
+      x-acl:
+        - admin
       summary: Get top userID.
       description: >
         Get the IDs of the 10 users with the highest number of records per
@@ -5078,6 +5160,8 @@ paths:
       tags:
         - Clusters
       operationId: getUserId
+      x-acl:
+        - admin
       summary: Get userID.
       description: >
         Returns the userID data stored in the mapping.
@@ -5105,6 +5189,8 @@ paths:
       tags:
         - Clusters
       operationId: removeUserId
+      x-acl:
+        - admin
       summary: Remove userID.
       description: Remove a userID and its associated data from the multi-clusters.
       parameters:
@@ -5136,6 +5222,8 @@ paths:
       tags:
         - Clusters
       operationId: listClusters
+      x-acl:
+        - admin
       summary: List clusters.
       description: List the available clusters in a multi-cluster setup.
       responses:
@@ -5173,6 +5261,8 @@ paths:
       operationId: searchUserIds
       x-use-read-transporter: true
       x-cacheable: true
+      x-acl:
+        - admin
       summary: Search for a user ID.
       description: >
         Since it can take up to a few seconds to get the data from the different
@@ -5182,7 +5272,7 @@ paths:
         as the mapping. Instead, it's built every 12 hours, at the same time as
         the update of user ID usage. For example, if you add or move a user ID,
         the search will show an old value until the next time the mapping is
-        rebuilt (every 12 hours). 
+        rebuilt (every 12 hours).
       requestBody:
         required: true
         content:
@@ -5280,6 +5370,8 @@ paths:
       tags:
         - Clusters
       operationId: hasPendingMappings
+      x-acl:
+        - admin
       summary: Get migration and user mapping status.
       description: >
         To determine when the time-consuming process of creating a large batch
@@ -5332,6 +5424,8 @@ paths:
       tags:
         - Vaults
       operationId: getSources
+      x-acl:
+        - admin
       description: Get all allowed sources (IP addresses).
       summary: Get all allowed IP addresses.
       responses:
@@ -5353,6 +5447,8 @@ paths:
       tags:
         - Vaults
       operationId: replaceSources
+      x-acl:
+        - admin
       description: Replace all allowed sources.
       summary: Replace all sources.
       requestBody:
@@ -5389,6 +5485,8 @@ paths:
       tags:
         - Vaults
       operationId: appendSource
+      x-acl:
+        - admin
       description: Add a source to the list of allowed sources.
       summary: Add a source.
       requestBody:
@@ -5414,6 +5512,8 @@ paths:
       tags:
         - Vaults
       operationId: deleteSource
+      x-acl:
+        - admin
       description: Remove a source from the list of allowed sources.
       summary: Remove a source.
       parameters:
@@ -5451,6 +5551,8 @@ paths:
       tags:
         - Advanced
       operationId: getLogs
+      x-acl:
+        - logs
       description: >
         The request must be authenticated by an API key with the [`logs`
         ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
@@ -5652,6 +5754,8 @@ paths:
       tags:
         - Indices
       operationId: getTask
+      x-acl:
+        - addObject
       description: >-
         Some operations, such as copying an index, will respond with a `taskID`
         value. Use this value here to check the status of that task.
@@ -5693,6 +5797,8 @@ paths:
       tags:
         - Indices
       operationId: operationIndex
+      x-acl:
+        - addObject
       summary: Copy, move, or rename an index.
       description: >-
         This `operation`, _copy_ or _move_, will copy or move a source index's
@@ -5767,6 +5873,8 @@ paths:
       tags:
         - Indices
       operationId: listIndices
+      x-acl:
+        - listIndexes
       summary: List indices.
       description: List indices in an Algolia application.
       parameters:
