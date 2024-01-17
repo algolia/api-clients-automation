@@ -36,13 +36,26 @@ namespace Algolia.Search.Clients
     /// <param name="apiKey">Your API Key</param>
     public {{packageName}}Config(string appId, string apiKey)  : base(appId, apiKey, "{{packageName}}")
     {
-      DefaultHosts = GetDefaultHosts(appId);
+      DefaultHosts = GetDefaultHosts({{^uniqueHost}}appId{{/uniqueHost}});
       Compression = CompressionType.NONE;
     }
   {{/hasRegionalHost}}
   {{^hasRegionalHost}}
-  private static List<StatefulHost> GetDefaultHosts(string appId)
+  private static List<StatefulHost> GetDefaultHosts({{^uniqueHost}}string appId{{/uniqueHost}})
   {
+    {{#uniqueHost}}
+    List<StatefulHost> hosts = new List<StatefulHost>
+    {
+      new StatefulHost
+      {
+        Url = "{{{uniqueHost}}}",
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept =  CallType.Read | CallType.Write
+      }
+    };
+    {{/uniqueHost}}
+    {{^uniqueHost}}
     List<StatefulHost> hosts = new List<StatefulHost>
     {
       new StatefulHost
@@ -84,6 +97,7 @@ namespace Algolia.Search.Clients
     }.Shuffle();
 
     hosts.AddRange(commonHosts);
+    {{/uniqueHost}}
     return hosts;
   }
   {{/hasRegionalHost}}
