@@ -1,6 +1,0 @@
-{{#isCreateClient}}
-  {{> tests/client/createClient}}
-{{/isCreateClient}}
-{{#isMethod}}
-  const result = await ({{> tests/client/method}}) as unknown as EchoResponse;
-{{/isMethod}}

@@ -22,7 +22,7 @@ void main() {
     expectError(
       '{{{expectedError}}}',
       () {
-        {{> tests/client/step}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
       },
     );
     {{/isError}}
