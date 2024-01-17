@@ -320,8 +320,8 @@ func (v *NullableTime) UnmarshalJSON(src []byte) error {
 	return json.Unmarshal(src, &v.value)
 }
 
-// IsNilorEmpty checks if an input is nil or empty.
-func IsNilorEmpty(i any) bool {
+// IsNilOrEmpty checks if an input is nil or empty.
+func IsNilOrEmpty(i any) bool {
 	if i == nil {
 		return true
 	}

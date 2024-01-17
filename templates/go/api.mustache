@@ -211,7 +211,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
   {{#vendorExtensions.x-is-custom-request}}
     {{#queryParams}}
-      {{^required}}if !utils.IsNilorEmpty(r.{{paramName}}) { {{/required}}
+      {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
            queryParams.Set(k, parameterToString(v))
           }
@@ -224,7 +224,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
-  if !utils.IsNilorEmpty(r.{{paramName}}) {
+  if !utils.IsNilOrEmpty(r.{{paramName}}) {
     queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
@@ -235,7 +235,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
-  if !utils.IsNilorEmpty(r.{{paramName}}) {
+  if !utils.IsNilOrEmpty(r.{{paramName}}) {
     headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
@@ -253,7 +253,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
 {{#bodyParams}}
   // body params{{^required}}
-  if utils.IsNilorEmpty(r.{{paramName}}) {
+  if utils.IsNilOrEmpty(r.{{paramName}}) {
     postBody = "{}"
   } else { {{/required}}
     postBody = r.{{paramName}}{{^required}}

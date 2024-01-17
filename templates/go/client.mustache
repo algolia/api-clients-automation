@@ -2,29 +2,29 @@
 package {{packageName}}
 
 import (
-	"bytes"
-	"compress/gzip"
-	"context"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"net/http/httputil"
-	"net/url"
-	"reflect"
-	"regexp"
-	"runtime"
-	"strings"
+  "bytes"
+  "compress/gzip"
+  "context"
+  "encoding/json"
+  "errors"
+  "fmt"
+  "io"
+  "log"
+  "net/http"
+  "net/http/httputil"
+  "net/url"
+  "reflect"
+  "regexp"
+  "runtime"
+  "strings"
   "slices"
-	"time"
+  "time"
 
   "github.com/go-playground/validator/v10"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 var jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)

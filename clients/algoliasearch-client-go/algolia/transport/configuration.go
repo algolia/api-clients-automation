@@ -10,10 +10,10 @@ type Configuration struct {
 	AppID  string
 	ApiKey string
 
-	Hosts          []string          `json:"host,omitempty"`
-	DefaultHeader  map[string]string `json:"defaultHeader,omitempty"`
-	UserAgent      string            `json:"userAgent,omitempty"`
-	Debug          bool              `json:"debug,omitempty"`
+	Hosts          []string
+	DefaultHeader  map[string]string
+	UserAgent      string
+	Debug          bool
 	Requester      Requester
 	ReadTimeout    time.Duration
 	WriteTimeout   time.Duration
