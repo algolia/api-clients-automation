@@ -35,7 +35,6 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *t
 {{#tests}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
   var err error
-  _ = err
   {{#autoCreateClient}}
   client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
   _ = echo
@@ -45,7 +44,6 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   var client *{{clientPrefix}}.APIClient
   var cfg {{clientPrefix}}.Configuration
   _ = client
-  _ = cfg
   {{/autoCreateClient}}
   {{#steps}}
   {{#isError}}
