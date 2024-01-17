@@ -553,26 +553,6 @@ void main() {
     ),
   );
 
-  // clearAllSynonyms
-  test(
-    'clearAllSynonyms0',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.clearAllSynonyms(
-        indexName: "indexName",
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/synonyms/clear');
-        expect(request.method, 'post');
-        expect(request.body, {});
-      },
-    ),
-  );
-
   // clearObjects
   test(
     'clearObjects0',
@@ -607,6 +587,26 @@ void main() {
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/rules/clear');
+        expect(request.method, 'post');
+        expect(request.body, {});
+      },
+    ),
+  );
+
+  // clearSynonyms
+  test(
+    'clearSynonyms0',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.clearSynonyms(
+        indexName: "indexName",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/synonyms/clear');
         expect(request.method, 'post');
         expect(request.body, {});
       },

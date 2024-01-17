@@ -223,27 +223,6 @@ async def snippet_for_browse():
     print(resp.to_json())
 
 
-async def snippet_for_clear_all_synonyms():
-    """
-    Snippet for the clearAllSynonyms method.
-
-    clearAllSynonyms0
-    """
-    # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-    # Call the API
-    resp = await _client.clear_all_synonyms(
-        index_name="indexName",
-    )
-
-    # use the class directly
-    print(resp)
-
-    # print the JSON response
-    print(resp.to_json())
-
-
 async def snippet_for_clear_objects():
     """
     Snippet for the clearObjects method.
@@ -276,6 +255,27 @@ async def snippet_for_clear_rules():
 
     # Call the API
     resp = await _client.clear_rules(
+        index_name="indexName",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+
+
+async def snippet_for_clear_synonyms():
+    """
+    Snippet for the clearSynonyms method.
+
+    clearSynonyms0
+    """
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    resp = await _client.clear_synonyms(
         index_name="indexName",
     )
 

@@ -149,20 +149,6 @@ export async function snippetForbrowse(): Promise<void> {
   console.log(response);
 }
 
-// Snippet for the clearAllSynonyms method.
-//
-// clearAllSynonyms0
-export async function snippetForclearAllSynonyms(): Promise<void> {
-  // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-  // Call the API
-  const response = await client.clearAllSynonyms({ indexName: 'indexName' });
-
-  // Use typed response
-  console.log(response);
-}
-
 // Snippet for the clearObjects method.
 //
 // clearObjects0
@@ -186,6 +172,20 @@ export async function snippetForclearRules(): Promise<void> {
 
   // Call the API
   const response = await client.clearRules({ indexName: 'indexName' });
+
+  // Use typed response
+  console.log(response);
+}
+
+// Snippet for the clearSynonyms method.
+//
+// clearSynonyms0
+export async function snippetForclearSynonyms(): Promise<void> {
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.clearSynonyms({ indexName: 'indexName' });
 
   // Use typed response
   console.log(response);

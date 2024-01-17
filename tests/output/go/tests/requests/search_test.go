@@ -366,24 +366,6 @@ func TestSearch_Browse(t *testing.T) {
 	})
 }
 
-func TestSearch_ClearAllSynonyms(t *testing.T) {
-	client, echo := createSearchClient()
-
-	t.Run("clearAllSynonyms0", func(t *testing.T) {
-		_, err := client.ClearAllSynonyms(client.NewApiClearAllSynonymsRequest(
-			"indexName",
-		))
-		require.NoError(t, err)
-
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/clear")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
-
-		require.Empty(t, echo.body)
-	})
-}
-
 func TestSearch_ClearObjects(t *testing.T) {
 	client, echo := createSearchClient()
 
@@ -412,6 +394,24 @@ func TestSearch_ClearRules(t *testing.T) {
 		require.NoError(t, err)
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/clear")
+		require.NoError(t, err)
+		require.Equal(t, expectedPath, echo.path)
+		require.Equal(t, "POST", echo.method)
+
+		require.Empty(t, echo.body)
+	})
+}
+
+func TestSearch_ClearSynonyms(t *testing.T) {
+	client, echo := createSearchClient()
+
+	t.Run("clearSynonyms0", func(t *testing.T) {
+		_, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
+			"indexName",
+		))
+		require.NoError(t, err)
+
+		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/clear")
 		require.NoError(t, err)
 		require.Equal(t, expectedPath, echo.path)
 		require.Equal(t, "POST", echo.method)

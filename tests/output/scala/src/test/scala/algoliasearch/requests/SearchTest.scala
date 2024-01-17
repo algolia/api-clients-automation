@@ -479,20 +479,6 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("clearAllSynonyms0") {
-    val (client, echo) = testClient()
-    val future = client.clearAllSynonyms(
-      indexName = "indexName"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/indexes/indexName/synonyms/clear")
-    assert(res.method == "POST")
-    assert(res.body.contains("{}"))
-  }
-
   test("clearObjects0") {
     val (client, echo) = testClient()
     val future = client.clearObjects(
@@ -517,6 +503,20 @@ class SearchTest extends AnyFunSuite {
     val res = echo.lastResponse.get
 
     assert(res.path == "/1/indexes/indexName/rules/clear")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
+  test("clearSynonyms0") {
+    val (client, echo) = testClient()
+    val future = client.clearSynonyms(
+      indexName = "indexName"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/synonyms/clear")
     assert(res.method == "POST")
     assert(res.body.contains("{}"))
   }

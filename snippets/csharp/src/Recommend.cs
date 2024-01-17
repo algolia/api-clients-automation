@@ -10,7 +10,7 @@ public class SnippetRecommendClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForRecommendClientCustomDelete()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -24,7 +24,7 @@ public class SnippetRecommendClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForRecommendClientCustomGet()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -38,7 +38,7 @@ public class SnippetRecommendClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForRecommendClientCustomPost()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -52,7 +52,7 @@ public class SnippetRecommendClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForRecommendClientCustomPut()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -66,7 +66,7 @@ public class SnippetRecommendClient
   ///
   /// deleteRecommendRule0
   /// </summary>
-  public async Task SnippetForDeleteRecommendRule0()
+  public async Task SnippetForRecommendClientDeleteRecommendRule()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -84,7 +84,7 @@ public class SnippetRecommendClient
   ///
   /// getRecommendRule0
   /// </summary>
-  public async Task SnippetForGetRecommendRule0()
+  public async Task SnippetForRecommendClientGetRecommendRule()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -102,7 +102,7 @@ public class SnippetRecommendClient
   ///
   /// getRecommendStatus0
   /// </summary>
-  public async Task SnippetForGetRecommendStatus0()
+  public async Task SnippetForRecommendClientGetRecommendStatus()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -120,7 +120,7 @@ public class SnippetRecommendClient
   ///
   /// get recommendations for recommend model with minimal parameters
   /// </summary>
-  public async Task SnippetForGetRecommendations0()
+  public async Task SnippetForRecommendClientGetRecommendations()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
@@ -150,7 +150,7 @@ public class SnippetRecommendClient
   ///
   /// searchRecommendRules0
   /// </summary>
-  public async Task SnippetForSearchRecommendRules0()
+  public async Task SnippetForRecommendClientSearchRecommendRules()
   {
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));

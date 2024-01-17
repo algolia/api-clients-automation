@@ -246,16 +246,6 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"cursor":"test"}'), JSON.parse(req.body))
   end
 
-  # clearAllSynonyms0
-  def test_clear_all_synonyms0
-    req = @client.clear_all_synonyms_with_http_info("indexName")
-
-    assert_equal(:post, req.method)
-    assert_equal('/1/indexes/indexName/synonyms/clear', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-  end
-
   # clearObjects0
   def test_clear_objects0
     req = @client.clear_objects_with_http_info("theIndexName")
@@ -272,6 +262,16 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/indexName/rules/clear', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
+  # clearSynonyms0
+  def test_clear_synonyms0
+    req = @client.clear_synonyms_with_http_info("indexName")
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/indexName/synonyms/clear', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end

@@ -13,7 +13,7 @@ public class Snippet{{client}}
   ///
   /// {{{description}}}
   /// </summary>
-  public async Task SnippetFor{{#lambda.pascalcase}}{{method}}{{testIndex}}{{/lambda.pascalcase}}()
+  public async Task SnippetFor{{client}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}()
   {
     // Initialize the client
     var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));

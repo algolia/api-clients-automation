@@ -158,19 +158,6 @@ void snippetForbrowse() async {
   );
 }
 
-// Snippet for the clearAllSynonyms method.
-//
-// clearAllSynonyms0
-void snippetForclearAllSynonyms() async {
-  // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
-
-  // Call the API
-  final response = await client.clearAllSynonyms(
-    indexName: "indexName",
-  );
-}
-
 // Snippet for the clearObjects method.
 //
 // clearObjects0
@@ -193,6 +180,19 @@ void snippetForclearRules() async {
 
   // Call the API
   final response = await client.clearRules(
+    indexName: "indexName",
+  );
+}
+
+// Snippet for the clearSynonyms method.
+//
+// clearSynonyms0
+void snippetForclearSynonyms() async {
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.clearSynonyms(
     indexName: "indexName",
   );
 }

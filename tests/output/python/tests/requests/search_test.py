@@ -499,19 +499,6 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"cursor":"test"}""")
 
-    async def test_clear_all_synonyms_0(self):
-        """
-        clearAllSynonyms0
-        """
-        _req = await self._client.clear_all_synonyms_with_http_info(
-            index_name="indexName",
-        )
-
-        assert _req.path == "/1/indexes/indexName/synonyms/clear"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
-        assert _req.headers.items() >= {}.items()
-
     async def test_clear_objects_0(self):
         """
         clearObjects0
@@ -534,6 +521,19 @@ class TestSearchClient:
         )
 
         assert _req.path == "/1/indexes/indexName/rules/clear"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() >= {}.items()
+        assert _req.headers.items() >= {}.items()
+
+    async def test_clear_synonyms_0(self):
+        """
+        clearSynonyms0
+        """
+        _req = await self._client.clear_synonyms_with_http_info(
+            index_name="indexName",
+        )
+
+        assert _req.path == "/1/indexes/indexName/synonyms/clear"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()

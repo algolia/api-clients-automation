@@ -679,117 +679,6 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public UpdatedAtResponse clearAllSynonyms(@Nonnull String indexName, Boolean forwardToReplicas, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(clearAllSynonymsAsync(indexName, forwardToReplicas, requestOptions));
-  }
-
-  /**
-   * Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public UpdatedAtResponse clearAllSynonyms(@Nonnull String indexName, Boolean forwardToReplicas) throws AlgoliaRuntimeException {
-    return this.clearAllSynonyms(indexName, forwardToReplicas, null);
-  }
-
-  /**
-   * Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public UpdatedAtResponse clearAllSynonyms(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.clearAllSynonyms(indexName, null, requestOptions);
-  }
-
-  /**
-   * Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public UpdatedAtResponse clearAllSynonyms(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.clearAllSynonyms(indexName, null, null);
-  }
-
-  /**
-   * (asynchronously) Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<UpdatedAtResponse> clearAllSynonymsAsync(
-    @Nonnull String indexName,
-    Boolean forwardToReplicas,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearAllSynonyms`.");
-
-    HttpRequest request = HttpRequest
-      .builder()
-      .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
-      .setMethod("POST")
-      .addQueryParameter("forwardToReplicas", forwardToReplicas)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<UpdatedAtResponse> clearAllSynonymsAsync(@Nonnull String indexName, Boolean forwardToReplicas)
-    throws AlgoliaRuntimeException {
-    return this.clearAllSynonymsAsync(indexName, forwardToReplicas, null);
-  }
-
-  /**
-   * (asynchronously) Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<UpdatedAtResponse> clearAllSynonymsAsync(@Nonnull String indexName, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.clearAllSynonymsAsync(indexName, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Delete all synonyms in the index.
-   *
-   * @param indexName Index on which to perform the request. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<UpdatedAtResponse> clearAllSynonymsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.clearAllSynonymsAsync(indexName, null, null);
-  }
-
-  /**
    * Delete the records but leave settings and index-specific API keys untouched.
    *
    * @param indexName Index on which to perform the request. (required)
@@ -946,6 +835,117 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<UpdatedAtResponse> clearRulesAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.clearRulesAsync(indexName, null, null);
+  }
+
+  /**
+   * Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
+   *     indices. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse clearSynonyms(@Nonnull String indexName, Boolean forwardToReplicas, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(clearSynonymsAsync(indexName, forwardToReplicas, requestOptions));
+  }
+
+  /**
+   * Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
+   *     indices. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse clearSynonyms(@Nonnull String indexName, Boolean forwardToReplicas) throws AlgoliaRuntimeException {
+    return this.clearSynonyms(indexName, forwardToReplicas, null);
+  }
+
+  /**
+   * Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse clearSynonyms(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.clearSynonyms(indexName, null, requestOptions);
+  }
+
+  /**
+   * Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse clearSynonyms(@Nonnull String indexName) throws AlgoliaRuntimeException {
+    return this.clearSynonyms(indexName, null, null);
+  }
+
+  /**
+   * (asynchronously) Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
+   *     indices. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(
+    @Nonnull String indexName,
+    Boolean forwardToReplicas,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
+      .setMethod("POST")
+      .addQueryParameter("forwardToReplicas", forwardToReplicas)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
+   *     indices. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(@Nonnull String indexName, Boolean forwardToReplicas)
+    throws AlgoliaRuntimeException {
+    return this.clearSynonymsAsync(indexName, forwardToReplicas, null);
+  }
+
+  /**
+   * (asynchronously) Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(@Nonnull String indexName, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.clearSynonymsAsync(indexName, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Delete all synonyms in the index.
+   *
+   * @param indexName Index on which to perform the request. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+    return this.clearSynonymsAsync(indexName, null, null);
   }
 
   /**
