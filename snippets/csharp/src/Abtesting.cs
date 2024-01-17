@@ -10,7 +10,7 @@ public class SnippetAbtestingClient
   ///
   /// addABTests with minimal parameters
   /// </summary>
-  public async Task SnippetForAddABTests0()
+  public async Task SnippetForAbtestingClientAddABTests()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -39,7 +39,7 @@ public class SnippetAbtestingClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForAbtestingClientCustomDelete()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -55,7 +55,7 @@ public class SnippetAbtestingClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForAbtestingClientCustomGet()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -71,7 +71,7 @@ public class SnippetAbtestingClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForAbtestingClientCustomPost()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -87,7 +87,7 @@ public class SnippetAbtestingClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForAbtestingClientCustomPut()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -103,7 +103,7 @@ public class SnippetAbtestingClient
   ///
   /// deleteABTest
   /// </summary>
-  public async Task SnippetForDeleteABTest0()
+  public async Task SnippetForAbtestingClientDeleteABTest()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -119,7 +119,7 @@ public class SnippetAbtestingClient
   ///
   /// getABTest
   /// </summary>
-  public async Task SnippetForGetABTest0()
+  public async Task SnippetForAbtestingClientGetABTest()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -135,7 +135,7 @@ public class SnippetAbtestingClient
   ///
   /// listABTests with minimal parameters
   /// </summary>
-  public async Task SnippetForListABTests0()
+  public async Task SnippetForAbtestingClientListABTests()
   {
     // Initialize the client
     var client = new AbtestingClient(
@@ -151,7 +151,7 @@ public class SnippetAbtestingClient
   ///
   /// stopABTest
   /// </summary>
-  public async Task SnippetForStopABTest0()
+  public async Task SnippetForAbtestingClientStopABTest()
   {
     // Initialize the client
     var client = new AbtestingClient(

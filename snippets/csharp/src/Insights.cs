@@ -10,7 +10,7 @@ public class SnippetInsightsClient
   ///
   /// allow del method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomDelete0()
+  public async Task SnippetForInsightsClientCustomDelete()
   {
     // Initialize the client
     var client = new InsightsClient(
@@ -26,7 +26,7 @@ public class SnippetInsightsClient
   ///
   /// allow get method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomGet0()
+  public async Task SnippetForInsightsClientCustomGet()
   {
     // Initialize the client
     var client = new InsightsClient(
@@ -42,7 +42,7 @@ public class SnippetInsightsClient
   ///
   /// allow post method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPost0()
+  public async Task SnippetForInsightsClientCustomPost()
   {
     // Initialize the client
     var client = new InsightsClient(
@@ -58,7 +58,7 @@ public class SnippetInsightsClient
   ///
   /// allow put method for a custom path with minimal parameters
   /// </summary>
-  public async Task SnippetForCustomPut0()
+  public async Task SnippetForInsightsClientCustomPut()
   {
     // Initialize the client
     var client = new InsightsClient(
@@ -74,7 +74,7 @@ public class SnippetInsightsClient
   ///
   /// deleteUserToken0
   /// </summary>
-  public async Task SnippetForDeleteUserToken0()
+  public async Task SnippetForInsightsClientDeleteUserToken()
   {
     // Initialize the client
     var client = new InsightsClient(
@@ -90,7 +90,7 @@ public class SnippetInsightsClient
   ///
   /// pushEvents0
   /// </summary>
-  public async Task SnippetForPushEvents0()
+  public async Task SnippetForInsightsClientPushEvents()
   {
     // Initialize the client
     var client = new InsightsClient(
