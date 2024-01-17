@@ -5,6 +5,10 @@ def union(expected, received)
     return expected
   end
 
+  if received.nil?
+    return nil
+  end
+
   expected.each do |key, value|
     if received.key?(key)
       if value.is_a?(Array)

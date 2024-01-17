@@ -51,11 +51,11 @@
         klass = openapi_discriminator_mapping[discriminator_value.to_s.to_sym]
         return nil unless klass
 
-        {{moduleName}}.const_get(klass).build_from_hash(data)
+        {{moduleName}}::{{modelModule}}.const_get(klass).build_from_hash(data)
       {{/-first}}
       {{/mappedModels}}
       {{^mappedModels}}
-        {{moduleName}}.const_get(discriminator_value).build_from_hash(data)
+        {{moduleName}}::{{modelModule}}.const_get(discriminator_value).build_from_hash(data)
       {{/mappedModels}}
       {{/discriminator}}
       {{^discriminator}}
@@ -114,7 +114,7 @@
             return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
           end
         else # model
-          const = {{moduleName}}.const_get(klass)
+          const = {{moduleName}}::{{modelModule}}.const_get(klass)
           if const
             if const.respond_to?(:openapi_one_of) # nested oneOf model
               model = const.build(data)

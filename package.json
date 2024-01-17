@@ -15,7 +15,7 @@
     "docker:setup": "./scripts/docker/setup.sh",
     "fix:json": "eslint --ext=json . --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "postinstall": "husky install && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts tsc",
+    "postinstall": "husky install && yarn workspace eslint-plugin-automation-custom build && yarn scripts:build",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "release": "yarn workspace scripts createReleasePR",
     "scripts:build": "yarn workspace scripts build",
