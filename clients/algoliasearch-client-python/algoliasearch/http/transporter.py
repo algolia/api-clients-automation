@@ -59,7 +59,7 @@ class Transporter:
         if use_read_transporter:
             self._timeout = request_options.timeouts["read"]
             self._hosts = self._config.hosts.read()
-            if request_options.data is not None and isinstance(request_options.data, dict):
+            if isinstance(request_options.data, dict):
                 query_parameters.update(request_options.data)
             return query_parameters
 
