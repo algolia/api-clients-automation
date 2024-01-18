@@ -7,7 +7,6 @@ use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -229,14 +228,13 @@ class SearchTest extends TestCase implements HttpClientInterface
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     * @param mixed $region
      *
      * @return SearchClient
      */
-    private function createClient($appId, $apiKey, $region = '')
+    private function createClient($appId, $apiKey)
     {
         $config = SearchConfig::create($appId, $apiKey);
-        $clusterHosts = ClusterHosts::createFromAppId($appId);
+        $clusterHosts = SearchClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new SearchClient($api, $config);

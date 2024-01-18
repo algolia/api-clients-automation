@@ -149,11 +149,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      */
     private function createClient($appId, $apiKey, $region = 'us')
     {
-        $config = QuerySuggestionsConfig::create(
-            $appId,
-            $apiKey,
-            $region
-        );
+        $config = QuerySuggestionsConfig::create($appId, $apiKey, $region);
         $clusterHosts = QuerySuggestionsClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 

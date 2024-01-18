@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, require-await */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { MonitoringClient } from '@algolia/monitoring';
 import { monitoringClient } from '@algolia/monitoring';
@@ -51,9 +50,15 @@ describe('commonApi', () => {
 });
 
 describe('parameters', () => {
-  test('uses the correct region', async () => {
+  test('use the correct host', async () => {
     const $client = monitoringClient('my-app-id', 'my-api-key', {
       requester: echoRequester(),
     });
+
+    const result = (await $client.customDelete({
+      path: '/test',
+    })) as unknown as EchoResponse;
+
+    expect(result.host).toEqual('status.algolia.com');
   });
 });

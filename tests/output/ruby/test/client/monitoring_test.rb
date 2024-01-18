@@ -41,5 +41,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
       'my-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+    req = client.custom_delete_with_http_info("/test")
+    assert_equal('status.algolia.com', req.host.url)
   end
 end

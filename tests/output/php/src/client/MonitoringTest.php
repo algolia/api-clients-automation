@@ -7,7 +7,6 @@ use Algolia\AlgoliaSearch\Configuration\MonitoringConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -97,7 +96,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case : uses the correct region.
+     * Test case : use the correct host.
      */
     public function test0parameters()
     {
@@ -107,19 +106,25 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+        $client->customDelete(
+            '/test',
+        );
+        $this->assertEquals(
+            'status.algolia.com',
+            $this->recordedRequest['request']->getUri()->getHost()
+        );
     }
 
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     * @param mixed $region
      *
      * @return MonitoringClient
      */
-    private function createClient($appId, $apiKey, $region = '')
+    private function createClient($appId, $apiKey)
     {
         $config = MonitoringConfig::create($appId, $apiKey);
-        $clusterHosts = ClusterHosts::createFromAppId($appId);
+        $clusterHosts = MonitoringClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new MonitoringClient($api, $config);
