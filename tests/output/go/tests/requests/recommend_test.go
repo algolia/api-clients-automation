@@ -1,4 +1,4 @@
-package tests
+package requests
 
 import (
 	"encoding/json"
@@ -8,20 +8,22 @@ import (
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
+	"gotests/tests"
+
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createRecommendClient() (*recommend.APIClient, *echoRequester) {
-	echo := &echoRequester{}
+func createRecommendClient() (*recommend.APIClient, *tests.EchoRequester) {
+	echo := &tests.EchoRequester{}
 	cfg := recommend.Configuration{
-		AppID:     "appID",
-		ApiKey:    "apiKey",
-		Requester: echo,
+		Configuration: transport.Configuration{
+			AppID:     "appID",
+			ApiKey:    "apiKey",
+			Requester: echo,
+		},
 	}
-	client := recommend.NewClientWithConfig(cfg)
-
-	// so that the linter doesn't complain
-	_ = jsonassert.New(nil)
+	client, _ := recommend.NewClientWithConfig(cfg)
 
 	return client, echo
 }
@@ -37,10 +39,10 @@ func TestRecommend_CustomDelete(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -50,14 +52,14 @@ func TestRecommend_CustomDelete(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -73,10 +75,10 @@ func TestRecommend_CustomGet(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -86,14 +88,14 @@ func TestRecommend_CustomGet(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -109,11 +111,11 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{}`)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -123,15 +125,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
@@ -144,15 +146,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
@@ -165,15 +167,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
@@ -186,20 +188,20 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
 		for k, v := range headers {
-			require.Equal(t, v, echo.header.Get(k))
+			require.Equal(t, v, echo.Header.Get(k))
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
@@ -212,20 +214,20 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
 		for k, v := range headers {
-			require.Equal(t, v, echo.header.Get(k))
+			require.Equal(t, v, echo.Header.Get(k))
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
@@ -238,15 +240,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
@@ -259,15 +261,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
@@ -281,15 +283,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
@@ -303,15 +305,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
@@ -325,15 +327,15 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -349,11 +351,11 @@ func TestRecommend_CustomPut(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{}`)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -363,15 +365,15 @@ func TestRecommend_CustomPut(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -387,10 +389,10 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/objectID")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -405,10 +407,10 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/objectID")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -423,10 +425,10 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/task/12345")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -444,11 +446,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}`)
 	})
 	t.Run("get recommendations for recommend model with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -465,11 +467,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
 	})
 	t.Run("get recommendations for trending model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -482,11 +484,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}`)
 	})
 	t.Run("get recommendations for trending model with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -503,11 +505,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
 	})
 	t.Run("get multiple recommendations with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -521,11 +523,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}`)
 	})
 	t.Run("get multiple recommendations with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -547,11 +549,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
 	})
 	t.Run("get frequently bought together recommendations", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -564,11 +566,11 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}`)
 	})
 }
 
@@ -583,10 +585,10 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/search")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{}`)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 }
