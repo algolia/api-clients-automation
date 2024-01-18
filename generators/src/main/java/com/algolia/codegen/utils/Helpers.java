@@ -131,9 +131,13 @@ public class Helpers {
         regionalHost = url.getHost();
       }
 
-      if (servers.size() == 1 && hostWithFallback.isEmpty() && !hasRegionalHost) {
-        URL url = new URL(servers.get(0).url);
-        bundle.put("uniqueHost", url.getHost());
+      if (!hasRegionalHost) {
+        if (servers.size() == 1 && hostWithFallback.isEmpty()) {
+          URL url = new URL(servers.get(0).url);
+          bundle.put("uniqueHost", url.getHost());
+        } else {
+          bundle.put("hostWithAppID", true);
+        }
       }
 
       bundle.put("hostWithFallback", hostWithFallback);

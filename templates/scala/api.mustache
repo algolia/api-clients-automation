@@ -60,7 +60,7 @@ object {{classname}} {
     Seq(Host(url = url, callTypes = Set(CallType.Read, CallType.Write)))
   }
   {{/hasRegionalHost}}
-  {{^hasRegionalHost}}
+  {{#hostWithAppID}}
   private def hosts(appId: String): Seq[Host] = {
     val commonHosts = Random.shuffle(
       List(
@@ -74,7 +74,12 @@ object {{classname}} {
       Host(appId + ".algolia.net", Set(CallType.Write))
     ) ++ commonHosts
   }
-  {{/hasRegionalHost}}
+  {{/hostWithAppID}}
+  {{#uniqueHost}}
+  private def hosts(): Seq[Host] = {
+    List(Host("{{.}}", Set(CallType.Read, CallType.Write)))
+  }
+  {{/uniqueHost}}
 }
 
 class {{classname}}(
@@ -86,7 +91,7 @@ class {{classname}}(
       appId = appId,
       apiKey = apiKey,
       clientName = "{{{baseName}}}",
-      defaultHosts = {{^hasRegionalHost}}hosts(appId){{/hasRegionalHost}}{{#hasRegionalHost}}hosts(region){{/hasRegionalHost}},
+      defaultHosts = hosts({{#hostWithAppID}}appId{{/hostWithAppID}}{{#hasRegionalHost}}region{{/hasRegionalHost}}),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
