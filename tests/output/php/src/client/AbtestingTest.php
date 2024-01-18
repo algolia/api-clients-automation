@@ -105,8 +105,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             'my-api-key',
             null
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
         $client->getABTest(
             123,
@@ -127,8 +125,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             'my-api-key',
             'us'
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
         $client->getABTest(
             123,

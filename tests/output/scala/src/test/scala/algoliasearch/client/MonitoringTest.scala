@@ -40,7 +40,6 @@ class MonitoringTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -56,7 +55,6 @@ class MonitoringTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -70,7 +68,6 @@ class MonitoringTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
@@ -78,6 +75,5 @@ class MonitoringTest extends AnyFunSuite {
   test("uses the correct region") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key")
-
   }
 }

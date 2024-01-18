@@ -21,7 +21,6 @@ class TestInsightsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -33,7 +32,6 @@ class TestInsightsClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -43,7 +41,6 @@ class TestInsightsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
@@ -51,7 +48,6 @@ class TestInsightsClient:
         self._client = InsightsClient(
             transporter=EchoTransporter(InsightsConfig("my-app-id", "my-api-key"))
         )
-
         _req = await self._client.push_events_with_http_info(
             insights_events={
                 "events": [
@@ -75,18 +71,15 @@ class TestInsightsClient:
                 ],
             },
         )
-
         assert _req.host == "insights.algolia.io"
 
     async def test_parameters_1(self):
         self._client = InsightsClient(
             transporter=EchoTransporter(InsightsConfig("my-app-id", "my-api-key", "us"))
         )
-
         _req = await self._client.custom_delete_with_http_info(
             path="/test",
         )
-
         assert _req.host == "insights.us.algolia.io"
 
     async def test_parameters_2(self):
@@ -96,6 +89,5 @@ class TestInsightsClient:
                     InsightsConfig("my-app-id", "my-api-key", "not_a_region")
                 )
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`region` must be one of the following: de, us"

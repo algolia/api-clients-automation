@@ -30,7 +30,6 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
-
     client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -41,7 +40,6 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
-
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -55,7 +53,6 @@ class RecommendClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +

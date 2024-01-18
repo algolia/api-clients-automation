@@ -71,7 +71,6 @@ describe('parameters', () => {
         'not_a_region',
         { requester: echoRequester() }
       );
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(

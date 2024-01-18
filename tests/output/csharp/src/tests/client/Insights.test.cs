@@ -23,7 +23,6 @@ public class InsightsClientTests
     var client = new InsightsClient(new InsightsConfig("appId", "apiKey", "us"), _echo);
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
-
     {
       var regexp = new Regex(
         "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"

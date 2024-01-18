@@ -23,7 +23,6 @@ public class IngestionClientTests
     var client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
-
     {
       var regexp = new Regex(
         "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
