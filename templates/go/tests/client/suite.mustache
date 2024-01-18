@@ -1,0 +1,73 @@
+package client
+
+import (
+  "encoding/json"
+  "net/url"
+  "testing"
+  "regexp"
+
+  "github.com/kinbiko/jsonassert"
+  "github.com/stretchr/testify/require"
+
+  "gotests/tests"
+
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+)
+
+func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
+  echo := &tests.EchoRequester{}
+  cfg := {{clientPrefix}}.Configuration{
+    Configuration: transport.Configuration{
+      AppID:     "appID",
+      ApiKey:    "apiKey",
+      Requester: echo,
+    },{{#hasRegionalHost}}
+    Region:    {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}}
+  }
+  client, err := {{clientPrefix}}.NewClientWithConfig(cfg)
+  require.NoError(t, err)
+
+  return client, echo
+}
+
+{{#blocksClient}}
+{{#tests}}
+func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
+  var err error
+  {{#autoCreateClient}}
+  client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+  _ = echo
+  {{/autoCreateClient}}
+  {{^autoCreateClient}}
+  echo := &tests.EchoRequester{}
+  var client *{{clientPrefix}}.APIClient
+  var cfg {{clientPrefix}}.Configuration
+  _ = client
+  {{/autoCreateClient}}
+  {{#steps}}
+  {{#isError}}
+  {{> tests/client/step}}
+  require.EqualError(t, err, "{{{expectedError}}}")
+  {{/isError}}
+  {{^isError}}
+  require.NoError(t, err)
+  {{> tests/client/step}}
+  {{#match}}
+  {{#testUserAgent}}
+  require.Regexp(t, regexp.MustCompile(`{{{match}}}`), echo.Header.Get("User-Agent"))
+  {{/testUserAgent}}
+  {{#testTimeouts}}
+  require.Equal(t, int64({{{match.parametersWithDataTypeMap.connectTimeout.value}}}), echo.ConnectTimeout.Milliseconds())
+  require.Equal(t, int64({{{match.parametersWithDataTypeMap.responseTimeout.value}}}), echo.Timeout.Milliseconds())
+  {{/testTimeouts}}
+  {{#testHost}}
+  require.Equal(t, "{{{match}}}", echo.Host)
+  {{/testHost}}
+  {{/match}}
+  {{/isError}}
+  {{/steps}}
+}
+
+{{/tests}}
+{{/blocksClient}}

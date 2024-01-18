@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import static org.apache.commons.lang3.StringUtils.*;
 
 import com.algolia.codegen.utils.*;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
@@ -102,9 +103,12 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("packageVersion", version);
+  }
 
-    // Generate server info
-    Helpers.generateServer(client, additionalProperties);
+  @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
   }
 
   @Override

@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.IOException;
@@ -121,13 +122,12 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
     supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
+  }
 
-    try {
-      Helpers.generateServer(CLIENT, additionalProperties);
-    } catch (GeneratorException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
+  @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
   }
 
   @Override

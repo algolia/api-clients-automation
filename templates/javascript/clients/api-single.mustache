@@ -22,7 +22,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
   }: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: getDefaultHosts({{^hasRegionalHost}}appIdOption{{/hasRegionalHost}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
+    hosts: getDefaultHosts({{#hostWithAppID}}appIdOption{{/hostWithAppID}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,

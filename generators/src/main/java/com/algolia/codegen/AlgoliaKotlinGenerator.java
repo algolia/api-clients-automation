@@ -1,9 +1,9 @@
 package com.algolia.codegen;
 
-import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
@@ -114,14 +114,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
     additionalProperties.put("packageVersion", Helpers.getClientConfigField("kotlin", "packageVersion"));
-
-    try {
-      Helpers.generateServer(client, additionalProperties);
-      hostForKotlin();
-    } catch (GeneratorException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
   }
 
   /** Convert a Seq type to a valid class name. */
@@ -129,7 +121,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return content.trim().replace("<", "Of").replace(">", "").replace(", ", "").replace(".", "");
   }
 
-  private void hostForKotlin() {
+  @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+
     String host = (String) additionalProperties.get("regionalHost");
     if (host != null) {
       String hostForKotlin = host.replaceAll("\\{([^}]+)}", "\\$$1");

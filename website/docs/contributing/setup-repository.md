@@ -39,6 +39,11 @@ The swift images takes a really long time to build (~5 minutes) because of swift
 
 :::
 
+## Tooling
+
+Install the CLI tool by following the instructions at the top of [scripts/install.sh](https://github.com/algolia/api-clients-automation/blob/main/scripts/install.sh) to acces `apic` from your terminal, with bash autocompletion.
+You can run `apic help` to check if it's working properly.
+
 #### Clean
 
 > Stops all containers and clean the images
