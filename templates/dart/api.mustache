@@ -40,7 +40,7 @@ final class {{classname}} implements ApiClient {
             appId: appId,
             apiKey: apiKey,
             options: options,
-            {{^hasRegionalHost}}
+            {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
               Host(url: '$appId.algolia.net', callType: CallType.write),
@@ -52,7 +52,7 @@ final class {{classname}} implements ApiClient {
                   Host(url: '$appId-3.algolianet.com'),
                 ]..shuffle()
             ),
-            {{/hasRegionalHost}}
+            {{/hostWithAppID}}
             {{#hasRegionalHost}}
             defaultHosts: () {
               final allowedRegions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}];
@@ -66,6 +66,9 @@ final class {{classname}} implements ApiClient {
               return [Host(url: url)];
             }  
             {{/hasRegionalHost}}
+            {{#uniqueHost}}
+            defaultHosts: () => [Host(url: '{{{.}}}')],
+            {{/uniqueHost}}
             ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');

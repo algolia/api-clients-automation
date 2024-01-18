@@ -25,7 +25,7 @@ public class {{classname}}(
   }
 
   override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, options = options) {
-  {{^hasRegionalHost}}
+  {{#hostWithAppID}}
     listOf(
       Host("$appId-dsn.algolia.net", CallType.Read),
       Host("$appId.algolia.net", CallType.Write),
@@ -34,7 +34,7 @@ public class {{classname}}(
       Host("$appId-2.algolianet.com"),
       Host("$appId-3.algolianet.com")
     ).apply { shuffle() }
-  {{/hasRegionalHost}}
+  {{/hostWithAppID}}
   {{#hasRegionalHost}}
     val allowedRegions = listOf({{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}})
     {{^fallbackToAliasHost}}
@@ -46,6 +46,9 @@ public class {{classname}}(
     val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
     listOf(Host(url)) 
   {{/hasRegionalHost}}
+  {{#uniqueHost}}
+  listOf(Host("{{.}}"))
+  {{/uniqueHost}}
   }
 
   {{#operation}}

@@ -48,7 +48,9 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
     supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));
 
-    setDefaultGeneratorOptions(client);
+    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("configClassname", getClientName(client) + "Config");
+
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("php", "packageVersion"));
     } catch (GeneratorException e) {
@@ -68,15 +70,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
-  /** Set default generator options */
-  public void setDefaultGeneratorOptions(String client) {
-    if (client.equals("search") || client.equals("recommend")) {
-      additionalProperties.put("useCache", true);
-    }
-    additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("configClassname", getClientName(client) + "Config");
-  }
-
+  @Override
   public String getComposerPackageName() {
     return "algolia/algoliasearch-client-php";
   }
