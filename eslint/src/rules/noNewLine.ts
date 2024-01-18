@@ -28,8 +28,9 @@ export const noNewLine: Rule.RuleModule = {
       node: code.ast,
       messageId: 'noNewLine',
       fix(fixer) {
+        const toRemove = code.text.length - code.text.trimEnd().length;
         return fixer.removeRange([
-          code.text.length - code.lines[code.lines.length - 1].length - 1,
+          code.text.length - toRemove,
           code.text.length,
         ]);
       },

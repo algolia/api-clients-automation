@@ -28,5 +28,13 @@ multiple lines`,
       errors: [{ messageId: 'noNewLine' }],
       output: `single line`,
     },
+    {
+      code: `multiple new lines
+
+
+      `,
+      errors: [{ messageId: 'noNewLine' }],
+      output: `multiple new lines`,
+    }
   ],
 });
