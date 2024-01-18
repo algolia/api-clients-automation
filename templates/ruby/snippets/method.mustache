@@ -10,7 +10,7 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}
   client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create('YOUR_APP_ID','YOUR_API_KEY'{{#hasRegionalHost}},'YOUR_APP_ID_REGION'{{/hasRegionalHost}})
 
   # Call the API
-  resp = client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+  resp = client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
   # use the class directly
   puts resp

@@ -21,7 +21,6 @@ class TestAbtestingClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Abtesting (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -33,7 +32,6 @@ class TestAbtestingClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -43,7 +41,6 @@ class TestAbtestingClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
@@ -51,11 +48,9 @@ class TestAbtestingClient:
         self._client = AbtestingClient(
             transporter=EchoTransporter(AbtestingConfig("my-app-id", "my-api-key"))
         )
-
         _req = await self._client.get_ab_test_with_http_info(
             id=123,
         )
-
         assert _req.host == "analytics.algolia.com"
 
     async def test_parameters_1(self):
@@ -64,11 +59,9 @@ class TestAbtestingClient:
                 AbtestingConfig("my-app-id", "my-api-key", "us")
             )
         )
-
         _req = await self._client.get_ab_test_with_http_info(
             id=123,
         )
-
         assert _req.host == "analytics.us.algolia.com"
 
     async def test_parameters_2(self):
@@ -78,6 +71,5 @@ class TestAbtestingClient:
                     AbtestingConfig("my-app-id", "my-api-key", "not_a_region")
                 )
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`region` must be one of the following: de, us"

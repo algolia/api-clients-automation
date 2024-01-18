@@ -45,7 +45,6 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -61,7 +60,6 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -75,7 +73,6 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
@@ -90,7 +87,6 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "data.us.algolia.com")
   }
 
@@ -98,7 +94,6 @@ class IngestionTest extends AnyFunSuite {
 
     assertError("`region` is required and must be one of the following: eu, us") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "not_a_region")
-
     }
   }
 }

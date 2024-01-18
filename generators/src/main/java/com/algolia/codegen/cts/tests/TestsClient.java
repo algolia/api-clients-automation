@@ -57,6 +57,7 @@ public class TestsClient extends TestsGenerator {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Object> steps = new ArrayList<>();
+          testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
@@ -64,14 +65,15 @@ public class TestsClient extends TestsGenerator {
             Map<String, Object> stepOut = new HashMap<>();
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
-              stepOut.put("isCreateClient", true);
+              stepOut.put("stepTemplate", "tests/client/createClient.mustache");
+              stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
                 throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
-              stepOut.put("returnType", ope.returnType);
-              stepOut.put("isMethod", true);
+              stepOut.put("stepTemplate", "tests/client/method.mustache");
+              stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
             }
 
             stepOut.put("object", step.object);
@@ -100,6 +102,10 @@ public class TestsClient extends TestsGenerator {
             if (step.expected.error != null) {
               stepOut.put("isError", true);
               stepOut.put("expectedError", step.expected.error);
+              if (language.equals("go") && step.path != null) {
+                // hack for go that use PascalCase, but just in the operationID
+                stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
+              }
             } else if (step.expected.match != null) {
               if (step.expected.match instanceof Map) {
                 Map<String, Object> match = new HashMap<>();

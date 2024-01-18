@@ -34,7 +34,6 @@ class IngestionClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +
@@ -76,7 +75,6 @@ class IngestionClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest0() {
     IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", buildClientOptions());
-
     client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
 

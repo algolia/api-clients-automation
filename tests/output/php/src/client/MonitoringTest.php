@@ -106,8 +106,6 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             'my-api-key',
             null
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
     }
 

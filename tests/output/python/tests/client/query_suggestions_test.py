@@ -21,7 +21,6 @@ class TestQuerySuggestionsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; QuerySuggestions (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -33,7 +32,6 @@ class TestQuerySuggestionsClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -43,7 +41,6 @@ class TestQuerySuggestionsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
@@ -54,7 +51,6 @@ class TestQuerySuggestionsClient:
                     QuerySuggestionsConfig("my-app-id", "my-api-key", "")
                 )
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)
@@ -68,7 +64,6 @@ class TestQuerySuggestionsClient:
                     QuerySuggestionsConfig("my-app-id", "my-api-key", "not_a_region")
                 )
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)

@@ -45,7 +45,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -61,7 +60,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -75,7 +73,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
@@ -90,7 +87,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "analytics.algolia.com")
   }
 
@@ -104,7 +100,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "analytics.us.algolia.com")
   }
 
@@ -112,7 +107,6 @@ class AbtestingTest extends AnyFunSuite {
 
     assertError("`region` must be one of the following: de, us") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "not_a_region")
-
     }
   }
 }
