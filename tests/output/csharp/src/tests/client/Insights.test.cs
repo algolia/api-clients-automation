@@ -57,7 +57,6 @@ public class InsightsClientTests
   public async Task ParametersTest0()
   {
     var client = new InsightsClient(new InsightsConfig("my-app-id", "my-api-key"), _echo);
-
     await client.PushEventsAsync(
       new InsightsEvents
       {
@@ -89,7 +88,6 @@ public class InsightsClientTests
   public async Task ParametersTest1()
   {
     var client = new InsightsClient(new InsightsConfig("my-app-id", "my-api-key", "us"), _echo);
-
     await client.CustomDeleteAsync("/test");
     EchoResponse result = _echo.LastResponse;
 

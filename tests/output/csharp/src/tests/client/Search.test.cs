@@ -21,7 +21,6 @@ public class SearchClientTests
   public async Task ApiTest0()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
-
     await client.CustomGetAsync("/test");
     EchoResponse result = _echo.LastResponse;
 
@@ -32,7 +31,6 @@ public class SearchClientTests
   public async Task ApiTest1()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
-
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
 
