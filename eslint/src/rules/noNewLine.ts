@@ -15,20 +15,22 @@ export const noNewLine: Rule.RuleModule = {
       return {};
     }
 
+    const code = context.sourceCode;
+
     if (
-      context.sourceCode.lines.length < 2 ||
-      context.sourceCode.lines[context.sourceCode.lines.length - 1].length > 0
+      code.lines.length < 2 ||
+      code.lines[code.lines.length - 1].trim().length > 0
     ) {
       return {};
     }
 
     context.report({
-      node: context.sourceCode.ast,
+      node: code.ast,
       messageId: 'noNewLine',
       fix(fixer) {
         return fixer.removeRange([
-          context.sourceCode.lineStartIndices.at(-1) - 1,
-          context.sourceCode.lineStartIndices.at(-1),
+          code.text.length - code.lines[code.lines.length - 1].length - 1,
+          code.text.length,
         ]);
       },
     });

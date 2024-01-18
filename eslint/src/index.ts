@@ -15,6 +15,8 @@ const rules = {
   'no-new-line': noNewLine,
 };
 
+// Custom parser for ESLint, to read plain text file like mustache.
+// It returns a fake AST, because we only care about the source code.
 function parseForESLint(): any {
   return {
     ast: {
