@@ -43,7 +43,7 @@ func DefaultHTTPClient(connectTimeout *time.Duration) *http.Client {
 }
 
 type Requester interface {
-	Request(req *http.Request, timout time.Duration, connectTimeout time.Duration) (*http.Response, error)
+	Request(req *http.Request, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error)
 }
 
 type defaultRequester struct {
