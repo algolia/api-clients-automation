@@ -26,7 +26,6 @@ public class PersonalizationClientTests
     );
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
-
     {
       var regexp = new Regex(
         "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Personalization (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"

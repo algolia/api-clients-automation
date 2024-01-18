@@ -45,7 +45,6 @@ public class SearchClientTests
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
-
     {
       var regexp = new Regex(
         "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"

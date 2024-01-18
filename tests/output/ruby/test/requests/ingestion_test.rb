@@ -18,45 +18,77 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # createAuthenticationOAuth
   def test_create_authentication0
-    req = @client.create_authentication_with_http_info(AuthenticationCreate.new(type: 'oauth', name: "authName",
-                                                                                input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")))
+    req = @client.create_authentication_with_http_info(
+      AuthenticationCreate.new(
+        type: 'oauth',
+        name: "authName",
+        input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}'), JSON.parse(req.body)
+    )
   end
 
   # createAuthenticationAlgolia
   def test_create_authentication1
-    req = @client.create_authentication_with_http_info(AuthenticationCreate.new(type: 'algolia', name: "authName",
-                                                                                input: AuthAlgolia.new(app_id: "myappID", api_key: "randomApiKey")))
+    req = @client.create_authentication_with_http_info(
+      AuthenticationCreate.new(
+        type: 'algolia',
+        name: "authName",
+        input: AuthAlgolia.new(app_id: "myappID", api_key: "randomApiKey")
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}'), JSON.parse(req.body)
+    )
   end
 
   # createDestination
   def test_create_destination0
-    req = @client.create_destination_with_http_info(DestinationCreate.new(type: 'search', name: "destinationName",
-                                                                          input: DestinationIndexPrefix.new(index_prefix: "prefix_"), authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+    req = @client.create_destination_with_http_info(
+      DestinationCreate.new(
+        type: 'search',
+        name: "destinationName",
+        input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+        authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/destinations', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
-                 JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'), JSON.parse(req.body)
+    )
   end
 
   # createSource
   def test_create_source0
-    req = @client.create_source_with_http_info(SourceCreate.new(type: 'commercetools', name: "sourceName",
-                                                                input: SourceCommercetools.new(store_keys: ["myStore"], locales: ["de"], url: "http://commercetools.com", project_key: "keyID"), authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+    req = @client.create_source_with_http_info(
+      SourceCreate.new(
+        type: 'commercetools',
+        name: "sourceName",
+        input: SourceCommercetools.new(
+          store_keys: ["myStore"],
+          locales: ["de"],
+          url: "http://commercetools.com",
+          project_key: "keyID"
+        ),
+        authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/sources', req.path)
@@ -69,38 +101,62 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # createTaskOnDemand
   def test_create_task0
-    req = @client.create_task_with_http_info(TaskCreate.new(source_id: "search", destination_id: "destinationName", trigger: OnDemandTriggerInput.new(type: 'onDemand'),
-                                                            action: 'replace'))
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        trigger: OnDemandTriggerInput.new(type: 'onDemand'),
+        action: 'replace'
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body)
+    )
   end
 
   # createTaskSchedule
   def test_create_task1
-    req = @client.create_task_with_http_info(TaskCreate.new(source_id: "search", destination_id: "destinationName",
-                                                            trigger: ScheduleTriggerInput.new(type: 'schedule', cron: "* * * * *"), action: 'replace'))
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        trigger: ScheduleTriggerInput.new(type: 'schedule', cron: "* * * * *"),
+        action: 'replace'
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}'), JSON.parse(req.body)
+    )
   end
 
   # createTaskSubscription
   def test_create_task2
-    req = @client.create_task_with_http_info(TaskCreate.new(source_id: "search", destination_id: "destinationName", trigger:   OnDemandTriggerInput.new(type: 'onDemand'),
-                                                            action: 'replace'))
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        trigger: OnDemandTriggerInput.new(type: 'onDemand'),
+        action: 'replace'
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body)
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -164,7 +220,11 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # allow post method for a custom path with all parameters
   def test_custom_post1
-    req = @client.custom_post_with_http_info("/test/all", { query: "parameters" }, { body: "parameters" })
+    req = @client.custom_post_with_http_info(
+      "/test/all",
+      { query: "parameters" },
+      { body: "parameters" }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/all', req.path)
@@ -175,108 +235,171 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # requestOptions can override default query parameters
   def test_custom_post2
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"query":"myQueryParameter"}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"query":"myQueryParameter"}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "myQueryParameter" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions merges query parameters with default ones
   def test_custom_post3
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"query2":"myQueryParameter"}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"query2":"myQueryParameter"}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'query2': "myQueryParameter" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters",
+         'query2': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions can override default headers
   def test_custom_post4
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
-    assert(({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(
+      ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
+    )
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions merges headers with default ones
   def test_custom_post5
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
-    assert(({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(
+      ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
+    )
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions queryParameters accepts booleans
   def test_custom_post6
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"isItWorking":true}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"isItWorking":true}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'isItWorking': "true" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters", 'isItWorking': "true" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions queryParameters accepts integers
   def test_custom_post7
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"myParam":2}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"myParam":2}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'myParam': "2" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters", 'myParam': "2" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions queryParameters accepts list of string
   def test_custom_post8
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"myParam":["c","d"]}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"myParam":["c","d"]}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'myParam': "c,d" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters", 'myParam': "c,d" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions queryParameters accepts list of booleans
   def test_custom_post9
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"myParam":[true,true,false]}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"myParam":[true,true,false]}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'myParam': "true,true,false" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters",
+         'myParam': "true,true,false" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
 
   # requestOptions queryParameters accepts list of integers
   def test_custom_post10
-    req = @client.custom_post_with_http_info("/test/requestOptions", { query: "parameters" }, { facet: "filters" },
-                                             { :query_params => JSON.parse('{"myParam":[1,2]}', :symbolize_names => true) })
+    req = @client.custom_post_with_http_info(
+      "/test/requestOptions",
+      { query: "parameters" },
+      { facet: "filters" },
+      { :query_params => JSON.parse('{"myParam":[1,2]}', :symbolize_names => true) }
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters", 'myParam': "1,2" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters", 'myParam': "1,2" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -294,7 +417,11 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # allow put method for a custom path with all parameters
   def test_custom_put1
-    req = @client.custom_put_with_http_info("/test/all", { query: "parameters" }, { body: "parameters" })
+    req = @client.custom_put_with_http_info(
+      "/test/all",
+      { query: "parameters" },
+      { body: "parameters" }
+    )
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/all', req.path)
@@ -433,10 +560,15 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # getEvent
   def test_get_event0
-    req = @client.get_event_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
+    req = @client.get_event_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+    )
 
     assert_equal(:get, req.method)
-    assert_equal('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c', req.path)
+    assert_equal(
+      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c', req.path
+    )
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -539,48 +671,78 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # searchAuthentications
   def test_search_authentications0
-    req = @client.search_authentications_with_http_info(AuthenticationSearch.new(authentication_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                                                                                                      "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+    req = @client.search_authentications_with_http_info(
+      AuthenticationSearch.new(
+        authentication_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        ]
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications/search', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
+    )
   end
 
   # searchDestinations
   def test_search_destinations0
-    req = @client.search_destinations_with_http_info(DestinationSearch.new(destination_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                                                                                             "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+    req = @client.search_destinations_with_http_info(
+      DestinationSearch.new(
+        destination_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        ]
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/destinations/search', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
+    )
   end
 
   # searchSources
   def test_search_sources0
-    req = @client.search_sources_with_http_info(SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+    req = @client.search_sources_with_http_info(
+      SourceSearch.new(
+        source_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        ]
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/sources/search', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
+    )
   end
 
   # searchTasks
   def test_search_tasks0
-    req = @client.search_tasks_with_http_info(TaskSearch.new(task_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+    req = @client.search_tasks_with_http_info(
+      TaskSearch.new(
+        task_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        ]
+      )
+    )
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks/search', req.path)
     assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
+    )
   end
 
   # triggerDockerSourceDiscover
@@ -595,7 +757,10 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # updateAuthentication
   def test_update_authentication0
-    req = @client.update_authentication_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", AuthenticationUpdate.new(name: "newName"))
+    req = @client.update_authentication_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      AuthenticationUpdate.new(name: "newName")
+    )
 
     assert_equal(:patch, req.method)
     assert_equal('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
@@ -606,7 +771,10 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # updateDestination
   def test_update_destination0
-    req = @client.update_destination_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", DestinationUpdate.new(name: "newName"))
+    req = @client.update_destination_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      DestinationUpdate.new(name: "newName")
+    )
 
     assert_equal(:patch, req.method)
     assert_equal('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
@@ -617,7 +785,10 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # updateSource
   def test_update_source0
-    req = @client.update_source_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName"))
+    req = @client.update_source_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      SourceUpdate.new(name: "newName")
+    )
 
     assert_equal(:patch, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
@@ -628,7 +799,10 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # updateTask
   def test_update_task0
-    req = @client.update_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdate.new(enabled: false))
+    req = @client.update_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TaskUpdate.new(enabled: false)
+    )
 
     assert_equal(:patch, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)

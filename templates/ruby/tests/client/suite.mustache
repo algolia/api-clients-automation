@@ -17,13 +17,13 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     {{#steps}}
     {{#isError}}
     begin
-      {{> tests/client/step}}
+      {{#dynamicTemplate}}{{/dynamicTemplate}}
     rescue => e
       assert_equal({{#lambda.codeSnakeCase}}'{{{expectedError}}}'{{/lambda.codeSnakeCase}}, e.message)
     end
     {{/isError}}
     {{^isError}}
-    {{> tests/client/step}}
+    {{#dynamicTemplate}}{{/dynamicTemplate}}
     {{#match}}
     {{#testUserAgent}}
     assert(req.headers['user-agent'].match(/{{{match}}}/))

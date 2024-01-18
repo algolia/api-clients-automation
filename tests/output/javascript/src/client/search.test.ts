@@ -80,7 +80,6 @@ describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {
       const $client = searchClient('', '', { requester: echoRequester() });
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
@@ -89,7 +88,6 @@ describe('parameters', () => {
       const $client = searchClient('', 'my-api-key', {
         requester: echoRequester(),
       });
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
@@ -98,7 +96,6 @@ describe('parameters', () => {
       const $client = searchClient('my-app-id', '', {
         requester: echoRequester(),
       });
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
@@ -110,7 +107,6 @@ describe('parameters', () => {
 
     try {
       const result = (await $client.addApiKey(null)) as unknown as EchoResponse;
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
@@ -127,7 +123,6 @@ describe('parameters', () => {
         objectID: 'my-object-id',
         body: {},
       })) as unknown as EchoResponse;
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
@@ -139,7 +134,6 @@ describe('parameters', () => {
         indexName: 'my-index-name',
         body: {},
       })) as unknown as EchoResponse;
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
@@ -151,7 +145,6 @@ describe('parameters', () => {
         indexName: 'my-index-name',
         objectID: 'my-object-id',
       })) as unknown as EchoResponse;
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(

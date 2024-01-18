@@ -41,7 +41,6 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
 
@@ -55,7 +54,6 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
   }
 
@@ -68,7 +66,6 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -84,7 +81,6 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -98,7 +94,6 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
@@ -107,17 +102,14 @@ class SearchTest extends AnyFunSuite {
 
     assertError("`appId` is missing.") {
       val (client, echo) = testClient(appId = "", apiKey = "")
-
     }
 
     assertError("`appId` is missing.") {
       val (client, echo) = testClient(appId = "", apiKey = "my-api-key")
-
     }
 
     assertError("`apiKey` is missing.") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "")
-
     }
   }
 
@@ -131,7 +123,6 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-
     }
   }
 
@@ -147,7 +138,6 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-
     }
 
     assertError("Parameter `objectID` is required when calling `addOrUpdateObject`.") {
@@ -159,7 +149,6 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-
     }
 
     assertError("Parameter `body` is required when calling `addOrUpdateObject`.") {
@@ -171,7 +160,6 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-
     }
   }
 }

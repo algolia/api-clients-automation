@@ -23,7 +23,6 @@ public class MonitoringClientTests
     var client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
     await client.CustomPostAsync("/test");
     EchoResponse result = _echo.LastResponse;
-
     {
       var regexp = new Regex(
         "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Monitoring (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"

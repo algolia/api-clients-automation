@@ -8,8 +8,13 @@ def snippet_for_create_authentication
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.create_authentication(AuthenticationCreate.new(type: 'oauth', name: "authName",
-                                                               input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")))
+  resp = client.create_authentication(
+    AuthenticationCreate.new(
+      type: 'oauth',
+      name: "authName",
+      input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+    )
+  )
 
   # use the class directly
   puts resp
@@ -26,8 +31,14 @@ def snippet_for_create_destination
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.create_destination(DestinationCreate.new(type: 'search', name: "destinationName", input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
-                                                         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+  resp = client.create_destination(
+    DestinationCreate.new(
+      type: 'search',
+      name: "destinationName",
+      input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+      authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+  )
 
   # use the class directly
   puts resp
@@ -44,8 +55,19 @@ def snippet_for_create_source
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.create_source(SourceCreate.new(type: 'commercetools', name: "sourceName",
-                                               input: SourceCommercetools.new(store_keys: ["myStore"], locales: ["de"], url: "http://commercetools.com", project_key: "keyID"), authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+  resp = client.create_source(
+    SourceCreate.new(
+      type: 'commercetools',
+      name: "sourceName",
+      input: SourceCommercetools.new(
+        store_keys: ["myStore"],
+        locales: ["de"],
+        url: "http://commercetools.com",
+        project_key: "keyID"
+      ),
+      authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+  )
 
   # use the class directly
   puts resp
@@ -62,8 +84,14 @@ def snippet_for_create_task
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.create_task(TaskCreate.new(source_id: "search", destination_id: "destinationName", trigger: OnDemandTriggerInput.new(type: 'onDemand'),
-                                           action: 'replace'))
+  resp = client.create_task(
+    TaskCreate.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      trigger: OnDemandTriggerInput.new(type: 'onDemand'),
+      action: 'replace'
+    )
+  )
 
   # use the class directly
   puts resp
@@ -335,7 +363,10 @@ def snippet_for_get_event
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
+  resp = client.get_event(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+  )
 
   # use the class directly
   puts resp
@@ -488,7 +519,13 @@ def snippet_for_search_authentications
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.search_authentications(AuthenticationSearch.new(authentication_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+  resp = client.search_authentications(
+    AuthenticationSearch.new(
+      authentication_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+      ]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -505,7 +542,13 @@ def snippet_for_search_destinations
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.search_destinations(DestinationSearch.new(destination_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+  resp = client.search_destinations(
+    DestinationSearch.new(
+      destination_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+      ]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -522,7 +565,13 @@ def snippet_for_search_sources
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.search_sources(SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+  resp = client.search_sources(
+    SourceSearch.new(
+      source_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+      ]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -539,7 +588,13 @@ def snippet_for_search_tasks
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.search_tasks(TaskSearch.new(task_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]))
+  resp = client.search_tasks(
+    TaskSearch.new(
+      task_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+      ]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -573,7 +628,10 @@ def snippet_for_update_authentication
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.update_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", AuthenticationUpdate.new(name: "newName"))
+  resp = client.update_authentication(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    AuthenticationUpdate.new(name: "newName")
+  )
 
   # use the class directly
   puts resp
@@ -590,7 +648,10 @@ def snippet_for_update_destination
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", DestinationUpdate.new(name: "newName"))
+  resp = client.update_destination(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    DestinationUpdate.new(name: "newName")
+  )
 
   # use the class directly
   puts resp
@@ -607,7 +668,10 @@ def snippet_for_update_source
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName"))
+  resp = client.update_source(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    SourceUpdate.new(name: "newName")
+  )
 
   # use the class directly
   puts resp
@@ -624,7 +688,10 @@ def snippet_for_update_task
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.update_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdate.new(enabled: false))
+  resp = client.update_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    TaskUpdate.new(enabled: false)
+  )
 
   # use the class directly
   puts resp

@@ -19,22 +19,18 @@ class TestSearchClient:
         self._client = SearchClient(
             transporter=EchoTransporter(SearchConfig("test-app-id", "test-api-key"))
         )
-
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.host == "test-app-id-dsn.algolia.net"
 
     async def test_api_1(self):
         self._client = SearchClient(
             transporter=EchoTransporter(SearchConfig("test-app-id", "test-api-key"))
         )
-
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.host == "test-app-id.algolia.net"
 
     async def test_common_api_0(self):
@@ -43,7 +39,6 @@ class TestSearchClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -55,7 +50,6 @@ class TestSearchClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -65,7 +59,6 @@ class TestSearchClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
@@ -74,21 +67,18 @@ class TestSearchClient:
             self._client = SearchClient(
                 transporter=EchoTransporter(SearchConfig("", ""))
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
                 transporter=EchoTransporter(SearchConfig("", "my-api-key"))
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
             self._client = SearchClient(
                 transporter=EchoTransporter(SearchConfig("my-app-id", ""))
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`api_key` is missing."
 
@@ -99,7 +89,6 @@ class TestSearchClient:
             await self._client.add_api_key_with_http_info(
                 api_key=None,
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e) == "Parameter `api_key` is required when calling `add_api_key`."
@@ -114,7 +103,6 @@ class TestSearchClient:
                 object_id="my-object-id",
                 body={},
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)
@@ -126,7 +114,6 @@ class TestSearchClient:
                 object_id=None,
                 body={},
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)
@@ -138,7 +125,6 @@ class TestSearchClient:
                 object_id="my-object-id",
                 body=None,
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)
