@@ -30,12 +30,12 @@ public void Dispose()
     {{/autoCreateClient}}
     {{#steps}}
       {{#isError}}
-        _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{> tests/client/step}} });
+        _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{#dynamicTemplate}}{{/dynamicTemplate}} });
         Assert.Equal("{{{expectedError}}}".ToLowerInvariant(), _ex.Message.ToLowerInvariant());
 
       {{/isError}}
       {{^isError}}
-        {{> tests/client/step}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#match}}
           {{#testUserAgent}} {
             var regexp = new Regex("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}");

@@ -34,7 +34,6 @@ class PersonalizationClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +

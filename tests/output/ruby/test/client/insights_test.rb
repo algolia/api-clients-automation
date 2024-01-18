@@ -11,7 +11,6 @@ class TestClientInsightsClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_post_with_http_info("/test")
-
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
@@ -23,7 +22,6 @@ class TestClientInsightsClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_get_with_http_info("/test")
-
     assert_equal(2000, req.connect_timeout)
     assert_equal(5000, req.timeout)
   end
@@ -36,7 +34,6 @@ class TestClientInsightsClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_post_with_http_info("/test")
-
     assert_equal(2000, req.connect_timeout)
     assert_equal(30_000, req.timeout)
   end
@@ -47,7 +44,6 @@ class TestClientInsightsClient < Test::Unit::TestCase
       'my-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-
     req = client.push_events_with_http_info(
       InsightsEvents.new(
         events: [ClickedObjectIDsAfterSearch.new(
@@ -65,7 +61,6 @@ class TestClientInsightsClient < Test::Unit::TestCase
         )]
       )
     )
-
     assert_equal('insights.algolia.io', req.host.url)
   end
 
@@ -76,9 +71,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-
     req = client.custom_delete_with_http_info("/test")
-
     assert_equal('insights.us.algolia.io', req.host.url)
   end
 

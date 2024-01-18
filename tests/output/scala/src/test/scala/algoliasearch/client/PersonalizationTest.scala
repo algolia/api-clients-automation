@@ -45,7 +45,6 @@ class PersonalizationTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Personalization (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -61,7 +60,6 @@ class PersonalizationTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -75,7 +73,6 @@ class PersonalizationTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
@@ -84,7 +81,6 @@ class PersonalizationTest extends AnyFunSuite {
 
     assertError("`region` is required and must be one of the following: eu, us") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "")
-
     }
   }
 
@@ -92,13 +88,11 @@ class PersonalizationTest extends AnyFunSuite {
 
     assertError("`region` is required and must be one of the following: eu, us") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "not_a_region")
-
     }
   }
 
   test("does not throw when region is given") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "us")
-
   }
 }

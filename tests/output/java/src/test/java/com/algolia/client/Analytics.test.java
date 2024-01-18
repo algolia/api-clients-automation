@@ -34,7 +34,6 @@ class AnalyticsClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +
@@ -76,7 +75,6 @@ class AnalyticsClientClientTests {
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", buildClientOptions());
-
     client.getAverageClickPosition("my-index");
     EchoResponse result = echo.getLastResponse();
 
@@ -87,7 +85,6 @@ class AnalyticsClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", buildClientOptions());
-
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 

@@ -22,14 +22,14 @@ describe('{{testType}}', () => {
     {{#steps}}
       {{#isError}}
         try {
-          {{> tests/client/step}}
+          {{#dynamicTemplate}}{{/dynamicTemplate}}
           throw new Error('test is expected to throw error');
         } catch(e) {
           expect((e as Error).message).toMatch("{{{expectedError}}}");
         }
       {{/isError}}
       {{^isError}} 
-        {{> tests/client/step}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
 
         {{#testUserAgent}}
           expect(decodeURIComponent(result.algoliaAgent)).toMatch(/{{{match}}}/);

@@ -112,6 +112,8 @@ export const patterns = [
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
+  'tests/output/python/requirements.txt',
+
   // Ruby
   '!snippets/ruby/Gemfile',
   '!snippets/ruby/.rubocop.yml',
