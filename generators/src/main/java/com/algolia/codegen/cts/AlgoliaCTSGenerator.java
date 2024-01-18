@@ -9,7 +9,6 @@ import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
-import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -146,8 +145,6 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("hasRegionalHost", hasRegionalHost);
       if (hasRegionalHost) {
         bundle.put("defaultRegion", regionVariable.defaultValue);
-      } else if (servers.size() == 1) {
-        bundle.put("defaultRegion", new URL(servers.get(0).url).getHost());
       }
       bundle.put("lambda", lambda);
 
