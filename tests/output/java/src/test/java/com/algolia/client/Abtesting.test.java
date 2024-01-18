@@ -34,7 +34,6 @@ class AbtestingClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +
@@ -76,7 +75,6 @@ class AbtestingClientClientTests {
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", buildClientOptions());
-
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
 
@@ -87,7 +85,6 @@ class AbtestingClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "us", buildClientOptions());
-
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
 

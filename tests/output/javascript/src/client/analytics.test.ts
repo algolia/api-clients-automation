@@ -83,7 +83,6 @@ describe('parameters', () => {
         'not_a_region',
         { requester: echoRequester() }
       );
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
@@ -99,7 +98,6 @@ describe('parameters', () => {
       const result = (await $client.getClickPositions(
         {}
       )) as unknown as EchoResponse;
-
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(

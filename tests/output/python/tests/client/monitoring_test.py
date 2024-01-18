@@ -21,7 +21,6 @@ class TestMonitoringClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Monitoring (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -33,7 +32,6 @@ class TestMonitoringClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -43,7 +41,6 @@ class TestMonitoringClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 

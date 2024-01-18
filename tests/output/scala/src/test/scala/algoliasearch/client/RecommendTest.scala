@@ -41,7 +41,6 @@ class RecommendTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
 
@@ -55,7 +54,6 @@ class RecommendTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
   }
 
@@ -68,7 +66,6 @@ class RecommendTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Recommend (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
     val header = echo.lastResponse.get.headers("user-agent")
@@ -84,7 +81,6 @@ class RecommendTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 5000)
   }
@@ -98,7 +94,6 @@ class RecommendTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-
     assert(echo.lastResponse.get.connectTimeout == 2000)
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
