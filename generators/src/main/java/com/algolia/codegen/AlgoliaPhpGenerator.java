@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
@@ -49,12 +50,17 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
     setDefaultGeneratorOptions(client);
     try {
-      Helpers.generateServer(client, additionalProperties);
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("php", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
   }
 
   @Override
