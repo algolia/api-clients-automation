@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
@@ -47,9 +48,10 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
     supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));
 
-    setDefaultGeneratorOptions(client);
+    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("configClassname", getClientName(client) + "Config");
+
     try {
-      Helpers.generateServer(client, additionalProperties);
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("php", "packageVersion"));
     } catch (GeneratorException e) {
       e.printStackTrace();
@@ -58,19 +60,17 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   }
 
   @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+  }
+
+  @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
-  /** Set default generator options */
-  public void setDefaultGeneratorOptions(String client) {
-    if (client.equals("search") || client.equals("recommend")) {
-      additionalProperties.put("useCache", true);
-    }
-    additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("configClassname", getClientName(client) + "Config");
-  }
-
+  @Override
   public String getComposerPackageName() {
     return "algolia/algoliasearch-client-php";
   }

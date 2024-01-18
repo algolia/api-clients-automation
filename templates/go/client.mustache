@@ -66,7 +66,7 @@ func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
     if {{^fallbackToAliasHost}}cfg.Region == "" || {{/fallbackToAliasHost}}(cfg.Region != "" && !slices.Contains(allowedRegions[:], string(cfg.Region))) {
       return nil, fmt.Errorf("`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: %s", strings.Join(allowedRegions[:], ", "))
     }{{/hasRegionalHost}}
-    hosts = getDefaultHosts({{#hasRegionalHost}}cfg.Region{{/hasRegionalHost}}{{^hasRegionalHost}}cfg.AppID{{/hasRegionalHost}})
+    hosts = getDefaultHosts({{#hasRegionalHost}}cfg.Region{{/hasRegionalHost}}{{#hostWithAppID}}cfg.AppID{{/hostWithAppID}})
   } else {
     for _, h := range cfg.Hosts {
       hosts = append(hosts, transport.NewStatefulHost(h, call.IsReadWrite))
@@ -103,7 +103,7 @@ func getDefaultHosts(r Region) []*transport.StatefulHost {
   return []*transport.StatefulHost{transport.NewStatefulHost(strings.ReplaceAll("{{{regionalHost}}}", "{region}", string(r)), call.IsReadWrite)}
 }
 {{/hasRegionalHost}}
-{{^hasRegionalHost}}
+{{#hostWithAppID}}
 func getDefaultHosts(appID string) []*transport.StatefulHost {
 	hosts := []*transport.StatefulHost{
 		transport.NewStatefulHost(appID + "-dsn.algolia.net", call.IsRead),
@@ -118,7 +118,13 @@ func getDefaultHosts(appID string) []*transport.StatefulHost {
 	)...)
 	return hosts
 }
-{{/hasRegionalHost}}
+{{/hostWithAppID}}
+{{#uniqueHost}}
+func getDefaultHosts() []*transport.StatefulHost {
+  return []*transport.StatefulHost{transport.NewStatefulHost("{{{.}}}", call.IsReadWrite)}
+}
+{{/uniqueHost}}
+
 func getUserAgent() string {
   return fmt.Sprintf("Algolia for Go ({{{packageVersion}}}); Go (%s); {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}} ({{{packageVersion}}})", runtime.Version())
 }

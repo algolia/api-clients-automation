@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
@@ -77,7 +78,6 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     nameMapping.putAll(NAME_MAPPING);
 
     try {
-      Helpers.generateServer(client, additionalProperties);
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("scala", "packageVersion"));
     } catch (GeneratorException e) {
       logger.severe(e.getMessage());
@@ -88,6 +88,12 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   /** Convert a Seq type to a valid class name. */
   private String typeToName(String content) {
     return content.trim().replace("[", "Of").replace("]", "").replace(".", "").replace(", ", "");
+  }
+
+  @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
   }
 
   @Override

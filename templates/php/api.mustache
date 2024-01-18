@@ -113,7 +113,7 @@ use {{invokerPackage}}\Support\Helpers;
      */
     public static function getClusterHosts({{configClassname}} $config)
     {
-        {{#useCache}}
+        {{#hostWithAppID}}
         $cacheKey = sprintf('%s-clusterHosts-%s', __CLASS__, $config->getAppId());
 
         if ($hosts = $config->getHosts()) {
@@ -125,9 +125,9 @@ use {{invokerPackage}}\Support\Helpers;
             $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
                 ->setCacheKey($cacheKey);
         }
-        {{/useCache}}
+        {{/hostWithAppID}}
 
-        {{^useCache}}
+        {{#hasRegionalHost}}
         if ($hosts = $config->getHosts()) {
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
@@ -137,7 +137,16 @@ use {{invokerPackage}}\Support\Helpers;
                 '{{{hostWithFallback}}}';
             $clusterHosts = ClusterHosts::create($url);
         }
-        {{/useCache}}
+        {{/hasRegionalHost}}
+
+        {{#uniqueHost}}
+        if ($hosts = $config->getHosts()) {
+            // If a list of hosts was passed, we ignore the cache
+            $clusterHosts = ClusterHosts::create($hosts);
+        } else {
+            $clusterHosts = ClusterHosts::create('{{.}}');
+        }
+        {{/uniqueHost}}
 
         return $clusterHosts;
     }
