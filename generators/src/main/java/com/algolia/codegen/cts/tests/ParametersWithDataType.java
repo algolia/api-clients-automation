@@ -5,12 +5,10 @@ import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 
@@ -330,9 +328,7 @@ public class ParametersWithDataType {
     }
 
     Map<String, Object> vars = (Map<String, Object>) param;
-    List<Object> values = new ArrayList<>();
-    List<Object> requiredValues = new ArrayList<>();
-    List<Object> optionalValues = new ArrayList<>();
+    List<Map<String, Object>> values = new ArrayList<>();
     for (Entry<String, Object> entry : vars.entrySet()) {
       IJsonSchemaValidationProperties varSpec = null;
       for (CodegenProperty vs : spec.getVars()) {
@@ -373,20 +369,19 @@ public class ParametersWithDataType {
       } else {
         Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false);
         values.add(transformedParam);
-
-        if (varSpec instanceof CodegenProperty property) {
-          if (property.required) {
-            requiredValues.add(transformedParam);
-          } else {
-            optionalValues.add(transformedParam);
-          }
-        }
       }
     }
+
+    // Store ordered params from the spec
+    var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+
+    // Create a map to store the indices of each string in orderedParams
+    Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size()).boxed().collect(Collectors.toMap(orderedParams::get, i -> i));
+
+    values.sort(Comparator.comparing(value -> indexMap.get((String) value.get("key"))));
+
     testOutput.put("isObject", true);
     testOutput.put("value", values);
-    testOutput.put("requiredValue", requiredValues);
-    testOutput.put("optionalValue", optionalValues);
   }
 
   private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
