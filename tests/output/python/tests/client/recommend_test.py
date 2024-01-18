@@ -19,22 +19,18 @@ class TestRecommendClient:
         self._client = RecommendClient(
             transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
         )
-
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.host == "test-app-id-dsn.algolia.net"
 
     async def test_api_1(self):
         self._client = RecommendClient(
             transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
         )
-
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.host == "test-app-id.algolia.net"
 
     async def test_common_api_0(self):
@@ -43,7 +39,6 @@ class TestRecommendClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -55,7 +50,6 @@ class TestRecommendClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -65,6 +59,5 @@ class TestRecommendClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000

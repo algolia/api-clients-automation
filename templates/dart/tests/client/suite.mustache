@@ -22,13 +22,13 @@ void main() {
     expectError(
       '{{{expectedError}}}',
       () {
-        {{> tests/client/step}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
       },
     );
     {{/isError}}
     {{^isError}}
     {{#isCreateClient}}
-    {{> tests/client/create_client}}
+    {{> tests/client/createClient}}
     {{/isCreateClient}}
     {{#isMethod}}
      runTest(

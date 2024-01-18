@@ -49,8 +49,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             'test-api-key',
             null
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
         $client->customGet(
             '/test',
@@ -71,8 +69,6 @@ class RecommendTest extends TestCase implements HttpClientInterface
             'test-api-key',
             null
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
         $client->customPost(
             '/test',

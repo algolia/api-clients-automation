@@ -137,8 +137,6 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             'my-api-key',
             'us'
         );
-
-        // Make sure everything went fine without errors
         $this->assertIsObject($client);
     }
 

@@ -9,9 +9,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'test-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-
     req = client.custom_get_with_http_info("/test")
-
     assert_equal('test-app-id-dsn.algolia.net', req.host.url)
   end
 
@@ -21,9 +19,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'test-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-
     req = client.custom_post_with_http_info("/test")
-
     assert_equal('test-app-id.algolia.net', req.host.url)
   end
 
@@ -34,7 +30,6 @@ class TestClientSearchClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_post_with_http_info("/test")
-
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
@@ -45,7 +40,6 @@ class TestClientSearchClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_get_with_http_info("/test")
-
     assert_equal(2000, req.connect_timeout)
     assert_equal(5000, req.timeout)
   end
@@ -57,7 +51,6 @@ class TestClientSearchClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     req = client.custom_post_with_http_info("/test")
-
     assert_equal(2000, req.connect_timeout)
     assert_equal(30_000, req.timeout)
   end
@@ -112,17 +105,23 @@ class TestClientSearchClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     begin
-      client.add_or_update_object_with_http_info(nil,  "my-object-id", {})
+      client.add_or_update_object_with_http_info(nil, "my-object-id", {})
     rescue => e
-      assert_equal('Parameter `index_name` is required when calling `add_or_update_object`.', e.message)
+      assert_equal(
+        'Parameter `index_name` is required when calling `add_or_update_object`.',
+        e.message
+      )
     end
     begin
-      client.add_or_update_object_with_http_info("my-index-name",  nil, {})
+      client.add_or_update_object_with_http_info("my-index-name", nil, {})
     rescue => e
-      assert_equal('Parameter `object_id` is required when calling `add_or_update_object`.', e.message)
+      assert_equal(
+        'Parameter `object_id` is required when calling `add_or_update_object`.',
+        e.message
+      )
     end
     begin
-      client.add_or_update_object_with_http_info("my-index-name",  "my-object-id", nil)
+      client.add_or_update_object_with_http_info("my-index-name", "my-object-id", nil)
     rescue => e
       assert_equal('Parameter `body` is required when calling `add_or_update_object`.', e.message)
     end

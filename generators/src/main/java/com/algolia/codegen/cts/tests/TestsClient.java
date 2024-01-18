@@ -64,16 +64,15 @@ public class TestsClient extends TestsGenerator {
             Map<String, Object> stepOut = new HashMap<>();
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
-              stepOut.put("isCreateClient", true);
-            } else if (step.type.equals("variable")) {
-              stepOut.put("isVariable", true);
+              stepOut.put("stepTemplate", "tests/client/createClient.mustache");
+              stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
                 throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
-              stepOut.put("returnType", ope.returnType);
-              stepOut.put("isMethod", true);
+              stepOut.put("stepTemplate", "tests/client/method.mustache");
+              stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
             }
 
             stepOut.put("object", step.object);

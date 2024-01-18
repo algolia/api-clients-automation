@@ -22,7 +22,7 @@ class {{clientPrefix}}Test {
         {{#steps}}
         {{#isError}}
         assertFails { 
-            {{> tests/client/step}}
+            {{#dynamicTemplate}}{{/dynamicTemplate}}
         }.let { error ->  assertError(error, "{{{expectedError}}}") }
         {{/isError}}
         {{^isError}}

@@ -31,7 +31,6 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
-
     client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -42,7 +41,6 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
-
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -56,7 +54,6 @@ class SearchClientClientTests {
 
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
-
     {
       String regexp =
         "^Algolia for Java \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+" +

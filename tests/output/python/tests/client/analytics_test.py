@@ -21,7 +21,6 @@ class TestAnalyticsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Analytics (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         )
@@ -33,7 +32,6 @@ class TestAnalyticsClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
@@ -43,7 +41,6 @@ class TestAnalyticsClient:
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
@@ -51,11 +48,9 @@ class TestAnalyticsClient:
         self._client = AnalyticsClient(
             transporter=EchoTransporter(AnalyticsConfig("my-app-id", "my-api-key"))
         )
-
         _req = await self._client.get_average_click_position_with_http_info(
             index="my-index",
         )
-
         assert _req.host == "analytics.algolia.com"
 
     async def test_parameters_1(self):
@@ -64,11 +59,9 @@ class TestAnalyticsClient:
                 AnalyticsConfig("my-app-id", "my-api-key", "de")
             )
         )
-
         _req = await self._client.custom_post_with_http_info(
             path="/test",
         )
-
         assert _req.host == "analytics.de.algolia.com"
 
     async def test_parameters_2(self):
@@ -78,7 +71,6 @@ class TestAnalyticsClient:
                     AnalyticsConfig("my-app-id", "my-api-key", "not_a_region")
                 )
             )
-
         except (ValueError, Exception) as e:
             assert str(e) == "`region` must be one of the following: de, us"
 
@@ -89,7 +81,6 @@ class TestAnalyticsClient:
             await self._client.get_click_positions_with_http_info(
                 index=None,
             )
-
         except (ValueError, Exception) as e:
             assert (
                 str(e)
