@@ -79,6 +79,12 @@ public class Helpers {
     return s.replace('-', '_').replaceAll("(.+?)([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
   }
 
+  // test_input -> TestInput
+  // test-input -> TestInput
+  public static String toPascalCase(String s) {
+    return Arrays.stream(s.split("[_-]")).map(Helpers::capitalize).reduce("", String::concat);
+  }
+
   /** Inject server info into the client to generate the right URL */
   public static void generateServer(String clientKebab, Map<String, Object> additionalProperties) throws ConfigException {
     Yaml yaml = new Yaml();

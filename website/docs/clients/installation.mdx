@@ -356,7 +356,7 @@ import (
 
 func main() {
   // Instantiate the client
-  searchClient := search.NewClient("<YOUR_APP_ID>", "<YOUR_API_KEY>")
+  searchClient, _ := search.NewClient("<YOUR_APP_ID>", "<YOUR_API_KEY>")
 
   // Add a new record to your Algolia index.
   response, err := searchClient.AddOrUpdateObject(

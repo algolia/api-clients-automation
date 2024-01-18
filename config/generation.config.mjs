@@ -41,10 +41,12 @@ export const patterns = [
   'clients/algoliasearch-client-go/algolia/**',
   '!clients/algoliasearch-client-go/.github/**',
   '!clients/algoliasearch-client-go/*',
-  '!clients/algoliasearch-client-go/algolia/internal/**',
+  '!clients/algoliasearch-client-go/algolia/transport/**',
+  '!clients/algoliasearch-client-go/algolia/errs/**',
   '!clients/algoliasearch-client-go/algolia/call/*',
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
+  '!clients/algoliasearch-client-go/algolia/utils/*',
 
   'tests/output/go/go.sum',
 
