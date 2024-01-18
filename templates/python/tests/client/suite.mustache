@@ -25,12 +25,12 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         {{#steps}}
         {{#isError}}
         try:
-            {{> tests/client/step}}
+            {{#dynamicTemplate}}{{/dynamicTemplate}}
         except (ValueError, Exception) as e:
             assert str(e) == {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}}
         {{/isError}}
         {{^isError}}
-        {{> tests/client/step}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#match}}
         {{#testUserAgent}}
         regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}")
