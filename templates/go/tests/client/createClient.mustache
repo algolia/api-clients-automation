@@ -1,0 +1,9 @@
+cfg = {{clientPrefix}}.Configuration{
+  Configuration: transport.Configuration{
+    AppID:     "{{parametersWithDataTypeMap.appId.value}}",
+    ApiKey:    "{{parametersWithDataTypeMap.apiKey.value}}",
+    Requester: echo,
+  },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
+  Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
+}
+client, err = {{clientPrefix}}.NewClientWithConfig(cfg)
