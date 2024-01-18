@@ -1,0 +1,75 @@
+import XCTest
+#if canImport(AnyCodable)
+  import AnyCodable
+#endif
+
+@testable import Core
+@testable import {{import}}
+
+let APPLICATION_ID = ""
+let API_KEY = ""
+
+final class {{client}}RequestsTests: XCTestCase {
+  {{#blocksRequests}}
+    {{#tests}}
+      /**
+      {{description}}
+      */
+      func test{{method}}Test{{testIndex}}() async throws {
+        let statusCode: HTTPStatusСode = 200
+        let configuration: {{import}}.Configuration = {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder(statusCode: statusCode))
+        let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
+
+      {{#hasRequestOptions}}
+        let requestOptions = RequestOptions(
+          queryParameters: [
+            {{#requestOptions.queryParameters.parametersWithDataType}}
+              "{{{key}}}": {{> tests/generateParams }},
+            {{/requestOptions.queryParameters.parametersWithDataType}}
+          ],
+          headers: [
+            {{#requestOptions.headers.parametersWithDataType}}
+              "{{{key}}}": {{> tests/generateParams }},
+            {{/requestOptions.headers.parametersWithDataType}}
+          ]
+        )
+        {{/hasRequestOptions}}
+
+      {{#hasParameters}}
+        {{#parametersWithDataType}}
+          let {{> tests/generateParams }}
+        {{/parametersWithDataType}}
+      {{/hasParameters}}
+
+        let response = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{#isRoot}}{{key}}: {{key}}{{/isRoot}}{{^last}}, {{/last}}{{/parametersWithDataType}}{{/hasParameters}}requestOptions: {{#hasRequestOptions}}requestOptions{{/hasRequestOptions}}{{^hasRequestOptions}}nil{{/hasRequestOptions}})
+
+        {{#request}}
+        {{#body}}
+          let bodyData = try XCTUnwrap(response.bodyData)
+          let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: bodyData)
+
+          let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+          let comparableObject = try CodableHelper.jsonDecoder.decode({{#parametersWithDataType}}{{#isRoot}}{{objectName}}{{/isRoot}}{{/parametersWithDataType}}.self, from: comparableData)
+
+          let echoResponseBody = try XCTUnwrap(echoResponse.originalBodyData)
+          let echoResponseObject = try CodableHelper.jsonDecoder.decode({{#parametersWithDataType}}{{#isRoot}}{{objectName}}{{/isRoot}}{{/parametersWithDataType}}.self, from: echoResponseBody)
+
+          XCTAssertEqual(echoResponseObject, comparableObject)
+        {{/body}}
+        {{^body}}
+          {{#assertNullBody}}
+            XCTAssertNil(echoResponse.originalBodyData)
+          {{/assertNullBody}}
+          {{^assertNullBody}}
+            XCTAssertEqual(echoResponse.originalBodyData, "{}");
+          {{/assertNullBody}}
+        {{/body}}
+        XCTAssertEqual(echoResponse.path, "{{path}}")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.{{#lambda.lowercase}}{{&method}}{{/lambda.lowercase}})
+        {{/request}}
+      }
+    {{/tests}}
+
+  {{/blocksRequests}}
+}

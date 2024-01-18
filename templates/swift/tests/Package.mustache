@@ -1,0 +1,24 @@
+// swift-tools-version: 5.9
+// {{{generationBanner}}}
+
+import PackageDescription
+
+let package = Package(
+  name: "AlgoliaSearchClientTests",
+  dependencies: [
+    .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
+    .package(path: "../../../clients/algoliasearch-client-swift"),
+  ],
+  targets: [
+    .testTarget(
+      name: "requests",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),{{#packageList}}
+        .product(
+          name: "{{.}}",
+          package: "algoliasearch-client-swift"
+        ),{{/packageList}}
+      ]
+    )
+  ]
+)

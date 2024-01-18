@@ -1,0 +1,10 @@
+{{#isObject}}{{> tests/paramKey}}{{#oneOfModel}}{{parentClassName}}.{{#lambda.camelcase}}{{type}}{{/lambda.camelcase}}({{/oneOfModel}}{{objectName}}(
+  {{#value}}{{> tests/generateParams}}{{^-last}},
+  {{/-last}}{{/value}}
+){{#oneOfModel}}){{/oneOfModel}}{{/isObject}}{{#isString}}{{> tests/paramKey}}{{#isAnyType}}AnyCodable({{/isAnyType}}"{{{value}}}"{{#isAnyType}}){{/isAnyType}}{{/isString}}{{#isNumber}}{{> tests/paramKey}}{{{value}}}{{/isNumber}}{{#isBoolean}}{{> tests/paramKey}}{{{value}}}{{/isBoolean}}{{#isEnum}}{{> tests/paramKey}}Enum{{{.}}}{{/isEnum}}{{#isArray}}{{> tests/paramKey}}[
+  {{#value}}{{> tests/generateParams}}{{^-last}},
+  {{/-last}}{{/value}}
+]{{/isArray}}{{#isMap}}{{> tests/paramKey}}Map[{{{.}}}]{{/isMap}}{{#isFreeFormObject}}{{> tests/paramKey}}[
+  {{#value}}{{>tests/generateParams}}{{^-last}},
+  {{/-last}}{{/value}}
+]{{/isFreeFormObject}}

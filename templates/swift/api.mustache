@@ -72,7 +72,8 @@ typealias Client = {{classname}}
     {{/isDeprecated}}
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) async throws{{#returnType}} -> {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{/returnType}} {
-    {{#returnType}}let response: Response<{{{returnType}}}> = {{/returnType}}try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions){{#returnType}}
+    {{#returnType}}let response: Response<{{{returnType}}}> = {{/returnType}}try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions)
+    {{#returnType}}
 
         guard let body = response.body else {
             throw TransportError.missingData
@@ -113,13 +114,17 @@ typealias Client = {{classname}}
         {{/bodyParam}}
         {{^bodyParam}}
           let body: AnyCodable? = nil
-{{/bodyParam}}{{#hasQueryParams}}
+        {{/bodyParam}}
+        {{#hasQueryParams}}
         let queryItems = APIHelper.mapValuesToQueryItems([{{^queryParams}}:{{/queryParams}}
             {{#queryParams}}
             {{> _param}},
             {{/queryParams}}
-        ]){{/hasQueryParams}}{{^hasQueryParams}}
-        let queryItems: [URLQueryItem]? = nil{{/hasQueryParams}}
+        ])
+        {{/hasQueryParams}}
+        {{^hasQueryParams}}
+          let queryItems: [URLQueryItem]? = nil
+        {{/hasQueryParams}}
 
         let nillableHeaders: [String: Any?]? = [{{^headerParams}}{{^hasFormParams}}
             :{{/hasFormParams}}{{/headerParams}}{{#headerParams}}
