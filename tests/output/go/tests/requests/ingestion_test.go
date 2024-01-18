@@ -1,4 +1,4 @@
-package tests
+package requests
 
 import (
 	"encoding/json"
@@ -8,21 +8,23 @@ import (
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
+	"gotests/tests"
+
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createIngestionClient() (*ingestion.APIClient, *echoRequester) {
-	echo := &echoRequester{}
+func createIngestionClient() (*ingestion.APIClient, *tests.EchoRequester) {
+	echo := &tests.EchoRequester{}
 	cfg := ingestion.Configuration{
-		AppID:     "appID",
-		ApiKey:    "apiKey",
-		Region:    ingestion.US,
-		Requester: echo,
+		Configuration: transport.Configuration{
+			AppID:     "appID",
+			ApiKey:    "apiKey",
+			Requester: echo,
+		},
+		Region: ingestion.US,
 	}
-	client := ingestion.NewClientWithConfig(cfg)
-
-	// so that the linter doesn't complain
-	_ = jsonassert.New(nil)
+	client, _ := ingestion.NewClientWithConfig(cfg)
 
 	return client, echo
 }
@@ -40,11 +42,11 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}`)
+		ja.Assertf(*echo.Body, `{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}`)
 	})
 	t.Run("createAuthenticationAlgolia", func(t *testing.T) {
 		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
@@ -56,11 +58,11 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}`)
+		ja.Assertf(*echo.Body, `{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}`)
 	})
 }
 
@@ -77,11 +79,11 @@ func TestIngestion_CreateDestination(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 }
 
@@ -100,11 +102,11 @@ func TestIngestion_CreateSource(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 }
 
@@ -121,11 +123,11 @@ func TestIngestion_CreateTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 	t.Run("createTaskSchedule", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
@@ -137,11 +139,11 @@ func TestIngestion_CreateTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`)
 	})
 	t.Run("createTaskSubscription", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
@@ -153,11 +155,11 @@ func TestIngestion_CreateTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 }
 
@@ -172,10 +174,10 @@ func TestIngestion_CustomDelete(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -185,14 +187,14 @@ func TestIngestion_CustomDelete(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -208,10 +210,10 @@ func TestIngestion_CustomGet(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -221,14 +223,14 @@ func TestIngestion_CustomGet(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -244,11 +246,11 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{}`)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -258,15 +260,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
@@ -279,15 +281,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
@@ -300,15 +302,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
@@ -321,20 +323,20 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
 		for k, v := range headers {
-			require.Equal(t, v, echo.header.Get(k))
+			require.Equal(t, v, echo.Header.Get(k))
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
@@ -347,20 +349,20 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
 		for k, v := range headers {
-			require.Equal(t, v, echo.header.Get(k))
+			require.Equal(t, v, echo.Header.Get(k))
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
@@ -373,15 +375,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
@@ -394,15 +396,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
@@ -416,15 +418,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c,d"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
@@ -438,15 +440,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true,true,false"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
@@ -460,15 +462,15 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"facet":"filters"}`)
+		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1,2"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -484,11 +486,11 @@ func TestIngestion_CustomPut(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/minimal")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{}`)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -498,15 +500,15 @@ func TestIngestion_CustomPut(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/test/all")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"body":"parameters"}`)
+		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		for k, v := range queryParams {
-			require.Equal(t, v, echo.query.Get(k))
+			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 }
@@ -522,10 +524,10 @@ func TestIngestion_DeleteAuthentication(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -540,10 +542,10 @@ func TestIngestion_DeleteDestination(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -558,10 +560,10 @@ func TestIngestion_DeleteSource(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -576,10 +578,10 @@ func TestIngestion_DeleteTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "DELETE", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "DELETE", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -594,10 +596,10 @@ func TestIngestion_DisableTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.body)
+		require.Empty(t, echo.Body)
 	})
 }
 
@@ -612,10 +614,10 @@ func TestIngestion_EnableTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PUT", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.body)
+		require.Empty(t, echo.Body)
 	})
 }
 
@@ -630,10 +632,10 @@ func TestIngestion_GetAuthentication(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -646,10 +648,10 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -664,10 +666,10 @@ func TestIngestion_GetDestination(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -680,10 +682,10 @@ func TestIngestion_GetDestinations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -698,10 +700,10 @@ func TestIngestion_GetDockerSourceStreams(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -716,10 +718,10 @@ func TestIngestion_GetEvent(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -734,10 +736,10 @@ func TestIngestion_GetEvents(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -752,10 +754,10 @@ func TestIngestion_GetRun(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -768,10 +770,10 @@ func TestIngestion_GetRuns(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/runs")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -786,10 +788,10 @@ func TestIngestion_GetSource(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -802,10 +804,10 @@ func TestIngestion_GetSources(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -820,10 +822,10 @@ func TestIngestion_GetTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -836,10 +838,10 @@ func TestIngestion_GetTasks(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "GET", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "GET", echo.Method)
 
-		require.Nil(t, echo.body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -854,10 +856,10 @@ func TestIngestion_RunTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.body)
+		require.Empty(t, echo.Body)
 	})
 }
 
@@ -874,11 +876,11 @@ func TestIngestion_SearchAuthentications(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications/search")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		ja.Assertf(*echo.Body, `{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -895,11 +897,11 @@ func TestIngestion_SearchDestinations(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations/search")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		ja.Assertf(*echo.Body, `{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -916,11 +918,11 @@ func TestIngestion_SearchSources(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/search")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		ja.Assertf(*echo.Body, `{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -937,11 +939,11 @@ func TestIngestion_SearchTasks(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/search")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		ja.Assertf(*echo.Body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -956,10 +958,10 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "POST", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.body)
+		require.Empty(t, echo.Body)
 	})
 }
 
@@ -975,11 +977,11 @@ func TestIngestion_UpdateAuthentication(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PATCH", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"name":"newName"}`)
+		ja.Assertf(*echo.Body, `{"name":"newName"}`)
 	})
 }
 
@@ -995,11 +997,11 @@ func TestIngestion_UpdateDestination(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PATCH", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"name":"newName"}`)
+		ja.Assertf(*echo.Body, `{"name":"newName"}`)
 	})
 }
 
@@ -1015,11 +1017,11 @@ func TestIngestion_UpdateSource(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PATCH", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"name":"newName"}`)
+		ja.Assertf(*echo.Body, `{"name":"newName"}`)
 	})
 }
 
@@ -1035,10 +1037,10 @@ func TestIngestion_UpdateTask(t *testing.T) {
 
 		expectedPath, err := url.QueryUnescape("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.path)
-		require.Equal(t, "PATCH", echo.method)
+		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.body, `{"enabled":false}`)
+		ja.Assertf(*echo.Body, `{"enabled":false}`)
 	})
 }
