@@ -175,5 +175,14 @@ module.exports = {
 
       plugins: ['json-format'],
     },
+    {
+      files: ['templates/**/*.mustache'],
+
+      parser: 'eslint-plugin-automation-custom',
+      plugins: ['automation-custom'],
+      rules: {
+        'automation-custom/no-new-line': 'error',
+      },
+    }
   ],
 };
