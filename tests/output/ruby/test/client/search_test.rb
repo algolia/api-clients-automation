@@ -112,17 +112,23 @@ class TestClientSearchClient < Test::Unit::TestCase
       { requester: Algolia::Transport::EchoRequester.new }
     )
     begin
-      client.add_or_update_object_with_http_info(nil,  "my-object-id", {})
+      client.add_or_update_object_with_http_info(nil, "my-object-id", {})
     rescue => e
-      assert_equal('Parameter `index_name` is required when calling `add_or_update_object`.', e.message)
+      assert_equal(
+        'Parameter `index_name` is required when calling `add_or_update_object`.',
+        e.message
+      )
     end
     begin
-      client.add_or_update_object_with_http_info("my-index-name",  nil, {})
+      client.add_or_update_object_with_http_info("my-index-name", nil, {})
     rescue => e
-      assert_equal('Parameter `object_id` is required when calling `add_or_update_object`.', e.message)
+      assert_equal(
+        'Parameter `object_id` is required when calling `add_or_update_object`.',
+        e.message
+      )
     end
     begin
-      client.add_or_update_object_with_http_info("my-index-name",  "my-object-id", nil)
+      client.add_or_update_object_with_http_info("my-index-name", "my-object-id", nil)
     rescue => e
       assert_equal('Parameter `body` is required when calling `add_or_update_object`.', e.message)
     end

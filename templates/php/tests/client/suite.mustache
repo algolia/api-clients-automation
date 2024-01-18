@@ -69,59 +69,43 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         {{/autoCreateClient}}
         {{#steps}}
             {{#isError}}
-                {{#isCreateClient}}
-                try {
-                    {{> tests/client/createClient}}
-                } catch (\Exception $e) {
-                    $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
-                }
-                {{/isCreateClient}}
-                {{#isMethod}}
-                try {
-                    {{> tests/client/method}}
-                } catch (\Exception $e) {
-                    $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
-                }
-                {{/isMethod}}
+              try {
+                  {{#dynamicTemplate}}{{/dynamicTemplate}}
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
+              }
             {{/isError}}
             {{^isError}}
-                {{#isCreateClient}}
-                    {{> tests/client/createClient}}
-                    // Make sure everything went fine without errors
-                    $this->assertIsObject($client);
-                {{/isCreateClient}}
-                {{#isMethod}}
-                    {{> tests/client/method}}
-                    {{#match}}
-                        {{#testUserAgent}}
-                        $this->assertTrue(
-                            (bool) preg_match(
-                                '/{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}/',
-                                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-                            )
-                        );
-                        {{/testUserAgent}}
-                        {{#testHost}}
-                        $this->assertEquals(
-                            '{{{match}}}',
-                            $this->recordedRequest['request']->getUri()->getHost()
-                        );
-                        {{/testHost}}
-                        {{#testTimeouts}}
-                        $this->assertEquals(
-                            {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
-                            $this->recordedRequest['connectTimeout']
-                        );
-                    
-                        $this->assertEquals(
-                            {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
-                            $this->recordedRequest['responseTimeout']
-                        );
-                        {{/testTimeouts}}
-                        {{#testResult}}
-                        {{/testResult}}
-                    {{/match}}
-                {{/isMethod}}
+                {{#dynamicTemplate}}{{/dynamicTemplate}}
+                {{#match}}
+                    {{#testUserAgent}}
+                    $this->assertTrue(
+                        (bool) preg_match(
+                            '/{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}/',
+                            $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                        )
+                    );
+                    {{/testUserAgent}}
+                    {{#testHost}}
+                    $this->assertEquals(
+                        '{{{match}}}',
+                        $this->recordedRequest['request']->getUri()->getHost()
+                    );
+                    {{/testHost}}
+                    {{#testTimeouts}}
+                    $this->assertEquals(
+                        {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
+                        $this->recordedRequest['connectTimeout']
+                    );
+                
+                    $this->assertEquals(
+                        {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
+                        $this->recordedRequest['responseTimeout']
+                    );
+                    {{/testTimeouts}}
+                    {{#testResult}}
+                    {{/testResult}}
+                {{/match}}
             {{/isError}}
         {{/steps}}
     }

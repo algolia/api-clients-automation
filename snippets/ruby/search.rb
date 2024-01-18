@@ -8,8 +8,15 @@ def snippet_for_add_api_key
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.add_api_key(ApiKey.new(acl: ['search', 'addObject'], description: "my new api key", validity: 300, max_queries_per_ip_per_hour: 100,
-                                       max_hits_per_query: 20))
+  resp = client.add_api_key(
+    ApiKey.new(
+      acl: ['search', 'addObject'],
+      description: "my new api key",
+      validity: 300,
+      max_queries_per_ip_per_hour: 100,
+      max_hits_per_query: 20
+    )
+  )
 
   # use the class directly
   puts resp
@@ -43,7 +50,12 @@ def snippet_for_append_source
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.append_source(Source.new(source: "theSource", description: "theDescription"))
+  resp = client.append_source(
+    Source.new(
+      source: "theSource",
+      description: "theDescription"
+    )
+  )
 
   # use the class directly
   puts resp
@@ -77,7 +89,10 @@ def snippet_for_batch
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.batch("theIndexName", BatchWriteParams.new(requests: [BatchRequest.new(action: 'addObject', body: { key: "value" })]))
+  resp = client.batch(
+    "theIndexName",
+    BatchWriteParams.new(requests: [BatchRequest.new(action: 'addObject', body: { key: "value" })])
+  )
 
   # use the class directly
   puts resp
@@ -94,7 +109,10 @@ def snippet_for_batch_assign_user_ids
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.batch_assign_user_ids("userID", BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"]))
+  resp = client.batch_assign_user_ids(
+    "userID",
+    BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
+  )
 
   # use the class directly
   puts resp
@@ -111,12 +129,24 @@ def snippet_for_batch_dictionary_entries
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.batch_dictionary_entries('compounds',
-                                         BatchDictionaryEntriesParams.new(requests: [BatchDictionaryEntriesRequest.new(action: 'addEntry', body: DictionaryEntry.new(object_id: "1", language: "en")),
-                                                                                     BatchDictionaryEntriesRequest.new(action: 'deleteEntry',
-                                                                                                                       body: DictionaryEntry.new(
-                                                                                                                         object_id: "2", language: "fr"
-                                                                                                                       ))]))
+  resp = client.batch_dictionary_entries(
+    'compounds',
+    BatchDictionaryEntriesParams.new(
+      requests: [
+        BatchDictionaryEntriesRequest.new(
+          action: 'addEntry',
+          body: DictionaryEntry.new(
+            object_id: "1",
+            language: "en"
+          )
+        ),
+        BatchDictionaryEntriesRequest.new(
+          action: 'deleteEntry',
+          body: DictionaryEntry.new(object_id: "2", language: "fr")
+        )
+      ]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -473,8 +503,16 @@ def snippet_for_get_objects
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.get_objects(GetObjectsParams.new(requests: [GetObjectsRequest.new(attributes_to_retrieve: ["attr1", "attr2"], object_id: "uniqueID",
-                                                                                  index_name: "theIndexName")]))
+  resp = client.get_objects(
+    GetObjectsParams.new(
+      requests: [GetObjectsRequest.new(
+        attributes_to_retrieve: ["attr1",
+          "attr2"],
+        object_id: "uniqueID",
+        index_name: "theIndexName"
+      )]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -695,8 +733,13 @@ def snippet_for_multiple_batch
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.multiple_batch(BatchParams.new(requests: [MultipleBatchRequest.new(action: 'addObject', body: { key: "value" },
-                                                                                   index_name: "theIndexName")]))
+  resp = client.multiple_batch(
+    BatchParams.new(
+      requests: [MultipleBatchRequest.new(
+        action: 'addObject', body: { key: "value" }, index_name: "theIndexName"
+      )]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -713,7 +756,10 @@ def snippet_for_operation_index
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.operation_index("theIndexName", OperationIndexParams.new(operation: 'copy', destination: "dest", scope: ['rules', 'settings']))
+  resp = client.operation_index(
+    "theIndexName",
+    OperationIndexParams.new(operation: 'copy', destination: "dest", scope: ['rules', 'settings'])
+  )
 
   # use the class directly
   puts resp
@@ -730,7 +776,12 @@ def snippet_for_partial_update_object
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.partial_update_object("theIndexName", "uniqueID", { id1: "test", id2: BuiltInOperation.new(_operation: 'AddUnique', value: "test2") }, true)
+  resp = client.partial_update_object(
+    "theIndexName",
+    "uniqueID",
+    { id1: "test", id2: BuiltInOperation.new(_operation: 'AddUnique', value: "test2") },
+    true
+  )
 
   # use the class directly
   puts resp
@@ -764,7 +815,12 @@ def snippet_for_replace_sources
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.replace_sources([Source.new(source: "theSource", description: "theDescription")])
+  resp = client.replace_sources(
+    [Source.new(
+      source: "theSource",
+      description: "theDescription"
+    )]
+  )
 
   # use the class directly
   puts resp
@@ -815,7 +871,14 @@ def snippet_for_save_rule
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.save_rule("indexName", "id1", Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]))
+  resp = client.save_rule(
+    "indexName",
+    "id1",
+    Rule.new(
+      object_id: "id1",
+      conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]
+    )
+  )
 
   # use the class directly
   puts resp
@@ -832,9 +895,22 @@ def snippet_for_save_rules
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.save_rules("indexName",
-                           [Rule.new(object_id: "a-rule-id", conditions: [Condition.new(pattern: "smartphone", anchoring: 'contains')]),
-                            Rule.new(object_id: "a-second-rule-id", conditions: [Condition.new(pattern: "apple", anchoring: 'contains')])])
+  resp = client.save_rules(
+    "indexName",
+    [
+      Rule.new(
+        object_id: "a-rule-id",
+        conditions: [Condition.new(
+          pattern: "smartphone",
+          anchoring: 'contains'
+        )]
+      ),
+      Rule.new(
+        object_id: "a-second-rule-id",
+        conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]
+      )
+    ]
+  )
 
   # use the class directly
   puts resp
@@ -851,7 +927,12 @@ def snippet_for_save_synonym
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.save_synonym("indexName", "id1", SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]), true)
+  resp = client.save_synonym(
+    "indexName",
+    "id1",
+    SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]),
+    true
+  )
 
   # use the class directly
   puts resp
@@ -868,8 +949,18 @@ def snippet_for_save_synonyms
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.save_synonyms("indexName",
-                              [SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]), SynonymHit.new(object_id: "id2", type: 'onewaysynonym', input: "iphone", synonyms: ["ephone", "aphone", "yphone"])], true, false)
+  resp = client.save_synonyms(
+    "indexName",
+    [SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]),
+      SynonymHit.new(
+        object_id: "id2",
+        type: 'onewaysynonym',
+        input: "iphone",
+        synonyms: ["ephone", "aphone", "yphone"]
+      )],
+    true,
+    false
+  )
 
   # use the class directly
   puts resp
@@ -903,7 +994,10 @@ def snippet_for_search_dictionary_entries
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.search_dictionary_entries('compounds', SearchDictionaryEntriesParams.new(query: "foo"))
+  resp = client.search_dictionary_entries(
+    'compounds',
+    SearchDictionaryEntriesParams.new(query: "foo")
+  )
 
   # use the class directly
   puts resp
@@ -988,7 +1082,14 @@ def snippet_for_search_user_ids
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.search_user_ids(SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10))
+  resp = client.search_user_ids(
+    SearchUserIdsParams.new(
+      query: "test",
+      cluster_name: "theClusterName",
+      page: 5,
+      hits_per_page: 10
+    )
+  )
 
   # use the class directly
   puts resp
@@ -1005,8 +1106,15 @@ def snippet_for_set_dictionary_settings
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.set_dictionary_settings(DictionarySettingsParams.new(disable_standard_entries: StandardEntries.new(plurals: { fr: false, en: false,
-                                                                                                                              ru: true })))
+  resp = client.set_dictionary_settings(
+    DictionarySettingsParams.new(
+      disable_standard_entries: StandardEntries.new(
+        plurals: {
+          fr: false, en: false, ru: true
+        }
+      )
+    )
+  )
 
   # use the class directly
   puts resp
@@ -1023,7 +1131,11 @@ def snippet_for_set_settings
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.set_settings("cts_e2e_settings", IndexSettings.new(pagination_limited_to: 10), true)
+  resp = client.set_settings(
+    "cts_e2e_settings",
+    IndexSettings.new(pagination_limited_to: 10),
+    true
+  )
 
   # use the class directly
   puts resp
@@ -1040,7 +1152,15 @@ def snippet_for_update_api_key
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
   # Call the API
-  resp = client.update_api_key("myApiKey", ApiKey.new(acl: ['search', 'addObject'], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20))
+  resp = client.update_api_key(
+    "myApiKey",
+    ApiKey.new(
+      acl: ['search', 'addObject'],
+      validity: 300,
+      max_queries_per_ip_per_hour: 100,
+      max_hits_per_query: 20
+    )
+  )
 
   # use the class directly
   puts resp
