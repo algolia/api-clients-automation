@@ -59,11 +59,11 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(appId));
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{^uniqueHost}}appId{{/uniqueHost}}));
     }
     {{/hasRegionalHost}}
 
-    {{^hasRegionalHost}}
+    {{^uniqueHost}}{{^hasRegionalHost}}
     private static List<Host> getDefaultHosts(String appId) {
       List<Host> hosts = new ArrayList<>();
       hosts.add(new Host(appId + "-dsn.algolia.net", EnumSet.of(CallType.READ)));
@@ -103,7 +103,15 @@ public class {{classname}} extends ApiClient {
       hosts.add(new Host(url, EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
-    {{/hasRegionalHost}}
+    {{/hasRegionalHost}}{{/uniqueHost}}
+    
+    {{#uniqueHost}}
+    private static List<Host> getDefaultHosts() {
+      List<Host> hosts = new ArrayList<>();
+      hosts.add(new Host("{{{.}}}", EnumSet.of(CallType.READ, CallType.WRITE)));
+      return hosts;
+    }
+    {{/uniqueHost}}
 
     {{#operation}}
     /**
