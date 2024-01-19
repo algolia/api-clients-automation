@@ -1,0 +1,40 @@
+package snippets
+
+import (
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+)
+
+{{#blocksRequests}}
+{{#snippet}}
+func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.pascalcase}}{{clientPrefix}}{{/lambda.pascalcase}}() {
+    /*
+    Snippet for the {{method}} method.
+
+    {{{description}}}
+    */
+    
+    // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.YOUR_APP_ID_REGION{{/hasRegionalHost}}
+    client, err := {{clientPrefix}}.NewClient("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}}{{/hasRegionalHost}})
+    if err != nil {
+      // The client can fail to initialize if you pass an invalid parameter.
+      panic(err)
+    }
+
+    // Call the API
+    {{#hasResponsePayload}}resp, err :={{/hasResponsePayload}}{{^hasResponsePayload}}err ={{/hasResponsePayload}} client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
+        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
+      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
+      {{/requestOptions}})
+    if err != nil {
+      // handle the eventual error
+      panic(err)
+    }
+
+    {{#hasResponsePayload}}
+    // use the model directly
+    print(resp)
+    {{/hasResponsePayload}}
+}
+{{/snippet}}
+{{/blocksRequests}}
