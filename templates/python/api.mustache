@@ -85,6 +85,14 @@ class {{classname}}:
         {{#notes}}
         {{{.}}}
         {{/notes}}
+        {{#vendorExtensions}}
+        {{#x-acl.0}}
+        
+        Required API Key ACLs:{{/x-acl.0}}
+        {{#x-acl}}
+          - {{.}}
+        {{/x-acl}}
+        {{/vendorExtensions}}
 
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
@@ -156,7 +164,14 @@ class {{classname}}:
         {{#notes}}
         {{{.}}}
         {{/notes}}
-
+        {{#vendorExtensions}}
+        {{#x-acl.0}}
+        
+        Required API Key ACLs:{{/x-acl.0}}
+        {{#x-acl}}
+          - {{.}}
+        {{/x-acl}}
+        {{/vendorExtensions}}
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
         :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}

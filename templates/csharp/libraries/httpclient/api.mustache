@@ -102,7 +102,17 @@ namespace Algolia.Search.Clients
         {{#supportsAsync}}
 
         /// <summary>
-        /// {{{summary}}} {{notes}}
+        /// {{{summary}}}
+        ///
+        /// {{{notes}}}
+        {{#vendorExtensions}}
+        {{#x-acl.0}}
+            ///
+            /// Required API Key ACLs:{{/x-acl.0}}
+            {{#x-acl}}
+            ///   - {{.}}
+        {{/x-acl}}
+        {{/vendorExtensions}}
         /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}

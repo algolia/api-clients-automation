@@ -59,6 +59,14 @@ module {{moduleName}}
     {{#notes}}
     # {{.}}
     {{/notes}}
+    {{#vendorExtensions}}
+    {{#x-acl.0}}
+    #
+    # Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+    #   - {{.}}
+    {{/x-acl}}
+    {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
@@ -188,6 +196,14 @@ module {{moduleName}}
     {{#notes}}
     # {{{.}}}
     {{/notes}}
+    {{#vendorExtensions}}
+    {{#x-acl.0}}
+    #
+    # Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+    #   - {{.}}
+    {{/x-acl}}
+    {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{description}} (required)

@@ -1,11 +1,17 @@
 /**
 {{#notes}}
- * {{{notes}}}
+ * {{{.}}}
 {{/notes}}
 {{#summary}}
- * @summary {{{summary}}}
+ * @summary {{{.}}}
 {{/summary}}
 {{#vendorExtensions}}
+  {{#x-acl.0}}
+  *
+  * Required API Key ACLs:{{/x-acl.0}}
+  {{#x-acl}}
+  *  - {{.}}
+  {{/x-acl}}
   {{#x-create-wrapping-object}}
     * @param {{nickname}} - The {{nickname}} object.
     {{#allParams}}

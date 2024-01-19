@@ -109,6 +109,14 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 
 {{{unescapedNotes}}}
 {{/notes}}
+{{#vendorExtensions}}
+{{#x-acl.0}}
+
+Required API Key ACLs:{{/x-acl.0}}
+{{#x-acl}}
+  - {{.}}
+{{/x-acl}}
+{{/vendorExtensions}}
 
 Request can be constructed by NewApi{{operationId}}Request with parameters below.
  {{#allParams}}

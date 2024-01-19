@@ -56,6 +56,14 @@ public class {{classname}}(
   /**
    * {{{summary}}}
    * {{{notes}}}
+   {{#vendorExtensions}}
+   {{#x-acl.0}}
+   *
+   * Required API Key ACLs:{{/x-acl.0}}
+   {{#x-acl}}
+   *   - {{.}}
+   {{/x-acl}}
+   {{/vendorExtensions}}
    {{#allParams}}
    * @param {{{paramName}}} {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
    {{/allParams}}

@@ -79,7 +79,15 @@ typealias Client = {{classname}}
      {{#summary}}
      {{{.}}}
      {{/summary}}{{#notes}}
-     {{{.}}}{{/notes}}{{#subresourceOperation}}
+     {{{.}}}{{/notes}}
+     {{#vendorExtensions}}
+     {{#x-acl.0}}
+
+     Required API Key ACLs:{{/x-acl.0}}
+     {{#x-acl}}
+       - {{.}}
+     {{/x-acl}}
+     {{/vendorExtensions}}{{#subresourceOperation}}
      subresourceOperation: {{.}}{{/subresourceOperation}}{{#defaultResponse}}
      defaultResponse: {{.}}{{/defaultResponse}}
      {{#hasResponseHeaders}}
