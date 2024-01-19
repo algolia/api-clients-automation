@@ -127,7 +127,7 @@ export async function exists(ppath: string): Promise<boolean> {
   try {
     await fsp.stat(ppath);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
