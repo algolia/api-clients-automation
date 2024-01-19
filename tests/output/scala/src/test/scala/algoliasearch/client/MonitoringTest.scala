@@ -72,8 +72,16 @@ class MonitoringTest extends AnyFunSuite {
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
 
-  test("uses the correct region") {
+  test("use the correct host") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key")
+
+    Await.ready(
+      client.customDelete[Any](
+        path = "/test"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.host == "status.algolia.com")
   }
 }

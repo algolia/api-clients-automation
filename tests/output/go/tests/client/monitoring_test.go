@@ -81,4 +81,10 @@ func TestMonitoringparameters0(t *testing.T) {
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
 
+	require.NoError(t, err)
+	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"/test",
+	))
+
+	require.Equal(t, "status.algolia.com", echo.Host)
 }
