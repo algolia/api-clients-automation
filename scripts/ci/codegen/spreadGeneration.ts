@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import * as core from '@actions/core';
 import { copy } from 'fs-extra';
 
 import {
@@ -14,6 +15,7 @@ import {
 } from '../../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../../config.js';
 import { getNewReleasedTag } from '../../release/common.js';
+import type { Language } from '../../types.js';
 import { cloneRepository, getNbGitDiff } from '../utils.js';
 
 import text, { commitStartRelease } from './text.js';
@@ -69,6 +71,8 @@ async function spreadGeneration(): Promise<void> {
     await run('git push --tags');
   }
 
+  const pushed: Language[] = [];
+
   for (const lang of LANGUAGES) {
     try {
       const { tempGitDir } = await cloneRepository({
@@ -122,11 +126,15 @@ async function spreadGeneration(): Promise<void> {
         await run('git push --tags', { cwd: tempGitDir });
       }
 
+      pushed.push(lang);
+
       console.log(`✅ Code generation successfully pushed to ${lang} repository.`);
     } catch (e) {
       console.error(`Release failed for language ${lang}: ${e}`);
     }
   }
+
+  core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
