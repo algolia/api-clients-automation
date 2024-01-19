@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { getOctokit, setVerbose } from '../../common';
-import { getClientsConfigField } from '../../config';
+import { exists, getOctokit, setVerbose, toAbsolutePath } from '../../common';
+import { getClientsConfigField, getLanguageFolder } from '../../config';
 import { getTargetBranch } from '../../release/common';
 import type { Language } from '../../types';
 
@@ -46,6 +46,12 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
 
   const workflowIDs = await Promise.all(
     languages.map(async (lang) => {
+      if (
+        !(await exists(toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`)))
+      ) {
+        return undefined;
+      }
+
       const workflows = await octokit.actions.listRepoWorkflows({
         owner: 'algolia',
         repo: getClientsConfigField(lang, 'gitRepoId'),
