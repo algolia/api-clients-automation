@@ -49,14 +49,14 @@ runs:
       run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
     - name: Restore Yarn
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
         # let yarn handle the cache hash
         key: yarn-cache-${{ env.CACHE_VERSION }}
 
     - name: Cache node modules
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: node_modules
         key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
@@ -91,7 +91,7 @@ runs:
 
     - name: Restore Yarn js-client
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
         # let yarn handle the cache hash
@@ -99,7 +99,7 @@ runs:
 
     - name: Cache js-client node modules
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: clients/algoliasearch-client-javascript/node_modules
         key: node-modules-client-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
@@ -142,7 +142,7 @@ runs:
 
     - name: Cache golangci-lint analysis
       if: ${{ inputs.language == 'go' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/golangci-lint
         key: golangci-lint-${{ env.CACHE_VERSION }}-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
@@ -209,7 +209,7 @@ runs:
     - name: Cache Homebrew Bundler RubyGems
       if: ${{ inputs.language == 'swift' }}
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.set-up-homebrew.outputs.gems-path }}
         key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
