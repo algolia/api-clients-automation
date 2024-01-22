@@ -42,8 +42,12 @@ class {{client}}RequestsTests {
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
 
-        var dotenv = Dotenv.configure().directory("../../").load();
-        this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        if (System.getenv("CI").equals("true")) {
+          this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+          } else {
+          var dotenv = Dotenv.configure().directory("../../").load();
+          this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        }
     }
 
     @AfterAll
