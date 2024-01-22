@@ -259,8 +259,13 @@ components:
           type: integer
           description: Number of users during the A/B test.
           example: 55501
+        trackedUserCount:
+          type: integer
+          description: Number of users that performed a tracked search during the A/B test.
+          example: 55501
       required:
         - userCount
+        - trackedUserCount
         - trafficPercentage
         - trackedSearchCount
         - searchCount
