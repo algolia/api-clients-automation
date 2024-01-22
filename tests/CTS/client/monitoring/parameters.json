@@ -1,6 +1,6 @@
 [
   {
-    "testName": "uses the correct region",
+    "testName": "use the correct host",
     "autoCreateClient": false,
     "steps": [
       {
@@ -10,6 +10,18 @@
           "apiKey": "my-api-key"
         },
         "expected": {}
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "customDelete",
+        "parameters": {
+          "path": "/test"
+        },
+        "expected": {
+          "type": "host",
+          "match": "status.algolia.com"
+        }
       }
     ]
   }

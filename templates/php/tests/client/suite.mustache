@@ -27,20 +27,10 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     /**
      * @return {{client}}
      */
-    private function createClient($appId, $apiKey, $region = '{{{defaultRegion}}}')
+    private function createClient($appId, $apiKey{{#hasRegionalHost}}, $region = '{{{defaultRegion}}}'{{/hasRegionalHost}})
     {
-        {{^hasRegionalHost}}
-            $config = {{clientPrefix}}Config::create($appId, $apiKey);
-            $clusterHosts = ClusterHosts::createFromAppId($appId);
-        {{/hasRegionalHost}}
-        {{#hasRegionalHost}}
-            $config = {{clientPrefix}}Config::create(
-                $appId, 
-                $apiKey, 
-                $region
-            );
-            $clusterHosts = {{client}}::getClusterHosts($config);
-        {{/hasRegionalHost}}
+        $config = {{clientPrefix}}Config::create($appId, $apiKey{{#hasRegionalHost}}, $region{{/hasRegionalHost}});
+        $clusterHosts = {{client}}::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new {{client}}($api, $config);

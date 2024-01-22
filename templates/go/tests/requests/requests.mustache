@@ -1,4 +1,4 @@
-package tests
+package requests
 
 import (
   "encoding/json"
@@ -8,21 +8,23 @@ import (
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
 
+  "gotests/tests"
+
   "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*{{clientPrefix}}.APIClient, *echoRequester) {
-  echo := &echoRequester{}
+func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
+  echo := &tests.EchoRequester{}
   cfg := {{clientPrefix}}.Configuration{
-    AppID:     "appID",
-    ApiKey:    "apiKey",{{#hasRegionalHost}}
+    Configuration: transport.Configuration{
+      AppID:     "appID",
+      ApiKey:    "apiKey",
+      Requester: echo,
+    },{{#hasRegionalHost}}
     Region:    {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}}
-    Requester: echo,
   }
-  client := {{clientPrefix}}.NewClientWithConfig(cfg)
-
-  // so that the linter doesn't complain
-  _ = jsonassert.New(nil)
+  client, _ := {{clientPrefix}}.NewClientWithConfig(cfg)
 
   return client, echo
 }
@@ -42,33 +44,33 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 
       expectedPath, err := url.QueryUnescape("{{{request.path}}}")
       require.NoError(t, err)
-      require.Equal(t, expectedPath, echo.path)
-      require.Equal(t, "{{{request.method}}}", echo.method)
+      require.Equal(t, expectedPath, echo.Path)
+      require.Equal(t, "{{{request.method}}}", echo.Method)
 
       {{#request.body}}
       ja := jsonassert.New(t)
-      ja.Assertf(*echo.body, `{{{request.body}}}`)
+      ja.Assertf(*echo.Body, `{{{request.body}}}`)
       {{/request.body}}
       {{^request.body}}
       {{#assertNullBody}}
-        require.Nil(t, echo.body)
+        require.Nil(t, echo.Body)
       {{/assertNullBody}}
       {{^assertNullBody}}
-        require.Empty(t, echo.body);
+        require.Empty(t, echo.Body);
       {{/assertNullBody}}
       {{/request.body}}
       {{#request.headers}}
         headers := map[string]string{}
         require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &headers))
         for k, v := range headers {
-          require.Equal(t, v, echo.header.Get(k))
+          require.Equal(t, v, echo.Header.Get(k))
         }
       {{/request.headers}}
       {{#request.queryParameters}}
         queryParams := map[string]string{}
         require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &queryParams))
         for k, v := range queryParams {
-            require.Equal(t, v, echo.query.Get(k))
+            require.Equal(t, v, echo.Query.Get(k))
         }
       {{/request.queryParameters}}
     })

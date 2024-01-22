@@ -58,6 +58,12 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
 
         {{^hasRegionalHost}}
         self.hosts = HostsCollection(
+            {{#uniqueHost}}
+            [
+                Host("{{{.}}}"),
+            ]
+            {{/uniqueHost}}
+            {{#hostWithAppID}}
             [
                 Host("{}-dsn.algolia.net".format(self.app_id), 10, CallType.READ),
                 Host("{}.algolia.net".format(self.app_id), 10, CallType.WRITE),
@@ -65,5 +71,6 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
                 Host("{}-2.algolianet.com".format(self.app_id)),
                 Host("{}-3.algolianet.com".format(self.app_id)),
             ]
+            {{/hostWithAppID}}
         )
         {{/hasRegionalHost}}

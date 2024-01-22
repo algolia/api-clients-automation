@@ -180,11 +180,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      */
     private function createClient($appId, $apiKey, $region = 'us')
     {
-        $config = InsightsConfig::create(
-            $appId,
-            $apiKey,
-            $region
-        );
+        $config = InsightsConfig::create($appId, $apiKey, $region);
         $clusterHosts = InsightsClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 

@@ -127,7 +127,7 @@ jobs:
 
       - name: Cache bundled specs
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).cacheKey }}
           path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
@@ -167,7 +167,7 @@ jobs:
       - name: Cache '${{ matrix.client }}' client folder
         if: ${{ github.ref != 'refs/heads/main' }}
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: |
             ${{ matrix.client }}-${{ env.CACHE_VERSION }}-${{ hashFiles(
@@ -217,7 +217,7 @@ jobs:
       - name: Cache clients folder
         if: ${{ github.ref != 'refs/heads/main' }}
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).cacheKey }}
           path: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).path }}
@@ -273,14 +273,14 @@ jobs:
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           # let yarn handle the cache hash
           key: yarn-cache-tests-${{ env.CACHE_VERSION }}
 
       - name: Cache js tests node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tests/output/javascript/node_modules
           key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
@@ -324,7 +324,7 @@ jobs:
       - name: Cache clients folder
         if: ${{ github.ref != 'refs/heads/main' }}
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ matrix.client.cacheKey }}
           path: ${{ matrix.client.path }}
@@ -419,7 +419,14 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
 
       - name: Spread generation to each repository
+        id: spreadGeneration
         if: ${{ steps.pushGeneratedCode.exitcode == 0 && github.ref == 'refs/heads/main' }}
         run: yarn workspace scripts spreadGeneration
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Wait for all release CI
+        if: "github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'chore: release')"
+        run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

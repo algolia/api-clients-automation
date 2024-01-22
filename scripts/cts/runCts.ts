@@ -12,7 +12,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('dart test', { cwd, language });
       break;
     case 'go':
-      await run('go test -count 1 ./...', {
+      await run('go test -race -count 1 ./...', {
         cwd,
         language,
       });

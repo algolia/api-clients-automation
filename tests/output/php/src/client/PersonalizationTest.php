@@ -149,11 +149,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      */
     private function createClient($appId, $apiKey, $region = 'us')
     {
-        $config = PersonalizationConfig::create(
-            $appId,
-            $apiKey,
-            $region
-        );
+        $config = PersonalizationConfig::create($appId, $apiKey, $region);
         $clusterHosts = PersonalizationClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 

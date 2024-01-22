@@ -67,7 +67,7 @@ var client = SearchClient(
   If you enable the `debug` property of the Go API client, it will print the request and response to the standard output.
 
 ```go
-searchClient := search.NewClientWithConfig(search.Configuration{
+searchClient, _ := search.NewClientWithConfig(search.Configuration{
   AppID:         "<YOUR_APP_ID>",
   ApiKey:        "<YOUR_API_KEY>",
   Debug:         true,
@@ -216,7 +216,7 @@ indexName := "<INDEX_NAME>"
 appID := "<APPLICATION_ID>"
 apiKey := "<API_KEY>"
 
-searchClient := search.NewClient(appID, apiKey)
+searchClient, _ := search.NewClient(appID, apiKey)
 
 searchClient.Search(
   searchClient.NewApiSearchRequest(
@@ -341,7 +341,7 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
 
-searchClient := search.NewClientWithConfig(search.Configuration{
+searchClient, _ := search.NewClientWithConfig(search.Configuration{
   AppID:         appID,
   ApiKey:        apiKey,
   Hosts:         nil,
@@ -471,7 +471,7 @@ func (r *MyCustomRequester) Request(req *http.Request) (*http.Response, error) {
   return r.client.Do(req)
 }
 
-searchClient := search.NewClientWithConfig(search.Configuration{
+searchClient, _ := search.NewClientWithConfig(search.Configuration{
   AppID:         appID,
   ApiKey:        apiKey,
   Hosts:         nil,

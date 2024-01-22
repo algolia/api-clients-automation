@@ -7,7 +7,6 @@ use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -139,14 +138,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     * @param mixed $region
      *
      * @return RecommendClient
      */
-    private function createClient($appId, $apiKey, $region = '')
+    private function createClient($appId, $apiKey)
     {
         $config = RecommendConfig::create($appId, $apiKey);
-        $clusterHosts = ClusterHosts::createFromAppId($appId);
+        $clusterHosts = RecommendClient::getClusterHosts($config);
         $api = new ApiWrapper($this, $config, $clusterHosts);
 
         return new RecommendClient($api, $config);

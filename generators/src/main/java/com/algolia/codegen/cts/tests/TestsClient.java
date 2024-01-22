@@ -57,6 +57,7 @@ public class TestsClient extends TestsGenerator {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Object> steps = new ArrayList<>();
+          testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
@@ -101,6 +102,10 @@ public class TestsClient extends TestsGenerator {
             if (step.expected.error != null) {
               stepOut.put("isError", true);
               stepOut.put("expectedError", step.expected.error);
+              if (language.equals("go") && step.path != null) {
+                // hack for go that use PascalCase, but just in the operationID
+                stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
+              }
             } else if (step.expected.match != null) {
               if (step.expected.match instanceof Map) {
                 Map<String, Object> match = new HashMap<>();

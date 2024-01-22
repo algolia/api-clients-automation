@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
-import org.yaml.snakeyaml.Yaml;
+import org.openapitools.codegen.CodegenServer;
+import org.openapitools.codegen.CodegenServerVariable;
 
 public class Helpers {
 
@@ -79,71 +80,73 @@ public class Helpers {
     return s.replace('-', '_').replaceAll("(.+?)([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
   }
 
-  /** Inject server info into the client to generate the right URL */
-  public static void generateServer(String clientKebab, Map<String, Object> additionalProperties) throws ConfigException {
-    Yaml yaml = new Yaml();
-    try {
-      Map<String, Object> spec = yaml.load(new FileInputStream("specs/bundled/" + clientKebab + ".yml"));
-      List<Map<String, Object>> servers = (List<Map<String, Object>>) spec.get("servers");
+  // test_input -> TestInput
+  // test-input -> TestInput
+  public static String toPascalCase(String s) {
+    return Arrays.stream(s.split("[_-]")).map(Helpers::capitalize).reduce("", String::concat);
+  }
 
+  /** Inject server info into the client to generate the right URL */
+  public static void generateServers(List<CodegenServer> servers, Map<String, Object> bundle) throws ConfigException {
+    try {
       boolean hasRegionalHost = false;
       boolean fallbackToAliasHost = false;
       String regionalHost = "";
       String hostWithFallback = "";
       Set<String> allowedRegions = new HashSet<>();
-      for (Map<String, Object> server : servers) {
-        if (!server.containsKey("url")) {
+      for (CodegenServer server : servers) {
+        if (server.url.isEmpty()) {
           throw new ConfigException("Invalid server, does not contains 'url'");
         }
 
         // Determine if the current URL with `region` also have an alias without
         // variables.
-        for (Map<String, Object> otherServer : servers) {
+        for (CodegenServer otherServer : servers) {
           if (server == otherServer) {
             continue;
           }
-          String otherUrl = (String) otherServer.getOrDefault("url", "");
-          if (otherUrl.replace(".{region}", "").equals(server.get("url"))) {
-            URL fallbackURL = new URL(otherUrl.replace(".{region}", ""));
+          if (otherServer.url.replace(".{region}", "").equals(server.url)) {
+            URL fallbackURL = new URL(otherServer.url.replace(".{region}", ""));
             fallbackToAliasHost = true;
             hostWithFallback = fallbackURL.getHost();
             break;
           }
         }
 
-        if (!server.containsKey("variables")) {
+        if (server.variables == null || server.variables.isEmpty()) {
+          continue;
+        }
+        CodegenServerVariable regionVar = server.variables.stream().filter(v -> v.name.equals("region")).findFirst().orElse(null);
+        if (regionVar == null || regionVar.enumValues == null || regionVar.enumValues.isEmpty()) {
           continue;
         }
 
-        Map<String, Map<String, Object>> variables = (Map<String, Map<String, Object>>) server.get("variables");
-
-        if (!variables.containsKey("region") || !variables.get("region").containsKey("enum")) {
-          continue;
-        }
-        ArrayList<String> regions = (ArrayList<String>) variables.get("region").get("enum");
         hasRegionalHost = true;
-
-        for (String region : regions) {
+        for (String region : regionVar.enumValues) {
           allowedRegions.add(region);
         }
 
         // This is used for hosts like `insights` that uses `.io`
-        URL url = new URL((String) server.get("url"));
+        URL url = new URL(server.url);
         regionalHost = url.getHost();
       }
 
-      if (servers.size() == 1 && hostWithFallback.isEmpty() && !hasRegionalHost) {
-        URL url = new URL((String) servers.get(0).get("url"));
-        additionalProperties.put("uniqueHost", url.getHost());
+      if (!hasRegionalHost) {
+        if (servers.size() == 1 && hostWithFallback.isEmpty()) {
+          URL url = new URL(servers.get(0).url);
+          bundle.put("uniqueHost", url.getHost());
+        } else {
+          bundle.put("hostWithAppID", true);
+        }
       }
 
-      additionalProperties.put("hostWithFallback", hostWithFallback);
-      additionalProperties.put("hasRegionalHost", hasRegionalHost);
-      additionalProperties.put("fallbackToAliasHost", fallbackToAliasHost);
-      additionalProperties.put("regionalHost", regionalHost);
-      additionalProperties.put("allowedRegions", allowedRegions.toArray(new String[0]));
-    } catch (Exception e) {
-      throw new ConfigException("Couldn't generate servers", e);
+      bundle.put("hostWithFallback", hostWithFallback);
+      bundle.put("hasRegionalHost", hasRegionalHost);
+      bundle.put("fallbackToAliasHost", fallbackToAliasHost);
+      bundle.put("regionalHost", regionalHost);
+      bundle.put("allowedRegions", allowedRegions.toArray(new String[0]));
+    } catch (MalformedURLException e) {
+      throw new ConfigException("Invalid server URL", e);
     }
   }
 

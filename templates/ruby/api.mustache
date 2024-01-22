@@ -31,14 +31,18 @@ module {{moduleName}}
       {{/fallbackToAliasHost}}
 
       hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
-      {{/hasRegionalHost}}{{^hasRegionalHost}}
+      {{/hasRegionalHost}}
+      {{#hostWithAppID}}
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
 
       hosts += 1.upto(3).map do |i|
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
-      {{/hasRegionalHost}}
+      {{/hostWithAppID}}
+      {{#uniqueHost}}
+      hosts << Transport::StatefulHost.new('{{.}}', accept: CallType::READ | CallType::WRITE)
+      {{/uniqueHost}}
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}', opts)
       create_with_config(config)
@@ -202,6 +206,10 @@ module {{moduleName}}
 
 {{/-last}}
 {{/operation}}
+
+{{#isSearchClient}}
+{{> search_helpers}}
+{{/isSearchClient}}
   end
 {{/operations}}
 end

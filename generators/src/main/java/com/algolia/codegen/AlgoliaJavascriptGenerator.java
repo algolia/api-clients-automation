@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
@@ -161,6 +162,12 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   }
 
   @Override
+  public void processOpenAPI(OpenAPI openAPI) {
+    super.processOpenAPI(openAPI);
+    Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+  }
+
+  @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models);
@@ -174,7 +181,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     setDefaultGeneratorOptions();
     try {
-      Helpers.generateServer((String) additionalProperties.get("client"), additionalProperties);
       additionalProperties.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
       additionalProperties.put("npmNamespace", Helpers.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {

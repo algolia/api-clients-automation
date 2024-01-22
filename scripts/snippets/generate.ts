@@ -22,6 +22,13 @@ export async function snippetsGenerateMany(generators: Generator[]): Promise<voi
       });
     }
 
+    if (lang === 'go') {
+      await run('go mod tidy', {
+        cwd: 'snippets/go',
+        language: 'go',
+      });
+    }
+
     const snippetsPath = `snippets/${lang}`;
     if (await exists(toAbsolutePath(snippetsPath))) {
       await formatter(lang, snippetsPath);

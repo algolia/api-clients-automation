@@ -48,3 +48,7 @@ class TestMonitoringClient:
         self._client = MonitoringClient(
             transporter=EchoTransporter(MonitoringConfig("my-app-id", "my-api-key"))
         )
+        _req = await self._client.custom_delete_with_http_info(
+            path="/test",
+        )
+        assert _req.host == "status.algolia.com"
