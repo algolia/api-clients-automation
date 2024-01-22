@@ -2,11 +2,11 @@ using Algolia.Search.Clients;
 
 public static class Recommend
 {
-  public static async Task Run(Settings settings)
+  public static async Task Run(Configuration configuration)
   {
     Console.WriteLine("------------------------------------");
     Console.WriteLine("Starting Recommend API playground");
     Console.WriteLine("------------------------------------");
-    var client = new RecommendClient(new RecommendConfig(settings.AppId, settings.AdminApiKey));
+    var client = new RecommendClient(new RecommendConfig(configuration.AppId, configuration.AdminApiKey));
   }
 }

@@ -1,4 +1,4 @@
-public class Settings
+public class Configuration
 {
   public string AppId { get; set; }
   public string AdminApiKey { get; set; }

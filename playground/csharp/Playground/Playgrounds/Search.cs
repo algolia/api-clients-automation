@@ -5,18 +5,18 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public static class SearchPlayground
 {
-  public static async Task Run(Settings settings)
+  public static async Task Run(Configuration configuration)
   {
     Console.WriteLine("------------------------------------");
     Console.WriteLine("Starting Search API playground");
     Console.WriteLine("------------------------------------");
 
-    var client = new SearchClient(new SearchConfig(settings.AppId, settings.AdminApiKey)
+    var client = new SearchClient(new SearchConfig(configuration.AppId, configuration.AdminApiKey)
     {
       Compression = CompressionType.NONE
     });
 
-    var metisClient = new SearchClient(new SearchConfig(settings.MetisAppId, settings.MetisApiKey)
+    var metisClient = new SearchClient(new SearchConfig(configuration.MetisAppId, configuration.MetisApiKey)
     {
       Compression = CompressionType.NONE
     });

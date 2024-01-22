@@ -3,12 +3,12 @@ using Algolia.Search.Models.Ingestion;
 
 public static class Ingestion
 {
-  public static async Task Run(Settings settings)
+  public static async Task Run(Configuration configuration)
   {
     Console.WriteLine("------------------------------------");
     Console.WriteLine("Starting Ingestion API playground");
     Console.WriteLine("------------------------------------");
-    var client = new IngestionClient(new IngestionConfig(settings.AppId, settings.AdminApiKey, "us"));
+    var client = new IngestionClient(new IngestionConfig(configuration.AppId, configuration.AdminApiKey, "us"));
 
     // Get existing JSON source
     Console.WriteLine("--- Get existing JSON source `GetSourcesAsync` ---");

@@ -3,12 +3,12 @@ using Algolia.Search.Clients;
 
 public static class Monitoring
 {
-  public static async Task Run(Settings settings)
+  public static async Task Run(Configuration configuration)
   {
     Console.WriteLine("------------------------------------");
     Console.WriteLine("Starting Monitoring API playground");
     Console.WriteLine("------------------------------------");
-    var client = new MonitoringClient(new MonitoringConfig(settings.AppId, settings.MonitoringApiKey));
+    var client = new MonitoringClient(new MonitoringConfig(configuration.AppId, configuration.MonitoringApiKey));
 
     Console.WriteLine("--- Get clusters status `GetStatusAsync` ---");
     var response = await client.GetStatusAsync();

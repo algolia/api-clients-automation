@@ -3,12 +3,12 @@ using Algolia.Search.Models.Insights;
 
 public static class Insights
 {
-  public static async Task Run(Settings settings)
+  public static async Task Run(Configuration configuration)
   {
     Console.WriteLine("------------------------------------");
     Console.WriteLine("Starting Insights API playground");
     Console.WriteLine("------------------------------------");
-    var client = new InsightsClient(new InsightsConfig(settings.AppId, settings.AdminApiKey));
+    var client = new InsightsClient(new InsightsConfig(configuration.AppId, configuration.AdminApiKey));
 
     Console.WriteLine("--- Push new events `PushEventsAsync` ---");
     var response = await client.PushEventsAsync(new InsightsEvents(new List<EventsItems>()
