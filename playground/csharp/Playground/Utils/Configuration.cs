@@ -6,12 +6,11 @@ public static class Config
 {
   public static Configuration Load()
   {
-    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, envFilePaths: new[] { "./Playground/.env"}));
-    var envVariable = GetEnvVariable("ALGOLIA_APPLICATION_ID");
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, envFilePaths: new[] { "../.env", "./Playground/.env"}));
     return new Configuration
     {
-      AppId = envVariable,
-      AdminApiKey = GetEnvVariable("ALGOLIA_ADMIN_API_KEY"),
+      AppId = GetEnvVariable("ALGOLIA_APPLICATION_ID"),
+      AdminApiKey = GetEnvVariable("ALGOLIA_ADMIN_KEY"),
       MetisAppId = GetEnvVariable("ALGOLIA_METIS_APPLICATION_ID"),
       MetisApiKey = GetEnvVariable("ALGOLIA_METIS_API_KEY"),
       MonitoringApiKey = GetEnvVariable("ALGOLIA_MONITORING_API_KEY"),
