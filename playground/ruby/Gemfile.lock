@@ -9,20 +9,20 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    base64 (0.2.0)
     connection_pool (2.4.1)
     dotenv (2.8.1)
-    faraday (2.8.1)
-      base64
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.1.0)
+      net-http
     faraday-net_http_persistent (2.1.0)
       faraday (~> 2.5)
       net-http-persistent (~> 4.0)
+    net-http (0.4.1)
+      uri
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    ruby2_keywords (0.0.5)
+    uri (0.13.0)
 
 PLATFORMS
   aarch64-linux
