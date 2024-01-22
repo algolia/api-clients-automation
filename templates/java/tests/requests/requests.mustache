@@ -20,6 +20,7 @@ import com.algolia.model.{{import}}.*;
 import com.algolia.api.{{client}};
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
@@ -27,8 +28,10 @@ import com.algolia.EchoResponse;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}RequestsTests {
     private {{client}} client;
+    private {{client}} clientE2E;
     private EchoInterceptor echo;
     private ObjectMapper json;
+    
 
     @BeforeAll
     void init() {
@@ -38,6 +41,9 @@ class {{client}}RequestsTests {
                 .setRequesterConfig(requester -> requester.addInterceptor(echo))
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
+
+        var dotenv = Dotenv.configure().directory("../../").load();
+        this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
     }
 
     @AfterAll
@@ -102,7 +108,21 @@ class {{client}}RequestsTests {
           fail("failed to parse headers json");
         }
         {{/headers}}
-        {{/request}}   
+        {{/request}}
+
+        {{#response}}
+        var res = clientE2E.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+              {{#requestOptions.queryParameters.parametersWithDataType}}
+                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
+              {{/requestOptions.queryParameters.parametersWithDataType}}
+              {{#requestOptions.headers.parametersWithDataType}}
+                .addExtraHeader("{{{key}}}", "{{{value}}}")
+              {{/requestOptions.headers.parametersWithDataType}}
+            {{/hasRequestOptions}});
+        {{#body}}
+        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
+        {{/body}}
+        {{/response}}
     }
     {{/tests}}
     {{/blocksRequests}}
