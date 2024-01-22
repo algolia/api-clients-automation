@@ -17,7 +17,8 @@
     "spreadGeneration": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
     "start": "NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",
     "test": "vitest",
-    "upsertGenerationComment": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/upsertGenerationComment.js"
+    "upsertGenerationComment": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/upsertGenerationComment.js",
+    "waitForAllReleases": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/waitForAllReleases.js"
   },
   "devDependencies": {
     "@actions/artifact": "2.0.1",
