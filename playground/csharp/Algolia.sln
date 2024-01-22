@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia-Generated-Client", "Algolia-Generated-Client\Algolia-Generated-Client.csproj", "{C3F414F4-84DD-4E56-A1E7-34086763F07D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{C3F414F4-84DD-4E56-A1E7-34086763F07D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj", "{2485A285-E565-4407-95E1-0F216142AAA8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia-Old-Client", "Algolia-Old-Client\Algolia-Old-Client.csproj", "{33F416B9-F209-47BF-9504-D596428FA5E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +18,5 @@ Global
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33F416B9-F209-47BF-9504-D596428FA5E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33F416B9-F209-47BF-9504-D596428FA5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33F416B9-F209-47BF-9504-D596428FA5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33F416B9-F209-47BF-9504-D596428FA5E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
