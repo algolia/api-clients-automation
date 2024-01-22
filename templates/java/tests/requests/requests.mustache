@@ -42,7 +42,7 @@ class {{client}}RequestsTests {
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
 
-        if (System.getenv("CI").equals("true")) {
+        if ("true".equals(System.getenv("CI"))) {
           this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
           } else {
           var dotenv = Dotenv.configure().directory("../../").load();
