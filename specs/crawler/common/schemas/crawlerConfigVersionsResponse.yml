@@ -1,0 +1,19 @@
+allOf:
+  - $ref: '../parameters.yml#/Pagination'
+  - type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            version:
+              type: integer
+              minimum: 1
+            createdAt:
+              type: string
+            authorId:
+              type: string
+          required:
+            - version
+            - createdAt

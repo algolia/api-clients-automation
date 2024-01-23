@@ -1,0 +1,45 @@
+openapi: 3.0.2
+info:
+  title: Crawler API
+  description: API to configure and manage the Algolia Crawler.
+  version: 1.0.0
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+servers:
+  - url: https://crawler.algolia.com/api/1
+  - url: https://crawler-dev.algolia.com/api/1
+  - url: http://localhost:8000/api/1
+security:
+  - BasicAuth: []
+paths:
+  /crawlers:
+    $ref: 'paths/crawlers.yml'
+  /crawlers/{id}:
+    $ref: 'paths/crawler.yml'
+  /crawlers/{id}/config:
+    $ref: 'paths/crawlerConfig.yml'
+  /crawlers/{id}/run:
+    $ref: 'paths/crawlerRun.yml'
+  /crawlers/{id}/pause:
+    $ref: 'paths/crawlerPause.yml'
+  /crawlers/{id}/reindex:
+    $ref: 'paths/crawlerReindex.yml'
+  /crawlers/{id}/stats/urls:
+    $ref: 'paths/crawlerStats.yml'
+  /crawlers/{id}/test:
+    $ref: 'paths/crawlerTest.yml'
+  /crawlers/{id}/tasks/{tid}:
+    $ref: 'paths/crawlerTask.yml'
+  /crawlers/{id}/tasks/{tid}/cancel:
+    $ref: 'paths/crawlerTaskCancel.yml'
+  /crawlers/{id}/config/versions:
+    $ref: 'paths/crawlerConfigVersions.yml'
+  /crawlers/{id}/config/versions/{version}:
+    $ref: 'paths/crawlerConfigVersion.yml'
+  /crawlers/{id}/urls/crawl:
+    $ref: 'paths/crawlerCrawl.yml'
+  /domains:
+    $ref: 'paths/domains.yml'
