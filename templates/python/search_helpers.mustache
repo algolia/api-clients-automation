@@ -136,7 +136,6 @@
         self,
         index_name: str,
         aggregator: Optional[Callable[[SearchSynonymsResponse], None]],
-        synonym_type: Optional[SynonymType] = None,
         page: Optional[int] = 0,
         hits_per_page: Optional[int] = 1000,
         search_synonyms_params: Optional[SearchSynonymsParams] = SearchSynonymsParams(),
@@ -150,7 +149,6 @@
                 search_synonyms_params.page = _prev.page + 1
             return await self.search_synonyms(
                 index_name=index_name,
-                type=synonym_type,
                 page=page,
                 hits_per_page=hits_per_page,
                 search_synonyms_params=search_synonyms_params,
