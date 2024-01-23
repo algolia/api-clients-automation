@@ -24,9 +24,7 @@
       "path": "/1/indexes/indexName/synonyms/search",
       "method": "POST",
       "body": {
-        "query": "myQuery"
-      },
-      "queryParameters": {
+        "query": "myQuery",
         "type": "altcorrection1",
         "page": "10",
         "hitsPerPage": "10"
