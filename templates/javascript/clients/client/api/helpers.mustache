@@ -207,7 +207,7 @@ browseSynonyms(
   }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
   requestOptions?: RequestOptions
 ): Promise<SearchSynonymsResponse> {
-  const params: SearchSynonymsParams = {
+  const params = {
     page: 0,
     ...searchSynonymsParams,
     hitsPerPage: 1000,
