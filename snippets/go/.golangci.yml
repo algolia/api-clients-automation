@@ -1,0 +1,10 @@
+linters:
+  disable:
+    - ineffassign
+    - staticcheck
+service:
+  golangci-lint-version: 1.55.2
+
+run:
+  concurrency: 2
+  timeout: 10m

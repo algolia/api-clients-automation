@@ -81,6 +81,10 @@
     "tests": {
       "extension": "_test.go",
       "outputFolder": "tests"
+    },
+    "snippets": {
+      "extension": ".go",
+      "outputFolder": "src"
     }
   },
   "java": {

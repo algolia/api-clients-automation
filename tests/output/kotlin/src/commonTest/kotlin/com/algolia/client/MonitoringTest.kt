@@ -62,7 +62,17 @@ class MonitoringTest {
   }
 
   @Test
-  fun `uses the correct region`() = runTest {
+  fun `use the correct host`() = runTest {
     val client = MonitoringClient(appId = "my-app-id", apiKey = "my-api-key")
+    client.runTest(
+      call = {
+        customDelete(
+          path = "/test",
+        )
+      },
+      intercept = {
+        assertEquals("status.algolia.com", it.url.host)
+      },
+    )
   }
 }

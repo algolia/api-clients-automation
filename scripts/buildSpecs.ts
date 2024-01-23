@@ -52,11 +52,6 @@ async function transformBundle({
       }
 
       const docMethod = bundledDocSpec.paths[pathKey][method];
-      if (docMethod.summary) {
-        // Remove dot at the end of summary for better sidebar display
-        docMethod.summary = docMethod.summary.replace(/\.$/gm, '');
-      }
-
       if (!docMethod.tags) {
         continue;
       }

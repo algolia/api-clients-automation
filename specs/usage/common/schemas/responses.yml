@@ -1,0 +1,50 @@
+Success:
+  description: Success.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          statistics:
+            type: array
+            items:
+              type: object
+              properties:
+                t:
+                  type: integer
+                  description: >
+                    [Unix timestamp](https://www.unixtimestamp.com/) (in milliseconds).
+                  example: 1455451200000
+                v:
+                  description: |
+                    Depending on the statistic, the type of this value (`v`) differs.
+                    Most statistics return integer values.
+
+                    `degraded_queries_*`, `max_qps`, and `used_search_capacity` are returned as maps of server name strings to integers.
+
+                    `region_*` statistics return strings (regions).
+                  $ref: '#/statisticValue'
+
+statisticValue:
+  oneOf:
+    - type: integer
+    - type: object
+      properties:
+        serverName:
+          type: string
+        value:
+          type: integer
+    - type: string
+
+MissingAuthorization:
+  description: Authorization information is missing or invalid.
+
+IndexNotFound:
+  description: |
+    Index not found.
+
+    If `index` has been correctly defined, this error message means that no data was found in the given time range.
+    The time range may lie outside the [data retention period](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-).
+
+StatisticNotFound:
+  description: Metric not found.

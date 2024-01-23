@@ -1,0 +1,57 @@
+post:
+  operationId: createDocSearchApp
+  summary: Create a new Algolia app with the DocSearch plan.
+  description: Create a new Algolia app with the DocSearch plan.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            ownerEmail:
+              type: string
+              description: The email of the owner of the DocSearch.
+              example: 'docsearch+crawler@algolia.com'
+            collaboratorEmails:
+              type: array
+              items:
+                type: string
+              description: The emails of the user that requested DocSearch.
+              example: ['user@algolia.com']
+            websiteURLs:
+              type: array
+              items:
+                type: string
+              description: The URLs of the website, used to restrict the crawler domains.
+              example: ['https://www.algolia.com/doc/']
+            applicationName:
+              type: string
+              description: The application name for the new Algolia app.
+              example: DocSearch App
+            monthlySearchRequestQuota:
+              type: integer
+              minimum: 200000
+              default: 200000
+              description: The monthly search request quota.
+            monthlyRecordsQuota:
+              type: integer
+              minimum: 200000
+              default: 200000
+              description: The monthly records quota.
+            blockOverquota:
+              type: boolean
+              default: true
+              description: Blocks the user application after reaching their quota.
+          required:
+            - ownerEmail
+            - collaboratorEmails
+            - websiteURLs
+  responses:
+    '200':
+      $ref: '../common/schemas/responses.yml#DocSearchCreateApp'
+    '400':
+      $ref: '../../common/responses/InvalidRequest.yml'
+    '401':
+      $ref: '../common/schemas/responses.yml#/MissingAuthorization'
+    '403':
+      description: The user doesn't have enough rights to create a Crawler.
