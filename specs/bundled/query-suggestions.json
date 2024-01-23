@@ -1,0 +1,3384 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Query Suggestions API",
+    "description": "The Query Suggestions API lets you manage Algolia's Query Suggestions configurations.\nQuery Suggestions add new indices with popular search queries, external suggestions, or facet values to your Algolia application.\nIn your user interface, you can query the Query Suggestions indices like regular indices and add [suggested searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/) to guide users and speed up their search.\n",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "appId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Algolia-Application-Id"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Algolia-API-Key"
+      }
+    },
+    "parameters": {
+      "PathInPath": {
+        "name": "path",
+        "in": "path",
+        "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "/keys"
+        }
+      },
+      "Parameters": {
+        "name": "parameters",
+        "in": "query",
+        "description": "Query parameters to apply to the current query.",
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "IndexName": {
+        "name": "indexName",
+        "in": "path",
+        "required": true,
+        "description": "Query Suggestions index name.",
+        "schema": {
+          "title": "indexName",
+          "type": "string",
+          "description": "Query Suggestions index name.",
+          "example": "products_query_suggestions"
+        }
+      }
+    },
+    "schemas": {
+      "ErrorBase": {
+        "description": "Error.",
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid Application-Id or API-Key"
+          }
+        }
+      },
+      "baseQuerySuggestionsConfigurationResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "appId": {
+            "type": "string",
+            "description": "Your Algolia application ID."
+          },
+          "sourceIndicesAPIKey": {
+            "type": "string",
+            "description": "API key used to read from your source index."
+          },
+          "suggestionsIndicesAPIKey": {
+            "type": "string",
+            "description": "API key used to write and configure your Query Suggestions index."
+          },
+          "externalIndicesAPIKey": {
+            "type": "string",
+            "default": "",
+            "description": "API key used to read from external Algolia indices."
+          }
+        }
+      },
+      "QuerySuggestionsIndexName": {
+        "title": "indexName",
+        "type": "string",
+        "description": "Query Suggestions index name.",
+        "example": "products_query_suggestions"
+      },
+      "baseQuerySuggestionsConfigurationWithIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "indexName"
+        ],
+        "properties": {
+          "indexName": {
+            "title": "indexName",
+            "type": "string",
+            "description": "Query Suggestions index name.",
+            "example": "products_query_suggestions"
+          }
+        }
+      },
+      "Facet": {
+        "title": "facet",
+        "description": "Facet to use as category.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attribute": {
+            "type": "string",
+            "description": "Facet name."
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Number of suggestions."
+          }
+        }
+      },
+      "SourceIndex": {
+        "title": "sourceIndex",
+        "type": "object",
+        "description": "Configuration of an Algolia index for Query Suggestions.",
+        "additionalProperties": false,
+        "required": [
+          "indexName"
+        ],
+        "properties": {
+          "indexName": {
+            "type": "string",
+            "description": "Name of the Algolia index to use as source for query suggestions.",
+            "example": "products"
+          },
+          "replicas": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+            "example": false
+          },
+          "analyticsTags": {
+            "type": "array",
+            "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "facets": {
+            "type": "array",
+            "items": {
+              "title": "facet",
+              "description": "Facet to use as category.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "attribute": {
+                  "type": "string",
+                  "description": "Facet name."
+                },
+                "amount": {
+                  "type": "integer",
+                  "description": "Number of suggestions."
+                }
+              }
+            },
+            "nullable": true,
+            "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+            "example": [
+              {
+                "attribute": "category",
+                "amount": 3
+              },
+              {
+                "attribute": "brand",
+                "amount": 2
+              }
+            ]
+          },
+          "minHits": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 5,
+            "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+          },
+          "minLetters": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 4,
+            "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+          },
+          "generate": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true,
+              "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+              "example": [
+                "color",
+                "brand"
+              ]
+            }
+          },
+          "external": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+          }
+        }
+      },
+      "SourceIndices": {
+        "title": "sourceIndices",
+        "type": "array",
+        "description": "Algolia indices from which to get the popular searches for query suggestions.",
+        "minItems": 1,
+        "items": {
+          "title": "sourceIndex",
+          "type": "object",
+          "description": "Configuration of an Algolia index for Query Suggestions.",
+          "additionalProperties": false,
+          "required": [
+            "indexName"
+          ],
+          "properties": {
+            "indexName": {
+              "type": "string",
+              "description": "Name of the Algolia index to use as source for query suggestions.",
+              "example": "products"
+            },
+            "replicas": {
+              "type": "boolean",
+              "default": false,
+              "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+              "example": false
+            },
+            "analyticsTags": {
+              "type": "array",
+              "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "facets": {
+              "type": "array",
+              "items": {
+                "title": "facet",
+                "description": "Facet to use as category.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "attribute": {
+                    "type": "string",
+                    "description": "Facet name."
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "description": "Number of suggestions."
+                  }
+                }
+              },
+              "nullable": true,
+              "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+              "example": [
+                {
+                  "attribute": "category",
+                  "amount": 3
+                },
+                {
+                  "attribute": "brand",
+                  "amount": 2
+                }
+              ]
+            },
+            "minHits": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 5,
+              "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+            },
+            "minLetters": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 4,
+              "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+            },
+            "generate": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                "example": [
+                  "color",
+                  "brand"
+                ]
+              }
+            },
+            "external": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true,
+              "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+            }
+          }
+        }
+      },
+      "Languages": {
+        "title": "languages",
+        "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "boolean",
+            "default": false
+          }
+        ]
+      },
+      "QuerySuggestionsConfiguration": {
+        "type": "object",
+        "description": "Query Suggestions configuration.",
+        "additionalProperties": false,
+        "required": [
+          "sourceIndices"
+        ],
+        "properties": {
+          "sourceIndices": {
+            "title": "sourceIndices",
+            "type": "array",
+            "description": "Algolia indices from which to get the popular searches for query suggestions.",
+            "minItems": 1,
+            "items": {
+              "title": "sourceIndex",
+              "type": "object",
+              "description": "Configuration of an Algolia index for Query Suggestions.",
+              "additionalProperties": false,
+              "required": [
+                "indexName"
+              ],
+              "properties": {
+                "indexName": {
+                  "type": "string",
+                  "description": "Name of the Algolia index to use as source for query suggestions.",
+                  "example": "products"
+                },
+                "replicas": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                  "example": false
+                },
+                "analyticsTags": {
+                  "type": "array",
+                  "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                  "nullable": true,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "facets": {
+                  "type": "array",
+                  "items": {
+                    "title": "facet",
+                    "description": "Facet to use as category.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "attribute": {
+                        "type": "string",
+                        "description": "Facet name."
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "description": "Number of suggestions."
+                      }
+                    }
+                  },
+                  "nullable": true,
+                  "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                  "example": [
+                    {
+                      "attribute": "category",
+                      "amount": 3
+                    },
+                    {
+                      "attribute": "brand",
+                      "amount": 2
+                    }
+                  ]
+                },
+                "minHits": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "default": 5,
+                  "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                },
+                "minLetters": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "default": 4,
+                  "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                },
+                "generate": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true,
+                    "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                    "example": [
+                      "color",
+                      "brand"
+                    ]
+                  }
+                },
+                "external": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "nullable": true,
+                  "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                }
+              }
+            }
+          },
+          "languages": {
+            "title": "languages",
+            "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "boolean",
+                "default": false
+              }
+            ]
+          },
+          "exclude": {
+            "type": "array",
+            "description": "Patterns to exclude from query suggestions.",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "enablePersonalization": {
+            "type": "boolean",
+            "default": false,
+            "description": "Turn on personalized query suggestions."
+          },
+          "allowSpecialCharacters": {
+            "type": "boolean",
+            "default": false,
+            "description": "Allow suggestions with special characters."
+          }
+        }
+      },
+      "QuerySuggestionsConfigurationWithIndex": {
+        "type": "object",
+        "description": "Query Suggestions configuration.",
+        "required": [
+          "indexName",
+          "sourceIndices"
+        ],
+        "allOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "indexName"
+            ],
+            "properties": {
+              "indexName": {
+                "title": "indexName",
+                "type": "string",
+                "description": "Query Suggestions index name.",
+                "example": "products_query_suggestions"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "Query Suggestions configuration.",
+            "additionalProperties": false,
+            "required": [
+              "sourceIndices"
+            ],
+            "properties": {
+              "sourceIndices": {
+                "title": "sourceIndices",
+                "type": "array",
+                "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                "minItems": 1,
+                "items": {
+                  "title": "sourceIndex",
+                  "type": "object",
+                  "description": "Configuration of an Algolia index for Query Suggestions.",
+                  "additionalProperties": false,
+                  "required": [
+                    "indexName"
+                  ],
+                  "properties": {
+                    "indexName": {
+                      "type": "string",
+                      "description": "Name of the Algolia index to use as source for query suggestions.",
+                      "example": "products"
+                    },
+                    "replicas": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                      "example": false
+                    },
+                    "analyticsTags": {
+                      "type": "array",
+                      "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                      "nullable": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "facets": {
+                      "type": "array",
+                      "items": {
+                        "title": "facet",
+                        "description": "Facet to use as category.",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "attribute": {
+                            "type": "string",
+                            "description": "Facet name."
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "description": "Number of suggestions."
+                          }
+                        }
+                      },
+                      "nullable": true,
+                      "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                      "example": [
+                        {
+                          "attribute": "category",
+                          "amount": 3
+                        },
+                        {
+                          "attribute": "brand",
+                          "amount": 2
+                        }
+                      ]
+                    },
+                    "minHits": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "default": 5,
+                      "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                    },
+                    "minLetters": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "default": 4,
+                      "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                    },
+                    "generate": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "nullable": true,
+                        "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                        "example": [
+                          "color",
+                          "brand"
+                        ]
+                      }
+                    },
+                    "external": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true,
+                      "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                    }
+                  }
+                }
+              },
+              "languages": {
+                "title": "languages",
+                "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "boolean",
+                    "default": false
+                  }
+                ]
+              },
+              "exclude": {
+                "type": "array",
+                "description": "Patterns to exclude from query suggestions.",
+                "nullable": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "enablePersonalization": {
+                "type": "boolean",
+                "default": false,
+                "description": "Turn on personalized query suggestions."
+              },
+              "allowSpecialCharacters": {
+                "type": "boolean",
+                "default": false,
+                "description": "Allow suggestions with special characters."
+              }
+            }
+          }
+        ]
+      },
+      "QuerySuggestionsConfigurationResponse": {
+        "type": "object",
+        "allOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Your Algolia application ID."
+              },
+              "sourceIndicesAPIKey": {
+                "type": "string",
+                "description": "API key used to read from your source index."
+              },
+              "suggestionsIndicesAPIKey": {
+                "type": "string",
+                "description": "API key used to write and configure your Query Suggestions index."
+              },
+              "externalIndicesAPIKey": {
+                "type": "string",
+                "default": "",
+                "description": "API key used to read from external Algolia indices."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "Query Suggestions configuration.",
+            "required": [
+              "indexName",
+              "sourceIndices"
+            ],
+            "allOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "indexName"
+                ],
+                "properties": {
+                  "indexName": {
+                    "title": "indexName",
+                    "type": "string",
+                    "description": "Query Suggestions index name.",
+                    "example": "products_query_suggestions"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "description": "Query Suggestions configuration.",
+                "additionalProperties": false,
+                "required": [
+                  "sourceIndices"
+                ],
+                "properties": {
+                  "sourceIndices": {
+                    "title": "sourceIndices",
+                    "type": "array",
+                    "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                    "minItems": 1,
+                    "items": {
+                      "title": "sourceIndex",
+                      "type": "object",
+                      "description": "Configuration of an Algolia index for Query Suggestions.",
+                      "additionalProperties": false,
+                      "required": [
+                        "indexName"
+                      ],
+                      "properties": {
+                        "indexName": {
+                          "type": "string",
+                          "description": "Name of the Algolia index to use as source for query suggestions.",
+                          "example": "products"
+                        },
+                        "replicas": {
+                          "type": "boolean",
+                          "default": false,
+                          "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                          "example": false
+                        },
+                        "analyticsTags": {
+                          "type": "array",
+                          "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                          "nullable": true,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "facets": {
+                          "type": "array",
+                          "items": {
+                            "title": "facet",
+                            "description": "Facet to use as category.",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute": {
+                                "type": "string",
+                                "description": "Facet name."
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "description": "Number of suggestions."
+                              }
+                            }
+                          },
+                          "nullable": true,
+                          "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                          "example": [
+                            {
+                              "attribute": "category",
+                              "amount": 3
+                            },
+                            {
+                              "attribute": "brand",
+                              "amount": 2
+                            }
+                          ]
+                        },
+                        "minHits": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "default": 5,
+                          "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                        },
+                        "minLetters": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "default": 4,
+                          "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                        },
+                        "generate": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "nullable": true,
+                            "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                            "example": [
+                              "color",
+                              "brand"
+                            ]
+                          }
+                        },
+                        "external": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "nullable": true,
+                          "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                        }
+                      }
+                    }
+                  },
+                  "languages": {
+                    "title": "languages",
+                    "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    ]
+                  },
+                  "exclude": {
+                    "type": "array",
+                    "description": "Patterns to exclude from query suggestions.",
+                    "nullable": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "enablePersonalization": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Turn on personalized query suggestions."
+                  },
+                  "allowSpecialCharacters": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Allow suggestions with special characters."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "BaseResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about the response, such as error messages."
+          }
+        }
+      },
+      "LogLevel": {
+        "title": "level",
+        "type": "string",
+        "description": "The type of log entry. \n\n- `SKIP`. A query is skipped because it doesn't match the conditions for successful inclusion. For example, when a query doesn't generate enough search results.\n- `INFO`. An informative log entry.\n- `ERROR`. The Query Suggestions process encountered an error.\n",
+        "enum": [
+          "SKIP",
+          "INFO",
+          "ERROR"
+        ]
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request or request arguments.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "FeatureNotEnabled": {
+        "description": "This feature is not enabled on your Algolia account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MethodNotAllowed": {
+        "description": "Method not allowed with this API key.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "IndexNotFound": {
+        "description": "Index not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Details about the response, such as error messages."
+                }
+              }
+            },
+            "examples": {
+              "Unauthorized": {
+                "summary": "Wrong region.",
+                "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                "value": {
+                  "status": 401,
+                  "message": "The log processing region does not match"
+                }
+              },
+              "InvalidCredentials": {
+                "summary": "Invalid credentials.",
+                "description": "Your application ID or API key is wrong.",
+                "value": {
+                  "status": 401,
+                  "message": "Invalid credentials"
+                }
+              },
+              "WrongAPIKey": {
+                "summary": "Admin API key required.",
+                "description": "Your API key is not the Admin API key for your application.",
+                "value": {
+                  "status": 401,
+                  "message": "The admin API key is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest-2": {
+        "description": "Bad Request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Details about the response, such as error messages."
+                }
+              }
+            },
+            "examples": {
+              "IndexNameRequired": {
+                "summary": "Index name required.",
+                "value": {
+                  "status": 400,
+                  "message": "IndexName cannot be empty"
+                }
+              },
+              "SourceIndicesRequired": {
+                "summary": "Source indices required.",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid body \"sourceIndices needs to contain at least one index\"."
+                }
+              },
+              "SourceIndexNameRequired": {
+                "summary": "Source index name required.",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid body \"every source index must have an `indexName`\"."
+                }
+              },
+              "MinHitsPositive": {
+                "summary": "MinHits must be positive.",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid body \"every source index `minHits` must be positive\"."
+                }
+              },
+              "MinLettersPositive": {
+                "summary": "MinLetters must be positive.",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid body \"every source index `minLetters` must be positive\"."
+                }
+              }
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Details about the response, such as error messages."
+                }
+              }
+            },
+            "examples": {
+              "UnprocessableEntity": {
+                "summary": "Configuration already exists.",
+                "value": {
+                  "status": 422,
+                  "message": "Configuration already exists for index: test-qs"
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Internal error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Details about the response, such as error messages."
+                }
+              }
+            },
+            "examples": {
+              "NotFound": {
+                "summary": "Index not found.",
+                "value": {
+                  "status": 404,
+                  "message": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalError-2": {
+        "description": "Internal Server Error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Details about the response, such as error messages."
+                }
+              }
+            },
+            "examples": {
+              "Error": {
+                "description": "This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.",
+                "value": {
+                  "status": 500,
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://query-suggestions.{region}.algolia.com",
+      "description": "You can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\nIf you connect to the wrong region, the API returns an error with the status `401` and the message: \"The log processing region does not match\".\n",
+      "variables": {
+        "region": {
+          "enum": [
+            "us",
+            "eu"
+          ],
+          "default": "us"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "appId": [],
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "configurations",
+      "x-displayName": "Configurations",
+      "description": "Manage Query Suggestions configurations."
+    },
+    {
+      "name": "logs",
+      "x-displayName": "Logs",
+      "description": "Get logs for a Query Suggestions index."
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "Configurations",
+      "tags": [
+        "configurations"
+      ]
+    },
+    {
+      "name": "Logs",
+      "tags": [
+        "logs"
+      ]
+    }
+  ],
+  "paths": {
+    "/1{path}": {
+      "get": {
+        "operationId": "customGet",
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "customPost",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "customPut",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "customDelete",
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/configs": {
+      "get": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "getAllConfigs",
+        "summary": "List configurations.",
+        "description": "List all Query Suggestions configurations of your Algolia application.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "appId": {
+                            "type": "string",
+                            "description": "Your Algolia application ID."
+                          },
+                          "sourceIndicesAPIKey": {
+                            "type": "string",
+                            "description": "API key used to read from your source index."
+                          },
+                          "suggestionsIndicesAPIKey": {
+                            "type": "string",
+                            "description": "API key used to write and configure your Query Suggestions index."
+                          },
+                          "externalIndicesAPIKey": {
+                            "type": "string",
+                            "default": "",
+                            "description": "API key used to read from external Algolia indices."
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "description": "Query Suggestions configuration.",
+                        "required": [
+                          "indexName",
+                          "sourceIndices"
+                        ],
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "indexName"
+                            ],
+                            "properties": {
+                              "indexName": {
+                                "title": "indexName",
+                                "type": "string",
+                                "description": "Query Suggestions index name.",
+                                "example": "products_query_suggestions"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "description": "Query Suggestions configuration.",
+                            "additionalProperties": false,
+                            "required": [
+                              "sourceIndices"
+                            ],
+                            "properties": {
+                              "sourceIndices": {
+                                "title": "sourceIndices",
+                                "type": "array",
+                                "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                                "minItems": 1,
+                                "items": {
+                                  "title": "sourceIndex",
+                                  "type": "object",
+                                  "description": "Configuration of an Algolia index for Query Suggestions.",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "indexName"
+                                  ],
+                                  "properties": {
+                                    "indexName": {
+                                      "type": "string",
+                                      "description": "Name of the Algolia index to use as source for query suggestions.",
+                                      "example": "products"
+                                    },
+                                    "replicas": {
+                                      "type": "boolean",
+                                      "default": false,
+                                      "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                                      "example": false
+                                    },
+                                    "analyticsTags": {
+                                      "type": "array",
+                                      "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                                      "nullable": true,
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "facets": {
+                                      "type": "array",
+                                      "items": {
+                                        "title": "facet",
+                                        "description": "Facet to use as category.",
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "attribute": {
+                                            "type": "string",
+                                            "description": "Facet name."
+                                          },
+                                          "amount": {
+                                            "type": "integer",
+                                            "description": "Number of suggestions."
+                                          }
+                                        }
+                                      },
+                                      "nullable": true,
+                                      "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                                      "example": [
+                                        {
+                                          "attribute": "category",
+                                          "amount": 3
+                                        },
+                                        {
+                                          "attribute": "brand",
+                                          "amount": 2
+                                        }
+                                      ]
+                                    },
+                                    "minHits": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "default": 5,
+                                      "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                                    },
+                                    "minLetters": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "default": 4,
+                                      "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                                    },
+                                    "generate": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "nullable": true,
+                                        "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                                        "example": [
+                                          "color",
+                                          "brand"
+                                        ]
+                                      }
+                                    },
+                                    "external": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "nullable": true,
+                                      "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                                    }
+                                  }
+                                }
+                              },
+                              "languages": {
+                                "title": "languages",
+                                "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                                "oneOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "boolean",
+                                    "default": false
+                                  }
+                                ]
+                              },
+                              "exclude": {
+                                "type": "array",
+                                "description": "Patterns to exclude from query suggestions.",
+                                "nullable": true,
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "enablePersonalization": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Turn on personalized query suggestions."
+                              },
+                              "allowSpecialCharacters": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Allow suggestions with special characters."
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "createConfig",
+        "summary": "Create a configuration.",
+        "description": "Create a new Query Suggestions configuration.\n\nYou can have up to 100 configurations per Algolia application.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Query Suggestions configuration.",
+                "required": [
+                  "indexName",
+                  "sourceIndices"
+                ],
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "indexName"
+                    ],
+                    "properties": {
+                      "indexName": {
+                        "title": "indexName",
+                        "type": "string",
+                        "description": "Query Suggestions index name.",
+                        "example": "products_query_suggestions"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "description": "Query Suggestions configuration.",
+                    "additionalProperties": false,
+                    "required": [
+                      "sourceIndices"
+                    ],
+                    "properties": {
+                      "sourceIndices": {
+                        "title": "sourceIndices",
+                        "type": "array",
+                        "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                        "minItems": 1,
+                        "items": {
+                          "title": "sourceIndex",
+                          "type": "object",
+                          "description": "Configuration of an Algolia index for Query Suggestions.",
+                          "additionalProperties": false,
+                          "required": [
+                            "indexName"
+                          ],
+                          "properties": {
+                            "indexName": {
+                              "type": "string",
+                              "description": "Name of the Algolia index to use as source for query suggestions.",
+                              "example": "products"
+                            },
+                            "replicas": {
+                              "type": "boolean",
+                              "default": false,
+                              "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                              "example": false
+                            },
+                            "analyticsTags": {
+                              "type": "array",
+                              "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                              "nullable": true,
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "facets": {
+                              "type": "array",
+                              "items": {
+                                "title": "facet",
+                                "description": "Facet to use as category.",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                  "attribute": {
+                                    "type": "string",
+                                    "description": "Facet name."
+                                  },
+                                  "amount": {
+                                    "type": "integer",
+                                    "description": "Number of suggestions."
+                                  }
+                                }
+                              },
+                              "nullable": true,
+                              "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                              "example": [
+                                {
+                                  "attribute": "category",
+                                  "amount": 3
+                                },
+                                {
+                                  "attribute": "brand",
+                                  "amount": 2
+                                }
+                              ]
+                            },
+                            "minHits": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "default": 5,
+                              "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                            },
+                            "minLetters": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "default": 4,
+                              "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                            },
+                            "generate": {
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "nullable": true,
+                                "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                                "example": [
+                                  "color",
+                                  "brand"
+                                ]
+                              }
+                            },
+                            "external": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "nullable": true,
+                              "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                            }
+                          }
+                        }
+                      },
+                      "languages": {
+                        "title": "languages",
+                        "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                        "oneOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "type": "boolean",
+                            "default": false
+                          }
+                        ]
+                      },
+                      "exclude": {
+                        "type": "array",
+                        "description": "Patterns to exclude from query suggestions.",
+                        "nullable": true,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "enablePersonalization": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Turn on personalized query suggestions."
+                      },
+                      "allowSpecialCharacters": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Allow suggestions with special characters."
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Created": {
+                    "summary": "Configuration created.",
+                    "value": {
+                      "status": 200,
+                      "message": "Configuration was created, and a new indexing job has been scheduled."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "IndexNameRequired": {
+                    "summary": "Index name required.",
+                    "value": {
+                      "status": 400,
+                      "message": "IndexName cannot be empty"
+                    }
+                  },
+                  "SourceIndicesRequired": {
+                    "summary": "Source indices required.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"sourceIndices needs to contain at least one index\"."
+                    }
+                  },
+                  "SourceIndexNameRequired": {
+                    "summary": "Source index name required.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index must have an `indexName`\"."
+                    }
+                  },
+                  "MinHitsPositive": {
+                    "summary": "MinHits must be positive.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index `minHits` must be positive\"."
+                    }
+                  },
+                  "MinLettersPositive": {
+                    "summary": "MinLetters must be positive.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index `minLetters` must be positive\"."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "UnprocessableEntity": {
+                    "summary": "Configuration already exists.",
+                    "value": {
+                      "status": 422,
+                      "message": "Configuration already exists for index: test-qs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/configs/{indexName}": {
+      "get": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "getConfig",
+        "summary": "Get a configuration.",
+        "description": "Get a single Query Suggestions configuration.",
+        "parameters": [
+          {
+            "name": "indexName",
+            "in": "path",
+            "required": true,
+            "description": "Query Suggestions index name.",
+            "schema": {
+              "title": "indexName",
+              "type": "string",
+              "description": "Query Suggestions index name.",
+              "example": "products_query_suggestions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "description": "Your Algolia application ID."
+                        },
+                        "sourceIndicesAPIKey": {
+                          "type": "string",
+                          "description": "API key used to read from your source index."
+                        },
+                        "suggestionsIndicesAPIKey": {
+                          "type": "string",
+                          "description": "API key used to write and configure your Query Suggestions index."
+                        },
+                        "externalIndicesAPIKey": {
+                          "type": "string",
+                          "default": "",
+                          "description": "API key used to read from external Algolia indices."
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "description": "Query Suggestions configuration.",
+                      "required": [
+                        "indexName",
+                        "sourceIndices"
+                      ],
+                      "allOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "indexName"
+                          ],
+                          "properties": {
+                            "indexName": {
+                              "title": "indexName",
+                              "type": "string",
+                              "description": "Query Suggestions index name.",
+                              "example": "products_query_suggestions"
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "description": "Query Suggestions configuration.",
+                          "additionalProperties": false,
+                          "required": [
+                            "sourceIndices"
+                          ],
+                          "properties": {
+                            "sourceIndices": {
+                              "title": "sourceIndices",
+                              "type": "array",
+                              "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                              "minItems": 1,
+                              "items": {
+                                "title": "sourceIndex",
+                                "type": "object",
+                                "description": "Configuration of an Algolia index for Query Suggestions.",
+                                "additionalProperties": false,
+                                "required": [
+                                  "indexName"
+                                ],
+                                "properties": {
+                                  "indexName": {
+                                    "type": "string",
+                                    "description": "Name of the Algolia index to use as source for query suggestions.",
+                                    "example": "products"
+                                  },
+                                  "replicas": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                                    "example": false
+                                  },
+                                  "analyticsTags": {
+                                    "type": "array",
+                                    "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                                    "nullable": true,
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "facets": {
+                                    "type": "array",
+                                    "items": {
+                                      "title": "facet",
+                                      "description": "Facet to use as category.",
+                                      "type": "object",
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "attribute": {
+                                          "type": "string",
+                                          "description": "Facet name."
+                                        },
+                                        "amount": {
+                                          "type": "integer",
+                                          "description": "Number of suggestions."
+                                        }
+                                      }
+                                    },
+                                    "nullable": true,
+                                    "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                                    "example": [
+                                      {
+                                        "attribute": "category",
+                                        "amount": 3
+                                      },
+                                      {
+                                        "attribute": "brand",
+                                        "amount": 2
+                                      }
+                                    ]
+                                  },
+                                  "minHits": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "default": 5,
+                                    "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                                  },
+                                  "minLetters": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "default": 4,
+                                    "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                                  },
+                                  "generate": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "nullable": true,
+                                      "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                                      "example": [
+                                        "color",
+                                        "brand"
+                                      ]
+                                    }
+                                  },
+                                  "external": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "nullable": true,
+                                    "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                                  }
+                                }
+                              }
+                            },
+                            "languages": {
+                              "title": "languages",
+                              "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                              "oneOf": [
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                {
+                                  "type": "boolean",
+                                  "default": false
+                                }
+                              ]
+                            },
+                            "exclude": {
+                              "type": "array",
+                              "description": "Patterns to exclude from query suggestions.",
+                              "nullable": true,
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "enablePersonalization": {
+                              "type": "boolean",
+                              "default": false,
+                              "description": "Turn on personalized query suggestions."
+                            },
+                            "allowSpecialCharacters": {
+                              "type": "boolean",
+                              "default": false,
+                              "description": "Allow suggestions with special characters."
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "IndexNameRequired": {
+                    "summary": "Index name required.",
+                    "value": {
+                      "status": 400,
+                      "message": "IndexName cannot be empty"
+                    }
+                  },
+                  "SourceIndicesRequired": {
+                    "summary": "Source indices required.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"sourceIndices needs to contain at least one index\"."
+                    }
+                  },
+                  "SourceIndexNameRequired": {
+                    "summary": "Source index name required.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index must have an `indexName`\"."
+                    }
+                  },
+                  "MinHitsPositive": {
+                    "summary": "MinHits must be positive.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index `minHits` must be positive\"."
+                    }
+                  },
+                  "MinLettersPositive": {
+                    "summary": "MinLetters must be positive.",
+                    "value": {
+                      "status": 400,
+                      "message": "Invalid body \"every source index `minLetters` must be positive\"."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Index not found.",
+                    "value": {
+                      "status": 404,
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "updateConfig",
+        "summary": "Update a configuration.",
+        "description": "Update a QuerySuggestions configuration.",
+        "parameters": [
+          {
+            "name": "indexName",
+            "in": "path",
+            "required": true,
+            "description": "Query Suggestions index name.",
+            "schema": {
+              "title": "indexName",
+              "type": "string",
+              "description": "Query Suggestions index name.",
+              "example": "products_query_suggestions"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Query Suggestions configuration.",
+                "additionalProperties": false,
+                "required": [
+                  "sourceIndices"
+                ],
+                "properties": {
+                  "sourceIndices": {
+                    "title": "sourceIndices",
+                    "type": "array",
+                    "description": "Algolia indices from which to get the popular searches for query suggestions.",
+                    "minItems": 1,
+                    "items": {
+                      "title": "sourceIndex",
+                      "type": "object",
+                      "description": "Configuration of an Algolia index for Query Suggestions.",
+                      "additionalProperties": false,
+                      "required": [
+                        "indexName"
+                      ],
+                      "properties": {
+                        "indexName": {
+                          "type": "string",
+                          "description": "Name of the Algolia index to use as source for query suggestions.",
+                          "example": "products"
+                        },
+                        "replicas": {
+                          "type": "boolean",
+                          "default": false,
+                          "description": "If true, Query Suggestions uses all replicas of the primary index to find popular searches.\nIf false, only the primary index is used. \n",
+                          "example": false
+                        },
+                        "analyticsTags": {
+                          "type": "array",
+                          "description": "[Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.\n",
+                          "nullable": true,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "facets": {
+                          "type": "array",
+                          "items": {
+                            "title": "facet",
+                            "description": "Facet to use as category.",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute": {
+                                "type": "string",
+                                "description": "Facet name."
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "description": "Number of suggestions."
+                              }
+                            }
+                          },
+                          "nullable": true,
+                          "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+                          "example": [
+                            {
+                              "attribute": "category",
+                              "amount": 3
+                            },
+                            {
+                              "attribute": "brand",
+                              "amount": 2
+                            }
+                          ]
+                        },
+                        "minHits": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "default": 5,
+                          "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` hits to be included in the Query Suggestions index.\n"
+                        },
+                        "minLetters": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "default": 4,
+                          "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+                        },
+                        "generate": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "nullable": true,
+                            "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+                            "example": [
+                              "color",
+                              "brand"
+                            ]
+                          }
+                        },
+                        "external": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "nullable": true,
+                          "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n  - `query`: search query which will be added as a suggestion\n  - `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,\nand feed this data into an external Algolia index.\nYou can use this external index to generate query suggestions until your Algolia analytics has collected enough data.\n"
+                        }
+                      }
+                    }
+                  },
+                  "languages": {
+                    "title": "languages",
+                    "description": "Set the language for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    ]
+                  },
+                  "exclude": {
+                    "type": "array",
+                    "description": "Patterns to exclude from query suggestions.",
+                    "nullable": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "enablePersonalization": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Turn on personalized query suggestions."
+                  },
+                  "allowSpecialCharacters": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Allow suggestions with special characters."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Created": {
+                    "summary": "Configuration created.",
+                    "value": {
+                      "status": 200,
+                      "message": "Configuration was updated, and a new indexing job has been scheduled."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Error": {
+                    "description": "This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.",
+                    "value": {
+                      "status": 500,
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "deleteConfig",
+        "summary": "Delete a configuration.",
+        "description": "Delete a Query Suggestions configuration.\n\nDeleting only removes the configuration and stops updates to the Query Suggestions index.\nThe Query Suggestions index itself is not deleted.\n",
+        "parameters": [
+          {
+            "name": "indexName",
+            "in": "path",
+            "required": true,
+            "description": "Query Suggestions index name.",
+            "schema": {
+              "title": "indexName",
+              "type": "string",
+              "description": "Query Suggestions index name.",
+              "example": "products_query_suggestions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Created": {
+                    "summary": "Configuration created.",
+                    "value": {
+                      "status": 200,
+                      "message": "Configuration was deleted with success."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Error": {
+                    "description": "This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.",
+                    "value": {
+                      "status": 500,
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/configs/{indexName}/status": {
+      "get": {
+        "tags": [
+          "configurations"
+        ],
+        "operationId": "getConfigStatus",
+        "summary": "Get configuration status.",
+        "description": "Report the status of a Query Suggestions index.",
+        "parameters": [
+          {
+            "name": "indexName",
+            "in": "path",
+            "required": true,
+            "description": "Query Suggestions index name.",
+            "schema": {
+              "title": "indexName",
+              "type": "string",
+              "description": "Query Suggestions index name.",
+              "example": "products_query_suggestions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "indexName": {
+                      "title": "indexName",
+                      "type": "string",
+                      "description": "Query Suggestions index name.",
+                      "example": "products_query_suggestions"
+                    },
+                    "isRunning": {
+                      "type": "boolean",
+                      "description": "Indicates whether the creation or update of the Query Suggestions is in progress.",
+                      "example": false
+                    },
+                    "lastBuiltAt": {
+                      "type": "string",
+                      "description": "Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.",
+                      "example": "2023-07-05T08:03:53Z"
+                    },
+                    "lastSuccessfulBuiltAt": {
+                      "type": "string",
+                      "description": "Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.",
+                      "example": "2023-07-05T08:03:53Z"
+                    },
+                    "lastSuccessfulBuildDuration": {
+                      "type": "string",
+                      "description": "Duration of the last successful build in seconds.",
+                      "example": 28
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Index not found.",
+                    "value": {
+                      "status": 404,
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/logs/{indexName}": {
+      "get": {
+        "tags": [
+          "logs"
+        ],
+        "operationId": "getLogFile",
+        "summary": "Get logs.",
+        "description": "Get the logs for a single Query Suggestions index.",
+        "parameters": [
+          {
+            "name": "indexName",
+            "in": "path",
+            "required": true,
+            "description": "Query Suggestions index name.",
+            "schema": {
+              "title": "indexName",
+              "type": "string",
+              "description": "Query Suggestions index name.",
+              "example": "products_query_suggestions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "description": "Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.",
+                      "example": "2023-07-05T08:03:33.898076171Z"
+                    },
+                    "level": {
+                      "title": "level",
+                      "type": "string",
+                      "description": "The type of log entry. \n\n- `SKIP`. A query is skipped because it doesn't match the conditions for successful inclusion. For example, when a query doesn't generate enough search results.\n- `INFO`. An informative log entry.\n- `ERROR`. The Query Suggestions process encountered an error.\n",
+                      "enum": [
+                        "SKIP",
+                        "INFO",
+                        "ERROR"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about this log entry.",
+                      "example": "skipping query \"Brooke Adams\": not enough search results, got 1, expected 5"
+                    },
+                    "contextLevel": {
+                      "type": "integer",
+                      "description": "Level indicating the position of a suggestion in a hierarchy of records. \n\nFor example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.\n",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Wrong region.",
+                    "description": "Make sure to make your request to the server corresponding to your region.  \n\nYou can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).\n",
+                    "value": {
+                      "status": 401,
+                      "message": "The log processing region does not match"
+                    }
+                  },
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials.",
+                    "description": "Your application ID or API key is wrong.",
+                    "value": {
+                      "status": 401,
+                      "message": "Invalid credentials"
+                    }
+                  },
+                  "WrongAPIKey": {
+                    "summary": "Admin API key required.",
+                    "description": "Your API key is not the Admin API key for your application.",
+                    "value": {
+                      "status": 401,
+                      "message": "The admin API key is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the response, such as error messages."
+                    }
+                  }
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Index not found.",
+                    "value": {
+                      "status": 404,
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
