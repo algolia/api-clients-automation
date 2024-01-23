@@ -36,7 +36,7 @@ namespace Algolia.Search.Utils
     }
 
     /// <summary>
-    /// This function waits for the Algolia's API Key to finish
+    /// Helper method that waits for an API key task to be processed.
     /// </summary>
     /// <param name="client">Algolia Search Client instance</param>
     /// <param name="operation">The `operation` that was done on a `key`.</param>
@@ -54,7 +54,7 @@ namespace Algolia.Search.Utils
       {
         if (apiKey == null)
         {
-          throw new AlgoliaException("`ApiKey` is required when waiting for an `update` operation.");
+          throw new AlgoliaApiException("`ApiKey` is required when waiting for an `update` operation.");
         }
 
         return await RetryUntil(() => client.GetApiKeyAsync(key, requestOptions, ct),
@@ -75,8 +75,6 @@ namespace Algolia.Search.Utils
           }, maxRetries: maxRetries, ct: ct).ConfigureAwait(false);
       }
 
-      //
-      // bypass lambda restriction to modify final object
       var addedKey = new GetApiKeyResponse();
 
       // check the status of the getApiKey method
@@ -94,18 +92,16 @@ namespace Algolia.Search.Utils
           }
         }, (status) =>
         {
-          switch (operation)
+          return operation switch
           {
-            case ApiKeyOperation.ADD:
+            ApiKeyOperation.ADD =>
               // stop either when the key is created or when we don't receive 404
-              return status == -2 || status != 404;
-            case ApiKeyOperation.DELETE:
+              status is -2 or not 404,
+            ApiKeyOperation.DELETE =>
               // stop when the key is not found
-              return status == 404;
-            default:
-              // continue
-              return false;
-          }
+              status == 404,
+            _ => false
+          };
         },
         maxRetries, ct
       );
@@ -120,38 +116,41 @@ namespace Algolia.Search.Utils
     /// <param name="browseParams">The `browse` parameters.</param>
     /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.</param>
     /// <typeparam name="T">The model of the record</typeparam>
-    public static async Task<IEnumerable<T>> BrowseObjects<T>(this SearchClient client, string indexName,
+    public static async Task<IEnumerable<T>> BrowseObjectsAsync<T>(this SearchClient client, string indexName,
       BrowseParamsObject browseParams,
-      RequestOptions requestOptions)
+      RequestOptions requestOptions = null)
     {
-      var all = await CreateIterable<BrowseResponse<T>>(async (prevResp) =>
+      var all = await CreateIterable<BrowseResponse<T>>(async prevResp =>
       {
         browseParams.Cursor = prevResp?.Cursor;
         return await client.BrowseAsync<T>(indexName, new BrowseParams(browseParams), requestOptions);
-      }, resp => resp != null && resp.Cursor == null).ConfigureAwait(false);
+      }, resp => resp is { Cursor: null }).ConfigureAwait(false);
 
       return all.SelectMany(u => u.Hits);
     }
 
     /// <summary>
-    /// Iterate on the `searchRules` method of the client to allow aggregating rules of an index.
+    /// Iterate on the `SearchRules` method of the client to allow aggregating rules of an index.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="indexName">The index in which to perform the request.</param>
-    /// <param name="rulesParams">The `rules` parameters.</param>
-    /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.</param>
-    public static async Task<IEnumerable<Rule>> BrowseRules<T>(this SearchClient client, string indexName,
-      SearchRulesParams rulesParams,
-      RequestOptions requestOptions)
+    /// <param name="searchRulesParams">The `SearchRules` parameters</param>
+    /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `searchRules` method and merged with the transporter requestOptions.</param>
+    public static async Task<IEnumerable<Rule>> BrowseRulesAsync(this SearchClient client, string indexName,
+      SearchRulesParams searchRulesParams,
+      RequestOptions requestOptions = null)
     {
-      var all = await CreateIterable<SearchRulesResponse>(async (prevResp) =>
-      {
-        rulesParams.HitsPerPage = 1000;
-        rulesParams.Page = prevResp != null ? prevResp.Page + 1 : rulesParams.Page ?? 0;
-        return await client.SearchRulesAsync(indexName, rulesParams, requestOptions);
-      }, resp => resp?.Page != null && resp.NbPages < rulesParams.HitsPerPage).ConfigureAwait(false);
+      const int hitPerPage = 1000;
+      searchRulesParams.HitsPerPage = hitPerPage;
 
-      return all.SelectMany(u => u.Hits);
+      var all = await CreateIterable<Tuple<SearchRulesResponse, int>>(async (prevResp) =>
+      {
+        var page = prevResp?.Item2 ?? 0;
+        var searchSynonymsResponse = await client.SearchRulesAsync(indexName, searchRulesParams, requestOptions);
+        return new Tuple<SearchRulesResponse, int>(searchSynonymsResponse, page + 1);
+      }, resp => resp?.Item1 is { NbHits: < hitPerPage }).ConfigureAwait(false);
+
+      return all.SelectMany(u => u.Item1.Hits);
     }
 
 
@@ -160,23 +159,23 @@ namespace Algolia.Search.Utils
     /// </summary>
     /// <param name="client"></param>
     /// <param name="indexName">The index in which to perform the request.</param>
-    /// <param name="rulesParams">The `rules` parameters.</param>
-    /// <param name="synomymsParams"></param>
-    /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.</param>
+    /// <param name="synonymsParams">The `SearchSynonyms` parameters.</param>
+    /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.</param>
     /// <param name="type"></param>
-    public static async Task<IEnumerable<SynonymHit>> BrowseSynonyms<T>(this SearchClient client, string indexName,
+    public static async Task<IEnumerable<SynonymHit>> BrowseSynonymsAsync(this SearchClient client, string indexName,
       SynonymType? type,
-      SearchSynonymsParams synomymsParams,
-      RequestOptions requestOptions)
+      SearchSynonymsParams synonymsParams,
+      RequestOptions requestOptions = null)
     {
       const int hitPerPage = 1000;
       var all = await CreateIterable<Tuple<SearchSynonymsResponse, int>>(async (prevResp) =>
       {
-        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, type, prevResp.Item2, hitPerPage,
-          synomymsParams,
+        var page = prevResp?.Item2 ?? 0;
+        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, type, page, hitPerPage,
+          synonymsParams,
           requestOptions);
-        return new Tuple<SearchSynonymsResponse, int>(searchSynonymsResponse, prevResp.Item2 + 1);
-      }, resp => resp?.Item1 != null && resp.Item1.NbHits < hitPerPage).ConfigureAwait(false);
+        return new Tuple<SearchSynonymsResponse, int>(searchSynonymsResponse, page + 1);
+      }, resp => resp?.Item1 is { NbHits: < hitPerPage }).ConfigureAwait(false);
 
       return all.SelectMany(u => u.Item1.Hits);
     }
@@ -197,7 +196,7 @@ namespace Algolia.Search.Utils
         retryCount++;
       }
 
-      throw new AlgoliaException(
+      throw new AlgoliaApiException(
         "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
     }
 
@@ -206,7 +205,8 @@ namespace Algolia.Search.Utils
       return Math.Min(retryCount * 200, 5000);
     }
 
-    private static async Task<List<TU>> CreateIterable<TU>(Func<TU, Task<TU>> executeQuery, Func<TU, bool> hasNext)
+    private static async Task<List<TU>> CreateIterable<TU>(Func<TU, Task<TU>> executeQuery,
+      Func<TU, bool> stopCondition)
     {
       var responses = new List<TU>();
       var current = default(TU);
@@ -215,7 +215,7 @@ namespace Algolia.Search.Utils
         var response = await executeQuery(current).ConfigureAwait(false);
         current = response;
         responses.Add(response);
-      } while (hasNext(current));
+      } while (!stopCondition(current));
 
       return responses;
     }
