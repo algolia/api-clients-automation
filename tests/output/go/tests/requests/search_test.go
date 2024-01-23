@@ -1941,8 +1941,8 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 	t.Run("searchSynonyms with all parameters", func(t *testing.T) {
 		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
 			"indexName",
-		).WithType(search.SynonymType("altcorrection1")).WithPage(10).WithHitsPerPage(10).WithSearchSynonymsParams(
-			search.NewEmptySearchSynonymsParams().SetQuery("myQuery")))
+		).WithSearchSynonymsParams(
+			search.NewEmptySearchSynonymsParams().SetQuery("myQuery").SetType(search.SynonymType("altcorrection1")).SetPage(10).SetHitsPerPage(10)))
 		require.NoError(t, err)
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
@@ -1951,12 +1951,7 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"myQuery"}`)
-		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"type":"altcorrection1","page":"10","hitsPerPage":"10"}`), &queryParams))
-		for k, v := range queryParams {
-			require.Equal(t, v, echo.Query.Get(k))
-		}
+		ja.Assertf(*echo.Body, `{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}`)
 	})
 }
 

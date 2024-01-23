@@ -2638,29 +2638,23 @@ public class SearchClientRequestTests
   {
     await _client.SearchSynonymsAsync(
       "indexName",
-      Enum.Parse<SynonymType>("Altcorrection1"),
-      10,
-      10,
-      new SearchSynonymsParams { Query = "myQuery", }
+      new SearchSynonymsParams
+      {
+        Query = "myQuery",
+        Type = Enum.Parse<SynonymType>("Altcorrection1"),
+        Page = 10,
+        HitsPerPage = 10,
+      }
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault("{\"query\":\"myQuery\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"type\":\"altcorrection1\",\"page\":\"10\",\"hitsPerPage\":\"10\"}"
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"myQuery\",\"type\":\"altcorrection1\",\"page\":10,\"hitsPerPage\":10}",
+      req.Body,
+      new JsonDiffConfig(false)
     );
-    Assert.NotNull(expectedQuery);
-
-    var actualQuery = req.QueryParameters;
-    Assert.Equal(expectedQuery.Count, actualQuery.Count);
-
-    foreach (var query in actualQuery)
-    {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
-    }
   }
 
   [Fact(DisplayName = "searchUserIds0")]
