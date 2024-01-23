@@ -28,7 +28,7 @@ import com.algolia.EchoResponse;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}RequestsTests {
     private {{client}} client;
-    private {{client}} clientE2E;
+    {{#hasE2E}}private {{client}} clientE2E;{{/hasE2E}}
     private EchoInterceptor echo;
     private ObjectMapper json;
     
@@ -42,12 +42,13 @@ class {{client}}RequestsTests {
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
 
+        {{#hasE2E}}
         if ("true".equals(System.getenv("CI"))) {
           this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
           } else {
           var dotenv = Dotenv.configure().directory("../../").load();
           this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
-        }
+        }{{/hasE2E}}
     }
 
     @AfterAll
