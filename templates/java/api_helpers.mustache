@@ -253,12 +253,14 @@ public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params
   */
 public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params, RequestOptions requestOptions) {
   final Holder<Integer> currentPage = new Holder<>(0);
-  final int hitsPerPage = 1000;
+
+  params.setPage(0);
+  params.setHitsPerPage(1000);
 
   return AlgoliaIterableHelper.createIterable(
     () -> {
-      SearchSynonymsResponse response = this.searchSynonyms(indexName, currentPage.value, hitsPerPage, params, requestOptions);
-      currentPage.value = response.getNbHits() < hitsPerPage ? null : currentPage.value + 1;
+      SearchSynonymsResponse response = this.searchSynonyms(indexName, params, requestOptions);
+      currentPage.value = response.getNbHits() < params.getHitsPerPage() ? null : currentPage.value + 1;
       return response.getHits().iterator();
     },
     () -> currentPage.value != null
