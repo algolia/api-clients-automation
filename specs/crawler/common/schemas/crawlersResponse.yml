@@ -1,0 +1,13 @@
+allOf:
+  - $ref: '../parameters.yml#/Pagination'
+  - type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              $ref: '../parameters.yml#/CrawlerId'
+            name:
+              $ref: '../parameters.yml#/CrawlerName'
