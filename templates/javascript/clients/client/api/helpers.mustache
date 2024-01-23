@@ -216,11 +216,13 @@ browseSynonyms(
     func: (previousResponse) => {
       return this.searchSynonyms(
         {
-          ...params,
           indexName,
-          page: previousResponse
-            ? previousResponse.page + 1
-            : browseSynonymsOptions.page || 0,
+          searchSynonymsParams: {
+            ...params.searchSynonymsParams,
+            page: previousResponse
+              ? previousResponse.page + 1
+              : params.searchSynonymsParams?.page || 0,
+          }
         },
         requestOptions
       );
