@@ -13,11 +13,11 @@
     "testName": "searchSynonyms with all parameters",
     "parameters": {
       "indexName": "indexName",
-      "type": "altcorrection1",
-      "page": 10,
-      "hitsPerPage": 10,
       "searchSynonymsParams": {
-        "query": "myQuery"
+        "query": "myQuery",
+        "type": "altcorrection1",
+        "page": 10,
+        "hitsPerPage": 10
       }
     },
     "request": {
