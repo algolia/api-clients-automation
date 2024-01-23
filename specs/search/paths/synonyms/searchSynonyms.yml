@@ -10,9 +10,6 @@ post:
   description: Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
-    - $ref: './common/parameters.yml#/Type'
-    - $ref: '../../../common/parameters.yml#/PageDefault0'
-    - $ref: '../../../common/parameters.yml#/HitsPerPage'
   requestBody:
     description: Body of the `searchSynonyms` operation.
     content:
@@ -24,6 +21,12 @@ post:
           properties:
             query:
               $ref: '../../../common/schemas/SearchParams.yml#/query'
+            type:
+              $ref: './common/parameters.yml#/SynonymType'
+            page:
+              $ref: '../../../common/schemas/SearchParams.yml#/page'
+            hitsPerPage:
+              $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
   responses:
     '200':
       description: OK
