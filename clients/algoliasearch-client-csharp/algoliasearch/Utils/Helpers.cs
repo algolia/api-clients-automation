@@ -120,6 +120,7 @@ namespace Algolia.Search.Utils
       BrowseParamsObject browseParams,
       RequestOptions requestOptions = null)
     {
+      browseParams.HitsPerPage = 1000;
       var all = await CreateIterable<BrowseResponse<T>>(async prevResp =>
       {
         browseParams.Cursor = prevResp?.Cursor;
@@ -140,15 +141,15 @@ namespace Algolia.Search.Utils
       SearchRulesParams searchRulesParams,
       RequestOptions requestOptions = null)
     {
-      const int hitPerPage = 1000;
-      searchRulesParams.HitsPerPage = hitPerPage;
+      const int hitsPerPage = 1000;
+      searchRulesParams.HitsPerPage = hitsPerPage;
 
       var all = await CreateIterable<Tuple<SearchRulesResponse, int>>(async (prevResp) =>
       {
         var page = prevResp?.Item2 ?? 0;
         var searchSynonymsResponse = await client.SearchRulesAsync(indexName, searchRulesParams, requestOptions);
         return new Tuple<SearchRulesResponse, int>(searchSynonymsResponse, page + 1);
-      }, resp => resp?.Item1 is { NbHits: < hitPerPage }).ConfigureAwait(false);
+      }, resp => resp?.Item1 is { NbHits: < hitsPerPage }).ConfigureAwait(false);
 
       return all.SelectMany(u => u.Item1.Hits);
     }
@@ -167,15 +168,15 @@ namespace Algolia.Search.Utils
       SearchSynonymsParams synonymsParams,
       RequestOptions requestOptions = null)
     {
-      const int hitPerPage = 1000;
+      const int hitsPerPage = 1000;
       var all = await CreateIterable<Tuple<SearchSynonymsResponse, int>>(async (prevResp) =>
       {
         var page = prevResp?.Item2 ?? 0;
-        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, type, page, hitPerPage,
+        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, type, page, hitsPerPage,
           synonymsParams,
           requestOptions);
         return new Tuple<SearchSynonymsResponse, int>(searchSynonymsResponse, page + 1);
-      }, resp => resp?.Item1 is { NbHits: < hitPerPage }).ConfigureAwait(false);
+      }, resp => resp?.Item1 is { NbHits: < hitsPerPage }).ConfigureAwait(false);
 
       return all.SelectMany(u => u.Item1.Hits);
     }
