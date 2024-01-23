@@ -66,6 +66,9 @@ public class Variant {
   @JsonProperty("userCount")
   private Integer userCount;
 
+  @JsonProperty("trackedUserCount")
+  private Integer trackedUserCount;
+
   public Variant setAddToCartCount(Integer addToCartCount) {
     this.addToCartCount = addToCartCount;
     return this;
@@ -291,6 +294,17 @@ public class Variant {
     return userCount;
   }
 
+  public Variant setTrackedUserCount(Integer trackedUserCount) {
+    this.trackedUserCount = trackedUserCount;
+    return this;
+  }
+
+  /** Number of users that performed a tracked search during the A/B test. */
+  @javax.annotation.Nonnull
+  public Integer getTrackedUserCount() {
+    return trackedUserCount;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -318,7 +332,8 @@ public class Variant {
       Objects.equals(this.searchCount, variant.searchCount) &&
       Objects.equals(this.trackedSearchCount, variant.trackedSearchCount) &&
       Objects.equals(this.trafficPercentage, variant.trafficPercentage) &&
-      Objects.equals(this.userCount, variant.userCount)
+      Objects.equals(this.userCount, variant.userCount) &&
+      Objects.equals(this.trackedUserCount, variant.trackedUserCount)
     );
   }
 
@@ -342,7 +357,8 @@ public class Variant {
       searchCount,
       trackedSearchCount,
       trafficPercentage,
-      userCount
+      userCount,
+      trackedUserCount
     );
   }
 
@@ -368,6 +384,7 @@ public class Variant {
     sb.append("    trackedSearchCount: ").append(toIndentedString(trackedSearchCount)).append("\n");
     sb.append("    trafficPercentage: ").append(toIndentedString(trafficPercentage)).append("\n");
     sb.append("    userCount: ").append(toIndentedString(userCount)).append("\n");
+    sb.append("    trackedUserCount: ").append(toIndentedString(trackedUserCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }
