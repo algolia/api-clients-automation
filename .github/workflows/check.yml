@@ -420,8 +420,14 @@ jobs:
 
       - name: Spread generation to each repository
         id: spreadGeneration
-        if: ${{ steps.pushGeneratedCode.exitcode == 0 && github.ref == 'refs/heads/main' }}
+        if: github.ref == 'refs/heads/main'
         run: yarn workspace scripts spreadGeneration
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push specs to new worlds documentation
+        if: github.ref == 'refs/heads/main'
+        run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
