@@ -427,7 +427,7 @@ jobs:
 
       - name: Push specs to new worlds documentation
         if: github.ref == 'refs/heads/main'
-        run: yarn workspace scripts pushSpecsToNewWorld
+        run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
