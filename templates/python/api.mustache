@@ -5,10 +5,6 @@
 from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}
 
-{{#isSearchClient}}
-from algoliasearch.{{packageName}}.models.synonym_type import SynonymType
-{{/isSearchClient}}
-
 
 {{#operations}}
 class {{classname}}:
