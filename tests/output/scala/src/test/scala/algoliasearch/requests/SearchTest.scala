@@ -2467,12 +2467,12 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.searchSynonyms(
       indexName = "indexName",
-      `type` = Some(SynonymType.withName("altcorrection1")),
-      page = Some(10),
-      hitsPerPage = Some(10),
       searchSynonymsParams = Some(
         SearchSynonymsParams(
-          query = Some("myQuery")
+          query = Some("myQuery"),
+          `type` = Some(SynonymType.withName("altcorrection1")),
+          page = Some(10),
+          hitsPerPage = Some(10)
         )
       )
     )
@@ -2482,17 +2482,9 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/indexName/synonyms/search")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"myQuery"}""")
+    val expectedBody = parse("""{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery =
-      parse("""{"type":"altcorrection1","page":"10","hitsPerPage":"10"}""").asInstanceOf[JObject].obj.toMap
-    val actualQuery = res.queryParameters
-    assert(actualQuery.size == expectedQuery.size)
-    for ((k, v) <- actualQuery) {
-      assert(expectedQuery.contains(k))
-      assert(expectedQuery(k).values == v)
-    }
   }
 
   test("searchUserIds0") {

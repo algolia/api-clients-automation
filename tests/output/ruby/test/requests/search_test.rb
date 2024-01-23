@@ -1845,22 +1845,21 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_synonyms1
     req = @client.search_synonyms_with_http_info(
       "indexName",
-      'altcorrection1',
-      10,
-      10,
-      SearchSynonymsParams.new(query: "myQuery")
+      SearchSynonymsParams.new(
+        query: "myQuery",
+        type: 'altcorrection1',
+        page: 10,
+        hits_per_page: 10
+      )
     )
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/indexName/synonyms/search', req.path)
-    assert(
-      ({ 'type': "altcorrection1",
-         'page': "10",
-         'hitsPerPage': "10" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"query":"myQuery"}'), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse('{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}'), JSON.parse(req.body)
+    )
   end
 
   # searchUserIds0

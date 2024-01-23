@@ -2336,27 +2336,21 @@ class SearchClientRequestsTests {
   @DisplayName("searchSynonyms with all parameters")
   void searchSynonymsTest1() {
     assertDoesNotThrow(() -> {
-      client.searchSynonyms("indexName", SynonymType.fromValue("altcorrection1"), 10, 10, new SearchSynonymsParams().setQuery("myQuery"));
+      client.searchSynonyms(
+        "indexName",
+        new SearchSynonymsParams().setQuery("myQuery").setType(SynonymType.fromValue("altcorrection1")).setPage(10).setHitsPerPage(10)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/synonyms/search", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"myQuery\"}", req.body, JSONCompareMode.STRICT));
-
-    try {
-      Map<String, String> expectedQuery = json.readValue(
-        "{\"type\":\"altcorrection1\",\"page\":\"10\",\"hitsPerPage\":\"10\"}",
-        new TypeReference<HashMap<String, String>>() {}
-      );
-      Map<String, Object> actualQuery = req.queryParameters;
-
-      assertEquals(expectedQuery.size(), actualQuery.size());
-      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
-        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
-      }
-    } catch (JsonProcessingException e) {
-      fail("failed to parse queryParameters json");
-    }
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"query\":\"myQuery\",\"type\":\"altcorrection1\",\"page\":10,\"hitsPerPage\":10}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test

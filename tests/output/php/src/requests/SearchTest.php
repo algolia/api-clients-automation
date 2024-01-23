@@ -2886,10 +2886,10 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->searchSynonyms(
             'indexName',
-            'altcorrection1',
-            10,
-            10,
             ['query' => 'myQuery',
+                'type' => 'altcorrection1',
+                'page' => 10,
+                'hitsPerPage' => 10,
             ],
         );
 
@@ -2897,8 +2897,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/synonyms/search',
                 'method' => 'POST',
-                'body' => json_decode('{"query":"myQuery"}'),
-                'queryParameters' => json_decode('{"type":"altcorrection1","page":"10","hitsPerPage":"10"}', true),
+                'body' => json_decode('{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}'),
             ],
         ]);
     }

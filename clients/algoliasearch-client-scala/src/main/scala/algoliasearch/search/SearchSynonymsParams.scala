@@ -11,11 +11,20 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.SynonymType._
+
 /** SearchSynonymsParams
   *
   * @param query
   *   Text to search for in an index.
+  * @param page
+  *   Page to retrieve (the first page is `0`, not `1`).
+  * @param hitsPerPage
+  *   Number of hits per page.
   */
 case class SearchSynonymsParams(
-    query: Option[String] = scala.None
+    query: Option[String] = scala.None,
+    `type`: Option[SynonymType] = scala.None,
+    page: Option[Int] = scala.None,
+    hitsPerPage: Option[Int] = scala.None
 )
