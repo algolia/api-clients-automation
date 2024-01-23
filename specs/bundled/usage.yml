@@ -1,0 +1,656 @@
+openapi: 3.0.2
+info:
+  title: Usage API
+  description: >
+    API to retrieve usage statistics for HTTP requests made to Algolia
+    applications.
+
+
+    Use the [Usage API key](https://dashboard.algolia.com/account/api-keys/) for
+    authentication.
+  version: 1.0.0
+  contact:
+    name: Algolia Usage API
+    url: https://www.algolia.com/doc/rest-api/usage/
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  parameters:
+    statisticParameter:
+      name: statistic
+      in: path
+      required: true
+      schema:
+        type: string
+        example: records,max_qps,region_max_qps
+      description: >
+        The [statistics](#statistics) to retrieve.
+
+        To retrieve several queries, separate them with commas.
+
+
+        ### Statistics
+
+
+        The usage statistics cover several sets of operations:
+        [search](#search-operations), [access control lists](#acl-operations),
+        [indexing](#indexing-operations), [records](#record-operations),
+        [synonyms](#synonym-operations), [Rules](#rule-operations), and
+        [Insights](#insights-operations).
+
+        They also return metrics on: [total operations](#total-operations),
+        [total Query Suggestions
+        operations](#total-query-suggestions-operations), [processing
+        time](#processing-time), [indices](#indices), [queries per
+        second](#maximum-qps-query-per-second), [search
+        capacity](#used-search-capacity), and [degraded
+        queries](#degraded-queries).
+
+
+        To avoid unnecessary calls, you can request all or some of the following
+        sets of statistics with a [grouping](#grouping) option.
+
+
+        #### Search operations
+
+
+        - `queries_operations`: number of [single
+        queries](https://www.algolia.com/doc/rest-api/search/#search-index-post)
+
+        - `multi_queries_operations`: number of [multiple
+        queries](https://www.algolia.com/doc/rest-api/search/#search-multiple-indices)
+        (batched queries)
+
+
+        #### ACL operations
+
+
+        - `get_api_key_operations`: number of [get API
+        key](https://www.algolia.com/doc/rest-api/search/#get-api-key-permissions)
+        operations
+
+        - `get_api_keys_operations`: number of [list API
+        keys](https://www.algolia.com/doc/rest-api/search/#list-api-keys)
+        operations
+
+        - `add_api_key_operations`: number of [add API
+        key](https://www.algolia.com/doc//rest-api/search/#add-api-key)
+        operations
+
+        - `update_api_key_operations`: number of [update API
+        key](https://www.algolia.com/doc/rest-api/search/#update-api-key)
+        operations
+
+        - `delete_api_key_operations`: number of [delete API
+        key](https://www.algolia.com/doc/rest-api/search/#delete-api-key)
+        operations
+
+        - `list_api_key_operations`: number of [list index API
+        keys](https://www.algolia.com/doc/rest-api/search/#list-index-api-keys-for-all-indices)
+        operations
+
+
+        #### Indexing operations
+
+
+        - `browse_operations`: number of [browse
+        index](https://www.algolia.com/doc/rest-api/search/#browse-index-post)
+        operations
+
+        - `clear_index_operations`: number of [clear
+        records](https://www.algolia.com/doc/rest-api/search/#clear-objects)
+        operations
+
+        - `copy_move_operations`: number of [copy or move
+        index](https://www.algolia.com/doc/rest-api/search/#copymove-index)
+        operations
+
+        - `delete_index_operations`: number of [delete
+        index](https://www.algolia.com/doc/rest-api/search/#delete-index)
+        operations
+
+        - `get_log_operations`: number of [get
+        logs](https://www.algolia.com/doc/rest-api/search/#get-logs) operations
+
+        - `get_settings_operations`: number of [get
+        settings](https://www.algolia.com/doc/rest-api/search/#get-settings)
+        operations
+
+        - `set_settings_operations`: number of [set
+        settings](https://www.algolia.com/doc/rest-api/search/#set-settings)
+        operations
+
+        - `list_indices_operations`: number of [list
+        indices](https://www.algolia.com/doc/rest-api/search/#list-indices)
+        operations
+
+        - `wait_task_operations`: number of
+        [wait](https://www.algolia.com/doc/api-reference/api-methods/wait-task/)
+        operations
+
+
+        #### Record operations
+
+
+        - `add_record_operations`: number of [add or replace
+        record](https://www.algolia.com/doc/rest-api/search/#add-or-replace-object)
+        operations
+
+        - `batch_operations`: number of [batch
+        update](https://www.algolia.com/doc/rest-api/search/#batch-write-operations)
+        operations
+
+        - `delete_by_query_operations`: number of [delete by
+        query](https://www.algolia.com/doc/rest-api/search/#delete-by)
+        operations
+
+        - `delete_record_operations`: number of [delete
+        record](https://www.algolia.com/doc/rest-api/search/#delete-object)
+        operations
+
+        - `get_record_operations`: number of [get
+        record](https://www.algolia.com/doc/rest-api/search/#get-object)
+        operations
+
+        - `partial_update_record_operations`: number of [partially update
+        records](https://www.algolia.com/doc/rest-api/search/#partially-update-objects)
+        operations
+
+        - `update_record_operations`: number of [add or replace record by
+        objectID](https://www.algolia.com/doc/rest-api/search/#add-or-replace-object-by-id)
+        operations
+
+
+        #### Synonym operations
+
+
+        - `batch_synonym_operations`: number of [save all
+        synonyms](https://www.algolia.com/doc/rest-api/search/#save-synonyms)
+        operations
+
+        - `clear_synonym_operations`: number of [clear
+        synonyms](https://www.algolia.com/doc/rest-api/search/#clear-all-synonyms)
+        operations
+
+        - `delete_synonym_operations`: number of [delete
+        synonym](https://www.algolia.com/doc/rest-api/search/#delete-synonym)
+        operations
+
+        - `get_synonym_operations`: number of [get
+        synonym](https://www.algolia.com/doc/rest-api/search/#get-synonym)
+        operations
+
+        - `query_synonym_operations`: number of [search
+        synonyms](https://www.algolia.com/doc/rest-api/search/#search-synonyms)
+        operations
+
+        - `update_synonym_operations`: number of [save a
+        synonym](https://www.algolia.com/doc/rest-api/search/#save-synonym)
+        operations
+
+
+        #### Rule operations
+
+
+        - `batch_rules_operations`: number of [batch
+        rules](https://www.algolia.com/doc/rest-api/search/#batch-rules)
+        operations
+
+        - `clear_rules_operations`: number of [delete
+        rule](https://www.algolia.com/doc/rest-api/search/#delete-rule)
+        operations
+
+        - `delete_rules_operations`: number of [clear
+        rules](https://www.algolia.com/doc/rest-api/search/#clear-rules)
+        operations
+
+        - `get_rules_operations`: number of [get
+        rule](https://www.algolia.com/doc/rest-api/search/#get-rule) operations
+
+        - `save_rules_operations`: number of [save
+        rule](https://www.algolia.com/doc/rest-api/search/#save-rule) operations
+
+        - `search_rules_operations`: number of [search
+        rules](https://www.algolia.com/doc/rest-api/search/#search-rules)
+        operations
+
+
+        #### Insights operations
+
+
+        - `insights_operations`: number of operations on the Insights API.
+
+
+        #### Total operations
+
+
+        - `total_search_operations`: sum of all [search
+        operations](#search-operations)
+
+        - `total_search_requests`: number of [search
+        requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
+        The number of billed search requests is equal to this value minus
+        `querysuggestions_total_search_requests`
+
+        - `total_recommend_requests`: number of [Recommend
+        requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+
+        - `total_acl_operations`: sum of all [ACL operations](#acl-operations)
+
+        - `total_indexing_operations`: sum of all [indexing
+        operations](#indexing-operations)
+
+        - `total_records_operations`: sum of all [record
+        operations](#record-operations)
+
+        - `total_synonym_operations`: sum of all [synonym
+        operations](#synonym-operations)
+
+        - `total_rules_operations`: sum of all [Rule
+        operations](#rule-operations)
+
+        - `total_write_operations`: number of Write operations
+
+        - `total_read_operations`: number of Read operations
+
+        - `total_operations`: sum of all operations
+
+
+        #### Total Query Suggestions operations
+
+
+        [Query
+        Suggestions](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/)
+        operations are a subset of `total_search_operations`.
+
+
+        - `querysuggestions_total_search_operations`: number of Query
+        Suggestions search operations
+
+        - `querysuggestions_total_search_requests`: number of Query Suggestions
+        [search
+        requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+
+        - `querysuggestions_total_acl_operations`: sum of all Query Suggestions
+        [ACL operations](#acl-operations)
+
+        - `querysuggestions_total_indexing_operations`: number of Query
+        Suggestions [indexing operations](#indexing-operations)
+
+        - `querysuggestions_total_records_operations`: number of Query
+        Suggestions [record operations](#record-operations)
+
+        - `querysuggestions_total_synonym_operations`: number of Query
+        Suggestions [synonym operations](#synonym-operations)
+
+        - `querysuggestions_total_rules_operations`: number of Query Suggestions
+        [Rule operations](#rule-operations)
+
+        - `querysuggestions_total_write_operations`: number of Query Suggestions
+        Write operations
+
+        - `querysuggestions_total_read_operations`: number of Query Suggestions
+        Read operations
+
+        - `querysuggestions_total_operations`: sum of all Query Suggestions
+        operations
+
+
+        #### Processing time
+
+
+        - `avg_processing_time`: average processing time (in milliseconds)
+
+        - `90p_processing_time`: 90th percentile of processing time (in
+        milliseconds)
+
+        - `99p_processing_time`: 99th percentile of processing time (in
+        milliseconds)
+
+        - `queries_above_last_ms_processing_time`: number of queries that take
+        one or more seconds to process
+
+
+        #### Indices
+
+
+        - `records`: number of records
+
+        - `data_size`: the size of the indices' records (in bytes)
+
+        - `file_size`: the size of the indices' records _and_ metadata (in
+        bytes)
+
+
+        #### Maximum QPS (query per second)
+
+
+        - `max_qps`: [maximum queries per
+        second](https://support.algolia.com/hc/en-us/articles/4406975224721)
+        over the time range (per server)
+
+        - `region_max_qps`: maximum queries per second over the time range (per
+        region)
+
+        - `total_max_qps`: maximum queries per second across all servers
+
+
+        #### Used search capacity
+
+
+        - `used_search_capacity`: maximum search capacity used (in percentage
+        per server)
+
+        - `avg_used_search_capacity`: average search capacity used (in
+        percentage per server)
+
+        - `region_used_search_capacity`: maximum search capacity used  (in
+        percentage per region)
+
+        - `region_avg_used_search_capacity`: average search capacity used (in
+        percentage per region)
+
+        - `total_used_search_capacity`: maximum search capacity used (in
+        percentage for all servers)
+
+        - `total_avg_used_search_capacity`: average used search capacity (in
+        percentage for all servers)
+
+
+        #### Degraded queries
+
+
+        Use these statistics to monitor the impact of [degraded
+        queries](https://support.algolia.com/hc/en-us/articles/4406981934481).
+
+
+        - `degraded_queries_ssd_used_queries_impacted`: percentage of queries
+        that made the Algolia search engine read from the server's SSD.
+
+        - `degraded_queries_ssd_used_seconds_impacted`: percentage of seconds
+        affected by a `ssd_used` degradation.
+
+        - `degraded_queries_max_capacity_queries_impacted`: percentage of
+        queries degraded because all search threads were used.
+
+        - `degraded_queries_max_capacity_seconds_impacted`: percentage of
+        seconds affected by a `max_capacity` degradation.
+
+
+        Some statistics provide information about the percentage of time when
+        queries were degraded during the specified period.
+
+        For example, if `degraded_queries_max_capacity_seconds_impacted` shows
+        50%, there were `max_capacity` problems half of the time.
+
+        These issues might not happen continuously but at different times during
+        the specified period.
+
+
+        ### Grouping
+
+
+        - `*`: return all the usage statistics in the same response
+
+        - `search_operations`: return all [search
+        operations](#search-operations)
+
+        - `acl_operations`: return all [ACL operations](#acl-operations)
+
+        - `indexing_operations`: return all [indexing
+        operations](#indexing-operations)
+
+        - `record_operations`: return all [record
+        operations](#record-operations)
+
+        - `synonym_operations`: returns all [synonym
+        operations](#synonym-operations)
+
+        - `rule_operations`: returns all [Rule operations](#rule-operations).
+    startDateParameter:
+      name: startDate
+      in: query
+      description: Start date in [ISO-8601 format](https://wikipedia.org/wiki/ISO_8601).
+      required: true
+      schema:
+        type: string
+        example: '2023-08-12T14:30:00Z'
+    endDateParameter:
+      name: endDate
+      in: query
+      description: End date in [ISO-8601 format](https://wikipedia.org/wiki/ISO_8601).
+      required: true
+      schema:
+        type: string
+        example: '2023-08-19T16:45:00Z'
+    granularityParameter:
+      name: granularity
+      in: query
+      description: |
+        Return hourly or daily statistics.
+
+        - `hourly`: the maximum time range for this granularity is 7&nbsp;days
+        - `daily`: the maximum time range for this granularity is 365&nbsp;days.
+      schema:
+        $ref: '#/components/schemas/granularity'
+    indexParameter:
+      name: index
+      in: path
+      description: Index name.
+      required: true
+      schema:
+        type: string
+        example: YOUR_INDEX_NAME
+  schemas:
+    granularity:
+      type: string
+      enum:
+        - hourly
+        - daily
+      default: daily
+    statisticValue:
+      oneOf:
+        - type: integer
+        - type: object
+          properties:
+            serverName:
+              type: string
+            value:
+              type: integer
+        - type: string
+  responses:
+    Success:
+      description: Success.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statistics:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    t:
+                      type: integer
+                      description: >
+                        [Unix timestamp](https://www.unixtimestamp.com/) (in
+                        milliseconds).
+                      example: 1455451200000
+                    v:
+                      description: >
+                        Depending on the statistic, the type of this value (`v`)
+                        differs.
+
+                        Most statistics return integer values.
+
+
+                        `degraded_queries_*`, `max_qps`, and
+                        `used_search_capacity` are returned as maps of server
+                        name strings to integers.
+
+
+                        `region_*` statistics return strings (regions).
+                      $ref: '#/components/schemas/statisticValue'
+    InvalidRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        line:
+                          type: integer
+                        position:
+                          type: integer
+                      required:
+                        - message
+                      example:
+                        message: url is not defined
+                        line: 5
+                example:
+                  code: malformed_id
+            required:
+              - error
+    MissingAuthorization:
+      description: Authorization information is missing or invalid.
+    Forbidden:
+      description: Invalid credentials.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        line:
+                          type: integer
+                        position:
+                          type: integer
+                      required:
+                        - message
+                      example:
+                        message: url is not defined
+                        line: 5
+                example:
+                  code: malformed_id
+            required:
+              - error
+    IndexNotFound:
+      description: >
+        Index not found.
+
+
+        If `index` has been correctly defined, this error message means that no
+        data was found in the given time range.
+
+        The time range may lie outside the [data retention
+        period](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-).
+    StatisticNotFound:
+      description: Metric not found.
+servers:
+  - url: https://usage.algolia.com/1/usage
+  - url: https://usage-dev.algolia.com/1/usage
+  - url: http://localhost:8000/1/usage
+security:
+  - BasicAuth: []
+paths:
+  /{statistic}:
+    get:
+      operationId: getUsage
+      summary: Get usage.
+      description: >
+        Returns usage statistics over a specified period.
+
+
+        The specified period must be within the last 90 days.
+
+        However, the period of [data retention can be
+        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
+        to a maximum of 365 days.
+      parameters:
+        - $ref: '#/components/parameters/statisticParameter'
+        - $ref: '#/components/parameters/startDateParameter'
+        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/granularityParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/StatisticNotFound'
+      tags:
+        - usage
+  /{statistic}/{index}:
+    get:
+      operationId: getIndexUsage
+      summary: Get usage for an index.
+      description: >
+        Returns index usage statistics over a specified period.
+
+
+        The specified period must be within the last 90 days.
+
+        However, the period of [data retention can be
+        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
+        to a maximum of 365 days.
+      parameters:
+        - $ref: '#/components/parameters/statisticParameter'
+        - $ref: '#/components/parameters/indexParameter'
+        - $ref: '#/components/parameters/startDateParameter'
+        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/granularityParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/StatisticNotFound'
+      tags:
+        - usage

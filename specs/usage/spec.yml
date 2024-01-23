@@ -1,0 +1,27 @@
+openapi: 3.0.2
+info:
+  title: Usage API
+  description: |
+    API to retrieve usage statistics for HTTP requests made to Algolia applications.
+
+    Use the [Usage API key](https://dashboard.algolia.com/account/api-keys/) for authentication.
+  version: 1.0.0
+  contact:
+    name: Algolia Usage API
+    url: 'https://www.algolia.com/doc/rest-api/usage/'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+servers:
+  - url: 'https://usage.algolia.com/1/usage'
+  - url: 'https://usage-dev.algolia.com/1/usage'
+  - url: 'http://localhost:8000/1/usage'
+security:
+  - BasicAuth: []
+paths:
+  /{statistic}:
+    $ref: 'paths/statistic.yml'
+  /{statistic}/{index}:
+    $ref: 'paths/statisticIndex.yml'

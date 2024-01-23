@@ -1,0 +1,35 @@
+description: Invalid credentials.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  line:
+                    type: integer
+                  position:
+                    type: integer
+                required:
+                  - message
+                example:
+                  message: 'url is not defined'
+                  line: 5
+          example:
+            code: malformed_id
+      required:
+        - error

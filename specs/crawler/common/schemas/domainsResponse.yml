@@ -1,0 +1,18 @@
+allOf:
+  - $ref: '../parameters.yml#/Pagination'
+  - type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            appId:
+              type: string
+              description: The app for which the domain is registered.
+            domain:
+              type: string
+              description: The registered domain name.
+            validated:
+              type: boolean
+              description: Indicates whether the domain is validated or not.

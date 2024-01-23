@@ -24,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class AnalyticsClientRequestsTests {
 
   private AnalyticsClient client;
+
   private EchoInterceptor echo;
   private ObjectMapper json;
 
