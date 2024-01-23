@@ -26,8 +26,8 @@
       "body": {
         "query": "myQuery",
         "type": "altcorrection1",
-        "page": "10",
-        "hitsPerPage": "10"
+        "page": 10,
+        "hitsPerPage": 10
       }
     }
   }
