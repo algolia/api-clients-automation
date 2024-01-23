@@ -53,14 +53,14 @@ async function pushToNewWorld(): Promise<void> {
 
   await configureGitHubAuthor(tempGitDir);
 
-  const message = 'feat(specs): automated update from api-clients-automation repository';
+  const message = 'feat(specs): automatic update from api-clients-automation repository';
   await run('git add .', { cwd: tempGitDir });
   await gitCommit({
     message,
     coAuthors: [author, ...coAuthors],
     cwd: tempGitDir,
   });
-  await run('git push -f', { cwd: tempGitDir });
+  await run(`git push -f origin ${targetBranch}`, { cwd: tempGitDir });
 
   console.log(`Creating pull request on ${OWNER}/${repository}...`);
   const octokit = getOctokit();
@@ -70,7 +70,7 @@ async function pushToNewWorld(): Promise<void> {
     title: message,
     body: [
       'This PR is automatically created by https://github.com/algolia/api-clients-automation',
-      'It contains the most up-to-date specs for the Algolia API clients.',
+      'It contains the most up-to-date OpenAPI for the Algolia API clients.',
     ].join('\n\n'),
     base: 'main',
     head: targetBranch,
