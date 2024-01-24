@@ -22,8 +22,6 @@ runs:
       shell: bash
       run: |
         source /root/.profile
-        which yarn
-        ls -la /root/.nvm/versions/node/20.11.0/bin
         git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
 
     # JavaScript for monorepo and tooling
