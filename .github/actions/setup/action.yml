@@ -22,6 +22,7 @@ runs:
       shell: bash
       run: |
         source /root/.profile
+        echo "$PATH" >> $GITHUB_PATH
         git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
 
     # JavaScript for monorepo and tooling
