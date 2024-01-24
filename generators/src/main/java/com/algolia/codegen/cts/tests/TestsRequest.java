@@ -55,7 +55,18 @@ public class TestsRequest extends TestsGenerator {
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
       if (!cts.containsKey(operationId)) {
-        continue;
+        throw new CTSException(
+          "operationId '" +
+          operationId +
+          "' does not exist in the tests suite, please create the file:" +
+          " 'tests/CTS/requests/" +
+          client +
+          "/" +
+          operationId +
+          ".json'.\n" +
+          "You can read more on the documentation:" +
+          " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite"
+        );
       }
       Request[] op = cts.get(operationId);
 

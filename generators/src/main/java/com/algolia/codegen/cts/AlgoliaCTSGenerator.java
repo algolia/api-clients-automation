@@ -84,7 +84,6 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
         models.put(entry.getKey(), innerModel.get(0).getModel());
       }
     }
-
     GenericPropagator.propagateGenericsToModels(mod);
     return mod;
   }
