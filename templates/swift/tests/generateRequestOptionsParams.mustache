@@ -1,0 +1,10 @@
+{{#isObject}}{{> tests/requestOptionsParamKey}}{{#oneOfModel}}{{parentClassName}}.{{#lambda.camelcase}}{{type}}{{/lambda.camelcase}}({{/oneOfModel}}{{objectName}}(
+{{#value}}{{> tests/generateRequestOptionsParams}}{{^-last}},
+{{/-last}}{{/value}}
+){{#oneOfModel}}){{/oneOfModel}}{{/isObject}}{{#isString}}{{> tests/requestOptionsParamKey}}{{#isAnyType}}AnyCodable({{/isAnyType}}"{{{value}}}"{{#isAnyType}}){{/isAnyType}}{{/isString}}{{#isNumber}}{{> tests/requestOptionsParamKey}}{{{value}}}{{/isNumber}}{{#isBoolean}}{{> tests/requestOptionsParamKey}}{{{value}}}{{/isBoolean}}{{#isEnum}}{{> tests/requestOptionsParamKey}}Enum{{{.}}}{{/isEnum}}{{#isArray}}{{> tests/requestOptionsParamKey}}[
+{{#value}}{{> tests/generateRequestOptionsParams}}{{^-last}},
+{{/-last}}{{/value}}
+]{{/isArray}}{{#isMap}}{{> tests/requestOptionsParamKey}}Map[{{{.}}}]{{/isMap}}{{#isFreeFormObject}}{{> tests/requestOptionsParamKey}}[
+{{#value}}{{>tests/generateRequestOptionsParams}}{{^-last}},
+{{/-last}}{{/value}}
+]{{/isFreeFormObject}}

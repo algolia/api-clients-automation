@@ -28,7 +28,7 @@
 {{^isEnum}}
     {{#description}}/** {{{.}}} */
     {{/description}}{{#deprecated}}@available(*, deprecated, message: "This property is deprecated.")
-    {{/deprecated}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} {{#readonlyProperties}}private(set) {{/readonlyProperties}}var {{{name}}}: {{#vendorExtensions.x-null-encodable}}NullEncodable<{{{datatype}}}>{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{datatype}}}{{#required}}{{#isNullable}}?{{/isNullable}}{{/required}}{{^required}}?{{/required}}{{/vendorExtensions.x-null-encodable}}{{#defaultValue}} = {{#vendorExtensions.x-null-encodable}}{{{vendorExtensions.x-null-encodable-default-value}}}{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{.}}}{{/vendorExtensions.x-null-encodable}}{{/defaultValue}}
+    {{/deprecated}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} {{#readonlyProperties}}private(set) {{/readonlyProperties}}var {{{name}}}: {{#vendorExtensions.x-null-encodable}}NullEncodable<{{{datatype}}}>{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{datatype}}}{{#required}}{{#isNullable}}?{{/isNullable}}{{/required}}{{^required}}?{{/required}}{{/vendorExtensions.x-null-encodable}}
     {{#objcCompatible}}
     {{#vendorExtensions.x-swift-optional-scalar}}
     {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} var {{{name}}}Num: NSNumber? {
@@ -51,7 +51,7 @@
 {{/allVars}}
 {{#hasVars}}
 
-    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} init({{#allVars}}{{{name}}}: {{#vendorExtensions.x-null-encodable}}NullEncodable<{{{datatypeWithEnum}}}>{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{datatypeWithEnum}}}{{#required}}{{#isNullable}}?{{/isNullable}}{{/required}}{{^required}}?{{/required}}{{/vendorExtensions.x-null-encodable}}{{#defaultValue}} = {{#vendorExtensions.x-null-encodable}}{{{vendorExtensions.x-null-encodable-default-value}}}{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{.}}}{{/vendorExtensions.x-null-encodable}}{{/defaultValue}}{{^defaultValue}}{{^required}} = {{#vendorExtensions.x-null-encodable}}.encodeNull{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}nil{{/vendorExtensions.x-null-encodable}}{{/required}}{{/defaultValue}}{{^-last}}, {{/-last}}{{/allVars}}) {
+    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} init({{#allVars}}{{{name}}}: {{#vendorExtensions.x-null-encodable}}NullEncodable<{{{datatypeWithEnum}}}>{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}{{{datatypeWithEnum}}}{{#required}}{{#isNullable}}?{{/isNullable}}{{/required}}{{^required}}?{{/required}}{{/vendorExtensions.x-null-encodable}}{{^required}} = {{#vendorExtensions.x-null-encodable}}.encodeNull{{/vendorExtensions.x-null-encodable}}{{^vendorExtensions.x-null-encodable}}nil{{/vendorExtensions.x-null-encodable}}{{/required}}{{^-last}}, {{/-last}}{{/allVars}}) {
         {{#allVars}}
         self.{{{name}}} = {{{name}}}
         {{/allVars}}
@@ -77,6 +77,16 @@
         set {
             additionalProperties[key] = newValue
         }
+    }
+
+    public func setAdditionalProperties(with properties: [String: AnyCodable]?) -> Self {
+      var updatedInstance = self
+
+      if let properties = properties {
+      updatedInstance.additionalProperties = properties
+      }
+
+      return updatedInstance
     }{{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}
 
     // Encodable protocol methods

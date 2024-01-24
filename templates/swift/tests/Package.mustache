@@ -7,13 +7,15 @@ let package = Package(
   name: "AlgoliaSearchClientTests",
   dependencies: [
     .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
+    .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.0"),
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
   targets: [
     .testTarget(
       name: "requests",
       dependencies: [
-        .product(name: "AnyCodable", package: "AnyCodable"),{{#packageList}}
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "SwiftyJSON", package: "SwiftyJSON"),{{#packageList}}
         .product(
           name: "{{.}}",
           package: "algoliasearch-client-swift"

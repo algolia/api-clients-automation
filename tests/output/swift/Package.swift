@@ -1,5 +1,5 @@
 // swift-tools-version: 5.9
-//
+// 
 
 import PackageDescription
 
@@ -7,6 +7,7 @@ let package = Package(
   name: "AlgoliaSearchClientTests",
   dependencies: [
     .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
+    .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.0"),
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
   targets: [
@@ -14,6 +15,7 @@ let package = Package(
       name: "requests",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "SwiftyJSON", package: "SwiftyJSON"),
         .product(
           name: "Abtesting",
           package: "algoliasearch-client-swift"

@@ -21,6 +21,7 @@ public struct EchoResponse: Codable {
   let host: String
   let algoliaAgent: String
   let queryItems: [String: String?]?
+  let headers: [String: String?]?
 }
 
 final class EchoRequestBuilder: RequestBuilder {
@@ -43,21 +44,21 @@ final class EchoRequestBuilder: RequestBuilder {
     guard let requestHttpMethod = urlRequest.httpMethod,
       let httpMethod = HTTPMethod(rawValue: requestHttpMethod)
     else {
-      throw TransportError.requestError(
-        AlgoliaError(errorMessage: "Unable to parse HTTP method from request"))
+      throw AlgoliaError.requestError(
+        GenericError(description: "Unable to parse HTTP method from request"))
     }
 
     guard let url = urlRequest.url else {
-      throw TransportError.requestError(
-        AlgoliaError(errorMessage: "Unable to parse URL from request"))
+      throw AlgoliaError.requestError(
+        GenericError(description: "Unable to parse URL from request"))
     }
 
     guard
       let mockHTTPURLResponse = HTTPURLResponse(
-        url: url, statusCode: self.statusCode, httpVersion: nil, headerFields: headers)
+        url: url, statusCode: self.statusCode, httpVersion: nil, headerFields: nil)
     else {
-      throw TransportError.requestError(
-        AlgoliaError(errorMessage: "Unable to mock HTTPURLResponse from EchoTransporter"))
+      throw AlgoliaError.requestError(
+        GenericError(description: "Unable to mock HTTPURLResponse from EchoTransporter"))
     }
 
     let queryItems = processQueryItems(from: url.query)
@@ -66,7 +67,7 @@ final class EchoRequestBuilder: RequestBuilder {
       statusCode: self.statusCode, method: httpMethod, url: url.absoluteString, timeout: timeout,
       originalBodyData: urlRequest.httpBody, path: url.path, host: url.host ?? "",
       algoliaAgent: headers["X-Algolia-Agent"] ?? "",
-      queryItems: queryItems
+      queryItems: queryItems, headers: headers
     )
 
     let interceptedBody = try CodableHelper.jsonEncoder.encode(echoResponse)

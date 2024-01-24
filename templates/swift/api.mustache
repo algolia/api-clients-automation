@@ -76,7 +76,7 @@ typealias Client = {{classname}}
     {{#returnType}}
 
         guard let body = response.body else {
-            throw TransportError.missingData
+            throw AlgoliaError.missingData
         }
 
       return body{{/returnType}}
@@ -104,11 +104,11 @@ typealias Client = {{classname}}
     @available(*, deprecated, message: "This operation is deprecated.")
     {{/isDeprecated}}
     {{^returnType}}@discardableResult{{/returnType}}
-    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}AnyCodable{{/returnType}}> {
-        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
+    {{#vendorExtensions}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}AnyCodable{{/returnType}}> {
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{path}}}"{{#pathParams}}
         let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"
-        let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}PostEscape, options: .literal, range: nil){{/pathParams}}
+        let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .{{#x-is-custom-request}}urlPathAllowed{{/x-is-custom-request}}{{^x-is-custom-request}}urlPathAlgoliaAllowed{{/x-is-custom-request}}) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}PostEscape, options: .literal, range: nil){{/pathParams}}
         {{#bodyParam}}
         let body = {{paramName}}
         {{/bodyParam}}
@@ -116,30 +116,30 @@ typealias Client = {{classname}}
           let body: AnyCodable? = nil
         {{/bodyParam}}
         {{#hasQueryParams}}
-        let queryItems = APIHelper.mapValuesToQueryItems([{{^queryParams}}:{{/queryParams}}
+        let queryItems = APIHelper.mapValuesToQueryItems({{#x-is-custom-request}}parameters{{/x-is-custom-request}}{{^x-is-custom-request}}[{{^queryParams}}:{{/queryParams}}
             {{#queryParams}}
             {{> _param}},
             {{/queryParams}}
-        ])
+        ]{{/x-is-custom-request}})
         {{/hasQueryParams}}
         {{^hasQueryParams}}
           let queryItems: [URLQueryItem]? = nil
         {{/hasQueryParams}}
 
-        let nillableHeaders: [String: Any?]? = [{{^headerParams}}{{^hasFormParams}}
-            :{{/hasFormParams}}{{/headerParams}}{{#headerParams}}
-            {{> _param}},{{/headerParams}}
-        ]
+        let nillableHeaders: [String: Any?]? = {{^headerParams}}nil{{/headerParams}}{{#headerParams}}{{#-first}}[{{/-first}}
+            {{> _param}},
+        {{#-last}}]{{/-last}}{{/headerParams}}
 
         let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
         return try await self.transporter.send(
           method: "{{httpMethod}}",
-          path: path,
-          data: body,
-          requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+          path: resourcePath,
+          data: body{{#bodyParam}}{{^required}} ?? AnyCodable(){{/required}}{{/bodyParam}},
+          requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
+          useReadTransporter: true{{/vendorExtensions.x-use-read-transporter}}
         )
-    }
+    }{{/vendorExtensions}}
 {{/operation}}
 }
 {{/operations}}
