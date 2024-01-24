@@ -156,11 +156,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  const swiftIndex = clientMatrix.client.findIndex((c) => c.language === 'swift');
-  if (swiftIndex !== -1) {
-    clientMatrix.client.splice(swiftIndex, 1);
-  }
-
   const phpIndex = clientMatrix.client.findIndex((c) => c.language === 'php');
   if (phpIndex !== -1) {
     clientMatrix.client.splice(phpIndex, 1);
