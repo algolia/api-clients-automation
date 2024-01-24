@@ -88,11 +88,12 @@ open class Transporter {
       request = request.set(\.timeoutInterval, to: timeout)
 
       for (key, value) in self.configuration.defaultHeaders ?? [:] {
-          request.setValue(value, forHTTPHeaderField: key.lowercased())
+        request.setValue(value, forHTTPHeaderField: key.lowercased())
       }
-        request.setValue(UserAgentController.httpHeaderValue, forHTTPHeaderField: "User-Agent".lowercased())
+      request.setValue(
+        UserAgentController.httpHeaderValue, forHTTPHeaderField: "User-Agent".lowercased())
       for (key, value) in headers {
-          request.setValue(value, forHTTPHeaderField: key.lowercased())
+        request.setValue(value, forHTTPHeaderField: key.lowercased())
       }
 
       if callType == CallType.write {
