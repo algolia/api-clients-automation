@@ -21,10 +21,12 @@ runs:
     - name: Edit config for docker
       shell: bash
       run: |
-        source /root/.profile
-        echo "$PATH" >> $GITHUB_PATH
-        git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
-
+        # only inside a container
+        if [[ -f /root/.profile ]]; then
+          source /root/.profile
+          echo "$PATH" >> $GITHUB_PATH
+          git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
+        fi
     # JavaScript for monorepo and tooling
     - name: Install Node
       if: ${{ inputs.install-node == 'true' }}
