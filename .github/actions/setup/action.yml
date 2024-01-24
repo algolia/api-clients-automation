@@ -24,6 +24,7 @@ runs:
         # only inside a container
         if [[ -f /root/.profile ]]; then
           source /root/.profile
+          echo "setting PATH: $PATH"
           echo "$PATH" >> $GITHUB_PATH
           git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
         fi
