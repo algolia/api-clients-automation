@@ -384,13 +384,18 @@ public class ParametersWithDataType {
       }
     }
 
-    // Store ordered params from the spec
-    var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+    if (language.equals("swift")) {
+      // Store ordered params from the spec
+      var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
 
-    // Create a map to store the indices of each string in orderedParams
-    Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size()).boxed().collect(Collectors.toMap(orderedParams::get, i -> i));
+      // Create a map to store the indices of each string in orderedParams
+      Map<String, Integer> indexMap = IntStream
+        .range(0, orderedParams.size())
+        .boxed()
+        .collect(Collectors.toMap(orderedParams::get, i -> i));
 
-    values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
+      values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
+    }
 
     testOutput.put("isObject", true);
     testOutput.put("value", values);
