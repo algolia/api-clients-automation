@@ -6,7 +6,7 @@ while read line; do
   export $(echo ${arr[1]} | sed -e "s/-/_/;s/config\/\.//" | tr "[a-z]" "[A-Z]")=${arr[0]}
 done < <(find config -name '.*-version' -exec jq --raw-input -r '. + " " + input_filename' {} \;)
 
-docker buildx build --load \
+docker buildx build --push \
   --platform linux/amd64 \
   --build-arg CSHARP_VERSION \
   --build-arg DART_VERSION \
@@ -17,3 +17,19 @@ docker buildx build --load \
   --build-arg PYTHON_VERSION \
   -t ghcr.io/algolia/apic-base:latest \
   -f scripts/docker/Dockerfile.base . 
+
+docker buildx build --push \
+  --platform linux/amd64 \
+  --build-arg RUBY_VERSION \
+  --build-arg JAVA_VERSION \
+  --build-arg NODE_VERSION \
+  -t ghcr.io/algolia/apic-ruby:latest \
+  -f scripts/docker/Dockerfile.ruby . 
+
+docker buildx build --push \
+  --platform linux/amd64 \
+  --build-arg SWIFT_VERSION \
+  --build-arg JAVA_VERSION \
+  --build-arg NODE_VERSION \
+  -t ghcr.io/algolia/apic-swift:latest \
+  -f scripts/docker/Dockerfile.swift .
