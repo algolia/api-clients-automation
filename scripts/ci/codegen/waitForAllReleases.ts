@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
-import { exists, getOctokit, setVerbose, toAbsolutePath } from '../../common';
+import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common';
 import { getClientsConfigField, getLanguageFolder } from '../../config';
 import { getTargetBranch } from '../../release/common';
 import type { Language } from '../../types';
+
+import { commitStartRelease } from './text';
 
 function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined>): Promise<any[]> {
   const octokit = getOctokit();
@@ -15,7 +17,7 @@ function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined
         return undefined;
       }
 
-      const run = await octokit.actions.listWorkflowRuns({
+      const ciRun = await octokit.actions.listWorkflowRuns({
         owner: 'algolia',
         repo: getClientsConfigField(lang, 'gitRepoId'),
         workflow_id: workflowID,
@@ -23,22 +25,28 @@ function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined
         branch: getTargetBranch(lang),
       });
 
-      if (run.data.workflow_runs.length === 0) {
+      if (ciRun.data.workflow_runs.length === 0) {
         return null;
       }
 
       // check that the run was created less than 10 minutes ago
-      if (Date.now() - Date.parse(run.data.workflow_runs[0].created_at) > 10 * 60 * 1000) {
+      if (Date.now() - Date.parse(ciRun.data.workflow_runs[0].created_at) > 10 * 60 * 1000) {
         return null;
       }
 
-      return run.data.workflow_runs[0];
+      return ciRun.data.workflow_runs[0];
     })
   );
 }
 
 async function waitForAllReleases(languages: Language[]): Promise<void> {
   const octokit = getOctokit();
+
+  const lastCommitMessage = await run('git log -1 --format="%s"');
+
+  if (!lastCommitMessage.startsWith(commitStartRelease)) {
+    return;
+  }
 
   console.log(
     `Waiting for all releases CI to finish for the following languages: ${languages.join(', ')}`
