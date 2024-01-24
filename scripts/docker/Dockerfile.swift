@@ -1,4 +1,6 @@
 ARG SWIFT_VERSION
+
+FROM ghcr.io/nicklockwood/swiftformat:latest as swiftFormat
 FROM swift:${SWIFT_VERSION}-jammy
 
 SHELL ["/bin/bash", "--login", "-c"]
@@ -26,13 +28,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && nvm use default \
     && npm install -g yarn
 
-
-# Swift formatter
-ARG SWIFT_VERSION
-RUN git clone --depth 1 -b release/${SWIFT_VERSION} https://github.com/apple/swift-format.git /tmp/swift-format \
-    && cd /tmp/swift-format && swift build -c release \
-    && mv .build/release/swift-format /usr/bin \
-    && cd /app && rm -rf /tmp/swift-format
+# Swift
+COPY --from=swiftFormat /usr/bin/swiftformat /usr/bin/swiftformat
 
 # Autolink repository https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package
 LABEL org.opencontainers.image.source=https://github.com/algolia/api-clients-automation

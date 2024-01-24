@@ -7,7 +7,7 @@ ARG CSHARP_VERSION
 
 FROM dart:${DART_VERSION} AS dart-builder
 FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
-FROM golang:${GO_VERSION}-bullseye AS go-builder
+FROM golang:${GO_VERSION}-alpine AS go-builder
 FROM python:${PYTHON_VERSION}-bullseye AS python-builder
 FROM php:${PHP_VERSION}-bullseye AS builder
 
@@ -46,9 +46,9 @@ RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
-RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
-RUN go install golang.org/x/tools/cmd/goimports@latest
+RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
+    && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2 \
+    && go install golang.org/x/tools/cmd/goimports@latest
 
 
 # Dart
@@ -62,7 +62,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # C#
 COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
 RUN echo "export PATH=$PATH:/usr/share/dotnet:/root/.dotnet/tools" >> ~/.profile && source ~/.profile \
-          && dotnet tool install --global csharpier
+    && dotnet tool install --global csharpier
 
 WORKDIR /app
 
