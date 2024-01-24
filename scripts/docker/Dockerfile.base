@@ -61,8 +61,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # C#
 COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet
-RUN echo "export PATH=$PATH:/usr/share/dotnet:/root/.dotnet/tools" >> ~/.profile && source ~/.profile \
-    && dotnet tool install --global csharpier
+RUN echo "export PATH=$PATH:/usr/share/dotnet:/root/.dotnet/tools" >> ~/.profile && source ~/.profile
 
 WORKDIR /app
 
