@@ -161,9 +161,6 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, spec);
     }
 
-    if (paramName != null && paramName.equals("userData")) {
-      Helpers.prettyPrint(testOutput);
-    }
     return testOutput;
   }
 
