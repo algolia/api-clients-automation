@@ -81,6 +81,6 @@ async function pushToNewWorld(): Promise<void> {
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
-  setVerbose(true);
+  setVerbose(false);
   pushToNewWorld();
 }
