@@ -4,6 +4,7 @@ import * as core from '@actions/core';
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
 import {
   getClientsConfigField,
+  getDockerImage,
   getLanguageFolder,
   getTestExtension,
   getTestOutputFolder,
@@ -142,6 +143,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
       snippetsToStore,
+      dockerImage: getDockerImage(language),
     });
   }
 
@@ -153,6 +155,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   }
 
   const shouldRun = clientMatrix.client.length > 0;
+
+  const phpIndex = clientMatrix.client.findIndex((c) => c.language === 'php');
+  if (phpIndex !== -1) {
+    clientMatrix.client.splice(phpIndex, 1);
+  }
 
   core.setOutput('RUN_GEN', shouldRun);
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));

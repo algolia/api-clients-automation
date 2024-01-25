@@ -1,6 +1,5 @@
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 
-import { CI } from './common';
 import type { Language, LanguageConfig } from './types.js';
 
 export function getClientsConfigField(language: Language, pathToField: string[] | string): any {
@@ -37,11 +36,7 @@ export function getTestOutputFolder(language: Language): string {
   return getClientsConfigField(language, ['tests', 'outputFolder']);
 }
 
-export function getDockerImage(language?: Language): string | undefined {
-  if (CI || !language || !('dockerImage' in clientsConfig[language])) {
-    return undefined;
-  }
-
+export function getDockerImage(language: Language): string {
   return getClientsConfigField(language, 'dockerImage');
 }
 

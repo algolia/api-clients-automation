@@ -20,6 +20,11 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic-base
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 10
     steps:
       - name: debugging - dump GitHub context
@@ -35,10 +40,12 @@ jobs:
         id: setup
         uses: ./.github/actions/setup
 
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
       # Computing jobs that should run
       - name: Setting diff outputs variables
         id: diff
-        shell: bash
         run: |
           previousCommit=${{ github.event.before }}
           baseRef=${{ github.base_ref }}
@@ -48,12 +55,10 @@ jobs:
 
       - name: Compute specs matrix
         id: spec-matrix
-        shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
       - name: Compute the client codegen matrix
         id: gen-matrix
-        shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} clients
 
       - name: check that custom actions are built
@@ -107,7 +112,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          type: minimal
+          install-node: true
 
       - name: Check script linting
         run: yarn scripts:lint
@@ -136,7 +141,7 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
         with:
-          type: minimal
+          install-node: true
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -152,6 +157,8 @@ jobs:
   client_javascript_utils:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic-base
     needs: setup
     if: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
     strategy:
@@ -184,8 +191,7 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         uses: ./.github/actions/setup
         with:
-          type: minimal
-          language: javascript
+          javascript-utils: true
 
       - name: Build '${{ matrix.client }}' client
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -198,6 +204,8 @@ jobs:
   client_gen_javascript:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/algolia/apic-base
     needs:
       - setup
       - client_javascript_utils
@@ -239,7 +247,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          language: javascript
+          javascript-utils: true
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -303,7 +311,9 @@ jobs:
 
   client_gen:
     timeout-minutes: 20
-    runs-on: ${{ matrix.client.language == 'swift' && 'macos-12' || 'ubuntu-22.04' }}
+    runs-on: 'ubuntu-22.04'
+    container:
+      image: ${{ format('ghcr.io/algolia/{0}', matrix.client.dockerImage) }}
     needs:
       - setup
       - specs
@@ -337,8 +347,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          language: ${{ matrix.client.language }}
 
       - name: Generate clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -409,7 +417,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          type: minimal
+          install-node: true
 
       - name: Push generated code
         id: pushGeneratedCode

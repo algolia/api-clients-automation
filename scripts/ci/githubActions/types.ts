@@ -49,6 +49,10 @@ export type ClientMatrix = BaseMatrix & {
    * The snippets output path to store in the artifact.
    */
   snippetsToStore: string;
+  /**
+   * Which docker image to use on the CI.
+   */
+  dockerImage: string;
 };
 
 export type SpecMatrix = Pick<BaseMatrix, 'cacheKey' | 'toRun'> & {

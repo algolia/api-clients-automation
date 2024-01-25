@@ -1,6 +1,6 @@
 services:
   base:
-    container_name: apic_base
+    container_name: apic-base
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.base
@@ -15,7 +15,7 @@ services:
     command: tail -f /dev/null
     volumes: [./:/app]
   ruby:
-    container_name: apic_ruby
+    container_name: apic-ruby
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.ruby
@@ -26,7 +26,7 @@ services:
     command: tail -f /dev/null
     volumes: [./:/app]
   swift:
-    container_name: apic_swift
+    container_name: apic-swift
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.swift

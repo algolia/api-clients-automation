@@ -16,7 +16,7 @@
     "packageVersion": "7.0.0-alpha.5",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": ".test.cs",
       "outputFolder": "src/tests"
@@ -50,7 +50,7 @@
     "packageVersion": "1.5.0",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "_test.dart",
       "outputFolder": "test"
@@ -77,7 +77,7 @@
     "packageVersion": "4.0.0-alpha.43",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "_test.go",
       "outputFolder": "tests"
@@ -104,7 +104,7 @@
     "packageVersion": "4.0.0-beta.18",
     "modelFolder": "algoliasearch/src/main/java/com/algolia/model",
     "apiFolder": "algoliasearch/src/main/java/com/algolia/api",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
@@ -163,7 +163,7 @@
     "packageVersion": "5.0.0-alpha.100",
     "modelFolder": "model",
     "apiFolder": "src",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
@@ -190,7 +190,7 @@
     "packageVersion": "3.0.0-beta.12",
     "modelFolder": "client/src/commonMain/kotlin/com/algolia/client/model",
     "apiFolder": "client/src/commonMain/kotlin/com/algolia/client/api",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "Test.kt",
       "outputFolder": "src/commonTest/kotlin/com/algolia"
@@ -217,7 +217,7 @@
     "packageVersion": "4.0.0-alpha.93",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "Test.php",
       "outputFolder": "src"
@@ -244,7 +244,7 @@
     "packageVersion": "4.0.0b3",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
@@ -271,7 +271,7 @@
     "packageVersion": "3.0.0.alpha.6",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
-    "dockerImage": "apic_ruby",
+    "dockerImage": "apic-ruby",
     "tests": {
       "extension": "_test.rb",
       "outputFolder": "test"
@@ -298,7 +298,7 @@
     "packageVersion": "2.0.0-alpha.6",
     "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
-    "dockerImage": "apic_base",
+    "dockerImage": "apic-base",
     "tests": {
       "extension": "Test.scala",
       "outputFolder": "src/test/scala/algoliasearch"
@@ -325,7 +325,7 @@
     "packageVersion": "9.0.0-alpha.2",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
-    "dockerImage": "apic_swift",
+    "dockerImage": "apic-swift",
     "tests": {
       "extension": ".swift",
       "outputFolder": "Tests"
