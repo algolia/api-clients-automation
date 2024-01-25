@@ -19,15 +19,15 @@ runs:
         echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
 
     - name: Edit config for docker
+      if: ${{ inputs.install-node != 'true' }}
       shell: bash
       run: |
-        # only inside a container
-        if [[ -f /root/.profile ]]; then
-          source /root/.profile
-          echo "setting PATH: $PATH"
-          echo "$PATH" >> $GITHUB_PATH
-          git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
-        fi
+        source /root/.profile
+        echo "setting PATH: $PATH"
+        echo "$PATH" >> $GITHUB_PATH
+        echo "/root/.nvm/versions/node/$(cat .nvmrc)/bin" >> $GITHUB_PATH
+        git config --global --add safe.directory /__w/api-clients-automation/api-clients-automation
+
     # JavaScript for monorepo and tooling
     - name: Install Node
       if: ${{ inputs.install-node == 'true' }}
