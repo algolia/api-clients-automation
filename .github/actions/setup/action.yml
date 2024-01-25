@@ -217,7 +217,7 @@ runs:
     - name: Build swiftformat
       if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}
       shell: bash
-      run: swift build -c release
+      run: cd swiftformat && swift build -c release
 
     - name: Setup the path
       if: ${{ inputs.language == 'swift' }}
