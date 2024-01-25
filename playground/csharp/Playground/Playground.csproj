@@ -1,27 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Algolia</RootNamespace>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>11</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Algolia</RootNamespace>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="dotenv.net" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="dotenv.net" Version="3.1.3"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <None Update=".env">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Update=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

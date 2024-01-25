@@ -1,4 +1,4 @@
-namespace Algolia.Search.Models
+namespace Algolia.Search.Models.Common
 {
   /// <summary>
   /// Compression type for outgoing HTTP requests

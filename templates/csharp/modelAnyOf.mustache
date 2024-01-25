@@ -14,7 +14,7 @@
     {
         {{#isNullable}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
+        /// Initializes a new instance of the {{classname}} class.
         /// </summary>
         public {{classname}}()
         {
@@ -27,7 +27,7 @@
         {{^vendorExtensions.x-duplicated-data-type}}
         {{^isNull}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class
+        /// Initializes a new instance of the {{classname}} class
         /// with the <see cref="{{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}" /> class
         /// </summary>
         /// <param name="actualInstance">An instance of {{dataType}}.</param>
@@ -72,10 +72,10 @@
         {{^isNull}}
 
         /// <summary>
-        /// Get the actual instance of `{{{dataType}}}`. If the actual instance is not `{{{dataType}}}`,
+        /// {{#lamda.escape-generic}}Get the actual instance of `{{{dataType}}}`. If the actual instance is not `{{{dataType}}}`{{/lamda.escape-generic}},
         /// the InvalidClassException will be thrown
         /// </summary>
-        /// <returns>An instance of {{dataType}}</returns>
+        /// <returns>An instance of {{#lamda.escape-generic}}{{dataType}}{{/lamda.escape-generic}}</returns>
         public {{{dataType}}} Get{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{#lambda.titlecase}}{{{dataFormat}}}{{/lambda.titlecase}}{{/isArray}}()
         {
             return ({{{dataType}}})this.ActualInstance;

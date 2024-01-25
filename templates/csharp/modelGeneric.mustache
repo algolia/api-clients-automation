@@ -1,5 +1,5 @@
     /// <summary>
-    /// {{description}}{{^description}}{{classname}}{{/description}}
+    /// {{{description}}}{{^description}}{{classname}}{{/description}}
     /// </summary>
     {{#vendorExtensions.x-cls-compliant}}
     [CLSCompliant({{{vendorExtensions.x-cls-compliant}}})]
@@ -35,10 +35,10 @@
         {{#isEnum}}
 
         /// <summary>
-        /// {{description}}{{^description}}Gets or Sets {{{name}}}{{/description}}
+        /// {{{description}}}{{^description}}Gets or Sets {{{name}}}{{/description}}
         /// </summary>
         {{#description}}
-        /// <value>{{.}}</value>
+        /// <value>{{{.}}}</value>
         {{/description}}
         {{^conditionalSerialization}}
         [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
@@ -109,22 +109,22 @@
     {{#hasRequired}}
     {{^hasOnlyReadOnly}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
+        /// Initializes a new instance of the {{classname}} class.
         /// </summary>
-        [JsonConstructorAttribute]
+        [JsonConstructor]
         {{^isAdditionalPropertiesTrue}}
         public {{classname}}() { }
         {{/isAdditionalPropertiesTrue}}
         {{#isAdditionalPropertiesTrue}}
         public {{classname}}()
         {
-            this.AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new Dictionary<string, object>();
         }
         {{/isAdditionalPropertiesTrue}}
     {{/hasOnlyReadOnly}}
     {{/hasRequired}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
+        /// Initializes a new instance of the {{classname}} class.
         /// </summary>
         {{#readWriteVars}}
         {{#required}}
@@ -132,7 +132,7 @@
         {{/required}}
         {{/readWriteVars}}
     {{#hasOnlyReadOnly}}
-        [JsonConstructorAttribute]
+        [JsonConstructor]
     {{/hasOnlyReadOnly}}
         public {{classname}}({{#requiredVars}}{{> generic_type}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/requiredVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/parentVars}}){{/parent}}
         {
@@ -142,17 +142,17 @@
             {{#required}}
             {{^conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} ?? throw new ArgumentNullException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
+            {{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} ?? throw new ArgumentNullException(nameof({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}));
             {{/vendorExtensions.x-csharp-value-type}}
             {{#vendorExtensions.x-csharp-value-type}}
-            this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            {{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{/conditionalSerialization}}
             {{#conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
             if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
             {
-                throw new ArgumentNullException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
+                throw new ArgumentNullException(nameof({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}));
             }
             this._{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/vendorExtensions.x-csharp-value-type}}
@@ -165,7 +165,7 @@
             {{/isInherited}}
             {{/vars}}
             {{#isAdditionalPropertiesTrue}}
-            this.AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new Dictionary<string, object>();
             {{/isAdditionalPropertiesTrue}}
         }
 
@@ -173,9 +173,9 @@
         {{^isInherited}}
         {{^isEnum}}
         /// <summary>
-        /// {{description}}{{^description}}Gets or Sets {{{name}}}{{/description}}
+        /// {{{description}}}{{^description}}Gets or Sets {{{name}}}{{/description}}
         /// </summary>{{#description}}
-        /// <value>{{.}}</value>{{/description}}
+        /// <value>{{{.}}}</value>{{/description}}
         {{^conditionalSerialization}}
         [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
         {{#isDate}}
@@ -285,7 +285,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public {{#parent}}{{^isArray}}{{^isMap}}override {{/isMap}}{{/isArray}}{{/parent}}{{^parent}}virtual {{/parent}}string ToJson()
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
         {{#equatable}}
 

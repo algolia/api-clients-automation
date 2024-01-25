@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Algolia.Search.Clients
+namespace Algolia.Search.Models.Common
 {
   /// <summary>
   /// A dictionary in which one key has many associated values.

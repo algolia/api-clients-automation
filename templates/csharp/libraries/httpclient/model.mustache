@@ -26,7 +26,7 @@ using JsonSubTypes;
 using System.ComponentModel.DataAnnotations;
 {{/validatable}}
 {{#useCompareNetObjects}}
-using OpenAPIClientUtils = Algolia.Search.{{packageName}}.Client.ClientUtils;
+using OpenAPIClientUtils = Algolia.Search.{{apiPackageName}}.Client.ClientUtils;
 {{/useCompareNetObjects}}
 {{#models}}
 {{#model}}
@@ -41,10 +41,10 @@ using System.Reflection;
 {{/-first}}
 {{/anyOf}}
 using Algolia.Search.Models;
+using Algolia.Search.Models.Common;
 
-namespace Algolia.Search.{{modelPackage}}.{{packageName}}
-{
+namespace Algolia.Search.Models.{{apiPackageName}};
+
 {{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{#anyOf}}{{#-first}}{{>modelAnyOf}}{{/-first}}{{/anyOf}}{{^oneOf}}{{^anyOf}}{{>modelGeneric}}{{/anyOf}}{{/oneOf}}{{/isEnum}}
 {{/model}}
 {{/models}}
-}

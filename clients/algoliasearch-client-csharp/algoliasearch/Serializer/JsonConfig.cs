@@ -10,7 +10,7 @@ namespace Algolia.Search.Serializer
   {
     public const string JsonContentType = "application/json";
 
-    public static JsonSerializerSettings AlgoliaJsonSerializerSettings => new JsonSerializerSettings
+    public static JsonSerializerSettings AlgoliaJsonSerializerSettings => new()
     {
       Formatting = Formatting.None,
       NullValueHandling = NullValueHandling.Ignore,

@@ -1,5 +1,6 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Models;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
 using Action = Algolia.Search.Models.Search.Action;
 
