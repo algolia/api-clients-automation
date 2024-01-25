@@ -2,6 +2,8 @@ get:
   tags:
     - configurations
   operationId: getAllConfigs
+  x-acl:
+    - settings
   summary: List configurations.
   description: List all Query Suggestions configurations of your Algolia application.
   responses:
@@ -20,6 +22,8 @@ post:
   tags:
     - configurations
   operationId: createConfig
+  x-acl:
+    - editSettings
   summary: Create a configuration.
   description: |
     Create a new Query Suggestions configuration.
