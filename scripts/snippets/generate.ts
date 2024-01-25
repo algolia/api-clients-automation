@@ -1,12 +1,12 @@
-import { callCTSGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.js';
+import { callGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.js';
 import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
 import type { Generator } from '../types.js';
 
 export async function snippetsGenerateMany(generators: Generator[]): Promise<void> {
-  await setupAndGen(generators, async (gen) => {
+  await setupAndGen(generators, 'snippets', async (gen) => {
     if (getTestOutputFolder(gen.language)) {
-      await callCTSGenerator(gen, 'snippets');
+      await callGenerator(gen);
     }
   });
 

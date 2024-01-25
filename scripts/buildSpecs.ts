@@ -4,6 +4,7 @@ import yaml from 'js-yaml';
 
 import { Cache } from './cache.js';
 import { exists, run, toAbsolutePath } from './common.js';
+import type { Spinner } from './spinners.js';
 import { createSpinner } from './spinners.js';
 import type { Spec } from './types.js';
 
@@ -20,11 +21,13 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 async function transformBundle({
   bundledPath,
   withDoc,
+  withHelpers,
   clientName,
   alias,
 }: {
   bundledPath: string;
   withDoc: boolean;
+  withHelpers: boolean;
   clientName: string;
   alias?: string;
 }): Promise<void> {
@@ -46,6 +49,12 @@ async function transformBundle({
       // because open-api-generator will use this to determine the name of the client
       specMethod.tags = [clientName];
 
+      if (!withHelpers && specMethod['x-helper']) {
+        delete bundledSpec.paths[pathKey];
+        delete bundledDocSpec?.paths[pathKey];
+        break;
+      }
+
       // Doc special cases
       if (!withDoc || !bundledDocSpec) {
         continue;
@@ -59,7 +68,9 @@ async function transformBundle({
       // Checks that specified tags are well defined at root level
       for (const tag of docMethod.tags) {
         if (tag === clientName) {
-          throw new Error(`Tag name "${tag}" must be different from client name ${clientName}`);
+          throw new Error(
+            `Tag name "${tag}" must be different from client name ${clientName} in operation ${specMethod.operationId}`
+          );
         }
         if (alias && tag === alias) {
           throw new Error(`Tag name "${tag} must be different from alias ${alias}`);
@@ -121,11 +132,9 @@ async function lintCommon(useCache: boolean): Promise<void> {
 async function buildLiteSpec({
   spec,
   bundledPath,
-  outputFormat,
 }: {
   spec: string;
   bundledPath: string;
-  outputFormat: string;
 }): Promise<void> {
   const parsed = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
 
@@ -143,16 +152,56 @@ async function buildLiteSpec({
     {} as Spec['paths']
   );
 
-  const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
-  await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(parsed));
+  await fsp.writeFile(bundledPath, yaml.dump(parsed));
 
   await transformBundle({
-    bundledPath: toAbsolutePath(liteBundledPath),
+    bundledPath,
     clientName: spec,
     // Lite does not need documentation because it's just a subset
     withDoc: false,
+    withHelpers: false,
   });
 }
+
+/* eslint-disable no-param-reassign */
+async function buildSpecWithHelpers(useCache: boolean, spinner: Spinner): Promise<void> {
+  const cache = new Cache({
+    folder: toAbsolutePath('specs/'),
+    generatedFiles: ['bundled/search.helpers.yml'],
+    filesToCache: ['search', 'common'],
+    cacheFile: toAbsolutePath('specs/dist/search.helpers.cache'),
+  });
+
+  if (useCache) {
+    spinner.text = `checking cache for 'search with helpers'`;
+
+    if (await cache.isValid()) {
+      spinner.succeed(`job skipped, cache found for 'search with helpers'`);
+      return;
+    }
+
+    spinner.text = `cache not found for 'search with helpers'`;
+  }
+
+  const bundledPath = `specs/bundled/search.helpers.yml`;
+  await run(`yarn openapi bundle specs/search/spec.yml -o ${bundledPath} --ext yml`);
+
+  await transformBundle({
+    bundledPath: toAbsolutePath(bundledPath),
+    clientName: 'search',
+    withDoc: false,
+    withHelpers: true,
+  });
+
+  spinner.text = `linting 'search with helpers' bundled spec`;
+  await run('yarn specs:fix bundled/search.helpers.yml');
+
+  if (useCache) {
+    spinner.text = `storing 'seach with helpers' spec cache`;
+    await cache.store();
+  }
+}
+/* eslint-enable no-param-reassign */
 
 /**
  * Build spec file.
@@ -165,7 +214,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     folder: toAbsolutePath('specs/'),
     generatedFiles: [
       `bundled/${spec}.yml`,
-      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`]),
+      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`, `bundled/${spec}.json`]),
     ],
     filesToCache: [specBase, 'common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
@@ -200,17 +249,17 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
       bundledPath: toAbsolutePath(bundledPath),
       clientName: spec,
       withDoc: true,
+      withHelpers: false,
     });
   } else {
     await buildLiteSpec({
       spec,
       bundledPath: toAbsolutePath(bundledPath),
-      outputFormat,
     });
   }
 
   spinner.text = `validating '${spec}' bundled spec`;
-  await run(`yarn openapi lint specs/bundled/${spec}.${outputFormat}`);
+  await run(`yarn openapi lint ${bundledPath}`);
 
   spinner.text = `linting '${spec}' bundled spec`;
   await run(`yarn specs:fix bundled/${spec}.${outputFormat}`);
@@ -226,6 +275,10 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
   if (useCache) {
     spinner.text = `storing '${spec}' spec cache`;
     await cache.store();
+  }
+
+  if (spec === 'search') {
+    await buildSpecWithHelpers(useCache, spinner);
   }
 
   spinner.succeed(`building complete for '${spec}' spec`);

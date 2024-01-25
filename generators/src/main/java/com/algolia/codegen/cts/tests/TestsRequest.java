@@ -85,27 +85,29 @@ public class TestsRequest extends TestsGenerator {
             test.put("isCustomRequest", true);
           }
 
-          // We check on the spec if body parameters should be present in the CTS
-          // If so, we change the `null` default to an empty object, so we know if
-          // tests are properly written
-          if (ope.bodyParams.size() != 0 && req.request.body == null) {
-            req.request.body = "{}";
-          }
+          if (req.request != null) {
+            // We check on the spec if body parameters should be present in the CTS
+            // If so, we change the `null` default to an empty object, so we know if
+            // tests are properly written
+            if (ope.bodyParams.size() != 0 && req.request.body == null) {
+              req.request.body = "{}";
+            }
 
-          // For golang, jsonassert expect % to be formatted, we need to escape them
-          if (language.equals("go") && req.request.body != null) {
-            req.request.body = req.request.body.replace("%", "%%");
-          }
+            // For golang, jsonassert expect % to be formatted, we need to escape them
+            if (language.equals("go") && req.request.body != null) {
+              req.request.body = req.request.body.replace("%", "%%");
+            }
 
-          // For dart, same thing but for $
-          if (language.equals("dart") && req.request.body != null) {
-            req.request.body = req.request.body.replace("$", "\\$");
-          }
+            // For dart, same thing but for $
+            if (language.equals("dart") && req.request.body != null) {
+              req.request.body = req.request.body.replace("$", "\\$");
+            }
 
-          // In a case of a `GET` or `DELETE` request, we want to assert if the body
-          // is correctly parsed (absent from the payload)
-          if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
-            test.put("assertNullBody", true);
+            // In a case of a `GET` or `DELETE` request, we want to assert if the body
+            // is correctly parsed (absent from the payload)
+            if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
+              test.put("assertNullBody", true);
+            }
           }
 
           if (req.response != null) {
