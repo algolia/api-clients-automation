@@ -16,30 +16,26 @@ final class {{client}}RequestsTests: XCTestCase {
 
   {{#blocksRequests}}
     {{#tests}}
+      /**
+      {{testName}}
+      */
       func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
-        let statusCode: HTTPStatusСode = 200
-        let configuration: {{import}}.Configuration = {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
-        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder(statusCode: statusCode))
+        let configuration: {{import}}.Configuration = try {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
 
       {{#hasRequestOptions}}
-        let requestOptions = RequestOptions({{#requestOptions.headers.parametersWithDataType}}
-        headers: [
-        "{{key}}": {{> tests/generateRequestOptionsParams }},
-        ]{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}},{{/requestOptions.queryParameters.parametersWithDataType}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}}
-          queryItems: APIHelper.mapValuesToQueryItems([
-          "{{key}}": {{> tests/generateRequestOptionsParams }},
-          ]){{/requestOptions.queryParameters.parametersWithDataType}}
+        let requestOptions = RequestOptions({{#requestOptions.headers.parametersWithDataType}}{{#-first}}
+        headers: [{{/-first}}
+            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
+          ]{{/-last}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}},{{/requestOptions.queryParameters.parametersWithDataType}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}}{{#-first}}
+          queryItems: APIHelper.mapValuesToQueryItems([{{/-first}}
+            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
+          ]){{/-last}}{{/requestOptions.queryParameters.parametersWithDataType}}
         )
         {{/hasRequestOptions}}
 
-      {{#hasParameters}}
-        {{#parametersWithDataType}}
-          let {{> tests/generateParams }}
-        {{/parametersWithDataType}}
-      {{/hasParameters}}
-
-        let response = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{#isRoot}}{{key}}: {{key}}{{/isRoot}}{{^last}}, {{/last}}{{/parametersWithDataType}}{{/hasParameters}}requestOptions: {{#hasRequestOptions}}requestOptions{{/hasRequestOptions}}{{^hasRequestOptions}}nil{{/hasRequestOptions}})
+        let response = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}, {{/parametersWithDataType}}{{/hasParameters}}requestOptions: {{#hasRequestOptions}}requestOptions{{/hasRequestOptions}}{{^hasRequestOptions}}nil{{/hasRequestOptions}})
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

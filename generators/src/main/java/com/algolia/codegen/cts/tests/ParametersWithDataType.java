@@ -147,7 +147,7 @@ public class ParametersWithDataType {
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, suffix);
     } else if (spec.getIsEnum()) {
-      handleEnum(param, testOutput, language);
+      handleEnum(param, testOutput);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
       handleModel(paramName, param, testOutput, spec, baseType, parent, suffix, isParentFreeFormObject);
@@ -249,7 +249,7 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleEnum(Object param, Map<String, Object> testOutput, String language) {
+  private void handleEnum(Object param, Map<String, Object> testOutput) {
     testOutput.put("isEnum", true);
     testOutput.put("value", param);
 

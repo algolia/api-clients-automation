@@ -9,6 +9,10 @@ import Foundation
 
 public struct GenericError: Error, CustomStringConvertible {
   public var description: String
+
+  public init(description: String) {
+    self.description = description
+  }
 }
 
 public struct ErrorMessage: Codable, CustomStringConvertible {

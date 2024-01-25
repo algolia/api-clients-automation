@@ -28,8 +28,8 @@ typealias Client = {{classname}}
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) {
-        self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
+    public convenience init(applicationID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
+        self.init(configuration: try Configuration(applicationID: applicationID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 
 {{#operation}}
