@@ -1682,6 +1682,9 @@
           "configurations"
         ],
         "operationId": "getAllConfigs",
+        "x-acl": [
+          "settings"
+        ],
         "summary": "List configurations.",
         "description": "List all Query Suggestions configurations of your Algolia application.",
         "responses": {
@@ -1948,6 +1951,9 @@
           "configurations"
         ],
         "operationId": "createConfig",
+        "x-acl": [
+          "editSettings"
+        ],
         "summary": "Create a configuration.",
         "description": "Create a new Query Suggestions configuration.\n\nYou can have up to 100 configurations per Algolia application.\n",
         "requestBody": {
@@ -2321,6 +2327,9 @@
           "configurations"
         ],
         "operationId": "getConfig",
+        "x-acl": [
+          "settings"
+        ],
         "summary": "Get a configuration.",
         "description": "Get a single Query Suggestions configuration.",
         "parameters": [
@@ -2686,6 +2695,9 @@
           "configurations"
         ],
         "operationId": "updateConfig",
+        "x-acl": [
+          "editSettings"
+        ],
         "summary": "Update a configuration.",
         "description": "Update a QuerySuggestions configuration.",
         "parameters": [
@@ -2970,6 +2982,9 @@
           "configurations"
         ],
         "operationId": "deleteConfig",
+        "x-acl": [
+          "editSettings"
+        ],
         "summary": "Delete a configuration.",
         "description": "Delete a Query Suggestions configuration.\n\nDeleting only removes the configuration and stops updates to the Query Suggestions index.\nThe Query Suggestions index itself is not deleted.\n",
         "parameters": [
@@ -3103,6 +3118,9 @@
           "configurations"
         ],
         "operationId": "getConfigStatus",
+        "x-acl": [
+          "settings"
+        ],
         "summary": "Get configuration status.",
         "description": "Report the status of a Query Suggestions index.",
         "parameters": [
@@ -3245,6 +3263,9 @@
           "logs"
         ],
         "operationId": "getLogFile",
+        "x-acl": [
+          "settings"
+        ],
         "summary": "Get logs.",
         "description": "Get the logs for a single Query Suggestions index.",
         "parameters": [
