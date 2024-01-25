@@ -79,14 +79,25 @@
         }
     }
 
-    public func setAdditionalProperties(with properties: [String: AnyCodable]?) -> Self {
-      var updatedInstance = self
+    public init(from dictionary: Dictionary<String, AnyCodable>) throws {
 
-      if let properties = properties {
-      updatedInstance.additionalProperties = properties
-      }
+      {{#allVars}}{{#required}}
+        guard let {{{name}}} = dictionary["{{{name}}}"]?.value as? {{{datatype}}} else {
+          throw GenericError(description: "Failed to cast")
+        }
+        self.{{{name}}} = {{{name}}}{{/required}}{{^required}}
+        self.{{{name}}} = dictionary["{{{name}}}"]?.value as? {{{datatype}}}
+        {{/required}}
+      {{/allVars}}
 
-      return updatedInstance
+        for (key, value) in dictionary {
+            switch key {
+              case {{#allVars}}"{{{name}}}"{{^-last}}, {{/-last}}{{/allVars}}:
+                continue
+              default:
+                self.additionalProperties[key] = value
+            }
+        }
     }{{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}
 
     // Encodable protocol methods

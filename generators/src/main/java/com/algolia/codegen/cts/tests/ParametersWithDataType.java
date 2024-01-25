@@ -359,11 +359,7 @@ public class ParametersWithDataType {
             false
           );
           value.put("isAdditionalProperty", true);
-          if (language.equals("swift")) {
-            additionalPropertyValues.add(value);
-          } else {
-            values.add(value);
-          }
+          values.add(value);
         } else {
           throw new CTSException(
             "Parameter '" +
@@ -398,7 +394,18 @@ public class ParametersWithDataType {
     }
 
     testOutput.put("isObject", true);
-    testOutput.put("value", values);
+    testOutput.put(
+      "value",
+      values
+        .stream()
+        .peek(item ->
+          item.put(
+            "hasAdditionalProperties",
+            values.stream().anyMatch(el -> el.containsKey("isAdditionalProperty") && (boolean) el.get("isAdditionalProperty"))
+          )
+        )
+        .collect(Collectors.toList())
+    );
     testOutput.put("additionalProperties", additionalPropertyValues);
   }
 
