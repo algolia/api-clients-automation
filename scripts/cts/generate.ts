@@ -1,7 +1,6 @@
 import { callCTSGenerator, run, setupAndGen } from '../common.js';
 import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
-import { createSpinner } from '../spinners.js';
 import type { Generator } from '../types.js';
 
 export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
@@ -28,13 +27,6 @@ export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
         cwd: 'tests/output/go',
         language: 'go',
       });
-    }
-
-    if (lang === 'swift') {
-      const spinner = createSpinner('');
-      spinner.warn(`CTS not yet implemented for ${lang}`);
-
-      continue;
     }
 
     await formatter(lang, `tests/output/${lang}`);
