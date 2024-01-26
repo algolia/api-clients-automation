@@ -342,12 +342,12 @@ components:
               value:
                 status: 401
                 message: Invalid credentials
-            WrongAPIKey:
-              summary: Admin API key required.
-              description: Your API key is not the Admin API key for your application.
+            MissingACL:
+              summary: Key is missing ACL.
+              description: Your API key is missing the required ACL for this operation.
               value:
                 status: 401
-                message: The admin API key is required
+                message: The provided API key is missing the \"editSettings\" ACL
     BadRequest-2:
       description: Bad Request.
       content:
@@ -567,6 +567,8 @@ paths:
       tags:
         - configurations
       operationId: getAllConfigs
+      x-acl:
+        - settings
       summary: List configurations.
       description: List all Query Suggestions configurations of your Algolia application.
       responses:
@@ -584,6 +586,8 @@ paths:
       tags:
         - configurations
       operationId: createConfig
+      x-acl:
+        - editSettings
       summary: Create a configuration.
       description: |
         Create a new Query Suggestions configuration.
@@ -623,6 +627,8 @@ paths:
       tags:
         - configurations
       operationId: getConfig
+      x-acl:
+        - settings
       summary: Get a configuration.
       description: Get a single Query Suggestions configuration.
       parameters:
@@ -644,6 +650,8 @@ paths:
       tags:
         - configurations
       operationId: updateConfig
+      x-acl:
+        - editSettings
       summary: Update a configuration.
       description: Update a QuerySuggestions configuration.
       parameters:
@@ -677,6 +685,8 @@ paths:
       tags:
         - configurations
       operationId: deleteConfig
+      x-acl:
+        - editSettings
       summary: Delete a configuration.
       description: >
         Delete a Query Suggestions configuration.
@@ -710,6 +720,8 @@ paths:
       tags:
         - configurations
       operationId: getConfigStatus
+      x-acl:
+        - settings
       summary: Get configuration status.
       description: Report the status of a Query Suggestions index.
       parameters:
@@ -759,6 +771,8 @@ paths:
       tags:
         - logs
       operationId: getLogFile
+      x-acl:
+        - settings
       summary: Get logs.
       description: Get the logs for a single Query Suggestions index.
       parameters:

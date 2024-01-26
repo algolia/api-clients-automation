@@ -13,6 +13,15 @@ public class SearchSynonymsParams {
   @JsonProperty("query")
   private String query;
 
+  @JsonProperty("type")
+  private SynonymType type;
+
+  @JsonProperty("page")
+  private Integer page;
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
+
   public SearchSynonymsParams setQuery(String query) {
     this.query = query;
     return this;
@@ -24,6 +33,39 @@ public class SearchSynonymsParams {
     return query;
   }
 
+  public SearchSynonymsParams setType(SynonymType type) {
+    this.type = type;
+    return this;
+  }
+
+  /** Get type */
+  @javax.annotation.Nullable
+  public SynonymType getType() {
+    return type;
+  }
+
+  public SearchSynonymsParams setPage(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /** Page to retrieve (the first page is `0`, not `1`). */
+  @javax.annotation.Nullable
+  public Integer getPage() {
+    return page;
+  }
+
+  public SearchSynonymsParams setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nullable
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -33,12 +75,17 @@ public class SearchSynonymsParams {
       return false;
     }
     SearchSynonymsParams searchSynonymsParams = (SearchSynonymsParams) o;
-    return Objects.equals(this.query, searchSynonymsParams.query);
+    return (
+      Objects.equals(this.query, searchSynonymsParams.query) &&
+      Objects.equals(this.type, searchSynonymsParams.type) &&
+      Objects.equals(this.page, searchSynonymsParams.page) &&
+      Objects.equals(this.hitsPerPage, searchSynonymsParams.hitsPerPage)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query);
+    return Objects.hash(query, type, page, hitsPerPage);
   }
 
   @Override
@@ -46,6 +93,9 @@ public class SearchSynonymsParams {
     StringBuilder sb = new StringBuilder();
     sb.append("class SearchSynonymsParams {\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("}");
     return sb.toString();
   }

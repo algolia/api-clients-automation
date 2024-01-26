@@ -2,6 +2,8 @@ get:
   tags:
     - configurations
   operationId: getConfig
+  x-acl:
+    - settings
   summary: Get a configuration.
   description: Get a single Query Suggestions configuration.
   parameters:
@@ -24,6 +26,8 @@ put:
   tags:
     - configurations
   operationId: updateConfig
+  x-acl:
+    - editSettings
   summary: Update a configuration.
   description: Update a QuerySuggestions configuration.
   parameters:
@@ -57,6 +61,8 @@ delete:
   tags:
     - configurations
   operationId: deleteConfig
+  x-acl:
+    - editSettings
   summary: Delete a configuration.
   description: |
     Delete a Query Suggestions configuration.

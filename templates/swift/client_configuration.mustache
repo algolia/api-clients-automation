@@ -31,7 +31,7 @@ public struct Configuration: Core.Configuration, Credentials {
        readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
        logLevel: LogLevel = DefaultConfiguration.default.logLevel,
        defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders{{#isSearchClient}},
-       batchSize: Int = 1000{{/isSearchClient}}) {
+       batchSize: Int = 1000{{/isSearchClient}}) throws {
     self.applicationID = applicationID
     self.apiKey = apiKey
     self.writeTimeout = writeTimeout
@@ -46,19 +46,22 @@ public struct Configuration: Core.Configuration, Credentials {
     self.batchSize = batchSize{{/isSearchClient}}
 
     {{^hasRegionalHost}}
-    func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport))
+    func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
       -> RetryableHost
     {
-      let url = URL(string: "https://\(applicationID)\(components.suffix)")!
+      guard let url = URL(string: "https://\(applicationID)\(components.suffix)") else {
+        throw GenericError(description: "Malformed URL")
+      }
+
       return RetryableHost(url: url, callType: components.callType)
     }
 
-    let hosts = [
+    let hosts = try [
       ("-dsn.algolia.net", .read),
       (".algolia.net", .write),
     ].map(buildHost)
 
-    let commonHosts = [
+    let commonHosts = try [
       ("-1.algolianet.com", .universal),
       ("-2.algolianet.com", .universal),
       ("-3.algolianet.com", .universal),
@@ -68,8 +71,8 @@ public struct Configuration: Core.Configuration, Credentials {
 {{/hasRegionalHost}}
 {{#hasRegionalHost}}
     guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {
-        fatalError(
-          "Region {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
+        throw GenericError(description:
+          "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
         )
       }
 
@@ -77,8 +80,8 @@ public struct Configuration: Core.Configuration, Credentials {
       if let region = region {
     {{/fallbackToAliasHost}}
         guard let url = URL(string: "https://{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
-                    fatalError("Malformed URL")
-                }
+          throw GenericError(description: "Malformed URL")
+        }
 
             self.hosts = [
                 .init(url: url)
@@ -86,7 +89,7 @@ public struct Configuration: Core.Configuration, Credentials {
     {{#fallbackToAliasHost}}
       } else {
         guard let url = URL(string: "https://{{{hostWithFallback}}}") else {
-          fatalError("Malformed URL")
+          throw GenericError(description: "Malformed URL")
         }
 
         self.hosts = [

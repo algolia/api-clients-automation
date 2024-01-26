@@ -5153,12 +5153,6 @@ public class SearchClient extends ApiClient {
    * get all synonyms, send an empty request body.
    *
    * @param indexName Index on which to perform the request. (required)
-   * @param type Search for specific [types of
-   *     synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-   *     (optional)
-   * @param page Returns the requested page number (the first page is 0). Page size is set by
-   *     `hitsPerPage`. When null, there's no pagination. (optional, default to 0)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5166,13 +5160,10 @@ public class SearchClient extends ApiClient {
    */
   public SearchSynonymsResponse searchSynonyms(
     @Nonnull String indexName,
-    SynonymType type,
-    Integer page,
-    Integer hitsPerPage,
     SearchSynonymsParams searchSynonymsParams,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(searchSynonymsAsync(indexName, type, page, hitsPerPage, searchSynonymsParams, requestOptions));
+    return LaunderThrowable.await(searchSynonymsAsync(indexName, searchSynonymsParams, requestOptions));
   }
 
   /**
@@ -5180,23 +5171,12 @@ public class SearchClient extends ApiClient {
    * get all synonyms, send an empty request body.
    *
    * @param indexName Index on which to perform the request. (required)
-   * @param type Search for specific [types of
-   *     synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-   *     (optional)
-   * @param page Returns the requested page number (the first page is 0). Page size is set by
-   *     `hitsPerPage`. When null, there's no pagination. (optional, default to 0)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SearchSynonymsResponse searchSynonyms(
-    @Nonnull String indexName,
-    SynonymType type,
-    Integer page,
-    Integer hitsPerPage,
-    SearchSynonymsParams searchSynonymsParams
-  ) throws AlgoliaRuntimeException {
-    return this.searchSynonyms(indexName, type, page, hitsPerPage, searchSynonymsParams, null);
+  public SearchSynonymsResponse searchSynonyms(@Nonnull String indexName, SearchSynonymsParams searchSynonymsParams)
+    throws AlgoliaRuntimeException {
+    return this.searchSynonyms(indexName, searchSynonymsParams, null);
   }
 
   /**
@@ -5209,7 +5189,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchSynonymsResponse searchSynonyms(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.searchSynonyms(indexName, null, null, null, null, requestOptions);
+    return this.searchSynonyms(indexName, null, requestOptions);
   }
 
   /**
@@ -5220,7 +5200,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchSynonymsResponse searchSynonyms(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.searchSynonyms(indexName, null, null, null, null, null);
+    return this.searchSynonyms(indexName, null, null);
   }
 
   /**
@@ -5228,12 +5208,6 @@ public class SearchClient extends ApiClient {
    * parameters. To get all synonyms, send an empty request body.
    *
    * @param indexName Index on which to perform the request. (required)
-   * @param type Search for specific [types of
-   *     synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-   *     (optional)
-   * @param page Returns the requested page number (the first page is 0). Page size is set by
-   *     `hitsPerPage`. When null, there's no pagination. (optional, default to 0)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5241,9 +5215,6 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(
     @Nonnull String indexName,
-    SynonymType type,
-    Integer page,
-    Integer hitsPerPage,
     SearchSynonymsParams searchSynonymsParams,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -5255,9 +5226,6 @@ public class SearchClient extends ApiClient {
       .setMethod("POST")
       .setBody(searchSynonymsParams)
       .setRead(true)
-      .addQueryParameter("type", type)
-      .addQueryParameter("page", page)
-      .addQueryParameter("hitsPerPage", hitsPerPage)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchSynonymsResponse>() {});
   }
@@ -5267,23 +5235,14 @@ public class SearchClient extends ApiClient {
    * parameters. To get all synonyms, send an empty request body.
    *
    * @param indexName Index on which to perform the request. (required)
-   * @param type Search for specific [types of
-   *     synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-   *     (optional)
-   * @param page Returns the requested page number (the first page is 0). Page size is set by
-   *     `hitsPerPage`. When null, there's no pagination. (optional, default to 0)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(
     @Nonnull String indexName,
-    SynonymType type,
-    Integer page,
-    Integer hitsPerPage,
     SearchSynonymsParams searchSynonymsParams
   ) throws AlgoliaRuntimeException {
-    return this.searchSynonymsAsync(indexName, type, page, hitsPerPage, searchSynonymsParams, null);
+    return this.searchSynonymsAsync(indexName, searchSynonymsParams, null);
   }
 
   /**
@@ -5297,7 +5256,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.searchSynonymsAsync(indexName, null, null, null, null, requestOptions);
+    return this.searchSynonymsAsync(indexName, null, requestOptions);
   }
 
   /**
@@ -5308,7 +5267,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.searchSynonymsAsync(indexName, null, null, null, null, null);
+    return this.searchSynonymsAsync(indexName, null, null);
   }
 
   /**
@@ -5935,24 +5894,20 @@ public class SearchClient extends ApiClient {
    * Helper: Returns an iterator on top of the `searchSynonyms` method.
    *
    * @param indexName The index in which to perform the request.
-   * @param type The synonym type. (optional)
    * @param params The `searchSynonyms` parameters. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public Iterable<SynonymHit> browseSynonyms(
-    String indexName,
-    SynonymType type,
-    SearchSynonymsParams params,
-    RequestOptions requestOptions
-  ) {
+  public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params, RequestOptions requestOptions) {
     final Holder<Integer> currentPage = new Holder<>(0);
-    final int hitsPerPage = 1000;
+
+    params.setPage(0);
+    params.setHitsPerPage(1000);
 
     return AlgoliaIterableHelper.createIterable(
       () -> {
-        SearchSynonymsResponse response = this.searchSynonyms(indexName, type, currentPage.value, hitsPerPage, params, requestOptions);
-        currentPage.value = response.getNbHits() < hitsPerPage ? null : currentPage.value + 1;
+        SearchSynonymsResponse response = this.searchSynonyms(indexName, params, requestOptions);
+        currentPage.value = response.getNbHits() < params.getHitsPerPage() ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null
@@ -5963,11 +5918,10 @@ public class SearchClient extends ApiClient {
    * Helper: Returns an iterator on top of the `searchSynonyms` method.
    *
    * @param indexName The index in which to perform the request.
-   * @param type The synonym type. (optional)
    * @param params The `searchSynonyms` parameters .(optional)
    */
-  public Iterable<SynonymHit> browseSynonyms(String indexName, SynonymType type, SearchSynonymsParams params) {
-    return browseSynonyms(indexName, type, params, null);
+  public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params) {
+    return browseSynonyms(indexName, params, null);
   }
 
   /**
@@ -5976,7 +5930,7 @@ public class SearchClient extends ApiClient {
    * @param indexName The index in which to perform the request.
    */
   public Iterable<SynonymHit> browseSynonyms(String indexName) {
-    return browseSynonyms(indexName, null, null, null);
+    return browseSynonyms(indexName, null, null);
   }
 
   /**

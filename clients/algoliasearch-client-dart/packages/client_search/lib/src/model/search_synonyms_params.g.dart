@@ -14,6 +14,10 @@ SearchSynonymsParams _$SearchSynonymsParamsFromJson(
       ($checkedConvert) {
         final val = SearchSynonymsParams(
           query: $checkedConvert('query', (v) => v as String?),
+          type: $checkedConvert(
+              'type', (v) => $enumDecodeNullable(_$SynonymTypeEnumMap, v)),
+          page: $checkedConvert('page', (v) => v as int?),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
         );
         return val;
       },
@@ -30,5 +34,16 @@ Map<String, dynamic> _$SearchSynonymsParamsToJson(
   }
 
   writeNotNull('query', instance.query);
+  writeNotNull('type', instance.type?.toJson());
+  writeNotNull('page', instance.page);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
   return val;
 }
+
+const _$SynonymTypeEnumMap = {
+  SynonymType.synonym: 'synonym',
+  SynonymType.onewaysynonym: 'onewaysynonym',
+  SynonymType.altcorrection1: 'altcorrection1',
+  SynonymType.altcorrection2: 'altcorrection2',
+  SynonymType.placeholder: 'placeholder',
+};

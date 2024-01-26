@@ -1,6 +1,7 @@
 export const patterns = [
   // Ignore the roots and go down the tree by negating hand written files
   'specs/bundled/*.yml',
+  'specs/bundled/*.json',
 
   'clients/**',
   'snippets/**',
@@ -146,4 +147,6 @@ export const patterns = [
   'clients/algoliasearch-client-swift/**/Sources/**',
   '!clients/algoliasearch-client-swift/Sources/Core/**',
   'clients/algoliasearch-client-swift/Sources/Core/Helpers/Version.swift',
+
+  'tests/output/swift/Package.swift',
 ];
