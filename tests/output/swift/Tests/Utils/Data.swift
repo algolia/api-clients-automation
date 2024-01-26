@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Data {
+public extension Data {
     var jsonString: String? {
         return (try? JSONSerialization.jsonObject(with: self, options: .allowFragments))
             .flatMap {

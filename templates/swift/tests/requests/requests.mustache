@@ -1,8 +1,9 @@
 import XCTest
-import SwiftyJSON
+
 #if canImport(AnyCodable)
   import AnyCodable
 #endif
+import Utils
 
 @testable import Core
 @testable import {{import}}
@@ -42,11 +43,10 @@ final class {{client}}RequestsTests: XCTestCase {
         {{#request}}
         {{#body}}
           let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-          let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+          let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-          let comparableJSON = JSON(parseJSON:
-            "{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}"
-          )
+          let comparableData = "{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+          let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
           XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
         {{/body}}
@@ -83,7 +83,7 @@ final class {{client}}RequestsTests: XCTestCase {
 
             let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
             for header in comparableHeadersMap {
-              XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+              XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
             }
           {{/headers}}
         {{/request}}
