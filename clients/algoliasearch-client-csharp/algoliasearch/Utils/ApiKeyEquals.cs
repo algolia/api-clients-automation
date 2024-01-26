@@ -5,6 +5,11 @@ namespace Algolia.Search.Models.Search
 {
   public partial class ApiKey
   {
+    /// <summary>
+    /// Compare two ApiKey objects
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public override bool Equals(object obj)
     {
       // We compare the properties of the object
@@ -25,10 +30,10 @@ namespace Algolia.Search.Models.Search
       return base.Equals(obj);
     }
 
-    private bool CheckNullable<T>(T objProps, T otherProps) 
+    private bool CheckNullable<T>(T objProps, T otherProps)
     {
       // if other is null, we don't compare the property
-      if(otherProps == null)
+      if (otherProps == null)
         return true;
 
       return objProps != null && objProps.Equals(otherProps);
@@ -37,9 +42,9 @@ namespace Algolia.Search.Models.Search
     private bool CheckSequence<T>(List<T> objProps, List<T> otherProps)
     {
       // if other is null, we don't compare the property
-      if(otherProps == null)
+      if (otherProps == null)
         return true;
-      
+
       return objProps != null && objProps.SequenceEqual(otherProps);
     }
   }

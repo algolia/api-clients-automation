@@ -141,7 +141,7 @@ public static class SearchPlayground
       Indexes = new List<string> { defaultIndex }
     });
     var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key",async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.ADD, addApiKeyResponse.Key), "New key has been created !");
+      await client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key), "New key has been created !");
 
     Console.WriteLine("--- Update api key `UpdateApiKeyAsync` ---");
     var modifiedApiKey = createdApiKey.ToApiKey();
@@ -149,12 +149,12 @@ public static class SearchPlayground
 
     var updateApiKey = await client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
     await PlaygroundHelper.Start("Updating API Key`",async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.UPDATE, updateApiKey.Key, modifiedApiKey), "Key updated !");
+      await client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey), "Key updated !");
 
     Console.WriteLine("--- Delete api key `UpdateApiKeyAsync` ---");
     await client.DeleteApiKeyAsync(addApiKeyResponse.Key);
     await PlaygroundHelper.Start("Deleting API Key",async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.DELETE, updateApiKey.Key), "Key deleted !");
+      await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key), "Key deleted !");
 
     // Add Synonyms
     Console.WriteLine("--- Add Synonyms `SaveSynonymsAsync` ---");

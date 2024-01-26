@@ -50,11 +50,11 @@ namespace Algolia.Search.Utils
       ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null,
       CancellationToken ct = default)
     {
-      if (operation == ApiKeyOperation.UPDATE)
+      if (operation == ApiKeyOperation.Update)
       {
         if (apiKey == null)
         {
-          throw new AlgoliaApiException("`ApiKey` is required when waiting for an `update` operation.");
+          throw new AlgoliaException("`ApiKey` is required when waiting for an `update` operation.");
         }
 
         return await RetryUntil(() => client.GetApiKeyAsync(key, requestOptions, ct),
@@ -94,10 +94,10 @@ namespace Algolia.Search.Utils
         {
           return operation switch
           {
-            ApiKeyOperation.ADD =>
+            ApiKeyOperation.Add =>
               // stop either when the key is created or when we don't receive 404
               status is -2 or not 404 and not 0,
-            ApiKeyOperation.DELETE =>
+            ApiKeyOperation.Delete =>
               // stop when the key is not found
               status == 404,
             _ => false
@@ -194,7 +194,7 @@ namespace Algolia.Search.Utils
         retryCount++;
       }
 
-      throw new AlgoliaApiException(
+      throw new AlgoliaException(
         "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
     }
 

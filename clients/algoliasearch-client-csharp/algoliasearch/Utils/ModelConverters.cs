@@ -2,8 +2,16 @@ using Algolia.Search.Models.Search;
 
 namespace Algolia.Search.Utils
 {
+  /// <summary>
+  /// A tool class to help model conversion
+  /// </summary>
   public static class ModelConverters
   {
+    /// <summary>
+    /// Convert a GetApiKeyResponse to an ApiKey
+    /// </summary>
+    /// <param name="apiKey"></param>
+    /// <returns></returns>
     public static ApiKey ToApiKey(this GetApiKeyResponse apiKey)
     {
       return new ApiKey
