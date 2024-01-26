@@ -19,7 +19,7 @@ content:
         description: Your application ID or API key is wrong.
         value: {'status': 401, 'message': 'Invalid credentials'}
       MissingACL:
-        summary: Key is missing ACL
+        summary: Key is missing ACL.
         description: Your API key is missing the required ACL for this operation.
         value:
           {'status': 401, 'message': 'The provided API key is missing the \"editSettings\" ACL'}
