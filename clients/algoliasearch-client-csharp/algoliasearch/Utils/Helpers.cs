@@ -96,7 +96,7 @@ namespace Algolia.Search.Utils
           {
             ApiKeyOperation.ADD =>
               // stop either when the key is created or when we don't receive 404
-              status is -2 or not 404,
+              status is -2 or not 404 and not 0,
             ApiKeyOperation.DELETE =>
               // stop when the key is not found
               status == 404,
@@ -162,20 +162,17 @@ namespace Algolia.Search.Utils
     /// <param name="indexName">The index in which to perform the request.</param>
     /// <param name="synonymsParams">The `SearchSynonyms` parameters.</param>
     /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.</param>
-    /// <param name="type"></param>
     public static async Task<IEnumerable<SynonymHit>> BrowseSynonymsAsync(this SearchClient client, string indexName,
-      SynonymType? type,
       SearchSynonymsParams synonymsParams,
       RequestOptions requestOptions = null)
     {
       const int hitsPerPage = 1000;
+      synonymsParams.HitsPerPage = hitsPerPage;
       var all = await CreateIterable<Tuple<SearchSynonymsResponse, int>>(async (prevResp) =>
       {
-        var page = prevResp?.Item2 ?? 0;
-        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, type, page, hitsPerPage,
-          synonymsParams,
-          requestOptions);
-        return new Tuple<SearchSynonymsResponse, int>(searchSynonymsResponse, page + 1);
+        synonymsParams.Page = prevResp?.Item2 ?? 0;
+        var searchSynonymsResponse = await client.SearchSynonymsAsync(indexName, synonymsParams, requestOptions);
+        return new Tuple<SearchSynonymsResponse, int>(searchSynonymsResponse, (prevResp?.Item2 ?? 0) + 1);
       }, resp => resp?.Item1 is { NbHits: < hitsPerPage }).ConfigureAwait(false);
 
       return all.SelectMany(u => u.Item1.Hits);

@@ -181,8 +181,9 @@ public static class SearchPlayground
 
     // Search Synonyms
     Console.WriteLine("--- Search Synonyms `SearchSynonymsAsync` ---");
-    var searchSynonymsAsync = await client.SearchSynonymsAsync(defaultIndex, SynonymType.Onewaysynonym, 0,
-      1, new SearchSynonymsParams { Query = "" }).ConfigureAwait(false);
+    var searchSynonymsAsync = await client
+      .SearchSynonymsAsync(defaultIndex, new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym, HitsPerPage = 1})
+      .ConfigureAwait(false);
     Console.WriteLine(searchSynonymsAsync.Hits.Count);
 
     // Browse Synonyms
