@@ -56,7 +56,6 @@ import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
 import 'package:algolia_client_search/src/model/source.dart';
 import 'package:algolia_client_search/src/model/synonym_hit.dart';
-import 'package:algolia_client_search/src/model/synonym_type.dart';
 import 'package:algolia_client_search/src/model/update_api_key_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_with_object_id_response.dart';
@@ -1996,16 +1995,10 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [indexName] Index on which to perform the request.
-  /// * [type] Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-  /// * [page] Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
-  /// * [hitsPerPage] Maximum number of hits per page.
   /// * [searchSynonymsParams] Body of the `searchSynonyms` operation.
   /// * [requestOptions] additional request configuration.
   Future<SearchSynonymsResponse> searchSynonyms({
     required String indexName,
-    SynonymType? type,
-    int? page,
-    int? hitsPerPage,
     SearchSynonymsParams? searchSynonymsParams,
     RequestOptions? requestOptions,
   }) async {
@@ -2018,11 +2011,6 @@ final class SearchClient implements ApiClient {
       path: r'/1/indexes/{indexName}/synonyms/search'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       isRead: true,
-      queryParams: {
-        if (type != null) 'type': type,
-        if (page != null) 'page': page,
-        if (hitsPerPage != null) 'hitsPerPage': hitsPerPage,
-      },
       body: searchSynonymsParams?.toJson(),
     );
     final response = await _retryStrategy.execute(

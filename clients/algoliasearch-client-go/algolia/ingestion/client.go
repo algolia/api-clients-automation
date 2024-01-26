@@ -98,7 +98,7 @@ func getDefaultHosts(r Region) []*transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.0.0-alpha.42); Go (%s); Ingestion (4.0.0-alpha.42)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.0.0-alpha.43); Go (%s); Ingestion (4.0.0-alpha.43)", runtime.Version())
 }
 
 // parameterToString convert any parameters to string.
@@ -254,14 +254,14 @@ func reportError(format string, a ...any) error {
 }
 
 // A wrapper for strict JSON decoding.
-func newStrictDecoder(data []byte) *json.Decoder { 
+func newStrictDecoder(data []byte) *json.Decoder {
 	dec := json.NewDecoder(bytes.NewBuffer(data))
 	dec.DisallowUnknownFields()
 	return dec
 }
 
 // A wrapper for validating a struct, returns nil if value is not a struct.
-func validateStruct(v any) error { 
+func validateStruct(v any) error {
 	err := validator.New().Struct(v)
 	validationErrors, ok := err.(validator.ValidationErrors)
 	if ok && len(validationErrors) > 0 {

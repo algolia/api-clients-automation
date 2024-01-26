@@ -575,6 +575,8 @@ paths:
       tags:
         - query-suggestions
       operationId: getAllConfigs
+      x-acl:
+        - settings
       summary: List configurations.
       description: List all Query Suggestions configurations of your Algolia application.
       responses:
@@ -592,6 +594,8 @@ paths:
       tags:
         - query-suggestions
       operationId: createConfig
+      x-acl:
+        - editSettings
       summary: Create a configuration.
       description: |
         Create a new Query Suggestions configuration.
@@ -631,6 +635,8 @@ paths:
       tags:
         - query-suggestions
       operationId: getConfig
+      x-acl:
+        - settings
       summary: Get a configuration.
       description: Get a single Query Suggestions configuration.
       parameters:
@@ -652,6 +658,8 @@ paths:
       tags:
         - query-suggestions
       operationId: updateConfig
+      x-acl:
+        - editSettings
       summary: Update a configuration.
       description: Update a QuerySuggestions configuration.
       parameters:
@@ -685,6 +693,8 @@ paths:
       tags:
         - query-suggestions
       operationId: deleteConfig
+      x-acl:
+        - editSettings
       summary: Delete a configuration.
       description: >
         Delete a Query Suggestions configuration.
@@ -718,6 +728,8 @@ paths:
       tags:
         - query-suggestions
       operationId: getConfigStatus
+      x-acl:
+        - settings
       summary: Get configuration status.
       description: Report the status of a Query Suggestions index.
       parameters:
@@ -767,6 +779,8 @@ paths:
       tags:
         - query-suggestions
       operationId: getLogFile
+      x-acl:
+        - settings
       summary: Get logs.
       description: Get the logs for a single Query Suggestions index.
       parameters:

@@ -59,7 +59,6 @@ import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
-import algoliasearch.search.SynonymType._
 import algoliasearch.search.UpdateApiKeyResponse
 import algoliasearch.search.UpdatedAtResponse
 import algoliasearch.search.UpdatedAtWithObjectIdResponse
@@ -1418,22 +1417,11 @@ class SearchClient(
     *
     * @param indexName
     *   Index on which to perform the request.
-    * @param `type`
-    *   Search for specific [types of
-    *   synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-    * @param page
-    *   Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's
-    *   no pagination.
-    * @param hitsPerPage
-    *   Maximum number of hits per page.
     * @param searchSynonymsParams
     *   Body of the `searchSynonyms` operation.
     */
   def searchSynonyms(
       indexName: String,
-      `type`: Option[SynonymType] = None,
-      page: Option[Int] = None,
-      hitsPerPage: Option[Int] = None,
       searchSynonymsParams: Option[SearchSynonymsParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchSynonymsResponse] = Future {
@@ -1445,9 +1433,6 @@ class SearchClient(
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/search")
       .withBody(searchSynonymsParams)
       .withRead(true)
-      .withQueryParameter("type", `type`)
-      .withQueryParameter("page", page)
-      .withQueryParameter("hitsPerPage", hitsPerPage)
       .build()
     execute[SearchSynonymsResponse](request, requestOptions)
   }

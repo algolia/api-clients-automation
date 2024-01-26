@@ -13,6 +13,7 @@
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushGeneratedCode.js",
+    "pushSpecsToNewWorldDocs": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushSpecsToNewWorldDocs.js",
     "setRunVariables": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/setRunVariables.js",
     "spreadGeneration": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
     "start": "NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",

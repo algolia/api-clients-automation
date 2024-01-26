@@ -2463,19 +2463,18 @@ class SearchTest {
       call = {
         searchSynonyms(
           indexName = "indexName",
-          type = SynonymType.entries.first { it.value == "altcorrection1" },
-          page = 10,
-          hitsPerPage = 10,
           searchSynonymsParams = SearchSynonymsParams(
             query = "myQuery",
+            type = SynonymType.entries.first { it.value == "altcorrection1" },
+            page = 10,
+            hitsPerPage = 10,
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"type":"altcorrection1","page":"10","hitsPerPage":"10"}""", it.url.parameters)
-        assertJsonBody("""{"query":"myQuery"}""", it.body)
+        assertJsonBody("""{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}""", it.body)
       },
     )
   }
