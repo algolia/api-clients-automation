@@ -393,19 +393,13 @@ public class ParametersWithDataType {
       values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
     }
 
+    var hasAdditionalProperties = values
+      .stream()
+      .anyMatch(el -> el.containsKey("isAdditionalProperty") && (boolean) el.get("isAdditionalProperty"));
+    testOutput.put("hasAdditionalProperties", hasAdditionalProperties);
+
     testOutput.put("isObject", true);
-    testOutput.put(
-      "value",
-      values
-        .stream()
-        .peek(item ->
-          item.put(
-            "hasAdditionalProperties",
-            values.stream().anyMatch(el -> el.containsKey("isAdditionalProperty") && (boolean) el.get("isAdditionalProperty"))
-          )
-        )
-        .collect(Collectors.toList())
-    );
+    testOutput.put("value", values);
     testOutput.put("additionalProperties", additionalPropertyValues);
   }
 
