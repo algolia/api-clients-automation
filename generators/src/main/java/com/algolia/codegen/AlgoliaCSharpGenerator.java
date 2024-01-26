@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -44,6 +45,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
   @Override
   public void processOpts() {
+    String version = Helpers.getClientConfigField("csharp", "packageVersion");
     CLIENT = (String) additionalProperties.get("client");
 
     setLibrary("httpclient");
@@ -55,26 +57,35 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       System.exit(1);
     }
 
+    additionalProperties.put("packageVersion", version);
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put("validatable", false);
+    additionalProperties.put("apiPackageName", getClientName(CLIENT));
     additionalProperties.put("equatable", false);
     additionalProperties.put("disallowAdditionalPropertiesIfNotPresent", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
+    additionalProperties.put(
+      "lambda.escape-generic",
+      (Mustache.Lambda) (fragment, writer) -> writer.write(escapeGenericForDoc(fragment.execute()))
+    );
+
     setApiNameSuffix(Helpers.API_SUFFIX);
 
     String packageName = getClientName(CLIENT);
-    setPackageName(packageName);
-    setApiPackage("");
-    setModelPackage("Models");
+    setPackageName("");
+    setApiPackage("Clients");
+    setModelPackage("Models/" + packageName);
     setOutputDir(getOutputDir() + "/algoliasearch/");
 
     super.processOpts();
 
     modelNameMapping.put("Task", "IngestionTask");
+
+    typeMapping.put("Object", "object");
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
@@ -113,6 +124,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
       file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
       file.getTemplateFile().equals("ClientUtils.mustache") ||
+      file.getTemplateFile().equals("Configuration.mustache") ||
+      file.getTemplateFile().equals("nuspec.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
 
@@ -120,8 +133,13 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.add(new SupportingFile("Solution.mustache", "../", "Algolia.Search.sln"));
     supportingFiles.add(new SupportingFile("globaljson.mustache", "../", "global.json"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
-    supportingFiles.add(new SupportingFile("AbstractOpenAPISchema.mustache", "Models", "AbstractSchema.cs"));
-    supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
+    supportingFiles.add(new SupportingFile("Configuration.mustache", "Clients", packageName + "Configuration.cs"));
+  }
+
+  /** Escape <> in generic with {} */
+  private String escapeGenericForDoc(String type) {
+    Helpers.prettyPrint(type);
+    return type.replaceAll("<", "{").replaceAll(">", "}");
   }
 
   @Override

@@ -63,7 +63,7 @@ runs:
 
     - name: Install JavaScript dependencies
       shell: bash
-      run: yarn install
+      run: YARN_ENABLE_HARDENED_MODE=0 yarn install
 
     - name: Build scripts
       shell: bash
@@ -107,7 +107,7 @@ runs:
     - name: Install JavaScript client dependencies
       if: ${{ inputs.language == 'javascript' }}
       shell: bash
-      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+      run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
     # PHP
     - name: Install PHP
@@ -146,6 +146,16 @@ runs:
       with:
         path: ~/.cache/golangci-lint
         key: golangci-lint-${{ env.CACHE_VERSION }}-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
+
+    # Kotlin
+    - name: Cache spotless
+      if: ${{ inputs.language == 'kotlin' }}
+      uses: actions/cache@v4
+      with:
+        path: |
+          clients/algoliasearch-client-kotlin/.gradle
+          clients/algoliasearch-client-kotlin/client/build/spotless
+        key: gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
 
     # Dart
     - name: Install dart
@@ -190,9 +200,6 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
-    - run: dotnet tool install csharpier --global
-      if: ${{ inputs.language == 'csharp' }}
-      shell: bash
 
     # Swift deps
     - name: Install swift
@@ -201,21 +208,28 @@ runs:
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
-    - name: Set up Homebrew
+    - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+      uses: actions/checkout@v4
+      with:
+        repository: nicklockwood/SwiftFormat
+        ref: 0.53.0
+        path: swiftformat
 
-    - name: Cache Homebrew Bundler RubyGems
+    - name: Cache the build folder
+      id: cache-swiftformat
       if: ${{ inputs.language == 'swift' }}
-      id: cache
       uses: actions/cache@v4
       with:
-        path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-        key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-        restore-keys: ${{ runner.os }}-rubygems-
+        path: swiftformat/.build
+        key: swiftformat-build-0.53.0-${{ runner.os }}-${{ env.CACHE_VERSION }}
 
-    - name: Install swift-format
-      if: ${{ inputs.language == 'swift' && steps.cache.outputs.cache-hit != 'true' }}
+    - name: Build swiftformat
+      if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}
       shell: bash
-      run: brew install swift-format
+      run: cd swiftformat && swift build -c release
+
+    - name: Setup the path
+      if: ${{ inputs.language == 'swift' }}
+      shell: bash
+      run: echo "$(pwd)/swiftformat/.build/release" >> $GITHUB_PATH

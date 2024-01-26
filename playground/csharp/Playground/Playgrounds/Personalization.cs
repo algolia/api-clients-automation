@@ -1,5 +1,7 @@
 using Algolia.Search.Clients;
 
+namespace Algolia.Playgrounds;
+
 public static class Personalization
 {
   public static async Task Run(Configuration configuration)

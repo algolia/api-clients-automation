@@ -1,5 +1,7 @@
 using Algolia.Search.Clients;
 
+namespace Algolia.Playgrounds;
+
 public static class Recommend
 {
   public static async Task Run(Configuration configuration)

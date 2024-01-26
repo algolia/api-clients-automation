@@ -1,26 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>{{#useGenericHost}}
+  <PropertyGroup>
+    <Description>Algolia Search API Client for .NET</Description>
+    <AssemblyName>Algolia.Search</AssemblyName>
+    <AssemblyTitle>Algolia.Search</AssemblyTitle>
+    <Authors>Algolia</Authors>
+    <Owners>Algolia</Owners>
+    <PackageId>Algolia.Search</PackageId>
+    <Company>Algolia</Company>
+    <PackageTags>Algolia;Search;SearchEngine;Service;Instant;Typo-Tolerance;Realtime;Analytics</PackageTags>
+    <PackageReleaseNotes>https://github.com/algolia/algoliasearch-client-csharp/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <PackageIconUrl>https://s.gravatar.com/avatar/ef38ca989ef6a4a6373435c257373b84?s=80</PackageIconUrl>
+    <PackageDescription>
+      Algolia is a powerful search-as-a-service solution, made easy to use with API clients, UI libraries, and pre-built integrations. Algolia API Client for the .NET framework lets you easily use the Algolia Search REST API from your .NET code.
+    </PackageDescription>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://www.algolia.com/doc/api-client/getting-started/install/csharp/</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/algolia/algoliasearch-client-csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <Copyright>Copyright 2019 Algolia</Copyright>
+    <Version>{{packageVersion}}</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFramework{{#multiTarget}}s{{/multiTarget}}>{{targetFramework}}</TargetFramework{{#multiTarget}}s{{/multiTarget}}>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <OutputType>Library</OutputType>
+    <LangVersion>11</LangVersion>
+    <Description>Algolia is a powerful search-as-a-service solution, made easy to use with API clients, UI libraries, and pre-built integrations. Algolia API Client for the .NET framework lets you easily use the Algolia Search REST API from your .NET code.</Description>
+    <RootNamespace>Algolia.Search</RootNamespace>{{#nrt}}
+    <Nullable>{{#useGenericHost}}enable{{/useGenericHost}}{{^useGenericHost}}annotations{{/useGenericHost}}</Nullable>{{/nrt}}
+    <NoWarn>CS0612;CS1570</NoWarn>{{#useGenericHost}}
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo> <!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}{{^useGenericHost}}
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo><!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}
-    <TargetFramework{{#multiTarget}}s{{/multiTarget}}>{{targetFramework}}</TargetFramework{{#multiTarget}}s{{/multiTarget}}>
-    <AssemblyName>Algolia.Search</AssemblyName>
-    <PackageId>Algolia.Search</PackageId>
-    <OutputType>Library</OutputType>
-    <Authors>{{packageAuthors}}</Authors>
-    <Company>{{packageCompany}}</Company>
-    <AssemblyTitle>{{packageTitle}}</AssemblyTitle>
-    <Description>{{packageDescription}}</Description>
-    <Copyright>{{packageCopyright}}</Copyright>
-    <RootNamespace>Algolia.Search</RootNamespace>
-    <Version>{{packageVersion}}</Version>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Algolia.Search.xml</DocumentationFile>{{#licenseId}}
-    <PackageLicenseExpression>{{.}}</PackageLicenseExpression>{{/licenseId}}
-    <RepositoryUrl>https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>{{#releaseNote}}
-    <PackageReleaseNotes>{{.}}</PackageReleaseNotes>{{/releaseNote}}{{#packageTags}}
-    <PackageTags>{{{.}}}</PackageTags>{{/packageTags}}{{#nrt}}
-    <Nullable>{{#useGenericHost}}enable{{/useGenericHost}}{{^useGenericHost}}annotations{{/useGenericHost}}</Nullable>{{/nrt}}
   </PropertyGroup>
 
   <ItemGroup>

@@ -46,3 +46,5 @@ pubspec.lock
 **/csharp/src/bin
 **/csharp/src/obj
 *.DotSettings.user
+
+swiftformat

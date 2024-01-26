@@ -1,6 +1,6 @@
-using System.Globalization;
-using System.Runtime.InteropServices.JavaScript;
 using Algolia.Search.Clients;
+
+namespace Algolia.Playgrounds;
 
 public static class Analytics
 {
