@@ -190,9 +190,6 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
-    - run: dotnet tool install csharpier --global
-      if: ${{ inputs.language == 'csharp' }}
-      shell: bash
 
     # Swift deps
     - name: Install swift
@@ -201,21 +198,28 @@ runs:
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
-    - name: Set up Homebrew
+    - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+      uses: actions/checkout@v4
+      with:
+        repository: nicklockwood/SwiftFormat
+        ref: 0.53.0
+        path: swiftformat
 
-    - name: Cache Homebrew Bundler RubyGems
+    - name: Cache the build folder
+      id: cache-swiftformat
       if: ${{ inputs.language == 'swift' }}
-      id: cache
       uses: actions/cache@v4
       with:
-        path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-        key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-        restore-keys: ${{ runner.os }}-rubygems-
+        path: swiftformat/.build
+        key: swiftformat-build-0.53.0-${{ env.CACHE_VERSION }}
 
-    - name: Install swift-format
-      if: ${{ inputs.language == 'swift' && steps.cache.outputs.cache-hit != 'true' }}
+    - name: Build swiftformat
+      if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}
       shell: bash
-      run: brew install swift-format
+      run: cd swiftformat && swift build -c release
+
+    - name: Setup the path
+      if: ${{ inputs.language == 'swift' }}
+      shell: bash
+      run: echo "$(pwd)/swiftformat/.build/release" >> $GITHUB_PATH

@@ -6,7 +6,10 @@ export async function formatter(language: string, cwd: string): Promise<void> {
   switch (language) {
     case 'csharp':
       if (cwd.includes('tests') || cwd.includes('snippets')) {
-        await run('dotnet format && dotnet-csharpier .', { cwd, language });
+        await run('dotnet format && dotnet tool restore && dotnet dotnet-csharpier .', {
+          cwd,
+          language,
+        });
       } else {
         await run('dotnet format', { cwd, language });
       }
@@ -63,9 +66,9 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'swift':
       if (cwd.includes('tests') || cwd.includes('snippets')) {
-        await run(`swift-format --recursive --in-place Tests`, { cwd, language });
+        await run(`swiftformat Tests`, { cwd, language });
       } else {
-        await run(`swift-format --recursive --in-place Sources`, { cwd, language });
+        await run(`swiftformat Sources`, { cwd, language });
       }
       break;
     default:
