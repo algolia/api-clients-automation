@@ -127,6 +127,7 @@ public class TestsRequest extends TestsGenerator {
           test.put("request", req.request);
           test.put("hasParameters", req.parameters.size() != 0);
           test.put("hasOperationParams", ope.hasParams);
+          test.put("isHelper", ope.vendorExtensions.getOrDefault("x-helper", false));
 
           if (req.requestOptions != null) {
             test.put("hasRequestOptions", true);

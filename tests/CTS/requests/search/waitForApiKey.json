@@ -3,7 +3,8 @@
     "testName": "add a new api key",
     "parameters": {
       "operation": "add",
-      "key": "af10866ceb3ef44e975167a30d4a0b80"
+      "key": "af10866ceb3ef44e975167a30d4a0b80",
+      "apiKey": null
     }
   }
 ]

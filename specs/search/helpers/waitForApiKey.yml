@@ -19,6 +19,12 @@ method:
         required: true
         schema:
           type: string
+      - in: query
+        name: apiKey
+        description: Used to compare fields of the getApiKey response on an `update` operation, to check if the `key` has been updated.
+        required: false
+        schema:
+          $ref: '../paths/keys/common/schemas.yml#/apiKey'
     responses:
       '200':
         description: OK

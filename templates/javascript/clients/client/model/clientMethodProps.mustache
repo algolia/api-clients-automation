@@ -81,14 +81,14 @@ export type WaitForApiKeyOptions = WaitForOptions & {
         /**
          * The operation that has been performed, used to compute the stop condition.
          */
-        operation: 'add' | 'delete';
+        operation: Extract<ApiKeyOperation, 'add' | 'delete'>;
         apiKey?: never;
       }
     | {
         /**
          * The operation that has been performed, used to compute the stop condition.
          */
-        operation: 'update';
+        operation: Extract<ApiKeyOperation, 'update'>;
         /**
          * The updated fields, used to compute the stop condition.
          */
