@@ -1,6 +1,8 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Insights;
 
+namespace Algolia.Playgrounds;
+
 public static class Insights
 {
   public static async Task Run(Configuration configuration)

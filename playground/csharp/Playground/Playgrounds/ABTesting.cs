@@ -2,6 +2,8 @@ using System.Globalization;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Abtesting;
 
+namespace Algolia.Playgrounds;
+
 public static class ABTesting
 {
   public static async Task Run(Configuration configuration)
