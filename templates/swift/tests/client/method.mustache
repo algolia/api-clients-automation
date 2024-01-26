@@ -1,0 +1,3 @@
+let response = try await client{{#path}}.{{.}}WithHTTPInfo{{/path}}({{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}})
+let responseBodyData = try XCTUnwrap(response.bodyData)
+let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

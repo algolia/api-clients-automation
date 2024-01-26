@@ -1,0 +1,68 @@
+import XCTest
+import SwiftyJSON
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
+
+@testable import Core
+@testable import {{import}}
+
+final class {{client}}ClientTests: XCTestCase {
+
+  let APPLICATION_ID = ""
+  let API_KEY = ""
+{{#blocksClient}}
+  {{#tests}}
+
+    /**
+    {{testName}}
+    */
+    func test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
+      {{#autoCreateClient}}
+        let statusCode: HTTPStatusСode = 200
+        let configuration: {{import}}.Configuration = try {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder(statusCode: statusCode))
+        let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
+      {{/autoCreateClient}}
+
+      {{#steps}}
+        {{#isError}}
+          do {
+            {{#dynamicTemplate}}{{/dynamicTemplate}}
+
+            _ = client
+            XCTFail("Expected an error to be thrown")
+          } catch {
+            XCTAssertEqual(error.localizedDescription, "{{{expectedError}}}")
+          }
+        {{/isError}}
+        {{^isError}}
+          {{#dynamicTemplate}}{{/dynamicTemplate}}
+          {{#match}}
+            {{#testUserAgent}}
+
+              let pattern = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}"
+              let rule = StringRule(pattern: pattern)
+              let userAgent = try XCTUnwrap(echoResponse.headers?["user-agent"])
+              guard let userAgent = userAgent else {
+                XCTFail("Expected user-agent header")
+                return
+              }
+
+              XCTAssertNoThrow(try Validator.validate(userAgent, against: rule), "Expected " + userAgent + " to match the following regex: " + pattern);
+            {{/testUserAgent}}
+
+            {{#testTimeouts}}
+
+              XCTAssertEqual(TimeInterval({{{match.parametersWithDataTypeMap.responseTimeout.value}}} / 1000), echoResponse.timeout);
+            {{/testTimeouts}}
+            {{#testHost}}
+              XCTAssertEqual("{{{match}}}", echoResponse.url);
+            {{/testHost}}
+          {{/match}}
+        {{/isError}}
+      {{/steps}}
+    }
+  {{/tests}}
+  {{/blocksClient}}
+}

@@ -12,6 +12,19 @@ let package = Package(
   ],
   targets: [
     .testTarget(
+      name: "client",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "SwiftyJSON", package: "SwiftyJSON"),{{#packageList}}
+        .product(
+          name: "{{.}}",
+          package: "algoliasearch-client-swift"
+        ),{{/packageList}}
+      ],
+      path: "Tests",
+      sources: ["client", "Utils"]
+    ),
+    .testTarget(
       name: "requests",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
