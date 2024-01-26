@@ -23,7 +23,7 @@
     "@algolia/client-common": "5.0.0-alpha.99"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.23.8",
+    "@babel/preset-env": "7.23.9",
     "@babel/preset-typescript": "7.23.3",
     "@types/jest": "29.5.11",
     "@types/node": "20.11.5",
