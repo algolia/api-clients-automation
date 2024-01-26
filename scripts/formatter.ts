@@ -62,7 +62,11 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt', { cwd, language });
       break;
     case 'swift':
-      await run('swift-format --recursive --in-place .', { cwd, language });
+      if (cwd.includes('tests') || cwd.includes('snippets')) {
+        await run(`swift-format --recursive --in-place Tests`, { cwd, language });
+      } else {
+        await run(`swift-format --recursive --in-place Sources`, { cwd, language });
+      }
       break;
     default:
       spinner.warn(`no formatter for '${language}'`);

@@ -5,12 +5,10 @@ import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 
@@ -152,7 +150,7 @@ public class ParametersWithDataType {
       handleEnum(param, testOutput);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
-      handleModel(paramName, param, testOutput, spec, baseType, parent, suffix);
+      handleModel(paramName, param, testOutput, spec, baseType, parent, suffix, isParentFreeFormObject);
     } else if (baseType.equals("Object")) {
       // not var, no item, pure free form
       handleObject(paramName, param, testOutput, true, suffix);
@@ -162,6 +160,7 @@ public class ParametersWithDataType {
     } else {
       handlePrimitive(param, testOutput, spec);
     }
+
     return testOutput;
   }
 
@@ -253,7 +252,12 @@ public class ParametersWithDataType {
   private void handleEnum(Object param, Map<String, Object> testOutput) {
     testOutput.put("isEnum", true);
     testOutput.put("value", param);
-    testOutput.put("valueEscaped", param + "_");
+
+    if (language.equals("swift")) {
+      testOutput.put("valueEscaped", ((String) param).contains("-") ? Helpers.camelize((String) param) : param);
+    } else {
+      testOutput.put("valueEscaped", param + "_");
+    }
   }
 
   private void handleModel(
@@ -263,7 +267,8 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     String baseType,
     String parent,
-    int suffix
+    int suffix,
+    boolean isParentFreeFormObject
   ) throws CTSException {
     if (!spec.getHasVars()) {
       // In this case we might have a complex `allOf`, we will first check if it exists
@@ -292,13 +297,13 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
-      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, false));
+      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();
       IJsonSchemaValidationProperties current = match;
       String typeName = getTypeName(current);
       boolean isList = false;
-      if (language.equals("go")) {
+      if (language.equals("go") || language.equals("swift")) {
         typeName = Helpers.capitalize(getObjectNameForLanguage(typeName));
         while (current.getItems() != null) {
           current = current.getItems();
@@ -330,9 +335,8 @@ public class ParametersWithDataType {
     }
 
     Map<String, Object> vars = (Map<String, Object>) param;
-    List<Object> values = new ArrayList<>();
-    List<Object> requiredValues = new ArrayList<>();
-    List<Object> optionalValues = new ArrayList<>();
+    List<Map<String, Object>> values = new ArrayList<>();
+    List<Map<String, Object>> additionalPropertyValues = new ArrayList<>();
     for (Entry<String, Object> entry : vars.entrySet()) {
       IJsonSchemaValidationProperties varSpec = null;
       for (CodegenProperty vs : spec.getVars()) {
@@ -373,20 +377,30 @@ public class ParametersWithDataType {
       } else {
         Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false);
         values.add(transformedParam);
-
-        if (varSpec instanceof CodegenProperty property) {
-          if (property.required) {
-            requiredValues.add(transformedParam);
-          } else {
-            optionalValues.add(transformedParam);
-          }
-        }
       }
     }
+
+    if (language.equals("swift")) {
+      // Store ordered params from the spec
+      var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+
+      // Create a map to store the indices of each string in orderedParams
+      Map<String, Integer> indexMap = IntStream
+        .range(0, orderedParams.size())
+        .boxed()
+        .collect(Collectors.toMap(orderedParams::get, i -> i));
+
+      values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
+    }
+
+    var hasAdditionalProperties = values
+      .stream()
+      .anyMatch(el -> el.containsKey("isAdditionalProperty") && (boolean) el.get("isAdditionalProperty"));
+    testOutput.put("hasAdditionalProperties", hasAdditionalProperties);
+
     testOutput.put("isObject", true);
     testOutput.put("value", values);
-    testOutput.put("requiredValue", requiredValues);
-    testOutput.put("optionalValue", optionalValues);
+    testOutput.put("additionalProperties", additionalPropertyValues);
   }
 
   private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
@@ -497,6 +511,11 @@ public class ParametersWithDataType {
             return "Array";
           case "Object":
             return "map[string]any";
+        }
+      case "swift":
+        switch (objectName) {
+          case "List":
+            return "array";
         }
     }
     return Helpers.capitalize(objectName);

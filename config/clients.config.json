@@ -327,7 +327,7 @@
     "apiFolder": "Sources",
     "dockerImage": "apic_swift",
     "tests": {
-      "extension": ".swift",
+      "extension": "Tests.swift",
       "outputFolder": "Tests"
     }
   }

@@ -18,8 +18,8 @@ content:
         summary: Invalid credentials.
         description: Your application ID or API key is wrong.
         value: {'status': 401, 'message': 'Invalid credentials'}
-      WrongAPIKey:
-        summary: Admin API key required.
-        description: Your API key is not the Admin API key for your application.
+      MissingACL:
+        summary: Key is missing ACL
+        description: Your API key is missing the required ACL for this operation.
         value:
-          {'status': 401, 'message': 'The admin API key is required'}
+          {'status': 401, 'message': 'The provided API key is missing the \"editSettings\" ACL'}
