@@ -1,6 +1,8 @@
 using System.Globalization;
 using Algolia.Search.Clients;
 
+namespace Algolia.Playgrounds;
+
 public static class Monitoring
 {
   public static async Task Run(Configuration configuration)

@@ -12,7 +12,7 @@ namespace Algolia.Search.Serializer;
 internal class CustomJsonSerializer
 {
   private readonly JsonSerializerSettings _serializerSettings;
-
+  
   public CustomJsonSerializer(JsonSerializerSettings serializerSettings)
   {
     _serializerSettings = serializerSettings;
@@ -30,7 +30,7 @@ internal class CustomJsonSerializer
       // the object to be serialized is an oneOf/anyOf schema
       return schema.ToJson();
     }
-
+    
     return JsonConvert.SerializeObject(obj, _serializerSettings);
   }
 

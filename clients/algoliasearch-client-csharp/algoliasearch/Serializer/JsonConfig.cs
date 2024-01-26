@@ -16,7 +16,9 @@ namespace Algolia.Search.Serializer
       NullValueHandling = NullValueHandling.Ignore,
       ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
       ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-      DateParseHandling = DateParseHandling.DateTime
+      DateParseHandling = DateParseHandling.DateTime,
+      ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+      MissingMemberHandling = MissingMemberHandling.Ignore,
     };
   }
 }

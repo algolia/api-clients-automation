@@ -1,4 +1,5 @@
-﻿using Algolia.Utils;
+﻿using Algolia.Playgrounds;
+using Algolia.Utils;
 
 var arguments = Environment.GetCommandLineArgs();
 var client = (arguments.Length > 1 ? arguments[1] : null) ?? "all";
