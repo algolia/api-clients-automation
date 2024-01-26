@@ -125,6 +125,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
       file.getTemplateFile().equals("ClientUtils.mustache") ||
       file.getTemplateFile().equals("Configuration.mustache") ||
+      file.getTemplateFile().equals("nuspec.mustache") ||
       file.getTemplateFile().equals("appveyor.mustache")
     );
 
