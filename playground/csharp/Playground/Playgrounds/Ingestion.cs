@@ -1,6 +1,8 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Ingestion;
 
+namespace Algolia.Playgrounds;
+
 public static class Ingestion
 {
   public static async Task Run(Configuration configuration)

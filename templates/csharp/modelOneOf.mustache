@@ -1,6 +1,6 @@
 {{#model}}
     /// <summary>
-    /// {{description}}{{^description}}{{classname}}{{/description}}
+    /// {{{description}}}{{^description}}{{classname}}{{/description}}
     /// </summary>
     {{#vendorExtensions.x-cls-compliant}}
     [CLSCompliant({{{.}}})]
@@ -14,7 +14,7 @@
     {
         {{#isNullable}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
+        /// Initializes a new instance of the {{classname}} class.
         /// </summary>
         public {{classname}}()
         {
@@ -28,8 +28,8 @@
         {{^vendorExtensions.x-duplicated-data-type}}
         {{^isNull}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class
-        /// with the <see cref="{{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}" /> class
+        /// Initializes a new instance of the {{classname}} class
+        /// with a {{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}
         /// </summary>
         /// <param name="actualInstance">An instance of {{dataType}}.</param>
         public {{classname}}({{{dataType}}} actualInstance)
@@ -44,8 +44,8 @@
 
         {{#vendorExtensions.x-has-child-generic}}
           /// <summary>
-          /// Initializes a new instance of the <see cref="{{classname}}" /> class
-          /// with the <see cref="{{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}" /> class
+          /// Initializes a new instance of the {{classname}} class
+          /// with a {{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}
           /// </summary>
           /// <param name="actualInstance">An instance of {{dataType}}.</param>
           public {{classname}}(object actualInstance)
@@ -57,31 +57,19 @@
         {{/vendorExtensions.x-has-child-generic}}
         {{/composedSchemas.oneOf}}
 
-        private Object _actualInstance;
-
         /// <summary>
         /// Gets or Sets ActualInstance
         /// </summary>
-        public override Object ActualInstance
-        {
-            get
-            {
-                return _actualInstance;
-            }
-            set
-            {
-                this._actualInstance = value;
-            }
-        }
+        public sealed override object ActualInstance { get; set; }
         {{#composedSchemas.oneOf}}
         {{^vendorExtensions.x-duplicated-data-type}}
         {{^isNull}}
 
         /// <summary>
-        /// Get the actual instance of `{{dataType}}`. If the actual instance is not `{{dataType}}`,
-        /// the InvalidClassException will be thrown
+        /// {{#lambda.escape-generic}}Get the actual instance of `{{{dataType}}}`. If the actual instance is not `{{{dataType}}}`,
+        /// the InvalidClassException will be thrown{{/lambda.escape-generic}}
         /// </summary>
-        /// <returns>An instance of {{dataType}}</returns>
+        /// <returns>An instance of {{#lambda.escape-generic}}{{dataType}}{{/lambda.escape-generic}}</returns>
         public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} As{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
         {
             return ({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})ActualInstance;
@@ -95,7 +83,7 @@
             {{^isNull}}
 
                 /// <summary>
-                /// Check if the actual instance is of `{{dataType}}` type.
+                /// {{#lambda.escape-generic}}Check if the actual instance is of `{{{dataType}}}` type.{{/lambda.escape-generic}}
                 /// </summary>
                 /// <returns>Whether or not the instance is the type</returns>
                 public bool Is{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#isArray}}{{^complexType}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}{{/complexType}}{{/isArray}}()
@@ -125,7 +113,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public override string ToJson()
         {
-            return JsonConvert.SerializeObject(ActualInstance, SerializerSettings);
+            return JsonConvert.SerializeObject(ActualInstance, JsonConfig.AlgoliaJsonSerializerSettings);
         }
 
         /// <summary>
@@ -176,12 +164,12 @@
             catch (Exception exception)
             {
                 // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into {{{datatypeWithEnum}}}: {1}", jsonString, exception.ToString()));
+                System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into {{{datatypeWithEnum}}}: {exception}");
             }
             {{/composedSchemas.oneOf}}
             {{/vendorExtensions}}
 
-            throw new InvalidDataException("The JSON string `" + jsonString + "` cannot be deserialized into any schema defined.");
+            throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
         }
 
         {{#equatable}}
@@ -260,7 +248,7 @@
         /// <param name="serializer">JSON Serializer</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<object>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson").Invoke(value, null)));
+            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<object>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson")?.Invoke(value, null)));
         }
 
         /// <summary>
@@ -275,7 +263,7 @@
         {
             if(reader.TokenType != JsonToken.Null)
             {
-                return objectType.GetMethod("FromJson").Invoke(null, new[] { JObject.Load(reader).ToString(Formatting.None) });
+                return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
             }
             return null;
         }

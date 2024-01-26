@@ -1,0 +1,198 @@
+//
+// {{{generationBanner}}}
+//
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Algolia.Search.Clients;
+using Algolia.Search.Models;
+{{#hasImport}}using Algolia.Search.Models.{{apiPackageName}};
+{{/hasImport}}
+using Algolia.Search.Transport;
+using Algolia.Search.Http;
+
+namespace Algolia.Search.Clients;
+
+  {{#operations}}
+
+  {{#supportsAsync}}
+  /// <summary>
+  /// Represents a collection of functions to interact with the API endpoints
+  /// </summary>
+  {{>visibility}} interface {{interfacePrefix}}{{classname}}
+  {
+      {{#operation}}
+      /// <summary>
+      /// {{{summary}}}
+      /// </summary>
+      /// <remarks>
+      /// {{{notes}}}
+      /// </remarks>
+      {{#allParams}}
+      /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      {{/allParams}}
+      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+      /// <returns>Task of {{> return_type_doc}}</returns>
+      Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+
+      {{/operation}}
+  }
+
+  {{/supportsAsync}}
+
+
+  /// <summary>
+  /// Represents a collection of functions to interact with the API endpoints
+  /// </summary>
+  {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
+  {
+      private readonly HttpTransport _transport;
+
+      /// <summary>
+      /// Create a new {{apiPackageName}} client for the given appID and apiKey.
+      /// </summary>
+      /// <param name="applicationId">Your application</param>
+      /// <param name="apiKey">Your API key</param>
+      {{#hasRegionalHost}}/// <param name="region">The targeted region</param>{{/hasRegionalHost}}
+      public {{classname}}(string applicationId, string apiKey{{#hasRegionalHost}}, string region{{/hasRegionalHost}}{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}}) : this(new {{apiPackageName}}Config(applicationId, apiKey{{#hasRegionalHost}}, region{{/hasRegionalHost}}), new AlgoliaHttpRequester())
+      {
+      }
+
+      /// <summary>
+      /// Initialize a client with custom config
+      /// </summary>
+      /// <param name="config">Algolia configuration</param>
+      public {{classname}}({{apiPackageName}}Config config) : this(config, new AlgoliaHttpRequester())
+      {
+      }
+
+      /// <summary>
+      /// Initialize the client with custom config and custom Requester
+      /// </summary>
+      /// <param name="config">Algolia Config</param>
+      /// <param name="httpRequester">Your Http requester implementation of <see cref="IHttpRequester"/></param>
+      public {{classname}}({{apiPackageName}}Config config, IHttpRequester httpRequester)
+      {
+        if (httpRequester == null)
+        {
+          throw new ArgumentException("An httpRequester is required");
+        }
+        if (config == null)
+        {
+          throw new ArgumentException("A config is required");
+        }
+        if (string.IsNullOrWhiteSpace(config.AppId))
+        {
+          throw new ArgumentException("`AppId` is missing.");
+        }
+        if (string.IsNullOrWhiteSpace(config.ApiKey))
+        {
+          throw new ArgumentException("`ApiKey` is missing.");
+        }
+
+        _transport = new HttpTransport(config, httpRequester);
+      }
+
+      {{#operation}}
+      {{#supportsAsync}}
+
+      /// <summary>
+      /// {{{summary}}} {{notes}}
+      /// </summary>
+      {{#allParams}}
+      /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      {{/allParams}}
+      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+      /// <returns>Task of {{> return_type_doc}}</returns>
+      public async Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+      {
+          {{#allParams}}
+          {{#required}}
+          {{^vendorExtensions.x-csharp-value-type}}{{^isEnumRef}}
+          if ({{paramName}} == null)
+              throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+            {{/isEnumRef}}{{/vendorExtensions.x-csharp-value-type}}
+          {{/required}}
+          {{/allParams}}
+          var requestOptions = new InternalRequestOptions(options);
+          {{#vendorExtensions.x-is-custom-request}}
+          {{#pathParams}}
+          requestOptions.CustomPathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+          {{/pathParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{#vendorExtensions}}{{^x-is-custom-request}}
+          {{#pathParams}}
+          {{#required}}
+          requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+          }
+          {{/required}}
+          {{/pathParams}}
+          {{/x-is-custom-request}}{{/vendorExtensions}}
+          {{#vendorExtensions.x-is-custom-request}}
+          {{#queryParams}}
+          requestOptions.AddCustomQueryParameters({{paramName}});
+          {{/queryParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{^vendorExtensions.x-is-custom-request}}
+          {{#queryParams}}
+          requestOptions.AddQueryParameter("{{baseName}}", {{paramName}});
+          {{/queryParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{#headerParams}}
+          {{#required}}
+          requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
+          }
+          {{/required}}
+          {{/headerParams}}
+          {{#formParams}}
+          {{#required}}
+          requestOptions.FormParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // form parameter
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.FormParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // form parameter
+          }
+          {{/required}}
+          {{/formParams}}
+          {{#bodyParam}}
+          requestOptions.Data = {{paramName}};
+          {{/bodyParam}}
+          {{#vendorExtensions}}
+          {{#x-use-read-transporter}}
+          requestOptions.UseReadTransporter = true;
+          {{/x-use-read-transporter}}
+          {{/vendorExtensions}}
+          {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+      }
+      {{/supportsAsync}}
+      {{/operation}}
+  }
+  {{/operations}}
+
