@@ -28,7 +28,7 @@
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "dotenv": "16.3.2",
+    "dotenv": "16.4.1",
     "typescript": "5.3.3"
   },
   "engines": {
