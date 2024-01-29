@@ -36,7 +36,6 @@ func TestIngestioncommonApi0(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
@@ -48,7 +47,6 @@ func TestIngestioncommonApi1(t *testing.T) {
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
@@ -61,7 +59,6 @@ func TestIngestioncommonApi2(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
@@ -82,12 +79,10 @@ func TestIngestionparameters0(t *testing.T) {
 		Region: ingestion.Region("us"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
-
 	require.NoError(t, err)
 	_, err = client.GetSource(client.NewApiGetSourceRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 	))
-
 	require.Equal(t, "data.us.algolia.com", echo.Host)
 }
 
@@ -106,6 +101,5 @@ func TestIngestionparameters1(t *testing.T) {
 		Region: ingestion.Region("not_a_region"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
