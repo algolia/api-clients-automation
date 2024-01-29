@@ -61,10 +61,9 @@ typealias Client = {{classname}}
     {{/allParams}}
 
     /**
-     {{#summary}}
-     {{{.}}}
-     {{/summary}}{{#allParams}}
-     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{/allParams}}
+     {{#allParams}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
      - returns: {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}
      */
     {{#isDeprecated}}
@@ -83,10 +82,16 @@ typealias Client = {{classname}}
     }
 
     /**
-     {{#summary}}
-     {{{.}}}
-     {{/summary}}{{#notes}}
-     {{{.}}}{{/notes}}{{#subresourceOperation}}
+     {{#notes}}{{{.}}}{{/notes}}
+     {{#vendorExtensions}}
+     {{#x-acl.0}}
+
+     Required API Key ACLs:{{/x-acl.0}}
+     {{#x-acl}}
+       - {{.}}
+     {{/x-acl}}
+     {{/vendorExtensions}}
+     {{#subresourceOperation}}
      subresourceOperation: {{.}}{{/subresourceOperation}}{{#defaultResponse}}
      defaultResponse: {{.}}{{/defaultResponse}}
      {{#hasResponseHeaders}}

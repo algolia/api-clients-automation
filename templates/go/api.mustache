@@ -104,11 +104,19 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/allParams}}
 {{/hasParams}}
 /*
-{{operationId}} {{{summary}}} Wraps {{nickname}}WithContext using context.Background.{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}} Wraps {{nickname}}WithContext using context.Background.
 {{#notes}}
 
 {{{unescapedNotes}}}
 {{/notes}}
+{{#vendorExtensions}}
+{{#x-acl.0}}
+
+Required API Key ACLs:{{/x-acl.0}}
+{{#x-acl}}
+  - {{.}}
+{{/x-acl}}
+{{/vendorExtensions}}
 
 Request can be constructed by NewApi{{operationId}}Request with parameters below.
  {{#allParams}}
@@ -128,7 +136,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 }
 
 /*
-{{operationId}} {{{summary}}}{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}}
 {{#notes}}
 
 {{{unescapedNotes}}}
