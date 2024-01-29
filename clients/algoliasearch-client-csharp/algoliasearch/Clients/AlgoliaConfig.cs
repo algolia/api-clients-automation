@@ -34,7 +34,7 @@ namespace Algolia.Search.Clients
         { Defaults.AcceptHeader.ToLowerInvariant(), JsonConfig.JsonContentType }
       };
     }
-    
+
     /// <summary>
     /// The application ID
     /// </summary>
@@ -82,7 +82,7 @@ namespace Algolia.Search.Clients
     /// Configurations hosts
     /// </summary>
     protected internal List<StatefulHost> DefaultHosts { get; set; }
-    
+
     /// <summary>
     /// The user-agent header
     /// </summary>

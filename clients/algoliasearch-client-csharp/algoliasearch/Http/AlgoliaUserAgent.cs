@@ -16,10 +16,10 @@ public class AlgoliaUserAgent
   // Get the client assembly version
   private static readonly string ClientVersion =
     typeof(AlgoliaConfig).GetTypeInfo().Assembly.GetName().Version.ToString();
-    
+
   // Get the dotnet runtime version
   private static readonly string DotnetVersion = Environment.Version.ToString();
-    
+
   /// <summary>
   /// Create a new user-agent header
   /// </summary>
@@ -37,10 +37,10 @@ public class AlgoliaUserAgent
     {
       throw new ArgumentException("Key and value must be set");
     }
-      
-    if(_segments.ContainsKey(key))
+
+    if (_segments.ContainsKey(key))
       throw new ArgumentException("Key must be unique");
-      
+
     _segments.Add(new KeyValuePair<string, string>(key, value));
   }
 
@@ -51,6 +51,6 @@ public class AlgoliaUserAgent
   /// <returns></returns>
   public override string ToString()
   {
-    return string.Join("; ",_segments.Select(s => $"{s.Key} {s.Value}"));
+    return string.Join("; ", _segments.Select(s => $"{s.Key} {s.Value}"));
   }
 }
