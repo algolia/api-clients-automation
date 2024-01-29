@@ -60,7 +60,7 @@ async function pushToNewWorld(): Promise<void> {
     coAuthors: [author, ...coAuthors],
     cwd: tempGitDir,
   });
-  await run(`git push -f origin ${targetBranch}`, { cwd: tempGitDir });
+  await run(`git push -f -u origin ${targetBranch}`, { cwd: tempGitDir });
 
   console.log(`Creating pull request on ${OWNER}/${repository}...`);
   const octokit = getOctokit();
