@@ -22,9 +22,6 @@ namespace Algolia.Search.Clients
     {{>visibility}} interface {{interfacePrefix}}{{classname}}
     {
         {{#operation}}
-        /// <summary>
-        /// {{{summary}}}
-        /// </summary>
         /// <remarks>
         /// {{{notes}}}
         /// </remarks>
@@ -102,9 +99,8 @@ namespace Algolia.Search.Clients
         {{#supportsAsync}}
 
         /// <summary>
-        /// {{{summary}}}
-        ///
         /// {{{notes}}}
+        /// </summary>
         {{#vendorExtensions}}
         {{#x-acl.0}}
             ///
@@ -113,7 +109,6 @@ namespace Algolia.Search.Clients
             ///   - {{.}}
         {{/x-acl}}
         {{/vendorExtensions}}
-        /// </summary>
         /// <exception cref="Algolia.Search.{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>

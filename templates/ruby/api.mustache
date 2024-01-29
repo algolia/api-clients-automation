@@ -53,9 +53,6 @@ module {{moduleName}}
     end
 
 {{#operation}}
-    {{#summary}}
-    # {{.}}
-    {{/summary}}
     {{#notes}}
     # {{.}}
     {{/notes}}
@@ -190,9 +187,6 @@ module {{moduleName}}
       @api_client.call_api(:{{httpMethod}}, path, new_options)
     end
 
-    {{#summary}}
-    # {{{.}}}
-    {{/summary}}
     {{#notes}}
     # {{{.}}}
     {{/notes}}

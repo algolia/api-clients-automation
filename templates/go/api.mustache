@@ -104,7 +104,7 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/allParams}}
 {{/hasParams}}
 /*
-{{operationId}} {{{summary}}} Wraps {{nickname}}WithContext using context.Background.{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}} Wraps {{nickname}}WithContext using context.Background.
 {{#notes}}
 
 {{{unescapedNotes}}}
@@ -136,7 +136,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 }
 
 /*
-{{operationId}} {{{summary}}}{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}}
 {{#notes}}
 
 {{{unescapedNotes}}}

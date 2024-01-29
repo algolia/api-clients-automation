@@ -80,7 +80,7 @@ class {{classname}}:
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
         """
-        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}{{{summary}}}{{^summary}}{{operationId}}{{/summary}}
+        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}
 
         {{#notes}}
         {{{.}}}
@@ -159,7 +159,7 @@ class {{classname}}:
 
     async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
-        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}{{{summary}}}{{^summary}}{{operationId}}{{/summary}}
+        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}
 
         {{#notes}}
         {{{.}}}
