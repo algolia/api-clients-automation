@@ -16,7 +16,7 @@
     "fix:json": "eslint --ext=json . --fix",
     "fix:mustache": "eslint --ext=mustache templates/**/tests/ --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "postinstall": "husky install && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts build:cli",
+    "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts build:cli",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "release": "yarn workspace scripts createReleasePR",
     "scripts:build": "yarn workspace scripts build",
