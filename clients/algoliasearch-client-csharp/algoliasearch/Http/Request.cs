@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using Algolia.Search.Models.Common;
 
@@ -28,9 +29,8 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Body of the request
     /// </summary>
-    public string Body { get; set; }
-    // public Stream Body { get; set; }
-
+    public Stream Body { get; set; }
+    
     /// <summary>
     /// Compression type of the request <see cref="CompressionType"/>
     /// </summary>

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Serializer;
 using Algolia.Search.Utils;
 
@@ -19,7 +23,7 @@ namespace Algolia.Search.Transport;
 internal class HttpTransport
 {
   private readonly IHttpRequester _httpClient;
-  private readonly CustomJsonSerializer _serializer;
+  private readonly DefaultJsonSerializer _serializer = new(JsonConfig.AlgoliaJsonSerializerSettings);
   private readonly RetryStrategy _retryStrategy;
   private readonly AlgoliaConfig _algoliaConfig;
   private string _errorMessage;
@@ -37,7 +41,6 @@ internal class HttpTransport
   {
     _algoliaConfig = config ?? throw new ArgumentNullException(nameof(config));
     _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    _serializer = new CustomJsonSerializer(JsonConfig.AlgoliaJsonSerializerSettings);
     _retryStrategy = new RetryStrategy(config);
   }
 
@@ -115,9 +118,9 @@ internal class HttpTransport
       var requestTimeout =
         TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
 
-      if (string.IsNullOrWhiteSpace(request.Body) && (method == HttpMethod.Post || method == HttpMethod.Put))
+      if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
       {
-        request.Body = "{}";
+        request.Body = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
       }
 
       var response = await _httpClient
@@ -147,6 +150,11 @@ internal class HttpTransport
     throw new AlgoliaUnreachableHostException("RetryStrategy failed to connect to Algolia. Reason: " + _errorMessage);
   }
 
+  // Buffer sized as recommended by Bradley Grainger, http://faithlife.codes/blog/2012/06/always-wrap-gzipstream-with-bufferedstream/
+  private static readonly int GZipBufferSize = 8192;
+  private static readonly int DefaultBufferSize = 1024;
+  private static readonly UTF8Encoding DefaultEncoding = new(false);
+
   /// <summary>
   /// Generate stream for serializing objects
   /// </summary>
@@ -154,9 +162,32 @@ internal class HttpTransport
   /// <param name="compress">Whether the stream should be compressed or not</param>
   /// <typeparam name="T">Type of the data to send/retrieve</typeparam>
   /// <returns></returns>
-  private string CreateRequestContent<T>(T data, bool compress)
+  private MemoryStream CreateRequestContent<T>(T data, bool compress)
   {
-    return data == null ? null : _serializer.Serialize(data);
+    if (data == null)
+      return null;
+
+    var stream = new MemoryStream();
+
+    var serialized = _serializer.Serialize(data);
+
+    var compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
+    if (compressionType == CompressionType.GZIP)
+    {
+      using var gzipStream = new GZipStream(stream, CompressionMode.Compress, true);
+      using var sw = new StreamWriter(gzipStream, DefaultEncoding, GZipBufferSize);
+      sw.Write(serialized);
+      sw.Flush();
+    }
+    else
+    {
+      using var sw = new StreamWriter(stream, DefaultEncoding, DefaultBufferSize, true);
+      sw.Write(serialized);
+      sw.Flush();
+    }
+
+    stream.Seek(0, SeekOrigin.Begin);
+    return stream;
   }
 
   /// <summary>
