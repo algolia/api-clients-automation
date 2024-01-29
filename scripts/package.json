@@ -44,7 +44,7 @@
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
     "js-yaml": "4.1.0",
-    "knip": "3.13.2",
+    "knip": "4.2.1",
     "micromatch": "4.0.5",
     "semver": "7.5.4",
     "spinnies": "0.5.1",
