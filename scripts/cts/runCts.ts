@@ -52,7 +52,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('sbt test', { cwd, language });
       break;
     case 'swift':
-      await run('swift test -q --parallel', { cwd, language });
+      await run('rm -rf .build && swift test -q --parallel', { cwd, language });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

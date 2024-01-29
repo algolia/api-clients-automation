@@ -10,7 +10,13 @@ let package = Package(
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
   targets: [
-    .target(name: "Utils", path: "Tests/Utils"),
+    .target(
+        name: "Utils",
+        dependencies: [
+            .product(name: "AnyCodable", package: "AnyCodable")
+        ],
+        path: "Tests/Utils"
+    ),
     .testTarget(
       name: "client",
       dependencies: [

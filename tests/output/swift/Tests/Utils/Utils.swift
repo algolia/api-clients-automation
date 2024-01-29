@@ -11,10 +11,12 @@ import Foundation
 #endif
 
 #if canImport(AnyCodable)
-    public typealias Object = [String: AnyCodable]
+    public typealias TestNullObject = [String: AnyCodable]
 #else
-    public typealias Object = [String: Any]
+    public typealias TestNullObject = [String: Any]
 #endif
+
+public typealias TestNullString = String
 
 public typealias StringMapObject = [String: String?]
 
