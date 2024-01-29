@@ -1,11 +1,22 @@
 //
-//  Data.swift
+//  Utils.swift
 //
 //
 //  Created by Algolia on 26/01/2024.
 //
 
 import Foundation
+#if canImport(AnyCodable)
+    import AnyCodable
+#endif
+
+#if canImport(AnyCodable)
+    public typealias Object = [String: AnyCodable]
+#else
+    public typealias Object = [String: Any]
+#endif
+
+public typealias StringMapObject = [String: String?]
 
 public extension Data {
     var jsonString: String? {

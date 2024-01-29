@@ -10,8 +10,8 @@ import Utils
 
 final class {{client}}ClientTests: XCTestCase {
 
-  let APPLICATION_ID = ""
-  let API_KEY = ""
+  let APPLICATION_ID = "my_application_id"
+  let API_KEY = "my_api_key"
 {{#blocksClient}}
   {{#tests}}
 
@@ -20,9 +20,8 @@ final class {{client}}ClientTests: XCTestCase {
     */
     func test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
       {{#autoCreateClient}}
-        let statusCode: HTTPStatusСode = 200
-        let configuration: {{import}}.Configuration = try {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
-        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder(statusCode: statusCode))
+        let configuration: {{import}}.Configuration = try {{import}}.Configuration(appId: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
       {{/autoCreateClient}}
 
@@ -31,7 +30,6 @@ final class {{client}}ClientTests: XCTestCase {
           do {
             {{#dynamicTemplate}}{{/dynamicTemplate}}
 
-            _ = client
             XCTFail("Expected an error to be thrown")
           } catch {
             XCTAssertEqual(error.localizedDescription, "{{{expectedError}}}")
@@ -44,7 +42,7 @@ final class {{client}}ClientTests: XCTestCase {
 
               let pattern = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}"
               let rule = StringRule(pattern: pattern)
-              let userAgent = try XCTUnwrap(echoResponse.headers?["user-agent"])
+              let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
               guard let userAgent = userAgent else {
                 XCTFail("Expected user-agent header")
                 return
@@ -58,7 +56,7 @@ final class {{client}}ClientTests: XCTestCase {
               XCTAssertEqual(TimeInterval({{{match.parametersWithDataTypeMap.responseTimeout.value}}} / 1000), echoResponse.timeout);
             {{/testTimeouts}}
             {{#testHost}}
-              XCTAssertEqual("{{{match}}}", echoResponse.url);
+              XCTAssertEqual("{{{match}}}", echoResponse.host);
             {{/testHost}}
           {{/match}}
         {{/isError}}

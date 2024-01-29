@@ -10,10 +10,8 @@ import Utils
 
 final class {{client}}RequestsTests: XCTestCase {
 
-  typealias StringMapObject = [String: String?]
-
-  let APPLICATION_ID = ""
-  let API_KEY = ""
+  let APPLICATION_ID = "my_application_id"
+  let API_KEY = "my_api_key"
 
   {{#blocksRequests}}
     {{#tests}}
@@ -21,7 +19,7 @@ final class {{client}}RequestsTests: XCTestCase {
       {{testName}}
       */
       func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
-        let configuration: {{import}}.Configuration = try {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let configuration: {{import}}.Configuration = try {{import}}.Configuration(appId: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
         let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
 
