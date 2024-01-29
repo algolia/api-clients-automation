@@ -8,7 +8,7 @@ using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Algolia.Search.Tests.tests;
+namespace Algolia.Search.Tests;
 
 public class RetryStrategyTests
 {

@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Xunit;
 using TaskStatus = Algolia.Search.Models.Search.TaskStatus;
 
-namespace Algolia.Search.Tests.tests;
+namespace Algolia.Search.Tests;
 
 public class HelpersTests
 {

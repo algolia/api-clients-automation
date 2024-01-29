@@ -4,7 +4,7 @@ using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
 using Xunit;
 
-namespace Algolia.Search.Tests.tests;
+namespace Algolia.Search.Tests;
 
 public class CompressionTests
 {
