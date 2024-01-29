@@ -50,5 +50,37 @@
         }
       }
     ]
+  },
+  {
+    "testName": "tests the retry strategy",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            "localhost:6677",
+            "localhost:6678"
+          ]
+        },
+        "expected": {}
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "customGet",
+        "parameters": {
+          "path": "/test"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok test server response"
+          }
+        }
+      }
+    ]
   }
 ]

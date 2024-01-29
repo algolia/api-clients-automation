@@ -63,10 +63,13 @@ public class TestsClient extends TestsGenerator {
           testOut.put("autoCreateClient", test.autoCreateClient);
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
+            stepOut.put("useEchoRequester", true);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
               stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
+
+              stepOut.put("useEchoRequester", step.parameters == null || !step.parameters.containsKey("customHosts"));
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
@@ -108,9 +111,12 @@ public class TestsClient extends TestsGenerator {
                 case "timeouts":
                   stepOut.put("testTimeouts", true);
                   break;
-                default:
-                  stepOut.put("testResult", true);
+                case "response":
+                  stepOut.put("testResponse", true);
+                  stepOut.put("useEchoRequester", false);
                   break;
+                default:
+                  throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
               }
             }
             if (step.expected.error != null) {
