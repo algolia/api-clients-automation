@@ -103,7 +103,7 @@ __metadata:
     eslint-plugin-prettier: "npm:5.1.3"
     eslint-plugin-unused-imports: "npm:3.0.0"
     eslint-plugin-yml: "npm:1.12.2"
-    husky: "npm:8.0.3"
+    husky: "npm:9.0.6"
     lint-staged: "npm:15.2.0"
     pinst: "npm:3.0.0"
     prettier: "npm:3.2.4"
@@ -8033,12 +8033,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:8.0.3":
-  version: 8.0.3
-  resolution: "husky@npm:8.0.3"
+"husky@npm:9.0.6":
+  version: 9.0.6
+  resolution: "husky@npm:9.0.6"
   bin:
-    husky: lib/bin.js
-  checksum: b754cf70fdc97c3b60fec5b80056b9c11436464953b1691bf2b5dcf0081fb6685d2c5f47abb8b2b1c49f504aabea5321fdd6496f8b755d9f6e7525a493406abb
+    husky: bin.js
+  checksum: e198c90a59d460cf860c33e0a4c3927ecfb645d4fd4c2de3fbcd5fb56b858a923af452508d549f6ed020bb48de08290912cd77c006dd2a83e551c24c17340d5b
   languageName: node
   linkType: hard
 
