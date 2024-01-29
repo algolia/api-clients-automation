@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Xunit;
 using TaskStatus = Algolia.Search.Models.Search.TaskStatus;
 
-namespace Algolia.Search.Tests.tests;
+namespace Algolia.Search.Tests;
 
 public class HelpersTests
 {
@@ -114,7 +114,7 @@ public class HelpersTests
     await client.WaitForApiKeyAsync(ApiKeyOperation.Add, "my-key");
 
     // Verify that the request has been called three times
-     httpMock.Verify(
+    httpMock.Verify(
       m =>
         m.SendRequestAsync(
           It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/keys/my-key")),

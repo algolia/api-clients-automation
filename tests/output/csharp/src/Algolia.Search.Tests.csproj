@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference
-            Include="..\..\..\..\clients/algoliasearch-client-csharp\algoliasearch\\Algolia.Search.csproj" />
+            Include="..\..\..\..\clients/algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj" />
     </ItemGroup>
 
     <ItemGroup>
