@@ -80,20 +80,16 @@ class {{classname}}:
 
     async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
         """
-        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}
-
+        {{#isDeprecated}}
+        (Deprecated) {{operationId}}
+        {{/isDeprecated}}
         {{#notes}}
         {{{.}}}
-        {{/notes}}
-        {{#vendorExtensions}}
-        {{#x-acl.0}}
-        
+        {{/notes}}{{#vendorExtensions}}{{#x-acl.0}}
         Required API Key ACLs:{{/x-acl.0}}
         {{#x-acl}}
           - {{.}}
-        {{/x-acl}}
-        {{/vendorExtensions}}
-
+        {{/x-acl}}{{/vendorExtensions}}
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
         :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
@@ -159,19 +155,16 @@ class {{classname}}:
 
     async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
-        {{#isDeprecated}}(Deprecated) {{/isDeprecated}}
-
+        {{#isDeprecated}}
+        (Deprecated) {{operationId}}
+        {{/isDeprecated}}
         {{#notes}}
         {{{.}}}
-        {{/notes}}
-        {{#vendorExtensions}}
-        {{#x-acl.0}}
-        
+        {{/notes}}{{#vendorExtensions}}{{#x-acl.0}}
         Required API Key ACLs:{{/x-acl.0}}
         {{#x-acl}}
           - {{.}}
-        {{/x-acl}}
-        {{/vendorExtensions}}
+        {{/x-acl}}{{/vendorExtensions}}
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
         :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
