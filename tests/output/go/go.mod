@@ -6,6 +6,7 @@ replace github.com/algolia/algoliasearch-client-go/v4 v4.0.0 => ../../../clients
 
 require (
 	github.com/algolia/algoliasearch-client-go/v4 v4.0.0
+	github.com/joho/godotenv v1.5.1
 	github.com/kinbiko/jsonassert v1.1.1
 	github.com/stretchr/testify v1.8.4
 )
