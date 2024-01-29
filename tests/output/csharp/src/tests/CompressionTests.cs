@@ -2,7 +2,6 @@ using System.IO.Compression;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
-using Moq;
 using Xunit;
 
 namespace Algolia.Search.Tests.tests;
@@ -10,8 +9,7 @@ namespace Algolia.Search.Tests.tests;
 public class CompressionTests
 {
   private readonly EchoHttpRequester _echo = new(bodyAsStream: true);
-
-
+  
   [Fact]
   public async Task DoNotCompressRequestByDefault()
   {
@@ -31,10 +29,10 @@ public class CompressionTests
     lastResponseBodyStream.Position = 0;
     cp.Position = 0;
     
-    GZipStream v = new(lastResponseBodyStream, CompressionMode.Decompress);
-    var reader = new StreamReader(v);
+    GZipStream gZipStream = new(lastResponseBodyStream, CompressionMode.Decompress);
+    var reader = new StreamReader(gZipStream);
 
-    var exception = await Assert.ThrowsAsync<InvalidDataException>(async () => await reader.ReadToEndAsync()).ConfigureAwait(false);
+    var exception = await Assert.ThrowsAsync<InvalidDataException>(async () => await reader.ReadToEndAsync());
 
     Assert.Equal("The archive entry was compressed using an unsupported compression method.", exception.Message);
     

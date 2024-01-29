@@ -150,11 +150,6 @@ internal class HttpTransport
     throw new AlgoliaUnreachableHostException("RetryStrategy failed to connect to Algolia. Reason: " + _errorMessage);
   }
 
-  // Buffer sized as recommended by Bradley Grainger, http://faithlife.codes/blog/2012/06/always-wrap-gzipstream-with-bufferedstream/
-  private static readonly int GZipBufferSize = 8192;
-  private static readonly int DefaultBufferSize = 1024;
-  private static readonly UTF8Encoding DefaultEncoding = new(false);
-
   /// <summary>
   /// Generate stream for serializing objects
   /// </summary>
@@ -164,30 +159,7 @@ internal class HttpTransport
   /// <returns></returns>
   private MemoryStream CreateRequestContent<T>(T data, bool compress)
   {
-    if (data == null)
-      return null;
-
-    var stream = new MemoryStream();
-
-    var serialized = _serializer.Serialize(data);
-
-    var compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
-    if (compressionType == CompressionType.GZIP)
-    {
-      using var gzipStream = new GZipStream(stream, CompressionMode.Compress, true);
-      using var sw = new StreamWriter(gzipStream, DefaultEncoding, GZipBufferSize);
-      sw.Write(serialized);
-      sw.Flush();
-    }
-    else
-    {
-      using var sw = new StreamWriter(stream, DefaultEncoding, DefaultBufferSize, true);
-      sw.Write(serialized);
-      sw.Flush();
-    }
-
-    stream.Seek(0, SeekOrigin.Begin);
-    return stream;
+    return data == null ? null : Compression.CreateStream(_serializer.Serialize(data), compress);
   }
 
   /// <summary>
