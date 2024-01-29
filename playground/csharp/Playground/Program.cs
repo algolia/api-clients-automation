@@ -44,6 +44,7 @@ switch (client)
     await Ingestion.Run(config);
     break;
   case "all":
+    await SearchPlayground.Run(config);
     await ABTesting.Run(config);
     await Analytics.Run(config);
     await Insights.Run(config);
@@ -51,7 +52,6 @@ switch (client)
     await Personalization.Run(config);
     await QuerySuggestions.Run(config);
     await Recommend.Run(config);
-    await SearchPlayground.Run(config);
     await Ingestion.Run(config);
     break;
 }
