@@ -53,12 +53,17 @@ module {{moduleName}}
     end
 
 {{#operation}}
-    {{#summary}}
-    # {{.}}
-    {{/summary}}
     {{#notes}}
     # {{.}}
     {{/notes}}
+    {{#vendorExtensions}}
+    {{#x-acl.0}}
+    #
+    # Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+    #   - {{.}}
+    {{/x-acl}}
+    {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
@@ -182,12 +187,17 @@ module {{moduleName}}
       @api_client.call_api(:{{httpMethod}}, path, new_options)
     end
 
-    {{#summary}}
-    # {{{.}}}
-    {{/summary}}
     {{#notes}}
     # {{{.}}}
     {{/notes}}
+    {{#vendorExtensions}}
+    {{#x-acl.0}}
+    #
+    # Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+    #   - {{.}}
+    {{/x-acl}}
+    {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
