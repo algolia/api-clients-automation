@@ -36,7 +36,6 @@ func TestPersonalizationcommonApi0(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Personalization (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
@@ -48,7 +47,6 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
@@ -61,7 +59,6 @@ func TestPersonalizationcommonApi2(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
@@ -81,7 +78,6 @@ func TestPersonalizationparameters0(t *testing.T) {
 		Region: personalization.Region(""),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -100,7 +96,6 @@ func TestPersonalizationparameters1(t *testing.T) {
 		Region: personalization.Region("not_a_region"),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -120,5 +115,4 @@ func TestPersonalizationparameters2(t *testing.T) {
 		Region: personalization.Region("us"),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
-
 }

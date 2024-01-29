@@ -18,6 +18,7 @@ public class CTSManagerFactory {
       case "scala" -> new ScalaCTSManager(client);
       case "python" -> new PythonCTSManager(client);
       case "csharp" -> new CSharpCTSManager(client);
+      case "swift" -> new SwiftCTSManager(client);
       default -> null;
     };
   }

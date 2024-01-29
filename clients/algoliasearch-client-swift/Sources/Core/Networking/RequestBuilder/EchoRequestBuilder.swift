@@ -8,90 +8,82 @@
 import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+    import FoundationNetworking
 #endif
 
-public struct EchoResponse<T: Decodable>: Decodable {
-  let statusCode: HTTPStatusСode
-  let url: String
-  let timeout: TimeInterval
-  let data: T?
-  let path: String
-  let host: String
-  let algoliaAgent: String
-  let queryItems: [String: String?]?
+public struct EchoResponse: Codable {
+    let statusCode: HTTPStatusСode
+    let method: HTTPMethod
+    let url: String
+    let timeout: TimeInterval
+    let originalBodyData: Data?
+    let path: String
+    let host: String
+    let algoliaAgent: String
+    let queryItems: [String: String?]?
+    let headers: [String: String?]?
 }
 
 final class EchoRequestBuilder: RequestBuilder {
-  let statusCode: HTTPStatusСode
+    let statusCode: HTTPStatusСode
 
-  public init() {
-    self.statusCode = 200
-  }
-
-  public init(statusCode: HTTPStatusСode) {
-    self.statusCode = statusCode
-  }
-
-  final func execute<T: Decodable>(urlRequest: URLRequest, timeout: TimeInterval) async throws
-    -> Response<T>
-  {
-
-    let headers = urlRequest.allHTTPHeaderFields ?? [:]
-
-    guard let url = urlRequest.url else {
-      throw TransportError.requestError(
-        AlgoliaError(errorMessage: "Unable to parse URL from request"))
+    public init() {
+        statusCode = 200
     }
 
-    guard let httpBody = urlRequest.httpBody else {
-      throw TransportError.missingData
+    public init(statusCode: HTTPStatusСode) {
+        self.statusCode = statusCode
     }
 
-    let typedBody: T = try CodableHelper.jsonDecoder.decode(T.self, from: httpBody)
+    final func execute<T: Decodable>(urlRequest: URLRequest, timeout: TimeInterval) async throws
+        -> Response<T>
+    {
+        let headers = urlRequest.allHTTPHeaderFields ?? [:]
 
-    guard
-      let mockHTTPURLResponse = HTTPURLResponse(
-        url: url, statusCode: self.statusCode, httpVersion: nil, headerFields: headers)
-    else {
-      throw TransportError.requestError(
-        AlgoliaError(errorMessage: "Unable to mock HTTPURLResponse from EchoTransporter"))
+        guard let requestHttpMethod = urlRequest.httpMethod,
+              let httpMethod = HTTPMethod(rawValue: requestHttpMethod)
+        else {
+            throw AlgoliaError.requestError(
+                GenericError(description: "Unable to parse HTTP method from request"))
+        }
+
+        guard let url = urlRequest.url else {
+            throw AlgoliaError.requestError(
+                GenericError(description: "Unable to parse URL from request"))
+        }
+
+        guard
+            let mockHTTPURLResponse = HTTPURLResponse(
+                url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil
+            )
+        else {
+            throw AlgoliaError.requestError(
+                GenericError(description: "Unable to mock HTTPURLResponse from EchoTransporter"))
+        }
+
+        let queryItems = processQueryItems(from: url.query)
+
+        let echoResponse = EchoResponse(
+            statusCode: statusCode, method: httpMethod, url: url.absoluteString, timeout: timeout,
+            originalBodyData: urlRequest.httpBody, path: url.path, host: url.host ?? "",
+            algoliaAgent: headers["X-Algolia-Agent"] ?? "",
+            queryItems: queryItems, headers: headers
+        )
+
+        let interceptedBody = try CodableHelper.jsonEncoder.encode(echoResponse)
+
+        return Response(response: mockHTTPURLResponse, body: nil, bodyData: interceptedBody)
     }
 
-    return Response(response: mockHTTPURLResponse, body: typedBody, bodyData: httpBody)
-  }
+    fileprivate func processQueryItems(from query: String?) -> [String: String?]? {
+        guard let query = query else {
+            return nil
+        }
 
-  final func execute<T: Decodable>(urlRequest: URLRequest, timeout: TimeInterval) async throws
-    -> EchoResponse<T>
-  {
-    let response: Response<T> = try await self.execute(urlRequest: urlRequest, timeout: timeout)
+        let components = URLComponents(string: "?" + query)
 
-    guard let url = urlRequest.url else {
-      throw AlgoliaError(errorMessage: "Malformed URL")
+        return components?.queryItems?.reduce(into: [String: String?]()) { acc, cur in
+            acc.updateValue(cur.value, forKey: cur.name)
+        }
     }
-
-    let headers = urlRequest.allHTTPHeaderFields ?? [:]
-
-    let queryItems = processQueryItems(from: url.query)
-
-    return EchoResponse(
-      statusCode: self.statusCode, url: url.absoluteString, timeout: timeout,
-      data: response.body, path: url.path, host: url.host ?? "",
-      algoliaAgent: headers["X-Algolia-Agent"] ?? "",
-      queryItems: queryItems
-    )
-  }
-
-  fileprivate func processQueryItems(from query: String?) -> [String: String?]? {
-    guard let query = query else {
-      return nil
-    }
-
-    let components = URLComponents(string: "?" + query)
-
-    return components?.queryItems?.reduce(into: [String: String?]()) { acc, cur in
-      acc.updateValue(cur.value, forKey: cur.name)
-    }
-  }
-
 }

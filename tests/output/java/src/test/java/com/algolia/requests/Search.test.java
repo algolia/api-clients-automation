@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -24,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class SearchClientRequestsTests {
 
   private SearchClient client;
+  private SearchClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -33,6 +35,13 @@ class SearchClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new SearchClient("appId", "apiKey", options);
+
+    if ("true".equals(System.getenv("CI"))) {
+      this.clientE2E = new SearchClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"));
+    } else {
+      var dotenv = Dotenv.configure().directory("../../").load();
+      this.clientE2E = new SearchClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"));
+    }
   }
 
   @AfterAll
@@ -406,6 +415,15 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_browse/browse", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+
+    var res = clientE2E.browse("cts_e2e_browse", Object.class);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test
@@ -1177,6 +1195,15 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_settings/settings", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+
+    var res = clientE2E.getSettings("cts_e2e_settings");
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":20,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test
@@ -1824,6 +1851,18 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}", req.body, JSONCompareMode.STRICT)
     );
+
+    var res = clientE2E.search(
+      new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
+      Object.class
+    );
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test
@@ -1849,6 +1888,22 @@ class SearchClientRequestsTests {
         "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}",
         req.body,
         JSONCompareMode.STRICT
+      )
+    );
+
+    var res = clientE2E.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.fromValue("facet")).setFacet("editor"))
+        )
+        .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+      Object.class
+    );
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
       )
     );
   }
@@ -2243,6 +2298,8 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_space%20in%20index/query", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+
+    var res = clientE2E.searchSingleIndex("cts_e2e_space in index", Object.class);
   }
 
   @Test
@@ -2279,27 +2336,21 @@ class SearchClientRequestsTests {
   @DisplayName("searchSynonyms with all parameters")
   void searchSynonymsTest1() {
     assertDoesNotThrow(() -> {
-      client.searchSynonyms("indexName", SynonymType.fromValue("altcorrection1"), 10, 10, new SearchSynonymsParams().setQuery("myQuery"));
+      client.searchSynonyms(
+        "indexName",
+        new SearchSynonymsParams().setQuery("myQuery").setType(SynonymType.fromValue("altcorrection1")).setPage(10).setHitsPerPage(10)
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/synonyms/search", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"myQuery\"}", req.body, JSONCompareMode.STRICT));
-
-    try {
-      Map<String, String> expectedQuery = json.readValue(
-        "{\"type\":\"altcorrection1\",\"page\":\"10\",\"hitsPerPage\":\"10\"}",
-        new TypeReference<HashMap<String, String>>() {}
-      );
-      Map<String, Object> actualQuery = req.queryParameters;
-
-      assertEquals(expectedQuery.size(), actualQuery.size());
-      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
-        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
-      }
-    } catch (JsonProcessingException e) {
-      fail("failed to parse queryParameters json");
-    }
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"query\":\"myQuery\",\"type\":\"altcorrection1\",\"page\":10,\"hitsPerPage\":10}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test
@@ -2392,6 +2443,8 @@ class SearchClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+
+    var res = clientE2E.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
   }
 
   @Test

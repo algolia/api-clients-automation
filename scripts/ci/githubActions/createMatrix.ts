@@ -128,6 +128,9 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       case 'ruby':
         testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;
         break;
+      case 'swift':
+        testsToStore = `${testsToStore} ${testsRootFolder}/Package.swift`;
+        break;
       default:
         break;
     }

@@ -2,52 +2,52 @@
 
 import Core
 import Foundation
-
 #if canImport(AnyCodable)
-  import AnyCodable
+    import AnyCodable
 #endif
 
 typealias Client = RecommendClient
 
 open class RecommendClient {
+    private var configuration: Configuration
+    private var transporter: Transporter
 
-  private var configuration: Configuration
-  private var transporter: Transporter
+    var applicationID: String {
+        configuration.applicationID
+    }
 
-  var applicationID: String {
-    self.configuration.applicationID
-  }
+    public init(configuration: Configuration, transporter: Transporter) {
+        self.configuration = configuration
+        self.transporter = transporter
+    }
 
-  public init(configuration: Configuration, transporter: Transporter) {
-    self.configuration = configuration
-    self.transporter = transporter
-  }
+    public convenience init(configuration: Configuration) {
+        self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
+    }
 
-  public convenience init(configuration: Configuration) {
-    self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
-  }
+    public convenience init(applicationID: String, apiKey: String) throws {
+        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey))
+    }
 
-  public convenience init(applicationID: String, apiKey: String) {
-    self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey))
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customDelete(
-    path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customDeleteWithHTTPInfo(
-      path: path, parameters: parameters, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customDelete(path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customDeleteWithHTTPInfo(path: path, parameters: parameters, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -56,51 +56,45 @@ open class RecommendClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customDeleteWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "DELETE",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "DELETE",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customGet(
-    path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customGetWithHTTPInfo(
-      path: path, parameters: parameters, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customGet(path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customGetWithHTTPInfo(path: path, parameters: parameters, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -109,35 +103,27 @@ open class RecommendClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customGetWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -145,17 +131,18 @@ open class RecommendClient {
      - parameter body: (body) Parameters to send with the custom request. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customPost(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customPostWithHTTPInfo(
-      path: path, parameters: parameters, body: body, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customPost(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customPostWithHTTPInfo(path: path, parameters: parameters, body: body, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -165,35 +152,27 @@ open class RecommendClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customPostWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body = body
+    open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body = body
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "POST",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -201,17 +180,18 @@ open class RecommendClient {
      - parameter body: (body) Parameters to send with the custom request. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customPut(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customPutWithHTTPInfo(
-      path: path, parameters: parameters, body: body, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customPut(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customPutWithHTTPInfo(path: path, parameters: parameters, body: body, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -221,35 +201,27 @@ open class RecommendClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customPutWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body = body
+    open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body = body
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "PUT",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "PUT",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Delete a Recommend rule.
 
      - parameter indexName: (path) Index on which to perform the request.
@@ -257,17 +229,18 @@ open class RecommendClient {
      - parameter objectID: (path) Unique record (object) identifier.
      - returns: DeletedAtResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func deleteRecommendRule(
-    indexName: String, model: RecommendModels, objectID: String,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> DeletedAtResponse {
-    return try await deleteRecommendRuleWithHTTPInfo(
-      indexName: indexName, model: model, objectID: objectID, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func deleteRecommendRule(indexName: String, model: RecommendModels, objectID: String, requestOptions: RequestOptions? = nil) async throws -> DeletedAtResponse {
+        let response: Response<DeletedAtResponse> = try await deleteRecommendRuleWithHTTPInfo(indexName: indexName, model: model, objectID: objectID, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Delete a Recommend rule.
 
      Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
@@ -277,43 +250,33 @@ open class RecommendClient {
      - returns: RequestBuilder<DeletedAtResponse>
      */
 
-  open func deleteRecommendRuleWithHTTPInfo(
-    indexName: String, model: RecommendModels, objectID: String,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<DeletedAtResponse> {
-    var path = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
-    let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
-    let indexNamePostEscape =
-      indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
-    let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
-    let modelPostEscape =
-      modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{model}", with: modelPostEscape, options: .literal, range: nil)
-    let objectIDPreEscape = "\(APIHelper.mapValueToPathItem(objectID))"
-    let objectIDPostEscape =
-      objectIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{objectID}", with: objectIDPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func deleteRecommendRuleWithHTTPInfo(indexName: String, model: RecommendModels, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
+        let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
+        let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
+        let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
+        let modelPostEscape = modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{model}", with: modelPostEscape, options: .literal, range: nil)
+        let objectIDPreEscape = "\(APIHelper.mapValueToPathItem(objectID))"
+        let objectIDPostEscape = objectIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{objectID}", with: objectIDPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems: [URLQueryItem]? = nil
 
-    let queryItems: [URLQueryItem]? = nil
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "DELETE",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "DELETE",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get a Recommend rule.
 
      - parameter indexName: (path) Index on which to perform the request.
@@ -321,17 +284,18 @@ open class RecommendClient {
      - parameter objectID: (path) Unique record (object) identifier.
      - returns: RuleResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getRecommendRule(
-    indexName: String, model: RecommendModels, objectID: String,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> RuleResponse {
-    return try await getRecommendRuleWithHTTPInfo(
-      indexName: indexName, model: model, objectID: objectID, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getRecommendRule(indexName: String, model: RecommendModels, objectID: String, requestOptions: RequestOptions? = nil) async throws -> RuleResponse {
+        let response: Response<RuleResponse> = try await getRecommendRuleWithHTTPInfo(indexName: indexName, model: model, objectID: objectID, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get a Recommend rule.
 
      Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
@@ -341,43 +305,33 @@ open class RecommendClient {
      - returns: RequestBuilder<RuleResponse>
      */
 
-  open func getRecommendRuleWithHTTPInfo(
-    indexName: String, model: RecommendModels, objectID: String,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<RuleResponse> {
-    var path = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
-    let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
-    let indexNamePostEscape =
-      indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
-    let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
-    let modelPostEscape =
-      modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{model}", with: modelPostEscape, options: .literal, range: nil)
-    let objectIDPreEscape = "\(APIHelper.mapValueToPathItem(objectID))"
-    let objectIDPostEscape =
-      objectIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{objectID}", with: objectIDPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func getRecommendRuleWithHTTPInfo(indexName: String, model: RecommendModels, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<RuleResponse> {
+        var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
+        let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
+        let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
+        let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
+        let modelPostEscape = modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{model}", with: modelPostEscape, options: .literal, range: nil)
+        let objectIDPreEscape = "\(APIHelper.mapValueToPathItem(objectID))"
+        let objectIDPostEscape = objectIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{objectID}", with: objectIDPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems: [URLQueryItem]? = nil
 
-    let queryItems: [URLQueryItem]? = nil
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get a Recommend task's status.
 
      - parameter indexName: (path) Index on which to perform the request.
@@ -385,16 +339,18 @@ open class RecommendClient {
      - parameter taskID: (path) Unique identifier of a task. Numeric value (up to 64bits).
      - returns: GetRecommendTaskResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getRecommendStatus(
-    indexName: String, model: RecommendModels, taskID: Int64, requestOptions: RequestOptions? = nil
-  ) async throws -> GetRecommendTaskResponse {
-    return try await getRecommendStatusWithHTTPInfo(
-      indexName: indexName, model: model, taskID: taskID, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getRecommendStatus(indexName: String, model: RecommendModels, taskID: Int64, requestOptions: RequestOptions? = nil) async throws -> GetRecommendTaskResponse {
+        let response: Response<GetRecommendTaskResponse> = try await getRecommendStatusWithHTTPInfo(indexName: indexName, model: model, taskID: taskID, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get a Recommend task's status.
 
      Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
@@ -404,58 +360,50 @@ open class RecommendClient {
      - returns: RequestBuilder<GetRecommendTaskResponse>
      */
 
-  open func getRecommendStatusWithHTTPInfo(
-    indexName: String, model: RecommendModels, taskID: Int64,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetRecommendTaskResponse> {
-    var path = "/1/indexes/{indexName}/{model}/task/{taskID}"
-    let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
-    let indexNamePostEscape =
-      indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
-    let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
-    let modelPostEscape =
-      modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{model}", with: modelPostEscape, options: .literal, range: nil)
-    let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
-    let taskIDPostEscape =
-      taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{taskID}", with: taskIDPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func getRecommendStatusWithHTTPInfo(indexName: String, model: RecommendModels, taskID: Int64, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetRecommendTaskResponse> {
+        var resourcePath = "/1/indexes/{indexName}/{model}/task/{taskID}"
+        let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
+        let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
+        let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
+        let modelPostEscape = modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{model}", with: modelPostEscape, options: .literal, range: nil)
+        let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
+        let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{taskID}", with: taskIDPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems: [URLQueryItem]? = nil
 
-    let queryItems: [URLQueryItem]? = nil
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get recommendations and trending items.
 
      - parameter getRecommendationsParams: (body)
      - returns: GetRecommendationsResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getRecommendations(
-    getRecommendationsParams: GetRecommendationsParams, requestOptions: RequestOptions? = nil
-  ) async throws -> GetRecommendationsResponse {
-    return try await getRecommendationsWithHTTPInfo(
-      getRecommendationsParams: getRecommendationsParams, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getRecommendations(getRecommendationsParams: GetRecommendationsParams, requestOptions: RequestOptions? = nil) async throws -> GetRecommendationsResponse {
+        let response: Response<GetRecommendationsResponse> = try await getRecommendationsWithHTTPInfo(getRecommendationsParams: getRecommendationsParams, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get recommendations and trending items.
 
      Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
@@ -463,28 +411,25 @@ open class RecommendClient {
      - returns: RequestBuilder<GetRecommendationsResponse>
      */
 
-  open func getRecommendationsWithHTTPInfo(
-    getRecommendationsParams: GetRecommendationsParams,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetRecommendationsResponse> {
-    let path = "/1/indexes/*/recommendations"
-    let body = getRecommendationsParams
+    open func getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetRecommendationsResponse> {
+        let resourcePath = "/1/indexes/*/recommendations"
+        let body = getRecommendationsParams
+        let queryItems: [URLQueryItem]? = nil
 
-    let queryItems: [URLQueryItem]? = nil
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions,
+            useReadTransporter: true
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "POST",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      List Recommend rules.
 
      - parameter indexName: (path) Index on which to perform the request.
@@ -492,19 +437,18 @@ open class RecommendClient {
      - parameter searchRecommendRulesParams: (body)  (optional)
      - returns: SearchRecommendRulesResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func searchRecommendRules(
-    indexName: String, model: RecommendModels,
-    searchRecommendRulesParams: SearchRecommendRulesParams? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> SearchRecommendRulesResponse {
-    return try await searchRecommendRulesWithHTTPInfo(
-      indexName: indexName, model: model, searchRecommendRulesParams: searchRecommendRulesParams,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func searchRecommendRules(indexName: String, model: RecommendModels, searchRecommendRulesParams: SearchRecommendRulesParams? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchRecommendRulesResponse {
+        let response: Response<SearchRecommendRulesResponse> = try await searchRecommendRulesWithHTTPInfo(indexName: indexName, model: model, searchRecommendRulesParams: searchRecommendRulesParams, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      List Recommend rules.
 
      List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
@@ -514,35 +458,27 @@ open class RecommendClient {
      - returns: RequestBuilder<SearchRecommendRulesResponse>
      */
 
-  open func searchRecommendRulesWithHTTPInfo(
-    indexName: String, model: RecommendModels,
-    searchRecommendRulesParams: SearchRecommendRulesParams? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<SearchRecommendRulesResponse> {
-    var path = "/1/indexes/{indexName}/{model}/recommend/rules/search"
-    let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
-    let indexNamePostEscape =
-      indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
-    let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
-    let modelPostEscape =
-      modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{model}", with: modelPostEscape, options: .literal, range: nil)
-    let body = searchRecommendRulesParams
+    open func searchRecommendRulesWithHTTPInfo(indexName: String, model: RecommendModels, searchRecommendRulesParams: SearchRecommendRulesParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchRecommendRulesResponse> {
+        var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/search"
+        let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
+        let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{indexName}", with: indexNamePostEscape, options: .literal, range: nil)
+        let modelPreEscape = "\(APIHelper.mapValueToPathItem(model))"
+        let modelPostEscape = modelPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{model}", with: modelPostEscape, options: .literal, range: nil)
+        let body = searchRecommendRulesParams
+        let queryItems: [URLQueryItem]? = nil
 
-    let queryItems: [URLQueryItem]? = nil
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
-
-    return try await self.transporter.send(
-      method: "POST",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
+        return try await transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions,
+            useReadTransporter: true
+        )
+    }
 }

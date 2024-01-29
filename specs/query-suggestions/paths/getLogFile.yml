@@ -2,6 +2,8 @@ get:
   tags:
     - logs
   operationId: getLogFile
+  x-acl:
+    - settings
   summary: Get logs.
   description: Get the logs for a single Query Suggestions index.
   parameters:

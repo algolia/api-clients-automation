@@ -100,6 +100,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
     lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
     lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
+    lambdas.put("swiftIdentifier", new SwiftIdentifierLambda());
     return lambdas;
   }
 

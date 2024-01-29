@@ -2917,19 +2917,18 @@ void main() {
       ),
       call: (client) => client.searchSynonyms(
         indexName: "indexName",
-        type: SynonymType.fromJson("altcorrection1"),
-        page: 10,
-        hitsPerPage: 10,
         searchSynonymsParams: SearchSynonymsParams(
           query: "myQuery",
+          type: SynonymType.fromJson("altcorrection1"),
+          page: 10,
+          hitsPerPage: 10,
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/synonyms/search');
         expect(request.method, 'post');
-        expectParams(request.queryParameters,
-            """{"type":"altcorrection1","page":"10","hitsPerPage":"10"}""");
-        expectBody(request.body, """{"query":"myQuery"}""");
+        expectBody(request.body,
+            """{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}""");
       },
     ),
   );

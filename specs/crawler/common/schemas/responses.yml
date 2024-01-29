@@ -1,0 +1,37 @@
+ActionAcknowledged:
+  description: The request has been acknowledged by the crawler.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          taskId:
+            type: string
+            example: 'e0f6db8a-24f5-4092-83a4-1b2c6cb6d809'
+        required:
+          - taskId
+
+NoRightsOnCrawler:
+  description: The user doesn't have enough rights on the specified Crawler, or it doesn't exists.
+
+DocSearchCreateApp:
+  description: A new DocSearch app has been created.
+  content:
+    application/json:
+      schema:
+        additionalProperties: false
+        type: object
+        properties:
+          appId:
+            type: string
+          id:
+            type: number
+          name:
+            type: string
+        required:
+          - appId
+          - id
+          - name
+
+MissingAuthorization:
+  description: Authorization information is missing or invalid.

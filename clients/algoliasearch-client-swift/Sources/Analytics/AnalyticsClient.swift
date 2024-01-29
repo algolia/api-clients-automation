@@ -2,53 +2,52 @@
 
 import Core
 import Foundation
-
 #if canImport(AnyCodable)
-  import AnyCodable
+    import AnyCodable
 #endif
 
 typealias Client = AnalyticsClient
 
 open class AnalyticsClient {
+    private var configuration: Configuration
+    private var transporter: Transporter
 
-  private var configuration: Configuration
-  private var transporter: Transporter
+    var applicationID: String {
+        configuration.applicationID
+    }
 
-  var applicationID: String {
-    self.configuration.applicationID
-  }
+    public init(configuration: Configuration, transporter: Transporter) {
+        self.configuration = configuration
+        self.transporter = transporter
+    }
 
-  public init(configuration: Configuration, transporter: Transporter) {
-    self.configuration = configuration
-    self.transporter = transporter
-  }
+    public convenience init(configuration: Configuration) {
+        self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
+    }
 
-  public convenience init(configuration: Configuration) {
-    self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
-  }
+    public convenience init(applicationID: String, apiKey: String, region: Region?) throws {
+        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey, region: region))
+    }
 
-  public convenience init(applicationID: String, apiKey: String, region: Region?) {
-    self.init(
-      configuration: Configuration(applicationID: applicationID, apiKey: apiKey, region: region))
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customDelete(
-    path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customDeleteWithHTTPInfo(
-      path: path, parameters: parameters, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customDelete(path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customDeleteWithHTTPInfo(path: path, parameters: parameters, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -57,51 +56,45 @@ open class AnalyticsClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customDeleteWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "DELETE",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "DELETE",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customGet(
-    path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customGetWithHTTPInfo(
-      path: path, parameters: parameters, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customGet(path: String, parameters: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customGetWithHTTPInfo(path: path, parameters: parameters, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -110,35 +103,27 @@ open class AnalyticsClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customGetWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -146,17 +131,18 @@ open class AnalyticsClient {
      - parameter body: (body) Parameters to send with the custom request. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customPost(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customPostWithHTTPInfo(
-      path: path, parameters: parameters, body: body, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customPost(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customPostWithHTTPInfo(path: path, parameters: parameters, body: body, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -166,35 +152,27 @@ open class AnalyticsClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customPostWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body = body
+    open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body = body
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "POST",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Send requests to the Algolia REST API.
 
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -202,17 +180,18 @@ open class AnalyticsClient {
      - parameter body: (body) Parameters to send with the custom request. (optional)
      - returns: AnyCodable
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func customPut(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> AnyCodable {
-    return try await customPutWithHTTPInfo(
-      path: path, parameters: parameters, body: body, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func customPut(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions: RequestOptions? = nil) async throws -> AnyCodable {
+        let response: Response<AnyCodable> = try await customPutWithHTTPInfo(path: path, parameters: parameters, body: body, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Send requests to the Algolia REST API.
 
      This method allow you to send requests to the Algolia REST API.
@@ -222,35 +201,27 @@ open class AnalyticsClient {
      - returns: RequestBuilder<AnyCodable>
      */
 
-  open func customPutWithHTTPInfo(
-    path: String, parameters: [String: AnyCodable]? = nil, body: Codable? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<AnyCodable> {
-    var path = "/1{path}"
-    let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
-    let pathPostEscape =
-      pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{path}", with: pathPostEscape, options: .literal, range: nil)
-    let body = body
+    open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        var resourcePath = "/1{path}"
+        let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
+        let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{path}", with: pathPostEscape, options: .literal, range: nil)
+        let body = body
+        let queryItems = APIHelper.mapValuesToQueryItems(parameters)
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "parameters": (wrappedValue: parameters?.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "PUT",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "PUT",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get average click position.
 
      - parameter index: (query) Index name to target.
@@ -259,18 +230,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetAverageClickPositionResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getAverageClickPosition(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetAverageClickPositionResponse {
-    return try await getAverageClickPositionWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getAverageClickPosition(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetAverageClickPositionResponse {
+        let response: Response<GetAverageClickPositionResponse> = try await getAverageClickPositionWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get average click position.
 
      Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
@@ -281,33 +252,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetAverageClickPositionResponse>
      */
 
-  open func getAverageClickPositionWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetAverageClickPositionResponse> {
-    let path = "/2/clicks/averageClickPosition"
-    let body: AnyCodable? = nil
+    open func getAverageClickPositionWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetAverageClickPositionResponse> {
+        let resourcePath = "/2/clicks/averageClickPosition"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get click positions.
 
      - parameter index: (query) Index name to target.
@@ -316,18 +283,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetClickPositionsResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getClickPositions(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetClickPositionsResponse {
-    return try await getClickPositionsWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getClickPositions(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetClickPositionsResponse {
+        let response: Response<GetClickPositionsResponse> = try await getClickPositionsWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get click positions.
 
      Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
@@ -338,33 +305,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetClickPositionsResponse>
      */
 
-  open func getClickPositionsWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetClickPositionsResponse> {
-    let path = "/2/clicks/positions"
-    let body: AnyCodable? = nil
+    open func getClickPositionsWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetClickPositionsResponse> {
+        let resourcePath = "/2/clicks/positions"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get click-through rate (CTR).
 
      - parameter index: (query) Index name to target.
@@ -373,18 +336,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetClickThroughRateResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getClickThroughRate(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetClickThroughRateResponse {
-    return try await getClickThroughRateWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getClickThroughRate(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetClickThroughRateResponse {
+        let response: Response<GetClickThroughRateResponse> = try await getClickThroughRateWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get click-through rate (CTR).
 
      Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
@@ -395,33 +358,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetClickThroughRateResponse>
      */
 
-  open func getClickThroughRateWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetClickThroughRateResponse> {
-    let path = "/2/clicks/clickThroughRate"
-    let body: AnyCodable? = nil
+    open func getClickThroughRateWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetClickThroughRateResponse> {
+        let resourcePath = "/2/clicks/clickThroughRate"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get conversion rate (CR).
 
      - parameter index: (query) Index name to target.
@@ -430,18 +389,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetConversationRateResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getConversationRate(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetConversationRateResponse {
-    return try await getConversationRateWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getConversationRate(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetConversationRateResponse {
+        let response: Response<GetConversationRateResponse> = try await getConversationRateWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get conversion rate (CR).
 
      Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
@@ -452,33 +411,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetConversationRateResponse>
      */
 
-  open func getConversationRateWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetConversationRateResponse> {
-    let path = "/2/conversions/conversionRate"
-    let body: AnyCodable? = nil
+    open func getConversationRateWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetConversationRateResponse> {
+        let resourcePath = "/2/conversions/conversionRate"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get no click rate.
 
      - parameter index: (query) Index name to target.
@@ -487,18 +442,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetNoClickRateResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getNoClickRate(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetNoClickRateResponse {
-    return try await getNoClickRateWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getNoClickRate(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetNoClickRateResponse {
+        let response: Response<GetNoClickRateResponse> = try await getNoClickRateWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get no click rate.
 
      Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
@@ -509,33 +464,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetNoClickRateResponse>
      */
 
-  open func getNoClickRateWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetNoClickRateResponse> {
-    let path = "/2/searches/noClickRate"
-    let body: AnyCodable? = nil
+    open func getNoClickRateWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetNoClickRateResponse> {
+        let resourcePath = "/2/searches/noClickRate"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get no results rate.
 
      - parameter index: (query) Index name to target.
@@ -544,18 +495,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetNoResultsRateResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getNoResultsRate(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetNoResultsRateResponse {
-    return try await getNoResultsRateWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getNoResultsRate(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetNoResultsRateResponse {
+        let response: Response<GetNoResultsRateResponse> = try await getNoResultsRateWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get no results rate.
 
      Returns the rate at which searches didn't return any results.
@@ -566,33 +517,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetNoResultsRateResponse>
      */
 
-  open func getNoResultsRateWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetNoResultsRateResponse> {
-    let path = "/2/searches/noResultRate"
-    let body: AnyCodable? = nil
+    open func getNoResultsRateWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetNoResultsRateResponse> {
+        let resourcePath = "/2/searches/noResultRate"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get number of searches.
 
      - parameter index: (query) Index name to target.
@@ -601,18 +548,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetSearchesCountResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getSearchesCount(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetSearchesCountResponse {
-    return try await getSearchesCountWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getSearchesCount(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetSearchesCountResponse {
+        let response: Response<GetSearchesCountResponse> = try await getSearchesCountWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get number of searches.
 
      Returns the number of searches within a time range.
@@ -623,33 +570,29 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetSearchesCountResponse>
      */
 
-  open func getSearchesCountWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetSearchesCountResponse> {
-    let path = "/2/searches/count"
-    let body: AnyCodable? = nil
+    open func getSearchesCountWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetSearchesCountResponse> {
+        let resourcePath = "/2/searches/count"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top searches with no clicks.
 
      - parameter index: (query) Index name to target.
@@ -660,18 +603,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetSearchesNoClicksResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getSearchesNoClicks(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> GetSearchesNoClicksResponse {
-    return try await getSearchesNoClicksWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset,
-      tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getSearchesNoClicks(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetSearchesNoClicksResponse {
+        let response: Response<GetSearchesNoClicksResponse> = try await getSearchesNoClicksWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top searches with no clicks.
 
      Return the most popular of the last 1,000 searches that didn't lead to any clicks.
@@ -684,36 +627,31 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetSearchesNoClicksResponse>
      */
 
-  open func getSearchesNoClicksWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetSearchesNoClicksResponse> {
-    let path = "/2/searches/noClicks"
-    let body: AnyCodable? = nil
+    open func getSearchesNoClicksWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetSearchesNoClicksResponse> {
+        let resourcePath = "/2/searches/noClicks"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top searches with no results.
 
      - parameter index: (query) Index name to target.
@@ -724,18 +662,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetSearchesNoResultsResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getSearchesNoResults(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> GetSearchesNoResultsResponse {
-    return try await getSearchesNoResultsWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset,
-      tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getSearchesNoResults(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetSearchesNoResultsResponse {
+        let response: Response<GetSearchesNoResultsResponse> = try await getSearchesNoResultsWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top searches with no results.
 
      Returns the most popular of the latest 1,000 searches that didn't return any results.
@@ -748,49 +686,48 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetSearchesNoResultsResponse>
      */
 
-  open func getSearchesNoResultsWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetSearchesNoResultsResponse> {
-    let path = "/2/searches/noResults"
-    let body: AnyCodable? = nil
+    open func getSearchesNoResultsWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetSearchesNoResultsResponse> {
+        let resourcePath = "/2/searches/noResults"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get Analytics API status.
 
      - parameter index: (query) Index name to target.
      - returns: GetStatusResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getStatus(index: String, requestOptions: RequestOptions? = nil) async throws
-    -> GetStatusResponse
-  {
-    return try await getStatusWithHTTPInfo(index: index, requestOptions: requestOptions).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getStatus(index: String, requestOptions: RequestOptions? = nil) async throws -> GetStatusResponse {
+        let response: Response<GetStatusResponse> = try await getStatusWithHTTPInfo(index: index, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get Analytics API status.
 
      Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
@@ -798,29 +735,26 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetStatusResponse>
      */
 
-  open func getStatusWithHTTPInfo(
-    index: String, requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetStatusResponse> {
-    let path = "/2/status"
-    let body: AnyCodable? = nil
+    open func getStatusWithHTTPInfo(index: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetStatusResponse> {
+        let resourcePath = "/2/status"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true)
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top countries.
 
      - parameter index: (query) Index name to target.
@@ -831,18 +765,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopCountriesResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopCountries(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopCountriesResponse {
-    return try await getTopCountriesWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset,
-      tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopCountries(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopCountriesResponse {
+        let response: Response<GetTopCountriesResponse> = try await getTopCountriesWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top countries.
 
      Returns top countries. Limited to the 1,000 most frequent ones.
@@ -855,36 +789,31 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopCountriesResponse>
      */
 
-  open func getTopCountriesWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil,
-    offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopCountriesResponse> {
-    let path = "/2/countries"
-    let body: AnyCodable? = nil
+    open func getTopCountriesWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopCountriesResponse> {
+        let resourcePath = "/2/countries"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top filterable attributes.
 
      - parameter index: (query) Index name to target.
@@ -896,19 +825,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopFilterAttributesResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopFilterAttributes(
-    index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil,
-    limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopFilterAttributesResponse {
-    return try await getTopFilterAttributesWithHTTPInfo(
-      index: index, search: search, startDate: startDate, endDate: endDate, limit: limit,
-      offset: offset, tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopFilterAttributes(index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopFilterAttributesResponse {
+        let response: Response<GetTopFilterAttributesResponse> = try await getTopFilterAttributesWithHTTPInfo(index: index, search: search, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top filterable attributes.
 
      Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
@@ -922,37 +850,32 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopFilterAttributesResponse>
      */
 
-  open func getTopFilterAttributesWithHTTPInfo(
-    index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil,
-    limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopFilterAttributesResponse> {
-    let path = "/2/filters"
-    let body: AnyCodable? = nil
+    open func getTopFilterAttributesWithHTTPInfo(index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopFilterAttributesResponse> {
+        let resourcePath = "/2/filters"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "search": search?.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top filter values for an attribute.
 
      - parameter attribute: (path) Attribute name.
@@ -965,19 +888,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopFilterForAttributeResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopFilterForAttribute(
-    attribute: String, index: String, search: String? = nil, startDate: String? = nil,
-    endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopFilterForAttributeResponse {
-    return try await getTopFilterForAttributeWithHTTPInfo(
-      attribute: attribute, index: index, search: search, startDate: startDate, endDate: endDate,
-      limit: limit, offset: offset, tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopFilterForAttribute(attribute: String, index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopFilterForAttributeResponse {
+        let response: Response<GetTopFilterForAttributeResponse> = try await getTopFilterForAttributeWithHTTPInfo(attribute: attribute, index: index, search: search, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top filter values for an attribute.
 
      Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
@@ -992,42 +914,35 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopFilterForAttributeResponse>
      */
 
-  open func getTopFilterForAttributeWithHTTPInfo(
-    attribute: String, index: String, search: String? = nil, startDate: String? = nil,
-    endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopFilterForAttributeResponse> {
-    var path = "/2/filters/{attribute}"
-    let attributePreEscape = "\(APIHelper.mapValueToPathItem(attribute))"
-    let attributePostEscape =
-      attributePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-    path = path.replacingOccurrences(
-      of: "{attribute}", with: attributePostEscape, options: .literal, range: nil)
-    let body: AnyCodable? = nil
+    open func getTopFilterForAttributeWithHTTPInfo(attribute: String, index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopFilterForAttributeResponse> {
+        var resourcePath = "/2/filters/{attribute}"
+        let attributePreEscape = "\(APIHelper.mapValueToPathItem(attribute))"
+        let attributePostEscape = attributePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(of: "{attribute}", with: attributePostEscape, options: .literal, range: nil)
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "search": search?.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top filters for a no result search.
 
      - parameter index: (query) Index name to target.
@@ -1039,19 +954,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopFiltersNoResultsResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopFiltersNoResults(
-    index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil,
-    limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopFiltersNoResultsResponse {
-    return try await getTopFiltersNoResultsWithHTTPInfo(
-      index: index, search: search, startDate: startDate, endDate: endDate, limit: limit,
-      offset: offset, tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopFiltersNoResults(index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopFiltersNoResultsResponse {
+        let response: Response<GetTopFiltersNoResultsResponse> = try await getTopFiltersNoResultsWithHTTPInfo(index: index, search: search, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top filters for a no result search.
 
      Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
@@ -1065,37 +979,32 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopFiltersNoResultsResponse>
      */
 
-  open func getTopFiltersNoResultsWithHTTPInfo(
-    index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil,
-    limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopFiltersNoResultsResponse> {
-    let path = "/2/filters/noResults"
-    let body: AnyCodable? = nil
+    open func getTopFiltersNoResultsWithHTTPInfo(index: String, search: String? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopFiltersNoResultsResponse> {
+        let resourcePath = "/2/filters/noResults"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "search": search?.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top hits.
 
      - parameter index: (query) Index name to target.
@@ -1108,19 +1017,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopHitsResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopHits(
-    index: String, search: String? = nil, clickAnalytics: Bool? = nil, startDate: String? = nil,
-    endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopHitsResponse {
-    return try await getTopHitsWithHTTPInfo(
-      index: index, search: search, clickAnalytics: clickAnalytics, startDate: startDate,
-      endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopHits(index: String, search: String? = nil, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopHitsResponse {
+        let response: Response<GetTopHitsResponse> = try await getTopHitsWithHTTPInfo(index: index, search: search, clickAnalytics: clickAnalytics, startDate: startDate, endDate: endDate, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top hits.
 
      Return the most popular clicked results in the last 1,000 searches.
@@ -1135,38 +1043,33 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopHitsResponse>
      */
 
-  open func getTopHitsWithHTTPInfo(
-    index: String, search: String? = nil, clickAnalytics: Bool? = nil, startDate: String? = nil,
-    endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopHitsResponse> {
-    let path = "/2/hits"
-    let body: AnyCodable? = nil
+    open func getTopHitsWithHTTPInfo(index: String, search: String? = nil, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopHitsResponse> {
+        let resourcePath = "/2/hits"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "search": search?.encodeToJSON(),
+            "clickAnalytics": clickAnalytics?.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
-      "clickAnalytics": (wrappedValue: clickAnalytics?.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get top searches.
 
      - parameter index: (query) Index name to target.
@@ -1180,20 +1083,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetTopSearchesResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getTopSearches(
-    index: String, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil,
-    orderBy: OrderBy? = nil, direction: Direction? = nil, limit: Int? = nil, offset: Int? = nil,
-    tags: String? = nil, requestOptions: RequestOptions? = nil
-  ) async throws -> GetTopSearchesResponse {
-    return try await getTopSearchesWithHTTPInfo(
-      index: index, clickAnalytics: clickAnalytics, startDate: startDate, endDate: endDate,
-      orderBy: orderBy, direction: direction, limit: limit, offset: offset, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getTopSearches(index: String, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil, orderBy: OrderBy? = nil, direction: Direction? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTopSearchesResponse {
+        let response: Response<GetTopSearchesResponse> = try await getTopSearchesWithHTTPInfo(index: index, clickAnalytics: clickAnalytics, startDate: startDate, endDate: endDate, orderBy: orderBy, direction: direction, limit: limit, offset: offset, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get top searches.
 
      Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
@@ -1209,39 +1110,34 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetTopSearchesResponse>
      */
 
-  open func getTopSearchesWithHTTPInfo(
-    index: String, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil,
-    orderBy: OrderBy? = nil, direction: Direction? = nil, limit: Int? = nil, offset: Int? = nil,
-    tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetTopSearchesResponse> {
-    let path = "/2/searches"
-    let body: AnyCodable? = nil
+    open func getTopSearchesWithHTTPInfo(index: String, clickAnalytics: Bool? = nil, startDate: String? = nil, endDate: String? = nil, orderBy: OrderBy? = nil, direction: Direction? = nil, limit: Int? = nil, offset: Int? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTopSearchesResponse> {
+        let resourcePath = "/2/searches"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "clickAnalytics": clickAnalytics?.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "orderBy": orderBy?.encodeToJSON(),
+            "direction": direction?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "clickAnalytics": (wrappedValue: clickAnalytics?.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "orderBy": (wrappedValue: orderBy?.encodeToJSON(), isExplode: true),
-      "direction": (wrappedValue: direction?.encodeToJSON(), isExplode: true),
-      "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
-      "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
-
-  /**
+    /**
      Get user count.
 
      - parameter index: (query) Index name to target.
@@ -1250,18 +1146,18 @@ open class AnalyticsClient {
      - parameter tags: (query) Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded. (optional)
      - returns: GetUsersCountResponse
      */
-  @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-  open func getUsersCount(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetUsersCountResponse {
-    return try await getUsersCountWithHTTPInfo(
-      index: index, startDate: startDate, endDate: endDate, tags: tags,
-      requestOptions: requestOptions
-    ).body
-  }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getUsersCount(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetUsersCountResponse {
+        let response: Response<GetUsersCountResponse> = try await getUsersCountWithHTTPInfo(index: index, startDate: startDate, endDate: endDate, tags: tags, requestOptions: requestOptions)
 
-  /**
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    /**
      Get user count.
 
      Return the count of unique users.
@@ -1272,29 +1168,25 @@ open class AnalyticsClient {
      - returns: RequestBuilder<GetUsersCountResponse>
      */
 
-  open func getUsersCountWithHTTPInfo(
-    index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil,
-    requestOptions userRequestOptions: RequestOptions? = nil
-  ) async throws -> Response<GetUsersCountResponse> {
-    let path = "/2/users/count"
-    let body: AnyCodable? = nil
+    open func getUsersCountWithHTTPInfo(index: String, startDate: String? = nil, endDate: String? = nil, tags: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetUsersCountResponse> {
+        let resourcePath = "/2/users/count"
+        let body: AnyCodable? = nil
+        let queryItems = APIHelper.mapValuesToQueryItems([
+            "index": index.encodeToJSON(),
+            "startDate": startDate?.encodeToJSON(),
+            "endDate": endDate?.encodeToJSON(),
+            "tags": tags?.encodeToJSON(),
+        ])
 
-    let queryItems = APIHelper.mapValuesToQueryItems([
-      "index": (wrappedValue: index.encodeToJSON(), isExplode: true),
-      "startDate": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-      "endDate": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
-      "tags": (wrappedValue: tags?.encodeToJSON(), isExplode: true),
-    ])
+        let nillableHeaders: [String: Any?]? = nil
 
-    let nillableHeaders: [String: Any?]? = [:]
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
 
-    let headers = APIHelper.rejectNilHeaders(nillableHeaders)
-
-    return try await self.transporter.send(
-      method: "GET",
-      path: path,
-      data: body,
-      requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
-    )
-  }
+        return try await transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions
+        )
+    }
 }

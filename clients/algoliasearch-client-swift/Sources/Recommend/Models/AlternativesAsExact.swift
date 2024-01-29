@@ -2,13 +2,12 @@
 
 import Core
 import Foundation
-
 #if canImport(AnyCodable)
-  import AnyCodable
+    import AnyCodable
 #endif
 
 public enum AlternativesAsExact: String, Codable, CaseIterable {
-  case ignoreplurals = "ignorePlurals"
-  case singlewordsynonym = "singleWordSynonym"
-  case multiwordssynonym = "multiWordsSynonym"
+    case ignorePlurals
+    case singleWordSynonym
+    case multiWordsSynonym
 }

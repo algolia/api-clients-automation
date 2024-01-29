@@ -1,6 +1,7 @@
 export const patterns = [
   // Ignore the roots and go down the tree by negating hand written files
   'specs/bundled/*.yml',
+  'specs/bundled/*.json',
 
   'clients/**',
   'snippets/**',
@@ -13,13 +14,13 @@ export const patterns = [
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   'clients/algoliasearch-client-csharp/global.json',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Models/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
   'tests/output/csharp/global.json',
 
   // Dart
@@ -146,4 +147,6 @@ export const patterns = [
   'clients/algoliasearch-client-swift/**/Sources/**',
   '!clients/algoliasearch-client-swift/Sources/Core/**',
   'clients/algoliasearch-client-swift/Sources/Core/Helpers/Version.swift',
+
+  'tests/output/swift/Package.swift',
 ];

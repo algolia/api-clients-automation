@@ -3,10 +3,13 @@ package requests
 import (
 	"encoding/json"
 	"net/url"
+	"os"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -14,7 +17,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createSearchClient() (*search.APIClient, *tests.EchoRequester) {
+func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := search.Configuration{
 		Configuration: transport.Configuration{
@@ -23,13 +28,30 @@ func createSearchClient() (*search.APIClient, *tests.EchoRequester) {
 			Requester: echo,
 		},
 	}
-	client, _ := search.NewClientWithConfig(cfg)
+	client, err := search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
+func createE2ESearchClient(t *testing.T) *search.APIClient {
+	t.Helper()
+
+	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+	if appID == "" && os.Getenv("CI") != "true" {
+		err := godotenv.Load("../../../../.env")
+		require.NoError(t, err)
+		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+	}
+	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+	client, err := search.NewClient(appID, apiKey)
+	require.NoError(t, err)
+
+	return client
+}
+
 func TestSearch_AddApiKey(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("addApiKey0", func(t *testing.T) {
 		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
@@ -50,7 +72,7 @@ func TestSearch_AddApiKey(t *testing.T) {
 }
 
 func TestSearch_AddOrUpdateObject(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("addOrUpdateObject0", func(t *testing.T) {
 		_, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
@@ -69,7 +91,7 @@ func TestSearch_AddOrUpdateObject(t *testing.T) {
 }
 
 func TestSearch_AppendSource(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("appendSource0", func(t *testing.T) {
 		_, err := client.AppendSource(client.NewApiAppendSourceRequest(
@@ -89,7 +111,7 @@ func TestSearch_AppendSource(t *testing.T) {
 }
 
 func TestSearch_AssignUserId(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("assignUserId0", func(t *testing.T) {
 		_, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
@@ -114,7 +136,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 }
 
 func TestSearch_Batch(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("allows batch method with `addObject` action", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
@@ -231,7 +253,7 @@ func TestSearch_Batch(t *testing.T) {
 }
 
 func TestSearch_BatchAssignUserIds(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("batchAssignUserIds0", func(t *testing.T) {
 		_, err := client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
@@ -257,7 +279,7 @@ func TestSearch_BatchAssignUserIds(t *testing.T) {
 }
 
 func TestSearch_BatchDictionaryEntries(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get batchDictionaryEntries results with minimal parameters", func(t *testing.T) {
 		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
@@ -319,7 +341,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 }
 
 func TestSearch_Browse(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("browse with minimal parameters", func(t *testing.T) {
 		_, err := client.Browse(client.NewApiBrowseRequest(
@@ -334,6 +356,31 @@ func TestSearch_Browse(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.Browse(client.NewApiBrowseRequest(
+			"cts_e2e_browse",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 	t.Run("browse with search parameters", func(t *testing.T) {
 		_, err := client.Browse(client.NewApiBrowseRequest(
@@ -369,7 +416,7 @@ func TestSearch_Browse(t *testing.T) {
 }
 
 func TestSearch_ClearObjects(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("clearObjects0", func(t *testing.T) {
 		_, err := client.ClearObjects(client.NewApiClearObjectsRequest(
@@ -387,7 +434,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 }
 
 func TestSearch_ClearRules(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("clearRules0", func(t *testing.T) {
 		_, err := client.ClearRules(client.NewApiClearRulesRequest(
@@ -405,7 +452,7 @@ func TestSearch_ClearRules(t *testing.T) {
 }
 
 func TestSearch_ClearSynonyms(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("clearSynonyms0", func(t *testing.T) {
 		_, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
@@ -423,7 +470,7 @@ func TestSearch_ClearSynonyms(t *testing.T) {
 }
 
 func TestSearch_CustomDelete(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -459,7 +506,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 }
 
 func TestSearch_CustomGet(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -495,7 +542,7 @@ func TestSearch_CustomGet(t *testing.T) {
 }
 
 func TestSearch_CustomPost(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -735,7 +782,7 @@ func TestSearch_CustomPost(t *testing.T) {
 }
 
 func TestSearch_CustomPut(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -773,7 +820,7 @@ func TestSearch_CustomPut(t *testing.T) {
 }
 
 func TestSearch_DeleteApiKey(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteApiKey0", func(t *testing.T) {
 		_, err := client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
@@ -791,7 +838,7 @@ func TestSearch_DeleteApiKey(t *testing.T) {
 }
 
 func TestSearch_DeleteBy(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteBy0", func(t *testing.T) {
 		_, err := client.DeleteBy(client.NewApiDeleteByRequest(
@@ -811,7 +858,7 @@ func TestSearch_DeleteBy(t *testing.T) {
 }
 
 func TestSearch_DeleteIndex(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteIndex0", func(t *testing.T) {
 		_, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
@@ -829,7 +876,7 @@ func TestSearch_DeleteIndex(t *testing.T) {
 }
 
 func TestSearch_DeleteObject(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteObject0", func(t *testing.T) {
 		_, err := client.DeleteObject(client.NewApiDeleteObjectRequest(
@@ -847,7 +894,7 @@ func TestSearch_DeleteObject(t *testing.T) {
 }
 
 func TestSearch_DeleteRule(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("delete rule simple case", func(t *testing.T) {
 		_, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
@@ -878,7 +925,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 }
 
 func TestSearch_DeleteSource(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteSource0", func(t *testing.T) {
 		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
@@ -896,7 +943,7 @@ func TestSearch_DeleteSource(t *testing.T) {
 }
 
 func TestSearch_DeleteSynonym(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("deleteSynonym0", func(t *testing.T) {
 		_, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
@@ -914,7 +961,7 @@ func TestSearch_DeleteSynonym(t *testing.T) {
 }
 
 func TestSearch_GetApiKey(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getApiKey0", func(t *testing.T) {
 		_, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
@@ -932,7 +979,7 @@ func TestSearch_GetApiKey(t *testing.T) {
 }
 
 func TestSearch_GetDictionaryLanguages(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get getDictionaryLanguages", func(t *testing.T) {
 		_, err := client.GetDictionaryLanguages()
@@ -948,7 +995,7 @@ func TestSearch_GetDictionaryLanguages(t *testing.T) {
 }
 
 func TestSearch_GetDictionarySettings(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get getDictionarySettings results", func(t *testing.T) {
 		_, err := client.GetDictionarySettings()
@@ -964,7 +1011,7 @@ func TestSearch_GetDictionarySettings(t *testing.T) {
 }
 
 func TestSearch_GetLogs(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getLogs with minimal parameters", func(t *testing.T) {
 		_, err := client.GetLogs(client.NewApiGetLogsRequest())
@@ -996,7 +1043,7 @@ func TestSearch_GetLogs(t *testing.T) {
 }
 
 func TestSearch_GetObject(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getObject0", func(t *testing.T) {
 		_, err := client.GetObject(client.NewApiGetObjectRequest(
@@ -1020,7 +1067,7 @@ func TestSearch_GetObject(t *testing.T) {
 }
 
 func TestSearch_GetObjects(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getObjects0", func(t *testing.T) {
 		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
@@ -1042,7 +1089,7 @@ func TestSearch_GetObjects(t *testing.T) {
 }
 
 func TestSearch_GetRule(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getRule0", func(t *testing.T) {
 		_, err := client.GetRule(client.NewApiGetRuleRequest(
@@ -1060,7 +1107,7 @@ func TestSearch_GetRule(t *testing.T) {
 }
 
 func TestSearch_GetSettings(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getSettings0", func(t *testing.T) {
 		_, err := client.GetSettings(client.NewApiGetSettingsRequest(
@@ -1074,11 +1121,36 @@ func TestSearch_GetSettings(t *testing.T) {
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.GetSettings(client.NewApiGetSettingsRequest(
+			"cts_e2e_settings",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 
 func TestSearch_GetSources(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getSources0", func(t *testing.T) {
 		_, err := client.GetSources()
@@ -1094,7 +1166,7 @@ func TestSearch_GetSources(t *testing.T) {
 }
 
 func TestSearch_GetSynonym(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getSynonym0", func(t *testing.T) {
 		_, err := client.GetSynonym(client.NewApiGetSynonymRequest(
@@ -1112,7 +1184,7 @@ func TestSearch_GetSynonym(t *testing.T) {
 }
 
 func TestSearch_GetTask(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getTask0", func(t *testing.T) {
 		_, err := client.GetTask(client.NewApiGetTaskRequest(
@@ -1130,7 +1202,7 @@ func TestSearch_GetTask(t *testing.T) {
 }
 
 func TestSearch_GetTopUserIds(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getTopUserIds0", func(t *testing.T) {
 		_, err := client.GetTopUserIds()
@@ -1146,7 +1218,7 @@ func TestSearch_GetTopUserIds(t *testing.T) {
 }
 
 func TestSearch_GetUserId(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("getUserId0", func(t *testing.T) {
 		_, err := client.GetUserId(client.NewApiGetUserIdRequest(
@@ -1164,7 +1236,7 @@ func TestSearch_GetUserId(t *testing.T) {
 }
 
 func TestSearch_HasPendingMappings(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("hasPendingMappings with minimal parameters", func(t *testing.T) {
 		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())
@@ -1196,7 +1268,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 }
 
 func TestSearch_ListApiKeys(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("listApiKeys0", func(t *testing.T) {
 		_, err := client.ListApiKeys()
@@ -1212,7 +1284,7 @@ func TestSearch_ListApiKeys(t *testing.T) {
 }
 
 func TestSearch_ListClusters(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("listClusters0", func(t *testing.T) {
 		_, err := client.ListClusters()
@@ -1228,7 +1300,7 @@ func TestSearch_ListClusters(t *testing.T) {
 }
 
 func TestSearch_ListIndices(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("listIndices with minimal parameters", func(t *testing.T) {
 		_, err := client.ListIndices(client.NewApiListIndicesRequest())
@@ -1260,7 +1332,7 @@ func TestSearch_ListIndices(t *testing.T) {
 }
 
 func TestSearch_ListUserIds(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("listUserIds with minimal parameters", func(t *testing.T) {
 		_, err := client.ListUserIds(client.NewApiListUserIdsRequest())
@@ -1292,7 +1364,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 }
 
 func TestSearch_MultipleBatch(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("multipleBatch0", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -1313,7 +1385,7 @@ func TestSearch_MultipleBatch(t *testing.T) {
 }
 
 func TestSearch_OperationIndex(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("operationIndex0", func(t *testing.T) {
 		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
@@ -1334,7 +1406,7 @@ func TestSearch_OperationIndex(t *testing.T) {
 }
 
 func TestSearch_PartialUpdateObject(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("partialUpdateObject0", func(t *testing.T) {
 		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
@@ -1359,7 +1431,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 }
 
 func TestSearch_RemoveUserId(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("removeUserId0", func(t *testing.T) {
 		_, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
@@ -1377,7 +1449,7 @@ func TestSearch_RemoveUserId(t *testing.T) {
 }
 
 func TestSearch_ReplaceSources(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("replaceSources0", func(t *testing.T) {
 		_, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(
@@ -1397,7 +1469,7 @@ func TestSearch_ReplaceSources(t *testing.T) {
 }
 
 func TestSearch_RestoreApiKey(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("restoreApiKey0", func(t *testing.T) {
 		_, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
@@ -1415,7 +1487,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 }
 
 func TestSearch_SaveObject(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("saveObject0", func(t *testing.T) {
 		_, err := client.SaveObject(client.NewApiSaveObjectRequest(
@@ -1434,7 +1506,7 @@ func TestSearch_SaveObject(t *testing.T) {
 }
 
 func TestSearch_SaveRule(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("saveRule with minimal parameters", func(t *testing.T) {
 		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
@@ -1487,7 +1559,7 @@ func TestSearch_SaveRule(t *testing.T) {
 }
 
 func TestSearch_SaveRules(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("saveRules with minimal parameters", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -1541,7 +1613,7 @@ func TestSearch_SaveRules(t *testing.T) {
 }
 
 func TestSearch_SaveSynonym(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("saveSynonym0", func(t *testing.T) {
 		_, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
@@ -1567,7 +1639,7 @@ func TestSearch_SaveSynonym(t *testing.T) {
 }
 
 func TestSearch_SaveSynonyms(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("saveSynonyms0", func(t *testing.T) {
 		_, err := client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
@@ -1594,7 +1666,7 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 }
 
 func TestSearch_Search(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("search for a single hits request with minimal parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1612,6 +1684,34 @@ func TestSearch_Search(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))}),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1629,6 +1729,34 @@ func TestSearch_Search(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+					search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SearchTypeFacet("facet")).SetFacet("editor"))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 	t.Run("search for a single hits request with all parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1784,7 +1912,7 @@ func TestSearch_Search(t *testing.T) {
 }
 
 func TestSearch_SearchDictionaryEntries(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get searchDictionaryEntries results with minimal parameters", func(t *testing.T) {
 		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
@@ -1819,7 +1947,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 }
 
 func TestSearch_SearchForFacetValues(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get searchForFacetValues results with minimal parameters", func(t *testing.T) {
 		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
@@ -1853,7 +1981,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 }
 
 func TestSearch_SearchRules(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("searchRules0", func(t *testing.T) {
 		_, err := client.SearchRules(client.NewApiSearchRulesRequest(
@@ -1873,7 +2001,7 @@ func TestSearch_SearchRules(t *testing.T) {
 }
 
 func TestSearch_SearchSingleIndex(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("search with minimal parameters", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -1902,6 +2030,13 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"cts_e2e_space in index",
+		))
+		require.NoError(t, err)
+		_ = res
+
 	})
 	t.Run("search with searchParams", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -1922,7 +2057,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 }
 
 func TestSearch_SearchSynonyms(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("searchSynonyms with minimal parameters", func(t *testing.T) {
 		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
@@ -1941,8 +2076,8 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 	t.Run("searchSynonyms with all parameters", func(t *testing.T) {
 		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
 			"indexName",
-		).WithType(search.SynonymType("altcorrection1")).WithPage(10).WithHitsPerPage(10).WithSearchSynonymsParams(
-			search.NewEmptySearchSynonymsParams().SetQuery("myQuery")))
+		).WithSearchSynonymsParams(
+			search.NewEmptySearchSynonymsParams().SetQuery("myQuery").SetType(search.SynonymType("altcorrection1")).SetPage(10).SetHitsPerPage(10)))
 		require.NoError(t, err)
 
 		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
@@ -1951,17 +2086,12 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"myQuery"}`)
-		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"type":"altcorrection1","page":"10","hitsPerPage":"10"}`), &queryParams))
-		for k, v := range queryParams {
-			require.Equal(t, v, echo.Query.Get(k))
-		}
+		ja.Assertf(*echo.Body, `{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}`)
 	})
 }
 
 func TestSearch_SearchUserIds(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("searchUserIds0", func(t *testing.T) {
 		_, err := client.SearchUserIds(client.NewApiSearchUserIdsRequest(
@@ -1981,7 +2111,7 @@ func TestSearch_SearchUserIds(t *testing.T) {
 }
 
 func TestSearch_SetDictionarySettings(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("get setDictionarySettings results with minimal parameters", func(t *testing.T) {
 		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
@@ -2018,7 +2148,7 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 }
 
 func TestSearch_SetSettings(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("setSettings with minimal parameters", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
@@ -2039,6 +2169,14 @@ func TestSearch_SetSettings(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.SetSettings(client.NewApiSetSettingsRequest(
+			"cts_e2e_settings",
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10),
+		).WithForwardToReplicas(true))
+		require.NoError(t, err)
+		_ = res
+
 	})
 	t.Run("setSettings allow boolean `typoTolerance`", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
@@ -2249,7 +2387,7 @@ func TestSearch_SetSettings(t *testing.T) {
 }
 
 func TestSearch_UpdateApiKey(t *testing.T) {
-	client, echo := createSearchClient()
+	client, echo := createSearchClient(t)
 
 	t.Run("updateApiKey0", func(t *testing.T) {
 		_, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(

@@ -171,7 +171,12 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
 func (src {{classname}}) MarshalJSON() ([]byte, error) {
 {{#oneOf}}
 	if src.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} != nil {
-		return json.Marshal(&src.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}})
+		serialized, err := json.Marshal(&src.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}})
+    if err != nil {
+      return nil, fmt.Errorf("failed to unmarshal one of {{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} of {{classname}}: %w", err)
+    }
+
+    return serialized, nil
 	}
 
 {{/oneOf}}

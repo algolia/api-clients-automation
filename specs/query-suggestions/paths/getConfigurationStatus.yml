@@ -2,6 +2,8 @@ get:
   tags:
     - configurations
   operationId: getConfigStatus
+  x-acl:
+    - settings
   summary: Get configuration status.
   description: Report the status of a Query Suggestions index.
   parameters:

@@ -2,18 +2,17 @@
 
 import Core
 import Foundation
-
 #if canImport(AnyCodable)
-  import AnyCodable
+    import AnyCodable
 #endif
 
-/// Type of batch operation.
+/** Type of batch operation. */
 public enum Action: String, Codable, CaseIterable {
-  case addobject = "addObject"
-  case updateobject = "updateObject"
-  case partialupdateobject = "partialUpdateObject"
-  case partialupdateobjectnocreate = "partialUpdateObjectNoCreate"
-  case deleteobject = "deleteObject"
-  case delete = "delete"
-  case clear = "clear"
+    case addObject
+    case updateObject
+    case partialUpdateObject
+    case partialUpdateObjectNoCreate
+    case deleteObject
+    case delete
+    case clear
 }

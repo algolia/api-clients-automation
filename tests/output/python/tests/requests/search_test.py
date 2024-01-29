@@ -2447,22 +2447,21 @@ class TestSearchClient:
         """
         _req = await self._client.search_synonyms_with_http_info(
             index_name="indexName",
-            type="altcorrection1",
-            page=10,
-            hits_per_page=10,
             search_synonyms_params={
                 "query": "myQuery",
+                "type": "altcorrection1",
+                "page": 10,
+                "hitsPerPage": 10,
             },
         )
 
         assert _req.path == "/1/indexes/indexName/synonyms/search"
         assert _req.verb == "POST"
-        assert (
-            _req.query_parameters.items()
-            >= {"type": "altcorrection1", "page": "10", "hitsPerPage": "10"}.items()
-        )
+        assert _req.query_parameters.items() >= {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"query":"myQuery"}""")
+        assert loads(_req.data) == loads(
+            """{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}"""
+        )
 
     async def test_search_user_ids_0(self):
         """

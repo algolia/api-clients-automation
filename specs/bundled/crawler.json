@@ -1,0 +1,2913 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Crawler API",
+    "description": "API to configure and manage the Algolia Crawler.",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "Pagination": {
+        "type": "object",
+        "description": "Represent a group of items and pagination information.",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "itemsPerPage": {
+            "type": "integer",
+            "description": "The maximum number of items returned by this request.",
+            "default": 20,
+            "example": 20
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page browsed by this request.",
+            "default": 1,
+            "example": 1
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of items.",
+            "example": 100
+          }
+        }
+      },
+      "CrawlerId": {
+        "type": "string",
+        "description": "The unique id of the Crawler.",
+        "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+      },
+      "CrawlerName": {
+        "type": "string",
+        "maxLength": 64,
+        "description": "The name of the Crawler.",
+        "example": "My Crawler"
+      },
+      "crawlersResponse": {
+        "allOf": [
+          {
+            "type": "object",
+            "description": "Represent a group of items and pagination information.",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "itemsPerPage": {
+                "type": "integer",
+                "description": "The maximum number of items returned by this request.",
+                "default": 20,
+                "example": 20
+              },
+              "page": {
+                "type": "integer",
+                "description": "The current page browsed by this request.",
+                "default": 1,
+                "example": 1
+              },
+              "total": {
+                "type": "integer",
+                "description": "The total number of items.",
+                "example": 100
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique id of the Crawler.",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    },
+                    "name": {
+                      "type": "string",
+                      "maxLength": 64,
+                      "description": "The name of the Crawler.",
+                      "example": "My Crawler"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "configurationRecordExtractorType": {
+        "type": "string",
+        "enum": [
+          "function"
+        ]
+      },
+      "Configuration": {
+        "type": "object",
+        "description": "A Crawler configuration object. See the Crawler documentation to have more details about it.",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "example": "ABC9DEFGHI"
+          },
+          "apiKey": {
+            "type": "string",
+            "example": "c69564c68bad256f8d11399bf2048f82"
+          },
+          "indexPrefix": {
+            "type": "string",
+            "example": "crawler_"
+          },
+          "rateLimit": {
+            "type": "number",
+            "example": 8
+          },
+          "startUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://www.algolia.com"
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "indexName": {
+                  "type": "string",
+                  "example": "algolia_website"
+                },
+                "pathsToMatch": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "https://www.algolia.com/**"
+                  }
+                },
+                "selectorsToMatch": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    ".products",
+                    "!.featured"
+                  ]
+                },
+                "fileTypesToMatch": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "html",
+                    "pdf"
+                  ]
+                },
+                "recordExtractor": {
+                  "type": "object",
+                  "properties": {
+                    "__type": {
+                      "type": "string",
+                      "enum": [
+                        "function"
+                      ]
+                    },
+                    "source": {
+                      "type": "string",
+                      "example": "() => {}"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "indexName",
+                "recordExtractor"
+              ]
+            }
+          }
+        }
+      },
+      "urlsCrawledGroupStatus": {
+        "type": "string",
+        "description": "A string corresponding to the status of the group.",
+        "enum": [
+          "DONE",
+          "SKIPPED",
+          "FAILED"
+        ]
+      },
+      "urlsCrawledGroupCategory": {
+        "type": "string",
+        "description": "In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.",
+        "enum": [
+          "fetch",
+          "extraction",
+          "indexing",
+          "success"
+        ]
+      },
+      "UrlsCrawledGroup": {
+        "type": "object",
+        "description": "Represent a group of URLs that have been crawled and have the same final state.",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "A string corresponding to the status of the group.",
+            "enum": [
+              "DONE",
+              "SKIPPED",
+              "FAILED"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "description": "The code of the reason why when ended up in this status."
+          },
+          "category": {
+            "type": "string",
+            "description": "In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.",
+            "enum": [
+              "fetch",
+              "extraction",
+              "indexing",
+              "success"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of URLs belonging to this group."
+          },
+          "readable": {
+            "type": "string",
+            "description": "Human redeable version of the error."
+          }
+        },
+        "example": {
+          "status": "SKIPPED",
+          "reason": "forbidden_by_robotstxt",
+          "category": "fetch",
+          "nbUrls": 3,
+          "readable": "Forbidden by robots.txt"
+        }
+      },
+      "crawlerConfigVersionsResponse": {
+        "allOf": [
+          {
+            "type": "object",
+            "description": "Represent a group of items and pagination information.",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "itemsPerPage": {
+                "type": "integer",
+                "description": "The maximum number of items returned by this request.",
+                "default": 20,
+                "example": 20
+              },
+              "page": {
+                "type": "integer",
+                "description": "The current page browsed by this request.",
+                "default": 1,
+                "example": 1
+              },
+              "total": {
+                "type": "integer",
+                "description": "The total number of items.",
+                "example": 100
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "authorId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "version",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "domainsResponse": {
+        "allOf": [
+          {
+            "type": "object",
+            "description": "Represent a group of items and pagination information.",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "itemsPerPage": {
+                "type": "integer",
+                "description": "The maximum number of items returned by this request.",
+                "default": 20,
+                "example": 20
+              },
+              "page": {
+                "type": "integer",
+                "description": "The current page browsed by this request.",
+                "default": 1,
+                "example": 1
+              },
+              "total": {
+                "type": "integer",
+                "description": "The total number of items.",
+                "example": 100
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "string",
+                      "description": "The app for which the domain is registered."
+                    },
+                    "domain": {
+                      "type": "string",
+                      "description": "The registered domain name."
+                    },
+                    "validated": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is validated or not."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "responses": {
+      "InvalidRequest": {
+        "description": "Invalid request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "line": {
+                            "type": "integer"
+                          },
+                          "position": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ],
+                        "example": {
+                          "message": "url is not defined",
+                          "line": 5
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "code": "malformed_id"
+                  }
+                }
+              },
+              "required": [
+                "error"
+              ]
+            }
+          }
+        }
+      },
+      "MissingAuthorization": {
+        "description": "Authorization information is missing or invalid."
+      },
+      "NoRightsOnCrawler": {
+        "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+      },
+      "ActionAcknowledged": {
+        "description": "The request has been acknowledged by the crawler.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "taskId": {
+                  "type": "string",
+                  "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                }
+              },
+              "required": [
+                "taskId"
+              ]
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Invalid credentials.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "line": {
+                            "type": "integer"
+                          },
+                          "position": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ],
+                        "example": {
+                          "message": "url is not defined",
+                          "line": 5
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "code": "malformed_id"
+                  }
+                }
+              },
+              "required": [
+                "error"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "CrawlerIdParameter": {
+        "name": "id",
+        "in": "path",
+        "description": "The Id of the targeted Crawler.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "TaskIdParameter": {
+        "name": "tid",
+        "in": "path",
+        "description": "The Id of the targeted Task.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "CrawlerVersionParameter": {
+        "name": "version",
+        "in": "path",
+        "description": "The version of the targeted Crawler revision.",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://crawler.algolia.com/api/1"
+    },
+    {
+      "url": "https://crawler-dev.algolia.com/api/1"
+    },
+    {
+      "url": "http://localhost:8000/api/1"
+    }
+  ],
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ],
+  "paths": {
+    "/crawlers": {
+      "get": {
+        "operationId": "listCrawlers",
+        "summary": "List available Crawlers.",
+        "description": "List available Crawlers.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "itemsPerPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 20,
+              "maximum": 100
+            },
+            "description": "Change the number of items per page."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "maximum": 100
+            },
+            "description": "Change the page number."
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string",
+              "example": "MyCrawlerName"
+            },
+            "description": "Filter by crawler name."
+          },
+          {
+            "in": "query",
+            "name": "appId",
+            "schema": {
+              "type": "string",
+              "example": "XXXXXXX123"
+            },
+            "description": "Filter by Application ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Crawlers and pagination information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "description": "Represent a group of items and pagination information.",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "itemsPerPage": {
+                          "type": "integer",
+                          "description": "The maximum number of items returned by this request.",
+                          "default": 20,
+                          "example": 20
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "The current page browsed by this request.",
+                          "default": 1,
+                          "example": 1
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "The total number of items.",
+                          "example": 100
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The unique id of the Crawler.",
+                                "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                              },
+                              "name": {
+                                "type": "string",
+                                "maxLength": 64,
+                                "description": "The name of the Crawler.",
+                                "example": "My Crawler"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "Invalid credentials."
+          },
+          "404": {
+            "description": "The call does not have results for this combinaison of query params."
+          }
+        }
+      },
+      "post": {
+        "operationId": "createCrawler",
+        "summary": "Create a new Crawler with the given config.",
+        "description": "Create a new Crawler with the given config.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 64,
+                    "description": "The name of the Crawler.",
+                    "example": "My Crawler"
+                  },
+                  "config": {
+                    "type": "object",
+                    "description": "A Crawler configuration object. See the Crawler documentation to have more details about it.",
+                    "properties": {
+                      "appId": {
+                        "type": "string",
+                        "example": "ABC9DEFGHI"
+                      },
+                      "apiKey": {
+                        "type": "string",
+                        "example": "c69564c68bad256f8d11399bf2048f82"
+                      },
+                      "indexPrefix": {
+                        "type": "string",
+                        "example": "crawler_"
+                      },
+                      "rateLimit": {
+                        "type": "number",
+                        "example": 8
+                      },
+                      "startUrls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "https://www.algolia.com"
+                        }
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "indexName": {
+                              "type": "string",
+                              "example": "algolia_website"
+                            },
+                            "pathsToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "example": "https://www.algolia.com/**"
+                              }
+                            },
+                            "selectorsToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": [
+                                ".products",
+                                "!.featured"
+                              ]
+                            },
+                            "fileTypesToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": [
+                                "html",
+                                "pdf"
+                              ]
+                            },
+                            "recordExtractor": {
+                              "type": "object",
+                              "properties": {
+                                "__type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "function"
+                                  ]
+                                },
+                                "source": {
+                                  "type": "string",
+                                  "example": "() => {}"
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "indexName",
+                            "recordExtractor"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A new Crawler has been created with the given configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The id of the Crawler created."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights to create a Crawler."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}": {
+      "get": {
+        "operationId": "getCrawler",
+        "summary": "Get information about the specified Crawler and its configuration.",
+        "description": "Get information about the specified Crawler and its configuration.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "withConfig",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Whether or not the configuration should be returned in the response (in the 'config' field)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Several field with information about the specified Crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 64,
+                      "description": "The name of the Crawler.",
+                      "example": "My Crawler"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The creation date of this Crawler.",
+                      "example": "2019-05-10T07:58:41.146Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date this Crawler was last updated.",
+                      "example": "2019-05-10T08:16:47.920Z"
+                    },
+                    "running": {
+                      "type": "boolean",
+                      "description": "Indicate if this Crawler is running, i.e. will crawl regularly based on its configuration."
+                    },
+                    "reindexing": {
+                      "type": "boolean",
+                      "description": "Indicate if this Crawler is currently doing a complete reindex."
+                    },
+                    "blocked": {
+                      "type": "boolean",
+                      "description": "Indicate if this Crawler is currently blocked and need a manual intervention in the Console.",
+                      "example": false
+                    },
+                    "blockingError": {
+                      "type": "string",
+                      "description": "The reason for which the Crawler has been blocked.",
+                      "example": "Error: Failed to fetch external data for source 'testCSV': 404"
+                    },
+                    "blockingTaskId": {
+                      "type": "string",
+                      "description": "The ID of the task that is currently blocking the Crawler."
+                    },
+                    "lastReindexStartedAt": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "The date when the last complete reindex was started. Will be null if no reindex was ever done.",
+                      "example": "2019-05-10T08:16:47.920Z"
+                    },
+                    "lastReindexEndedAt": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "The date when the last complete reindex finished. Can be null if the reindex is still running.",
+                      "example": null
+                    },
+                    "config": {
+                      "type": "object",
+                      "description": "A Crawler configuration object. See the Crawler documentation to have more details about it.",
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "ABC9DEFGHI"
+                        },
+                        "apiKey": {
+                          "type": "string",
+                          "example": "c69564c68bad256f8d11399bf2048f82"
+                        },
+                        "indexPrefix": {
+                          "type": "string",
+                          "example": "crawler_"
+                        },
+                        "rateLimit": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "startUrls": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "https://www.algolia.com"
+                          }
+                        },
+                        "actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "indexName": {
+                                "type": "string",
+                                "example": "algolia_website"
+                              },
+                              "pathsToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "example": "https://www.algolia.com/**"
+                                }
+                              },
+                              "selectorsToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  ".products",
+                                  "!.featured"
+                                ]
+                              },
+                              "fileTypesToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "html",
+                                  "pdf"
+                                ]
+                              },
+                              "recordExtractor": {
+                                "type": "object",
+                                "properties": {
+                                  "__type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "function"
+                                    ]
+                                  },
+                                  "source": {
+                                    "type": "string",
+                                    "example": "() => {}"
+                                  }
+                                }
+                              }
+                            },
+                            "required": [
+                              "indexName",
+                              "recordExtractor"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "createdAt",
+                    "updatedAt",
+                    "running",
+                    "reindexing",
+                    "blocked",
+                    "lastReindexStartedAt",
+                    "lastReindexEndedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patchCrawler",
+        "summary": "Update parts of the Crawler, either its name, its config, or both.",
+        "description": "Update parts of the Crawler, either its name, its config, or both.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 64,
+                    "description": "The name of the Crawler.",
+                    "example": "My Crawler"
+                  },
+                  "config": {
+                    "type": "object",
+                    "description": "A Crawler configuration object. See the Crawler documentation to have more details about it.",
+                    "properties": {
+                      "appId": {
+                        "type": "string",
+                        "example": "ABC9DEFGHI"
+                      },
+                      "apiKey": {
+                        "type": "string",
+                        "example": "c69564c68bad256f8d11399bf2048f82"
+                      },
+                      "indexPrefix": {
+                        "type": "string",
+                        "example": "crawler_"
+                      },
+                      "rateLimit": {
+                        "type": "number",
+                        "example": 8
+                      },
+                      "startUrls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "https://www.algolia.com"
+                        }
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "indexName": {
+                              "type": "string",
+                              "example": "algolia_website"
+                            },
+                            "pathsToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "example": "https://www.algolia.com/**"
+                              }
+                            },
+                            "selectorsToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": [
+                                ".products",
+                                "!.featured"
+                              ]
+                            },
+                            "fileTypesToMatch": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": [
+                                "html",
+                                "pdf"
+                              ]
+                            },
+                            "recordExtractor": {
+                              "type": "object",
+                              "properties": {
+                                "__type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "function"
+                                  ]
+                                },
+                                "source": {
+                                  "type": "string",
+                                  "example": "() => {}"
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "indexName",
+                            "recordExtractor"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/config": {
+      "patch": {
+        "operationId": "patchConfig",
+        "summary": "Update parts of the Crawler configuration.",
+        "description": "Update parts of the Crawler configuration.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "A partial config object that will be injected into the current one.",
+                "example": {
+                  "rateLimit": 10,
+                  "startUrls": [
+                    "https://www.algolia.com/doc",
+                    "https://www.algolia.com/blog"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/run": {
+      "post": {
+        "operationId": "runCrawler",
+        "summary": "Request the specified Crawler to run.",
+        "description": "Request the specified Crawler to run.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/pause": {
+      "post": {
+        "operationId": "pauseCrawler",
+        "summary": "Request the specified Crawler to pause itself.",
+        "description": "Request the specified Crawler to pause itself.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/reindex": {
+      "post": {
+        "operationId": "startReindex",
+        "summary": "Request the specified Crawler to start a reindex.",
+        "description": "Request the specified Crawler to start a reindex.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/stats/urls": {
+      "get": {
+        "operationId": "getStats",
+        "summary": "Get a summary of the current status of crawled URLs for the specified Crawler.",
+        "description": "Get a summary of the current status of crawled URLs for the specified Crawler.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Several metrics to know what the Crawler did during since the last reindex.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "description": "The total number of crawled URLs."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "Represent a group of URLs that have been crawled and have the same final state.",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "description": "A string corresponding to the status of the group.",
+                            "enum": [
+                              "DONE",
+                              "SKIPPED",
+                              "FAILED"
+                            ]
+                          },
+                          "reason": {
+                            "type": "string",
+                            "description": "The code of the reason why when ended up in this status."
+                          },
+                          "category": {
+                            "type": "string",
+                            "description": "In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.",
+                            "enum": [
+                              "fetch",
+                              "extraction",
+                              "indexing",
+                              "success"
+                            ]
+                          },
+                          "count": {
+                            "type": "integer",
+                            "description": "Number of URLs belonging to this group."
+                          },
+                          "readable": {
+                            "type": "string",
+                            "description": "Human redeable version of the error."
+                          }
+                        },
+                        "example": {
+                          "status": "SKIPPED",
+                          "reason": "forbidden_by_robotstxt",
+                          "category": "fetch",
+                          "nbUrls": 3,
+                          "readable": "Forbidden by robots.txt"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/test": {
+      "post": {
+        "operationId": "testUrl",
+        "summary": "Test an URL against the crawler's config.",
+        "description": "Test an URL against the given Crawler's config and see what will be processed.\nYou can also override parts of the configuration to try your changes before updating the configuration.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL to test.",
+                    "example": "https://www.algolia.com/blog"
+                  },
+                  "config": {
+                    "type": "object",
+                    "description": "A partial configuration object, that will be merged with the configuration saved.\nThis allows to tests changes in a configuration before saving it.\nNote that it's not a deep merge, we will simply override all top level fields with the ones that\nyou will pass."
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Several information to know how the Crawler processed the given URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "startDate": {
+                      "type": "string",
+                      "description": "The datetime when the test started.",
+                      "example": "2019-05-21T09:04:33.742Z"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "description": "The datetime when the test ended.",
+                      "example": "2019-05-21T09:04:33.923Z"
+                    },
+                    "logs": {
+                      "type": "array",
+                      "description": "The list of logs generated by `console.log()` in the recordExtractors.",
+                      "items": {
+                        "type": "array",
+                        "description": "Each console.log() accepts many parameter. They will be returned in an array.",
+                        "items": {
+                          "type": "string",
+                          "example": "Processing url 'https://www.algolia.com/blog'"
+                        }
+                      }
+                    },
+                    "records": {
+                      "type": "array",
+                      "description": "The list of records generated for the given URL.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "indexName": {
+                            "type": "string",
+                            "description": "The name of the targeted index.",
+                            "example": "testIndex"
+                          },
+                          "records": {
+                            "type": "array",
+                            "description": "The list of records generated by each action.",
+                            "items": {
+                              "type": "object",
+                              "description": "An actual Algolia record.",
+                              "example": {
+                                "objectID": "https://www.algolia.com/blog",
+                                "numberOfLinks": 2
+                              }
+                            }
+                          },
+                          "recordsPerExtractor": {
+                            "type": "array",
+                            "description": "The record's parts generated by each extractor.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "index": {
+                                  "type": "number",
+                                  "description": "Index of the extractor."
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "Type of the extractor."
+                                },
+                                "records": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "description": "The partial record generated by the extractor."
+                                  }
+                                }
+                              }
+                            },
+                            "example": [
+                              {
+                                "index": 0,
+                                "type": "custom",
+                                "records": [
+                                  {
+                                    "objectID": "https://www.algolia.com/blog"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "links": {
+                      "type": "array",
+                      "description": "The list of links found on the page, that match the configuration (and would be processed).",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "https://blog.algolia.com/challenging-migration-heroku-google-kubernetes-engine/",
+                        "https://blog.algolia.com/tale-two-engines-algolia-unity/"
+                      ]
+                    },
+                    "externalData": {
+                      "type": "object",
+                      "description": "The External Data associated to the tested URL. External data are refreshed automatically before reindex.",
+                      "example": {
+                        "externalData1": {
+                          "data1": "val1",
+                          "data2": "val2"
+                        },
+                        "externalData2": {
+                          "data1": "val1",
+                          "data2": "val2"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "http_internal_server_error"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "HTTP Internal Server Error (500)"
+                        }
+                      },
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "startDate",
+                    "endDate",
+                    "logs",
+                    "records",
+                    "links"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/tasks/{tid}": {
+      "get": {
+        "operationId": "getTaskStatus",
+        "summary": "Get the status of a specific task.",
+        "description": "Get the status of a specific task.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tid",
+            "in": "path",
+            "description": "The Id of the targeted Task.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A response telling you if an action is still pending or not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pending": {
+                      "type": "boolean",
+                      "description": "A boolean that will be true if the action hasn't been processed yet, false if it has been processed or if the action doesn't exists.\n"
+                    }
+                  },
+                  "required": [
+                    "pending"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/tasks/{tid}/cancel": {
+      "post": {
+        "operationId": "cancelBlockingAction",
+        "summary": "Cancel a blocking action on your Crawler.",
+        "description": "Cancel a blocking action on your Crawler.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tid",
+            "in": "path",
+            "description": "The Id of the targeted Task.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your request was processed correctly."
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/config/versions": {
+      "get": {
+        "operationId": "listConfigVersions",
+        "summary": "List crawler versions.",
+        "description": "List crawler config versions.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "itemsPerPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 20,
+              "maximum": 100
+            },
+            "description": "Change the number of versions per page."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "maximum": 5000
+            },
+            "description": "Change the page number."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of crawler versions and pagination information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "description": "Represent a group of items and pagination information.",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "itemsPerPage": {
+                          "type": "integer",
+                          "description": "The maximum number of items returned by this request.",
+                          "default": 20,
+                          "example": 20
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "The current page browsed by this request.",
+                          "default": 1,
+                          "example": 1
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "The total number of items.",
+                          "example": 100
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "version": {
+                                "type": "integer",
+                                "minimum": 1
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "authorId": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "version",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/config/versions/{version}": {
+      "get": {
+        "operationId": "getConfigVersion",
+        "summary": "Get a specific version of the configuration of a crawler.",
+        "description": "Get a specific version of the configuration of a crawler.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "description": "The version of the targeted Crawler revision.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific revision of the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "config": {
+                      "type": "object",
+                      "description": "A Crawler configuration object. See the Crawler documentation to have more details about it.",
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "ABC9DEFGHI"
+                        },
+                        "apiKey": {
+                          "type": "string",
+                          "example": "c69564c68bad256f8d11399bf2048f82"
+                        },
+                        "indexPrefix": {
+                          "type": "string",
+                          "example": "crawler_"
+                        },
+                        "rateLimit": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "startUrls": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "https://www.algolia.com"
+                          }
+                        },
+                        "actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "indexName": {
+                                "type": "string",
+                                "example": "algolia_website"
+                              },
+                              "pathsToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "example": "https://www.algolia.com/**"
+                                }
+                              },
+                              "selectorsToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  ".products",
+                                  "!.featured"
+                                ]
+                              },
+                              "fileTypesToMatch": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "html",
+                                  "pdf"
+                                ]
+                              },
+                              "recordExtractor": {
+                                "type": "object",
+                                "properties": {
+                                  "__type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "function"
+                                    ]
+                                  },
+                                  "source": {
+                                    "type": "string",
+                                    "example": "() => {}"
+                                  }
+                                }
+                              }
+                            },
+                            "required": [
+                              "indexName",
+                              "recordExtractor"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "authorId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "version",
+                    "config",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/crawlers/{id}/urls/crawl": {
+      "post": {
+        "operationId": "crawlUrls",
+        "summary": "Immediately crawl some URLs and update the live index.",
+        "description": "The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.\nIf a reindex is running, the records will be pushed to the temporary index.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the targeted Crawler.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "https://www.algolia.com/products/crawler/"
+                    ]
+                  },
+                  "save": {
+                    "type": "boolean",
+                    "description": "If true, the given URLs will be added to the `extraUrls` field of the config (if not already in `startUrls` or `sitemaps`).\nIf false, the URLs will not be saved in the config.\nIf unspecified, the URLs will be saved to the `extraUrls` field of the config only if they haven't been indexed during the last reindex.\n"
+                  }
+                },
+                "required": [
+                  "urls"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been acknowledged by the crawler.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "taskId": {
+                      "type": "string",
+                      "example": "e0f6db8a-24f5-4092-83a4-1b2c6cb6d809"
+                    }
+                  },
+                  "required": [
+                    "taskId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "The user doesn't have enough rights on the specified Crawler, or it doesn't exists."
+          }
+        }
+      }
+    },
+    "/domains": {
+      "get": {
+        "operationId": "listDomains",
+        "summary": "List registered Domains.",
+        "description": "List registered Domains.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "itemsPerPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Change the number of items per page."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            },
+            "description": "Change the page number."
+          },
+          {
+            "in": "query",
+            "name": "appId",
+            "schema": {
+              "type": "string",
+              "example": "XXXXXXX123"
+            },
+            "description": "Filter by Application ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Domains and pagination information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "description": "Represent a group of items and pagination information.",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "itemsPerPage": {
+                          "type": "integer",
+                          "description": "The maximum number of items returned by this request.",
+                          "default": 20,
+                          "example": 20
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "The current page browsed by this request.",
+                          "default": 1,
+                          "example": 1
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "The total number of items.",
+                          "example": 100
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "appId": {
+                                "type": "string",
+                                "description": "The app for which the domain is registered."
+                              },
+                              "domain": {
+                                "type": "string",
+                                "description": "The registered domain name."
+                              },
+                              "validated": {
+                                "type": "boolean",
+                                "description": "Indicates whether the domain is validated or not."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid."
+          },
+          "403": {
+            "description": "Invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "line": {
+                                "type": "integer"
+                              },
+                              "position": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "message"
+                            ],
+                            "example": {
+                              "message": "url is not defined",
+                              "line": 5
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "code": "malformed_id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

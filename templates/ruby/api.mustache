@@ -216,6 +216,10 @@ module {{moduleName}}
 
 {{/-last}}
 {{/operation}}
+
+{{#isSearchClient}}
+{{> search_helpers}}
+{{/isSearchClient}}
   end
 {{/operations}}
 end

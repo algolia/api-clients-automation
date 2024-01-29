@@ -1,0 +1,15 @@
+post:
+  operationId: pauseCrawler
+  summary: Request the specified Crawler to pause itself.
+  description: Request the specified Crawler to pause itself.
+  parameters:
+    - $ref: '../common/parameters.yml#/CrawlerIdParameter'
+  responses:
+    '200':
+      $ref: '../common/schemas/responses.yml#/ActionAcknowledged'
+    '400':
+      $ref: '../../common/responses/InvalidRequest.yml'
+    '401':
+      $ref: '../common/schemas/responses.yml#/MissingAuthorization'
+    '403':
+      $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'

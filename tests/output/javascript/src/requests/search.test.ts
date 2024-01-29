@@ -2182,20 +2182,23 @@ describe('searchSynonyms', () => {
   test('searchSynonyms with all parameters', async () => {
     const req = (await client.searchSynonyms({
       indexName: 'indexName',
-      type: 'altcorrection1',
-      page: 10,
-      hitsPerPage: 10,
-      searchSynonymsParams: { query: 'myQuery' },
+      searchSynonymsParams: {
+        query: 'myQuery',
+        type: 'altcorrection1',
+        page: 10,
+        hitsPerPage: 10,
+      },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'myQuery' });
-    expect(req.searchParams).toStrictEqual({
+    expect(req.data).toEqual({
+      query: 'myQuery',
       type: 'altcorrection1',
-      page: '10',
-      hitsPerPage: '10',
+      page: 10,
+      hitsPerPage: 10,
     });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

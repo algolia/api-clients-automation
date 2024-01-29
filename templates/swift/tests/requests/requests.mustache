@@ -1,0 +1,94 @@
+import XCTest
+import SwiftyJSON
+#if canImport(AnyCodable)
+  import AnyCodable
+#endif
+
+@testable import Core
+@testable import {{import}}
+
+final class {{client}}RequestsTests: XCTestCase {
+
+  typealias StringMapObject = [String: String?]
+
+  let APPLICATION_ID = ""
+  let API_KEY = ""
+
+  {{#blocksRequests}}
+    {{#tests}}
+      /**
+      {{testName}}
+      */
+      func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
+        let configuration: {{import}}.Configuration = try {{import}}.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
+
+      {{#hasRequestOptions}}
+        let requestOptions = RequestOptions({{#requestOptions.headers.parametersWithDataType}}{{#-first}}
+        headers: [{{/-first}}
+            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
+          ]{{/-last}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}},{{/requestOptions.queryParameters.parametersWithDataType}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}}{{#-first}}
+          queryItems: APIHelper.mapValuesToQueryItems([{{/-first}}
+            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
+          ]){{/-last}}{{/requestOptions.queryParameters.parametersWithDataType}}
+        )
+        {{/hasRequestOptions}}
+
+        let response = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}, {{/parametersWithDataType}}{{/hasParameters}}requestOptions: {{#hasRequestOptions}}requestOptions{{/hasRequestOptions}}{{^hasRequestOptions}}nil{{/hasRequestOptions}})
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        {{#request}}
+        {{#body}}
+          let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+          let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+
+          let comparableJSON = JSON(parseJSON:
+            "{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}"
+          )
+
+          XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        {{/body}}
+        {{^body}}
+
+          {{^assertNullBody}}
+            let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+            XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+          {{/assertNullBody}}
+          {{#assertNullBody}}
+
+            XCTAssertNil(echoResponse.originalBodyData)
+          {{/assertNullBody}}
+        {{/body}}
+
+        XCTAssertEqual(echoResponse.path, "{{path}}")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.{{#lambda.lowercase}}{{&method}}{{/lambda.lowercase}})
+
+          {{#queryParameters}}
+            let comparableQueryItems = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+            let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+
+            XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+          {{/queryParameters}}
+        {{^queryParameters}}
+          XCTAssertNil(echoResponse.queryItems)
+        {{/queryParameters}}
+
+          {{#headers}}
+
+            let comparableHeaders = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+            let comparableHeadersMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableHeaders)
+
+            let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+            for header in comparableHeadersMap {
+              XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            }
+          {{/headers}}
+        {{/request}}
+      }
+    {{/tests}}
+
+  {{/blocksRequests}}
+}

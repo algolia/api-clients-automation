@@ -1,0 +1,5053 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Analytics API",
+    "description": "The Analytics API lets you review your search, and click and conversion analytics.\n> **Note**: The API key in the `X-Algolia-API-Key` header requires the [`analytics` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).\n",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "appId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Algolia-Application-Id"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Algolia-API-Key"
+      }
+    },
+    "parameters": {
+      "PathInPath": {
+        "name": "path",
+        "in": "path",
+        "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "/keys"
+        }
+      },
+      "Parameters": {
+        "name": "parameters",
+        "in": "query",
+        "description": "Query parameters to apply to the current query.",
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "Index": {
+        "in": "query",
+        "name": "index",
+        "description": "Index name to target.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "YourIndexName"
+        }
+      },
+      "ClickAnalytics": {
+        "in": "query",
+        "name": "clickAnalytics",
+        "description": "Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "StartDate": {
+        "in": "query",
+        "name": "startDate",
+        "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+        "schema": {
+          "type": "string",
+          "example": "2022-09-19",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+        }
+      },
+      "EndDate": {
+        "in": "query",
+        "name": "endDate",
+        "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+        "schema": {
+          "type": "string",
+          "example": "2023-01-21",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+        }
+      },
+      "OrderBy": {
+        "in": "query",
+        "name": "orderBy",
+        "description": "Reorder the results.",
+        "schema": {
+          "type": "string",
+          "description": "Method for ordering results.\n`clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.\n",
+          "enum": [
+            "searchCount",
+            "clickThroughRate",
+            "conversionRate",
+            "averageClickPosition"
+          ],
+          "default": "searchCount"
+        }
+      },
+      "Direction": {
+        "in": "query",
+        "name": "direction",
+        "description": "Sorting direction of the results: ascending or descending.\n",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "asc"
+        }
+      },
+      "Limit": {
+        "in": "query",
+        "name": "limit",
+        "description": "Number of records to return (page size).",
+        "schema": {
+          "type": "integer",
+          "default": 10
+        }
+      },
+      "Offset": {
+        "in": "query",
+        "name": "offset",
+        "description": "Position of the starting record. Used for paging. 0 is the first record.",
+        "schema": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "Tags": {
+        "name": "tags",
+        "in": "query",
+        "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+        "example": "device:mobile%20phone",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Search": {
+        "in": "query",
+        "name": "search",
+        "description": "User query.",
+        "example": "enable ab test",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Attribute": {
+        "in": "path",
+        "name": "attribute",
+        "description": "Attribute name.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "brand"
+        }
+      }
+    },
+    "schemas": {
+      "ErrorBase": {
+        "description": "Error.",
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid Application-Id or API-Key"
+          }
+        }
+      },
+      "orderBy": {
+        "type": "string",
+        "description": "Method for ordering results.\n`clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.\n",
+        "enum": [
+          "searchCount",
+          "clickThroughRate",
+          "conversionRate",
+          "averageClickPosition"
+        ],
+        "default": "searchCount"
+      },
+      "direction": {
+        "type": "string",
+        "enum": [
+          "asc",
+          "desc"
+        ],
+        "default": "asc"
+      },
+      "search": {
+        "description": "User query.",
+        "example": "separator",
+        "type": "string"
+      },
+      "count": {
+        "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+        "type": "integer",
+        "example": 504
+      },
+      "nbHits": {
+        "type": "integer",
+        "description": "Number of hits the search query matched.",
+        "example": 20
+      },
+      "topSearchesResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "searches"
+        ],
+        "properties": {
+          "searches": {
+            "type": "array",
+            "description": "Top searches with their hits count.",
+            "items": {
+              "type": "object",
+              "title": "topSearch",
+              "additionalProperties": false,
+              "required": [
+                "search",
+                "count",
+                "nbHits"
+              ],
+              "properties": {
+                "search": {
+                  "description": "User query.",
+                  "example": "separator",
+                  "type": "string"
+                },
+                "count": {
+                  "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                  "type": "integer",
+                  "example": 504
+                },
+                "nbHits": {
+                  "type": "integer",
+                  "description": "Number of hits the search query matched.",
+                  "example": 20
+                }
+              }
+            }
+          }
+        }
+      },
+      "rate": {
+        "type": "number",
+        "format": "double",
+        "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+        "minimum": 0,
+        "maximum": 1,
+        "example": 0.14634193523426317
+      },
+      "averageClickPosition": {
+        "type": "integer",
+        "description": "Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.",
+        "example": 1
+      },
+      "conversionRate": {
+        "type": "number",
+        "format": "double",
+        "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+        "example": 0
+      },
+      "trackedSearchCount": {
+        "type": "integer",
+        "example": 2,
+        "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+      },
+      "clickCount": {
+        "type": "integer",
+        "description": "Number of click events.",
+        "example": 162
+      },
+      "conversionCount": {
+        "type": "integer",
+        "description": "Number of converted clicks.",
+        "example": 0
+      },
+      "topSearchesResponseWithAnalytics": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "searches"
+        ],
+        "properties": {
+          "searches": {
+            "type": "array",
+            "description": "Top searches with their hits count and analytics.",
+            "items": {
+              "type": "object",
+              "title": "topSearchWithAnalytics",
+              "additionalProperties": false,
+              "required": [
+                "search",
+                "count",
+                "nbHits",
+                "clickThroughRate",
+                "averageClickPosition",
+                "conversionRate",
+                "trackedSearchCount",
+                "clickCount",
+                "conversionCount"
+              ],
+              "properties": {
+                "search": {
+                  "description": "User query.",
+                  "example": "separator",
+                  "type": "string"
+                },
+                "count": {
+                  "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                  "type": "integer",
+                  "example": 504
+                },
+                "clickThroughRate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "example": 0.14634193523426317
+                },
+                "averageClickPosition": {
+                  "type": "integer",
+                  "description": "Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.",
+                  "example": 1
+                },
+                "conversionRate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                  "example": 0
+                },
+                "trackedSearchCount": {
+                  "type": "integer",
+                  "example": 2,
+                  "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                },
+                "clickCount": {
+                  "type": "integer",
+                  "description": "Number of click events.",
+                  "example": 162
+                },
+                "conversionCount": {
+                  "type": "integer",
+                  "description": "Number of converted clicks.",
+                  "example": 0
+                },
+                "nbHits": {
+                  "type": "integer",
+                  "description": "Number of hits the search query matched.",
+                  "example": 20
+                }
+              }
+            }
+          }
+        }
+      },
+      "getTopSearchesResponse": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "searches"
+            ],
+            "properties": {
+              "searches": {
+                "type": "array",
+                "description": "Top searches with their hits count.",
+                "items": {
+                  "type": "object",
+                  "title": "topSearch",
+                  "additionalProperties": false,
+                  "required": [
+                    "search",
+                    "count",
+                    "nbHits"
+                  ],
+                  "properties": {
+                    "search": {
+                      "description": "User query.",
+                      "example": "separator",
+                      "type": "string"
+                    },
+                    "count": {
+                      "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                      "type": "integer",
+                      "example": 504
+                    },
+                    "nbHits": {
+                      "type": "integer",
+                      "description": "Number of hits the search query matched.",
+                      "example": 20
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "searches"
+            ],
+            "properties": {
+              "searches": {
+                "type": "array",
+                "description": "Top searches with their hits count and analytics.",
+                "items": {
+                  "type": "object",
+                  "title": "topSearchWithAnalytics",
+                  "additionalProperties": false,
+                  "required": [
+                    "search",
+                    "count",
+                    "nbHits",
+                    "clickThroughRate",
+                    "averageClickPosition",
+                    "conversionRate",
+                    "trackedSearchCount",
+                    "clickCount",
+                    "conversionCount"
+                  ],
+                  "properties": {
+                    "search": {
+                      "description": "User query.",
+                      "example": "separator",
+                      "type": "string"
+                    },
+                    "count": {
+                      "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                      "type": "integer",
+                      "example": 504
+                    },
+                    "clickThroughRate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "averageClickPosition": {
+                      "type": "integer",
+                      "description": "Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.",
+                      "example": 1
+                    },
+                    "conversionRate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                      "example": 0
+                    },
+                    "trackedSearchCount": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                    },
+                    "clickCount": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "conversionCount": {
+                      "type": "integer",
+                      "description": "Number of converted clicks.",
+                      "example": 0
+                    },
+                    "nbHits": {
+                      "type": "integer",
+                      "description": "Number of hits the search query matched.",
+                      "example": 20
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "parameters_count": {
+        "description": "Number of occurrences.",
+        "example": 2,
+        "type": "integer"
+      },
+      "date": {
+        "type": "string",
+        "description": "Date of the event in the format YYYY-MM-DD.",
+        "example": "2023-06-14"
+      },
+      "noResultCount": {
+        "description": "Number of occurences.",
+        "type": "integer",
+        "example": 54
+      },
+      "hit": {
+        "description": "Hit.",
+        "type": "string",
+        "example": "method-export-rules-php"
+      },
+      "topHitsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hits"
+        ],
+        "properties": {
+          "hits": {
+            "type": "array",
+            "description": "Top hits.",
+            "items": {
+              "type": "object",
+              "title": "topHit",
+              "additionalProperties": false,
+              "required": [
+                "hit",
+                "count"
+              ],
+              "properties": {
+                "hit": {
+                  "description": "Hit.",
+                  "type": "string",
+                  "example": "method-export-rules-php"
+                },
+                "count": {
+                  "description": "Number of occurrences.",
+                  "example": 2,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "topHitsResponseWithAnalytics": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hits"
+        ],
+        "properties": {
+          "hits": {
+            "type": "array",
+            "description": "Top hits.",
+            "items": {
+              "type": "object",
+              "title": "topHitWithAnalytics",
+              "additionalProperties": false,
+              "required": [
+                "hit",
+                "count",
+                "clickThroughRate",
+                "conversionRate",
+                "trackedSearchCount",
+                "clickCount",
+                "conversionCount"
+              ],
+              "properties": {
+                "hit": {
+                  "description": "Hit.",
+                  "type": "string",
+                  "example": "method-export-rules-php"
+                },
+                "count": {
+                  "description": "Number of occurrences.",
+                  "example": 2,
+                  "type": "integer"
+                },
+                "clickThroughRate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "example": 0.14634193523426317
+                },
+                "conversionRate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                  "example": 0
+                },
+                "trackedSearchCount": {
+                  "type": "integer",
+                  "example": 2,
+                  "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                },
+                "clickCount": {
+                  "type": "integer",
+                  "description": "Number of click events.",
+                  "example": 162
+                },
+                "conversionCount": {
+                  "type": "integer",
+                  "description": "Number of converted clicks.",
+                  "example": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "getTopHitsResponse": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "hits"
+            ],
+            "properties": {
+              "hits": {
+                "type": "array",
+                "description": "Top hits.",
+                "items": {
+                  "type": "object",
+                  "title": "topHit",
+                  "additionalProperties": false,
+                  "required": [
+                    "hit",
+                    "count"
+                  ],
+                  "properties": {
+                    "hit": {
+                      "description": "Hit.",
+                      "type": "string",
+                      "example": "method-export-rules-php"
+                    },
+                    "count": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "hits"
+            ],
+            "properties": {
+              "hits": {
+                "type": "array",
+                "description": "Top hits.",
+                "items": {
+                  "type": "object",
+                  "title": "topHitWithAnalytics",
+                  "additionalProperties": false,
+                  "required": [
+                    "hit",
+                    "count",
+                    "clickThroughRate",
+                    "conversionRate",
+                    "trackedSearchCount",
+                    "clickCount",
+                    "conversionCount"
+                  ],
+                  "properties": {
+                    "hit": {
+                      "description": "Hit.",
+                      "type": "string",
+                      "example": "method-export-rules-php"
+                    },
+                    "count": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    },
+                    "clickThroughRate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "conversionRate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                      "example": 0
+                    },
+                    "trackedSearchCount": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                    },
+                    "clickCount": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "conversionCount": {
+                      "type": "integer",
+                      "description": "Number of converted clicks.",
+                      "example": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "attribute": {
+        "description": "Attribute name.",
+        "type": "string",
+        "example": "url"
+      },
+      "getTopFilterAttribute": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attribute",
+          "count"
+        ],
+        "properties": {
+          "attribute": {
+            "description": "Attribute name.",
+            "type": "string",
+            "example": "url"
+          },
+          "count": {
+            "description": "Number of occurrences.",
+            "example": 2,
+            "type": "integer"
+          }
+        }
+      },
+      "getTopFilterAttributesResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attributes"
+        ],
+        "properties": {
+          "attributes": {
+            "type": "array",
+            "description": "Filterable attributes.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "attribute",
+                "count"
+              ],
+              "properties": {
+                "attribute": {
+                  "description": "Attribute name.",
+                  "type": "string",
+                  "example": "url"
+                },
+                "count": {
+                  "description": "Number of occurrences.",
+                  "example": 2,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "operator": {
+        "description": "Operator.",
+        "type": "string",
+        "example": ":"
+      },
+      "value": {
+        "description": "Attribute value.",
+        "type": "string",
+        "example": "integration"
+      },
+      "getTopFilterForAttribute": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operator",
+          "attribute",
+          "value",
+          "count"
+        ],
+        "properties": {
+          "attribute": {
+            "description": "Attribute name.",
+            "type": "string",
+            "example": "url"
+          },
+          "operator": {
+            "description": "Operator.",
+            "type": "string",
+            "example": ":"
+          },
+          "value": {
+            "description": "Attribute value.",
+            "type": "string",
+            "example": "integration"
+          },
+          "count": {
+            "description": "Number of occurrences.",
+            "example": 2,
+            "type": "integer"
+          }
+        }
+      },
+      "getTopFilterForAttributeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "values"
+        ],
+        "properties": {
+          "values": {
+            "type": "array",
+            "description": "Filter values for an attribute.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operator",
+                "attribute",
+                "value",
+                "count"
+              ],
+              "properties": {
+                "attribute": {
+                  "description": "Attribute name.",
+                  "type": "string",
+                  "example": "url"
+                },
+                "operator": {
+                  "description": "Operator.",
+                  "type": "string",
+                  "example": ":"
+                },
+                "value": {
+                  "description": "Attribute value.",
+                  "type": "string",
+                  "example": "integration"
+                },
+                "count": {
+                  "description": "Number of occurrences.",
+                  "example": 2,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getTopFiltersNoResultsValue": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attribute",
+          "operator",
+          "value"
+        ],
+        "properties": {
+          "attribute": {
+            "description": "Attribute name.",
+            "type": "string",
+            "example": "url"
+          },
+          "operator": {
+            "description": "Operator.",
+            "type": "string",
+            "example": ":"
+          },
+          "value": {
+            "description": "Attribute value.",
+            "type": "string",
+            "example": "integration"
+          }
+        }
+      },
+      "getTopFiltersNoResultsValues": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "values",
+          "count"
+        ],
+        "properties": {
+          "count": {
+            "description": "Number of occurrences.",
+            "example": 2,
+            "type": "integer"
+          },
+          "values": {
+            "type": "array",
+            "description": "Filters with no results.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "attribute",
+                "operator",
+                "value"
+              ],
+              "properties": {
+                "attribute": {
+                  "description": "Attribute name.",
+                  "type": "string",
+                  "example": "url"
+                },
+                "operator": {
+                  "description": "Operator.",
+                  "type": "string",
+                  "example": ":"
+                },
+                "value": {
+                  "description": "Attribute value.",
+                  "type": "string",
+                  "example": "integration"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getTopFiltersNoResultsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "values"
+        ],
+        "properties": {
+          "values": {
+            "type": "array",
+            "description": "Filters with no results.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "values",
+                "count"
+              ],
+              "properties": {
+                "count": {
+                  "description": "Number of occurrences.",
+                  "example": 2,
+                  "type": "integer"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "Filters with no results.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "attribute",
+                      "operator",
+                      "value"
+                    ],
+                    "properties": {
+                      "attribute": {
+                        "description": "Attribute name.",
+                        "type": "string",
+                        "example": "url"
+                      },
+                      "operator": {
+                        "description": "Operator.",
+                        "type": "string",
+                        "example": ":"
+                      },
+                      "value": {
+                        "description": "Attribute value.",
+                        "type": "string",
+                        "example": "integration"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "average": {
+        "type": "number",
+        "format": "double",
+        "description": "Average count of all click events.",
+        "example": 2.3344634550185286
+      },
+      "updatedAt": {
+        "type": "string",
+        "example": "2023-07-04T12:49:15Z",
+        "description": "Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format."
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request or request arguments.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "FeatureNotEnabled": {
+        "description": "This feature is not enabled on your Algolia account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MethodNotAllowed": {
+        "description": "Method not allowed with this API key.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      },
+      "IndexNotFound": {
+        "description": "Index not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Error.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Application-Id or API-Key"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://analytics.{region}.algolia.com",
+      "variables": {
+        "region": {
+          "enum": [
+            "us",
+            "de"
+          ],
+          "default": "us"
+        }
+      }
+    },
+    {
+      "url": "https://analytics.algolia.com"
+    }
+  ],
+  "security": [
+    {
+      "appId": [],
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "advanced",
+      "x-displayName": "Advanced",
+      "description": "Advanced operations."
+    },
+    {
+      "name": "click",
+      "x-displayName": "Click Analytics",
+      "description": "Get all click analytics."
+    },
+    {
+      "name": "search",
+      "x-displayName": "Search Analytics",
+      "description": "Get all search analytics."
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "General",
+      "tags": [
+        "search",
+        "click"
+      ]
+    },
+    {
+      "name": "Others",
+      "tags": [
+        "advanced"
+      ]
+    }
+  ],
+  "paths": {
+    "/1{path}": {
+      "get": {
+        "operationId": "customGet",
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "customPost",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "customPut",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "customDelete",
+        "summary": "Send requests to the Algolia REST API.",
+        "description": "This method allow you to send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "/keys"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Query parameters to apply to the current query.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopSearches",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top searches.",
+        "description": "Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clickAnalytics",
+            "description": "Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "orderBy",
+            "description": "Reorder the results.",
+            "schema": {
+              "type": "string",
+              "description": "Method for ordering results.\n`clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.\n",
+              "enum": [
+                "searchCount",
+                "clickThroughRate",
+                "conversionRate",
+                "averageClickPosition"
+              ],
+              "default": "searchCount"
+            }
+          },
+          {
+            "in": "query",
+            "name": "direction",
+            "description": "Sorting direction of the results: ascending or descending.\n",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "searches"
+                      ],
+                      "properties": {
+                        "searches": {
+                          "type": "array",
+                          "description": "Top searches with their hits count.",
+                          "items": {
+                            "type": "object",
+                            "title": "topSearch",
+                            "additionalProperties": false,
+                            "required": [
+                              "search",
+                              "count",
+                              "nbHits"
+                            ],
+                            "properties": {
+                              "search": {
+                                "description": "User query.",
+                                "example": "separator",
+                                "type": "string"
+                              },
+                              "count": {
+                                "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                                "type": "integer",
+                                "example": 504
+                              },
+                              "nbHits": {
+                                "type": "integer",
+                                "description": "Number of hits the search query matched.",
+                                "example": 20
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "searches"
+                      ],
+                      "properties": {
+                        "searches": {
+                          "type": "array",
+                          "description": "Top searches with their hits count and analytics.",
+                          "items": {
+                            "type": "object",
+                            "title": "topSearchWithAnalytics",
+                            "additionalProperties": false,
+                            "required": [
+                              "search",
+                              "count",
+                              "nbHits",
+                              "clickThroughRate",
+                              "averageClickPosition",
+                              "conversionRate",
+                              "trackedSearchCount",
+                              "clickCount",
+                              "conversionCount"
+                            ],
+                            "properties": {
+                              "search": {
+                                "description": "User query.",
+                                "example": "separator",
+                                "type": "string"
+                              },
+                              "count": {
+                                "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                                "type": "integer",
+                                "example": 504
+                              },
+                              "clickThroughRate": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                                "minimum": 0,
+                                "maximum": 1,
+                                "example": 0.14634193523426317
+                              },
+                              "averageClickPosition": {
+                                "type": "integer",
+                                "description": "Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.",
+                                "example": 1
+                              },
+                              "conversionRate": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                                "example": 0
+                              },
+                              "trackedSearchCount": {
+                                "type": "integer",
+                                "example": 2,
+                                "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                              },
+                              "clickCount": {
+                                "type": "integer",
+                                "description": "Number of click events.",
+                                "example": 162
+                              },
+                              "conversionCount": {
+                                "type": "integer",
+                                "description": "Number of converted clicks.",
+                                "example": 0
+                              },
+                              "nbHits": {
+                                "type": "integer",
+                                "description": "Number of hits the search query matched.",
+                                "example": 20
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches/count": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getSearchesCount",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get number of searches.",
+        "description": "Returns the number of searches within a time range.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getSearchesCountResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dates",
+                    "count"
+                  ],
+                  "properties": {
+                    "count": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Search events with their associated dates and hit counts.",
+                      "items": {
+                        "type": "object",
+                        "title": "searchEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "date",
+                          "count"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches/noResults": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getSearchesNoResults",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top searches with no results.",
+        "description": "Returns the most popular of the latest 1,000 searches that didn't return any results.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getSearchesNoResultsResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "searches"
+                  ],
+                  "properties": {
+                    "searches": {
+                      "type": "array",
+                      "description": "Searches with no results.",
+                      "items": {
+                        "type": "object",
+                        "title": "searchNoResultEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "search",
+                          "count",
+                          "nbHits"
+                        ],
+                        "properties": {
+                          "search": {
+                            "description": "User query.",
+                            "example": "separator",
+                            "type": "string"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          },
+                          "nbHits": {
+                            "type": "integer",
+                            "description": "Number of hits the search query matched.",
+                            "example": 20
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches/noClicks": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getSearchesNoClicks",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top searches with no clicks.",
+        "description": "Return the most popular of the last 1,000 searches that didn't lead to any clicks.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getSearchesNoClicksResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "searches"
+                  ],
+                  "properties": {
+                    "searches": {
+                      "type": "array",
+                      "description": "Searches with no clicks.",
+                      "items": {
+                        "type": "object",
+                        "title": "searchNoClickEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "search",
+                          "count",
+                          "withFilterCount"
+                        ],
+                        "properties": {
+                          "search": {
+                            "description": "User query.",
+                            "example": "separator",
+                            "type": "string"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          },
+                          "withFilterCount": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches/noResultRate": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getNoResultsRate",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get no results rate.",
+        "description": "Returns the rate at which searches didn't return any results.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getNoResultsRateResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "rate",
+                    "count",
+                    "noResultCount",
+                    "dates"
+                  ],
+                  "properties": {
+                    "rate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "count": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    },
+                    "noResultCount": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Overall count of searches without results plus a daily breakdown.",
+                      "items": {
+                        "type": "object",
+                        "title": "noResultsRateEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "date",
+                          "noResultCount",
+                          "count",
+                          "rate"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          },
+                          "noResultCount": {
+                            "description": "Number of occurences.",
+                            "type": "integer",
+                            "example": 54
+                          },
+                          "count": {
+                            "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                            "type": "integer",
+                            "example": 504
+                          },
+                          "rate": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "example": 0.14634193523426317
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/searches/noClickRate": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getNoClickRate",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get no click rate.",
+        "description": "Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getNoClickRateResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dates",
+                    "count",
+                    "noClickCount",
+                    "rate"
+                  ],
+                  "properties": {
+                    "rate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "count": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "noClickCount": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Overall count of searches without clicks plus a daily breakdown.",
+                      "items": {
+                        "type": "object",
+                        "title": "noClickRateEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "rate",
+                          "count",
+                          "noClickCount",
+                          "date"
+                        ],
+                        "properties": {
+                          "rate": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "example": 0.14634193523426317
+                          },
+                          "count": {
+                            "description": "Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).",
+                            "type": "integer",
+                            "example": 504
+                          },
+                          "noClickCount": {
+                            "type": "integer",
+                            "description": "Number of click events.",
+                            "example": 162
+                          },
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/hits": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopHits",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top hits.",
+        "description": "Return the most popular clicked results in the last 1,000 searches.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "User query.",
+            "example": "enable ab test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clickAnalytics",
+            "description": "Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "hits"
+                      ],
+                      "properties": {
+                        "hits": {
+                          "type": "array",
+                          "description": "Top hits.",
+                          "items": {
+                            "type": "object",
+                            "title": "topHit",
+                            "additionalProperties": false,
+                            "required": [
+                              "hit",
+                              "count"
+                            ],
+                            "properties": {
+                              "hit": {
+                                "description": "Hit.",
+                                "type": "string",
+                                "example": "method-export-rules-php"
+                              },
+                              "count": {
+                                "description": "Number of occurrences.",
+                                "example": 2,
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "hits"
+                      ],
+                      "properties": {
+                        "hits": {
+                          "type": "array",
+                          "description": "Top hits.",
+                          "items": {
+                            "type": "object",
+                            "title": "topHitWithAnalytics",
+                            "additionalProperties": false,
+                            "required": [
+                              "hit",
+                              "count",
+                              "clickThroughRate",
+                              "conversionRate",
+                              "trackedSearchCount",
+                              "clickCount",
+                              "conversionCount"
+                            ],
+                            "properties": {
+                              "hit": {
+                                "description": "Hit.",
+                                "type": "string",
+                                "example": "method-export-rules-php"
+                              },
+                              "count": {
+                                "description": "Number of occurrences.",
+                                "example": 2,
+                                "type": "integer"
+                              },
+                              "clickThroughRate": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                                "minimum": 0,
+                                "maximum": 1,
+                                "example": 0.14634193523426317
+                              },
+                              "conversionRate": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).\n",
+                                "example": 0
+                              },
+                              "trackedSearchCount": {
+                                "type": "integer",
+                                "example": 2,
+                                "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                              },
+                              "clickCount": {
+                                "type": "integer",
+                                "description": "Number of click events.",
+                                "example": 162
+                              },
+                              "conversionCount": {
+                                "type": "integer",
+                                "description": "Number of converted clicks.",
+                                "example": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/users/count": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getUsersCount",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get user count.",
+        "description": "Return the count of unique users.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getUsersCountResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dates",
+                    "count"
+                  ],
+                  "properties": {
+                    "count": {
+                      "description": "Number of occurrences.",
+                      "example": 2,
+                      "type": "integer"
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "User count.",
+                      "items": {
+                        "type": "object",
+                        "title": "userWithDate",
+                        "additionalProperties": false,
+                        "required": [
+                          "date",
+                          "count"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/filters": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopFilterAttributes",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top filterable attributes.",
+        "description": "Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "User query.",
+            "example": "enable ab test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "attributes"
+                  ],
+                  "properties": {
+                    "attributes": {
+                      "type": "array",
+                      "description": "Filterable attributes.",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "attribute",
+                          "count"
+                        ],
+                        "properties": {
+                          "attribute": {
+                            "description": "Attribute name.",
+                            "type": "string",
+                            "example": "url"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/filters/{attribute}": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopFilterForAttribute",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top filter values for an attribute.",
+        "description": "Returns the most popular filter values for an attribute in the 1,000 most recently used filters.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "attribute",
+            "description": "Attribute name.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "brand"
+            }
+          },
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "User query.",
+            "example": "enable ab test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "values"
+                  ],
+                  "properties": {
+                    "values": {
+                      "type": "array",
+                      "description": "Filter values for an attribute.",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "operator",
+                          "attribute",
+                          "value",
+                          "count"
+                        ],
+                        "properties": {
+                          "attribute": {
+                            "description": "Attribute name.",
+                            "type": "string",
+                            "example": "url"
+                          },
+                          "operator": {
+                            "description": "Operator.",
+                            "type": "string",
+                            "example": ":"
+                          },
+                          "value": {
+                            "description": "Attribute value.",
+                            "type": "string",
+                            "example": "integration"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/filters/noResults": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopFiltersNoResults",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top filters for a no result search.",
+        "description": "Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "User query.",
+            "example": "enable ab test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "values"
+                  ],
+                  "properties": {
+                    "values": {
+                      "type": "array",
+                      "description": "Filters with no results.",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "values",
+                          "count"
+                        ],
+                        "properties": {
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          },
+                          "values": {
+                            "type": "array",
+                            "description": "Filters with no results.",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "attribute",
+                                "operator",
+                                "value"
+                              ],
+                              "properties": {
+                                "attribute": {
+                                  "description": "Attribute name.",
+                                  "type": "string",
+                                  "example": "url"
+                                },
+                                "operator": {
+                                  "description": "Operator.",
+                                  "type": "string",
+                                  "example": ":"
+                                },
+                                "value": {
+                                  "description": "Attribute value.",
+                                  "type": "string",
+                                  "example": "integration"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/countries": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "operationId": "getTopCountries",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get top countries.",
+        "description": "Returns top countries. Limited to the 1,000 most frequent ones.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Number of records to return (page size).",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Position of the starting record. Used for paging. 0 is the first record.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getTopCountriesResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "countries"
+                  ],
+                  "properties": {
+                    "countries": {
+                      "type": "array",
+                      "description": "Countries",
+                      "items": {
+                        "type": "object",
+                        "title": "topCountry",
+                        "additionalProperties": false,
+                        "required": [
+                          "country",
+                          "count"
+                        ],
+                        "properties": {
+                          "country": {
+                            "description": "Country.",
+                            "type": "string",
+                            "example": "UK"
+                          },
+                          "count": {
+                            "description": "Number of occurrences.",
+                            "example": 2,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/clicks/averageClickPosition": {
+      "get": {
+        "tags": [
+          "click"
+        ],
+        "operationId": "getAverageClickPosition",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get average click position.",
+        "description": "Return the average click position for the complete time range and for individual days.\n> **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getAverageClickPositionResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "average",
+                    "clickCount",
+                    "dates"
+                  ],
+                  "properties": {
+                    "average": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "Average count of all click events.",
+                      "example": 2.3344634550185286
+                    },
+                    "clickCount": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Average click positions.",
+                      "items": {
+                        "type": "object",
+                        "title": "averageClickEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "average",
+                          "clickCount",
+                          "date"
+                        ],
+                        "properties": {
+                          "average": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Average count of all click events.",
+                            "example": 2.3344634550185286
+                          },
+                          "clickCount": {
+                            "type": "integer",
+                            "description": "Number of click events.",
+                            "example": 162
+                          },
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/clicks/positions": {
+      "get": {
+        "tags": [
+          "click"
+        ],
+        "operationId": "getClickPositions",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get click positions.",
+        "description": "Show the number of clicks events and their associated position in the search results.\n\n> **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getClickPositionsResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "positions"
+                  ],
+                  "properties": {
+                    "positions": {
+                      "type": "array",
+                      "description": "Click positions.",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "object",
+                        "title": "clickPosition",
+                        "additionalProperties": false,
+                        "required": [
+                          "position",
+                          "clickCount"
+                        ],
+                        "properties": {
+                          "position": {
+                            "description": "Range of positions with the following pattern:\n- For positions 1 to 10, the number of click events are shown for each position - For positions 11 to 20, all click events are grouped - For positions 21 and up, all click events are grouped.\n",
+                            "type": "array",
+                            "example": [
+                              10,
+                              10
+                            ],
+                            "items": {
+                              "type": "integer"
+                            }
+                          },
+                          "clickCount": {
+                            "type": "integer",
+                            "description": "Number of click events.",
+                            "example": 162
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/clicks/clickThroughRate": {
+      "get": {
+        "tags": [
+          "click"
+        ],
+        "operationId": "getClickThroughRate",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get click-through rate (CTR).",
+        "description": "Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getClickThroughRateResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dates",
+                    "clickCount",
+                    "trackedSearchCount",
+                    "rate"
+                  ],
+                  "properties": {
+                    "rate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "clickCount": {
+                      "type": "integer",
+                      "description": "Number of click events.",
+                      "example": 162
+                    },
+                    "trackedSearchCount": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Click-through rate events.",
+                      "items": {
+                        "type": "object",
+                        "title": "clickThroughRateEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "rate",
+                          "clickCount",
+                          "trackedSearchCount",
+                          "date"
+                        ],
+                        "properties": {
+                          "rate": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "example": 0.14634193523426317
+                          },
+                          "clickCount": {
+                            "type": "integer",
+                            "description": "Number of click events.",
+                            "example": 162
+                          },
+                          "trackedSearchCount": {
+                            "type": "integer",
+                            "example": 2,
+                            "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                          },
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/conversions/conversionRate": {
+      "get": {
+        "tags": [
+          "click"
+        ],
+        "operationId": "getConversationRate",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get conversion rate (CR).",
+        "description": "Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2022-09-19",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End date (a string in the format `YYYY-MM-DD`) of the period to analyze.",
+            "schema": {
+              "type": "string",
+              "example": "2023-01-21",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.",
+            "example": "device:mobile%20phone",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getConversationRateResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dates",
+                    "trackedSearchCount",
+                    "conversionCount",
+                    "rate"
+                  ],
+                  "properties": {
+                    "rate": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "example": 0.14634193523426317
+                    },
+                    "trackedSearchCount": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                    },
+                    "conversionCount": {
+                      "type": "integer",
+                      "description": "Number of converted clicks.",
+                      "example": 0
+                    },
+                    "dates": {
+                      "type": "array",
+                      "description": "Conversion events.",
+                      "items": {
+                        "type": "object",
+                        "title": "conversionRateEvent",
+                        "additionalProperties": false,
+                        "required": [
+                          "rate",
+                          "trackedSearchCount",
+                          "conversionCount",
+                          "date"
+                        ],
+                        "properties": {
+                          "rate": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).\n",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "example": 0.14634193523426317
+                          },
+                          "trackedSearchCount": {
+                            "type": "integer",
+                            "example": 2,
+                            "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
+                          },
+                          "conversionCount": {
+                            "type": "integer",
+                            "description": "Number of converted clicks.",
+                            "example": 0
+                          },
+                          "date": {
+                            "type": "string",
+                            "description": "Date of the event in the format YYYY-MM-DD.",
+                            "example": "2023-06-14"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/status": {
+      "get": {
+        "tags": [
+          "advanced"
+        ],
+        "operationId": "getStatus",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Get Analytics API status.",
+        "description": "Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`.\n> **Note**: The Analytics API is updated every 5&nbsp;minutes.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "description": "Index name to target.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YourIndexName"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "getStatusResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "updatedAt"
+                  ],
+                  "properties": {
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-04T12:49:15Z",
+                      "description": "Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or request arguments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "This feature is not enabled on your Algolia account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Method not allowed with this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Error.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Application-Id or API-Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

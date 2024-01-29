@@ -49,6 +49,8 @@ package algoliasearch.abtesting
   *   A/B test traffic percentage.
   * @param userCount
   *   Number of users during the A/B test.
+  * @param trackedUserCount
+  *   Number of users that performed a tracked search during the A/B test.
   */
 case class Variant(
     addToCartCount: Int,
@@ -68,5 +70,6 @@ case class Variant(
     searchCount: Int,
     trackedSearchCount: Int,
     trafficPercentage: Int,
-    userCount: Int
+    userCount: Int,
+    trackedUserCount: Int
 )

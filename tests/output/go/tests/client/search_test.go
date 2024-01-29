@@ -42,12 +42,10 @@ func TestSearchapi0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
-
 	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
-
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
@@ -66,12 +64,10 @@ func TestSearchapi1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
-
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
 
@@ -83,7 +79,6 @@ func TestSearchcommonApi0(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
@@ -95,7 +90,6 @@ func TestSearchcommonApi1(t *testing.T) {
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
@@ -108,7 +102,6 @@ func TestSearchcommonApi2(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
@@ -127,7 +120,6 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`appId` is missing.")
 	cfg = search.Configuration{
 		Configuration: transport.Configuration{
@@ -137,7 +129,6 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`appId` is missing.")
 	cfg = search.Configuration{
 		Configuration: transport.Configuration{
@@ -147,7 +138,6 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`apiKey` is missing.")
 }
 
@@ -158,7 +148,6 @@ func TestSearchparameters1(t *testing.T) {
 	_, err = client.AddApiKey(client.NewApiAddApiKeyRequest(
 		tests.ZeroValue[*search.ApiKey](),
 	))
-
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
 }
 
@@ -169,16 +158,13 @@ func TestSearchparameters2(t *testing.T) {
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		tests.ZeroValue[string](), "my-object-id", map[string]any{},
 	))
-
 	require.EqualError(t, err, "Parameter `indexName` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", tests.ZeroValue[string](), map[string]any{},
 	))
-
 	require.EqualError(t, err, "Parameter `objectID` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", "my-object-id", tests.ZeroValue[map[string]any](),
 	))
-
 	require.EqualError(t, err, "Parameter `body` is required when calling `AddOrUpdateObject`.")
 }

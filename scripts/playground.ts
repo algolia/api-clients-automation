@@ -49,6 +49,12 @@ export async function playground({
         language,
       });
       break;
+    case 'csharp':
+      await run(`dotnet run --property WarningLevel=0 --project Playground ${client}`, {
+        cwd: 'playground/csharp',
+        language,
+      });
+      break;
     case 'scala':
       // run scala playground
       break;

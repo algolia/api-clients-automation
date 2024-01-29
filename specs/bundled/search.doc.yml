@@ -81,32 +81,6 @@ components:
       description: >-
         Indicates whether to replace all synonyms in the index with the ones
         sent with this request.
-    Type:
-      in: query
-      name: type
-      description: >-
-        Search for specific [types of
-        synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-      schema:
-        $ref: '#/components/schemas/SynonymType'
-    PageDefault0:
-      in: query
-      name: page
-      description: >
-        Returns the requested page number (the first page is 0). Page size is
-        set by `hitsPerPage`. When null, there's no pagination.
-      schema:
-        type: integer
-        nullable: true
-        minimum: 0
-        default: 0
-    HitsPerPage:
-      in: query
-      name: hitsPerPage
-      description: Maximum number of hits per page.
-      schema:
-        type: integer
-        default: 100
     KeyString:
       in: path
       name: key
@@ -152,6 +126,13 @@ components:
         minimum: 0
         nullable: true
         default: null
+    HitsPerPage:
+      in: query
+      name: hitsPerPage
+      description: Maximum number of hits per page.
+      schema:
+        type: integer
+        default: 100
     UserIDInHeader:
       name: X-Algolia-User-ID
       description: userID to assign.
@@ -4301,9 +4282,6 @@ paths:
         with parameters. To get all synonyms, send an empty request body.
       parameters:
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Type'
-        - $ref: '#/components/parameters/PageDefault0'
-        - $ref: '#/components/parameters/HitsPerPage'
       requestBody:
         description: Body of the `searchSynonyms` operation.
         content:
@@ -4315,6 +4293,12 @@ paths:
               properties:
                 query:
                   $ref: '#/components/schemas/query'
+                type:
+                  $ref: '#/components/schemas/SynonymType'
+                page:
+                  $ref: '#/components/schemas/page'
+                hitsPerPage:
+                  $ref: '#/components/schemas/hitsPerPage'
       responses:
         '200':
           description: OK
