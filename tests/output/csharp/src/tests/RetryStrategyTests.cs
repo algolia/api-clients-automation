@@ -20,36 +20,38 @@ public class RetryStrategyTests
     var client = new SearchClient(searchConfig, httpMock.Object);
 
     // The `SearchSingleIndexAsync` use Host with CallType = Read
-    var eligibleHosts = searchConfig.DefaultHosts.Where(x => x.Accept.HasFlag(CallType.Read)).Select(x => x.Url);
+    var eligibleHosts = searchConfig
+      .DefaultHosts.Where(x => x.Accept.HasFlag(CallType.Read))
+      .Select(x => x.Url);
 
     IList<string> actualHosts = new List<string>();
 
     httpMock
       .Setup(c =>
-        c.SendRequestAsync(It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/test-index/query")),
+        c.SendRequestAsync(
+          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/test-index/query")),
           It.IsAny<TimeSpan>(),
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
-        ))
-      // Always return a 500 from Algolia server
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 500,
-            Body = null
-          }
         )
-      ).Callback((Request rq, TimeSpan _, TimeSpan _, CancellationToken _) => actualHosts.Add(rq.Uri.Host));
+      )
+      // Always return a 500 from Algolia server
+      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 500, Body = null }))
+      .Callback(
+        (Request rq, TimeSpan _, TimeSpan _, CancellationToken _) => actualHosts.Add(rq.Uri.Host)
+      );
 
     // Do a simple search
-    await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(async () =>
-      await client.SearchSingleIndexAsync<object>("test-index",
-        new SearchParams(new SearchParamsObject { Query = "" })));
-    
+    await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(
+      async () =>
+        await client.SearchSingleIndexAsync<object>(
+          "test-index",
+          new SearchParams(new SearchParamsObject { Query = "" })
+        )
+    );
+
     Assert.Equal(eligibleHosts, actualHosts);
   }
-
 
   [Fact]
   public async Task ShouldThrowsWhenAllRetriesFailed()
@@ -68,33 +70,11 @@ public class RetryStrategyTests
         )
       )
       // First call return a 500 from Algolia server
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 500,
-            Body = null
-          }
-        )
-      )
+      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 500, Body = null }))
       // Second call return a 300 from Algolia server
+      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 300, Body = null }))
+      .Returns(Task.FromResult(new AlgoliaHttpResponse { IsTimedOut = true, Body = null }))
       .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 300,
-            Body = null
-          }
-        )
-      ).Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            IsTimedOut = true,
-            Body = null
-          }
-        )
-      ).Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
           {
@@ -106,11 +86,18 @@ public class RetryStrategyTests
       );
 
     // Do a simple search and expect a AlgoliaUnreachableHostException after 4 retries
-    var exception = await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(async () =>
-      await client.SearchSingleIndexAsync<object>("test-index",
-        new SearchParams(new SearchParamsObject { Query = "" })));
+    var exception = await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(
+      async () =>
+        await client.SearchSingleIndexAsync<object>(
+          "test-index",
+          new SearchParams(new SearchParamsObject { Query = "" })
+        )
+    );
 
-    Assert.Equal("RetryStrategy failed to connect to Algolia. Reason: DNS server not responding", exception.Message);
+    Assert.Equal(
+      "RetryStrategy failed to connect to Algolia. Reason: DNS server not responding",
+      exception.Message
+    );
 
     // Verify that the request has been called 4 times
     httpMock.Verify(
@@ -147,7 +134,9 @@ public class RetryStrategyTests
     httpMock
       .SetupSequence(c =>
         c.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsoluteUri.Equals("https://myhost.com/1/indexes/test-index/query")),
+          It.Is<Request>(r =>
+            r.Uri.AbsoluteUri.Equals("https://myhost.com/1/indexes/test-index/query")
+          ),
           It.IsAny<TimeSpan>(),
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
@@ -163,8 +152,13 @@ public class RetryStrategyTests
                 JsonConvert.SerializeObject(
                   new SearchResponse<object>()
                   {
-                    HitsPerPage = 10, NbHits = 1, NbPages = 1, Page = 1, ProcessingTimeMS = 1,
-                    Hits = new List<object>(), Query = "",
+                    HitsPerPage = 10,
+                    NbHits = 1,
+                    NbPages = 1,
+                    Page = 1,
+                    ProcessingTimeMS = 1,
+                    Hits = new List<object>(),
+                    Query = "",
                     VarParams = ""
                   }
                 )
@@ -175,13 +169,18 @@ public class RetryStrategyTests
       );
 
     // Do a simple search and expect a AlgoliaUnreachableHostException after 4 retries
-    await client.SearchSingleIndexAsync<object>("test-index", new SearchParams(new SearchParamsObject { Query = "" }));
+    await client.SearchSingleIndexAsync<object>(
+      "test-index",
+      new SearchParams(new SearchParamsObject { Query = "" })
+    );
 
     // Verify that the request has been called 1 times
     httpMock.Verify(
       m =>
         m.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsoluteUri.Equals("https://myhost.com/1/indexes/test-index/query")),
+          It.Is<Request>(r =>
+            r.Uri.AbsoluteUri.Equals("https://myhost.com/1/indexes/test-index/query")
+          ),
           It.IsAny<TimeSpan>(),
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()

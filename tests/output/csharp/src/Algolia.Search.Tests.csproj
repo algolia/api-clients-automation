@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <ProjectReference
-            Include="..\..\..\..\clients/algoliasearch-client-csharp\algoliasearch\\Algolia.Search.csproj" />
+            Include="..\..\..\..\clients/algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj" />
     </ItemGroup>
 
     <ItemGroup>
