@@ -24,7 +24,7 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{#composedSchemas.oneOf}}
     {{^isModel}}
     {{^isEnumRef}}
-    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    // {{classname}} as {{{datatypeWithEnum}}} wrapper.
     static {{classname}} of{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}({{{datatypeWithEnum}}} value) {
         return new {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
     }
@@ -37,7 +37,7 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{#composedSchemas.oneOf}}
     {{^isModel}}
     {{^isEnumRef}}
-    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    // {{classname}} as {{{datatypeWithEnum}}} wrapper.
     static {{classname}} of({{{datatypeWithEnum}}} value) {
         return new {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
     }
@@ -49,7 +49,7 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{#composedSchemas.oneOf}}
     {{^isModel}}
     {{^isEnumRef}}
-    /** {{classname}} as {{{datatypeWithEnum}}} wrapper. */
+    // {{classname}} as {{{datatypeWithEnum}}} wrapper.
     @JsonSerialize(using = {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper.Serializer.class)
     class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper implements {{classname}}{
         private final {{{datatypeWithEnum}}} value;
