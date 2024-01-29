@@ -14,7 +14,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createInsightsClient() (*insights.APIClient, *tests.EchoRequester) {
+func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := insights.Configuration{
 		Configuration: transport.Configuration{
@@ -24,13 +26,14 @@ func createInsightsClient() (*insights.APIClient, *tests.EchoRequester) {
 		},
 		Region: insights.US,
 	}
-	client, _ := insights.NewClientWithConfig(cfg)
+	client, err := insights.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
 func TestInsights_CustomDelete(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -66,7 +69,7 @@ func TestInsights_CustomDelete(t *testing.T) {
 }
 
 func TestInsights_CustomGet(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -102,7 +105,7 @@ func TestInsights_CustomGet(t *testing.T) {
 }
 
 func TestInsights_CustomPost(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -342,7 +345,7 @@ func TestInsights_CustomPost(t *testing.T) {
 }
 
 func TestInsights_CustomPut(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -380,7 +383,7 @@ func TestInsights_CustomPut(t *testing.T) {
 }
 
 func TestInsights_DeleteUserToken(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("deleteUserToken0", func(t *testing.T) {
 		err := client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
@@ -398,7 +401,7 @@ func TestInsights_DeleteUserToken(t *testing.T) {
 }
 
 func TestInsights_PushEvents(t *testing.T) {
-	client, echo := createInsightsClient()
+	client, echo := createInsightsClient(t)
 
 	t.Run("pushEvents0", func(t *testing.T) {
 		_, err := client.PushEvents(client.NewApiPushEventsRequest(
