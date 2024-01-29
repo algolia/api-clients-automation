@@ -36,7 +36,6 @@ func TestAbtestingcommonApi0(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
@@ -48,7 +47,6 @@ func TestAbtestingcommonApi1(t *testing.T) {
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
@@ -61,7 +59,6 @@ func TestAbtestingcommonApi2(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
-
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
@@ -81,12 +78,10 @@ func TestAbtestingparameters0(t *testing.T) {
 		},
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
-
 	require.NoError(t, err)
 	_, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
 	))
-
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
 
@@ -106,12 +101,10 @@ func TestAbtestingparameters1(t *testing.T) {
 		Region: abtesting.Region("us"),
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
-
 	require.NoError(t, err)
 	_, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
 	))
-
 	require.Equal(t, "analytics.us.algolia.com", echo.Host)
 }
 
@@ -130,6 +123,5 @@ func TestAbtestingparameters2(t *testing.T) {
 		Region: abtesting.Region("not_a_region"),
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
-
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }

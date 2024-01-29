@@ -26,10 +26,10 @@ func NewNullable{{classname}}(val {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFor
 }
 
 func (v Nullable{{{classname}}}) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value)
+	return json.Marshal(v.value) //nolint:wrapcheck
 }
 
 func (v *Nullable{{{classname}}}) UnmarshalJSON(src []byte) error {
 	v.isSet = true
-	return json.Unmarshal(src, &v.value)
+	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }
