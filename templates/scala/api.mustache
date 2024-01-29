@@ -98,6 +98,14 @@ class {{classname}}(
   
 {{#operation}}
 /** {{{notes}}}
+{{#vendorExtensions}}
+{{#x-acl.0}}
+*
+* Required API Key ACLs:{{/x-acl.0}}
+{{#x-acl}}
+*   - {{.}}
+{{/x-acl}}
+{{/vendorExtensions}}
 *
 {{#allParams}}
 {{#description}}

@@ -25,11 +25,8 @@ namespace Algolia.Search.Clients;
   {
       {{#operation}}
       /// <summary>
-      /// {{{summary}}}
-      /// </summary>
-      /// <remarks>
       /// {{{notes}}}
-      /// </remarks>
+      /// </summary>
       {{#allParams}}
       /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}
@@ -106,8 +103,14 @@ namespace Algolia.Search.Clients;
       {{#supportsAsync}}
 
       /// <summary>
-      /// {{{summary}}} {{notes}}
-      /// </summary>
+      /// {{{notes}}}
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+      ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
       {{#allParams}}
       /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}
