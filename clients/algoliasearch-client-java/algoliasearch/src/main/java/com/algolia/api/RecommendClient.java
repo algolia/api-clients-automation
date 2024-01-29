@@ -680,7 +680,7 @@ public class RecommendClient extends ApiClient {
 
   /**
    * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
-   * &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+   * `taskID` value. Use this value here to check the status of that task.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param model [Recommend
@@ -713,7 +713,7 @@ public class RecommendClient extends ApiClient {
 
   /**
    * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
-   * &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+   * `taskID` value. Use this value here to check the status of that task.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param model [Recommend

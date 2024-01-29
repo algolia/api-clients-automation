@@ -25,17 +25,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = RemoveStopWords.Deserializer.class)
 public interface RemoveStopWords {
-  /** RemoveStopWords as List<String> wrapper. */
+  // RemoveStopWords as List<String> wrapper.
   static RemoveStopWords of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
-  /** RemoveStopWords as Boolean wrapper. */
+  // RemoveStopWords as Boolean wrapper.
   static RemoveStopWords of(Boolean value) {
     return new BooleanWrapper(value);
   }
 
-  /** RemoveStopWords as List<String> wrapper. */
+  // RemoveStopWords as List<String> wrapper.
   @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
   class ListOfStringWrapper implements RemoveStopWords {
 
@@ -58,7 +58,7 @@ public interface RemoveStopWords {
     }
   }
 
-  /** RemoveStopWords as Boolean wrapper. */
+  // RemoveStopWords as Boolean wrapper.
   @JsonSerialize(using = BooleanWrapper.Serializer.class)
   class BooleanWrapper implements RemoveStopWords {
 

@@ -552,8 +552,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the
-   * [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Delete an A/B test. To determine the `id` for an A/B test, use the
+   * [`listABTests` operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -570,8 +570,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the
-   * [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Delete an A/B test. To determine the `id` for an A/B test, use the
+   * [`listABTests` operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -605,8 +605,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get specific details for an A/B test. To determine the &#x60;id&#x60; for an
-   * A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Get specific details for an A/B test. To determine the `id` for an A/B test,
+   * use the [`listABTests` operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -622,8 +622,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get specific details for an A/B test. To determine the &#x60;id&#x60; for an
-   * A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Get specific details for an A/B test. To determine the `id` for an A/B test,
+   * use the [`listABTests` operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -782,9 +782,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If stopped, the test is over and can&#39;t be restarted. There is now only one
+   * (asynchronously) If stopped, the test is over and can't be restarted. There is now only one
    * index, receiving 100% of all search requests. The data gathered for stopped A/B tests is
-   * retained. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60;
+   * retained. To determine the `id` for an A/B test, use the [`listABTests`
    * operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)
@@ -802,9 +802,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If stopped, the test is over and can&#39;t be restarted. There is now only one
+   * (asynchronously) If stopped, the test is over and can't be restarted. There is now only one
    * index, receiving 100% of all search requests. The data gathered for stopped A/B tests is
-   * retained. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60;
+   * retained. To determine the `id` for an A/B test, use the [`listABTests`
    * operation](#tag/abtest/operation/listABTests).
    *
    * @param id Unique A/B test ID. (required)

@@ -21,17 +21,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = OptionalFilters.Deserializer.class)
 public interface OptionalFilters {
-  /** OptionalFilters as List<MixedSearchFilters> wrapper. */
+  // OptionalFilters as List<MixedSearchFilters> wrapper.
   static OptionalFilters of(List<MixedSearchFilters> value) {
     return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  /** OptionalFilters as String wrapper. */
+  // OptionalFilters as String wrapper.
   static OptionalFilters of(String value) {
     return new StringWrapper(value);
   }
 
-  /** OptionalFilters as List<MixedSearchFilters> wrapper. */
+  // OptionalFilters as List<MixedSearchFilters> wrapper.
   @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
   class ListOfMixedSearchFiltersWrapper implements OptionalFilters {
 
@@ -54,7 +54,7 @@ public interface OptionalFilters {
     }
   }
 
-  /** OptionalFilters as String wrapper. */
+  // OptionalFilters as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements OptionalFilters {
 

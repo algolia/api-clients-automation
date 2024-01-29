@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = AutomaticFacetFilters.Deserializer.class)
 public interface AutomaticFacetFilters {
-  /** AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper. */
+  // AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper.
   static AutomaticFacetFilters ofListOfAutomaticFacetFilter(List<AutomaticFacetFilter> value) {
     return new ListOfAutomaticFacetFilterWrapper(value);
   }
 
-  /** AutomaticFacetFilters as List<String> wrapper. */
+  // AutomaticFacetFilters as List<String> wrapper.
   static AutomaticFacetFilters ofListOfString(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
-  /** AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper. */
+  // AutomaticFacetFilters as List<AutomaticFacetFilter> wrapper.
   @JsonSerialize(using = ListOfAutomaticFacetFilterWrapper.Serializer.class)
   class ListOfAutomaticFacetFilterWrapper implements AutomaticFacetFilters {
 
@@ -52,7 +52,7 @@ public interface AutomaticFacetFilters {
     }
   }
 
-  /** AutomaticFacetFilters as List<String> wrapper. */
+  // AutomaticFacetFilters as List<String> wrapper.
   @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
   class ListOfStringWrapper implements AutomaticFacetFilters {
 

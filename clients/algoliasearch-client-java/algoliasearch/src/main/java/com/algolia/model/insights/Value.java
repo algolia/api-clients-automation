@@ -14,17 +14,17 @@ import java.util.logging.Logger;
 /** Total monetary value of this event in units of `currency`. */
 @JsonDeserialize(using = Value.Deserializer.class)
 public interface Value {
-  /** Value as Double wrapper. */
+  // Value as Double wrapper.
   static Value of(Double value) {
     return new DoubleWrapper(value);
   }
 
-  /** Value as String wrapper. */
+  // Value as String wrapper.
   static Value of(String value) {
     return new StringWrapper(value);
   }
 
-  /** Value as Double wrapper. */
+  // Value as Double wrapper.
   @JsonSerialize(using = DoubleWrapper.Serializer.class)
   class DoubleWrapper implements Value {
 
@@ -47,7 +47,7 @@ public interface Value {
     }
   }
 
-  /** Value as String wrapper. */
+  // Value as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements Value {
 

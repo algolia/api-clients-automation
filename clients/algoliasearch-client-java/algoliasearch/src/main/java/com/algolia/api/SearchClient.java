@@ -139,11 +139,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If you use an existing &#x60;objectID&#x60;, the existing record will be
-   * replaced with the new one. To update only some attributes of an existing record, use the
-   * [&#x60;partial&#x60; operation](#tag/Records/operation/partialUpdateObject) instead. To add
-   * multiple records to your index in a single API request, use the [&#x60;batch&#x60;
-   * operation](#tag/Records/operation/batch).
+   * (asynchronously) If you use an existing `objectID`, the existing record will be replaced with
+   * the new one. To update only some attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
+   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique record (object) identifier. (required)
@@ -174,11 +173,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If you use an existing &#x60;objectID&#x60;, the existing record will be
-   * replaced with the new one. To update only some attributes of an existing record, use the
-   * [&#x60;partial&#x60; operation](#tag/Records/operation/partialUpdateObject) instead. To add
-   * multiple records to your index in a single API request, use the [&#x60;batch&#x60;
-   * operation](#tag/Records/operation/batch).
+   * (asynchronously) If you use an existing `objectID`, the existing record will be replaced with
+   * the new one. To update only some attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
+   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique record (object) identifier. (required)
@@ -348,7 +346,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) To reduce the time spent on network round trips, you can perform several write
    * actions in a single API call. Actions are applied in the order they are specified. The
-   * supported &#x60;action&#x60;s are equivalent to the individual operations of the same name.
+   * supported `action`s are equivalent to the individual operations of the same name.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param batchWriteParams (required)
@@ -377,7 +375,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) To reduce the time spent on network round trips, you can perform several write
    * actions in a single API call. Actions are applied in the order they are specified. The
-   * supported &#x60;action&#x60;s are equivalent to the individual operations of the same name.
+   * supported `action`s are equivalent to the individual operations of the same name.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param batchWriteParams (required)
@@ -418,7 +416,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign multiple user IDs to a cluster. **You can&#39;t _move_ users with this
+   * (asynchronously) Assign multiple user IDs to a cluster. **You can't _move_ users with this
    * operation.**.
    *
    * @param xAlgoliaUserID userID to assign. (required)
@@ -450,7 +448,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign multiple user IDs to a cluster. **You can&#39;t _move_ users with this
+   * (asynchronously) Assign multiple user IDs to a cluster. **You can't _move_ users with this
    * operation.**.
    *
    * @param xAlgoliaUserID userID to assign. (required)
@@ -606,8 +604,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn&#39;t support: - The &#x60;distinct&#x60; query parameter -
-   * Sorting by typos, proximity, words, or geographical distance.
+   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
+   * typos, proximity, words, or geographical distance.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param browseParams (optional)
@@ -635,8 +633,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn&#39;t support: - The &#x60;distinct&#x60; query parameter -
-   * Sorting by typos, proximity, words, or geographical distance.
+   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
+   * typos, proximity, words, or geographical distance.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param browseParams (optional)
@@ -650,8 +648,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn&#39;t support: - The &#x60;distinct&#x60; query parameter -
-   * Sorting by typos, proximity, words, or geographical distance.
+   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
+   * typos, proximity, words, or geographical distance.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -666,8 +664,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn&#39;t support: - The &#x60;distinct&#x60; query parameter -
-   * Sorting by typos, proximity, words, or geographical distance.
+   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
+   * typos, proximity, words, or geographical distance.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -1445,8 +1443,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This operation doesn&#39;t support all the query options, only its filters
-   * (numeric, facet, or tag) and geo queries. It doesn&#39;t accept empty filters or queries.
+   * (asynchronously) This operation doesn't support all the query options, only its filters
+   * (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param deleteByParams (required)
@@ -1473,8 +1471,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This operation doesn&#39;t support all the query options, only its filters
-   * (numeric, facet, or tag) and geo queries. It doesn&#39;t accept empty filters or queries.
+   * (asynchronously) This operation doesn't support all the query options, only its filters
+   * (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param deleteByParams (required)
@@ -1561,8 +1559,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To delete a set of records matching a query, use the
-   * [&#x60;deleteByQuery&#x60; operation](#tag/Records/operation/deleteBy) instead.
+   * (asynchronously) To delete a set of records matching a query, use the [`deleteByQuery`
+   * operation](#tag/Records/operation/deleteBy) instead.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique record (object) identifier. (required)
@@ -1588,8 +1586,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To delete a set of records matching a query, use the
-   * [&#x60;deleteByQuery&#x60; operation](#tag/Records/operation/deleteBy) instead.
+   * (asynchronously) To delete a set of records matching a query, use the [`deleteByQuery`
+   * operation](#tag/Records/operation/deleteBy) instead.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique record (object) identifier. (required)
@@ -1664,8 +1662,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60;
-   * for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1695,8 +1693,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60;
-   * for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1713,8 +1711,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60;
-   * for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1731,8 +1729,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60;
-   * for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1855,8 +1853,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its &#x60;objectID&#x60;. To find the object IDs of your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
+   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -1886,8 +1884,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its &#x60;objectID&#x60;. To find the object IDs of your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
+   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -1904,8 +1902,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its &#x60;objectID&#x60;. To find the object IDs of your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
+   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -1922,8 +1920,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its &#x60;objectID&#x60;. To find the object IDs of your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
+   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -1963,8 +1961,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Get the permissions and restrictions of a specific API key. When
    * authenticating with the admin API key, you can request information for any of your
-   * application&#39;s keys. When authenticating with other API keys, you can only retrieve
-   * information for that key.
+   * application's keys. When authenticating with other API keys, you can only retrieve information
+   * for that key.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1983,8 +1981,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Get the permissions and restrictions of a specific API key. When
    * authenticating with the admin API key, you can request information for any of your
-   * application&#39;s keys. When authenticating with other API keys, you can only retrieve
-   * information for that key.
+   * application's keys. When authenticating with other API keys, you can only retrieve information
+   * for that key.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2028,9 +2026,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists Algolia&#39;s [supported
+   * (asynchronously) Lists Algolia's [supported
    * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language&#39;s [stop
+   * and any customizations applied to each language's [stop
    * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
    * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
    * and [segmentation
@@ -2049,9 +2047,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists Algolia&#39;s [supported
+   * (asynchronously) Lists Algolia's [supported
    * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language&#39;s [stop
+   * and any customizations applied to each language's [stop
    * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
    * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
    * and [segmentation
@@ -2195,13 +2193,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The request must be authenticated by an API key with the [&#x60;logs&#x60;
+   * (asynchronously) The request must be authenticated by an API key with the [`logs`
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There&#39;s also a logging limit of 1,000 API calls per server.
-   * This request counts towards your [operations
+   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
+   * request counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn&#39;t appear in the logs itself. &gt; **Note**: To fetch the logs for a Distributed
-   * Search Network (DSN) cluster, target the [DSN&#39;s
+   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
+   * Network (DSN) cluster, target the [DSN's
    * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
    *
    * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
@@ -2235,13 +2233,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The request must be authenticated by an API key with the [&#x60;logs&#x60;
+   * (asynchronously) The request must be authenticated by an API key with the [`logs`
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There&#39;s also a logging limit of 1,000 API calls per server.
-   * This request counts towards your [operations
+   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
+   * request counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn&#39;t appear in the logs itself. &gt; **Note**: To fetch the logs for a Distributed
-   * Search Network (DSN) cluster, target the [DSN&#39;s
+   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
+   * Network (DSN) cluster, target the [DSN's
    * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
    *
    * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
@@ -2259,13 +2257,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The request must be authenticated by an API key with the [&#x60;logs&#x60;
+   * (asynchronously) The request must be authenticated by an API key with the [`logs`
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There&#39;s also a logging limit of 1,000 API calls per server.
-   * This request counts towards your [operations
+   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
+   * request counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn&#39;t appear in the logs itself. &gt; **Note**: To fetch the logs for a Distributed
-   * Search Network (DSN) cluster, target the [DSN&#39;s
+   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
+   * Network (DSN) cluster, target the [DSN's
    * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2277,13 +2275,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The request must be authenticated by an API key with the [&#x60;logs&#x60;
+   * (asynchronously) The request must be authenticated by an API key with the [`logs`
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There&#39;s also a logging limit of 1,000 API calls per server.
-   * This request counts towards your [operations
+   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
+   * request counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn&#39;t appear in the logs itself. &gt; **Note**: To fetch the logs for a Distributed
-   * Search Network (DSN) cluster, target the [DSN&#39;s
+   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
+   * Network (DSN) cluster, target the [DSN's
    * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2358,7 +2356,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [&#x60;objects&#x60;
+   * (asynchronously) To get more than one record, use the [`objects`
    * operation](#tag/Records/operation/getObjects).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2392,7 +2390,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [&#x60;objects&#x60;
+   * (asynchronously) To get more than one record, use the [`objects`
    * operation](#tag/Records/operation/getObjects).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2413,7 +2411,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [&#x60;objects&#x60;
+   * (asynchronously) To get more than one record, use the [`objects`
    * operation](#tag/Records/operation/getObjects).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2431,7 +2429,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [&#x60;objects&#x60;
+   * (asynchronously) To get more than one record, use the [`objects`
    * operation](#tag/Records/operation/getObjects).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2541,8 +2539,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60; for
-   * rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Get a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2565,8 +2563,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60; for
-   * rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Get a rule by its `objectID`. To find the `objectID` for rules, use the
+   * [`search` operation](#tag/Rules/operation/searchRules).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2601,7 +2599,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return an object containing an index&#39;s [configuration
+   * (asynchronously) Return an object containing an index's [configuration
    * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2618,7 +2616,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return an object containing an index&#39;s [configuration
+   * (asynchronously) Return an object containing an index's [configuration
    * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -2698,8 +2696,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a syonym by its &#x60;objectID&#x60;. To find the object IDs for your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Get a syonym by its `objectID`. To find the object IDs for your synonyms, use
+   * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2722,8 +2720,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a syonym by its &#x60;objectID&#x60;. To find the object IDs for your
-   * synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Get a syonym by its `objectID`. To find the object IDs for your synonyms, use
+   * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2761,8 +2759,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as copying an index, will respond with a
-   * &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+   * (asynchronously) Some operations, such as copying an index, will respond with a `taskID` value.
+   * Use this value here to check the status of that task.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param taskID Unique task identifier. (required)
@@ -2781,8 +2779,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as copying an index, will respond with a
-   * &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+   * (asynchronously) Some operations, such as copying an index, will respond with a `taskID` value.
+   * Use this value here to check the status of that task.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param taskID Unique task identifier. (required)
@@ -2817,7 +2815,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Get the IDs of the 10 users with the highest number of records per cluster.
    * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn&#39;t real-time.
+   * isn't real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2832,7 +2830,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Get the IDs of the 10 users with the highest number of records per cluster.
    * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn&#39;t real-time.
+   * isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2866,7 +2864,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Returns the userID data stored in the mapping. Since it can take up to a few
-   * seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param userID userID to assign. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2882,7 +2880,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Returns the userID data stored in the mapping. Since it can take up to a few
-   * seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param userID userID to assign. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3249,7 +3247,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * to a few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
    *     parameter. You can see the number of available pages in the `nbPages` response attribute.
@@ -3273,7 +3271,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * to a few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
    *     parameter. You can see the number of available pages in the `nbPages` response attribute.
@@ -3287,7 +3285,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * to a few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3299,7 +3297,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
+   * to a few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3338,7 +3336,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single request. It&#39;s a multi-index version of the [&#x60;batch&#x60;
+   * actions in a single request. It's a multi-index version of the [`batch`
    * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
    * The supported actions are equivalent to the individual operations of the same name.
    *
@@ -3357,7 +3355,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single request. It&#39;s a multi-index version of the [&#x60;batch&#x60;
+   * actions in a single request. It's a multi-index version of the [`batch`
    * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
    * The supported actions are equivalent to the individual operations of the same name.
    *
@@ -3416,14 +3414,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This &#x60;operation&#x60;, _copy_ or _move_, will copy or move a source
-   * index&#39;s (&#x60;IndexName&#x60;) records, settings, synonyms, and rules to a
-   * &#x60;destination&#x60; index. If the destination index exists, it will be replaced, except for
-   * index-specific API keys and analytics data. If the destination index doesn&#39;t exist, it will
-   * be created. The choice between moving or copying an index depends on your needs. Choose: -
-   * **Move** to rename an index. - **Copy** to create a new index with the same records and
-   * configuration as an existing one. &gt; **Note**: When considering copying or moving, be aware
-   * of the [rate
+   * (asynchronously) This `operation`, _copy_ or _move_, will copy or move a source index's
+   * (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the
+   * destination index exists, it will be replaced, except for index-specific API keys and analytics
+   * data. If the destination index doesn't exist, it will be created. The choice between moving or
+   * copying an index depends on your needs. Choose: - **Move** to rename an index. - **Copy** to
+   * create a new index with the same records and configuration as an existing one. > **Note**: When
+   * considering copying or moving, be aware of the [rate
    * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
    * on these processes and the [impact on your analytics
    * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
@@ -3453,14 +3450,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This &#x60;operation&#x60;, _copy_ or _move_, will copy or move a source
-   * index&#39;s (&#x60;IndexName&#x60;) records, settings, synonyms, and rules to a
-   * &#x60;destination&#x60; index. If the destination index exists, it will be replaced, except for
-   * index-specific API keys and analytics data. If the destination index doesn&#39;t exist, it will
-   * be created. The choice between moving or copying an index depends on your needs. Choose: -
-   * **Move** to rename an index. - **Copy** to create a new index with the same records and
-   * configuration as an existing one. &gt; **Note**: When considering copying or moving, be aware
-   * of the [rate
+   * (asynchronously) This `operation`, _copy_ or _move_, will copy or move a source index's
+   * (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the
+   * destination index exists, it will be replaced, except for index-specific API keys and analytics
+   * data. If the destination index doesn't exist, it will be created. The choice between moving or
+   * copying an index depends on your needs. Choose: - **Move** to rename an index. - **Copy** to
+   * create a new index with the same records and configuration as an existing one. > **Note**: When
+   * considering copying or moving, be aware of the [rate
    * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
    * on these processes and the [impact on your analytics
    * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
@@ -3846,11 +3842,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn&#39;t
-   * contain an &#x60;objectID&#x60;, Algolia automatically adds it. If you use an existing
-   * &#x60;objectID&#x60;, the existing record is replaced with the new one. To add multiple records
-   * to your index in a single API request, use the [&#x60;batch&#x60;
-   * operation](#tag/Records/operation/batch).
+   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn't contain
+   * an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing
+   * record is replaced with the new one. To add multiple records to your index in a single API
+   * request, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param body The Algolia record. (required)
@@ -3872,11 +3867,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn&#39;t
-   * contain an &#x60;objectID&#x60;, Algolia automatically adds it. If you use an existing
-   * &#x60;objectID&#x60;, the existing record is replaced with the new one. To add multiple records
-   * to your index in a single API request, use the [&#x60;batch&#x60;
-   * operation](#tag/Records/operation/batch).
+   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn't contain
+   * an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing
+   * record is replaced with the new one. To add multiple records to your index in a single API
+   * request, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param body The Algolia record. (required)
@@ -3961,7 +3955,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [&#x60;batch&#x60;
+   * (asynchronously) To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -3997,7 +3991,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [&#x60;batch&#x60;
+   * (asynchronously) To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -4017,7 +4011,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [&#x60;batch&#x60;
+   * (asynchronously) To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -4037,7 +4031,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [&#x60;batch&#x60;
+   * (asynchronously) To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
    * @param indexName Index on which to perform the request. (required)
@@ -4298,10 +4292,10 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Add a
    * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym &#x60;objectID&#x60; doesn&#39;t exist, Algolia adds
-   * a new one. If you use an existing synonym &#x60;objectID&#x60;, the existing synonym is
-   * replaced with the new one. To add multiple synonyms in a single API request, use the
-   * [&#x60;batch&#x60; operation](#tag/Synonyms/operation/saveSynonyms).
+   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
+   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
+   * add multiple synonyms in a single API request, use the [`batch`
+   * operation](#tag/Synonyms/operation/saveSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4338,10 +4332,10 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Add a
    * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym &#x60;objectID&#x60; doesn&#39;t exist, Algolia adds
-   * a new one. If you use an existing synonym &#x60;objectID&#x60;, the existing synonym is
-   * replaced with the new one. To add multiple synonyms in a single API request, use the
-   * [&#x60;batch&#x60; operation](#tag/Synonyms/operation/saveSynonyms).
+   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
+   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
+   * add multiple synonyms in a single API request, use the [`batch`
+   * operation](#tag/Synonyms/operation/saveSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4362,10 +4356,10 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Add a
    * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym &#x60;objectID&#x60; doesn&#39;t exist, Algolia adds
-   * a new one. If you use an existing synonym &#x60;objectID&#x60;, the existing synonym is
-   * replaced with the new one. To add multiple synonyms in a single API request, use the
-   * [&#x60;batch&#x60; operation](#tag/Synonyms/operation/saveSynonyms).
+   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
+   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
+   * add multiple synonyms in a single API request, use the [`batch`
+   * operation](#tag/Synonyms/operation/saveSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4386,10 +4380,10 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Add a
    * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym &#x60;objectID&#x60; doesn&#39;t exist, Algolia adds
-   * a new one. If you use an existing synonym &#x60;objectID&#x60;, the existing synonym is
-   * replaced with the new one. To add multiple synonyms in a single API request, use the
-   * [&#x60;batch&#x60; operation](#tag/Synonyms/operation/saveSynonyms).
+   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
+   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
+   * add multiple synonyms in a single API request, use the [`batch`
+   * operation](#tag/Synonyms/operation/saveSynonyms).
    *
    * @param indexName Index on which to perform the request. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4808,12 +4802,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet&#39;s
+   * (asynchronously) [Search for a facet's
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
    * optionally restricting the returned values to those contained in records matching other search
-   * criteria. &gt; **Note**: Pagination isn&#39;t supported (&#x60;page&#x60; and
-   * &#x60;hitsPerPage&#x60; are ignored). By default, the engine returns a maximum of 10 values but
-   * you can adjust this with &#x60;maxFacetHits&#x60;.
+   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
+   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param facetName Facet name. (required)
@@ -4843,12 +4836,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet&#39;s
+   * (asynchronously) [Search for a facet's
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
    * optionally restricting the returned values to those contained in records matching other search
-   * criteria. &gt; **Note**: Pagination isn&#39;t supported (&#x60;page&#x60; and
-   * &#x60;hitsPerPage&#x60; are ignored). By default, the engine returns a maximum of 10 values but
-   * you can adjust this with &#x60;maxFacetHits&#x60;.
+   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
+   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param facetName Facet name. (required)
@@ -4864,12 +4856,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet&#39;s
+   * (asynchronously) [Search for a facet's
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
    * optionally restricting the returned values to those contained in records matching other search
-   * criteria. &gt; **Note**: Pagination isn&#39;t supported (&#x60;page&#x60; and
-   * &#x60;hitsPerPage&#x60; are ignored). By default, the engine returns a maximum of 10 values but
-   * you can adjust this with &#x60;maxFacetHits&#x60;.
+   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
+   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param facetName Facet name. (required)
@@ -4886,12 +4877,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet&#39;s
+   * (asynchronously) [Search for a facet's
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
    * optionally restricting the returned values to those contained in records matching other search
-   * criteria. &gt; **Note**: Pagination isn&#39;t supported (&#x60;page&#x60; and
-   * &#x60;hitsPerPage&#x60; are ignored). By default, the engine returns a maximum of 10 values but
-   * you can adjust this with &#x60;maxFacetHits&#x60;.
+   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
+   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
    *
    * @param indexName Index on which to perform the request. (required)
    * @param facetName Facet name. (required)
@@ -5303,10 +5293,10 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Since it can take up to a few seconds to get the data from the different
-   * clusters, the response isn&#39;t real-time. To ensure rapid updates, the user IDs index
-   * isn&#39;t built at the same time as the mapping. Instead, it&#39;s built every 12 hours, at the
-   * same time as the update of user ID usage. For example, if you add or move a user ID, the search
-   * will show an old value until the next time the mapping is rebuilt (every 12 hours).
+   * clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built
+   * at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the
+   * update of user ID usage. For example, if you add or move a user ID, the search will show an old
+   * value until the next time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5331,10 +5321,10 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Since it can take up to a few seconds to get the data from the different
-   * clusters, the response isn&#39;t real-time. To ensure rapid updates, the user IDs index
-   * isn&#39;t built at the same time as the mapping. Instead, it&#39;s built every 12 hours, at the
-   * same time as the update of user ID usage. For example, if you add or move a user ID, the search
-   * will show an old value until the next time the mapping is rebuilt (every 12 hours).
+   * clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built
+   * at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the
+   * update of user ID usage. For example, if you add or move a user ID, the search will show an old
+   * value until the next time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

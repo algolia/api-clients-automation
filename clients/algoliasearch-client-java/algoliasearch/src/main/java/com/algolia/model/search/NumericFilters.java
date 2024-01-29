@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = NumericFilters.Deserializer.class)
 public interface NumericFilters {
-  /** NumericFilters as List<MixedSearchFilters> wrapper. */
+  // NumericFilters as List<MixedSearchFilters> wrapper.
   static NumericFilters of(List<MixedSearchFilters> value) {
     return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  /** NumericFilters as String wrapper. */
+  // NumericFilters as String wrapper.
   static NumericFilters of(String value) {
     return new StringWrapper(value);
   }
 
-  /** NumericFilters as List<MixedSearchFilters> wrapper. */
+  // NumericFilters as List<MixedSearchFilters> wrapper.
   @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
   class ListOfMixedSearchFiltersWrapper implements NumericFilters {
 
@@ -52,7 +52,7 @@ public interface NumericFilters {
     }
   }
 
-  /** NumericFilters as String wrapper. */
+  // NumericFilters as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements NumericFilters {
 

@@ -17,12 +17,12 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = ConsequenceQuery.Deserializer.class)
 public interface ConsequenceQuery {
-  /** ConsequenceQuery as String wrapper. */
+  // ConsequenceQuery as String wrapper.
   static ConsequenceQuery of(String value) {
     return new StringWrapper(value);
   }
 
-  /** ConsequenceQuery as String wrapper. */
+  // ConsequenceQuery as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements ConsequenceQuery {
 

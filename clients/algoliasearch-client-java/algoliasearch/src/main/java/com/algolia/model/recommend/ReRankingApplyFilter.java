@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = ReRankingApplyFilter.Deserializer.class)
 public interface ReRankingApplyFilter {
-  /** ReRankingApplyFilter as List<MixedSearchFilters> wrapper. */
+  // ReRankingApplyFilter as List<MixedSearchFilters> wrapper.
   static ReRankingApplyFilter of(List<MixedSearchFilters> value) {
     return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  /** ReRankingApplyFilter as String wrapper. */
+  // ReRankingApplyFilter as String wrapper.
   static ReRankingApplyFilter of(String value) {
     return new StringWrapper(value);
   }
 
-  /** ReRankingApplyFilter as List<MixedSearchFilters> wrapper. */
+  // ReRankingApplyFilter as List<MixedSearchFilters> wrapper.
   @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
   class ListOfMixedSearchFiltersWrapper implements ReRankingApplyFilter {
 
@@ -52,7 +52,7 @@ public interface ReRankingApplyFilter {
     }
   }
 
-  /** ReRankingApplyFilter as String wrapper. */
+  // ReRankingApplyFilter as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements ReRankingApplyFilter {
 
