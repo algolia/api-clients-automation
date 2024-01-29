@@ -118,6 +118,11 @@ class IngestionClient(
 
   /** Create a authentication.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param authenticationCreate
     */
   def createAuthentication(authenticationCreate: AuthenticationCreate, requestOptions: Option[RequestOptions] = None)(
@@ -139,6 +144,11 @@ class IngestionClient(
 
   /** Create a destination.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param destinationCreate
     */
   def createDestination(destinationCreate: DestinationCreate, requestOptions: Option[RequestOptions] = None)(implicit
@@ -156,6 +166,11 @@ class IngestionClient(
   }
 
   /** Create a source.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param sourceCreate
     */
@@ -293,6 +308,11 @@ class IngestionClient(
 
   /** Soft delete the authentication of the given authenticationID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param authenticationID
     *   The authentication UUID.
     */
@@ -311,6 +331,11 @@ class IngestionClient(
 
   /** Soft delete the destination of the given destinationID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param destinationID
     *   The destination UUID.
     */
@@ -328,6 +353,11 @@ class IngestionClient(
   }
 
   /** Soft delete the source of the given sourceID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param sourceID
     *   The source UUID.
@@ -365,6 +395,11 @@ class IngestionClient(
 
   /** Disable the task of the given taskID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   The task UUID.
     */
@@ -382,6 +417,11 @@ class IngestionClient(
   }
 
   /** Enable the task of the given taskID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param taskID
     *   The task UUID.
@@ -401,6 +441,11 @@ class IngestionClient(
 
   /** Get the authentication of the given authenticationID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param authenticationID
     *   The authentication UUID.
     */
@@ -418,6 +463,11 @@ class IngestionClient(
   }
 
   /** Get a list of authentications for the given query parameters, with pagination details.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param itemsPerPage
     *   The number of items per page to return.
@@ -458,6 +508,11 @@ class IngestionClient(
 
   /** Get the destination of the given destinationID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param destinationID
     *   The destination UUID.
     */
@@ -475,6 +530,11 @@ class IngestionClient(
   }
 
   /** Get a list of destinations for the given query parameters, with pagination details.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param itemsPerPage
     *   The number of items per page to return.
@@ -515,6 +575,11 @@ class IngestionClient(
 
   /** Retrieve a stream listing for a given Singer specification compatible docker type source ID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param sourceID
     *   The source UUID.
     */
@@ -532,6 +597,11 @@ class IngestionClient(
   }
 
   /** Get a single event for a specific runID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param runID
     *   The run UUID.
@@ -553,6 +623,11 @@ class IngestionClient(
   }
 
   /** Get a list of events associated to the given runID, for the given query parameters.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param runID
     *   The run UUID.
@@ -605,6 +680,11 @@ class IngestionClient(
 
   /** Get a single run for the given ID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param runID
     *   The run UUID.
     */
@@ -621,6 +701,11 @@ class IngestionClient(
     }
 
   /** Get a list of runs for the given query parameters, with pagination details.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param itemsPerPage
     *   The number of items per page to return.
@@ -669,6 +754,11 @@ class IngestionClient(
 
   /** Get the source of the given sourceID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param sourceID
     *   The source UUID.
     */
@@ -686,6 +776,11 @@ class IngestionClient(
   }
 
   /** Get a list of sources for the given query parameters, with pagination details.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param itemsPerPage
     *   The number of items per page to return.
@@ -726,6 +821,11 @@ class IngestionClient(
 
   /** Get the task of the given taskID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   The task UUID.
     */
@@ -743,6 +843,11 @@ class IngestionClient(
   }
 
   /** Get a list of tasks for the given query parameters, with pagination details.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param itemsPerPage
     *   The number of items per page to return.
@@ -795,6 +900,11 @@ class IngestionClient(
 
   /** Run the task of the given taskID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   The task UUID.
     */
@@ -812,6 +922,11 @@ class IngestionClient(
   }
 
   /** Search among authentications with a defined set of parameters.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     */
   def searchAuthentications(authenticationSearch: AuthenticationSearch, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
@@ -831,6 +946,11 @@ class IngestionClient(
   }
 
   /** Search among destinations with a defined set of parameters.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     */
   def searchDestinations(destinationSearch: DestinationSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -847,6 +967,11 @@ class IngestionClient(
   }
 
   /** Search among sources with a defined set of parameters.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     */
   def searchSources(sourceSearch: SourceSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -863,6 +988,11 @@ class IngestionClient(
   }
 
   /** Search among tasks with a defined set of parameters.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     */
   def searchTasks(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -879,6 +1009,11 @@ class IngestionClient(
   }
 
   /** Trigger a stream listing request for a Singer specification compatible docker type source.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param sourceID
     *   The source UUID.
@@ -897,6 +1032,11 @@ class IngestionClient(
   }
 
   /** Update the authentication of the given authenticationID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param authenticationID
     *   The authentication UUID.
@@ -923,6 +1063,11 @@ class IngestionClient(
 
   /** Update the destination of the given destinationID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param destinationID
     *   The destination UUID.
     */
@@ -944,6 +1089,11 @@ class IngestionClient(
   }
 
   /** Update the source of the given sourceID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param sourceID
     *   The source UUID.

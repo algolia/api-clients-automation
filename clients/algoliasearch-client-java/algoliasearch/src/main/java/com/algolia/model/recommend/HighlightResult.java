@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 /** HighlightResult */
 @JsonDeserialize(using = HighlightResult.Deserializer.class)
 public interface HighlightResult {
-  /** HighlightResult as Map<String, HighlightResultOption> wrapper. */
+  // HighlightResult as Map<String, HighlightResultOption> wrapper.
   static HighlightResult of(Map<String, HighlightResultOption> value) {
     return new MapOfStringHighlightResultOptionWrapper(value);
   }
 
-  /** HighlightResult as Map<String, HighlightResultOption> wrapper. */
+  // HighlightResult as Map<String, HighlightResultOption> wrapper.
   @JsonSerialize(using = MapOfStringHighlightResultOptionWrapper.Serializer.class)
   class MapOfStringHighlightResultOptionWrapper implements HighlightResult {
 

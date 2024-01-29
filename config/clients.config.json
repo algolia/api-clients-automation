@@ -19,7 +19,7 @@
     "dockerImage": "apic_base",
     "tests": {
       "extension": ".test.cs",
-      "outputFolder": "src/tests"
+      "outputFolder": "src/generated"
     },
     "snippets": {
       "extension": ".cs",

@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = Languages.Deserializer.class)
 public interface Languages {
-  /** Languages as List<String> wrapper. */
+  // Languages as List<String> wrapper.
   static Languages of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
-  /** Languages as Boolean wrapper. */
+  // Languages as Boolean wrapper.
   static Languages of(Boolean value) {
     return new BooleanWrapper(value);
   }
 
-  /** Languages as List<String> wrapper. */
+  // Languages as List<String> wrapper.
   @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
   class ListOfStringWrapper implements Languages {
 
@@ -52,7 +52,7 @@ public interface Languages {
     }
   }
 
-  /** Languages as Boolean wrapper. */
+  // Languages as Boolean wrapper.
   @JsonSerialize(using = BooleanWrapper.Serializer.class)
   class BooleanWrapper implements Languages {
 

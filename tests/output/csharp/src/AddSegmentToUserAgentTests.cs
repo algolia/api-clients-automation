@@ -14,10 +14,10 @@ public class AddSegmentToUserAgentTests
     var searchConfig = new SearchConfig("appid", "apikey");
     searchConfig.UserAgent.AddSegment("My custom segment", "app-12233");
     var client = new SearchClient(searchConfig, _echo);
-    
+
     await client.CustomPostAsync("/test");
     var result = _echo.LastResponse;
-    
+
     Assert.Contains("; My custom segment app-12233", result.Headers["user-agent"]);
   }
 }

@@ -173,6 +173,9 @@ class RecommendClient(
 
   /** Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
     * @param indexName
     *   Index on which to perform the request.
     * @param model
@@ -199,6 +202,9 @@ class RecommendClient(
   }
 
   /** Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    *
+    * Required API Key ACLs:
+    *   - settings
     *
     * @param indexName
     *   Index on which to perform the request.
@@ -227,6 +233,9 @@ class RecommendClient(
 
   /** Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to
     * check the status of that task.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
     *
     * @param indexName
     *   Index on which to perform the request.
@@ -259,6 +268,9 @@ class RecommendClient(
     * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models -
     * **Trending** models are [Trending Items and Trending Facet
     * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    *
+    * Required API Key ACLs:
+    *   - search
     */
   def getRecommendations(
       getRecommendationsParams: GetRecommendationsParams,
@@ -280,6 +292,9 @@ class RecommendClient(
   }
 
   /** List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    *
+    * Required API Key ACLs:
+    *   - settings
     *
     * @param indexName
     *   Index on which to perform the request.

@@ -71,6 +71,9 @@ class QuerySuggestionsClient(
     ) {
 
   /** Create a new Query Suggestions configuration. You can have up to 100 configurations per Algolia application.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
     */
   def createConfig(
       querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex,
@@ -193,6 +196,9 @@ class QuerySuggestionsClient(
   /** Delete a Query Suggestions configuration. Deleting only removes the configuration and stops updates to the Query
     * Suggestions index. The Query Suggestions index itself is not deleted.
     *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
     * @param indexName
     *   Query Suggestions index name.
     */
@@ -210,6 +216,9 @@ class QuerySuggestionsClient(
   }
 
   /** List all Query Suggestions configurations of your Algolia application.
+    *
+    * Required API Key ACLs:
+    *   - settings
     */
   def getAllConfigs(
       requestOptions: Option[RequestOptions] = None
@@ -224,6 +233,9 @@ class QuerySuggestionsClient(
   }
 
   /** Get a single Query Suggestions configuration.
+    *
+    * Required API Key ACLs:
+    *   - settings
     *
     * @param indexName
     *   Query Suggestions index name.
@@ -243,6 +255,9 @@ class QuerySuggestionsClient(
 
   /** Report the status of a Query Suggestions index.
     *
+    * Required API Key ACLs:
+    *   - settings
+    *
     * @param indexName
     *   Query Suggestions index name.
     */
@@ -261,6 +276,9 @@ class QuerySuggestionsClient(
 
   /** Get the logs for a single Query Suggestions index.
     *
+    * Required API Key ACLs:
+    *   - settings
+    *
     * @param indexName
     *   Query Suggestions index name.
     */
@@ -278,6 +296,9 @@ class QuerySuggestionsClient(
   }
 
   /** Update a QuerySuggestions configuration.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
     *
     * @param indexName
     *   Query Suggestions index name.

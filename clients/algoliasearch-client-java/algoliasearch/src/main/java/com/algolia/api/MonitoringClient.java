@@ -669,8 +669,8 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) List the servers belonging to clusters. The response depends on whether you
    * authenticate your API request: - With authentication, the response lists the servers assigned
-   * to your Algolia application&#39;s cluster. - Without authentication, the response lists the
-   * servers for all Algolia clusters.
+   * to your Algolia application's cluster. - Without authentication, the response lists the servers
+   * for all Algolia clusters.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -685,8 +685,8 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) List the servers belonging to clusters. The response depends on whether you
    * authenticate your API request: - With authentication, the response lists the servers assigned
-   * to your Algolia application&#39;s cluster. - Without authentication, the response lists the
-   * servers for all Algolia clusters.
+   * to your Algolia application's cluster. - Without authentication, the response lists the servers
+   * for all Algolia clusters.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */

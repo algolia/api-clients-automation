@@ -561,7 +561,7 @@ public class InsightsClient extends ApiClient {
 
   /**
    * (asynchronously) Send a list of events to the Insights API. You can include up to 1,000 events
-   * in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
+   * in a single request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -578,7 +578,7 @@ public class InsightsClient extends ApiClient {
 
   /**
    * (asynchronously) Send a list of events to the Insights API. You can include up to 1,000 events
-   * in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
+   * in a single request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

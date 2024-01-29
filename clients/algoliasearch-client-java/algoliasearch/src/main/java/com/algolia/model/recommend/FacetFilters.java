@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = FacetFilters.Deserializer.class)
 public interface FacetFilters {
-  /** FacetFilters as List<MixedSearchFilters> wrapper. */
+  // FacetFilters as List<MixedSearchFilters> wrapper.
   static FacetFilters of(List<MixedSearchFilters> value) {
     return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  /** FacetFilters as String wrapper. */
+  // FacetFilters as String wrapper.
   static FacetFilters of(String value) {
     return new StringWrapper(value);
   }
 
-  /** FacetFilters as List<MixedSearchFilters> wrapper. */
+  // FacetFilters as List<MixedSearchFilters> wrapper.
   @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
   class ListOfMixedSearchFiltersWrapper implements FacetFilters {
 
@@ -52,7 +52,7 @@ public interface FacetFilters {
     }
   }
 
-  /** FacetFilters as String wrapper. */
+  // FacetFilters as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements FacetFilters {
 

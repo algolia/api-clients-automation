@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 /** [Filter hits by tags](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/). */
 @JsonDeserialize(using = TagFilters.Deserializer.class)
 public interface TagFilters {
-  /** TagFilters as List<MixedSearchFilters> wrapper. */
+  // TagFilters as List<MixedSearchFilters> wrapper.
   static TagFilters of(List<MixedSearchFilters> value) {
     return new ListOfMixedSearchFiltersWrapper(value);
   }
 
-  /** TagFilters as String wrapper. */
+  // TagFilters as String wrapper.
   static TagFilters of(String value) {
     return new StringWrapper(value);
   }
 
-  /** TagFilters as List<MixedSearchFilters> wrapper. */
+  // TagFilters as List<MixedSearchFilters> wrapper.
   @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
   class ListOfMixedSearchFiltersWrapper implements TagFilters {
 
@@ -49,7 +49,7 @@ public interface TagFilters {
     }
   }
 
-  /** TagFilters as String wrapper. */
+  // TagFilters as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements TagFilters {
 

@@ -18,12 +18,12 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = TypoTolerance.Deserializer.class)
 public interface TypoTolerance {
-  /** TypoTolerance as Boolean wrapper. */
+  // TypoTolerance as Boolean wrapper.
   static TypoTolerance of(Boolean value) {
     return new BooleanWrapper(value);
   }
 
-  /** TypoTolerance as Boolean wrapper. */
+  // TypoTolerance as Boolean wrapper.
   @JsonSerialize(using = BooleanWrapper.Serializer.class)
   class BooleanWrapper implements TypoTolerance {
 

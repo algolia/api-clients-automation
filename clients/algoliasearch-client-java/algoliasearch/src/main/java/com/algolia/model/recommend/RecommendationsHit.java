@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 /** RecommendationsHit */
 @JsonDeserialize(using = RecommendationsHit.Deserializer.class)
 public interface RecommendationsHit {
-  /** RecommendationsHit as RecommendHit wrapper. */
+  // RecommendationsHit as RecommendHit wrapper.
   static RecommendationsHit of(RecommendHit value) {
     return new RecommendHitWrapper(value);
   }
 
-  /** RecommendationsHit as RecommendHit wrapper. */
+  // RecommendationsHit as RecommendHit wrapper.
   @JsonSerialize(using = RecommendHitWrapper.Serializer.class)
   class RecommendHitWrapper implements RecommendationsHit {
 
