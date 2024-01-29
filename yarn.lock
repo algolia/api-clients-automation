@@ -4403,7 +4403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.17.21":
+"@types/express@npm:4.17.21":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
   dependencies:
@@ -7485,7 +7485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.18.2":
+"express@npm:4.18.2":
   version: 4.18.2
   resolution: "express@npm:4.18.2"
   dependencies:
@@ -12238,7 +12238,7 @@ __metadata:
     "@actions/exec": "npm:1.1.1"
     "@actions/io": "npm:1.1.3"
     "@octokit/rest": "npm:20.0.2"
-    "@types/express": "npm:^4.17.21"
+    "@types/express": "npm:4.17.21"
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
     "@types/js-yaml": "npm:4.0.9"
@@ -12253,7 +12253,7 @@ __metadata:
     eslint: "npm:8.56.0"
     eslint-import-resolver-typescript: "npm:3.6.1"
     execa: "npm:8.0.1"
-    express: "npm:^4.18.2"
+    express: "npm:4.18.2"
     folder-hash: "npm:4.0.4"
     fs-extra: "npm:11.2.0"
     js-yaml: "npm:4.1.0"

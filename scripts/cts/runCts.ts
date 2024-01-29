@@ -64,7 +64,7 @@ async function runCtsOne(language: string): Promise<void> {
 }
 
 export async function runCts(languages: string[]): Promise<void> {
-  const close = startTestServer();
+  const close = await startTestServer();
 
   for (const lang of languages) {
     await runCtsOne(lang);

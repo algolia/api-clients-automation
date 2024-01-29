@@ -6,20 +6,24 @@ import { createSpinner } from '../spinners';
 
 let timeoutCounter = 0;
 
-function timeoutServer(): Server {
+async function timeoutServer(): Promise<Server> {
   const spinner = createSpinner('starting tiemout test server');
   const app = express();
   const port = 6677;
   app.get('/1/test', (req, res) => {
+    // this is safe because js is single threaded
     timeoutCounter++;
-    // wait for 3 seconds before responding
+    // wait for 2.5 seconds before responding
     setTimeout(() => {
       res.send({ message: 'timeout test server response' });
-    }, 3000);
+    }, 2500);
   });
 
-  const server = app.listen(port, () => {
-    spinner.text = `timeout test server listening at http://localhost:${port}`;
+  const server = await new Promise<Server>((resolve) => {
+    const s = app.listen(port, () => {
+      spinner.text = `timeout test server listening at http://localhost:${port}`;
+      resolve(s);
+    });
   });
 
   server.addListener('close', () => {
@@ -29,7 +33,7 @@ function timeoutServer(): Server {
   return server;
 }
 
-function okServer(): Server {
+async function okServer(): Promise<Server> {
   const spinner = createSpinner('starting ok test server');
   const app = express();
   const port = 6678;
@@ -37,8 +41,11 @@ function okServer(): Server {
     res.send({ message: 'ok test server response' });
   });
 
-  const server = app.listen(port, () => {
-    spinner.text = `ok test server listening at http://localhost:${port}`;
+  const server = await new Promise<Server>((resolve) => {
+    const s = app.listen(port, () => {
+      spinner.text = `ok test server listening at http://localhost:${port}`;
+      resolve(s);
+    });
   });
 
   server.addListener('close', () => {
@@ -48,9 +55,9 @@ function okServer(): Server {
   return server;
 }
 
-export function startTestServer(): () => Promise<void> {
-  const server1 = timeoutServer();
-  const server2 = okServer();
+export async function startTestServer(): Promise<() => Promise<void>> {
+  const server1 = await timeoutServer();
+  const server2 = await okServer();
 
   return async () => {
     await Promise.all([
