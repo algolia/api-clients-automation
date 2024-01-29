@@ -23,7 +23,7 @@ namespace Algolia.Search.Http
     {
       _bodyAsStream = bodyAsStream;
     }
-    
+
     /// <summary>
     /// Last response returned by the echo API
     /// </summary>

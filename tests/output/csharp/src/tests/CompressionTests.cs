@@ -9,7 +9,7 @@ namespace Algolia.Search.Tests.tests;
 public class CompressionTests
 {
   private readonly EchoHttpRequester _echo = new(bodyAsStream: true);
-  
+
   [Fact]
   public async Task DoNotCompressRequestByDefault()
   {
@@ -17,7 +17,11 @@ public class CompressionTests
 
     var client = new SearchClient(searchConfig, _echo);
 
-    await client.CustomPostAsync("/1/mock", new Dictionary<string, object>(), new { test = "test" });
+    await client.CustomPostAsync(
+      "/1/mock",
+      new Dictionary<string, object>(),
+      new { test = "test" }
+    );
 
     var lastResponseBodyStream = _echo.LastResponse.BodyStream;
 
@@ -25,19 +29,24 @@ public class CompressionTests
 
     var cp = new MemoryStream();
     await lastResponseBodyStream.CopyToAsync(cp);
-    
+
     lastResponseBodyStream.Position = 0;
     cp.Position = 0;
-    
+
     GZipStream gZipStream = new(lastResponseBodyStream, CompressionMode.Decompress);
     var reader = new StreamReader(gZipStream);
 
-    var exception = await Assert.ThrowsAsync<InvalidDataException>(async () => await reader.ReadToEndAsync());
+    var exception = await Assert.ThrowsAsync<InvalidDataException>(
+      async () => await reader.ReadToEndAsync()
+    );
 
-    Assert.Equal("The archive entry was compressed using an unsupported compression method.", exception.Message);
-    
+    Assert.Equal(
+      "The archive entry was compressed using an unsupported compression method.",
+      exception.Message
+    );
+
     var stdReader = new StreamReader(cp);
-    
+
     Assert.Equal("{\"test\":\"test\"}", await stdReader.ReadToEndAsync());
   }
 
@@ -51,7 +60,11 @@ public class CompressionTests
 
     var client = new SearchClient(searchConfig, _echo);
 
-    await client.CustomPostAsync("/1/mock", new Dictionary<string, object>(), new { test = "test" });
+    await client.CustomPostAsync(
+      "/1/mock",
+      new Dictionary<string, object>(),
+      new { test = "test" }
+    );
 
     var lastResponseBodyStream = _echo.LastResponse.BodyStream;
 

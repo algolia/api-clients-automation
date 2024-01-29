@@ -11,7 +11,7 @@ namespace Algolia.Search.Serializer;
 internal class DefaultJsonSerializer
 {
   private readonly JsonSerializerSettings _serializerSettings;
-  
+
   public DefaultJsonSerializer(JsonSerializerSettings serializerSettings)
   {
     _serializerSettings = serializerSettings;
@@ -29,7 +29,7 @@ internal class DefaultJsonSerializer
       // the object to be serialized is an oneOf/anyOf schema
       return schema.ToJson();
     }
-    
+
     return JsonConvert.SerializeObject(obj, _serializerSettings);
   }
 
