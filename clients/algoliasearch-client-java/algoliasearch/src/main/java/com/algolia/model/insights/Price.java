@@ -14,17 +14,17 @@ import java.util.logging.Logger;
 /** The total price of a product, including any discounts, in units of `currency`. */
 @JsonDeserialize(using = Price.Deserializer.class)
 public interface Price {
-  /** Price as Double wrapper. */
+  // Price as Double wrapper.
   static Price of(Double value) {
     return new DoubleWrapper(value);
   }
 
-  /** Price as String wrapper. */
+  // Price as String wrapper.
   static Price of(String value) {
     return new StringWrapper(value);
   }
 
-  /** Price as Double wrapper. */
+  // Price as Double wrapper.
   @JsonSerialize(using = DoubleWrapper.Serializer.class)
   class DoubleWrapper implements Price {
 
@@ -47,7 +47,7 @@ public interface Price {
     }
   }
 
-  /** Price as String wrapper. */
+  // Price as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements Price {
 

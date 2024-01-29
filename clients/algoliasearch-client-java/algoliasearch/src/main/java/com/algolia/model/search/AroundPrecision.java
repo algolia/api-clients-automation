@@ -20,17 +20,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = AroundPrecision.Deserializer.class)
 public interface AroundPrecision {
-  /** AroundPrecision as Integer wrapper. */
+  // AroundPrecision as Integer wrapper.
   static AroundPrecision of(Integer value) {
     return new IntegerWrapper(value);
   }
 
-  /** AroundPrecision as List<AroundPrecisionFromValueInner> wrapper. */
+  // AroundPrecision as List<AroundPrecisionFromValueInner> wrapper.
   static AroundPrecision of(List<AroundPrecisionFromValueInner> value) {
     return new ListOfAroundPrecisionFromValueInnerWrapper(value);
   }
 
-  /** AroundPrecision as Integer wrapper. */
+  // AroundPrecision as Integer wrapper.
   @JsonSerialize(using = IntegerWrapper.Serializer.class)
   class IntegerWrapper implements AroundPrecision {
 
@@ -53,7 +53,7 @@ public interface AroundPrecision {
     }
   }
 
-  /** AroundPrecision as List<AroundPrecisionFromValueInner> wrapper. */
+  // AroundPrecision as List<AroundPrecisionFromValueInner> wrapper.
   @JsonSerialize(using = ListOfAroundPrecisionFromValueInnerWrapper.Serializer.class)
   class ListOfAroundPrecisionFromValueInnerWrapper implements AroundPrecision {
 

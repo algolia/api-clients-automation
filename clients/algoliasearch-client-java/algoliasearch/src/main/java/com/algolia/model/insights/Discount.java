@@ -14,17 +14,17 @@ import java.util.logging.Logger;
 /** The absolute value of the discount for this product, in units of `currency`. */
 @JsonDeserialize(using = Discount.Deserializer.class)
 public interface Discount {
-  /** Discount as Double wrapper. */
+  // Discount as Double wrapper.
   static Discount of(Double value) {
     return new DoubleWrapper(value);
   }
 
-  /** Discount as String wrapper. */
+  // Discount as String wrapper.
   static Discount of(String value) {
     return new StringWrapper(value);
   }
 
-  /** Discount as Double wrapper. */
+  // Discount as Double wrapper.
   @JsonSerialize(using = DoubleWrapper.Serializer.class)
   class DoubleWrapper implements Discount {
 
@@ -47,7 +47,7 @@ public interface Discount {
     }
   }
 
-  /** Discount as String wrapper. */
+  // Discount as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements Discount {
 

@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 /** MixedSearchFilters */
 @JsonDeserialize(using = MixedSearchFilters.Deserializer.class)
 public interface MixedSearchFilters {
-  /** MixedSearchFilters as List<String> wrapper. */
+  // MixedSearchFilters as List<String> wrapper.
   static MixedSearchFilters of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
-  /** MixedSearchFilters as String wrapper. */
+  // MixedSearchFilters as String wrapper.
   static MixedSearchFilters of(String value) {
     return new StringWrapper(value);
   }
 
-  /** MixedSearchFilters as List<String> wrapper. */
+  // MixedSearchFilters as List<String> wrapper.
   @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
   class ListOfStringWrapper implements MixedSearchFilters {
 
@@ -49,7 +49,7 @@ public interface MixedSearchFilters {
     }
   }
 
-  /** MixedSearchFilters as String wrapper. */
+  // MixedSearchFilters as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements MixedSearchFilters {
 

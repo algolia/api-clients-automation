@@ -47,7 +47,6 @@ final class InsightsClient implements ApiClient {
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
   }
 
-  /// Send requests to the Algolia REST API.
   /// This method allow you to send requests to the Algolia REST API.
   ///
   /// Parameters:
@@ -81,7 +80,6 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Send requests to the Algolia REST API.
   /// This method allow you to send requests to the Algolia REST API.
   ///
   /// Parameters:
@@ -115,7 +113,6 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Send requests to the Algolia REST API.
   /// This method allow you to send requests to the Algolia REST API.
   ///
   /// Parameters:
@@ -152,7 +149,6 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Send requests to the Algolia REST API.
   /// This method allow you to send requests to the Algolia REST API.
   ///
   /// Parameters:
@@ -189,7 +185,6 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Delete user token.
   /// Delete all events related to a certain user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
   ///
   /// Parameters:
@@ -214,7 +209,6 @@ final class InsightsClient implements ApiClient {
     );
   }
 
-  /// Send events.
   /// Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
   ///
   /// Parameters:
