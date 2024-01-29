@@ -6,7 +6,7 @@ public static class Config
 {
   public static Configuration Load()
   {
-    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, envFilePaths: new[] { "../.env", "./Playground/.env"}));
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv:true, envFilePaths: new[] { "../.env", "./Playground/.env"}));
     return new Configuration
     {
       AppId = GetEnvVariable("ALGOLIA_APPLICATION_ID"),
