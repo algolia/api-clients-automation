@@ -25,11 +25,16 @@ runs:
       with:
         distribution: zulu
         java-version-file: config/.java-version
-        cache: gradle
 
     - name: Validate gradle wrapper
       if: inputs.type != 'minimal'
       uses: gradle/wrapper-validation-action@v1
+
+    - name: Setup gradle
+      if: inputs.type != 'minimal'
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        cache-read-only: false
 
     - name: Download Java formatter
       if: inputs.type != 'minimal'
@@ -54,12 +59,6 @@ runs:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
         # let yarn handle the cache hash
         key: yarn-cache-${{ env.CACHE_VERSION }}
-
-    - name: Cache node modules
-      uses: actions/cache@v4
-      with:
-        path: node_modules
-        key: node-modules-${{ env.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
       shell: bash
@@ -152,10 +151,8 @@ runs:
       if: ${{ inputs.language == 'kotlin' }}
       uses: actions/cache@v4
       with:
-        path: |
-          clients/algoliasearch-client-kotlin/.gradle
-          clients/algoliasearch-client-kotlin/client/build/spotless
-        key: gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
+        path: clients/algoliasearch-client-kotlin/client/build/spotless
+        key: spotless-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
 
     # Dart
     - name: Install dart
