@@ -162,7 +162,7 @@ public class {{classname}} extends ApiClient {
 
   /**
   * (asynchronously)
-  * {{notes}}{{#allParams}}
+  * {{{notes}}}{{#allParams}}
   * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -186,7 +186,7 @@ public class {{classname}} extends ApiClient {
   {{! This case only sets `requestOptions` as optional }}
   /**
   * (asynchronously)
-  * {{notes}}{{#allParams}}
+  * {{{notes}}}{{#allParams}}
   * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   {{> api_javadoc}}
@@ -198,7 +198,7 @@ public class {{classname}} extends ApiClient {
   {{#optionalParams.0}}
   /**
   * (asynchronously)
-  * {{notes}}{{#requiredParams}}
+  * {{{notes}}}{{#requiredParams}}
   * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -212,7 +212,7 @@ public class {{classname}} extends ApiClient {
   {{#optionalParams.0}}
   /**
   * (asynchronously)
-  * {{notes}}{{#requiredParams}}
+  * {{{notes}}}{{#requiredParams}}
   * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   {{> api_javadoc}}
