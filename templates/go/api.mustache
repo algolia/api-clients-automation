@@ -162,7 +162,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.QueryEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
   {{/vendorExtensions}}
 
 	headers := make(map[string]string)

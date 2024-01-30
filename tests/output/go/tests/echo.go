@@ -21,7 +21,7 @@ type EchoRequester struct {
 
 func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
 	e.Host = req.URL.Host
-	e.Path = req.URL.Path
+	e.Path = req.URL.EscapedPath()
 	e.Method = req.Method
 	e.Header = req.Header
 	e.Query = req.URL.Query()
