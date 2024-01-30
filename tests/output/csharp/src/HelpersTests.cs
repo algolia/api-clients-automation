@@ -4,6 +4,7 @@ using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Utils;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
