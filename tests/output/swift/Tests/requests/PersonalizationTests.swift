@@ -1,23 +1,22 @@
-import SwiftyJSON
 import XCTest
+
 #if canImport(AnyCodable)
     import AnyCodable
 #endif
+import Utils
 
 @testable import Core
 @testable import Personalization
 
 final class PersonalizationClientRequestsTests: XCTestCase {
-    typealias StringMapObject = [String: String?]
-
-    let APPLICATION_ID = ""
-    let API_KEY = ""
+    let APPLICATION_ID = "my_application_id"
+    let API_KEY = "my_api_key"
 
     /**
      allow del method for a custom path with minimal parameters
      */
     func testCustomDeleteTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -37,7 +36,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow del method for a custom path with all parameters
      */
     func testCustomDeleteTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -60,7 +59,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow get method for a custom path with minimal parameters
      */
     func testCustomGetTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -80,7 +79,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow get method for a custom path with all parameters
      */
     func testCustomGetTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -103,7 +102,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow post method for a custom path with minimal parameters
      */
     func testCustomPostTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -112,11 +111,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -130,7 +128,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow post method for a custom path with all parameters
      */
     func testCustomPostTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -139,11 +137,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -160,7 +157,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions can override default query parameters
      */
     func testCustomPostTest2() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -175,11 +172,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -196,7 +192,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions merges query parameters with default ones
      */
     func testCustomPostTest3() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -211,11 +207,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -232,7 +227,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions can override default headers
      */
     func testCustomPostTest4() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -247,11 +242,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -268,7 +262,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -276,7 +270,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions merges headers with default ones
      */
     func testCustomPostTest5() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -291,11 +285,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -312,7 +305,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -320,7 +313,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts booleans
      */
     func testCustomPostTest6() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -335,11 +328,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -356,7 +348,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts integers
      */
     func testCustomPostTest7() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -371,11 +363,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -392,7 +383,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of string
      */
     func testCustomPostTest8() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -407,11 +398,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -428,7 +418,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of booleans
      */
     func testCustomPostTest9() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -443,11 +433,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -464,7 +453,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of integers
      */
     func testCustomPostTest10() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -479,11 +468,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -500,7 +488,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow put method for a custom path with minimal parameters
      */
     func testCustomPutTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -509,11 +497,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -527,7 +514,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      allow put method for a custom path with all parameters
      */
     func testCustomPutTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -536,11 +523,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -557,7 +543,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      delete deleteUserProfile
      */
     func testDeleteUserProfileTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -577,7 +563,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      get getPersonalizationStrategy
      */
     func testGetPersonalizationStrategyTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -597,7 +583,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      get getUserTokenProfile
      */
     func testGetUserTokenProfileTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -617,7 +603,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
      set setPersonalizationStrategy
      */
     func testSetPersonalizationStrategyTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Personalization.Configuration = try Personalization.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
 
@@ -626,11 +612,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
-        )
+        let comparableData = "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"Event\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 

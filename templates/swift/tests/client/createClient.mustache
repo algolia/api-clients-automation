@@ -1,0 +1,3 @@
+let configuration: {{import}}.Configuration = try {{import}}.Configuration(appId: "{{parametersWithDataTypeMap.appId.value}}", apiKey: "{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}, region: {{#parametersWithDataTypeMap.region}}Region(rawValue: "{{parametersWithDataTypeMap.region.value}}"){{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}nil{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})
+let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+{{^autoCreateClient}}let client = {{/autoCreateClient}}{{client}}(configuration: configuration, transporter: transporter)

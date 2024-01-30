@@ -15,8 +15,8 @@ typealias Client = {{classname}}
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var applicationID: String {
-        self.configuration.applicationID
+    var appId: String {
+        self.configuration.appId
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -28,8 +28,8 @@ typealias Client = {{classname}}
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
-        self.init(configuration: try Configuration(applicationID: applicationID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
+    public convenience init(appId: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
+        self.init(configuration: try Configuration(appId: appId, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 
 {{#operation}}
@@ -110,6 +110,19 @@ typealias Client = {{classname}}
     {{/isDeprecated}}
     {{^returnType}}@discardableResult{{/returnType}}
     {{#vendorExtensions}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}AnyCodable{{/returnType}}> {
+        {{#pathParams}}{{#isString}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
+        }
+
+        {{/required}}{{/isString}}{{/pathParams}}{{#queryParams}}{{#isString}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
+        }
+
+        {{/required}}{{/isString}}{{/queryParams}}{{#bodyParam}}{{#isFreeFormObject}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
+        }
+
+        {{/required}}{{/isFreeFormObject}}{{/bodyParam}}
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{path}}}"{{#pathParams}}
         let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"
         let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .{{#x-is-custom-request}}urlPathAllowed{{/x-is-custom-request}}{{^x-is-custom-request}}urlPathAlgoliaAllowed{{/x-is-custom-request}}) ?? ""

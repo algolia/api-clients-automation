@@ -1,23 +1,22 @@
-import SwiftyJSON
 import XCTest
+
 #if canImport(AnyCodable)
     import AnyCodable
 #endif
+import Utils
 
 @testable import Core
 @testable import Recommend
 
 final class RecommendClientRequestsTests: XCTestCase {
-    typealias StringMapObject = [String: String?]
-
-    let APPLICATION_ID = ""
-    let API_KEY = ""
+    let APPLICATION_ID = "my_application_id"
+    let API_KEY = "my_api_key"
 
     /**
      allow del method for a custom path with minimal parameters
      */
     func testCustomDeleteTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -37,7 +36,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow del method for a custom path with all parameters
      */
     func testCustomDeleteTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -60,7 +59,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow get method for a custom path with minimal parameters
      */
     func testCustomGetTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -80,7 +79,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow get method for a custom path with all parameters
      */
     func testCustomGetTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -103,7 +102,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow post method for a custom path with minimal parameters
      */
     func testCustomPostTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -112,11 +111,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -130,7 +128,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow post method for a custom path with all parameters
      */
     func testCustomPostTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -139,11 +137,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -160,7 +157,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions can override default query parameters
      */
     func testCustomPostTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -175,11 +172,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -196,7 +192,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions merges query parameters with default ones
      */
     func testCustomPostTest3() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -211,11 +207,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -232,7 +227,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions can override default headers
      */
     func testCustomPostTest4() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -247,11 +242,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -268,7 +262,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -276,7 +270,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions merges headers with default ones
      */
     func testCustomPostTest5() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -291,11 +285,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -312,7 +305,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -320,7 +313,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts booleans
      */
     func testCustomPostTest6() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -335,11 +328,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -356,7 +348,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts integers
      */
     func testCustomPostTest7() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -371,11 +363,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -392,7 +383,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of string
      */
     func testCustomPostTest8() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -407,11 +398,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -428,7 +418,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of booleans
      */
     func testCustomPostTest9() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -443,11 +433,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -464,7 +453,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of integers
      */
     func testCustomPostTest10() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -479,11 +468,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -500,7 +488,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow put method for a custom path with minimal parameters
      */
     func testCustomPutTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -509,11 +497,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -527,7 +514,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      allow put method for a custom path with all parameters
      */
     func testCustomPutTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -536,11 +523,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -557,7 +543,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      deleteRecommendRule0
      */
     func testDeleteRecommendRuleTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -577,7 +563,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      getRecommendRule0
      */
     func testGetRecommendRuleTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -597,7 +583,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      getRecommendStatus0
      */
     func testGetRecommendStatusTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -617,7 +603,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get recommendations for recommend model with minimal parameters
      */
     func testGetRecommendationsTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -626,11 +612,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -644,7 +629,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get recommendations for recommend model with all parameters
      */
     func testGetRecommendationsTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -653,11 +638,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -671,7 +655,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get recommendations for trending model with minimal parameters
      */
     func testGetRecommendationsTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -680,11 +664,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -698,7 +681,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get recommendations for trending model with all parameters
      */
     func testGetRecommendationsTest3() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -707,11 +690,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -725,7 +707,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get multiple recommendations with minimal parameters
      */
     func testGetRecommendationsTest4() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -734,11 +716,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -752,7 +733,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get multiple recommendations with all parameters
      */
     func testGetRecommendationsTest5() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -761,11 +742,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -779,7 +759,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      get frequently bought together recommendations
      */
     func testGetRecommendationsTest6() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -788,11 +768,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -806,7 +785,7 @@ final class RecommendClientRequestsTests: XCTestCase {
      searchRecommendRules0
      */
     func testSearchRecommendRulesTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Recommend.Configuration = try Recommend.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -815,11 +794,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 

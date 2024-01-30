@@ -1,23 +1,22 @@
-import SwiftyJSON
 import XCTest
+
 #if canImport(AnyCodable)
     import AnyCodable
 #endif
+import Utils
 
 @testable import Core
 @testable import Ingestion
 
 final class IngestionClientRequestsTests: XCTestCase {
-    typealias StringMapObject = [String: String?]
-
-    let APPLICATION_ID = ""
-    let API_KEY = ""
+    let APPLICATION_ID = "my_application_id"
+    let API_KEY = "my_api_key"
 
     /**
      createAuthenticationOAuth
      */
     func testCreateAuthenticationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -26,11 +25,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}"
-        )
+        let comparableData = "{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -44,7 +42,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createAuthenticationAlgolia
      */
     func testCreateAuthenticationTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -53,11 +51,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}"
-        )
+        let comparableData = "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -71,7 +68,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createDestination
      */
     func testCreateDestinationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -80,11 +77,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
-        )
+        let comparableData = "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -98,7 +94,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createSource
      */
     func testCreateSourceTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -107,11 +103,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
-        )
+        let comparableData = "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -125,7 +120,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createTaskOnDemand
      */
     func testCreateTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -134,11 +129,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
-        )
+        let comparableData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -152,7 +146,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createTaskSchedule
      */
     func testCreateTaskTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -161,11 +155,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"schedule\",\"cron\":\"* * * * *\"},\"action\":\"replace\"}"
-        )
+        let comparableData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"schedule\",\"cron\":\"* * * * *\"},\"action\":\"replace\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -179,7 +172,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      createTaskSubscription
      */
     func testCreateTaskTest2() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -188,11 +181,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
-        )
+        let comparableData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -206,7 +198,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow del method for a custom path with minimal parameters
      */
     func testCustomDeleteTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -226,7 +218,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow del method for a custom path with all parameters
      */
     func testCustomDeleteTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -249,7 +241,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow get method for a custom path with minimal parameters
      */
     func testCustomGetTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -269,7 +261,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow get method for a custom path with all parameters
      */
     func testCustomGetTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -292,7 +284,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow post method for a custom path with minimal parameters
      */
     func testCustomPostTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -301,11 +293,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -319,7 +310,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow post method for a custom path with all parameters
      */
     func testCustomPostTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -328,11 +319,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -349,7 +339,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions can override default query parameters
      */
     func testCustomPostTest2() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -364,11 +354,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -385,7 +374,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions merges query parameters with default ones
      */
     func testCustomPostTest3() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -400,11 +389,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -421,7 +409,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions can override default headers
      */
     func testCustomPostTest4() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -436,11 +424,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -457,7 +444,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -465,7 +452,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions merges headers with default ones
      */
     func testCustomPostTest5() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -480,11 +467,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -501,7 +487,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -509,7 +495,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts booleans
      */
     func testCustomPostTest6() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -524,11 +510,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -545,7 +530,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts integers
      */
     func testCustomPostTest7() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -560,11 +545,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -581,7 +565,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of string
      */
     func testCustomPostTest8() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -596,11 +580,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -617,7 +600,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of booleans
      */
     func testCustomPostTest9() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -632,11 +615,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -653,7 +635,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of integers
      */
     func testCustomPostTest10() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -668,11 +650,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -689,7 +670,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow put method for a custom path with minimal parameters
      */
     func testCustomPutTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -698,11 +679,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -716,7 +696,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      allow put method for a custom path with all parameters
      */
     func testCustomPutTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -725,11 +705,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -746,7 +725,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      deleteAuthentication
      */
     func testDeleteAuthenticationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -766,7 +745,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      deleteDestination
      */
     func testDeleteDestinationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -786,7 +765,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      deleteSource
      */
     func testDeleteSourceTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -806,7 +785,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      deleteTask
      */
     func testDeleteTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -826,7 +805,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      disableTask
      */
     func testDisableTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -848,7 +827,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      enableTask
      */
     func testEnableTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -870,7 +849,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getAuthentication
      */
     func testGetAuthenticationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -890,7 +869,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getAuthentications
      */
     func testGetAuthenticationsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -910,7 +889,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getDestination
      */
     func testGetDestinationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -930,7 +909,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getDestinations
      */
     func testGetDestinationsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -950,7 +929,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getDockerSourceStreams
      */
     func testGetDockerSourceStreamsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -970,7 +949,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getEvent
      */
     func testGetEventTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -990,7 +969,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getEvents
      */
     func testGetEventsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1010,7 +989,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getRun
      */
     func testGetRunTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1030,7 +1009,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getRuns
      */
     func testGetRunsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1050,7 +1029,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getSource
      */
     func testGetSourceTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1070,7 +1049,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getSources
      */
     func testGetSourcesTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1090,7 +1069,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getTask
      */
     func testGetTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1110,7 +1089,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      getTasks
      */
     func testGetTasksTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1130,7 +1109,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      runTask
      */
     func testRunTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1152,7 +1131,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      searchAuthentications
      */
     func testSearchAuthenticationsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1161,11 +1140,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"authenticationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"
-        )
+        let comparableData = "{\"authenticationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1179,7 +1157,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      searchDestinations
      */
     func testSearchDestinationsTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1188,11 +1166,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"destinationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"
-        )
+        let comparableData = "{\"destinationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1206,7 +1183,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      searchSources
      */
     func testSearchSourcesTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1215,11 +1192,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"sourceIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"
-        )
+        let comparableData = "{\"sourceIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1233,7 +1209,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      searchTasks
      */
     func testSearchTasksTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1242,11 +1218,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"
-        )
+        let comparableData = "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1260,7 +1235,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      triggerDockerSourceDiscover
      */
     func testTriggerDockerSourceDiscoverTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1282,7 +1257,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      updateAuthentication
      */
     func testUpdateAuthenticationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1291,11 +1266,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"name\":\"newName\"}"
-        )
+        let comparableData = "{\"name\":\"newName\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1309,7 +1283,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      updateDestination
      */
     func testUpdateDestinationTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1318,11 +1292,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"name\":\"newName\"}"
-        )
+        let comparableData = "{\"name\":\"newName\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1336,7 +1309,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      updateSource
      */
     func testUpdateSourceTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1345,11 +1318,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"name\":\"newName\"}"
-        )
+        let comparableData = "{\"name\":\"newName\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1363,7 +1335,7 @@ final class IngestionClientRequestsTests: XCTestCase {
      updateTask
      */
     func testUpdateTaskTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: Ingestion.Configuration = try Ingestion.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -1372,11 +1344,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"enabled\":false}"
-        )
+        let comparableData = "{\"enabled\":false}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
