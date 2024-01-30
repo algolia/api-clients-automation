@@ -73,7 +73,7 @@ public class TestsClient extends TestsGenerator {
 
               stepOut.put("useEchoRequester", !hasCustomHosts);
               stepOut.put("hasCustomHosts", hasCustomHosts);
-              if (hasCustomHosts && !"true".equals(System.getenv("CI"))) {
+              if (hasCustomHosts && !language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
                 // hack for docker on mac, the `network=host` does not work so we need to use
                 // another local IP
                 step.parameters.put(

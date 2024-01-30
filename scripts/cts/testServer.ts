@@ -13,10 +13,10 @@ async function timeoutServer(): Promise<Server> {
   app.get('/1/test', (req, res) => {
     // this is safe because js is single threaded
     timeoutCounter++;
-    // wait for 2.5 seconds before responding
+    // wait for 5.5 seconds, the default read timeout is 5 seconds
     setTimeout(() => {
       res.json({ message: 'timeout test server response' });
-    }, 2500);
+    }, 5500);
   });
 
   const server = await new Promise<Server>((resolve) => {
