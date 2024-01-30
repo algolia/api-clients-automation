@@ -160,8 +160,10 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		{{/returnType}}
 	)
 
+  {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, url.PathEscape(parameterToString(r.{{paramName}}))){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.QueryEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  {{/vendorExtensions}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -287,7 +289,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		}
 		
     var v ErrorBase
-    err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+    err = c.decode(&v, resBody)
     if err != nil {
       newErr.Message = err.Error()
       return {{#returnType}}returnValue, {{/returnType}}newErr
@@ -297,7 +299,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	}
 
 	{{#returnType}}
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
 	}
