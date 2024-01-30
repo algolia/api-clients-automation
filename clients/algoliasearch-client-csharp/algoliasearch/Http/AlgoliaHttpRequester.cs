@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Algolia.Search.Http
 {
@@ -27,7 +28,8 @@ namespace Algolia.Search.Http
 
     public AlgoliaHttpRequester(ILoggerFactory loggerFactory)
     {
-      _logger = loggerFactory.CreateLogger<AlgoliaHttpRequester>();
+      var logger = loggerFactory ?? NullLoggerFactory.Instance;
+      _logger = logger.CreateLogger<AlgoliaHttpRequester>();
     }
 
     /// <summary>
