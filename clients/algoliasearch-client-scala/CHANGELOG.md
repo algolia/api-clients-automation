@@ -1,3 +1,7 @@
+## [2.0.0-alpha.7](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.6...2.0.0-alpha.7)
+
+- [b3d61128a](https://github.com/algolia/api-clients-automation/commit/b3d61128a) docs(clients): add ACL section to code doc ([#2576](https://github.com/algolia/api-clients-automation/pull/2576)) by [@millotp](https://github.com/millotp/)
+
 ## [2.0.0-alpha.6](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.5...2.0.0-alpha.6)
 
 - [379fbc501](https://github.com/algolia/api-clients-automation/commit/379fbc501) fix(specs): correct `searchSynonyms` parameters ([#2595](https://github.com/algolia/api-clients-automation/pull/2595)) by [@morganleroi](https://github.com/morganleroi/)
