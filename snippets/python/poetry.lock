@@ -119,7 +119,7 @@ files = []
 develop = true
 
 [package.dependencies]
-aiohttp = ">= 3.9.0"
+aiohttp = ">= 3.9.2"
 async-timeout = ">= 4.0.3"
 pydantic = ">= 2"
 python-dateutil = ">= 2.8.2"
