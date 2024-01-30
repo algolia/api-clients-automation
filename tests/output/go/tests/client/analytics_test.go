@@ -28,48 +28,52 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	return client, echo
 }
 
+// calls api with correct user agent
 func TestAnalyticscommonApi0(t *testing.T) {
 	var err error
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
+	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
+// calls api with default read timeouts
 func TestAnalyticscommonApi1(t *testing.T) {
 	var err error
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
 	))
+	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
 
+// calls api with default write timeouts
 func TestAnalyticscommonApi2(t *testing.T) {
 	var err error
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
+	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
 
+// fallbacks to the alias when region is not given
 func TestAnalyticsparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.Configuration
 	_ = client
-	require.NoError(t, err)
+	_ = echo
 	cfg = analytics.Configuration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
@@ -82,16 +86,18 @@ func TestAnalyticsparameters0(t *testing.T) {
 	_, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
 		"my-index",
 	))
+	require.NoError(t, err)
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
 
+// uses the correct region
 func TestAnalyticsparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.Configuration
 	_ = client
-	require.NoError(t, err)
+	_ = echo
 	cfg = analytics.Configuration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
@@ -105,15 +111,18 @@ func TestAnalyticsparameters1(t *testing.T) {
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
 	))
+	require.NoError(t, err)
 	require.Equal(t, "analytics.de.algolia.com", echo.Host)
 }
 
+// throws when incorrect region is given
 func TestAnalyticsparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.Configuration
 	_ = client
+	_ = echo
 	cfg = analytics.Configuration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
@@ -126,6 +135,7 @@ func TestAnalyticsparameters2(t *testing.T) {
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
+// getAverageClickPosition throws without index
 func TestAnalyticsparameters3(t *testing.T) {
 	var err error
 	client, echo := createAnalyticsClient(t)
