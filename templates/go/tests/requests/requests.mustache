@@ -66,9 +66,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       {{/requestOptions}})
       require.NoError(t, err)
 
-      expectedPath, err := url.QueryUnescape("{{{request.path}}}")
-      require.NoError(t, err)
-      require.Equal(t, expectedPath, echo.Path)
+      require.Equal(t, "{{{request.path}}}", echo.Path)
       require.Equal(t, "{{{request.method}}}", echo.Method)
 
       {{#request.body}}
