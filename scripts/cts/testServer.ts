@@ -15,7 +15,7 @@ async function timeoutServer(): Promise<Server> {
     timeoutCounter++;
     // wait for 2.5 seconds before responding
     setTimeout(() => {
-      res.send({ message: 'timeout test server response' });
+      res.json({ message: 'timeout test server response' });
     }, 2500);
   });
 
@@ -38,7 +38,7 @@ async function okServer(): Promise<Server> {
   const app = express();
   const port = 6678;
   app.get('/1/test', (req, res) => {
-    res.send({ message: 'ok test server response' });
+    res.json({ message: 'ok test server response' });
   });
 
   const server = await new Promise<Server>((resolve) => {

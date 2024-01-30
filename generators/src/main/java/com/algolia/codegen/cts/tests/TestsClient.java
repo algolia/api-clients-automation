@@ -69,8 +69,11 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
               stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
 
-              stepOut.put("useEchoRequester", step.parameters == null || !step.parameters.containsKey("customHosts"));
-              if (step.parameters != null && step.parameters.containsKey("customHosts") && !"true".equals(System.getenv("CI"))) {
+              boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
+
+              stepOut.put("useEchoRequester", !hasCustomHosts);
+              stepOut.put("hasCustomHosts", hasCustomHosts);
+              if (hasCustomHosts && !"true".equals(System.getenv("CI"))) {
                 // hack for docker on mac, the `network=host` does not work so we need to use
                 // another local IP
                 step.parameters.put(
