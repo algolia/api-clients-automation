@@ -82,7 +82,11 @@
                   "value": "Superhero",
                   "matchLevel": "none"
                 }
-              ]
+              ],
+              "year": {
+                "value": "1964",
+                "matchLevel": "none"
+              }
             },
             "_highlightResult": {
               "genres": [
@@ -91,7 +95,12 @@
                   "matchLevel": "none",
                   "matchedWords": []
                 }
-              ]
+              ],
+              "year": {
+                "value": "1964",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
             }
           }
         ]
