@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"net/url"
 	"os"
 	"testing"
 
@@ -61,9 +60,7 @@ func TestSearch_AddApiKey(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -80,9 +77,7 @@ func TestSearch_AddOrUpdateObject(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/uniqueID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/uniqueID", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -100,9 +95,7 @@ func TestSearch_AppendSource(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/security/sources/append")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/security/sources/append", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -120,9 +113,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -146,9 +137,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -162,9 +151,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -178,9 +165,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -194,9 +179,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -210,9 +193,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -226,9 +207,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -242,9 +221,7 @@ func TestSearch_Batch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -263,9 +240,7 @@ func TestSearch_BatchAssignUserIds(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -291,9 +266,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -313,9 +286,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -330,9 +301,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -349,9 +318,7 @@ func TestSearch_Browse(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_browse/browse")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_browse/browse", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -390,9 +357,7 @@ func TestSearch_Browse(t *testing.T) {
 				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -405,9 +370,7 @@ func TestSearch_Browse(t *testing.T) {
 			search.NewEmptyBrowseParamsObject().SetCursor("test"))))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/browse")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -424,9 +387,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/clear")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)
@@ -442,9 +403,7 @@ func TestSearch_ClearRules(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/clear")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)
@@ -460,9 +419,7 @@ func TestSearch_ClearSynonyms(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/clear")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)
@@ -478,9 +435,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -491,9 +446,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -514,9 +467,7 @@ func TestSearch_CustomGet(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -527,9 +478,7 @@ func TestSearch_CustomGet(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -550,9 +499,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -564,9 +511,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -585,9 +530,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -606,9 +549,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -627,9 +568,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -653,9 +592,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -679,9 +616,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -700,9 +635,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -722,9 +655,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -744,9 +675,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -766,9 +695,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -790,9 +717,7 @@ func TestSearch_CustomPut(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -804,9 +729,7 @@ func TestSearch_CustomPut(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -828,9 +751,7 @@ func TestSearch_DeleteApiKey(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys/myTestApiKey", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -847,9 +768,7 @@ func TestSearch_DeleteBy(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/deleteByQuery")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/deleteByQuery", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -866,9 +785,7 @@ func TestSearch_DeleteIndex(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -884,9 +801,7 @@ func TestSearch_DeleteObject(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -902,9 +817,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -915,9 +828,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/test%2Fwith%2Fslash")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/test%2Fwith%2Fslash", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -933,9 +844,7 @@ func TestSearch_DeleteSource(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/security/sources/theSource")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/security/sources/theSource", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -951,9 +860,7 @@ func TestSearch_DeleteSynonym(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -969,9 +876,7 @@ func TestSearch_GetApiKey(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys/myTestApiKey")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys/myTestApiKey", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -985,9 +890,7 @@ func TestSearch_GetDictionaryLanguages(t *testing.T) {
 		_, err := client.GetDictionaryLanguages()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/languages")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/*/languages", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1001,9 +904,7 @@ func TestSearch_GetDictionarySettings(t *testing.T) {
 		_, err := client.GetDictionarySettings()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1017,9 +918,7 @@ func TestSearch_GetLogs(t *testing.T) {
 		_, err := client.GetLogs(client.NewApiGetLogsRequest())
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/logs")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/logs", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1028,9 +927,7 @@ func TestSearch_GetLogs(t *testing.T) {
 		_, err := client.GetLogs(client.NewApiGetLogsRequest().WithOffset(5).WithLength(10).WithIndexName("theIndexName").WithType(search.LogType("all")))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/logs")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/logs", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1052,9 +949,7 @@ func TestSearch_GetObject(t *testing.T) {
 			[]string{"attr1", "attr2"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1078,9 +973,7 @@ func TestSearch_GetObjects(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/objects")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/objects", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1097,9 +990,7 @@ func TestSearch_GetRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1115,9 +1006,7 @@ func TestSearch_GetSettings(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1156,9 +1045,7 @@ func TestSearch_GetSources(t *testing.T) {
 		_, err := client.GetSources()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/security/sources")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/security/sources", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1174,9 +1061,7 @@ func TestSearch_GetSynonym(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1192,9 +1077,7 @@ func TestSearch_GetTask(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/task/123")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/task/123", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1208,9 +1091,7 @@ func TestSearch_GetTopUserIds(t *testing.T) {
 		_, err := client.GetTopUserIds()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/top")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/top", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1226,9 +1107,7 @@ func TestSearch_GetUserId(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/uniqueID", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1242,9 +1121,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/pending", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1253,9 +1130,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest().WithGetClusters(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/pending")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/pending", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1274,9 +1149,7 @@ func TestSearch_ListApiKeys(t *testing.T) {
 		_, err := client.ListApiKeys()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1290,9 +1163,7 @@ func TestSearch_ListClusters(t *testing.T) {
 		_, err := client.ListClusters()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1306,9 +1177,7 @@ func TestSearch_ListIndices(t *testing.T) {
 		_, err := client.ListIndices(client.NewApiListIndicesRequest())
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1317,9 +1186,7 @@ func TestSearch_ListIndices(t *testing.T) {
 		_, err := client.ListIndices(client.NewApiListIndicesRequest().WithPage(8).WithHitsPerPage(3))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1338,9 +1205,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 		_, err := client.ListUserIds(client.NewApiListUserIdsRequest())
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1349,9 +1214,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 		_, err := client.ListUserIds(client.NewApiListUserIdsRequest().WithPage(8).WithHitsPerPage(100))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1374,9 +1237,7 @@ func TestSearch_MultipleBatch(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1395,9 +1256,7 @@ func TestSearch_OperationIndex(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/operation")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/operation", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1415,9 +1274,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		).WithCreateIfNotExists(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/uniqueID/partial")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1439,9 +1296,7 @@ func TestSearch_RemoveUserId(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/uniqueID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/uniqueID", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1458,9 +1313,7 @@ func TestSearch_ReplaceSources(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/security/sources")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/security/sources", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1477,9 +1330,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys/myApiKey/restore")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys/myApiKey/restore", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)
@@ -1495,9 +1346,7 @@ func TestSearch_SaveObject(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1516,9 +1365,7 @@ func TestSearch_SaveRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1543,9 +1390,7 @@ func TestSearch_SaveRule(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1570,9 +1415,7 @@ func TestSearch_SaveRules(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1597,9 +1440,7 @@ func TestSearch_SaveRules(t *testing.T) {
 		).WithForwardToReplicas(true).WithClearExistingRules(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1623,9 +1464,7 @@ func TestSearch_SaveSynonym(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/id1")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1650,9 +1489,7 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 		).WithForwardToReplicas(true).WithReplaceExistingSynonyms(false))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/batch")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1677,9 +1514,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1722,9 +1557,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1767,9 +1600,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1784,9 +1615,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1803,9 +1632,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1821,9 +1648,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1849,9 +1674,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1901,9 +1724,7 @@ func TestSearch_Search(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/queries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1921,9 +1742,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/compounds/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1936,9 +1755,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/compounds/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/compounds/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1955,9 +1772,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/facets/facetName/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1970,9 +1785,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 			search.NewEmptySearchForFacetValuesRequest().SetParams("query=foo&facetFilters=['bar']").SetFacetQuery("foo").SetMaxFacetHits(42)))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/facets/facetName/query")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/facets/facetName/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1990,9 +1803,7 @@ func TestSearch_SearchRules(t *testing.T) {
 			search.NewEmptySearchRulesParams().SetQuery("something")))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/rules/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/rules/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2009,9 +1820,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2023,9 +1832,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_space%20in%20index/query")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_space%20in%20index/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2046,9 +1853,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/query")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2065,9 +1870,7 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2080,9 +1883,7 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 			search.NewEmptySearchSynonymsParams().SetQuery("myQuery").SetType(search.SynonymType("altcorrection1")).SetPage(10).SetHitsPerPage(10)))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/synonyms/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/synonyms/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2100,9 +1901,7 @@ func TestSearch_SearchUserIds(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/clusters/mapping/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/clusters/mapping/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2121,9 +1920,7 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2137,9 +1934,7 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/dictionaries/*/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2157,9 +1952,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/cts_e2e_settings/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2185,9 +1978,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2205,9 +1996,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2225,9 +2014,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2246,9 +2033,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2266,9 +2051,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2287,9 +2070,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2307,9 +2088,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2327,9 +2106,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2376,9 +2153,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/theIndexName/settings")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -2397,9 +2172,7 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/keys/myApiKey")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/keys/myApiKey", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
