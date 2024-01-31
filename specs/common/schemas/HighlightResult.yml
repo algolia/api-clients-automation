@@ -41,10 +41,17 @@ highlightResultOptionMap:
   additionalProperties:
     $ref: '#/highlightResultOption'
 
+highlightResultArray:
+  type: array
+  description: Show highlighted section and words matched on a query.
+  items:
+    $ref: '#/highlightResultOption'
+
 highlightResult:
   oneOf:
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultOptionMap'
+    - $ref: '#/highlightResultArray'
 
 highlightResultMap:
   type: object

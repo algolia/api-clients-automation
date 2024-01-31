@@ -83,6 +83,15 @@
                   "matchLevel": "none"
                 }
               ]
+            },
+            "_highlightResult": {
+              "genres": [
+                {
+                  "value": "Superhero",
+                  "matchLevel": "none",
+                  "matchedWords": []
+                }
+              ]
             }
           }
         ]
