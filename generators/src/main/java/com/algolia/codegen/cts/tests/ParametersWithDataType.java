@@ -647,6 +647,15 @@ public class ParametersWithDataType {
       return null;
     }
 
+    // find the correct enum
+    if (param instanceof String && model.getComposedSchemas().getOneOf().stream().allMatch(p -> p.getIsEnumOrRef())) {
+      for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
+        if (couldMatchEnum(param, prop)) {
+          return prop;
+        }
+      }
+    }
+
     CodegenParameter maybeMatch = new CodegenParameter();
     String paramType = inferDataType(param, maybeMatch, null);
     maybeMatch.dataType = paramType;
