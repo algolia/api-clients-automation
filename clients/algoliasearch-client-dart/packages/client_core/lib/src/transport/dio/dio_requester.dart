@@ -93,6 +93,7 @@ class DioRequester implements Requester {
   Uri requestUri(HttpRequest request) => Uri(
         scheme: request.host.scheme,
         host: request.host.url,
+        port: request.host.port,
         path: request.path,
         queryParameters: request.queryParameters,
       );
