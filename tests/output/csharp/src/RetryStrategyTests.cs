@@ -1,9 +1,11 @@
+using System.Security.Cryptography;
 using System.Text;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Transport;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
