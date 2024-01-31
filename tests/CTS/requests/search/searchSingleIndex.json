@@ -43,5 +43,50 @@
         ]
       }
     }
+  },
+  {
+    "testName": "single search retrieve snippets",
+    "parameters": {
+      "indexName": "cts_e2e_browse",
+      "searchParams": {
+        "query": "batman",
+        "attributesToRetrieve": [
+          "*"
+        ],
+        "attributesToSnippet": [
+          "*:20"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/cts_e2e_browse/query",
+      "method": "POST",
+      "body": {
+        "query": "batman",
+        "attributesToRetrieve": [
+          "*"
+        ],
+        "attributesToSnippet": [
+          "*:20"
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "hits": [
+          {
+            "_snippetResult": {
+              "genres": [
+                {
+                  "value": "Superhero",
+                  "matchLevel": "none"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
   }
 ]
