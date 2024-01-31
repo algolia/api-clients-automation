@@ -5,6 +5,7 @@ using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Utils;
 using Algolia.Utils;
+using Microsoft.Extensions.Logging;
 using Action = Algolia.Search.Models.Search.Action;
 
 namespace Algolia.Playgrounds;
@@ -19,10 +20,17 @@ public static class SearchPlayground
     Console.WriteLine("Starting Search API playground");
     Console.WriteLine("------------------------------------");
 
-    var client = new SearchClient(new SearchConfig(configuration.AppId, configuration.AdminApiKey)
+
+    var searchConfig = new SearchConfig(configuration.AppId, configuration.AdminApiKey)
     {
       Compression = CompressionType.NONE
-    });
+    };
+
+
+    var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
+                                                                        .AddConsole());
+
+    var client = new SearchClient(searchConfig, loggerFactory);
 
     var metisClient = new SearchClient(new SearchConfig(configuration.MetisAppId, configuration.MetisApiKey)
     {
@@ -93,7 +101,8 @@ public static class SearchPlayground
     };
 
     var getObjResults = await client.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
-    getObjResults.Results.ForEach(t => Console.WriteLine($"  - Record ObjectID: {t.ObjectID} - Property `otherValue`: {t.otherValue}"));
+    getObjResults.Results.ForEach(t =>
+      Console.WriteLine($"  - Record ObjectID: {t.ObjectID} - Property `otherValue`: {t.otherValue}"));
 
     // Search single index
     Console.WriteLine("--- Search single index `SearchSingleIndexAsync` ---");
@@ -117,7 +126,8 @@ public static class SearchPlayground
       }
       else if (result.IsSearchForFacetValuesResponse())
       {
-        Console.WriteLine("Record with Facet. Facet value = " + result.AsSearchForFacetValuesResponse().FacetHits.First().Value);
+        Console.WriteLine("Record with Facet. Facet value = " +
+                          result.AsSearchForFacetValuesResponse().FacetHits.First().Value);
       }
       else
       {
@@ -130,7 +140,8 @@ public static class SearchPlayground
     var tMetis = await metisClient.SearchSingleIndexAsync<object>("008_jobs_v2_nosplit__contents__default");
     foreach (var tMetisAdditionalProperty in tMetis.AdditionalProperties)
     {
-      Console.WriteLine($" - Additional property found {tMetisAdditionalProperty.Key} : {tMetisAdditionalProperty.Value}");
+      Console.WriteLine(
+        $" - Additional property found {tMetisAdditionalProperty.Key} : {tMetisAdditionalProperty.Value}");
     }
 
     // API Key
@@ -140,7 +151,7 @@ public static class SearchPlayground
       Acl = new List<Acl> { Acl.Browse, Acl.Search }, Description = "A test key",
       Indexes = new List<string> { defaultIndex }
     });
-    var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key",async () =>
+    var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key", async () =>
       await client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key), "New key has been created !");
 
     Console.WriteLine("--- Update api key `UpdateApiKeyAsync` ---");
@@ -148,12 +159,12 @@ public static class SearchPlayground
     modifiedApiKey.Description = "Updated description";
 
     var updateApiKey = await client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
-    await PlaygroundHelper.Start("Updating API Key`",async () =>
+    await PlaygroundHelper.Start("Updating API Key`", async () =>
       await client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey), "Key updated !");
 
     Console.WriteLine("--- Delete api key `UpdateApiKeyAsync` ---");
     await client.DeleteApiKeyAsync(addApiKeyResponse.Key);
-    await PlaygroundHelper.Start("Deleting API Key",async () =>
+    await PlaygroundHelper.Start("Deleting API Key", async () =>
       await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key), "Key deleted !");
 
     // Add Synonyms
@@ -178,13 +189,14 @@ public static class SearchPlayground
         },
       }).ConfigureAwait(false);
 
-    await PlaygroundHelper.Start("Creating new Synonyms - Async TaskID: `{synonymsResponse.TaskID}`",async () =>
+    await PlaygroundHelper.Start("Creating new Synonyms - Async TaskID: `{synonymsResponse.TaskID}`", async () =>
       await client.WaitForTaskAsync(defaultIndex, synonymsResponse.TaskID), "New Synonyms has been created !");
 
     // Search Synonyms
     Console.WriteLine("--- Search Synonyms `SearchSynonymsAsync` ---");
     var searchSynonymsAsync = await client
-      .SearchSynonymsAsync(defaultIndex, new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym, HitsPerPage = 1})
+      .SearchSynonymsAsync(defaultIndex,
+        new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym, HitsPerPage = 1 })
       .ConfigureAwait(false);
     Console.WriteLine(searchSynonymsAsync.Hits.Count);
 
@@ -225,7 +237,8 @@ public static class SearchPlayground
         }
       }).ConfigureAwait(false);
 
-    await PlaygroundHelper.Start($"Saving new Rule - Async TaskID: `{saveRulesAsync.TaskID}`", async () => await client.WaitForTaskAsync(defaultIndex, saveRulesAsync.TaskID), "New Rule has been created !");
+    await PlaygroundHelper.Start($"Saving new Rule - Async TaskID: `{saveRulesAsync.TaskID}`",
+      async () => await client.WaitForTaskAsync(defaultIndex, saveRulesAsync.TaskID), "New Rule has been created !");
 
     Console.WriteLine("--- Error Handling ---");
     try
