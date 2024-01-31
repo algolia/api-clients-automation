@@ -32,8 +32,10 @@ public struct Configuration: Core.Configuration, Credentials {
        writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
        readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
        logLevel: LogLevel = DefaultConfiguration.default.logLevel,
-       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders{{#isSearchClient}},
-       batchSize: Int = 1000{{/isSearchClient}}) throws {
+       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
+       hosts: [RetryableHost]? = nil{{#isSearchClient}},
+       batchSize: Int = 1000{{/isSearchClient}}
+  ) throws {
     guard !appId.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
     }
@@ -52,72 +54,76 @@ public struct Configuration: Core.Configuration, Credentials {
       "X-Algolia-API-Key": apiKey,
       "Content-Type": "application/json"
     ].merging(defaultHeaders ?? [:]) { (_, new) in new }{{#isSearchClient}}
-
     self.batchSize = batchSize{{/isSearchClient}}
 
-    {{^uniqueHost}}{{^hasRegionalHost}}
-    func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
-      -> RetryableHost
-    {
-      guard let url = URL(string: "https://\(appId)\(components.suffix)") else {
-        throw AlgoliaError.runtimeError("Malformed URL")
+    UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
+
+    guard let hosts = hosts else {
+      {{^uniqueHost}}{{^hasRegionalHost}}
+      func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
+        -> RetryableHost
+      {
+        guard let url = URL(string: "https://\(appId)\(components.suffix)") else {
+          throw AlgoliaError.runtimeError("Malformed URL")
+        }
+
+        return RetryableHost(url: url, callType: components.callType)
       }
 
-      return RetryableHost(url: url, callType: components.callType)
+      let hosts = try [
+        ("-dsn.algolia.net", .read),
+        (".algolia.net", .write),
+      ].map(buildHost)
+
+      let commonHosts = try [
+        ("-1.algolianet.com", .universal),
+        ("-2.algolianet.com", .universal),
+        ("-3.algolianet.com", .universal),
+      ].map(buildHost).shuffled()
+
+      self.hosts = hosts + commonHosts
+  {{/hasRegionalHost}}{{/uniqueHost}}
+  {{#uniqueHost}}
+    guard let url = URL(string: "https://{{{.}}}") else {
+      throw AlgoliaError.runtimeError("Malformed URL")
     }
 
-    let hosts = try [
-      ("-dsn.algolia.net", .read),
-      (".algolia.net", .write),
-    ].map(buildHost)
-
-    let commonHosts = try [
-      ("-1.algolianet.com", .universal),
-      ("-2.algolianet.com", .universal),
-      ("-3.algolianet.com", .universal),
-    ].map(buildHost).shuffled()
-
-    self.hosts = hosts + commonHosts
-{{/hasRegionalHost}}{{/uniqueHost}}
-{{#uniqueHost}}
-  guard let url = URL(string: "https://{{{.}}}") else {
-    throw AlgoliaError.runtimeError("Malformed URL")
-  }
-
-  self.hosts = [
-    .init(url: url)
-  ]
-{{/uniqueHost}}
-{{#hasRegionalHost}}
-    guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {
-        throw AlgoliaError.runtimeError(
-          "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
-        )
-      }
-
-    {{#fallbackToAliasHost}}
-      if let region = region {
-    {{/fallbackToAliasHost}}
-        guard let url = URL(string: "https://{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
-          throw AlgoliaError.runtimeError("Malformed URL")
+    self.hosts = [
+      .init(url: url)
+    ]
+  {{/uniqueHost}}
+  {{#hasRegionalHost}}
+      guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {
+          throw AlgoliaError.runtimeError(
+            "`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", "))"
+          )
         }
 
-            self.hosts = [
-                .init(url: url)
-            ]
-    {{#fallbackToAliasHost}}
-      } else {
-        guard let url = URL(string: "https://{{{hostWithFallback}}}") else {
-          throw AlgoliaError.runtimeError("Malformed URL")
+      {{#fallbackToAliasHost}}
+        if let region = region {
+      {{/fallbackToAliasHost}}
+          guard let url = URL(string: "https://{{{regionalHost}}}".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
+            throw AlgoliaError.runtimeError("Malformed URL")
+          }
+
+              self.hosts = [
+                  .init(url: url)
+              ]
+      {{#fallbackToAliasHost}}
+        } else {
+          guard let url = URL(string: "https://{{{hostWithFallback}}}") else {
+            throw AlgoliaError.runtimeError("Malformed URL")
+          }
+
+          self.hosts = [
+            .init(url: url)
+          ]
         }
+      {{/fallbackToAliasHost}}
+      {{/hasRegionalHost}}
+      return
+    }
 
-        self.hosts = [
-          .init(url: url)
-        ]
-      }
-    {{/fallbackToAliasHost}}
-    {{/hasRegionalHost}}
-
-    UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
+    self.hosts = hosts
   }
 }
