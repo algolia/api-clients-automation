@@ -17,7 +17,7 @@ snippetResultOptionMap:
   additionalProperties:
     $ref: '#/snippetResultOption'
 
-snippetResultArray:
+snippetResultOptionArray:
   type: array
   description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
   items:
@@ -27,7 +27,7 @@ snippetResult:
   oneOf:
     - $ref: '#/snippetResultOption'
     - $ref: '#/snippetResultOptionMap'
-    - $ref: '#/snippetResultArray'
+    - $ref: '#/snippetResultOptionArray'
 
 snippetResultMap:
   type: object
