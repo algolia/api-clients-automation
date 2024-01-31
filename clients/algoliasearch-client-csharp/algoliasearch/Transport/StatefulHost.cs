@@ -8,9 +8,19 @@ namespace Algolia.Search.Transport;
 public class StatefulHost
 {
   /// <summary>
-  /// Url endpoint without the scheme
+  /// Url endpoint without the scheme, without the port
   /// </summary>
   public string Url { get; set; }
+
+  /// <summary>
+  /// Scheme of the URL
+  /// </summary>
+  public HttpScheme Scheme { get; set; } = HttpScheme.Https;
+
+  /// <summary>
+  /// Port of the URL (Optional)
+  /// </summary>
+  public int Port { get; set; } = -1;
 
   /// <summary>
   /// Is the host up or not
@@ -31,6 +41,18 @@ public class StatefulHost
   /// Calltype accepted by the host
   /// </summary>
   public CallType Accept { get; set; }
+}
+
+public enum HttpScheme
+{
+  /// <summary>
+  /// Http
+  /// </summary>
+  Http,
+  /// <summary>
+  /// Https
+  /// </summary>
+  Https
 }
 
 /// <summary>

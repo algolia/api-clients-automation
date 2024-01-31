@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -116,7 +117,7 @@ internal class HttpTransport
     foreach (var host in _retryStrategy.GetTryableHost(callType))
     {
       request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress, _logger);
-      request.Uri = BuildUri(host.Url, uri, requestOptions?.CustomPathParameters, requestOptions?.PathParameters,
+      request.Uri = BuildUri(host, uri, requestOptions?.CustomPathParameters, requestOptions?.PathParameters,
         requestOptions?.QueryParameters);
       var requestTimeout =
         TimeSpan.FromTicks((requestOptions?.Timeout ?? GetTimeOut(callType)).Ticks * (host.RetryCount + 1));
@@ -228,13 +229,14 @@ internal class HttpTransport
   /// <summary>
   /// Build uri depending on the method
   /// </summary>
-  /// <param name="url"></param>
+  /// <param name="host"></param>
   /// <param name="baseUri"></param>
   /// <param name="customPathParameters"></param>
   /// <param name="pathParameters"></param>
   /// <param name="optionalQueryParameters"></param>
   /// <returns></returns>
-  private static Uri BuildUri(string url, string baseUri, IDictionary<string, string> customPathParameters = null,
+  private static Uri BuildUri(StatefulHost host, string baseUri,
+    IDictionary<string, string> customPathParameters = null,
     IDictionary<string, string> pathParameters = null,
     IDictionary<string, string> optionalQueryParameters = null)
   {
@@ -258,10 +260,11 @@ internal class HttpTransport
     if (optionalQueryParameters != null)
     {
       var queryParams = optionalQueryParameters.ToQueryString();
-      return new UriBuilder { Scheme = "https", Host = url, Path = path, Query = queryParams }.Uri;
+      return new UriBuilder
+      { Scheme = host.Scheme.ToString(), Host = host.Url, Port = host.Port, Path = path, Query = queryParams }.Uri;
     }
 
-    return new UriBuilder { Scheme = "https", Host = url, Path = path }.Uri;
+    return new UriBuilder { Scheme = host.Scheme.ToString(), Host = host.Url, Port = host.Port, Path = path }.Uri;
   }
 
   /// <summary>

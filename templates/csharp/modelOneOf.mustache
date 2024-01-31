@@ -159,7 +159,15 @@
             {{#composedSchemas.oneOf}}
             try
             {
-                return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, AdditionalPropertiesSerializerSettings));
+                // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
+                if (typeof({{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}).GetProperty("AdditionalProperties") == null)
+                {
+                  return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));
+                }
+                else
+                {
+                  return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+                }
             }
             catch (Exception exception)
             {

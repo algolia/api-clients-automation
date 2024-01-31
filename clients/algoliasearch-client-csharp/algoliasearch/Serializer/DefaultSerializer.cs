@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Algolia.Search.Exceptions;
+using Algolia.Search.Models;
 using Algolia.Search.Models.Common;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -25,15 +27,34 @@ internal class DefaultJsonSerializer : ISerializer
   /// </summary>
   /// <param name="obj">Object to be serialized.</param>
   /// <returns>A JSON string.</returns>
-  public string Serialize(object obj)
+  public string Serialize(object data)
   {
-    if (obj is AbstractSchema schema)
+    if (data is AbstractSchema schema)
     {
       // the object to be serialized is an oneOf/anyOf schema
-      return schema.ToJson();
+      var serialize = schema.ToJson();
+      return serialize;
     }
 
-    return JsonConvert.SerializeObject(obj, _serializerSettings);
+    // using (var sw = new StreamWriter(memoryStream))
+    // using (var jtw = new JsonTextWriter(sw) { Formatting = Formatting.None })
+    // {
+    //   Serializer.MaxDepth = 123456789;
+    //   Serializer.Serialize(jtw, data);
+    //   jtw.Flush();
+    // }
+    // stop.Stop();
+    // Console.WriteLine($"Serialize: {stop.ElapsedTicks}ms");
+    //
+    //
+    // memoryStream.Seek(0, SeekOrigin.Begin);
+    // Stopwatch stop2 = new Stopwatch();
+    // stop2.Start();
+    //
+    // stop2.Stop();
+    // Console.WriteLine($"Serialize: {stop2.ElapsedMilliseconds}ms");
+
+    return JsonConvert.SerializeObject(data, _serializerSettings);
   }
 
   public async Task<T> Deserialize<T>(Stream response)
@@ -80,7 +101,26 @@ internal class DefaultJsonSerializer : ISerializer
     {
       using var reader = new StreamReader(response);
       var text = await reader.ReadToEndAsync().ConfigureAwait(false);
-      return JsonConvert.DeserializeObject(text, type, _serializerSettings);
+      // Stopwatch sw = new Stopwatch();
+      // sw.Start();
+      //
+      //
+      // if (response == null || response.CanRead == false)
+      //   return default;
+      //
+      // using (response)
+      // using (var sr = new StreamReader(response))
+      // using (var jtr = new JsonTextReader(sr))
+      // {
+      //   return Serializer.Deserialize(jtr);
+      // }
+
+
+
+      var deserializeObject = JsonConvert.DeserializeObject(text, type, _serializerSettings);
+      // sw.Stop();
+      // Console.WriteLine($"DeserializeObject: {sw.ElapsedMilliseconds}ms");
+      return deserializeObject;
     }
     catch (Exception ex)
     {

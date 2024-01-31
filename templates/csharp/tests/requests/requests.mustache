@@ -18,7 +18,8 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
     _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
 
     {{#hasE2E}}
-      DotEnv.Load();
+      DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+
       var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
       if (e2EAppId == null)
       {
@@ -113,7 +114,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/statusCode}}
 
       {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp), new JsonDiffConfig(true));
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings), new JsonDiffConfig(true));
       {{/body}}
       } catch (Exception e)
       {
