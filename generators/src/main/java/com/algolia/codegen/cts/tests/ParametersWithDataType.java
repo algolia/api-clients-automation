@@ -648,9 +648,9 @@ public class ParametersWithDataType {
     }
 
     // find the correct enum
-    if (param instanceof String && model.getComposedSchemas().getOneOf().stream().allMatch(p -> p.getIsEnumOrRef())) {
+    if (param instanceof String) {
       for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
-        if (couldMatchEnum(param, prop)) {
+        if (prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
           return prop;
         }
       }
