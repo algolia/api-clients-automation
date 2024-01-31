@@ -13,7 +13,7 @@ final class Host {
   final CallType? callType;
 
   /// Constructs a [Host] instance with the provided parameters.
-  Host({required this.url, this.port, this.scheme = 'https', this.callType});
+  const Host({required this.url, this.port, this.scheme = 'https', this.callType});
 
   factory Host.create({required String url, String scheme = 'https', CallType? callType}) {
     if (url.contains(':')) {
