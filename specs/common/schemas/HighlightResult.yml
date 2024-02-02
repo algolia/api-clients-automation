@@ -2,10 +2,6 @@ highlightResultOption:
   type: object
   description: Show highlighted section and words matched on a query.
   additionalProperties: false
-  x-discriminator-fields:
-    - matchLevel
-    - value
-    - matchedWords
   properties:
     value:
       $ref: '#/highlightedValue'
@@ -41,10 +37,17 @@ highlightResultOptionMap:
   additionalProperties:
     $ref: '#/highlightResultOption'
 
+highlightResultOptionArray:
+  type: array
+  description: Show highlighted section and words matched on a query.
+  items:
+    $ref: '#/highlightResultOption'
+
 highlightResult:
   oneOf:
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultOptionMap'
+    - $ref: '#/highlightResultOptionArray'
 
 highlightResultMap:
   type: object

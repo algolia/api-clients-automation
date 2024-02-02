@@ -2,7 +2,7 @@
   "name": "javascript-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "tsc && jest dist --passWithNoTests"
+    "test": "rm -rf dist || true && tsc && jest dist --passWithNoTests"
   },
   "dependencies": {
     {{#packageDependencies}}
