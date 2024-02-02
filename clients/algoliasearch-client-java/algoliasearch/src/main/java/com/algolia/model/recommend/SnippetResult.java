@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 /** SnippetResult */
 @JsonDeserialize(using = SnippetResult.Deserializer.class)
 public interface SnippetResult {
-  /** SnippetResult as Map<String, SnippetResultOption> wrapper. */
+  // SnippetResult as Map<String, SnippetResultOption> wrapper.
   static SnippetResult of(Map<String, SnippetResultOption> value) {
     return new MapOfStringSnippetResultOptionWrapper(value);
   }
 
-  /** SnippetResult as Map<String, SnippetResultOption> wrapper. */
+  // SnippetResult as Map<String, SnippetResultOption> wrapper.
   @JsonSerialize(using = MapOfStringSnippetResultOptionWrapper.Serializer.class)
   class MapOfStringSnippetResultOptionWrapper implements SnippetResult {
 

@@ -12,8 +12,8 @@ open class SearchClient {
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var applicationID: String {
-        configuration.applicationID
+    var appId: String {
+        configuration.appId
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -25,13 +25,11 @@ open class SearchClient {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String) throws {
-        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey))
+    public convenience init(appId: String, apiKey: String) throws {
+        try self.init(configuration: Configuration(appId: appId, apiKey: apiKey))
     }
 
     /**
-     Add API key.
-
      - parameter apiKey: (body)
      - returns: AddApiKeyResponse
      */
@@ -47,9 +45,11 @@ open class SearchClient {
     }
 
     /**
-     Add API key.
-
      Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter apiKey: (body)
      - returns: RequestBuilder<AddApiKeyResponse>
      */
@@ -72,8 +72,6 @@ open class SearchClient {
     }
 
     /**
-     Add or update a record (using objectID).
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter body: (body) Algolia record.
@@ -91,9 +89,11 @@ open class SearchClient {
     }
 
     /**
-     Add or update a record (using objectID).
-
      If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+
+     Required API Key ACLs:
+       - addObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter body: (body) Algolia record.
@@ -101,6 +101,18 @@ open class SearchClient {
      */
 
     open func addOrUpdateObjectWithHTTPInfo(indexName: String, objectID: String, body: [String: AnyCodable], requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtWithObjectIdResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "addOrUpdateObject")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "addOrUpdateObject")
+        }
+
+        guard !body.isEmpty else {
+            throw AlgoliaError.invalidArgument("body", "addOrUpdateObject")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -124,8 +136,6 @@ open class SearchClient {
     }
 
     /**
-     Add a source.
-
      - parameter source: (body) Source to add.
      - returns: CreatedAtResponse
      */
@@ -141,9 +151,11 @@ open class SearchClient {
     }
 
     /**
-     Add a source.
-
      Add a source to the list of allowed sources.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter source: (body) Source to add.
      - returns: RequestBuilder<CreatedAtResponse>
      */
@@ -166,8 +178,6 @@ open class SearchClient {
     }
 
     /**
-     Assign or move a user ID.
-
      - parameter xAlgoliaUserID: (header) userID to assign.
      - parameter assignUserIdParams: (body)
      - returns: CreatedAtResponse
@@ -184,9 +194,11 @@ open class SearchClient {
     }
 
     /**
-     Assign or move a user ID.
-
      Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter xAlgoliaUserID: (header) userID to assign.
      - parameter assignUserIdParams: (body)
      - returns: RequestBuilder<CreatedAtResponse>
@@ -212,8 +224,6 @@ open class SearchClient {
     }
 
     /**
-     Batch write operations on one index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter batchWriteParams: (body)
      - returns: BatchResponse
@@ -230,15 +240,18 @@ open class SearchClient {
     }
 
     /**
-     Batch write operations on one index.
-
      To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter batchWriteParams: (body)
      - returns: RequestBuilder<BatchResponse>
      */
 
     open func batchWithHTTPInfo(indexName: String, batchWriteParams: BatchWriteParams, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<BatchResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "batch")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/batch"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -259,8 +272,6 @@ open class SearchClient {
     }
 
     /**
-     Batch assign userIDs.
-
      - parameter xAlgoliaUserID: (header) userID to assign.
      - parameter batchAssignUserIdsParams: (body)
      - returns: CreatedAtResponse
@@ -277,9 +288,11 @@ open class SearchClient {
     }
 
     /**
-     Batch assign userIDs.
-
      Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter xAlgoliaUserID: (header) userID to assign.
      - parameter batchAssignUserIdsParams: (body)
      - returns: RequestBuilder<CreatedAtResponse>
@@ -305,8 +318,6 @@ open class SearchClient {
     }
 
     /**
-     Batch dictionary entries.
-
      - parameter dictionaryName: (path) Dictionary to search in.
      - parameter batchDictionaryEntriesParams: (body)
      - returns: UpdatedAtResponse
@@ -323,9 +334,11 @@ open class SearchClient {
     }
 
     /**
-     Batch dictionary entries.
-
      Add or remove a batch of dictionary entries.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter dictionaryName: (path) Dictionary to search in.
      - parameter batchDictionaryEntriesParams: (body)
      - returns: RequestBuilder<UpdatedAtResponse>
@@ -352,8 +365,6 @@ open class SearchClient {
     }
 
     /**
-     Get all records from an index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter browseParams: (body)  (optional)
      - returns: BrowseResponse
@@ -370,15 +381,21 @@ open class SearchClient {
     }
 
     /**
-     Get all records from an index.
-
      Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn't support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.
+
+     Required API Key ACLs:
+       - browse
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter browseParams: (body)  (optional)
      - returns: RequestBuilder<BrowseResponse>
      */
 
     open func browseWithHTTPInfo(indexName: String, browseParams: BrowseParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<BrowseResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "browse")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/browse"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -399,8 +416,6 @@ open class SearchClient {
     }
 
     /**
-     Delete all records from an index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - returns: UpdatedAtResponse
      */
@@ -416,14 +431,20 @@ open class SearchClient {
     }
 
     /**
-     Delete all records from an index.
-
      Delete the records but leave settings and index-specific API keys untouched.
+
+     Required API Key ACLs:
+       - deleteIndex
+
      - parameter indexName: (path) Index on which to perform the request.
      - returns: RequestBuilder<UpdatedAtResponse>
      */
 
     open func clearObjectsWithHTTPInfo(indexName: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "clearObjects")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/clear"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -444,8 +465,6 @@ open class SearchClient {
     }
 
     /**
-     Delete all rules.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
      - returns: UpdatedAtResponse
@@ -462,15 +481,21 @@ open class SearchClient {
     }
 
     /**
-     Delete all rules.
-
      Delete all rules in the index.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
      - returns: RequestBuilder<UpdatedAtResponse>
      */
 
     open func clearRulesWithHTTPInfo(indexName: String, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "clearRules")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/clear"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -493,8 +518,6 @@ open class SearchClient {
     }
 
     /**
-     Delete all synonyms.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
      - returns: UpdatedAtResponse
@@ -511,15 +534,21 @@ open class SearchClient {
     }
 
     /**
-     Delete all synonyms.
-
      Delete all synonyms in the index.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
      - returns: RequestBuilder<UpdatedAtResponse>
      */
 
     open func clearSynonymsWithHTTPInfo(indexName: String, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "clearSynonyms")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/clear"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -542,8 +571,6 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -560,15 +587,18 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customDelete")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -589,8 +619,6 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -607,15 +635,18 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customGet")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -636,8 +667,6 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -655,9 +684,8 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -665,6 +693,10 @@ open class SearchClient {
      */
 
     open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPost")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -685,8 +717,6 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -704,9 +734,8 @@ open class SearchClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -714,6 +743,10 @@ open class SearchClient {
      */
 
     open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPut")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -734,8 +767,6 @@ open class SearchClient {
     }
 
     /**
-     Delete API key.
-
      - parameter key: (path) API key.
      - returns: DeleteApiKeyResponse
      */
@@ -751,14 +782,20 @@ open class SearchClient {
     }
 
     /**
-     Delete API key.
-
      Delete an existing API key. The request must be authenticated with the admin API key.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter key: (path) API key.
      - returns: RequestBuilder<DeleteApiKeyResponse>
      */
 
     open func deleteApiKeyWithHTTPInfo(key: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteApiKeyResponse> {
+        guard !key.isEmpty else {
+            throw AlgoliaError.invalidArgument("key", "deleteApiKey")
+        }
+
         var resourcePath = "/1/keys/{key}"
         let keyPreEscape = "\(APIHelper.mapValueToPathItem(key))"
         let keyPostEscape = keyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -779,8 +816,6 @@ open class SearchClient {
     }
 
     /**
-     Delete all records matching a query.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter deleteByParams: (body)
      - returns: DeletedAtResponse
@@ -797,15 +832,21 @@ open class SearchClient {
     }
 
     /**
-     Delete all records matching a query.
-
      This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
+
+     Required API Key ACLs:
+       - deleteIndex
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter deleteByParams: (body)
      - returns: RequestBuilder<DeletedAtResponse>
      */
 
     open func deleteByWithHTTPInfo(indexName: String, deleteByParams: DeleteByParams, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteBy")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/deleteByQuery"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -826,8 +867,6 @@ open class SearchClient {
     }
 
     /**
-     Delete index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - returns: DeletedAtResponse
      */
@@ -843,14 +882,20 @@ open class SearchClient {
     }
 
     /**
-     Delete index.
-
      Delete an existing index.
+
+     Required API Key ACLs:
+       - deleteIndex
+
      - parameter indexName: (path) Index on which to perform the request.
      - returns: RequestBuilder<DeletedAtResponse>
      */
 
     open func deleteIndexWithHTTPInfo(indexName: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteIndex")
+        }
+
         var resourcePath = "/1/indexes/{indexName}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -871,8 +916,6 @@ open class SearchClient {
     }
 
     /**
-     Delete a record.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - returns: DeletedAtResponse
@@ -889,15 +932,25 @@ open class SearchClient {
     }
 
     /**
-     Delete a record.
-
      To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
+
+     Required API Key ACLs:
+       - deleteObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - returns: RequestBuilder<DeletedAtResponse>
      */
 
     open func deleteObjectWithHTTPInfo(indexName: String, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteObject")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "deleteObject")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -921,8 +974,6 @@ open class SearchClient {
     }
 
     /**
-     Delete a rule.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -940,9 +991,11 @@ open class SearchClient {
     }
 
     /**
-     Delete a rule.
-
      Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -950,6 +1003,14 @@ open class SearchClient {
      */
 
     open func deleteRuleWithHTTPInfo(indexName: String, objectID: String, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteRule")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "deleteRule")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -975,8 +1036,6 @@ open class SearchClient {
     }
 
     /**
-     Remove a source.
-
      - parameter source: (path) IP address range of the source.
      - returns: DeleteSourceResponse
      */
@@ -992,14 +1051,20 @@ open class SearchClient {
     }
 
     /**
-     Remove a source.
-
      Remove a source from the list of allowed sources.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter source: (path) IP address range of the source.
      - returns: RequestBuilder<DeleteSourceResponse>
      */
 
     open func deleteSourceWithHTTPInfo(source: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteSourceResponse> {
+        guard !source.isEmpty else {
+            throw AlgoliaError.invalidArgument("source", "deleteSource")
+        }
+
         var resourcePath = "/1/security/sources/{source}"
         let sourcePreEscape = "\(APIHelper.mapValueToPathItem(source))"
         let sourcePostEscape = sourcePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1020,8 +1085,6 @@ open class SearchClient {
     }
 
     /**
-     Delete a synonym.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -1039,9 +1102,11 @@ open class SearchClient {
     }
 
     /**
-     Delete a synonym.
-
      Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -1049,6 +1114,14 @@ open class SearchClient {
      */
 
     open func deleteSynonymWithHTTPInfo(indexName: String, objectID: String, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteSynonym")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "deleteSynonym")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1074,8 +1147,6 @@ open class SearchClient {
     }
 
     /**
-     Get API key permissions.
-
      - parameter key: (path) API key.
      - returns: GetApiKeyResponse
      */
@@ -1091,14 +1162,17 @@ open class SearchClient {
     }
 
     /**
-     Get API key permissions.
-
      Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+
      - parameter key: (path) API key.
      - returns: RequestBuilder<GetApiKeyResponse>
      */
 
     open func getApiKeyWithHTTPInfo(key: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetApiKeyResponse> {
+        guard !key.isEmpty else {
+            throw AlgoliaError.invalidArgument("key", "getApiKey")
+        }
+
         var resourcePath = "/1/keys/{key}"
         let keyPreEscape = "\(APIHelper.mapValueToPathItem(key))"
         let keyPostEscape = keyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1119,8 +1193,6 @@ open class SearchClient {
     }
 
     /**
-     List available languages.
-
      - returns: [String: Languages]
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1135,9 +1207,11 @@ open class SearchClient {
     }
 
     /**
-     List available languages.
-
      Lists Algolia's [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language's [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
+
+     Required API Key ACLs:
+       - settings
+
      - returns: RequestBuilder<[String: Languages]>
      */
 
@@ -1159,8 +1233,6 @@ open class SearchClient {
     }
 
     /**
-     Get stop word settings.
-
      - returns: GetDictionarySettingsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1175,9 +1247,11 @@ open class SearchClient {
     }
 
     /**
-     Get stop word settings.
-
      Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
+
+     Required API Key ACLs:
+       - settings
+
      - returns: RequestBuilder<GetDictionarySettingsResponse>
      */
 
@@ -1199,8 +1273,6 @@ open class SearchClient {
     }
 
     /**
-     Return the latest log entries.
-
      - parameter offset: (query) First log entry to retrieve. Sorted by decreasing date with 0 being the most recent. (optional, default to 0)
      - parameter length: (query) Maximum number of entries to retrieve. (optional, default to 10)
      - parameter indexName: (query) Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)
@@ -1219,9 +1291,11 @@ open class SearchClient {
     }
 
     /**
-     Return the latest log entries.
-
      The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN's endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+
+     Required API Key ACLs:
+       - logs
+
      - parameter offset: (query) First log entry to retrieve. Sorted by decreasing date with 0 being the most recent. (optional, default to 0)
      - parameter length: (query) Maximum number of entries to retrieve. (optional, default to 10)
      - parameter indexName: (query) Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices. (optional)
@@ -1252,8 +1326,6 @@ open class SearchClient {
     }
 
     /**
-     Get a record.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter attributesToRetrieve: (query) Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)
@@ -1271,9 +1343,11 @@ open class SearchClient {
     }
 
     /**
-     Get a record.
-
      To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+
+     Required API Key ACLs:
+       - search
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter attributesToRetrieve: (query) Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.  (optional)
@@ -1281,6 +1355,14 @@ open class SearchClient {
      */
 
     open func getObjectWithHTTPInfo(indexName: String, objectID: String, attributesToRetrieve: [String]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<[String: String]> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getObject")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "getObject")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1306,8 +1388,6 @@ open class SearchClient {
     }
 
     /**
-     Get multiple records.
-
      - parameter getObjectsParams: (body) Request object.
      - returns: GetObjectsResponse
      */
@@ -1323,9 +1403,11 @@ open class SearchClient {
     }
 
     /**
-     Get multiple records.
-
      Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.
+
+     Required API Key ACLs:
+       - search
+
      - parameter getObjectsParams: (body) Request object.
      - returns: RequestBuilder<GetObjectsResponse>
      */
@@ -1349,8 +1431,6 @@ open class SearchClient {
     }
 
     /**
-     Get a rule.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - returns: Rule
@@ -1367,15 +1447,25 @@ open class SearchClient {
     }
 
     /**
-     Get a rule.
-
      Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - returns: RequestBuilder<Rule>
      */
 
     open func getRuleWithHTTPInfo(indexName: String, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Rule> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getRule")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "getRule")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1399,8 +1489,6 @@ open class SearchClient {
     }
 
     /**
-     Get index settings.
-
      - parameter indexName: (path) Index on which to perform the request.
      - returns: IndexSettings
      */
@@ -1416,14 +1504,20 @@ open class SearchClient {
     }
 
     /**
-     Get index settings.
-
      Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+
+     Required API Key ACLs:
+       - search
+
      - parameter indexName: (path) Index on which to perform the request.
      - returns: RequestBuilder<IndexSettings>
      */
 
     open func getSettingsWithHTTPInfo(indexName: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<IndexSettings> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getSettings")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/settings"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1444,8 +1538,6 @@ open class SearchClient {
     }
 
     /**
-     Get all allowed IP addresses.
-
      - returns: [Source]
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1460,9 +1552,11 @@ open class SearchClient {
     }
 
     /**
-     Get all allowed IP addresses.
-
      Get all allowed sources (IP addresses).
+
+     Required API Key ACLs:
+       - admin
+
      - returns: RequestBuilder<[Source]>
      */
 
@@ -1484,8 +1578,6 @@ open class SearchClient {
     }
 
     /**
-     Get a synonym object.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - returns: SynonymHit
@@ -1502,15 +1594,25 @@ open class SearchClient {
     }
 
     /**
-     Get a synonym object.
-
      Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - returns: RequestBuilder<SynonymHit>
      */
 
     open func getSynonymWithHTTPInfo(indexName: String, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SynonymHit> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getSynonym")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "getSynonym")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1534,8 +1636,6 @@ open class SearchClient {
     }
 
     /**
-     Check a task's status.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter taskID: (path) Unique task identifier.
      - returns: GetTaskResponse
@@ -1552,15 +1652,21 @@ open class SearchClient {
     }
 
     /**
-     Check a task's status.
-
      Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
+
+     Required API Key ACLs:
+       - addObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter taskID: (path) Unique task identifier.
      - returns: RequestBuilder<GetTaskResponse>
      */
 
     open func getTaskWithHTTPInfo(indexName: String, taskID: Int64, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetTaskResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getTask")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/task/{taskID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1584,8 +1690,6 @@ open class SearchClient {
     }
 
     /**
-     Get top userID.
-
      - returns: GetTopUserIdsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1600,9 +1704,11 @@ open class SearchClient {
     }
 
     /**
-     Get top userID.
-
      Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
+
+     Required API Key ACLs:
+       - admin
+
      - returns: RequestBuilder<GetTopUserIdsResponse>
      */
 
@@ -1624,8 +1730,6 @@ open class SearchClient {
     }
 
     /**
-     Get userID.
-
      - parameter userID: (path) userID to assign.
      - returns: UserId
      */
@@ -1641,14 +1745,20 @@ open class SearchClient {
     }
 
     /**
-     Get userID.
-
      Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter userID: (path) userID to assign.
      - returns: RequestBuilder<UserId>
      */
 
     open func getUserIdWithHTTPInfo(userID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UserId> {
+        guard !userID.isEmpty else {
+            throw AlgoliaError.invalidArgument("userID", "getUserId")
+        }
+
         var resourcePath = "/1/clusters/mapping/{userID}"
         let userIDPreEscape = "\(APIHelper.mapValueToPathItem(userID))"
         let userIDPostEscape = userIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1669,8 +1779,6 @@ open class SearchClient {
     }
 
     /**
-     Get migration and user mapping status.
-
      - parameter getClusters: (query) Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)
      - returns: HasPendingMappingsResponse
      */
@@ -1686,9 +1794,11 @@ open class SearchClient {
     }
 
     /**
-     Get migration and user mapping status.
-
      To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter getClusters: (query) Indicates whether to include the cluster&#39;s pending mapping state in the response. (optional)
      - returns: RequestBuilder<HasPendingMappingsResponse>
      */
@@ -1713,8 +1823,6 @@ open class SearchClient {
     }
 
     /**
-     List API keys.
-
      - returns: ListApiKeysResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1729,9 +1837,11 @@ open class SearchClient {
     }
 
     /**
-     List API keys.
-
      List all API keys associated with your Algolia application, including their permissions and restrictions.
+
+     Required API Key ACLs:
+       - admin
+
      - returns: RequestBuilder<ListApiKeysResponse>
      */
 
@@ -1753,8 +1863,6 @@ open class SearchClient {
     }
 
     /**
-     List clusters.
-
      - returns: ListClustersResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1769,9 +1877,11 @@ open class SearchClient {
     }
 
     /**
-     List clusters.
-
      List the available clusters in a multi-cluster setup.
+
+     Required API Key ACLs:
+       - admin
+
      - returns: RequestBuilder<ListClustersResponse>
      */
 
@@ -1793,8 +1903,6 @@ open class SearchClient {
     }
 
     /**
-     List indices.
-
      - parameter page: (query) Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)
      - parameter hitsPerPage: (query) Maximum number of hits per page. (optional, default to 100)
      - returns: ListIndicesResponse
@@ -1811,9 +1919,11 @@ open class SearchClient {
     }
 
     /**
-     List indices.
-
      List indices in an Algolia application.
+
+     Required API Key ACLs:
+       - listIndexes
+
      - parameter page: (query) Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)
      - parameter hitsPerPage: (query) Maximum number of hits per page. (optional, default to 100)
      - returns: RequestBuilder<ListIndicesResponse>
@@ -1840,8 +1950,6 @@ open class SearchClient {
     }
 
     /**
-     List userIDs.
-
      - parameter page: (query) Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)
      - parameter hitsPerPage: (query) Maximum number of hits per page. (optional, default to 100)
      - returns: ListUserIdsResponse
@@ -1858,9 +1966,11 @@ open class SearchClient {
     }
 
     /**
-     List userIDs.
-
      List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter page: (query) Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.  (optional)
      - parameter hitsPerPage: (query) Maximum number of hits per page. (optional, default to 100)
      - returns: RequestBuilder<ListUserIdsResponse>
@@ -1887,8 +1997,6 @@ open class SearchClient {
     }
 
     /**
-     Batch write operations on multiple indices.
-
      - parameter batchParams: (body)
      - returns: MultipleBatchResponse
      */
@@ -1904,9 +2012,8 @@ open class SearchClient {
     }
 
     /**
-     Batch write operations on multiple indices.
-
      To reduce the time spent on network round trips, you can perform several write actions in a single request. It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.
+
      - parameter batchParams: (body)
      - returns: RequestBuilder<MultipleBatchResponse>
      */
@@ -1929,8 +2036,6 @@ open class SearchClient {
     }
 
     /**
-     Copy, move, or rename an index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter operationIndexParams: (body)
      - returns: UpdatedAtResponse
@@ -1947,15 +2052,21 @@ open class SearchClient {
     }
 
     /**
-     Copy, move, or rename an index.
-
      This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn't exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+
+     Required API Key ACLs:
+       - addObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter operationIndexParams: (body)
      - returns: RequestBuilder<UpdatedAtResponse>
      */
 
     open func operationIndexWithHTTPInfo(indexName: String, operationIndexParams: OperationIndexParams, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "operationIndex")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/operation"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1976,8 +2087,6 @@ open class SearchClient {
     }
 
     /**
-     Update record attributes.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter attributesToUpdate: (body) Object with attributes to update.
@@ -1996,9 +2105,11 @@ open class SearchClient {
     }
 
     /**
-     Update record attributes.
-
      Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.
+
+     Required API Key ACLs:
+       - addObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique record (object) identifier.
      - parameter attributesToUpdate: (body) Object with attributes to update.
@@ -2007,6 +2118,14 @@ open class SearchClient {
      */
 
     open func partialUpdateObjectWithHTTPInfo(indexName: String, objectID: String, attributesToUpdate: [String: AttributeToUpdate], createIfNotExists: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtWithObjectIdResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "partialUpdateObject")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "partialUpdateObject")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{objectID}/partial"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2032,8 +2151,6 @@ open class SearchClient {
     }
 
     /**
-     Remove userID.
-
      - parameter userID: (path) userID to assign.
      - returns: RemoveUserIdResponse
      */
@@ -2049,14 +2166,20 @@ open class SearchClient {
     }
 
     /**
-     Remove userID.
-
      Remove a userID and its associated data from the multi-clusters.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter userID: (path) userID to assign.
      - returns: RequestBuilder<RemoveUserIdResponse>
      */
 
     open func removeUserIdWithHTTPInfo(userID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<RemoveUserIdResponse> {
+        guard !userID.isEmpty else {
+            throw AlgoliaError.invalidArgument("userID", "removeUserId")
+        }
+
         var resourcePath = "/1/clusters/mapping/{userID}"
         let userIDPreEscape = "\(APIHelper.mapValueToPathItem(userID))"
         let userIDPostEscape = userIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2077,8 +2200,6 @@ open class SearchClient {
     }
 
     /**
-     Replace all sources.
-
      - parameter source: (body) Allowed sources.
      - returns: ReplaceSourceResponse
      */
@@ -2094,9 +2215,11 @@ open class SearchClient {
     }
 
     /**
-     Replace all sources.
-
      Replace all allowed sources.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter source: (body) Allowed sources.
      - returns: RequestBuilder<ReplaceSourceResponse>
      */
@@ -2119,8 +2242,6 @@ open class SearchClient {
     }
 
     /**
-     Restore API key.
-
      - parameter key: (path) API key.
      - returns: AddApiKeyResponse
      */
@@ -2136,14 +2257,20 @@ open class SearchClient {
     }
 
     /**
-     Restore API key.
-
      Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter key: (path) API key.
      - returns: RequestBuilder<AddApiKeyResponse>
      */
 
     open func restoreApiKeyWithHTTPInfo(key: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AddApiKeyResponse> {
+        guard !key.isEmpty else {
+            throw AlgoliaError.invalidArgument("key", "restoreApiKey")
+        }
+
         var resourcePath = "/1/keys/{key}/restore"
         let keyPreEscape = "\(APIHelper.mapValueToPathItem(key))"
         let keyPostEscape = keyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2164,8 +2291,6 @@ open class SearchClient {
     }
 
     /**
-     Add or update a record.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter body: (body) The Algolia record.
      - returns: SaveObjectResponse
@@ -2182,15 +2307,25 @@ open class SearchClient {
     }
 
     /**
-     Add or update a record.
-
      Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+
+     Required API Key ACLs:
+       - addObject
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter body: (body) The Algolia record.
      - returns: RequestBuilder<SaveObjectResponse>
      */
 
     open func saveObjectWithHTTPInfo(indexName: String, body: [String: AnyCodable], requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SaveObjectResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "saveObject")
+        }
+
+        guard !body.isEmpty else {
+            throw AlgoliaError.invalidArgument("body", "saveObject")
+        }
+
         var resourcePath = "/1/indexes/{indexName}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2211,8 +2346,6 @@ open class SearchClient {
     }
 
     /**
-     Create or update a rule.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - parameter rule: (body)
@@ -2231,9 +2364,11 @@ open class SearchClient {
     }
 
     /**
-     Create or update a rule.
-
      To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a rule object.
      - parameter rule: (body)
@@ -2242,6 +2377,14 @@ open class SearchClient {
      */
 
     open func saveRuleWithHTTPInfo(indexName: String, objectID: String, rule: Rule, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedRuleResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "saveRule")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "saveRule")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2267,8 +2410,6 @@ open class SearchClient {
     }
 
     /**
-     Save a batch of rules.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter rules: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2287,9 +2428,11 @@ open class SearchClient {
     }
 
     /**
-     Save a batch of rules.
-
      Create or update multiple rules.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter rules: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2298,6 +2441,10 @@ open class SearchClient {
      */
 
     open func saveRulesWithHTTPInfo(indexName: String, rules: [Rule], forwardToReplicas: Bool? = nil, clearExistingRules: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "saveRules")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/batch"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2321,8 +2468,6 @@ open class SearchClient {
     }
 
     /**
-     Save a synonym.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - parameter synonymHit: (body)
@@ -2341,9 +2486,11 @@ open class SearchClient {
     }
 
     /**
-     Save a synonym.
-
      Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter objectID: (path) Unique identifier of a synonym object.
      - parameter synonymHit: (body)
@@ -2352,6 +2499,14 @@ open class SearchClient {
      */
 
     open func saveSynonymWithHTTPInfo(indexName: String, objectID: String, synonymHit: SynonymHit, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SaveSynonymResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "saveSynonym")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "saveSynonym")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2377,8 +2532,6 @@ open class SearchClient {
     }
 
     /**
-     Save a batch of synonyms.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter synonymHit: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2397,9 +2550,11 @@ open class SearchClient {
     }
 
     /**
-     Save a batch of synonyms.
-
      Create or update multiple synonyms.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter synonymHit: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2408,6 +2563,10 @@ open class SearchClient {
      */
 
     open func saveSynonymsWithHTTPInfo(indexName: String, synonymHit: [SynonymHit], forwardToReplicas: Bool? = nil, replaceExistingSynonyms: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "saveSynonyms")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/batch"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2431,8 +2590,6 @@ open class SearchClient {
     }
 
     /**
-     Search multiple indices.
-
      - parameter searchMethodParams: (body) Query requests and strategies. Results will be received in the same order as the queries.
      - returns: SearchResponses
      */
@@ -2448,9 +2605,11 @@ open class SearchClient {
     }
 
     /**
-     Search multiple indices.
-
      Send multiple search queries to one or more indices.
+
+     Required API Key ACLs:
+       - search
+
      - parameter searchMethodParams: (body) Query requests and strategies. Results will be received in the same order as the queries.
      - returns: RequestBuilder<SearchResponses>
      */
@@ -2474,8 +2633,6 @@ open class SearchClient {
     }
 
     /**
-     Search dictionary entries.
-
      - parameter dictionaryName: (path) Dictionary to search in.
      - parameter searchDictionaryEntriesParams: (body)
      - returns: UpdatedAtResponse
@@ -2492,9 +2649,11 @@ open class SearchClient {
     }
 
     /**
-     Search dictionary entries.
-
      Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
+
+     Required API Key ACLs:
+       - settings
+
      - parameter dictionaryName: (path) Dictionary to search in.
      - parameter searchDictionaryEntriesParams: (body)
      - returns: RequestBuilder<UpdatedAtResponse>
@@ -2522,8 +2681,6 @@ open class SearchClient {
     }
 
     /**
-     Search for facet values.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter facetName: (path) Facet name.
      - parameter searchForFacetValuesRequest: (body)  (optional)
@@ -2541,9 +2698,11 @@ open class SearchClient {
     }
 
     /**
-     Search for facet values.
-
      [Search for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+
+     Required API Key ACLs:
+       - search
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter facetName: (path) Facet name.
      - parameter searchForFacetValuesRequest: (body)  (optional)
@@ -2551,6 +2710,14 @@ open class SearchClient {
      */
 
     open func searchForFacetValuesWithHTTPInfo(indexName: String, facetName: String, searchForFacetValuesRequest: SearchForFacetValuesRequest? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchForFacetValuesResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "searchForFacetValues")
+        }
+
+        guard !facetName.isEmpty else {
+            throw AlgoliaError.invalidArgument("facetName", "searchForFacetValues")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/facets/{facetName}/query"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2575,8 +2742,6 @@ open class SearchClient {
     }
 
     /**
-     Search for rules.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchRulesParams: (body)  (optional)
      - returns: SearchRulesResponse
@@ -2593,15 +2758,21 @@ open class SearchClient {
     }
 
     /**
-     Search for rules.
-
      Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchRulesParams: (body)  (optional)
      - returns: RequestBuilder<SearchRulesResponse>
      */
 
     open func searchRulesWithHTTPInfo(indexName: String, searchRulesParams: SearchRulesParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchRulesResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "searchRules")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/rules/search"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2623,8 +2794,6 @@ open class SearchClient {
     }
 
     /**
-     Search an index.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchParams: (body)  (optional)
      - returns: SearchResponse
@@ -2641,15 +2810,21 @@ open class SearchClient {
     }
 
     /**
-     Search an index.
-
      Return records that match the query.
+
+     Required API Key ACLs:
+       - search
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchParams: (body)  (optional)
      - returns: RequestBuilder<SearchResponse>
      */
 
     open func searchSingleIndexWithHTTPInfo(indexName: String, searchParams: SearchParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "searchSingleIndex")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/query"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2671,8 +2846,6 @@ open class SearchClient {
     }
 
     /**
-     Search for synonyms.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchSynonymsParams: (body) Body of the &#x60;searchSynonyms&#x60; operation. (optional)
      - returns: SearchSynonymsResponse
@@ -2689,15 +2862,21 @@ open class SearchClient {
     }
 
     /**
-     Search for synonyms.
-
      Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter searchSynonymsParams: (body) Body of the &#x60;searchSynonyms&#x60; operation. (optional)
      - returns: RequestBuilder<SearchSynonymsResponse>
      */
 
     open func searchSynonymsWithHTTPInfo(indexName: String, searchSynonymsParams: SearchSynonymsParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchSynonymsResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "searchSynonyms")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/synonyms/search"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2719,8 +2898,6 @@ open class SearchClient {
     }
 
     /**
-     Search for a user ID.
-
      - parameter searchUserIdsParams: (body)
      - returns: SearchUserIdsResponse
      */
@@ -2736,9 +2913,11 @@ open class SearchClient {
     }
 
     /**
-     Search for a user ID.
-
      Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).
+
+     Required API Key ACLs:
+       - admin
+
      - parameter searchUserIdsParams: (body)
      - returns: RequestBuilder<SearchUserIdsResponse>
      */
@@ -2762,8 +2941,6 @@ open class SearchClient {
     }
 
     /**
-     Set stop word settings.
-
      - parameter dictionarySettingsParams: (body)
      - returns: UpdatedAtResponse
      */
@@ -2779,9 +2956,11 @@ open class SearchClient {
     }
 
     /**
-     Set stop word settings.
-
      Set stop word settings for a specific language.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter dictionarySettingsParams: (body)
      - returns: RequestBuilder<UpdatedAtResponse>
      */
@@ -2804,8 +2983,6 @@ open class SearchClient {
     }
 
     /**
-     Update index settings.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter indexSettings: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2823,9 +3000,11 @@ open class SearchClient {
     }
 
     /**
-     Update index settings.
-
      Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter indexSettings: (body)
      - parameter forwardToReplicas: (query) Indicates whether changed index settings are forwarded to the replica indices. (optional)
@@ -2833,6 +3012,10 @@ open class SearchClient {
      */
 
     open func setSettingsWithHTTPInfo(indexName: String, indexSettings: IndexSettings, forwardToReplicas: Bool? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdatedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "setSettings")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/settings"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -2855,8 +3038,6 @@ open class SearchClient {
     }
 
     /**
-     Update an API key.
-
      - parameter key: (path) API key.
      - parameter apiKey: (body)
      - returns: UpdateApiKeyResponse
@@ -2873,15 +3054,21 @@ open class SearchClient {
     }
 
     /**
-     Update an API key.
-
      Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.
+
+     Required API Key ACLs:
+       - admin
+
      - parameter key: (path) API key.
      - parameter apiKey: (body)
      - returns: RequestBuilder<UpdateApiKeyResponse>
      */
 
     open func updateApiKeyWithHTTPInfo(key: String, apiKey: ApiKey, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<UpdateApiKeyResponse> {
+        guard !key.isEmpty else {
+            throw AlgoliaError.invalidArgument("key", "updateApiKey")
+        }
+
         var resourcePath = "/1/keys/{key}"
         let keyPreEscape = "\(APIHelper.mapValueToPathItem(key))"
         let keyPostEscape = keyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""

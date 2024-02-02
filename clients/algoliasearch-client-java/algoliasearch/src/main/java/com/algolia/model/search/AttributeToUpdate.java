@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 /** AttributeToUpdate */
 @JsonDeserialize(using = AttributeToUpdate.Deserializer.class)
 public interface AttributeToUpdate {
-  /** AttributeToUpdate as String wrapper. */
+  // AttributeToUpdate as String wrapper.
   static AttributeToUpdate of(String value) {
     return new StringWrapper(value);
   }
 
-  /** AttributeToUpdate as String wrapper. */
+  // AttributeToUpdate as String wrapper.
   @JsonSerialize(using = StringWrapper.Serializer.class)
   class StringWrapper implements AttributeToUpdate {
 

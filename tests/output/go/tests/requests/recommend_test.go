@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"net/url"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -14,7 +13,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createRecommendClient() (*recommend.APIClient, *tests.EchoRequester) {
+func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := recommend.Configuration{
 		Configuration: transport.Configuration{
@@ -23,13 +24,14 @@ func createRecommendClient() (*recommend.APIClient, *tests.EchoRequester) {
 			Requester: echo,
 		},
 	}
-	client, _ := recommend.NewClientWithConfig(cfg)
+	client, err := recommend.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
 func TestRecommend_CustomDelete(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -37,9 +39,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -50,9 +50,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -65,7 +63,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 }
 
 func TestRecommend_CustomGet(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -73,9 +71,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -86,9 +82,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -101,7 +95,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 }
 
 func TestRecommend_CustomPost(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -109,9 +103,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -123,9 +115,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -144,9 +134,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -165,9 +153,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -186,9 +172,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -212,9 +196,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -238,9 +220,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -259,9 +239,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -281,9 +259,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -303,9 +279,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -325,9 +299,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -341,7 +313,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 }
 
 func TestRecommend_CustomPut(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -349,9 +321,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -363,9 +333,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -379,7 +347,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 }
 
 func TestRecommend_DeleteRecommendRule(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("deleteRecommendRule0", func(t *testing.T) {
 		_, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
@@ -387,9 +355,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/objectID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -397,7 +363,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendRule(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("getRecommendRule0", func(t *testing.T) {
 		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
@@ -405,9 +371,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/objectID")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -415,7 +379,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendStatus(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("getRecommendStatus0", func(t *testing.T) {
 		_, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
@@ -423,9 +387,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/task/12345")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/related-products/task/12345", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -433,7 +395,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendations(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("get recommendations for recommend model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -444,9 +406,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -465,9 +425,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -482,9 +440,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -503,9 +459,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -521,9 +475,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -547,9 +499,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -564,9 +514,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/*/recommendations")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -575,7 +523,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 }
 
 func TestRecommend_SearchRecommendRules(t *testing.T) {
-	client, echo := createRecommendClient()
+	client, echo := createRecommendClient(t)
 
 	t.Run("searchRecommendRules0", func(t *testing.T) {
 		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
@@ -583,9 +531,7 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexes/indexName/related-products/recommend/rules/search")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)

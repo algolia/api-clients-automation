@@ -1,23 +1,22 @@
-import SwiftyJSON
 import XCTest
+
 #if canImport(AnyCodable)
     import AnyCodable
 #endif
+import Utils
 
 @testable import Core
 @testable import Search
 
 final class SearchClientRequestsTests: XCTestCase {
-    typealias StringMapObject = [String: String?]
-
-    let APPLICATION_ID = ""
-    let API_KEY = ""
+    let APPLICATION_ID = "my_application_id"
+    let API_KEY = "my_api_key"
 
     /**
      addApiKey0
      */
     func testAddApiKeyTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -26,11 +25,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
-        )
+        let comparableData = "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -44,7 +42,7 @@ final class SearchClientRequestsTests: XCTestCase {
      addOrUpdateObject0
      */
     func testAddOrUpdateObjectTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -53,11 +51,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"key\":\"value\"}"
-        )
+        let comparableData = "{\"key\":\"value\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -71,7 +68,7 @@ final class SearchClientRequestsTests: XCTestCase {
      appendSource0
      */
     func testAppendSourceTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -80,11 +77,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"source\":\"theSource\",\"description\":\"theDescription\"}"
-        )
+        let comparableData = "{\"source\":\"theSource\",\"description\":\"theDescription\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -98,7 +94,7 @@ final class SearchClientRequestsTests: XCTestCase {
      assignUserId0
      */
     func testAssignUserIdTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -107,11 +103,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"cluster\":\"theCluster\"}"
-        )
+        let comparableData = "{\"cluster\":\"theCluster\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -125,7 +120,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -133,7 +128,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;addObject&#x60; action
      */
     func testBatchTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -142,11 +137,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -160,7 +154,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;clear&#x60; action
      */
     func testBatchTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -169,11 +163,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -187,7 +180,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;delete&#x60; action
      */
     func testBatchTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -196,11 +189,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -214,7 +206,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;deleteObject&#x60; action
      */
     func testBatchTest3() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -223,11 +215,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"deleteObject\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"deleteObject\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -241,7 +232,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;partialUpdateObject&#x60; action
      */
     func testBatchTest4() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -250,11 +241,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"partialUpdateObject\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"partialUpdateObject\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -268,7 +258,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;partialUpdateObjectNoCreate&#x60; action
      */
     func testBatchTest5() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -277,11 +267,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -295,7 +284,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allows batch method with &#x60;updateObject&#x60; action
      */
     func testBatchTest6() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -304,11 +293,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"updateObject\",\"body\":{\"key\":\"value\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"updateObject\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -322,7 +310,7 @@ final class SearchClientRequestsTests: XCTestCase {
      batchAssignUserIds0
      */
     func testBatchAssignUserIdsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -331,11 +319,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"cluster\":\"theCluster\",\"users\":[\"user1\",\"user2\"]}"
-        )
+        let comparableData = "{\"cluster\":\"theCluster\",\"users\":[\"user1\",\"user2\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -349,7 +336,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -357,7 +344,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get batchDictionaryEntries results with minimal parameters
      */
     func testBatchDictionaryEntriesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -366,11 +353,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -384,7 +370,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get batchDictionaryEntries results with all parameters
      */
     func testBatchDictionaryEntriesTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -393,11 +379,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}"
-        )
+        let comparableData = "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -411,7 +396,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get batchDictionaryEntries results additional properties
      */
     func testBatchDictionaryEntriesTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -420,11 +405,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -438,7 +422,7 @@ final class SearchClientRequestsTests: XCTestCase {
      browse with minimal parameters
      */
     func testBrowseTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -447,11 +431,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -465,7 +448,7 @@ final class SearchClientRequestsTests: XCTestCase {
      browse with search parameters
      */
     func testBrowseTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -474,11 +457,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}"
-        )
+        let comparableData = "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -492,7 +474,7 @@ final class SearchClientRequestsTests: XCTestCase {
      browse allow a cursor in parameters
      */
     func testBrowseTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -501,11 +483,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"cursor\":\"test\"}"
-        )
+        let comparableData = "{\"cursor\":\"test\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -519,7 +500,7 @@ final class SearchClientRequestsTests: XCTestCase {
      clearObjects0
      */
     func testClearObjectsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -541,7 +522,7 @@ final class SearchClientRequestsTests: XCTestCase {
      clearRules0
      */
     func testClearRulesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -563,7 +544,7 @@ final class SearchClientRequestsTests: XCTestCase {
      clearSynonyms0
      */
     func testClearSynonymsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -585,7 +566,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow del method for a custom path with minimal parameters
      */
     func testCustomDeleteTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -605,7 +586,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow del method for a custom path with all parameters
      */
     func testCustomDeleteTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -628,7 +609,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow get method for a custom path with minimal parameters
      */
     func testCustomGetTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -648,7 +629,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow get method for a custom path with all parameters
      */
     func testCustomGetTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -671,7 +652,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow post method for a custom path with minimal parameters
      */
     func testCustomPostTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -680,11 +661,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -698,7 +678,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow post method for a custom path with all parameters
      */
     func testCustomPostTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -707,11 +687,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -728,7 +707,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions can override default query parameters
      */
     func testCustomPostTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -743,11 +722,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -764,7 +742,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions merges query parameters with default ones
      */
     func testCustomPostTest3() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -779,11 +757,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -800,7 +777,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions can override default headers
      */
     func testCustomPostTest4() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -815,11 +792,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -836,7 +812,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -844,7 +820,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions merges headers with default ones
      */
     func testCustomPostTest5() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -859,11 +835,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -880,7 +855,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
         for header in comparableHeadersMap {
-            XCTAssertEqual(echoResponseHeaders[header.key], header.value)
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
@@ -888,7 +863,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts booleans
      */
     func testCustomPostTest6() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -903,11 +878,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -924,7 +898,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts integers
      */
     func testCustomPostTest7() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -939,11 +913,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -960,7 +933,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of string
      */
     func testCustomPostTest8() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -975,11 +948,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -996,7 +968,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of booleans
      */
     func testCustomPostTest9() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1011,11 +983,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1032,7 +1003,7 @@ final class SearchClientRequestsTests: XCTestCase {
      requestOptions queryParameters accepts list of integers
      */
     func testCustomPostTest10() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1047,11 +1018,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"facet\":\"filters\"}"
-        )
+        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1068,7 +1038,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow put method for a custom path with minimal parameters
      */
     func testCustomPutTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1077,11 +1047,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1095,7 +1064,7 @@ final class SearchClientRequestsTests: XCTestCase {
      allow put method for a custom path with all parameters
      */
     func testCustomPutTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1104,11 +1073,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"body\":\"parameters\"}"
-        )
+        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1125,7 +1093,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteApiKey0
      */
     func testDeleteApiKeyTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1145,7 +1113,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteBy0
      */
     func testDeleteByTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1154,11 +1122,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"filters\":\"brand:brandName\"}"
-        )
+        let comparableData = "{\"filters\":\"brand:brandName\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1172,7 +1139,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteIndex0
      */
     func testDeleteIndexTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1192,7 +1159,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteObject0
      */
     func testDeleteObjectTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1212,7 +1179,7 @@ final class SearchClientRequestsTests: XCTestCase {
      delete rule simple case
      */
     func testDeleteRuleTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1232,7 +1199,7 @@ final class SearchClientRequestsTests: XCTestCase {
      delete rule with simple characters to encode in objectID
      */
     func testDeleteRuleTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1252,7 +1219,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteSource0
      */
     func testDeleteSourceTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1272,7 +1239,7 @@ final class SearchClientRequestsTests: XCTestCase {
      deleteSynonym0
      */
     func testDeleteSynonymTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1292,7 +1259,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getApiKey0
      */
     func testGetApiKeyTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1312,7 +1279,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get getDictionaryLanguages
      */
     func testGetDictionaryLanguagesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1332,7 +1299,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get getDictionarySettings results
      */
     func testGetDictionarySettingsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1352,7 +1319,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getLogs with minimal parameters
      */
     func testGetLogsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1372,7 +1339,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getLogs with parameters
      */
     func testGetLogsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1395,7 +1362,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getObject0
      */
     func testGetObjectTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1418,7 +1385,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getObjects0
      */
     func testGetObjectsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1427,11 +1394,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
-        )
+        let comparableData = "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1445,7 +1411,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getRule0
      */
     func testGetRuleTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1465,7 +1431,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getSettings0
      */
     func testGetSettingsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1485,7 +1451,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getSources0
      */
     func testGetSourcesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1505,7 +1471,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getSynonym0
      */
     func testGetSynonymTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1525,7 +1491,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getTask0
      */
     func testGetTaskTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1545,7 +1511,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getTopUserIds0
      */
     func testGetTopUserIdsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1565,7 +1531,7 @@ final class SearchClientRequestsTests: XCTestCase {
      getUserId0
      */
     func testGetUserIdTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1585,7 +1551,7 @@ final class SearchClientRequestsTests: XCTestCase {
      hasPendingMappings with minimal parameters
      */
     func testHasPendingMappingsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1605,7 +1571,7 @@ final class SearchClientRequestsTests: XCTestCase {
      hasPendingMappings with parameters
      */
     func testHasPendingMappingsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1628,7 +1594,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listApiKeys0
      */
     func testListApiKeysTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1648,7 +1614,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listClusters0
      */
     func testListClustersTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1668,7 +1634,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listIndices with minimal parameters
      */
     func testListIndicesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1688,7 +1654,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listIndices with parameters
      */
     func testListIndicesTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1711,7 +1677,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listUserIds with minimal parameters
      */
     func testListUserIdsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1731,7 +1697,7 @@ final class SearchClientRequestsTests: XCTestCase {
      listUserIds with parameters
      */
     func testListUserIdsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1754,7 +1720,7 @@ final class SearchClientRequestsTests: XCTestCase {
      multipleBatch0
      */
     func testMultipleBatchTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1763,11 +1729,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"},\"indexName\":\"theIndexName\"}]}"
-        )
+        let comparableData = "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"},\"indexName\":\"theIndexName\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1781,7 +1746,7 @@ final class SearchClientRequestsTests: XCTestCase {
      operationIndex0
      */
     func testOperationIndexTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1790,11 +1755,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}"
-        )
+        let comparableData = "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1808,7 +1772,7 @@ final class SearchClientRequestsTests: XCTestCase {
      partialUpdateObject0
      */
     func testPartialUpdateObjectTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1817,11 +1781,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}"
-        )
+        let comparableData = "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1838,7 +1801,7 @@ final class SearchClientRequestsTests: XCTestCase {
      removeUserId0
      */
     func testRemoveUserIdTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1858,7 +1821,7 @@ final class SearchClientRequestsTests: XCTestCase {
      replaceSources0
      */
     func testReplaceSourcesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1867,11 +1830,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "[{\"source\":\"theSource\",\"description\":\"theDescription\"}]"
-        )
+        let comparableData = "[{\"source\":\"theSource\",\"description\":\"theDescription\"}]".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1885,7 +1847,7 @@ final class SearchClientRequestsTests: XCTestCase {
      restoreApiKey0
      */
     func testRestoreApiKeyTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1907,7 +1869,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveObject0
      */
     func testSaveObjectTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1916,11 +1878,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"objectID\":\"id\",\"test\":\"val\"}"
-        )
+        let comparableData = "{\"objectID\":\"id\",\"test\":\"val\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1934,7 +1895,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveRule with minimal parameters
      */
     func testSaveRuleTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1943,11 +1904,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}"
-        )
+        let comparableData = "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1961,7 +1921,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveRule with all parameters
      */
     func testSaveRuleTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -1970,11 +1930,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}"
-        )
+        let comparableData = "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -1991,7 +1950,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveRules with minimal parameters
      */
     func testSaveRulesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2000,11 +1959,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]"
-        )
+        let comparableData = "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2018,7 +1976,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveRules with all parameters
      */
     func testSaveRulesTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2027,11 +1985,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]"
-        )
+        let comparableData = "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2048,7 +2005,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveSynonym0
      */
     func testSaveSynonymTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2057,11 +2014,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}"
-        )
+        let comparableData = "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2078,7 +2034,7 @@ final class SearchClientRequestsTests: XCTestCase {
      saveSynonyms0
      */
     func testSaveSynonymsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2087,11 +2043,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]"
-        )
+        let comparableData = "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2108,7 +2063,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for a single hits request with minimal parameters
      */
     func testSearchTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2117,11 +2072,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2135,7 +2089,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for a single facet request with minimal parameters
      */
     func testSearchTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2144,11 +2098,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2162,7 +2115,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for a single hits request with all parameters
      */
     func testSearchTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2171,11 +2124,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2189,7 +2141,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for a single facet request with all parameters
      */
     func testSearchTest3() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2198,11 +2150,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50}],\"strategy\":\"stopIfEnoughMatches\"}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50}],\"strategy\":\"stopIfEnoughMatches\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2216,7 +2167,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for multiple mixed requests in multiple indices with minimal parameters
      */
     func testSearchTest4() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2225,11 +2176,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"theIndexName\"},{\"indexName\":\"theIndexName2\",\"type\":\"facet\",\"facet\":\"theFacet\"},{\"indexName\":\"theIndexName\",\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"theIndexName\"},{\"indexName\":\"theIndexName2\",\"type\":\"facet\",\"facet\":\"theFacet\"},{\"indexName\":\"theIndexName\",\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2243,7 +2193,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search for multiple mixed requests in multiple indices with all parameters
      */
     func testSearchTest5() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2252,11 +2202,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50},{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50},{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2270,7 +2219,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search filters accept all of the possible shapes
      */
     func testSearchTest6() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2279,11 +2228,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}"
-        )
+        let comparableData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2297,7 +2245,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search with all search parameters
      */
     func testSearchTest7() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2306,11 +2254,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesForFaceting\":[\"\"],\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"explain\":[\"foo\",\"bar\"],\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}"
-        )
+        let comparableData = "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesForFaceting\":[\"\"],\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"explain\":[\"foo\",\"bar\"],\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2324,7 +2271,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get searchDictionaryEntries results with minimal parameters
      */
     func testSearchDictionaryEntriesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2333,11 +2280,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"foo\"}"
-        )
+        let comparableData = "{\"query\":\"foo\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2351,7 +2297,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get searchDictionaryEntries results with all parameters
      */
     func testSearchDictionaryEntriesTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2360,11 +2306,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}"
-        )
+        let comparableData = "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2378,7 +2323,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get searchForFacetValues results with minimal parameters
      */
     func testSearchForFacetValuesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2387,11 +2332,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2405,7 +2349,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get searchForFacetValues results with all parameters
      */
     func testSearchForFacetValuesTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2414,11 +2358,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"params\":\"query=foo&facetFilters=['bar']\",\"facetQuery\":\"foo\",\"maxFacetHits\":42}"
-        )
+        let comparableData = "{\"params\":\"query=foo&facetFilters=['bar']\",\"facetQuery\":\"foo\",\"maxFacetHits\":42}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2432,7 +2375,7 @@ final class SearchClientRequestsTests: XCTestCase {
      searchRules0
      */
     func testSearchRulesTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2441,11 +2384,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"something\"}"
-        )
+        let comparableData = "{\"query\":\"something\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2459,7 +2401,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search with minimal parameters
      */
     func testSearchSingleIndexTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2468,11 +2410,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2486,7 +2427,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search with special characters in indexName
      */
     func testSearchSingleIndexTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2495,11 +2436,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2513,7 +2453,7 @@ final class SearchClientRequestsTests: XCTestCase {
      search with searchParams
      */
     func testSearchSingleIndexTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2522,11 +2462,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}"
-        )
+        let comparableData = "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2540,7 +2479,7 @@ final class SearchClientRequestsTests: XCTestCase {
      searchSynonyms with minimal parameters
      */
     func testSearchSynonymsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2549,11 +2488,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{}"
-        )
+        let comparableData = "{}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2567,7 +2505,7 @@ final class SearchClientRequestsTests: XCTestCase {
      searchSynonyms with all parameters
      */
     func testSearchSynonymsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2576,11 +2514,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"myQuery\",\"type\":\"altcorrection1\",\"page\":10,\"hitsPerPage\":10}"
-        )
+        let comparableData = "{\"query\":\"myQuery\",\"type\":\"altcorrection1\",\"page\":10,\"hitsPerPage\":10}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2594,7 +2531,7 @@ final class SearchClientRequestsTests: XCTestCase {
      searchUserIds0
      */
     func testSearchUserIdsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2603,11 +2540,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"query\":\"test\",\"clusterName\":\"theClusterName\",\"page\":5,\"hitsPerPage\":10}"
-        )
+        let comparableData = "{\"query\":\"test\",\"clusterName\":\"theClusterName\",\"page\":5,\"hitsPerPage\":10}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2621,7 +2557,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get setDictionarySettings results with minimal parameters
      */
     func testSetDictionarySettingsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2630,11 +2566,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}"
-        )
+        let comparableData = "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2648,7 +2583,7 @@ final class SearchClientRequestsTests: XCTestCase {
      get setDictionarySettings results with all parameters
      */
     func testSetDictionarySettingsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2657,11 +2592,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}"
-        )
+        let comparableData = "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2675,7 +2609,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings with minimal parameters
      */
     func testSetSettingsTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2684,11 +2618,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"paginationLimitedTo\":10}"
-        )
+        let comparableData = "{\"paginationLimitedTo\":10}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2705,7 +2638,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow boolean &#x60;typoTolerance&#x60;
      */
     func testSetSettingsTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2714,11 +2647,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"typoTolerance\":true}"
-        )
+        let comparableData = "{\"typoTolerance\":true}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2735,7 +2667,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow enum &#x60;typoTolerance&#x60;
      */
     func testSetSettingsTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2744,11 +2676,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"typoTolerance\":\"min\"}"
-        )
+        let comparableData = "{\"typoTolerance\":\"min\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2765,7 +2696,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow boolean &#x60;ignorePlurals&#x60;
      */
     func testSetSettingsTest3() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2774,11 +2705,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"ignorePlurals\":true}"
-        )
+        let comparableData = "{\"ignorePlurals\":true}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2795,7 +2725,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow list of string &#x60;ignorePlurals&#x60;
      */
     func testSetSettingsTest4() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2804,11 +2734,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"ignorePlurals\":[\"algolia\"]}"
-        )
+        let comparableData = "{\"ignorePlurals\":[\"algolia\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2825,7 +2754,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow boolean &#x60;removeStopWords&#x60;
      */
     func testSetSettingsTest5() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2834,11 +2763,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"removeStopWords\":true}"
-        )
+        let comparableData = "{\"removeStopWords\":true}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2855,7 +2783,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow list of string &#x60;removeStopWords&#x60;
      */
     func testSetSettingsTest6() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2864,11 +2792,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"removeStopWords\":[\"algolia\"]}"
-        )
+        let comparableData = "{\"removeStopWords\":[\"algolia\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2885,7 +2812,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow boolean &#x60;distinct&#x60;
      */
     func testSetSettingsTest7() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2894,11 +2821,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"distinct\":true}"
-        )
+        let comparableData = "{\"distinct\":true}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2915,7 +2841,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow integers for &#x60;distinct&#x60;
      */
     func testSetSettingsTest8() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2924,11 +2850,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"distinct\":1}"
-        )
+        let comparableData = "{\"distinct\":1}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2945,7 +2870,7 @@ final class SearchClientRequestsTests: XCTestCase {
      setSettings allow all &#x60;indexSettings&#x60;
      */
     func testSetSettingsTest9() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2954,11 +2879,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"algolia\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"algolia\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}"
-        )
+        let comparableData = "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"algolia\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"algolia\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 
@@ -2972,7 +2896,7 @@ final class SearchClientRequestsTests: XCTestCase {
      updateApiKey0
      */
     func testUpdateApiKeyTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(applicationID: APPLICATION_ID, apiKey: API_KEY)
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -2981,11 +2905,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try JSON(data: echoResponseBodyData, options: .fragmentsAllowed)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableJSON = JSON(parseJSON:
-            "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
-        )
+        let comparableData = "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
 

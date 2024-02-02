@@ -2,10 +2,9 @@
 package ingestion
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,20 +38,20 @@ func (r *ApiCreateAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["authenticationCreate"]; ok {
 		err = json.Unmarshal(v, &r.authenticationCreate)
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationCreate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationCreate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.authenticationCreate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter authenticationCreate: %w", err)
 		}
 	}
 
@@ -72,9 +71,14 @@ func (c *APIClient) NewApiCreateAuthenticationRequest(authenticationCreate *Auth
 }
 
 /*
-CreateAuthentication Create a authentication. Wraps CreateAuthenticationWithContext using context.Background.
+CreateAuthentication Wraps CreateAuthenticationWithContext using context.Background.
 
 Create a authentication.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiCreateAuthenticationRequest with parameters below.
 
@@ -86,7 +90,7 @@ func (c *APIClient) CreateAuthentication(r ApiCreateAuthenticationRequest, opts 
 }
 
 /*
-CreateAuthentication Create a authentication.
+CreateAuthentication
 
 Create a authentication.
 
@@ -127,19 +131,12 @@ func (c *APIClient) CreateAuthenticationWithContext(ctx context.Context, r ApiCr
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -149,7 +146,7 @@ func (c *APIClient) CreateAuthenticationWithContext(ctx context.Context, r ApiCr
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -158,7 +155,7 @@ func (c *APIClient) CreateAuthenticationWithContext(ctx context.Context, r ApiCr
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -170,20 +167,20 @@ func (r *ApiCreateDestinationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["destinationCreate"]; ok {
 		err = json.Unmarshal(v, &r.destinationCreate)
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationCreate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationCreate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.destinationCreate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter destinationCreate: %w", err)
 		}
 	}
 
@@ -203,9 +200,14 @@ func (c *APIClient) NewApiCreateDestinationRequest(destinationCreate *Destinatio
 }
 
 /*
-CreateDestination Create a destination. Wraps CreateDestinationWithContext using context.Background.
+CreateDestination Wraps CreateDestinationWithContext using context.Background.
 
 Create a destination.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiCreateDestinationRequest with parameters below.
 
@@ -217,7 +219,7 @@ func (c *APIClient) CreateDestination(r ApiCreateDestinationRequest, opts ...Opt
 }
 
 /*
-CreateDestination Create a destination.
+CreateDestination
 
 Create a destination.
 
@@ -258,19 +260,12 @@ func (c *APIClient) CreateDestinationWithContext(ctx context.Context, r ApiCreat
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -280,7 +275,7 @@ func (c *APIClient) CreateDestinationWithContext(ctx context.Context, r ApiCreat
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -289,7 +284,7 @@ func (c *APIClient) CreateDestinationWithContext(ctx context.Context, r ApiCreat
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -301,20 +296,20 @@ func (r *ApiCreateSourceRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceCreate"]; ok {
 		err = json.Unmarshal(v, &r.sourceCreate)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceCreate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceCreate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.sourceCreate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter sourceCreate: %w", err)
 		}
 	}
 
@@ -334,9 +329,14 @@ func (c *APIClient) NewApiCreateSourceRequest(sourceCreate *SourceCreate) ApiCre
 }
 
 /*
-CreateSource Create a source. Wraps CreateSourceWithContext using context.Background.
+CreateSource Wraps CreateSourceWithContext using context.Background.
 
 Create a source.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiCreateSourceRequest with parameters below.
 
@@ -348,7 +348,7 @@ func (c *APIClient) CreateSource(r ApiCreateSourceRequest, opts ...Option) (*Sou
 }
 
 /*
-CreateSource Create a source.
+CreateSource
 
 Create a source.
 
@@ -389,19 +389,12 @@ func (c *APIClient) CreateSourceWithContext(ctx context.Context, r ApiCreateSour
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -411,7 +404,7 @@ func (c *APIClient) CreateSourceWithContext(ctx context.Context, r ApiCreateSour
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -420,7 +413,7 @@ func (c *APIClient) CreateSourceWithContext(ctx context.Context, r ApiCreateSour
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -432,20 +425,20 @@ func (r *ApiCreateTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskCreate"]; ok {
 		err = json.Unmarshal(v, &r.taskCreate)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskCreate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskCreate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.taskCreate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter taskCreate: %w", err)
 		}
 	}
 
@@ -465,7 +458,7 @@ func (c *APIClient) NewApiCreateTaskRequest(taskCreate *TaskCreate) ApiCreateTas
 }
 
 /*
-CreateTask Create a task. Wraps CreateTaskWithContext using context.Background.
+CreateTask Wraps CreateTaskWithContext using context.Background.
 
 Create a task.
 
@@ -479,7 +472,7 @@ func (c *APIClient) CreateTask(r ApiCreateTaskRequest, opts ...Option) (*TaskCre
 }
 
 /*
-CreateTask Create a task.
+CreateTask
 
 Create a task.
 
@@ -520,19 +513,12 @@ func (c *APIClient) CreateTaskWithContext(ctx context.Context, r ApiCreateTaskRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -542,7 +528,7 @@ func (c *APIClient) CreateTaskWithContext(ctx context.Context, r ApiCreateTaskRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -551,7 +537,7 @@ func (c *APIClient) CreateTaskWithContext(ctx context.Context, r ApiCreateTaskRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -563,14 +549,14 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -579,7 +565,7 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -607,7 +593,7 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]interface{}
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API. Wraps CustomDeleteWithContext using context.Background.
+CustomDelete Wraps CustomDeleteWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -622,7 +608,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (map[
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API.
+CustomDelete
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -639,7 +625,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -668,19 +654,12 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -690,7 +669,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -699,7 +678,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -711,14 +690,14 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -727,7 +706,7 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -755,7 +734,7 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]interface{}) A
 }
 
 /*
-CustomGet Send requests to the Algolia REST API. Wraps CustomGetWithContext using context.Background.
+CustomGet Wraps CustomGetWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -770,7 +749,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (map[string
 }
 
 /*
-CustomGet Send requests to the Algolia REST API.
+CustomGet
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -787,7 +766,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -816,19 +795,12 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -838,7 +810,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -847,7 +819,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -859,14 +831,14 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -875,7 +847,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -884,7 +856,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -919,7 +891,7 @@ func (r ApiCustomPostRequest) WithBody(body map[string]interface{}) ApiCustomPos
 }
 
 /*
-CustomPost Send requests to the Algolia REST API. Wraps CustomPostWithContext using context.Background.
+CustomPost Wraps CustomPostWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -935,7 +907,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (map[stri
 }
 
 /*
-CustomPost Send requests to the Algolia REST API.
+CustomPost
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -953,7 +925,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -988,19 +960,12 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1010,7 +975,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1019,7 +984,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1031,14 +996,14 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -1047,7 +1012,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -1056,7 +1021,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -1091,7 +1056,7 @@ func (r ApiCustomPutRequest) WithBody(body map[string]interface{}) ApiCustomPutR
 }
 
 /*
-CustomPut Send requests to the Algolia REST API. Wraps CustomPutWithContext using context.Background.
+CustomPut Wraps CustomPutWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -1107,7 +1072,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (map[string
 }
 
 /*
-CustomPut Send requests to the Algolia REST API.
+CustomPut
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -1125,7 +1090,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -1160,19 +1125,12 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1182,7 +1140,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1191,7 +1149,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1203,14 +1161,14 @@ func (r *ApiDeleteAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["authenticationID"]; ok {
 		err = json.Unmarshal(v, &r.authenticationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationID: %w", err)
 			}
 		}
 	}
@@ -1231,9 +1189,14 @@ func (c *APIClient) NewApiDeleteAuthenticationRequest(authenticationID string) A
 }
 
 /*
-DeleteAuthentication Delete a authentication. Wraps DeleteAuthenticationWithContext using context.Background.
+DeleteAuthentication Wraps DeleteAuthenticationWithContext using context.Background.
 
 Soft delete the authentication of the given authenticationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiDeleteAuthenticationRequest with parameters below.
 
@@ -1245,7 +1208,7 @@ func (c *APIClient) DeleteAuthentication(r ApiDeleteAuthenticationRequest, opts 
 }
 
 /*
-DeleteAuthentication Delete a authentication.
+DeleteAuthentication
 
 Soft delete the authentication of the given authenticationID.
 
@@ -1284,19 +1247,12 @@ func (c *APIClient) DeleteAuthenticationWithContext(ctx context.Context, r ApiDe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1306,7 +1262,7 @@ func (c *APIClient) DeleteAuthenticationWithContext(ctx context.Context, r ApiDe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1315,7 +1271,7 @@ func (c *APIClient) DeleteAuthenticationWithContext(ctx context.Context, r ApiDe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1327,14 +1283,14 @@ func (r *ApiDeleteDestinationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["destinationID"]; ok {
 		err = json.Unmarshal(v, &r.destinationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationID: %w", err)
 			}
 		}
 	}
@@ -1355,9 +1311,14 @@ func (c *APIClient) NewApiDeleteDestinationRequest(destinationID string) ApiDele
 }
 
 /*
-DeleteDestination Delete a destination. Wraps DeleteDestinationWithContext using context.Background.
+DeleteDestination Wraps DeleteDestinationWithContext using context.Background.
 
 Soft delete the destination of the given destinationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiDeleteDestinationRequest with parameters below.
 
@@ -1369,7 +1330,7 @@ func (c *APIClient) DeleteDestination(r ApiDeleteDestinationRequest, opts ...Opt
 }
 
 /*
-DeleteDestination Delete a destination.
+DeleteDestination
 
 Soft delete the destination of the given destinationID.
 
@@ -1408,19 +1369,12 @@ func (c *APIClient) DeleteDestinationWithContext(ctx context.Context, r ApiDelet
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1430,7 +1384,7 @@ func (c *APIClient) DeleteDestinationWithContext(ctx context.Context, r ApiDelet
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1439,7 +1393,7 @@ func (c *APIClient) DeleteDestinationWithContext(ctx context.Context, r ApiDelet
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1451,14 +1405,14 @@ func (r *ApiDeleteSourceRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceID"]; ok {
 		err = json.Unmarshal(v, &r.sourceID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -1479,9 +1433,14 @@ func (c *APIClient) NewApiDeleteSourceRequest(sourceID string) ApiDeleteSourceRe
 }
 
 /*
-DeleteSource Delete a source. Wraps DeleteSourceWithContext using context.Background.
+DeleteSource Wraps DeleteSourceWithContext using context.Background.
 
 Soft delete the source of the given sourceID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiDeleteSourceRequest with parameters below.
 
@@ -1493,7 +1452,7 @@ func (c *APIClient) DeleteSource(r ApiDeleteSourceRequest, opts ...Option) (*Del
 }
 
 /*
-DeleteSource Delete a source.
+DeleteSource
 
 Soft delete the source of the given sourceID.
 
@@ -1532,19 +1491,12 @@ func (c *APIClient) DeleteSourceWithContext(ctx context.Context, r ApiDeleteSour
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1554,7 +1506,7 @@ func (c *APIClient) DeleteSourceWithContext(ctx context.Context, r ApiDeleteSour
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1563,7 +1515,7 @@ func (c *APIClient) DeleteSourceWithContext(ctx context.Context, r ApiDeleteSour
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1575,14 +1527,14 @@ func (r *ApiDeleteTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -1603,7 +1555,7 @@ func (c *APIClient) NewApiDeleteTaskRequest(taskID string) ApiDeleteTaskRequest 
 }
 
 /*
-DeleteTask Delete a task. Wraps DeleteTaskWithContext using context.Background.
+DeleteTask Wraps DeleteTaskWithContext using context.Background.
 
 Soft delete the task of the given taskID.
 
@@ -1617,7 +1569,7 @@ func (c *APIClient) DeleteTask(r ApiDeleteTaskRequest, opts ...Option) (*DeleteR
 }
 
 /*
-DeleteTask Delete a task.
+DeleteTask
 
 Soft delete the task of the given taskID.
 
@@ -1656,19 +1608,12 @@ func (c *APIClient) DeleteTaskWithContext(ctx context.Context, r ApiDeleteTaskRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1678,7 +1623,7 @@ func (c *APIClient) DeleteTaskWithContext(ctx context.Context, r ApiDeleteTaskRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1687,7 +1632,7 @@ func (c *APIClient) DeleteTaskWithContext(ctx context.Context, r ApiDeleteTaskRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1699,14 +1644,14 @@ func (r *ApiDisableTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -1727,9 +1672,14 @@ func (c *APIClient) NewApiDisableTaskRequest(taskID string) ApiDisableTaskReques
 }
 
 /*
-DisableTask Disable a task. Wraps DisableTaskWithContext using context.Background.
+DisableTask Wraps DisableTaskWithContext using context.Background.
 
 Disable the task of the given taskID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiDisableTaskRequest with parameters below.
 
@@ -1741,7 +1691,7 @@ func (c *APIClient) DisableTask(r ApiDisableTaskRequest, opts ...Option) (*TaskU
 }
 
 /*
-DisableTask Disable a task.
+DisableTask
 
 Disable the task of the given taskID.
 
@@ -1780,19 +1730,12 @@ func (c *APIClient) DisableTaskWithContext(ctx context.Context, r ApiDisableTask
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1802,7 +1745,7 @@ func (c *APIClient) DisableTaskWithContext(ctx context.Context, r ApiDisableTask
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1811,7 +1754,7 @@ func (c *APIClient) DisableTaskWithContext(ctx context.Context, r ApiDisableTask
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1823,14 +1766,14 @@ func (r *ApiEnableTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -1851,9 +1794,14 @@ func (c *APIClient) NewApiEnableTaskRequest(taskID string) ApiEnableTaskRequest 
 }
 
 /*
-EnableTask Enable a task. Wraps EnableTaskWithContext using context.Background.
+EnableTask Wraps EnableTaskWithContext using context.Background.
 
 Enable the task of the given taskID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiEnableTaskRequest with parameters below.
 
@@ -1865,7 +1813,7 @@ func (c *APIClient) EnableTask(r ApiEnableTaskRequest, opts ...Option) (*TaskUpd
 }
 
 /*
-EnableTask Enable a task.
+EnableTask
 
 Enable the task of the given taskID.
 
@@ -1904,19 +1852,12 @@ func (c *APIClient) EnableTaskWithContext(ctx context.Context, r ApiEnableTaskRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1926,7 +1867,7 @@ func (c *APIClient) EnableTaskWithContext(ctx context.Context, r ApiEnableTaskRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1935,7 +1876,7 @@ func (c *APIClient) EnableTaskWithContext(ctx context.Context, r ApiEnableTaskRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1947,14 +1888,14 @@ func (r *ApiGetAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["authenticationID"]; ok {
 		err = json.Unmarshal(v, &r.authenticationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationID: %w", err)
 			}
 		}
 	}
@@ -1975,9 +1916,14 @@ func (c *APIClient) NewApiGetAuthenticationRequest(authenticationID string) ApiG
 }
 
 /*
-GetAuthentication Get a authentication. Wraps GetAuthenticationWithContext using context.Background.
+GetAuthentication Wraps GetAuthenticationWithContext using context.Background.
 
 Get the authentication of the given authenticationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetAuthenticationRequest with parameters below.
 
@@ -1989,7 +1935,7 @@ func (c *APIClient) GetAuthentication(r ApiGetAuthenticationRequest, opts ...Opt
 }
 
 /*
-GetAuthentication Get a authentication.
+GetAuthentication
 
 Get the authentication of the given authenticationID.
 
@@ -2028,19 +1974,12 @@ func (c *APIClient) GetAuthenticationWithContext(ctx context.Context, r ApiGetAu
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2050,7 +1989,7 @@ func (c *APIClient) GetAuthenticationWithContext(ctx context.Context, r ApiGetAu
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2059,7 +1998,7 @@ func (c *APIClient) GetAuthenticationWithContext(ctx context.Context, r ApiGetAu
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2071,14 +2010,14 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["itemsPerPage"]; ok {
 		err = json.Unmarshal(v, &r.itemsPerPage)
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -2087,7 +2026,7 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -2096,7 +2035,7 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.type_)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal type_: %w", err)
 			}
 		}
 	}
@@ -2105,7 +2044,7 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.platform)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal platform: %w", err)
 			}
 		}
 	}
@@ -2114,7 +2053,7 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -2123,7 +2062,7 @@ func (r *ApiGetAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -2183,9 +2122,14 @@ func (r ApiGetAuthenticationsRequest) WithOrder(order OrderKeys) ApiGetAuthentic
 }
 
 /*
-GetAuthentications Get a list of authentications. Wraps GetAuthenticationsWithContext using context.Background.
+GetAuthentications Wraps GetAuthenticationsWithContext using context.Background.
 
 Get a list of authentications for the given query parameters, with pagination details.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetAuthenticationsRequest with parameters below.
 
@@ -2202,7 +2146,7 @@ func (c *APIClient) GetAuthentications(r ApiGetAuthenticationsRequest, opts ...O
 }
 
 /*
-GetAuthentications Get a list of authentications.
+GetAuthentications
 
 Get a list of authentications for the given query parameters, with pagination details.
 
@@ -2261,19 +2205,12 @@ func (c *APIClient) GetAuthenticationsWithContext(ctx context.Context, r ApiGetA
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2283,7 +2220,7 @@ func (c *APIClient) GetAuthenticationsWithContext(ctx context.Context, r ApiGetA
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2292,7 +2229,7 @@ func (c *APIClient) GetAuthenticationsWithContext(ctx context.Context, r ApiGetA
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2304,14 +2241,14 @@ func (r *ApiGetDestinationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["destinationID"]; ok {
 		err = json.Unmarshal(v, &r.destinationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationID: %w", err)
 			}
 		}
 	}
@@ -2332,9 +2269,14 @@ func (c *APIClient) NewApiGetDestinationRequest(destinationID string) ApiGetDest
 }
 
 /*
-GetDestination Get a destination. Wraps GetDestinationWithContext using context.Background.
+GetDestination Wraps GetDestinationWithContext using context.Background.
 
 Get the destination of the given destinationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetDestinationRequest with parameters below.
 
@@ -2346,7 +2288,7 @@ func (c *APIClient) GetDestination(r ApiGetDestinationRequest, opts ...Option) (
 }
 
 /*
-GetDestination Get a destination.
+GetDestination
 
 Get the destination of the given destinationID.
 
@@ -2385,19 +2327,12 @@ func (c *APIClient) GetDestinationWithContext(ctx context.Context, r ApiGetDesti
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2407,7 +2342,7 @@ func (c *APIClient) GetDestinationWithContext(ctx context.Context, r ApiGetDesti
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2416,7 +2351,7 @@ func (c *APIClient) GetDestinationWithContext(ctx context.Context, r ApiGetDesti
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2428,14 +2363,14 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["itemsPerPage"]; ok {
 		err = json.Unmarshal(v, &r.itemsPerPage)
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -2444,7 +2379,7 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -2453,7 +2388,7 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.type_)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal type_: %w", err)
 			}
 		}
 	}
@@ -2462,7 +2397,7 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationID: %w", err)
 			}
 		}
 	}
@@ -2471,7 +2406,7 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -2480,7 +2415,7 @@ func (r *ApiGetDestinationsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -2540,9 +2475,14 @@ func (r ApiGetDestinationsRequest) WithOrder(order OrderKeys) ApiGetDestinations
 }
 
 /*
-GetDestinations Get a list of destinations. Wraps GetDestinationsWithContext using context.Background.
+GetDestinations Wraps GetDestinationsWithContext using context.Background.
 
 Get a list of destinations for the given query parameters, with pagination details.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetDestinationsRequest with parameters below.
 
@@ -2559,7 +2499,7 @@ func (c *APIClient) GetDestinations(r ApiGetDestinationsRequest, opts ...Option)
 }
 
 /*
-GetDestinations Get a list of destinations.
+GetDestinations
 
 Get a list of destinations for the given query parameters, with pagination details.
 
@@ -2618,19 +2558,12 @@ func (c *APIClient) GetDestinationsWithContext(ctx context.Context, r ApiGetDest
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2640,7 +2573,7 @@ func (c *APIClient) GetDestinationsWithContext(ctx context.Context, r ApiGetDest
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2649,7 +2582,7 @@ func (c *APIClient) GetDestinationsWithContext(ctx context.Context, r ApiGetDest
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2661,14 +2594,14 @@ func (r *ApiGetDockerSourceStreamsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceID"]; ok {
 		err = json.Unmarshal(v, &r.sourceID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -2689,9 +2622,14 @@ func (c *APIClient) NewApiGetDockerSourceStreamsRequest(sourceID string) ApiGetD
 }
 
 /*
-GetDockerSourceStreams Retrieve a stream listing. Wraps GetDockerSourceStreamsWithContext using context.Background.
+GetDockerSourceStreams Wraps GetDockerSourceStreamsWithContext using context.Background.
 
 Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetDockerSourceStreamsRequest with parameters below.
 
@@ -2703,7 +2641,7 @@ func (c *APIClient) GetDockerSourceStreams(r ApiGetDockerSourceStreamsRequest, o
 }
 
 /*
-GetDockerSourceStreams Retrieve a stream listing.
+GetDockerSourceStreams
 
 Retrieve a stream listing for a given Singer specification compatible docker type source ID.
 
@@ -2742,19 +2680,12 @@ func (c *APIClient) GetDockerSourceStreamsWithContext(ctx context.Context, r Api
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2764,7 +2695,7 @@ func (c *APIClient) GetDockerSourceStreamsWithContext(ctx context.Context, r Api
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2773,7 +2704,7 @@ func (c *APIClient) GetDockerSourceStreamsWithContext(ctx context.Context, r Api
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2785,14 +2716,14 @@ func (r *ApiGetEventRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["runID"]; ok {
 		err = json.Unmarshal(v, &r.runID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.runID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal runID: %w", err)
 			}
 		}
 	}
@@ -2801,7 +2732,7 @@ func (r *ApiGetEventRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.eventID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal eventID: %w", err)
 			}
 		}
 	}
@@ -2824,9 +2755,14 @@ func (c *APIClient) NewApiGetEventRequest(runID string, eventID string) ApiGetEv
 }
 
 /*
-GetEvent Get an event. Wraps GetEventWithContext using context.Background.
+GetEvent Wraps GetEventWithContext using context.Background.
 
 Get a single event for a specific runID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetEventRequest with parameters below.
 
@@ -2839,7 +2775,7 @@ func (c *APIClient) GetEvent(r ApiGetEventRequest, opts ...Option) (*Event, erro
 }
 
 /*
-GetEvent Get an event.
+GetEvent
 
 Get a single event for a specific runID.
 
@@ -2883,19 +2819,12 @@ func (c *APIClient) GetEventWithContext(ctx context.Context, r ApiGetEventReques
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2905,7 +2834,7 @@ func (c *APIClient) GetEventWithContext(ctx context.Context, r ApiGetEventReques
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2914,7 +2843,7 @@ func (c *APIClient) GetEventWithContext(ctx context.Context, r ApiGetEventReques
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2926,14 +2855,14 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["runID"]; ok {
 		err = json.Unmarshal(v, &r.runID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.runID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal runID: %w", err)
 			}
 		}
 	}
@@ -2942,7 +2871,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -2951,7 +2880,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -2960,7 +2889,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.status)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal status: %w", err)
 			}
 		}
 	}
@@ -2969,7 +2898,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.type_)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal type_: %w", err)
 			}
 		}
 	}
@@ -2978,7 +2907,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -2987,7 +2916,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -2996,7 +2925,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3005,7 +2934,7 @@ func (r *ApiGetEventsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3082,9 +3011,14 @@ func (r ApiGetEventsRequest) WithEndDate(endDate string) ApiGetEventsRequest {
 }
 
 /*
-GetEvents Get a list of events. Wraps GetEventsWithContext using context.Background.
+GetEvents Wraps GetEventsWithContext using context.Background.
 
 Get a list of events associated to the given runID, for the given query parameters.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetEventsRequest with parameters below.
 
@@ -3104,7 +3038,7 @@ func (c *APIClient) GetEvents(r ApiGetEventsRequest, opts ...Option) (*ListEvent
 }
 
 /*
-GetEvents Get a list of events.
+GetEvents
 
 Get a list of events associated to the given runID, for the given query parameters.
 
@@ -3176,19 +3110,12 @@ func (c *APIClient) GetEventsWithContext(ctx context.Context, r ApiGetEventsRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3198,7 +3125,7 @@ func (c *APIClient) GetEventsWithContext(ctx context.Context, r ApiGetEventsRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3207,7 +3134,7 @@ func (c *APIClient) GetEventsWithContext(ctx context.Context, r ApiGetEventsRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3219,14 +3146,14 @@ func (r *ApiGetRunRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["runID"]; ok {
 		err = json.Unmarshal(v, &r.runID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.runID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal runID: %w", err)
 			}
 		}
 	}
@@ -3247,9 +3174,14 @@ func (c *APIClient) NewApiGetRunRequest(runID string) ApiGetRunRequest {
 }
 
 /*
-GetRun Get a run. Wraps GetRunWithContext using context.Background.
+GetRun Wraps GetRunWithContext using context.Background.
 
 Get a single run for the given ID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetRunRequest with parameters below.
 
@@ -3261,7 +3193,7 @@ func (c *APIClient) GetRun(r ApiGetRunRequest, opts ...Option) (*Run, error) {
 }
 
 /*
-GetRun Get a run.
+GetRun
 
 Get a single run for the given ID.
 
@@ -3300,19 +3232,12 @@ func (c *APIClient) GetRunWithContext(ctx context.Context, r ApiGetRunRequest, o
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3322,7 +3247,7 @@ func (c *APIClient) GetRunWithContext(ctx context.Context, r ApiGetRunRequest, o
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3331,7 +3256,7 @@ func (c *APIClient) GetRunWithContext(ctx context.Context, r ApiGetRunRequest, o
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3343,14 +3268,14 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["itemsPerPage"]; ok {
 		err = json.Unmarshal(v, &r.itemsPerPage)
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -3359,7 +3284,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -3368,7 +3293,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.status)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal status: %w", err)
 			}
 		}
 	}
@@ -3377,7 +3302,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -3386,7 +3311,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -3395,7 +3320,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -3404,7 +3329,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3413,7 +3338,7 @@ func (r *ApiGetRunsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3487,9 +3412,14 @@ func (r ApiGetRunsRequest) WithEndDate(endDate string) ApiGetRunsRequest {
 }
 
 /*
-GetRuns Get a list of runs. Wraps GetRunsWithContext using context.Background.
+GetRuns Wraps GetRunsWithContext using context.Background.
 
 Get a list of runs for the given query parameters, with pagination details.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetRunsRequest with parameters below.
 
@@ -3508,7 +3438,7 @@ func (c *APIClient) GetRuns(r ApiGetRunsRequest, opts ...Option) (*RunListRespon
 }
 
 /*
-GetRuns Get a list of runs.
+GetRuns
 
 Get a list of runs for the given query parameters, with pagination details.
 
@@ -3575,19 +3505,12 @@ func (c *APIClient) GetRunsWithContext(ctx context.Context, r ApiGetRunsRequest,
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3597,7 +3520,7 @@ func (c *APIClient) GetRunsWithContext(ctx context.Context, r ApiGetRunsRequest,
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3606,7 +3529,7 @@ func (c *APIClient) GetRunsWithContext(ctx context.Context, r ApiGetRunsRequest,
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3618,14 +3541,14 @@ func (r *ApiGetSourceRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceID"]; ok {
 		err = json.Unmarshal(v, &r.sourceID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -3646,9 +3569,14 @@ func (c *APIClient) NewApiGetSourceRequest(sourceID string) ApiGetSourceRequest 
 }
 
 /*
-GetSource Get a source. Wraps GetSourceWithContext using context.Background.
+GetSource Wraps GetSourceWithContext using context.Background.
 
 Get the source of the given sourceID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetSourceRequest with parameters below.
 
@@ -3660,7 +3588,7 @@ func (c *APIClient) GetSource(r ApiGetSourceRequest, opts ...Option) (*Source, e
 }
 
 /*
-GetSource Get a source.
+GetSource
 
 Get the source of the given sourceID.
 
@@ -3699,19 +3627,12 @@ func (c *APIClient) GetSourceWithContext(ctx context.Context, r ApiGetSourceRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3721,7 +3642,7 @@ func (c *APIClient) GetSourceWithContext(ctx context.Context, r ApiGetSourceRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3730,7 +3651,7 @@ func (c *APIClient) GetSourceWithContext(ctx context.Context, r ApiGetSourceRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3742,14 +3663,14 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["itemsPerPage"]; ok {
 		err = json.Unmarshal(v, &r.itemsPerPage)
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -3758,7 +3679,7 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -3767,7 +3688,7 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.type_)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal type_: %w", err)
 			}
 		}
 	}
@@ -3776,7 +3697,7 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationID: %w", err)
 			}
 		}
 	}
@@ -3785,7 +3706,7 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -3794,7 +3715,7 @@ func (r *ApiGetSourcesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -3854,9 +3775,14 @@ func (r ApiGetSourcesRequest) WithOrder(order OrderKeys) ApiGetSourcesRequest {
 }
 
 /*
-GetSources Get a list of sources. Wraps GetSourcesWithContext using context.Background.
+GetSources Wraps GetSourcesWithContext using context.Background.
 
 Get a list of sources for the given query parameters, with pagination details.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetSourcesRequest with parameters below.
 
@@ -3873,7 +3799,7 @@ func (c *APIClient) GetSources(r ApiGetSourcesRequest, opts ...Option) (*ListSou
 }
 
 /*
-GetSources Get a list of sources.
+GetSources
 
 Get a list of sources for the given query parameters, with pagination details.
 
@@ -3932,19 +3858,12 @@ func (c *APIClient) GetSourcesWithContext(ctx context.Context, r ApiGetSourcesRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3954,7 +3873,7 @@ func (c *APIClient) GetSourcesWithContext(ctx context.Context, r ApiGetSourcesRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3963,7 +3882,7 @@ func (c *APIClient) GetSourcesWithContext(ctx context.Context, r ApiGetSourcesRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3975,14 +3894,14 @@ func (r *ApiGetTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -4003,9 +3922,14 @@ func (c *APIClient) NewApiGetTaskRequest(taskID string) ApiGetTaskRequest {
 }
 
 /*
-GetTask Get a task. Wraps GetTaskWithContext using context.Background.
+GetTask Wraps GetTaskWithContext using context.Background.
 
 Get the task of the given taskID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetTaskRequest with parameters below.
 
@@ -4017,7 +3941,7 @@ func (c *APIClient) GetTask(r ApiGetTaskRequest, opts ...Option) (*Task, error) 
 }
 
 /*
-GetTask Get a task.
+GetTask
 
 Get the task of the given taskID.
 
@@ -4056,19 +3980,12 @@ func (c *APIClient) GetTaskWithContext(ctx context.Context, r ApiGetTaskRequest,
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4078,7 +3995,7 @@ func (c *APIClient) GetTaskWithContext(ctx context.Context, r ApiGetTaskRequest,
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4087,7 +4004,7 @@ func (c *APIClient) GetTaskWithContext(ctx context.Context, r ApiGetTaskRequest,
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4099,14 +4016,14 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["itemsPerPage"]; ok {
 		err = json.Unmarshal(v, &r.itemsPerPage)
 		if err != nil {
 			err = json.Unmarshal(b, &r.itemsPerPage)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal itemsPerPage: %w", err)
 			}
 		}
 	}
@@ -4115,7 +4032,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.page)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal page: %w", err)
 			}
 		}
 	}
@@ -4124,7 +4041,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.action)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal action: %w", err)
 			}
 		}
 	}
@@ -4133,7 +4050,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.enabled)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal enabled: %w", err)
 			}
 		}
 	}
@@ -4142,7 +4059,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -4151,7 +4068,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationID: %w", err)
 			}
 		}
 	}
@@ -4160,7 +4077,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.triggerType)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal triggerType: %w", err)
 			}
 		}
 	}
@@ -4169,7 +4086,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sort)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
 			}
 		}
 	}
@@ -4178,7 +4095,7 @@ func (r *ApiGetTasksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.order)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal order: %w", err)
 			}
 		}
 	}
@@ -4259,9 +4176,14 @@ func (r ApiGetTasksRequest) WithOrder(order OrderKeys) ApiGetTasksRequest {
 }
 
 /*
-GetTasks Get a list of tasks. Wraps GetTasksWithContext using context.Background.
+GetTasks Wraps GetTasksWithContext using context.Background.
 
 Get a list of tasks for the given query parameters, with pagination details.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiGetTasksRequest with parameters below.
 
@@ -4281,7 +4203,7 @@ func (c *APIClient) GetTasks(r ApiGetTasksRequest, opts ...Option) (*ListTasksRe
 }
 
 /*
-GetTasks Get a list of tasks.
+GetTasks
 
 Get a list of tasks for the given query parameters, with pagination details.
 
@@ -4352,19 +4274,12 @@ func (c *APIClient) GetTasksWithContext(ctx context.Context, r ApiGetTasksReques
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4374,7 +4289,7 @@ func (c *APIClient) GetTasksWithContext(ctx context.Context, r ApiGetTasksReques
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4383,7 +4298,7 @@ func (c *APIClient) GetTasksWithContext(ctx context.Context, r ApiGetTasksReques
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4395,14 +4310,14 @@ func (r *ApiRunTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -4423,9 +4338,14 @@ func (c *APIClient) NewApiRunTaskRequest(taskID string) ApiRunTaskRequest {
 }
 
 /*
-RunTask Run a task. Wraps RunTaskWithContext using context.Background.
+RunTask Wraps RunTaskWithContext using context.Background.
 
 Run the task of the given taskID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiRunTaskRequest with parameters below.
 
@@ -4437,7 +4357,7 @@ func (c *APIClient) RunTask(r ApiRunTaskRequest, opts ...Option) (*RunResponse, 
 }
 
 /*
-RunTask Run a task.
+RunTask
 
 Run the task of the given taskID.
 
@@ -4476,19 +4396,12 @@ func (c *APIClient) RunTaskWithContext(ctx context.Context, r ApiRunTaskRequest,
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4498,7 +4411,7 @@ func (c *APIClient) RunTaskWithContext(ctx context.Context, r ApiRunTaskRequest,
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4507,7 +4420,7 @@ func (c *APIClient) RunTaskWithContext(ctx context.Context, r ApiRunTaskRequest,
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4519,20 +4432,20 @@ func (r *ApiSearchAuthenticationsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["authenticationSearch"]; ok {
 		err = json.Unmarshal(v, &r.authenticationSearch)
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationSearch)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationSearch: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.authenticationSearch)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter authenticationSearch: %w", err)
 		}
 	}
 
@@ -4552,9 +4465,14 @@ func (c *APIClient) NewApiSearchAuthenticationsRequest(authenticationSearch *Aut
 }
 
 /*
-SearchAuthentications Search among authentications. Wraps SearchAuthenticationsWithContext using context.Background.
+SearchAuthentications Wraps SearchAuthenticationsWithContext using context.Background.
 
 Search among authentications with a defined set of parameters.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiSearchAuthenticationsRequest with parameters below.
 
@@ -4566,7 +4484,7 @@ func (c *APIClient) SearchAuthentications(r ApiSearchAuthenticationsRequest, opt
 }
 
 /*
-SearchAuthentications Search among authentications.
+SearchAuthentications
 
 Search among authentications with a defined set of parameters.
 
@@ -4607,19 +4525,12 @@ func (c *APIClient) SearchAuthenticationsWithContext(ctx context.Context, r ApiS
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4629,7 +4540,7 @@ func (c *APIClient) SearchAuthenticationsWithContext(ctx context.Context, r ApiS
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4638,7 +4549,7 @@ func (c *APIClient) SearchAuthenticationsWithContext(ctx context.Context, r ApiS
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4650,20 +4561,20 @@ func (r *ApiSearchDestinationsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["destinationSearch"]; ok {
 		err = json.Unmarshal(v, &r.destinationSearch)
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationSearch)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationSearch: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.destinationSearch)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter destinationSearch: %w", err)
 		}
 	}
 
@@ -4683,9 +4594,14 @@ func (c *APIClient) NewApiSearchDestinationsRequest(destinationSearch *Destinati
 }
 
 /*
-SearchDestinations Search among destinations. Wraps SearchDestinationsWithContext using context.Background.
+SearchDestinations Wraps SearchDestinationsWithContext using context.Background.
 
 Search among destinations with a defined set of parameters.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiSearchDestinationsRequest with parameters below.
 
@@ -4697,7 +4613,7 @@ func (c *APIClient) SearchDestinations(r ApiSearchDestinationsRequest, opts ...O
 }
 
 /*
-SearchDestinations Search among destinations.
+SearchDestinations
 
 Search among destinations with a defined set of parameters.
 
@@ -4738,19 +4654,12 @@ func (c *APIClient) SearchDestinationsWithContext(ctx context.Context, r ApiSear
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4760,7 +4669,7 @@ func (c *APIClient) SearchDestinationsWithContext(ctx context.Context, r ApiSear
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4769,7 +4678,7 @@ func (c *APIClient) SearchDestinationsWithContext(ctx context.Context, r ApiSear
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4781,20 +4690,20 @@ func (r *ApiSearchSourcesRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceSearch"]; ok {
 		err = json.Unmarshal(v, &r.sourceSearch)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceSearch)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceSearch: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.sourceSearch)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter sourceSearch: %w", err)
 		}
 	}
 
@@ -4814,9 +4723,14 @@ func (c *APIClient) NewApiSearchSourcesRequest(sourceSearch *SourceSearch) ApiSe
 }
 
 /*
-SearchSources Search among sources. Wraps SearchSourcesWithContext using context.Background.
+SearchSources Wraps SearchSourcesWithContext using context.Background.
 
 Search among sources with a defined set of parameters.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiSearchSourcesRequest with parameters below.
 
@@ -4828,7 +4742,7 @@ func (c *APIClient) SearchSources(r ApiSearchSourcesRequest, opts ...Option) ([]
 }
 
 /*
-SearchSources Search among sources.
+SearchSources
 
 Search among sources with a defined set of parameters.
 
@@ -4869,19 +4783,12 @@ func (c *APIClient) SearchSourcesWithContext(ctx context.Context, r ApiSearchSou
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4891,7 +4798,7 @@ func (c *APIClient) SearchSourcesWithContext(ctx context.Context, r ApiSearchSou
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4900,7 +4807,7 @@ func (c *APIClient) SearchSourcesWithContext(ctx context.Context, r ApiSearchSou
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4912,20 +4819,20 @@ func (r *ApiSearchTasksRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskSearch"]; ok {
 		err = json.Unmarshal(v, &r.taskSearch)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskSearch)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskSearch: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.taskSearch)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter taskSearch: %w", err)
 		}
 	}
 
@@ -4945,9 +4852,14 @@ func (c *APIClient) NewApiSearchTasksRequest(taskSearch *TaskSearch) ApiSearchTa
 }
 
 /*
-SearchTasks Search among tasks. Wraps SearchTasksWithContext using context.Background.
+SearchTasks Wraps SearchTasksWithContext using context.Background.
 
 Search among tasks with a defined set of parameters.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiSearchTasksRequest with parameters below.
 
@@ -4959,7 +4871,7 @@ func (c *APIClient) SearchTasks(r ApiSearchTasksRequest, opts ...Option) ([]Task
 }
 
 /*
-SearchTasks Search among tasks.
+SearchTasks
 
 Search among tasks with a defined set of parameters.
 
@@ -5000,19 +4912,12 @@ func (c *APIClient) SearchTasksWithContext(ctx context.Context, r ApiSearchTasks
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5022,7 +4927,7 @@ func (c *APIClient) SearchTasksWithContext(ctx context.Context, r ApiSearchTasks
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5031,7 +4936,7 @@ func (c *APIClient) SearchTasksWithContext(ctx context.Context, r ApiSearchTasks
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -5043,14 +4948,14 @@ func (r *ApiTriggerDockerSourceDiscoverRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceID"]; ok {
 		err = json.Unmarshal(v, &r.sourceID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -5071,9 +4976,14 @@ func (c *APIClient) NewApiTriggerDockerSourceDiscoverRequest(sourceID string) Ap
 }
 
 /*
-TriggerDockerSourceDiscover Trigger a stream listing request. Wraps TriggerDockerSourceDiscoverWithContext using context.Background.
+TriggerDockerSourceDiscover Wraps TriggerDockerSourceDiscoverWithContext using context.Background.
 
 Trigger a stream listing request for a Singer specification compatible docker type source.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with parameters below.
 
@@ -5085,7 +4995,7 @@ func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscover
 }
 
 /*
-TriggerDockerSourceDiscover Trigger a stream listing request.
+TriggerDockerSourceDiscover
 
 Trigger a stream listing request for a Singer specification compatible docker type source.
 
@@ -5124,19 +5034,12 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, 
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5146,7 +5049,7 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, 
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5155,7 +5058,7 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, 
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -5167,14 +5070,14 @@ func (r *ApiUpdateAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["authenticationID"]; ok {
 		err = json.Unmarshal(v, &r.authenticationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationID: %w", err)
 			}
 		}
 	}
@@ -5183,13 +5086,13 @@ func (r *ApiUpdateAuthenticationRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.authenticationUpdate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal authenticationUpdate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.authenticationUpdate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter authenticationUpdate: %w", err)
 		}
 	}
 
@@ -5211,9 +5114,14 @@ func (c *APIClient) NewApiUpdateAuthenticationRequest(authenticationID string, a
 }
 
 /*
-UpdateAuthentication Update a authentication. Wraps UpdateAuthenticationWithContext using context.Background.
+UpdateAuthentication Wraps UpdateAuthenticationWithContext using context.Background.
 
 Update the authentication of the given authenticationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiUpdateAuthenticationRequest with parameters below.
 
@@ -5226,7 +5134,7 @@ func (c *APIClient) UpdateAuthentication(r ApiUpdateAuthenticationRequest, opts 
 }
 
 /*
-UpdateAuthentication Update a authentication.
+UpdateAuthentication
 
 Update the authentication of the given authenticationID.
 
@@ -5272,19 +5180,12 @@ func (c *APIClient) UpdateAuthenticationWithContext(ctx context.Context, r ApiUp
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5294,7 +5195,7 @@ func (c *APIClient) UpdateAuthenticationWithContext(ctx context.Context, r ApiUp
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5303,7 +5204,7 @@ func (c *APIClient) UpdateAuthenticationWithContext(ctx context.Context, r ApiUp
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -5315,14 +5216,14 @@ func (r *ApiUpdateDestinationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["destinationID"]; ok {
 		err = json.Unmarshal(v, &r.destinationID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationID: %w", err)
 			}
 		}
 	}
@@ -5331,13 +5232,13 @@ func (r *ApiUpdateDestinationRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.destinationUpdate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal destinationUpdate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.destinationUpdate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter destinationUpdate: %w", err)
 		}
 	}
 
@@ -5359,9 +5260,14 @@ func (c *APIClient) NewApiUpdateDestinationRequest(destinationID string, destina
 }
 
 /*
-UpdateDestination Update a destination. Wraps UpdateDestinationWithContext using context.Background.
+UpdateDestination Wraps UpdateDestinationWithContext using context.Background.
 
 Update the destination of the given destinationID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiUpdateDestinationRequest with parameters below.
 
@@ -5374,7 +5280,7 @@ func (c *APIClient) UpdateDestination(r ApiUpdateDestinationRequest, opts ...Opt
 }
 
 /*
-UpdateDestination Update a destination.
+UpdateDestination
 
 Update the destination of the given destinationID.
 
@@ -5420,19 +5326,12 @@ func (c *APIClient) UpdateDestinationWithContext(ctx context.Context, r ApiUpdat
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5442,7 +5341,7 @@ func (c *APIClient) UpdateDestinationWithContext(ctx context.Context, r ApiUpdat
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5451,7 +5350,7 @@ func (c *APIClient) UpdateDestinationWithContext(ctx context.Context, r ApiUpdat
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -5463,14 +5362,14 @@ func (r *ApiUpdateSourceRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["sourceID"]; ok {
 		err = json.Unmarshal(v, &r.sourceID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
 			}
 		}
 	}
@@ -5479,13 +5378,13 @@ func (r *ApiUpdateSourceRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.sourceUpdate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal sourceUpdate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.sourceUpdate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter sourceUpdate: %w", err)
 		}
 	}
 
@@ -5507,9 +5406,14 @@ func (c *APIClient) NewApiUpdateSourceRequest(sourceID string, sourceUpdate *Sou
 }
 
 /*
-UpdateSource Update a source. Wraps UpdateSourceWithContext using context.Background.
+UpdateSource Wraps UpdateSourceWithContext using context.Background.
 
 Update the source of the given sourceID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
 
 Request can be constructed by NewApiUpdateSourceRequest with parameters below.
 
@@ -5522,7 +5426,7 @@ func (c *APIClient) UpdateSource(r ApiUpdateSourceRequest, opts ...Option) (*Sou
 }
 
 /*
-UpdateSource Update a source.
+UpdateSource
 
 Update the source of the given sourceID.
 
@@ -5568,19 +5472,12 @@ func (c *APIClient) UpdateSourceWithContext(ctx context.Context, r ApiUpdateSour
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5590,7 +5487,7 @@ func (c *APIClient) UpdateSourceWithContext(ctx context.Context, r ApiUpdateSour
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5599,7 +5496,7 @@ func (c *APIClient) UpdateSourceWithContext(ctx context.Context, r ApiUpdateSour
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -5611,14 +5508,14 @@ func (r *ApiUpdateTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["taskID"]; ok {
 		err = json.Unmarshal(v, &r.taskID)
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskID)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskID: %w", err)
 			}
 		}
 	}
@@ -5627,13 +5524,13 @@ func (r *ApiUpdateTaskRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.taskUpdate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal taskUpdate: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.taskUpdate)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter taskUpdate: %w", err)
 		}
 	}
 
@@ -5655,7 +5552,7 @@ func (c *APIClient) NewApiUpdateTaskRequest(taskID string, taskUpdate *TaskUpdat
 }
 
 /*
-UpdateTask Update a task. Wraps UpdateTaskWithContext using context.Background.
+UpdateTask Wraps UpdateTaskWithContext using context.Background.
 
 Update the task of the given taskID.
 
@@ -5670,7 +5567,7 @@ func (c *APIClient) UpdateTask(r ApiUpdateTaskRequest, opts ...Option) (*TaskUpd
 }
 
 /*
-UpdateTask Update a task.
+UpdateTask
 
 Update the task of the given taskID.
 
@@ -5716,19 +5613,12 @@ func (c *APIClient) UpdateTaskWithContext(ctx context.Context, r ApiUpdateTaskRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -5738,7 +5628,7 @@ func (c *APIClient) UpdateTaskWithContext(ctx context.Context, r ApiUpdateTaskRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -5747,7 +5637,7 @@ func (c *APIClient) UpdateTaskWithContext(ctx context.Context, r ApiUpdateTaskRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}

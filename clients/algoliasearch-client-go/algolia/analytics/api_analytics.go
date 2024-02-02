@@ -2,10 +2,9 @@
 package analytics
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,14 +38,14 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -55,7 +54,7 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -83,7 +82,7 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]interface{}
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API. Wraps CustomDeleteWithContext using context.Background.
+CustomDelete Wraps CustomDeleteWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -98,7 +97,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (map[
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API.
+CustomDelete
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -115,7 +114,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -144,19 +143,12 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -166,7 +158,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -175,7 +167,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -187,14 +179,14 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -203,7 +195,7 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -231,7 +223,7 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]interface{}) A
 }
 
 /*
-CustomGet Send requests to the Algolia REST API. Wraps CustomGetWithContext using context.Background.
+CustomGet Wraps CustomGetWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -246,7 +238,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (map[string
 }
 
 /*
-CustomGet Send requests to the Algolia REST API.
+CustomGet
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -263,7 +255,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -292,19 +284,12 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -314,7 +299,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -323,7 +308,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -335,14 +320,14 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -351,7 +336,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -360,7 +345,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -395,7 +380,7 @@ func (r ApiCustomPostRequest) WithBody(body map[string]interface{}) ApiCustomPos
 }
 
 /*
-CustomPost Send requests to the Algolia REST API. Wraps CustomPostWithContext using context.Background.
+CustomPost Wraps CustomPostWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -411,7 +396,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (map[stri
 }
 
 /*
-CustomPost Send requests to the Algolia REST API.
+CustomPost
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -429,7 +414,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -464,19 +449,12 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -486,7 +464,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -495,7 +473,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -507,14 +485,14 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -523,7 +501,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -532,7 +510,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -567,7 +545,7 @@ func (r ApiCustomPutRequest) WithBody(body map[string]interface{}) ApiCustomPutR
 }
 
 /*
-CustomPut Send requests to the Algolia REST API. Wraps CustomPutWithContext using context.Background.
+CustomPut Wraps CustomPutWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -583,7 +561,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (map[string
 }
 
 /*
-CustomPut Send requests to the Algolia REST API.
+CustomPut
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -601,7 +579,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -636,19 +614,12 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -658,7 +629,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -667,7 +638,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -679,14 +650,14 @@ func (r *ApiGetAverageClickPositionRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -695,7 +666,7 @@ func (r *ApiGetAverageClickPositionRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -704,7 +675,7 @@ func (r *ApiGetAverageClickPositionRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -713,7 +684,7 @@ func (r *ApiGetAverageClickPositionRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -755,10 +726,13 @@ func (r ApiGetAverageClickPositionRequest) WithTags(tags string) ApiGetAverageCl
 }
 
 /*
-GetAverageClickPosition Get average click position. Wraps GetAverageClickPositionWithContext using context.Background.
+GetAverageClickPosition Wraps GetAverageClickPositionWithContext using context.Background.
 
 Return the average click position for the complete time range and for individual days.
 > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetAverageClickPositionRequest with parameters below.
 
@@ -773,7 +747,7 @@ func (c *APIClient) GetAverageClickPosition(r ApiGetAverageClickPositionRequest,
 }
 
 /*
-GetAverageClickPosition Get average click position.
+GetAverageClickPosition
 
 Return the average click position for the complete time range and for individual days.
 > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
@@ -826,19 +800,12 @@ func (c *APIClient) GetAverageClickPositionWithContext(ctx context.Context, r Ap
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -848,7 +815,7 @@ func (c *APIClient) GetAverageClickPositionWithContext(ctx context.Context, r Ap
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -857,7 +824,7 @@ func (c *APIClient) GetAverageClickPositionWithContext(ctx context.Context, r Ap
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -869,14 +836,14 @@ func (r *ApiGetClickPositionsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -885,7 +852,7 @@ func (r *ApiGetClickPositionsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -894,7 +861,7 @@ func (r *ApiGetClickPositionsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -903,7 +870,7 @@ func (r *ApiGetClickPositionsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -945,11 +912,14 @@ func (r ApiGetClickPositionsRequest) WithTags(tags string) ApiGetClickPositionsR
 }
 
 /*
-GetClickPositions Get click positions. Wraps GetClickPositionsWithContext using context.Background.
+GetClickPositions Wraps GetClickPositionsWithContext using context.Background.
 
 Show the number of clicks events and their associated position in the search results.
 
 > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetClickPositionsRequest with parameters below.
 
@@ -964,7 +934,7 @@ func (c *APIClient) GetClickPositions(r ApiGetClickPositionsRequest, opts ...Opt
 }
 
 /*
-GetClickPositions Get click positions.
+GetClickPositions
 
 Show the number of clicks events and their associated position in the search results.
 
@@ -1018,19 +988,12 @@ func (c *APIClient) GetClickPositionsWithContext(ctx context.Context, r ApiGetCl
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1040,7 +1003,7 @@ func (c *APIClient) GetClickPositionsWithContext(ctx context.Context, r ApiGetCl
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1049,7 +1012,7 @@ func (c *APIClient) GetClickPositionsWithContext(ctx context.Context, r ApiGetCl
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1061,14 +1024,14 @@ func (r *ApiGetClickThroughRateRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -1077,7 +1040,7 @@ func (r *ApiGetClickThroughRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -1086,7 +1049,7 @@ func (r *ApiGetClickThroughRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -1095,7 +1058,7 @@ func (r *ApiGetClickThroughRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -1137,9 +1100,12 @@ func (r ApiGetClickThroughRateRequest) WithTags(tags string) ApiGetClickThroughR
 }
 
 /*
-GetClickThroughRate Get click-through rate (CTR). Wraps GetClickThroughRateWithContext using context.Background.
+GetClickThroughRate Wraps GetClickThroughRateWithContext using context.Background.
 
 Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetClickThroughRateRequest with parameters below.
 
@@ -1154,7 +1120,7 @@ func (c *APIClient) GetClickThroughRate(r ApiGetClickThroughRateRequest, opts ..
 }
 
 /*
-GetClickThroughRate Get click-through rate (CTR).
+GetClickThroughRate
 
 Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
 
@@ -1206,19 +1172,12 @@ func (c *APIClient) GetClickThroughRateWithContext(ctx context.Context, r ApiGet
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1228,7 +1187,7 @@ func (c *APIClient) GetClickThroughRateWithContext(ctx context.Context, r ApiGet
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1237,7 +1196,7 @@ func (c *APIClient) GetClickThroughRateWithContext(ctx context.Context, r ApiGet
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1249,14 +1208,14 @@ func (r *ApiGetConversationRateRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -1265,7 +1224,7 @@ func (r *ApiGetConversationRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -1274,7 +1233,7 @@ func (r *ApiGetConversationRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -1283,7 +1242,7 @@ func (r *ApiGetConversationRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -1325,9 +1284,12 @@ func (r ApiGetConversationRateRequest) WithTags(tags string) ApiGetConversationR
 }
 
 /*
-GetConversationRate Get conversion rate (CR). Wraps GetConversationRateWithContext using context.Background.
+GetConversationRate Wraps GetConversationRateWithContext using context.Background.
 
 Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetConversationRateRequest with parameters below.
 
@@ -1342,7 +1304,7 @@ func (c *APIClient) GetConversationRate(r ApiGetConversationRateRequest, opts ..
 }
 
 /*
-GetConversationRate Get conversion rate (CR).
+GetConversationRate
 
 Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
 
@@ -1394,19 +1356,12 @@ func (c *APIClient) GetConversationRateWithContext(ctx context.Context, r ApiGet
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1416,7 +1371,7 @@ func (c *APIClient) GetConversationRateWithContext(ctx context.Context, r ApiGet
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1425,7 +1380,7 @@ func (c *APIClient) GetConversationRateWithContext(ctx context.Context, r ApiGet
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1437,14 +1392,14 @@ func (r *ApiGetNoClickRateRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -1453,7 +1408,7 @@ func (r *ApiGetNoClickRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -1462,7 +1417,7 @@ func (r *ApiGetNoClickRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -1471,7 +1426,7 @@ func (r *ApiGetNoClickRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -1513,9 +1468,12 @@ func (r ApiGetNoClickRateRequest) WithTags(tags string) ApiGetNoClickRateRequest
 }
 
 /*
-GetNoClickRate Get no click rate. Wraps GetNoClickRateWithContext using context.Background.
+GetNoClickRate Wraps GetNoClickRateWithContext using context.Background.
 
 Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetNoClickRateRequest with parameters below.
 
@@ -1530,7 +1488,7 @@ func (c *APIClient) GetNoClickRate(r ApiGetNoClickRateRequest, opts ...Option) (
 }
 
 /*
-GetNoClickRate Get no click rate.
+GetNoClickRate
 
 Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
 
@@ -1582,19 +1540,12 @@ func (c *APIClient) GetNoClickRateWithContext(ctx context.Context, r ApiGetNoCli
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1604,7 +1555,7 @@ func (c *APIClient) GetNoClickRateWithContext(ctx context.Context, r ApiGetNoCli
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1613,7 +1564,7 @@ func (c *APIClient) GetNoClickRateWithContext(ctx context.Context, r ApiGetNoCli
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1625,14 +1576,14 @@ func (r *ApiGetNoResultsRateRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -1641,7 +1592,7 @@ func (r *ApiGetNoResultsRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -1650,7 +1601,7 @@ func (r *ApiGetNoResultsRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -1659,7 +1610,7 @@ func (r *ApiGetNoResultsRateRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -1701,9 +1652,12 @@ func (r ApiGetNoResultsRateRequest) WithTags(tags string) ApiGetNoResultsRateReq
 }
 
 /*
-GetNoResultsRate Get no results rate. Wraps GetNoResultsRateWithContext using context.Background.
+GetNoResultsRate Wraps GetNoResultsRateWithContext using context.Background.
 
 Returns the rate at which searches didn't return any results.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetNoResultsRateRequest with parameters below.
 
@@ -1718,7 +1672,7 @@ func (c *APIClient) GetNoResultsRate(r ApiGetNoResultsRateRequest, opts ...Optio
 }
 
 /*
-GetNoResultsRate Get no results rate.
+GetNoResultsRate
 
 Returns the rate at which searches didn't return any results.
 
@@ -1770,19 +1724,12 @@ func (c *APIClient) GetNoResultsRateWithContext(ctx context.Context, r ApiGetNoR
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1792,7 +1739,7 @@ func (c *APIClient) GetNoResultsRateWithContext(ctx context.Context, r ApiGetNoR
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1801,7 +1748,7 @@ func (c *APIClient) GetNoResultsRateWithContext(ctx context.Context, r ApiGetNoR
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1813,14 +1760,14 @@ func (r *ApiGetSearchesCountRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -1829,7 +1776,7 @@ func (r *ApiGetSearchesCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -1838,7 +1785,7 @@ func (r *ApiGetSearchesCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -1847,7 +1794,7 @@ func (r *ApiGetSearchesCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -1889,9 +1836,12 @@ func (r ApiGetSearchesCountRequest) WithTags(tags string) ApiGetSearchesCountReq
 }
 
 /*
-GetSearchesCount Get number of searches. Wraps GetSearchesCountWithContext using context.Background.
+GetSearchesCount Wraps GetSearchesCountWithContext using context.Background.
 
 Returns the number of searches within a time range.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetSearchesCountRequest with parameters below.
 
@@ -1906,7 +1856,7 @@ func (c *APIClient) GetSearchesCount(r ApiGetSearchesCountRequest, opts ...Optio
 }
 
 /*
-GetSearchesCount Get number of searches.
+GetSearchesCount
 
 Returns the number of searches within a time range.
 
@@ -1958,19 +1908,12 @@ func (c *APIClient) GetSearchesCountWithContext(ctx context.Context, r ApiGetSea
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1980,7 +1923,7 @@ func (c *APIClient) GetSearchesCountWithContext(ctx context.Context, r ApiGetSea
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1989,7 +1932,7 @@ func (c *APIClient) GetSearchesCountWithContext(ctx context.Context, r ApiGetSea
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2001,14 +1944,14 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -2017,7 +1960,7 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -2026,7 +1969,7 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -2035,7 +1978,7 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -2044,7 +1987,7 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -2053,7 +1996,7 @@ func (r *ApiGetSearchesNoClicksRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -2109,9 +2052,12 @@ func (r ApiGetSearchesNoClicksRequest) WithTags(tags string) ApiGetSearchesNoCli
 }
 
 /*
-GetSearchesNoClicks Get top searches with no clicks. Wraps GetSearchesNoClicksWithContext using context.Background.
+GetSearchesNoClicks Wraps GetSearchesNoClicksWithContext using context.Background.
 
 Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetSearchesNoClicksRequest with parameters below.
 
@@ -2128,7 +2074,7 @@ func (c *APIClient) GetSearchesNoClicks(r ApiGetSearchesNoClicksRequest, opts ..
 }
 
 /*
-GetSearchesNoClicks Get top searches with no clicks.
+GetSearchesNoClicks
 
 Return the most popular of the last 1,000 searches that didn't lead to any clicks.
 
@@ -2188,19 +2134,12 @@ func (c *APIClient) GetSearchesNoClicksWithContext(ctx context.Context, r ApiGet
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2210,7 +2149,7 @@ func (c *APIClient) GetSearchesNoClicksWithContext(ctx context.Context, r ApiGet
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2219,7 +2158,7 @@ func (c *APIClient) GetSearchesNoClicksWithContext(ctx context.Context, r ApiGet
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2231,14 +2170,14 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -2247,7 +2186,7 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -2256,7 +2195,7 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -2265,7 +2204,7 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -2274,7 +2213,7 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -2283,7 +2222,7 @@ func (r *ApiGetSearchesNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -2339,9 +2278,12 @@ func (r ApiGetSearchesNoResultsRequest) WithTags(tags string) ApiGetSearchesNoRe
 }
 
 /*
-GetSearchesNoResults Get top searches with no results. Wraps GetSearchesNoResultsWithContext using context.Background.
+GetSearchesNoResults Wraps GetSearchesNoResultsWithContext using context.Background.
 
 Returns the most popular of the latest 1,000 searches that didn't return any results.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetSearchesNoResultsRequest with parameters below.
 
@@ -2358,7 +2300,7 @@ func (c *APIClient) GetSearchesNoResults(r ApiGetSearchesNoResultsRequest, opts 
 }
 
 /*
-GetSearchesNoResults Get top searches with no results.
+GetSearchesNoResults
 
 Returns the most popular of the latest 1,000 searches that didn't return any results.
 
@@ -2418,19 +2360,12 @@ func (c *APIClient) GetSearchesNoResultsWithContext(ctx context.Context, r ApiGe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2440,7 +2375,7 @@ func (c *APIClient) GetSearchesNoResultsWithContext(ctx context.Context, r ApiGe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2449,7 +2384,7 @@ func (c *APIClient) GetSearchesNoResultsWithContext(ctx context.Context, r ApiGe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2461,14 +2396,14 @@ func (r *ApiGetStatusRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -2489,10 +2424,13 @@ func (c *APIClient) NewApiGetStatusRequest(index string) ApiGetStatusRequest {
 }
 
 /*
-GetStatus Get Analytics API status. Wraps GetStatusWithContext using context.Background.
+GetStatus Wraps GetStatusWithContext using context.Background.
 
 Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`.
 > **Note**: The Analytics API is updated every 5&nbsp;minutes.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetStatusRequest with parameters below.
 
@@ -2504,7 +2442,7 @@ func (c *APIClient) GetStatus(r ApiGetStatusRequest, opts ...Option) (*GetStatus
 }
 
 /*
-GetStatus Get Analytics API status.
+GetStatus
 
 Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`.
 > **Note**: The Analytics API is updated every 5&nbsp;minutes.
@@ -2545,19 +2483,12 @@ func (c *APIClient) GetStatusWithContext(ctx context.Context, r ApiGetStatusRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2567,7 +2498,7 @@ func (c *APIClient) GetStatusWithContext(ctx context.Context, r ApiGetStatusRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2576,7 +2507,7 @@ func (c *APIClient) GetStatusWithContext(ctx context.Context, r ApiGetStatusRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2588,14 +2519,14 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -2604,7 +2535,7 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -2613,7 +2544,7 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -2622,7 +2553,7 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -2631,7 +2562,7 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -2640,7 +2571,7 @@ func (r *ApiGetTopCountriesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -2696,9 +2627,12 @@ func (r ApiGetTopCountriesRequest) WithTags(tags string) ApiGetTopCountriesReque
 }
 
 /*
-GetTopCountries Get top countries. Wraps GetTopCountriesWithContext using context.Background.
+GetTopCountries Wraps GetTopCountriesWithContext using context.Background.
 
 Returns top countries. Limited to the 1,000 most frequent ones.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopCountriesRequest with parameters below.
 
@@ -2715,7 +2649,7 @@ func (c *APIClient) GetTopCountries(r ApiGetTopCountriesRequest, opts ...Option)
 }
 
 /*
-GetTopCountries Get top countries.
+GetTopCountries
 
 Returns top countries. Limited to the 1,000 most frequent ones.
 
@@ -2775,19 +2709,12 @@ func (c *APIClient) GetTopCountriesWithContext(ctx context.Context, r ApiGetTopC
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -2797,7 +2724,7 @@ func (c *APIClient) GetTopCountriesWithContext(ctx context.Context, r ApiGetTopC
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -2806,7 +2733,7 @@ func (c *APIClient) GetTopCountriesWithContext(ctx context.Context, r ApiGetTopC
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -2818,14 +2745,14 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -2834,7 +2761,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.search)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal search: %w", err)
 			}
 		}
 	}
@@ -2843,7 +2770,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -2852,7 +2779,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -2861,7 +2788,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -2870,7 +2797,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -2879,7 +2806,7 @@ func (r *ApiGetTopFilterAttributesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -2942,9 +2869,12 @@ func (r ApiGetTopFilterAttributesRequest) WithTags(tags string) ApiGetTopFilterA
 }
 
 /*
-GetTopFilterAttributes Get top filterable attributes. Wraps GetTopFilterAttributesWithContext using context.Background.
+GetTopFilterAttributes Wraps GetTopFilterAttributesWithContext using context.Background.
 
 Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopFilterAttributesRequest with parameters below.
 
@@ -2962,7 +2892,7 @@ func (c *APIClient) GetTopFilterAttributes(r ApiGetTopFilterAttributesRequest, o
 }
 
 /*
-GetTopFilterAttributes Get top filterable attributes.
+GetTopFilterAttributes
 
 Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
 
@@ -3026,19 +2956,12 @@ func (c *APIClient) GetTopFilterAttributesWithContext(ctx context.Context, r Api
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3048,7 +2971,7 @@ func (c *APIClient) GetTopFilterAttributesWithContext(ctx context.Context, r Api
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3057,7 +2980,7 @@ func (c *APIClient) GetTopFilterAttributesWithContext(ctx context.Context, r Api
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3069,14 +2992,14 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["attribute"]; ok {
 		err = json.Unmarshal(v, &r.attribute)
 		if err != nil {
 			err = json.Unmarshal(b, &r.attribute)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal attribute: %w", err)
 			}
 		}
 	}
@@ -3085,7 +3008,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -3094,7 +3017,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.search)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal search: %w", err)
 			}
 		}
 	}
@@ -3103,7 +3026,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3112,7 +3035,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3121,7 +3044,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -3130,7 +3053,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -3139,7 +3062,7 @@ func (r *ApiGetTopFilterForAttributeRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -3204,9 +3127,12 @@ func (r ApiGetTopFilterForAttributeRequest) WithTags(tags string) ApiGetTopFilte
 }
 
 /*
-GetTopFilterForAttribute Get top filter values for an attribute. Wraps GetTopFilterForAttributeWithContext using context.Background.
+GetTopFilterForAttribute Wraps GetTopFilterForAttributeWithContext using context.Background.
 
 Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopFilterForAttributeRequest with parameters below.
 
@@ -3225,7 +3151,7 @@ func (c *APIClient) GetTopFilterForAttribute(r ApiGetTopFilterForAttributeReques
 }
 
 /*
-GetTopFilterForAttribute Get top filter values for an attribute.
+GetTopFilterForAttribute
 
 Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
 
@@ -3294,19 +3220,12 @@ func (c *APIClient) GetTopFilterForAttributeWithContext(ctx context.Context, r A
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3316,7 +3235,7 @@ func (c *APIClient) GetTopFilterForAttributeWithContext(ctx context.Context, r A
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3325,7 +3244,7 @@ func (c *APIClient) GetTopFilterForAttributeWithContext(ctx context.Context, r A
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3337,14 +3256,14 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -3353,7 +3272,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.search)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal search: %w", err)
 			}
 		}
 	}
@@ -3362,7 +3281,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3371,7 +3290,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3380,7 +3299,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -3389,7 +3308,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -3398,7 +3317,7 @@ func (r *ApiGetTopFiltersNoResultsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -3461,9 +3380,12 @@ func (r ApiGetTopFiltersNoResultsRequest) WithTags(tags string) ApiGetTopFilters
 }
 
 /*
-GetTopFiltersNoResults Get top filters for a no result search. Wraps GetTopFiltersNoResultsWithContext using context.Background.
+GetTopFiltersNoResults Wraps GetTopFiltersNoResultsWithContext using context.Background.
 
 Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopFiltersNoResultsRequest with parameters below.
 
@@ -3481,7 +3403,7 @@ func (c *APIClient) GetTopFiltersNoResults(r ApiGetTopFiltersNoResultsRequest, o
 }
 
 /*
-GetTopFiltersNoResults Get top filters for a no result search.
+GetTopFiltersNoResults
 
 Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
 
@@ -3545,19 +3467,12 @@ func (c *APIClient) GetTopFiltersNoResultsWithContext(ctx context.Context, r Api
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3567,7 +3482,7 @@ func (c *APIClient) GetTopFiltersNoResultsWithContext(ctx context.Context, r Api
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3576,7 +3491,7 @@ func (c *APIClient) GetTopFiltersNoResultsWithContext(ctx context.Context, r Api
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3588,14 +3503,14 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -3604,7 +3519,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.search)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal search: %w", err)
 			}
 		}
 	}
@@ -3613,7 +3528,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.clickAnalytics)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal clickAnalytics: %w", err)
 			}
 		}
 	}
@@ -3622,7 +3537,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3631,7 +3546,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3640,7 +3555,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -3649,7 +3564,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -3658,7 +3573,7 @@ func (r *ApiGetTopHitsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -3728,9 +3643,12 @@ func (r ApiGetTopHitsRequest) WithTags(tags string) ApiGetTopHitsRequest {
 }
 
 /*
-GetTopHits Get top hits. Wraps GetTopHitsWithContext using context.Background.
+GetTopHits Wraps GetTopHitsWithContext using context.Background.
 
 Return the most popular clicked results in the last 1,000 searches.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopHitsRequest with parameters below.
 
@@ -3749,7 +3667,7 @@ func (c *APIClient) GetTopHits(r ApiGetTopHitsRequest, opts ...Option) (*GetTopH
 }
 
 /*
-GetTopHits Get top hits.
+GetTopHits
 
 Return the most popular clicked results in the last 1,000 searches.
 
@@ -3817,19 +3735,12 @@ func (c *APIClient) GetTopHitsWithContext(ctx context.Context, r ApiGetTopHitsRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -3839,7 +3750,7 @@ func (c *APIClient) GetTopHitsWithContext(ctx context.Context, r ApiGetTopHitsRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -3848,7 +3759,7 @@ func (c *APIClient) GetTopHitsWithContext(ctx context.Context, r ApiGetTopHitsRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -3860,14 +3771,14 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -3876,7 +3787,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.clickAnalytics)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal clickAnalytics: %w", err)
 			}
 		}
 	}
@@ -3885,7 +3796,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -3894,7 +3805,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -3903,7 +3814,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.orderBy)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal orderBy: %w", err)
 			}
 		}
 	}
@@ -3912,7 +3823,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.direction)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal direction: %w", err)
 			}
 		}
 	}
@@ -3921,7 +3832,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -3930,7 +3841,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -3939,7 +3850,7 @@ func (r *ApiGetTopSearchesRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -4016,9 +3927,12 @@ func (r ApiGetTopSearchesRequest) WithTags(tags string) ApiGetTopSearchesRequest
 }
 
 /*
-GetTopSearches Get top searches. Wraps GetTopSearchesWithContext using context.Background.
+GetTopSearches Wraps GetTopSearchesWithContext using context.Background.
 
 Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
 
@@ -4038,7 +3952,7 @@ func (c *APIClient) GetTopSearches(r ApiGetTopSearchesRequest, opts ...Option) (
 }
 
 /*
-GetTopSearches Get top searches.
+GetTopSearches
 
 Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
 
@@ -4110,19 +4024,12 @@ func (c *APIClient) GetTopSearchesWithContext(ctx context.Context, r ApiGetTopSe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4132,7 +4039,7 @@ func (c *APIClient) GetTopSearchesWithContext(ctx context.Context, r ApiGetTopSe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4141,7 +4048,7 @@ func (c *APIClient) GetTopSearchesWithContext(ctx context.Context, r ApiGetTopSe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -4153,14 +4060,14 @@ func (r *ApiGetUsersCountRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["index"]; ok {
 		err = json.Unmarshal(v, &r.index)
 		if err != nil {
 			err = json.Unmarshal(b, &r.index)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal index: %w", err)
 			}
 		}
 	}
@@ -4169,7 +4076,7 @@ func (r *ApiGetUsersCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.startDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal startDate: %w", err)
 			}
 		}
 	}
@@ -4178,7 +4085,7 @@ func (r *ApiGetUsersCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.endDate)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal endDate: %w", err)
 			}
 		}
 	}
@@ -4187,7 +4094,7 @@ func (r *ApiGetUsersCountRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.tags)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal tags: %w", err)
 			}
 		}
 	}
@@ -4229,9 +4136,12 @@ func (r ApiGetUsersCountRequest) WithTags(tags string) ApiGetUsersCountRequest {
 }
 
 /*
-GetUsersCount Get user count. Wraps GetUsersCountWithContext using context.Background.
+GetUsersCount Wraps GetUsersCountWithContext using context.Background.
 
 Return the count of unique users.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetUsersCountRequest with parameters below.
 
@@ -4246,7 +4156,7 @@ func (c *APIClient) GetUsersCount(r ApiGetUsersCountRequest, opts ...Option) (*G
 }
 
 /*
-GetUsersCount Get user count.
+GetUsersCount
 
 Return the count of unique users.
 
@@ -4298,19 +4208,12 @@ func (c *APIClient) GetUsersCountWithContext(ctx context.Context, r ApiGetUsersC
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -4320,7 +4223,7 @@ func (c *APIClient) GetUsersCountWithContext(ctx context.Context, r ApiGetUsersC
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -4329,7 +4232,7 @@ func (c *APIClient) GetUsersCountWithContext(ctx context.Context, r ApiGetUsersC
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}

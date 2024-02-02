@@ -26,17 +26,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = IgnorePlurals.Deserializer.class)
 public interface IgnorePlurals {
-  /** IgnorePlurals as List<String> wrapper. */
+  // IgnorePlurals as List<String> wrapper.
   static IgnorePlurals of(List<String> value) {
     return new ListOfStringWrapper(value);
   }
 
-  /** IgnorePlurals as Boolean wrapper. */
+  // IgnorePlurals as Boolean wrapper.
   static IgnorePlurals of(Boolean value) {
     return new BooleanWrapper(value);
   }
 
-  /** IgnorePlurals as List<String> wrapper. */
+  // IgnorePlurals as List<String> wrapper.
   @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
   class ListOfStringWrapper implements IgnorePlurals {
 
@@ -59,7 +59,7 @@ public interface IgnorePlurals {
     }
   }
 
-  /** IgnorePlurals as Boolean wrapper. */
+  // IgnorePlurals as Boolean wrapper.
   @JsonSerialize(using = BooleanWrapper.Serializer.class)
   class BooleanWrapper implements IgnorePlurals {
 

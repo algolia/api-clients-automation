@@ -17,17 +17,17 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = Distinct.Deserializer.class)
 public interface Distinct {
-  /** Distinct as Boolean wrapper. */
+  // Distinct as Boolean wrapper.
   static Distinct of(Boolean value) {
     return new BooleanWrapper(value);
   }
 
-  /** Distinct as Integer wrapper. */
+  // Distinct as Integer wrapper.
   static Distinct of(Integer value) {
     return new IntegerWrapper(value);
   }
 
-  /** Distinct as Boolean wrapper. */
+  // Distinct as Boolean wrapper.
   @JsonSerialize(using = BooleanWrapper.Serializer.class)
   class BooleanWrapper implements Distinct {
 
@@ -50,7 +50,7 @@ public interface Distinct {
     }
   }
 
-  /** Distinct as Integer wrapper. */
+  // Distinct as Integer wrapper.
   @JsonSerialize(using = IntegerWrapper.Serializer.class)
   class IntegerWrapper implements Distinct {
 

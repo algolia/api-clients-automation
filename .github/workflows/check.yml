@@ -246,7 +246,7 @@ jobs:
         run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Update `yarn.lock` for JavaScript
-        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -303,7 +303,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 20
-    runs-on: ${{ matrix.client.language == 'swift' && 'macos-12' || 'ubuntu-22.04' }}
+    runs-on: 'ubuntu-22.04'
     needs:
       - setup
       - specs
@@ -425,14 +425,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push specs to new worlds documentation
-        if: github.ref == 'refs/heads/main'
-        run: yarn workspace scripts pushSpecsToNewWorldDocs
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-
       - name: Wait for all release CI
         if: github.ref == 'refs/heads/main'
         run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push specs to new worlds documentation
+        if: github.ref == 'refs/heads/main'
+        run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

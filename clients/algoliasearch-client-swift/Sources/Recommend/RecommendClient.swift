@@ -12,8 +12,8 @@ open class RecommendClient {
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var applicationID: String {
-        configuration.applicationID
+    var appId: String {
+        configuration.appId
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -25,13 +25,11 @@ open class RecommendClient {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String) throws {
-        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey))
+    public convenience init(appId: String, apiKey: String) throws {
+        try self.init(configuration: Configuration(appId: appId, apiKey: apiKey))
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -48,15 +46,18 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customDelete")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -77,8 +78,6 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -95,15 +94,18 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customGet")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -124,8 +126,6 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -143,9 +143,8 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -153,6 +152,10 @@ open class RecommendClient {
      */
 
     open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPost")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -173,8 +176,6 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -192,9 +193,8 @@ open class RecommendClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -202,6 +202,10 @@ open class RecommendClient {
      */
 
     open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPut")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -222,8 +226,6 @@ open class RecommendClient {
     }
 
     /**
-     Delete a Recommend rule.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter objectID: (path) Unique record (object) identifier.
@@ -241,9 +243,11 @@ open class RecommendClient {
     }
 
     /**
-     Delete a Recommend rule.
-
      Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter objectID: (path) Unique record (object) identifier.
@@ -251,6 +255,14 @@ open class RecommendClient {
      */
 
     open func deleteRecommendRuleWithHTTPInfo(indexName: String, model: RecommendModels, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeletedAtResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "deleteRecommendRule")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "deleteRecommendRule")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -277,8 +289,6 @@ open class RecommendClient {
     }
 
     /**
-     Get a Recommend rule.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter objectID: (path) Unique record (object) identifier.
@@ -296,9 +306,11 @@ open class RecommendClient {
     }
 
     /**
-     Get a Recommend rule.
-
      Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter objectID: (path) Unique record (object) identifier.
@@ -306,6 +318,14 @@ open class RecommendClient {
      */
 
     open func getRecommendRuleWithHTTPInfo(indexName: String, model: RecommendModels, objectID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<RuleResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getRecommendRule")
+        }
+
+        guard !objectID.isEmpty else {
+            throw AlgoliaError.invalidArgument("objectID", "getRecommendRule")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -332,8 +352,6 @@ open class RecommendClient {
     }
 
     /**
-     Get a Recommend task's status.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter taskID: (path) Unique identifier of a task. Numeric value (up to 64bits).
@@ -351,9 +369,11 @@ open class RecommendClient {
     }
 
     /**
-     Get a Recommend task's status.
-
      Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+
+     Required API Key ACLs:
+       - editSettings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter taskID: (path) Unique identifier of a task. Numeric value (up to 64bits).
@@ -361,6 +381,10 @@ open class RecommendClient {
      */
 
     open func getRecommendStatusWithHTTPInfo(indexName: String, model: RecommendModels, taskID: Int64, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetRecommendTaskResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "getRecommendStatus")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{model}/task/{taskID}"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -387,8 +411,6 @@ open class RecommendClient {
     }
 
     /**
-     Get recommendations and trending items.
-
      - parameter getRecommendationsParams: (body)
      - returns: GetRecommendationsResponse
      */
@@ -404,9 +426,11 @@ open class RecommendClient {
     }
 
     /**
-     Get recommendations and trending items.
-
      Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+
+     Required API Key ACLs:
+       - search
+
      - parameter getRecommendationsParams: (body)
      - returns: RequestBuilder<GetRecommendationsResponse>
      */
@@ -430,8 +454,6 @@ open class RecommendClient {
     }
 
     /**
-     List Recommend rules.
-
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter searchRecommendRulesParams: (body)  (optional)
@@ -449,9 +471,11 @@ open class RecommendClient {
     }
 
     /**
-     List Recommend rules.
-
      List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+
+     Required API Key ACLs:
+       - settings
+
      - parameter indexName: (path) Index on which to perform the request.
      - parameter model: (path) [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      - parameter searchRecommendRulesParams: (body)  (optional)
@@ -459,6 +483,10 @@ open class RecommendClient {
      */
 
     open func searchRecommendRulesWithHTTPInfo(indexName: String, model: RecommendModels, searchRecommendRulesParams: SearchRecommendRulesParams? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SearchRecommendRulesResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "searchRecommendRules")
+        }
+
         var resourcePath = "/1/indexes/{indexName}/{model}/recommend/rules/search"
         let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
         let indexNamePostEscape = indexNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""

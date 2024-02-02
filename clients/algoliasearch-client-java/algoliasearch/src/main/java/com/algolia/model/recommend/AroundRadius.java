@@ -18,12 +18,12 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = AroundRadius.Deserializer.class)
 public interface AroundRadius {
-  /** AroundRadius as Integer wrapper. */
+  // AroundRadius as Integer wrapper.
   static AroundRadius of(Integer value) {
     return new IntegerWrapper(value);
   }
 
-  /** AroundRadius as Integer wrapper. */
+  // AroundRadius as Integer wrapper.
   @JsonSerialize(using = IntegerWrapper.Serializer.class)
   class IntegerWrapper implements AroundRadius {
 

@@ -2,10 +2,9 @@
 package abtesting
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,20 +38,20 @@ func (r *ApiAddABTestsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["addABTestsRequest"]; ok {
 		err = json.Unmarshal(v, &r.addABTestsRequest)
 		if err != nil {
 			err = json.Unmarshal(b, &r.addABTestsRequest)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal addABTestsRequest: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.addABTestsRequest)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter addABTestsRequest: %w", err)
 		}
 	}
 
@@ -72,9 +71,12 @@ func (c *APIClient) NewApiAddABTestsRequest(addABTestsRequest *AddABTestsRequest
 }
 
 /*
-AddABTests Create an A/B test. Wraps AddABTestsWithContext using context.Background.
+AddABTests Wraps AddABTestsWithContext using context.Background.
 
 Creates an A/B test.
+
+Required API Key ACLs:
+  - editSettings
 
 Request can be constructed by NewApiAddABTestsRequest with parameters below.
 
@@ -86,7 +88,7 @@ func (c *APIClient) AddABTests(r ApiAddABTestsRequest, opts ...Option) (*ABTestR
 }
 
 /*
-AddABTests Create an A/B test.
+AddABTests
 
 Creates an A/B test.
 
@@ -127,19 +129,12 @@ func (c *APIClient) AddABTestsWithContext(ctx context.Context, r ApiAddABTestsRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -149,7 +144,7 @@ func (c *APIClient) AddABTestsWithContext(ctx context.Context, r ApiAddABTestsRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -158,7 +153,7 @@ func (c *APIClient) AddABTestsWithContext(ctx context.Context, r ApiAddABTestsRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -170,14 +165,14 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -186,7 +181,7 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -214,7 +209,7 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]interface{}
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API. Wraps CustomDeleteWithContext using context.Background.
+CustomDelete Wraps CustomDeleteWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -229,7 +224,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (map[
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API.
+CustomDelete
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -246,7 +241,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -275,19 +270,12 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -297,7 +285,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -306,7 +294,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -318,14 +306,14 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -334,7 +322,7 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -362,7 +350,7 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]interface{}) A
 }
 
 /*
-CustomGet Send requests to the Algolia REST API. Wraps CustomGetWithContext using context.Background.
+CustomGet Wraps CustomGetWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -377,7 +365,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (map[string
 }
 
 /*
-CustomGet Send requests to the Algolia REST API.
+CustomGet
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -394,7 +382,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -423,19 +411,12 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -445,7 +426,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -454,7 +435,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -466,14 +447,14 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -482,7 +463,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -491,7 +472,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -526,7 +507,7 @@ func (r ApiCustomPostRequest) WithBody(body map[string]interface{}) ApiCustomPos
 }
 
 /*
-CustomPost Send requests to the Algolia REST API. Wraps CustomPostWithContext using context.Background.
+CustomPost Wraps CustomPostWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -542,7 +523,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (map[stri
 }
 
 /*
-CustomPost Send requests to the Algolia REST API.
+CustomPost
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -560,7 +541,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -595,19 +576,12 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -617,7 +591,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -626,7 +600,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -638,14 +612,14 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -654,7 +628,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -663,7 +637,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -698,7 +672,7 @@ func (r ApiCustomPutRequest) WithBody(body map[string]interface{}) ApiCustomPutR
 }
 
 /*
-CustomPut Send requests to the Algolia REST API. Wraps CustomPutWithContext using context.Background.
+CustomPut Wraps CustomPutWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -714,7 +688,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (map[string
 }
 
 /*
-CustomPut Send requests to the Algolia REST API.
+CustomPut
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -732,7 +706,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -767,19 +741,12 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -789,7 +756,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -798,7 +765,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -810,14 +777,14 @@ func (r *ApiDeleteABTestRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["id"]; ok {
 		err = json.Unmarshal(v, &r.id)
 		if err != nil {
 			err = json.Unmarshal(b, &r.id)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal id: %w", err)
 			}
 		}
 	}
@@ -838,10 +805,13 @@ func (c *APIClient) NewApiDeleteABTestRequest(id int32) ApiDeleteABTestRequest {
 }
 
 /*
-DeleteABTest Delete an A/B test. Wraps DeleteABTestWithContext using context.Background.
+DeleteABTest Wraps DeleteABTestWithContext using context.Background.
 
 Delete an A/B test.
 To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+
+Required API Key ACLs:
+  - editSettings
 
 Request can be constructed by NewApiDeleteABTestRequest with parameters below.
 
@@ -853,7 +823,7 @@ func (c *APIClient) DeleteABTest(r ApiDeleteABTestRequest, opts ...Option) (*ABT
 }
 
 /*
-DeleteABTest Delete an A/B test.
+DeleteABTest
 
 Delete an A/B test.
 To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
@@ -890,19 +860,12 @@ func (c *APIClient) DeleteABTestWithContext(ctx context.Context, r ApiDeleteABTe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -912,7 +875,7 @@ func (c *APIClient) DeleteABTestWithContext(ctx context.Context, r ApiDeleteABTe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -921,7 +884,7 @@ func (c *APIClient) DeleteABTestWithContext(ctx context.Context, r ApiDeleteABTe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -933,14 +896,14 @@ func (r *ApiGetABTestRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["id"]; ok {
 		err = json.Unmarshal(v, &r.id)
 		if err != nil {
 			err = json.Unmarshal(b, &r.id)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal id: %w", err)
 			}
 		}
 	}
@@ -961,10 +924,13 @@ func (c *APIClient) NewApiGetABTestRequest(id int32) ApiGetABTestRequest {
 }
 
 /*
-GetABTest Get A/B test details. Wraps GetABTestWithContext using context.Background.
+GetABTest Wraps GetABTestWithContext using context.Background.
 
 Get specific details for an A/B test.
 To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiGetABTestRequest with parameters below.
 
@@ -976,7 +942,7 @@ func (c *APIClient) GetABTest(r ApiGetABTestRequest, opts ...Option) (*ABTest, e
 }
 
 /*
-GetABTest Get A/B test details.
+GetABTest
 
 Get specific details for an A/B test.
 To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
@@ -1013,19 +979,12 @@ func (c *APIClient) GetABTestWithContext(ctx context.Context, r ApiGetABTestRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1035,7 +994,7 @@ func (c *APIClient) GetABTestWithContext(ctx context.Context, r ApiGetABTestRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1044,7 +1003,7 @@ func (c *APIClient) GetABTestWithContext(ctx context.Context, r ApiGetABTestRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1056,14 +1015,14 @@ func (r *ApiListABTestsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["offset"]; ok {
 		err = json.Unmarshal(v, &r.offset)
 		if err != nil {
 			err = json.Unmarshal(b, &r.offset)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal offset: %w", err)
 			}
 		}
 	}
@@ -1072,7 +1031,7 @@ func (r *ApiListABTestsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.limit)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal limit: %w", err)
 			}
 		}
 	}
@@ -1081,7 +1040,7 @@ func (r *ApiListABTestsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.indexPrefix)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal indexPrefix: %w", err)
 			}
 		}
 	}
@@ -1090,7 +1049,7 @@ func (r *ApiListABTestsRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.indexSuffix)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal indexSuffix: %w", err)
 			}
 		}
 	}
@@ -1136,9 +1095,12 @@ func (r ApiListABTestsRequest) WithIndexSuffix(indexSuffix string) ApiListABTest
 }
 
 /*
-ListABTests List all A/B tests. Wraps ListABTestsWithContext using context.Background.
+ListABTests Wraps ListABTestsWithContext using context.Background.
 
 List all A/B tests.
+
+Required API Key ACLs:
+  - analytics
 
 Request can be constructed by NewApiListABTestsRequest with parameters below.
 
@@ -1153,7 +1115,7 @@ func (c *APIClient) ListABTests(r ApiListABTestsRequest, opts ...Option) (*ListA
 }
 
 /*
-ListABTests List all A/B tests.
+ListABTests
 
 List all A/B tests.
 
@@ -1204,19 +1166,12 @@ func (c *APIClient) ListABTestsWithContext(ctx context.Context, r ApiListABTests
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1226,7 +1181,7 @@ func (c *APIClient) ListABTestsWithContext(ctx context.Context, r ApiListABTests
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1235,7 +1190,7 @@ func (c *APIClient) ListABTestsWithContext(ctx context.Context, r ApiListABTests
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -1247,14 +1202,14 @@ func (r *ApiStopABTestRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["id"]; ok {
 		err = json.Unmarshal(v, &r.id)
 		if err != nil {
 			err = json.Unmarshal(b, &r.id)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal id: %w", err)
 			}
 		}
 	}
@@ -1275,11 +1230,14 @@ func (c *APIClient) NewApiStopABTestRequest(id int32) ApiStopABTestRequest {
 }
 
 /*
-StopABTest Stop an A/B test. Wraps StopABTestWithContext using context.Background.
+StopABTest Wraps StopABTestWithContext using context.Background.
 
 If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests.
 The data gathered for stopped A/B tests is retained.
 To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+
+Required API Key ACLs:
+  - editSettings
 
 Request can be constructed by NewApiStopABTestRequest with parameters below.
 
@@ -1291,7 +1249,7 @@ func (c *APIClient) StopABTest(r ApiStopABTestRequest, opts ...Option) (*ABTestR
 }
 
 /*
-StopABTest Stop an A/B test.
+StopABTest
 
 If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests.
 The data gathered for stopped A/B tests is retained.
@@ -1329,19 +1287,12 @@ func (c *APIClient) StopABTestWithContext(ctx context.Context, r ApiStopABTestRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -1351,7 +1302,7 @@ func (c *APIClient) StopABTestWithContext(ctx context.Context, r ApiStopABTestRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -1360,7 +1311,7 @@ func (c *APIClient) StopABTestWithContext(ctx context.Context, r ApiStopABTestRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}

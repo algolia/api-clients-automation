@@ -3,10 +3,13 @@ package requests
 import (
   "encoding/json"
   "net/url"
+  "os"
   "testing"
 
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
+
+  "github.com/joho/godotenv"
 
   "gotests/tests"
 
@@ -14,7 +17,9 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
+func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
+  t.Helper()
+
   echo := &tests.EchoRequester{}
   cfg := {{clientPrefix}}.Configuration{
     Configuration: transport.Configuration{
@@ -24,14 +29,33 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client() (*
     },{{#hasRegionalHost}}
     Region:    {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}}
   }
-  client, _ := {{clientPrefix}}.NewClientWithConfig(cfg)
+  client, err := {{clientPrefix}}.NewClientWithConfig(cfg)
+  require.NoError(t, err)
 
   return client, echo
 }
 
+{{#hasE2E}}
+func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) *{{clientPrefix}}.APIClient {
+  t.Helper()
+
+  appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+  if appID == "" && os.Getenv("CI") != "true" {
+    err := godotenv.Load("../../../../.env")
+    require.NoError(t, err)
+    appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+  }
+  apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+  client, err := {{clientPrefix}}.NewClient(appID, apiKey, {{#hasRegionalHost}}{{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}})
+  require.NoError(t, err)
+
+  return client
+}
+{{/hasE2E}}
+
 {{#blocksRequests}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
-    client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client()
+    client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
@@ -42,9 +66,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       {{/requestOptions}})
       require.NoError(t, err)
 
-      expectedPath, err := url.QueryUnescape("{{{request.path}}}")
-      require.NoError(t, err)
-      require.Equal(t, expectedPath, echo.Path)
+      require.Equal(t, "{{{request.path}}}", echo.Path)
       require.Equal(t, "{{{request.method}}}", echo.Method)
 
       {{#request.body}}
@@ -73,6 +95,37 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
             require.Equal(t, v, echo.Query.Get(k))
         }
       {{/request.queryParameters}}
+      {{#response}}
+      clientE2E := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+      res, err := clientE2E.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
+        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
+      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
+      {{/requestOptions}})
+      require.NoError(t, err)
+      _ = res
+
+      {{#body}}
+      rawBody, err := json.Marshal(res)
+      require.NoError(t, err)
+
+      var rawBodyMap any
+      err = json.Unmarshal(rawBody, &rawBodyMap)
+      require.NoError(t, err)
+
+      expectedBodyRaw := `{{{.}}}`
+      var expectedBody any
+      err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+      require.NoError(t, err)
+
+      unionBody := tests.Union(expectedBody, rawBodyMap)
+      unionBodyRaw, err := json.Marshal(unionBody)
+      require.NoError(t, err)
+
+      jaE2E := jsonassert.New(t)
+      jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+      {{/body}}
+      {{/response}}
     })
 {{/tests}}
 }

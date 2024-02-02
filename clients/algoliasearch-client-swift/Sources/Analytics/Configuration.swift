@@ -6,12 +6,14 @@ import Foundation
     import AnyCodable
 #endif
 
+typealias AnalyticsClientConfiguration = Configuration
+
 public struct Configuration: Core.Configuration, Credentials {
     private let authorizedRegions: [Region] = [
         Region.de, Region.us,
     ]
 
-    public let applicationID: String
+    public let appId: String
     public let apiKey: String
     public var writeTimeout: TimeInterval
     public var readTimeout: TimeInterval
@@ -19,49 +21,63 @@ public struct Configuration: Core.Configuration, Credentials {
     public var defaultHeaders: [String: String]?
     public var hosts: [RetryableHost]
 
-    init(applicationID: String,
+    init(appId: String,
          apiKey: String,
          region: Region? = nil,
          writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
          readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
          logLevel: LogLevel = DefaultConfiguration.default.logLevel,
-         defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders) throws
+         defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
+         hosts: [RetryableHost]? = nil) throws
     {
-        self.applicationID = applicationID
+        guard !appId.isEmpty else {
+            throw AlgoliaError.invalidCredentials("appId")
+        }
+
+        guard !apiKey.isEmpty else {
+            throw AlgoliaError.invalidCredentials("apiKey")
+        }
+
+        self.appId = appId
         self.apiKey = apiKey
         self.writeTimeout = writeTimeout
         self.readTimeout = readTimeout
         self.logLevel = logLevel
         self.defaultHeaders = [
-            "X-Algolia-Application-Id": applicationID,
+            "X-Algolia-Application-Id": appId,
             "X-Algolia-API-Key": apiKey,
             "Content-Type": "application/json",
         ].merging(defaultHeaders ?? [:]) { _, new in new }
 
-        guard region == nil || authorizedRegions.contains(region!) else {
-            throw GenericError(description:
-                "`region` must be one of the following: \(authorizedRegions.map(\.rawValue).joined(separator: ", "))"
-            )
-        }
-
-        if let region = region {
-            guard let url = URL(string: "https://analytics.{region}.algolia.com".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
-                throw GenericError(description: "Malformed URL")
-            }
-
-            hosts = [
-                .init(url: url),
-            ]
-        } else {
-            guard let url = URL(string: "https://analytics.algolia.com") else {
-                throw GenericError(description: "Malformed URL")
-            }
-
-            hosts = [
-                .init(url: url),
-            ]
-        }
-
         UserAgentController.append(UserAgent(title: "Analytics", version: Version.current.description))
+
+        guard let hosts = hosts else {
+            guard region == nil || authorizedRegions.contains(region!) else {
+                throw AlgoliaError.runtimeError(
+                    "`region` must be one of the following: \(authorizedRegions.map(\.rawValue).joined(separator: ", "))"
+                )
+            }
+
+            if let region = region {
+                guard let url = URL(string: "https://analytics.{region}.algolia.com".replacingOccurrences(of: "{region}", with: region.rawValue)) else {
+                    throw AlgoliaError.runtimeError("Malformed URL")
+                }
+
+                self.hosts = [
+                    .init(url: url),
+                ]
+            } else {
+                guard let url = URL(string: "https://analytics.algolia.com") else {
+                    throw AlgoliaError.runtimeError("Malformed URL")
+                }
+
+                self.hosts = [
+                    .init(url: url),
+                ]
+            }
+            return
+        }
+
+        self.hosts = hosts
     }
 }

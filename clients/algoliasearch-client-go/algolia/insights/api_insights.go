@@ -2,10 +2,9 @@
 package insights
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,14 +38,14 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -55,7 +54,7 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -83,7 +82,7 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]interface{}
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API. Wraps CustomDeleteWithContext using context.Background.
+CustomDelete Wraps CustomDeleteWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -98,7 +97,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (map[
 }
 
 /*
-CustomDelete Send requests to the Algolia REST API.
+CustomDelete
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -115,7 +114,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -144,19 +143,12 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -166,7 +158,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -175,7 +167,7 @@ func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDele
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -187,14 +179,14 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -203,7 +195,7 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -231,7 +223,7 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]interface{}) A
 }
 
 /*
-CustomGet Send requests to the Algolia REST API. Wraps CustomGetWithContext using context.Background.
+CustomGet Wraps CustomGetWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -246,7 +238,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (map[string
 }
 
 /*
-CustomGet Send requests to the Algolia REST API.
+CustomGet
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -263,7 +255,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -292,19 +284,12 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -314,7 +299,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -323,7 +308,7 @@ func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -335,14 +320,14 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -351,7 +336,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -360,7 +345,7 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -395,7 +380,7 @@ func (r ApiCustomPostRequest) WithBody(body map[string]interface{}) ApiCustomPos
 }
 
 /*
-CustomPost Send requests to the Algolia REST API. Wraps CustomPostWithContext using context.Background.
+CustomPost Wraps CustomPostWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -411,7 +396,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (map[stri
 }
 
 /*
-CustomPost Send requests to the Algolia REST API.
+CustomPost
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -429,7 +414,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -464,19 +449,12 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -486,7 +464,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -495,7 +473,7 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -507,14 +485,14 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["path"]; ok {
 		err = json.Unmarshal(v, &r.path)
 		if err != nil {
 			err = json.Unmarshal(b, &r.path)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal path: %w", err)
 			}
 		}
 	}
@@ -523,7 +501,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.parameters)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal parameters: %w", err)
 			}
 		}
 	}
@@ -532,7 +510,7 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			err = json.Unmarshal(b, &r.body)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal body: %w", err)
 			}
 		}
 	}
@@ -567,7 +545,7 @@ func (r ApiCustomPutRequest) WithBody(body map[string]interface{}) ApiCustomPutR
 }
 
 /*
-CustomPut Send requests to the Algolia REST API. Wraps CustomPutWithContext using context.Background.
+CustomPut Wraps CustomPutWithContext using context.Background.
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -583,7 +561,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (map[string
 }
 
 /*
-CustomPut Send requests to the Algolia REST API.
+CustomPut
 
 This method allow you to send requests to the Algolia REST API.
 
@@ -601,7 +579,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	)
 
 	requestPath := "/1{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", url.PathEscape(parameterToString(r.path)))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -636,19 +614,12 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -658,7 +629,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -667,7 +638,7 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}
@@ -679,14 +650,14 @@ func (r *ApiDeleteUserTokenRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["userToken"]; ok {
 		err = json.Unmarshal(v, &r.userToken)
 		if err != nil {
 			err = json.Unmarshal(b, &r.userToken)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal userToken: %w", err)
 			}
 		}
 	}
@@ -707,7 +678,7 @@ func (c *APIClient) NewApiDeleteUserTokenRequest(userToken string) ApiDeleteUser
 }
 
 /*
-DeleteUserToken Delete user token. Wraps DeleteUserTokenWithContext using context.Background.
+DeleteUserToken Wraps DeleteUserTokenWithContext using context.Background.
 
 Delete all events related to a certain user token from events metrics and analytics.
 To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
@@ -721,7 +692,7 @@ func (c *APIClient) DeleteUserToken(r ApiDeleteUserTokenRequest, opts ...Option)
 }
 
 /*
-DeleteUserToken Delete user token.
+DeleteUserToken
 
 Delete all events related to a certain user token from events metrics and analytics.
 To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
@@ -763,19 +734,12 @@ func (c *APIClient) DeleteUserTokenWithContext(ctx context.Context, r ApiDeleteU
 		return err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return err
 	}
 	if res == nil {
 		return reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return err
 	}
 
 	if res.StatusCode >= 300 {
@@ -785,7 +749,7 @@ func (c *APIClient) DeleteUserTokenWithContext(ctx context.Context, r ApiDeleteU
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return newErr
@@ -801,20 +765,20 @@ func (r *ApiPushEventsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
 	if v, ok := req["insightsEvents"]; ok {
 		err = json.Unmarshal(v, &r.insightsEvents)
 		if err != nil {
 			err = json.Unmarshal(b, &r.insightsEvents)
 			if err != nil {
-				return err
+				return fmt.Errorf("cannot unmarshal insightsEvents: %w", err)
 			}
 		}
 	} else {
 		err = json.Unmarshal(b, &r.insightsEvents)
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot unmarshal body parameter insightsEvents: %w", err)
 		}
 	}
 
@@ -834,7 +798,7 @@ func (c *APIClient) NewApiPushEventsRequest(insightsEvents *InsightsEvents) ApiP
 }
 
 /*
-PushEvents Send events. Wraps PushEventsWithContext using context.Background.
+PushEvents Wraps PushEventsWithContext using context.Background.
 
 Send a list of events to the Insights API.
 
@@ -851,7 +815,7 @@ func (c *APIClient) PushEvents(r ApiPushEventsRequest, opts ...Option) (*EventsR
 }
 
 /*
-PushEvents Send events.
+PushEvents
 
 Send a list of events to the Insights API.
 
@@ -895,19 +859,12 @@ func (c *APIClient) PushEventsWithContext(ctx context.Context, r ApiPushEventsRe
 		return returnValue, err
 	}
 
-	res, err := c.callAPI(req, false)
+	res, resBody, err := c.callAPI(req, false)
 	if err != nil {
 		return returnValue, err
 	}
 	if res == nil {
 		return returnValue, reportError("res is nil")
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return returnValue, err
 	}
 
 	if res.StatusCode >= 300 {
@@ -917,7 +874,7 @@ func (c *APIClient) PushEventsWithContext(ctx context.Context, r ApiPushEventsRe
 		}
 
 		var v ErrorBase
-		err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+		err = c.decode(&v, resBody)
 		if err != nil {
 			newErr.Message = err.Error()
 			return returnValue, newErr
@@ -926,7 +883,7 @@ func (c *APIClient) PushEventsWithContext(ctx context.Context, r ApiPushEventsRe
 		return returnValue, newErr
 	}
 
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return returnValue, reportError("cannot decode result: %w", err)
 	}

@@ -12,8 +12,8 @@ open class PersonalizationClient {
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var applicationID: String {
-        configuration.applicationID
+    var appId: String {
+        configuration.appId
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -25,13 +25,11 @@ open class PersonalizationClient {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String, region: Region) throws {
-        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey, region: region))
+    public convenience init(appId: String, apiKey: String, region: Region) throws {
+        try self.init(configuration: Configuration(appId: appId, apiKey: apiKey, region: region))
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -48,15 +46,18 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customDelete")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -77,8 +78,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -95,15 +94,18 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customGet")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -124,8 +126,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -143,9 +143,8 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -153,6 +152,10 @@ open class PersonalizationClient {
      */
 
     open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPost")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -173,8 +176,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -192,9 +193,8 @@ open class PersonalizationClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -202,6 +202,10 @@ open class PersonalizationClient {
      */
 
     open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPut")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -222,8 +226,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Delete a user profile.
-
      - parameter userToken: (path) userToken representing the user for which to fetch the Personalization profile.
      - returns: DeleteUserProfileResponse
      */
@@ -239,14 +241,20 @@ open class PersonalizationClient {
     }
 
     /**
-     Delete a user profile.
-
      Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
+
+     Required API Key ACLs:
+       - recommendation
+
      - parameter userToken: (path) userToken representing the user for which to fetch the Personalization profile.
      - returns: RequestBuilder<DeleteUserProfileResponse>
      */
 
     open func deleteUserProfileWithHTTPInfo(userToken: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteUserProfileResponse> {
+        guard !userToken.isEmpty else {
+            throw AlgoliaError.invalidArgument("userToken", "deleteUserProfile")
+        }
+
         var resourcePath = "/1/profiles/{userToken}"
         let userTokenPreEscape = "\(APIHelper.mapValueToPathItem(userToken))"
         let userTokenPostEscape = userTokenPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -267,8 +275,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Get the current strategy.
-
      - returns: PersonalizationStrategyParams
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -283,9 +289,11 @@ open class PersonalizationClient {
     }
 
     /**
-     Get the current strategy.
-
      The strategy contains information on the events and facets that impact user profiles and personalized search results.
+
+     Required API Key ACLs:
+       - recommendation
+
      - returns: RequestBuilder<PersonalizationStrategyParams>
      */
 
@@ -307,8 +315,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Get a user profile.
-
      - parameter userToken: (path) userToken representing the user for which to fetch the Personalization profile.
      - returns: GetUserTokenResponse
      */
@@ -324,14 +330,20 @@ open class PersonalizationClient {
     }
 
     /**
-     Get a user profile.
-
      Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
+
+     Required API Key ACLs:
+       - recommendation
+
      - parameter userToken: (path) userToken representing the user for which to fetch the Personalization profile.
      - returns: RequestBuilder<GetUserTokenResponse>
      */
 
     open func getUserTokenProfileWithHTTPInfo(userToken: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<GetUserTokenResponse> {
+        guard !userToken.isEmpty else {
+            throw AlgoliaError.invalidArgument("userToken", "getUserTokenProfile")
+        }
+
         var resourcePath = "/1/profiles/personalization/{userToken}"
         let userTokenPreEscape = "\(APIHelper.mapValueToPathItem(userToken))"
         let userTokenPostEscape = userTokenPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -352,8 +364,6 @@ open class PersonalizationClient {
     }
 
     /**
-     Set a new strategy.
-
      - parameter personalizationStrategyParams: (body)
      - returns: SetPersonalizationStrategyResponse
      */
@@ -369,9 +379,11 @@ open class PersonalizationClient {
     }
 
     /**
-     Set a new strategy.
-
      A strategy defines the events and facets that impact user profiles and personalized search results.
+
+     Required API Key ACLs:
+       - recommendation
+
      - parameter personalizationStrategyParams: (body)
      - returns: RequestBuilder<SetPersonalizationStrategyResponse>
      */

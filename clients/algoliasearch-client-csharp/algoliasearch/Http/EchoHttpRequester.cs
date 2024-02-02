@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Extensions.Logging;
 
 namespace Algolia.Search.Http
 {
@@ -13,6 +14,17 @@ namespace Algolia.Search.Http
   /// </summary>
   public class EchoHttpRequester : IHttpRequester
   {
+    private readonly bool _bodyAsStream;
+
+    /// <summary>
+    /// Instantiate the EchoHttpRequester
+    /// </summary>
+    /// <param name="bodyAsStream"></param>
+    public EchoHttpRequester(bool bodyAsStream = false)
+    {
+      _bodyAsStream = bodyAsStream;
+    }
+
     /// <summary>
     /// Last response returned by the echo API
     /// </summary>
@@ -33,15 +45,22 @@ namespace Algolia.Search.Http
     /// <param name="ct"></param>
     /// <returns></returns>
     public Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan requestTimeout,
-      TimeSpan connectTimeout,
-      CancellationToken ct = default)
+      TimeSpan connectTimeout, CancellationToken ct = default)
     {
+      string body = null;
+      if (!_bodyAsStream && request.Body != null)
+      {
+        var reader = new StreamReader(request.Body);
+        body = reader.ReadToEnd();
+      }
+
       var echo = new EchoResponse
       {
         Path = request.Uri.AbsolutePath,
         Host = request.Uri.Host,
         Method = request.Method,
-        Body = request.Body,
+        BodyStream = request.Body,
+        Body = body,
         QueryParameters = SplitQuery(request.Uri.Query),
         Headers = new Dictionary<string, string>(request.Headers),
         ConnectTimeout = connectTimeout,

@@ -1,9 +1,11 @@
 package transport
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"time"
@@ -22,7 +24,7 @@ type Transport struct {
 }
 
 func New(
-	hosts []*StatefulHost,
+	hosts []StatefulHost,
 	requester Requester,
 	readTimeout time.Duration,
 	writeTimeout time.Duration,
@@ -45,7 +47,7 @@ func New(
 	}
 }
 
-func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind) (*http.Response, error) {
+func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind) (*http.Response, []byte, error) {
 	exposeIntermediateNetworkErrors := false // todo: expose this option to the user
 	var intermediateNetworkErrors []error
 
@@ -63,7 +65,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 		// cancelled` error may happen when the body is read.
 		perRequestCtx, cancel := context.WithTimeout(ctx, h.timeout)
 		req = req.WithContext(perRequestCtx)
-		res, err := t.request(req, h.host, h.timeout, t.connectTimeout)
+		res, err := t.request(req, h, h.timeout, t.connectTimeout)
 
 		code := 0
 		if res != nil {
@@ -76,13 +78,22 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 		// already cancelled.
 		if ctx.Err() != nil {
 			cancel()
-			return res, err
+			return res, nil, err
 		}
 
 		switch t.retryStrategy.Decide(h, code, err) {
 		case Success, Failure:
+			body, errBody := io.ReadAll(res.Body)
+			errClose := res.Body.Close()
 			cancel()
-			return res, err
+			res.Body = io.NopCloser(bytes.NewBuffer(body))
+			if errBody != nil {
+				return res, nil, fmt.Errorf("cannot read body: %v", errBody)
+			}
+			if errClose != nil {
+				return res, nil, fmt.Errorf("cannot close response's body: %v", errClose)
+			}
+			return res, body, err
 		default:
 			if err != nil {
 				intermediateNetworkErrors = append(intermediateNetworkErrors, err)
@@ -90,7 +101,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 			if res != nil && res.Body != nil {
 				if err = res.Body.Close(); err != nil {
 					cancel()
-					return res, fmt.Errorf("cannot close response's body before retry: %w", err)
+					return res, nil, fmt.Errorf("cannot close response's body before retry: %w", err)
 				}
 			}
 		}
@@ -99,15 +110,15 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 	}
 
 	if exposeIntermediateNetworkErrors {
-		return nil, errs.NewNoMoreHostToTryError(intermediateNetworkErrors...)
+		return nil, nil, errs.NewNoMoreHostToTryError(intermediateNetworkErrors...)
 	}
 
-	return nil, errs.ErrNoMoreHostToTry
+	return nil, nil, errs.ErrNoMoreHostToTry
 }
 
-func (t *Transport) request(req *http.Request, host string, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
-	req.URL.Scheme = "https"
-	req.URL.Host = host
+func (t *Transport) request(req *http.Request, host Host, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
+	req.URL.Scheme = host.scheme
+	req.URL.Host = host.host
 
 	debug.Display(req)
 	res, err := t.requester.Request(req, timeout, connectTimeout)

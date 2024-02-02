@@ -48,7 +48,7 @@ func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot unmarshal request: %w", err)
 	}
   {{#allParams}}
 	if v, ok := req["{{#isQueryParam}}{{baseName}}{{/isQueryParam}}{{^isQueryParam}}{{paramName}}{{/isQueryParam}}"]; ok {
@@ -56,13 +56,13 @@ func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/
 		if err != nil {
       err = json.Unmarshal(b, &r.{{paramName}})
       if err != nil {
-			  return err
+			  return fmt.Errorf("cannot unmarshal {{paramName}}: %w", err)
       }
 		}
 	} {{#isBodyParam}}{{#required}}else {
     err = json.Unmarshal(b, &r.{{paramName}})
     if err != nil {
-      return err
+      return fmt.Errorf("cannot unmarshal body parameter {{paramName}}: %w", err)
     }
   }{{/required}}{{/isBodyParam}}
   {{/allParams}}
@@ -104,11 +104,19 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/allParams}}
 {{/hasParams}}
 /*
-{{operationId}} {{{summary}}} Wraps {{nickname}}WithContext using context.Background.{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}} Wraps {{nickname}}WithContext using context.Background.
 {{#notes}}
 
 {{{unescapedNotes}}}
 {{/notes}}
+{{#vendorExtensions}}
+{{#x-acl.0}}
+
+Required API Key ACLs:{{/x-acl.0}}
+{{#x-acl}}
+  - {{.}}
+{{/x-acl}}
+{{/vendorExtensions}}
 
 Request can be constructed by NewApi{{operationId}}Request with parameters below.
  {{#allParams}}
@@ -128,7 +136,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 }
 
 /*
-{{operationId}} {{{summary}}}{{^summary}}Method for {{operationId}}{{/summary}}
+{{operationId}}
 {{#notes}}
 
 {{{unescapedNotes}}}
@@ -152,8 +160,10 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		{{/returnType}}
 	)
 
+  {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, url.PathEscape(parameterToString(r.{{paramName}}))){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  {{/vendorExtensions}}
 
 	headers := make(map[string]string)
 	queryParams := url.Values{}
@@ -264,20 +274,13 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
 
-	res, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
+	res, resBody, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
 	if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
   if res == nil {
     return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
   }
-
-	resBody, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	res.Body = io.NopCloser(bytes.NewBuffer(resBody))
-	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}err
-	}
 
 	if res.StatusCode >= 300 {
 		newErr := &APIError{
@@ -286,7 +289,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 		}
 		
     var v ErrorBase
-    err = c.decode(&v, resBody, res.Header.Get("Content-Type"))
+    err = c.decode(&v, resBody)
     if err != nil {
       newErr.Message = err.Error()
       return {{#returnType}}returnValue, {{/returnType}}newErr
@@ -296,7 +299,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	}
 
 	{{#returnType}}
-	err = c.decode(&returnValue, resBody, res.Header.Get("Content-Type"))
+	err = c.decode(&returnValue, resBody)
 	if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
 	}
@@ -375,7 +378,7 @@ func (c *APIClient) WaitForTaskWithContext(
   maxDelay *time.Duration,
   opts ...Option,
 ) (*GetTaskResponse, error) {
-  return utils.RetryUntil(
+  return utils.RetryUntil( //nolint:wrapcheck
     func() (*GetTaskResponse, error) {
       return c.GetTaskWithContext(ctx, c.NewApiGetTaskRequest(indexName, taskID), opts...)
     },
@@ -488,7 +491,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
       return nil, &errs.WaitKeyUpdateError{}
     }
 
-    return utils.RetryUntil(
+    return utils.RetryUntil( //nolint:wrapcheck
       func() (*GetApiKeyResponse, error) {
         return c.GetApiKeyWithContext(ctx, c.NewApiGetApiKeyRequest(key), opts...)
       },
@@ -546,7 +549,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
     )
   }
 
-  return utils.RetryUntil(
+  return utils.RetryUntil( //nolint:wrapcheck
     func() (*GetApiKeyResponse, error) {
       return c.GetApiKeyWithContext(ctx, c.NewApiGetApiKeyRequest(key), opts...)
     },

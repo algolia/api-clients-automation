@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"net/url"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -14,7 +13,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createAbtestingClient() (*abtesting.APIClient, *tests.EchoRequester) {
+func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := abtesting.Configuration{
 		Configuration: transport.Configuration{
@@ -24,13 +25,14 @@ func createAbtestingClient() (*abtesting.APIClient, *tests.EchoRequester) {
 		},
 		Region: abtesting.US,
 	}
-	client, _ := abtesting.NewClientWithConfig(cfg)
+	client, err := abtesting.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
 func TestAbtesting_AddABTests(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("addABTests with minimal parameters", func(t *testing.T) {
 		_, err := client.AddABTests(client.NewApiAddABTestsRequest(
@@ -42,9 +44,7 @@ func TestAbtesting_AddABTests(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -53,7 +53,7 @@ func TestAbtesting_AddABTests(t *testing.T) {
 }
 
 func TestAbtesting_CustomDelete(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -61,9 +61,7 @@ func TestAbtesting_CustomDelete(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -74,9 +72,7 @@ func TestAbtesting_CustomDelete(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -89,7 +85,7 @@ func TestAbtesting_CustomDelete(t *testing.T) {
 }
 
 func TestAbtesting_CustomGet(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -97,9 +93,7 @@ func TestAbtesting_CustomGet(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -110,9 +104,7 @@ func TestAbtesting_CustomGet(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -125,7 +117,7 @@ func TestAbtesting_CustomGet(t *testing.T) {
 }
 
 func TestAbtesting_CustomPost(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -133,9 +125,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -147,9 +137,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -168,9 +156,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -189,9 +175,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -210,9 +194,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -236,9 +218,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -262,9 +242,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -283,9 +261,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -305,9 +281,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -327,9 +301,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -349,9 +321,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -365,7 +335,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 }
 
 func TestAbtesting_CustomPut(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -373,9 +343,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -387,9 +355,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -403,7 +369,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 }
 
 func TestAbtesting_DeleteABTest(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("deleteABTest", func(t *testing.T) {
 		_, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
@@ -411,9 +377,7 @@ func TestAbtesting_DeleteABTest(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests/42")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests/42", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -421,7 +385,7 @@ func TestAbtesting_DeleteABTest(t *testing.T) {
 }
 
 func TestAbtesting_GetABTest(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("getABTest", func(t *testing.T) {
 		_, err := client.GetABTest(client.NewApiGetABTestRequest(
@@ -429,9 +393,7 @@ func TestAbtesting_GetABTest(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests/42")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests/42", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -439,15 +401,13 @@ func TestAbtesting_GetABTest(t *testing.T) {
 }
 
 func TestAbtesting_ListABTests(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("listABTests with minimal parameters", func(t *testing.T) {
 		_, err := client.ListABTests(client.NewApiListABTestsRequest())
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -456,9 +416,7 @@ func TestAbtesting_ListABTests(t *testing.T) {
 		_, err := client.ListABTests(client.NewApiListABTestsRequest().WithOffset(42).WithLimit(21).WithIndexPrefix("foo").WithIndexSuffix("bar"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -471,7 +429,7 @@ func TestAbtesting_ListABTests(t *testing.T) {
 }
 
 func TestAbtesting_StopABTest(t *testing.T) {
-	client, echo := createAbtestingClient()
+	client, echo := createAbtestingClient(t)
 
 	t.Run("stopABTest", func(t *testing.T) {
 		_, err := client.StopABTest(client.NewApiStopABTestRequest(
@@ -479,9 +437,7 @@ func TestAbtesting_StopABTest(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/abtests/42/stop")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/abtests/42/stop", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)

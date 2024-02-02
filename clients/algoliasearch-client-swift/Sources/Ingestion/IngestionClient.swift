@@ -12,8 +12,8 @@ open class IngestionClient {
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var applicationID: String {
-        configuration.applicationID
+    var appId: String {
+        configuration.appId
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -25,13 +25,11 @@ open class IngestionClient {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(applicationID: String, apiKey: String, region: Region) throws {
-        try self.init(configuration: Configuration(applicationID: applicationID, apiKey: apiKey, region: region))
+    public convenience init(appId: String, apiKey: String, region: Region) throws {
+        try self.init(configuration: Configuration(appId: appId, apiKey: apiKey, region: region))
     }
 
     /**
-     Create a authentication.
-
      - parameter authenticationCreate: (body)
      - returns: AuthenticationCreateResponse
      */
@@ -49,7 +47,11 @@ open class IngestionClient {
     /**
      Create a authentication.
 
-     Create a authentication.
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter authenticationCreate: (body)
      - returns: RequestBuilder<AuthenticationCreateResponse>
      */
@@ -72,8 +74,6 @@ open class IngestionClient {
     }
 
     /**
-     Create a destination.
-
      - parameter destinationCreate: (body)
      - returns: DestinationCreateResponse
      */
@@ -91,7 +91,11 @@ open class IngestionClient {
     /**
      Create a destination.
 
-     Create a destination.
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter destinationCreate: (body)
      - returns: RequestBuilder<DestinationCreateResponse>
      */
@@ -114,8 +118,6 @@ open class IngestionClient {
     }
 
     /**
-     Create a source.
-
      - parameter sourceCreate: (body)
      - returns: SourceCreateResponse
      */
@@ -133,7 +135,11 @@ open class IngestionClient {
     /**
      Create a source.
 
-     Create a source.
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceCreate: (body)
      - returns: RequestBuilder<SourceCreateResponse>
      */
@@ -156,8 +162,6 @@ open class IngestionClient {
     }
 
     /**
-     Create a task.
-
      - parameter taskCreate: (body)
      - returns: TaskCreateResponse
      */
@@ -175,7 +179,6 @@ open class IngestionClient {
     /**
      Create a task.
 
-     Create a task.
      - parameter taskCreate: (body)
      - returns: RequestBuilder<TaskCreateResponse>
      */
@@ -198,8 +201,6 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -216,15 +217,18 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customDeleteWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customDelete")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -245,8 +249,6 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: AnyCodable
@@ -263,15 +265,18 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - returns: RequestBuilder<AnyCodable>
      */
 
     open func customGetWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customGet")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -292,8 +297,6 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -311,9 +314,8 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -321,6 +323,10 @@ open class IngestionClient {
      */
 
     open func customPostWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPost")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -341,8 +347,6 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -360,9 +364,8 @@ open class IngestionClient {
     }
 
     /**
-     Send requests to the Algolia REST API.
-
      This method allow you to send requests to the Algolia REST API.
+
      - parameter path: (path) Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
      - parameter parameters: (query) Query parameters to apply to the current query. (optional)
      - parameter body: (body) Parameters to send with the custom request. (optional)
@@ -370,6 +373,10 @@ open class IngestionClient {
      */
 
     open func customPutWithHTTPInfo(path: String, parameters: [String: AnyCodable]? = nil, body: [String: AnyCodable]? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AnyCodable> {
+        guard !path.isEmpty else {
+            throw AlgoliaError.invalidArgument("path", "customPut")
+        }
+
         var resourcePath = "/1{path}"
         let pathPreEscape = "\(APIHelper.mapValueToPathItem(path))"
         let pathPostEscape = pathPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -390,8 +397,6 @@ open class IngestionClient {
     }
 
     /**
-     Delete a authentication.
-
      - parameter authenticationID: (path) The authentication UUID.
      - returns: DeleteResponse
      */
@@ -407,14 +412,22 @@ open class IngestionClient {
     }
 
     /**
-     Delete a authentication.
-
      Soft delete the authentication of the given authenticationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter authenticationID: (path) The authentication UUID.
      - returns: RequestBuilder<DeleteResponse>
      */
 
     open func deleteAuthenticationWithHTTPInfo(authenticationID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteResponse> {
+        guard !authenticationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("authenticationID", "deleteAuthentication")
+        }
+
         var resourcePath = "/1/authentications/{authenticationID}"
         let authenticationIDPreEscape = "\(APIHelper.mapValueToPathItem(authenticationID))"
         let authenticationIDPostEscape = authenticationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -435,8 +448,6 @@ open class IngestionClient {
     }
 
     /**
-     Delete a destination.
-
      - parameter destinationID: (path) The destination UUID.
      - returns: DeleteResponse
      */
@@ -452,14 +463,22 @@ open class IngestionClient {
     }
 
     /**
-     Delete a destination.
-
      Soft delete the destination of the given destinationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter destinationID: (path) The destination UUID.
      - returns: RequestBuilder<DeleteResponse>
      */
 
     open func deleteDestinationWithHTTPInfo(destinationID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteResponse> {
+        guard !destinationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("destinationID", "deleteDestination")
+        }
+
         var resourcePath = "/1/destinations/{destinationID}"
         let destinationIDPreEscape = "\(APIHelper.mapValueToPathItem(destinationID))"
         let destinationIDPostEscape = destinationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -480,8 +499,6 @@ open class IngestionClient {
     }
 
     /**
-     Delete a source.
-
      - parameter sourceID: (path) The source UUID.
      - returns: DeleteResponse
      */
@@ -497,14 +514,22 @@ open class IngestionClient {
     }
 
     /**
-     Delete a source.
-
      Soft delete the source of the given sourceID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceID: (path) The source UUID.
      - returns: RequestBuilder<DeleteResponse>
      */
 
     open func deleteSourceWithHTTPInfo(sourceID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteResponse> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "deleteSource")
+        }
+
         var resourcePath = "/1/sources/{sourceID}"
         let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
         let sourceIDPostEscape = sourceIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -525,8 +550,6 @@ open class IngestionClient {
     }
 
     /**
-     Delete a task.
-
      - parameter taskID: (path) The task UUID.
      - returns: DeleteResponse
      */
@@ -542,14 +565,17 @@ open class IngestionClient {
     }
 
     /**
-     Delete a task.
-
      Soft delete the task of the given taskID.
+
      - parameter taskID: (path) The task UUID.
      - returns: RequestBuilder<DeleteResponse>
      */
 
     open func deleteTaskWithHTTPInfo(taskID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DeleteResponse> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "deleteTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -570,8 +596,6 @@ open class IngestionClient {
     }
 
     /**
-     Disable a task.
-
      - parameter taskID: (path) The task UUID.
      - returns: TaskUpdateResponse
      */
@@ -587,14 +611,22 @@ open class IngestionClient {
     }
 
     /**
-     Disable a task.
-
      Disable the task of the given taskID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter taskID: (path) The task UUID.
      - returns: RequestBuilder<TaskUpdateResponse>
      */
 
     open func disableTaskWithHTTPInfo(taskID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<TaskUpdateResponse> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "disableTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}/disable"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -615,8 +647,6 @@ open class IngestionClient {
     }
 
     /**
-     Enable a task.
-
      - parameter taskID: (path) The task UUID.
      - returns: TaskUpdateResponse
      */
@@ -632,14 +662,22 @@ open class IngestionClient {
     }
 
     /**
-     Enable a task.
-
      Enable the task of the given taskID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter taskID: (path) The task UUID.
      - returns: RequestBuilder<TaskUpdateResponse>
      */
 
     open func enableTaskWithHTTPInfo(taskID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<TaskUpdateResponse> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "enableTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}/enable"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -660,8 +698,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a authentication.
-
      - parameter authenticationID: (path) The authentication UUID.
      - returns: Authentication
      */
@@ -677,14 +713,22 @@ open class IngestionClient {
     }
 
     /**
-     Get a authentication.
-
      Get the authentication of the given authenticationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter authenticationID: (path) The authentication UUID.
      - returns: RequestBuilder<Authentication>
      */
 
     open func getAuthenticationWithHTTPInfo(authenticationID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Authentication> {
+        guard !authenticationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("authenticationID", "getAuthentication")
+        }
+
         var resourcePath = "/1/authentications/{authenticationID}"
         let authenticationIDPreEscape = "\(APIHelper.mapValueToPathItem(authenticationID))"
         let authenticationIDPostEscape = authenticationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -705,8 +749,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of authentications.
-
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the authentications to retrieve. (optional)
@@ -727,9 +769,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of authentications.
-
      Get a list of authentications for the given query parameters, with pagination details.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the authentications to retrieve. (optional)
@@ -764,8 +810,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a destination.
-
      - parameter destinationID: (path) The destination UUID.
      - returns: Destination
      */
@@ -781,14 +825,22 @@ open class IngestionClient {
     }
 
     /**
-     Get a destination.
-
      Get the destination of the given destinationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter destinationID: (path) The destination UUID.
      - returns: RequestBuilder<Destination>
      */
 
     open func getDestinationWithHTTPInfo(destinationID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Destination> {
+        guard !destinationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("destinationID", "getDestination")
+        }
+
         var resourcePath = "/1/destinations/{destinationID}"
         let destinationIDPreEscape = "\(APIHelper.mapValueToPathItem(destinationID))"
         let destinationIDPostEscape = destinationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -809,8 +861,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of destinations.
-
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the destinations to retrive. (optional)
@@ -831,9 +881,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of destinations.
-
      Get a list of destinations for the given query parameters, with pagination details.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the destinations to retrive. (optional)
@@ -868,8 +922,6 @@ open class IngestionClient {
     }
 
     /**
-     Retrieve a stream listing.
-
      - parameter sourceID: (path) The source UUID.
      - returns: DockerSourceStreams
      */
@@ -885,14 +937,22 @@ open class IngestionClient {
     }
 
     /**
-     Retrieve a stream listing.
-
      Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceID: (path) The source UUID.
      - returns: RequestBuilder<DockerSourceStreams>
      */
 
     open func getDockerSourceStreamsWithHTTPInfo(sourceID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DockerSourceStreams> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "getDockerSourceStreams")
+        }
+
         var resourcePath = "/1/sources/{sourceID}/discover"
         let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
         let sourceIDPostEscape = sourceIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -913,8 +973,6 @@ open class IngestionClient {
     }
 
     /**
-     Get an event.
-
      - parameter runID: (path) The run UUID.
      - parameter eventID: (path) The event UUID.
      - returns: Event
@@ -931,15 +989,27 @@ open class IngestionClient {
     }
 
     /**
-     Get an event.
-
      Get a single event for a specific runID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter runID: (path) The run UUID.
      - parameter eventID: (path) The event UUID.
      - returns: RequestBuilder<Event>
      */
 
     open func getEventWithHTTPInfo(runID: String, eventID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Event> {
+        guard !runID.isEmpty else {
+            throw AlgoliaError.invalidArgument("runID", "getEvent")
+        }
+
+        guard !eventID.isEmpty else {
+            throw AlgoliaError.invalidArgument("eventID", "getEvent")
+        }
+
         var resourcePath = "/1/runs/{runID}/events/{eventID}"
         let runIDPreEscape = "\(APIHelper.mapValueToPathItem(runID))"
         let runIDPostEscape = runIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -963,8 +1033,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of events.
-
      - parameter runID: (path) The run UUID.
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
@@ -988,9 +1056,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of events.
-
      Get a list of events associated to the given runID, for the given query parameters.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter runID: (path) The run UUID.
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
@@ -1004,6 +1076,10 @@ open class IngestionClient {
      */
 
     open func getEventsWithHTTPInfo(runID: String, itemsPerPage: Int? = nil, page: Int? = nil, status: [EventStatus]? = nil, type: [EventType]? = nil, sort: EventSortKeys? = nil, order: OrderKeys? = nil, startDate: String? = nil, endDate: String? = nil, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<ListEventsResponse> {
+        guard !runID.isEmpty else {
+            throw AlgoliaError.invalidArgument("runID", "getEvents")
+        }
+
         var resourcePath = "/1/runs/{runID}/events"
         let runIDPreEscape = "\(APIHelper.mapValueToPathItem(runID))"
         let runIDPostEscape = runIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1033,8 +1109,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a run.
-
      - parameter runID: (path) The run UUID.
      - returns: Run
      */
@@ -1050,14 +1124,22 @@ open class IngestionClient {
     }
 
     /**
-     Get a run.
-
      Get a single run for the given ID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter runID: (path) The run UUID.
      - returns: RequestBuilder<Run>
      */
 
     open func getRunWithHTTPInfo(runID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Run> {
+        guard !runID.isEmpty else {
+            throw AlgoliaError.invalidArgument("runID", "getRun")
+        }
+
         var resourcePath = "/1/runs/{runID}"
         let runIDPreEscape = "\(APIHelper.mapValueToPathItem(runID))"
         let runIDPostEscape = runIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1078,8 +1160,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of runs.
-
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter status: (query) Filter the status of the runs. (optional)
@@ -1102,9 +1182,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of runs.
-
      Get a list of runs for the given query parameters, with pagination details.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter status: (query) Filter the status of the runs. (optional)
@@ -1143,8 +1227,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a source.
-
      - parameter sourceID: (path) The source UUID.
      - returns: Source
      */
@@ -1160,14 +1242,22 @@ open class IngestionClient {
     }
 
     /**
-     Get a source.
-
      Get the source of the given sourceID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceID: (path) The source UUID.
      - returns: RequestBuilder<Source>
      */
 
     open func getSourceWithHTTPInfo(sourceID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Source> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "getSource")
+        }
+
         var resourcePath = "/1/sources/{sourceID}"
         let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
         let sourceIDPostEscape = sourceIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1188,8 +1278,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of sources.
-
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the sources to retrieve. (optional)
@@ -1210,9 +1298,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of sources.
-
      Get a list of sources for the given query parameters, with pagination details.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter type: (query) The type of the sources to retrieve. (optional)
@@ -1247,8 +1339,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a task.
-
      - parameter taskID: (path) The task UUID.
      - returns: Task
      */
@@ -1264,14 +1354,22 @@ open class IngestionClient {
     }
 
     /**
-     Get a task.
-
      Get the task of the given taskID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter taskID: (path) The task UUID.
      - returns: RequestBuilder<Task>
      */
 
     open func getTaskWithHTTPInfo(taskID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<Task> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "getTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1292,8 +1390,6 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of tasks.
-
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter action: (query) The action of the tasks to retrieve. (optional)
@@ -1317,9 +1413,13 @@ open class IngestionClient {
     }
 
     /**
-     Get a list of tasks.
-
      Get a list of tasks for the given query parameters, with pagination details.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter itemsPerPage: (query) The number of items per page to return. (optional)
      - parameter page: (query) The page number to fetch, starting at 1. (optional)
      - parameter action: (query) The action of the tasks to retrieve. (optional)
@@ -1360,8 +1460,6 @@ open class IngestionClient {
     }
 
     /**
-     Run a task.
-
      - parameter taskID: (path) The task UUID.
      - returns: RunResponse
      */
@@ -1377,14 +1475,22 @@ open class IngestionClient {
     }
 
     /**
-     Run a task.
-
      Run the task of the given taskID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter taskID: (path) The task UUID.
      - returns: RequestBuilder<RunResponse>
      */
 
     open func runTaskWithHTTPInfo(taskID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<RunResponse> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "runTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}/run"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1405,8 +1511,6 @@ open class IngestionClient {
     }
 
     /**
-     Search among authentications.
-
      - parameter authenticationSearch: (body)
      - returns: [Authentication]
      */
@@ -1422,9 +1526,13 @@ open class IngestionClient {
     }
 
     /**
-     Search among authentications.
-
      Search among authentications with a defined set of parameters.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter authenticationSearch: (body)
      - returns: RequestBuilder<[Authentication]>
      */
@@ -1447,8 +1555,6 @@ open class IngestionClient {
     }
 
     /**
-     Search among destinations.
-
      - parameter destinationSearch: (body)
      - returns: [Destination]
      */
@@ -1464,9 +1570,13 @@ open class IngestionClient {
     }
 
     /**
-     Search among destinations.
-
      Search among destinations with a defined set of parameters.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter destinationSearch: (body)
      - returns: RequestBuilder<[Destination]>
      */
@@ -1489,8 +1599,6 @@ open class IngestionClient {
     }
 
     /**
-     Search among sources.
-
      - parameter sourceSearch: (body)
      - returns: [Source]
      */
@@ -1506,9 +1614,13 @@ open class IngestionClient {
     }
 
     /**
-     Search among sources.
-
      Search among sources with a defined set of parameters.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceSearch: (body)
      - returns: RequestBuilder<[Source]>
      */
@@ -1531,8 +1643,6 @@ open class IngestionClient {
     }
 
     /**
-     Search among tasks.
-
      - parameter taskSearch: (body)
      - returns: [Task]
      */
@@ -1548,9 +1658,13 @@ open class IngestionClient {
     }
 
     /**
-     Search among tasks.
-
      Search among tasks with a defined set of parameters.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter taskSearch: (body)
      - returns: RequestBuilder<[Task]>
      */
@@ -1573,8 +1687,6 @@ open class IngestionClient {
     }
 
     /**
-     Trigger a stream listing request.
-
      - parameter sourceID: (path) The source UUID.
      - returns: DockerSourceDiscover
      */
@@ -1590,14 +1702,22 @@ open class IngestionClient {
     }
 
     /**
-     Trigger a stream listing request.
-
      Trigger a stream listing request for a Singer specification compatible docker type source.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceID: (path) The source UUID.
      - returns: RequestBuilder<DockerSourceDiscover>
      */
 
     open func triggerDockerSourceDiscoverWithHTTPInfo(sourceID: String, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DockerSourceDiscover> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "triggerDockerSourceDiscover")
+        }
+
         var resourcePath = "/1/sources/{sourceID}/discover"
         let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
         let sourceIDPostEscape = sourceIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1618,8 +1738,6 @@ open class IngestionClient {
     }
 
     /**
-     Update a authentication.
-
      - parameter authenticationID: (path) The authentication UUID.
      - parameter authenticationUpdate: (body)
      - returns: AuthenticationUpdateResponse
@@ -1636,15 +1754,23 @@ open class IngestionClient {
     }
 
     /**
-     Update a authentication.
-
      Update the authentication of the given authenticationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter authenticationID: (path) The authentication UUID.
      - parameter authenticationUpdate: (body)
      - returns: RequestBuilder<AuthenticationUpdateResponse>
      */
 
     open func updateAuthenticationWithHTTPInfo(authenticationID: String, authenticationUpdate: AuthenticationUpdate, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<AuthenticationUpdateResponse> {
+        guard !authenticationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("authenticationID", "updateAuthentication")
+        }
+
         var resourcePath = "/1/authentications/{authenticationID}"
         let authenticationIDPreEscape = "\(APIHelper.mapValueToPathItem(authenticationID))"
         let authenticationIDPostEscape = authenticationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1665,8 +1791,6 @@ open class IngestionClient {
     }
 
     /**
-     Update a destination.
-
      - parameter destinationID: (path) The destination UUID.
      - parameter destinationUpdate: (body)
      - returns: DestinationUpdateResponse
@@ -1683,15 +1807,23 @@ open class IngestionClient {
     }
 
     /**
-     Update a destination.
-
      Update the destination of the given destinationID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter destinationID: (path) The destination UUID.
      - parameter destinationUpdate: (body)
      - returns: RequestBuilder<DestinationUpdateResponse>
      */
 
     open func updateDestinationWithHTTPInfo(destinationID: String, destinationUpdate: DestinationUpdate, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<DestinationUpdateResponse> {
+        guard !destinationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("destinationID", "updateDestination")
+        }
+
         var resourcePath = "/1/destinations/{destinationID}"
         let destinationIDPreEscape = "\(APIHelper.mapValueToPathItem(destinationID))"
         let destinationIDPostEscape = destinationIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1712,8 +1844,6 @@ open class IngestionClient {
     }
 
     /**
-     Update a source.
-
      - parameter sourceID: (path) The source UUID.
      - parameter sourceUpdate: (body)
      - returns: SourceUpdateResponse
@@ -1730,15 +1860,23 @@ open class IngestionClient {
     }
 
     /**
-     Update a source.
-
      Update the source of the given sourceID.
+
+     Required API Key ACLs:
+       - addObject
+       - deleteIndex
+       - editSettings
+
      - parameter sourceID: (path) The source UUID.
      - parameter sourceUpdate: (body)
      - returns: RequestBuilder<SourceUpdateResponse>
      */
 
     open func updateSourceWithHTTPInfo(sourceID: String, sourceUpdate: SourceUpdate, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<SourceUpdateResponse> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "updateSource")
+        }
+
         var resourcePath = "/1/sources/{sourceID}"
         let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
         let sourceIDPostEscape = sourceIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
@@ -1759,8 +1897,6 @@ open class IngestionClient {
     }
 
     /**
-     Update a task.
-
      - parameter taskID: (path) The task UUID.
      - parameter taskUpdate: (body)
      - returns: TaskUpdateResponse
@@ -1777,15 +1913,18 @@ open class IngestionClient {
     }
 
     /**
-     Update a task.
-
      Update the task of the given taskID.
+
      - parameter taskID: (path) The task UUID.
      - parameter taskUpdate: (body)
      - returns: RequestBuilder<TaskUpdateResponse>
      */
 
     open func updateTaskWithHTTPInfo(taskID: String, taskUpdate: TaskUpdate, requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<TaskUpdateResponse> {
+        guard !taskID.isEmpty else {
+            throw AlgoliaError.invalidArgument("taskID", "updateTask")
+        }
+
         var resourcePath = "/1/tasks/{taskID}"
         let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
         let taskIDPostEscape = taskIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""

@@ -35,7 +35,7 @@ Task {
           .init(firstname: "Warren", lastname: "Speach", followers: 42, company: "Norwalk Crmc")
         ]
 
-        let client = SearchClient(applicationID: applicationID, apiKey: apiKey)
+        let client = SearchClient(appId: applicationID, apiKey: apiKey)
 
         for contact in contacts {
             let saveObjRes = try await client.saveObject(indexName: "contacts", body: contact)

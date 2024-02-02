@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"net/url"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -14,7 +13,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createAnalyticsClient() (*analytics.APIClient, *tests.EchoRequester) {
+func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := analytics.Configuration{
 		Configuration: transport.Configuration{
@@ -24,13 +25,14 @@ func createAnalyticsClient() (*analytics.APIClient, *tests.EchoRequester) {
 		},
 		Region: analytics.US,
 	}
-	client, _ := analytics.NewClientWithConfig(cfg)
+	client, err := analytics.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
 func TestAnalytics_CustomDelete(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -38,9 +40,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -51,9 +51,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -66,7 +64,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 }
 
 func TestAnalytics_CustomGet(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -74,9 +72,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -87,9 +83,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -102,7 +96,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 }
 
 func TestAnalytics_CustomPost(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -110,9 +104,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -124,9 +116,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -145,9 +135,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -166,9 +154,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -187,9 +173,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -213,9 +197,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -239,9 +221,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -260,9 +240,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -282,9 +260,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -304,9 +280,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -326,9 +300,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -342,7 +314,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 }
 
 func TestAnalytics_CustomPut(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -350,9 +322,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -364,9 +334,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -380,7 +348,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 }
 
 func TestAnalytics_GetAverageClickPosition(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getAverageClickPosition with minimal parameters", func(t *testing.T) {
 		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
@@ -388,9 +356,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/averageClickPosition", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -406,9 +372,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/averageClickPosition")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/averageClickPosition", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -421,7 +385,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 }
 
 func TestAnalytics_GetClickPositions(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getClickPositions with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
@@ -429,9 +393,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/positions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/positions", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -447,9 +409,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/positions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/positions", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -462,7 +422,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 }
 
 func TestAnalytics_GetClickThroughRate(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getClickThroughRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
@@ -470,9 +430,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/clickThroughRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -488,9 +446,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/clicks/clickThroughRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/clicks/clickThroughRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -503,7 +459,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 }
 
 func TestAnalytics_GetConversationRate(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getConversationRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
@@ -511,9 +467,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/conversions/conversionRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -529,9 +483,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/conversions/conversionRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/conversions/conversionRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -544,7 +496,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 }
 
 func TestAnalytics_GetNoClickRate(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getNoClickRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
@@ -552,9 +504,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noClickRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -570,9 +520,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noClickRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noClickRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -585,7 +533,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 }
 
 func TestAnalytics_GetNoResultsRate(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getNoResultsRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
@@ -593,9 +541,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noResultRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -611,9 +557,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noResultRate")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noResultRate", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -626,7 +570,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 }
 
 func TestAnalytics_GetSearchesCount(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getSearchesCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
@@ -634,9 +578,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/count")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/count", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -652,9 +594,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/count")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/count", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -667,7 +607,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 }
 
 func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getSearchesNoClicks with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
@@ -675,9 +615,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noClicks", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -693,9 +631,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noClicks")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noClicks", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -708,7 +644,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 }
 
 func TestAnalytics_GetSearchesNoResults(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getSearchesNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
@@ -716,9 +652,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noResults")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noResults", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -734,9 +668,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches/noResults")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches/noResults", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -749,7 +681,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 }
 
 func TestAnalytics_GetStatus(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getStatus with minimal parameters", func(t *testing.T) {
 		_, err := client.GetStatus(client.NewApiGetStatusRequest(
@@ -757,9 +689,7 @@ func TestAnalytics_GetStatus(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/status")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/status", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -772,7 +702,7 @@ func TestAnalytics_GetStatus(t *testing.T) {
 }
 
 func TestAnalytics_GetTopCountries(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopCountries with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
@@ -780,9 +710,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/countries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/countries", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -798,9 +726,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/countries")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/countries", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -813,7 +739,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 }
 
 func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopFilterAttributes with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
@@ -821,9 +747,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -839,9 +763,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -854,7 +776,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 }
 
 func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopFilterForAttribute with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
@@ -862,9 +784,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/myAttribute", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -880,9 +800,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/myAttribute1%2CmyAttribute2", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -898,9 +816,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/myAttribute", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -916,9 +832,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/myAttribute1%2CmyAttribute2")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/myAttribute1%2CmyAttribute2", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -931,7 +845,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 }
 
 func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopFiltersNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
@@ -939,9 +853,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/noResults")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/noResults", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -957,9 +869,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/filters/noResults")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/filters/noResults", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -972,7 +882,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 }
 
 func TestAnalytics_GetTopHits(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopHits with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
@@ -980,9 +890,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/hits")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/hits", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -998,9 +906,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 		).WithSearch("mySearch").WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/hits")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/hits", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1013,7 +919,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 }
 
 func TestAnalytics_GetTopSearches(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getTopSearches with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
@@ -1021,9 +927,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1039,9 +943,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		).WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/searches")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/searches", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1054,7 +956,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 }
 
 func TestAnalytics_GetUsersCount(t *testing.T) {
-	client, echo := createAnalyticsClient()
+	client, echo := createAnalyticsClient(t)
 
 	t.Run("get getUsersCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
@@ -1062,9 +964,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/users/count")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/users/count", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1080,9 +980,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/2/users/count")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/2/users/count", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)

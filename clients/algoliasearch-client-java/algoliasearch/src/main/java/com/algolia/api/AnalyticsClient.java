@@ -560,10 +560,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
+   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
+   * request where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -601,10 +600,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
+   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
+   * request where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -628,10 +626,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
+   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
+   * request where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -647,10 +644,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
+   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
+   * request where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -741,10 +737,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
+   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
+   * where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -782,10 +777,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
+   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
+   * where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -809,10 +803,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
+   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
+   * where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -826,10 +819,9 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of
-   * &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for
-   * tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60;
-   * parameter is &#x60;true&#x60;.
+   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
+   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
+   * where the `clickAnalytics` parameter is `true`.
    *
    * @param index Index name to target. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1232,7 +1224,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don&#39;t lead to any clicks. The endpoint
+   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
@@ -1271,7 +1263,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don&#39;t lead to any clicks. The endpoint
+   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
@@ -1296,7 +1288,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don&#39;t lead to any clicks. The endpoint
+   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
@@ -1311,7 +1303,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don&#39;t lead to any clicks. The endpoint
+   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
@@ -1390,7 +1382,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn&#39;t return any results.
+   * (asynchronously) Returns the rate at which searches didn't return any results.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -1427,7 +1419,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn&#39;t return any results.
+   * (asynchronously) Returns the rate at which searches didn't return any results.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -1450,7 +1442,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn&#39;t return any results.
+   * (asynchronously) Returns the rate at which searches didn't return any results.
    *
    * @param index Index name to target. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1463,7 +1455,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn&#39;t return any results.
+   * (asynchronously) Returns the rate at which searches didn't return any results.
    *
    * @param index Index name to target. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1705,7 +1697,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn&#39;t lead to any
+   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
    * @param index Index name to target. (required)
@@ -1750,7 +1742,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn&#39;t lead to any
+   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
    * @param index Index name to target. (required)
@@ -1779,7 +1771,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn&#39;t lead to any
+   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
    * @param index Index name to target. (required)
@@ -1793,7 +1785,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn&#39;t lead to any
+   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
    * @param index Index name to target. (required)
@@ -1886,8 +1878,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn&#39;t return
-   * any results.
+   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
+   * results.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -1931,8 +1923,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn&#39;t return
-   * any results.
+   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
+   * results.
    *
    * @param index Index name to target. (required)
    * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -1960,8 +1952,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn&#39;t return
-   * any results.
+   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
+   * results.
    *
    * @param index Index name to target. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1974,8 +1966,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn&#39;t return
-   * any results.
+   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
+   * results.
    *
    * @param index Index name to target. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2012,8 +2004,8 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the latest update time of the Analytics API for an index. If the index
-   * has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be
-   * &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
+   * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
+   * **Note**: The Analytics API is updated every 5&nbsp;minutes.
    *
    * @param index Index name to target. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2030,8 +2022,8 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Return the latest update time of the Analytics API for an index. If the index
-   * has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be
-   * &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
+   * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
+   * **Note**: The Analytics API is updated every 5&nbsp;minutes.
    *
    * @param index Index name to target. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2732,7 +2724,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don&#39;t return results.
+   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
    * @param index Index name to target. (required)
@@ -2780,7 +2772,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don&#39;t return results.
+   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
    * @param index Index name to target. (required)
@@ -2811,7 +2803,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don&#39;t return results.
+   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
    * @param index Index name to target. (required)
@@ -2827,7 +2819,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don&#39;t return results.
+   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
    * @param index Index name to target. (required)

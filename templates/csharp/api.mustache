@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Algolia.Search.Clients;
-using Algolia.Search.Models;
 {{#hasImport}}using Algolia.Search.Models.{{apiPackageName}};
 {{/hasImport}}
 using Algolia.Search.Transport;
 using Algolia.Search.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Algolia.Search.Clients;
 
@@ -25,11 +25,8 @@ namespace Algolia.Search.Clients;
   {
       {{#operation}}
       /// <summary>
-      /// {{{summary}}}
-      /// </summary>
-      /// <remarks>
       /// {{{notes}}}
-      /// </remarks>
+      /// </summary>
       {{#allParams}}
       /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}
@@ -56,14 +53,16 @@ namespace Algolia.Search.Clients;
   {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       private readonly HttpTransport _transport;
+      private readonly ILogger<{{apiPackageName}}Client> _logger;
 
       /// <summary>
       /// Create a new {{apiPackageName}} client for the given appID and apiKey.
       /// </summary>
       /// <param name="applicationId">Your application</param>
       /// <param name="apiKey">Your API key</param>
+      /// <param name="loggerFactory">Logger factory</param>
       {{#hasRegionalHost}}/// <param name="region">The targeted region</param>{{/hasRegionalHost}}
-      public {{classname}}(string applicationId, string apiKey{{#hasRegionalHost}}, string region{{/hasRegionalHost}}{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}}) : this(new {{apiPackageName}}Config(applicationId, apiKey{{#hasRegionalHost}}, region{{/hasRegionalHost}}), new AlgoliaHttpRequester())
+      public {{classname}}(string applicationId, string apiKey{{#hasRegionalHost}}, string region{{/hasRegionalHost}}{{#fallbackToAliasHost}} = null{{/fallbackToAliasHost}}, ILoggerFactory loggerFactory = null) : this(new {{apiPackageName}}Config(applicationId, apiKey{{#hasRegionalHost}}, region{{/hasRegionalHost}}), new AlgoliaHttpRequester(loggerFactory), loggerFactory)
       {
       }
 
@@ -71,7 +70,8 @@ namespace Algolia.Search.Clients;
       /// Initialize a client with custom config
       /// </summary>
       /// <param name="config">Algolia configuration</param>
-      public {{classname}}({{apiPackageName}}Config config) : this(config, new AlgoliaHttpRequester())
+      /// <param name="loggerFactory">Logger factory</param>
+      public {{classname}}({{apiPackageName}}Config config, ILoggerFactory loggerFactory = null) : this(config, new AlgoliaHttpRequester(loggerFactory), loggerFactory)
       {
       }
 
@@ -80,7 +80,8 @@ namespace Algolia.Search.Clients;
       /// </summary>
       /// <param name="config">Algolia Config</param>
       /// <param name="httpRequester">Your Http requester implementation of <see cref="IHttpRequester"/></param>
-      public {{classname}}({{apiPackageName}}Config config, IHttpRequester httpRequester)
+      /// <param name="loggerFactory">Logger factory</param>
+      public {{classname}}({{apiPackageName}}Config config, IHttpRequester httpRequester, ILoggerFactory loggerFactory = null)
       {
         if (httpRequester == null)
         {
@@ -99,15 +100,28 @@ namespace Algolia.Search.Clients;
           throw new ArgumentException("`ApiKey` is missing.");
         }
 
-        _transport = new HttpTransport(config, httpRequester);
+        var factory = loggerFactory ?? NullLoggerFactory.Instance;
+        _transport = new HttpTransport(config, httpRequester, factory);
+        _logger = factory.CreateLogger<{{apiPackageName}}Client>();
+
+        if (_logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information))
+        {
+          _logger.LogInformation("Algolia {{apiPackageName}} client is initialized.");
+        }
       }
 
       {{#operation}}
       {{#supportsAsync}}
 
       /// <summary>
-      /// {{{summary}}} {{notes}}
-      /// </summary>
+      /// {{{notes}}}
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+      ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
       {{#allParams}}
       /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}

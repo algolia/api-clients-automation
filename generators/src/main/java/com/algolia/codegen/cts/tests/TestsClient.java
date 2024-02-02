@@ -83,6 +83,20 @@ public class TestsClient extends TestsGenerator {
             }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
+            // Swift is strongly-typed and compiled language,
+            // it can't have nil object when something is expected
+            if (language.equals("swift")) {
+              @SuppressWarnings("unchecked")
+              var isNotTestable =
+                step.type != null &&
+                step.type.equals("method") &&
+                ((List<Map<String, Object>>) stepOut.getOrDefault("parametersWithDataType", new ArrayList<>())).stream()
+                  .anyMatch(item -> (boolean) item.getOrDefault("isNullObject", false));
+              if (isNotTestable) {
+                continue;
+              }
+            }
+
             if (step.expected.type != null) {
               switch (step.expected.type) {
                 case "userAgent":

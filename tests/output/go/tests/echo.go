@@ -21,7 +21,7 @@ type EchoRequester struct {
 
 func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
 	e.Host = req.URL.Host
-	e.Path = req.URL.Path
+	e.Path = req.URL.EscapedPath()
 	e.Method = req.Method
 	e.Header = req.Header
 	e.Query = req.URL.Query()
@@ -44,4 +44,23 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 func ZeroValue[T any]() T {
 	var v T
 	return v
+}
+
+func Union(expected any, received any) any {
+	switch expected.(type) {
+	case map[string]any:
+		res := map[string]any{}
+		for key, val := range expected.(map[string]any) {
+			res[key] = Union(val, received.(map[string]any)[key])
+		}
+		return res
+	case []any:
+		res := []any{}
+		for i, val := range expected.([]any) {
+			res = append(res, Union(val, received.([]any)[i]))
+		}
+		return res
+	default:
+		return received
+	}
 }

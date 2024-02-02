@@ -10,10 +10,9 @@ type Configuration struct {
 	AppID  string
 	ApiKey string
 
-	Hosts          []string
+	Hosts          []StatefulHost
 	DefaultHeader  map[string]string
 	UserAgent      string
-	Debug          bool
 	Requester      Requester
 	ReadTimeout    time.Duration
 	WriteTimeout   time.Duration

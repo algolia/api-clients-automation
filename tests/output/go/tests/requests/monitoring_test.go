@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"net/url"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -14,7 +13,9 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createMonitoringClient() (*monitoring.APIClient, *tests.EchoRequester) {
+func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := monitoring.Configuration{
 		Configuration: transport.Configuration{
@@ -23,13 +24,14 @@ func createMonitoringClient() (*monitoring.APIClient, *tests.EchoRequester) {
 			Requester: echo,
 		},
 	}
-	client, _ := monitoring.NewClientWithConfig(cfg)
+	client, err := monitoring.NewClientWithConfig(cfg)
+	require.NoError(t, err)
 
 	return client, echo
 }
 
 func TestMonitoring_CustomDelete(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -37,9 +39,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -50,9 +50,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -65,7 +63,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 }
 
 func TestMonitoring_CustomGet(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -73,9 +71,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -86,9 +82,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -101,7 +95,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 }
 
 func TestMonitoring_CustomPost(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -109,9 +103,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -123,9 +115,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -144,9 +134,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -165,9 +153,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -186,9 +172,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -212,9 +196,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -238,9 +220,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -259,9 +239,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -281,9 +259,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -303,9 +279,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -325,9 +299,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/requestOptions")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -341,7 +313,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 }
 
 func TestMonitoring_CustomPut(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -349,9 +321,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/minimal")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -363,9 +333,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/test/all")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -379,7 +347,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 }
 
 func TestMonitoring_GetClusterIncidents(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getClusterIncidents", func(t *testing.T) {
 		_, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
@@ -387,9 +355,7 @@ func TestMonitoring_GetClusterIncidents(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/incidents/c1-de")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/incidents/c1-de", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -397,7 +363,7 @@ func TestMonitoring_GetClusterIncidents(t *testing.T) {
 }
 
 func TestMonitoring_GetClusterStatus(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getClusterStatus", func(t *testing.T) {
 		_, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
@@ -405,9 +371,7 @@ func TestMonitoring_GetClusterStatus(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/status/c1-de")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/status/c1-de", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -415,15 +379,13 @@ func TestMonitoring_GetClusterStatus(t *testing.T) {
 }
 
 func TestMonitoring_GetIncidents(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getIncidents", func(t *testing.T) {
 		_, err := client.GetIncidents()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/incidents")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/incidents", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -431,7 +393,7 @@ func TestMonitoring_GetIncidents(t *testing.T) {
 }
 
 func TestMonitoring_GetIndexingTime(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getIndexingTime", func(t *testing.T) {
 		_, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
@@ -439,9 +401,7 @@ func TestMonitoring_GetIndexingTime(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/indexing/c1-de")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/indexing/c1-de", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -449,15 +409,13 @@ func TestMonitoring_GetIndexingTime(t *testing.T) {
 }
 
 func TestMonitoring_GetInventory(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getInventory", func(t *testing.T) {
 		_, err := client.GetInventory()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/inventory/servers")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/inventory/servers", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -465,7 +423,7 @@ func TestMonitoring_GetInventory(t *testing.T) {
 }
 
 func TestMonitoring_GetLatency(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getLatency", func(t *testing.T) {
 		_, err := client.GetLatency(client.NewApiGetLatencyRequest(
@@ -473,9 +431,7 @@ func TestMonitoring_GetLatency(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/latency/c1-de")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/latency/c1-de", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -483,7 +439,7 @@ func TestMonitoring_GetLatency(t *testing.T) {
 }
 
 func TestMonitoring_GetMetrics(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getMetrics", func(t *testing.T) {
 		_, err := client.GetMetrics(client.NewApiGetMetricsRequest(
@@ -491,9 +447,7 @@ func TestMonitoring_GetMetrics(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/infrastructure/avg_build_time/period/minute")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/infrastructure/avg_build_time/period/minute", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -501,7 +455,7 @@ func TestMonitoring_GetMetrics(t *testing.T) {
 }
 
 func TestMonitoring_GetReachability(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getReachability", func(t *testing.T) {
 		_, err := client.GetReachability(client.NewApiGetReachabilityRequest(
@@ -509,9 +463,7 @@ func TestMonitoring_GetReachability(t *testing.T) {
 		))
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/reachability/c1-de/probes")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/reachability/c1-de/probes", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -519,15 +471,13 @@ func TestMonitoring_GetReachability(t *testing.T) {
 }
 
 func TestMonitoring_GetStatus(t *testing.T) {
-	client, echo := createMonitoringClient()
+	client, echo := createMonitoringClient(t)
 
 	t.Run("getStatus", func(t *testing.T) {
 		_, err := client.GetStatus()
 		require.NoError(t, err)
 
-		expectedPath, err := url.QueryUnescape("/1/status")
-		require.NoError(t, err)
-		require.Equal(t, expectedPath, echo.Path)
+		require.Equal(t, "/1/status", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
