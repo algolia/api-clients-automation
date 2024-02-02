@@ -24,9 +24,13 @@ trait HighlightResultTrait extends HighlightResult
 object HighlightResult {
 
   case class MapOfStringHighlightResultOption(value: Map[String, HighlightResultOption]) extends HighlightResult
+  case class SeqOfHighlightResultOption(value: Seq[HighlightResultOption]) extends HighlightResult
 
   def apply(value: Map[String, HighlightResultOption]): HighlightResult = {
     HighlightResult.MapOfStringHighlightResultOption(value)
+  }
+  def apply(value: Seq[HighlightResultOption]): HighlightResult = {
+    HighlightResult.SeqOfHighlightResultOption(value)
   }
 }
 
@@ -35,17 +39,18 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[HighlightResult] =>
       json match {
-        case value: JObject
-            if value.obj.contains("matchLevel") && value.obj.contains("value") && value.obj.contains("matchedWords") =>
-          Extraction.extract[HighlightResultOption](value)
+        case value: JObject => Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResultOption]](value))
-        case _              => throw new MappingException("Can't convert " + json + " to HighlightResult")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          HighlightResult.SeqOfHighlightResultOption(value.map(_.extract))
+        case _ => throw new MappingException("Can't convert " + json + " to HighlightResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: HighlightResult =>
     value match {
-      case value: HighlightResultOption => Extraction.decompose(value)(format - this)
+      case value: HighlightResultOption                      => Extraction.decompose(value)(format - this)
+      case HighlightResult.SeqOfHighlightResultOption(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

@@ -5162,11 +5162,6 @@
         "type": "object",
         "description": "Show highlighted section and words matched on a query.",
         "additionalProperties": false,
-        "x-discriminator-fields": [
-          "matchLevel",
-          "value",
-          "matchedWords"
-        ],
         "properties": {
           "value": {
             "type": "string",
@@ -5210,11 +5205,50 @@
           "type": "object",
           "description": "Show highlighted section and words matched on a query.",
           "additionalProperties": false,
-          "x-discriminator-fields": [
-            "matchLevel",
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "Markup text with `facetQuery` matches highlighted.",
+              "example": "<em>George</em> <em>Clo</em>oney"
+            },
+            "matchLevel": {
+              "type": "string",
+              "description": "Indicates how well the attribute matched the search query.",
+              "enum": [
+                "none",
+                "partial",
+                "full"
+              ]
+            },
+            "matchedWords": {
+              "type": "array",
+              "description": "List of words from the query that matched the object.",
+              "example": [
+                "action"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "fullyHighlighted": {
+              "type": "boolean",
+              "description": "Whether the entire attribute value is highlighted."
+            }
+          },
+          "required": [
             "value",
+            "matchLevel",
             "matchedWords"
-          ],
+          ]
+        }
+      },
+      "highlightResultOptionArray": {
+        "type": "array",
+        "description": "Show highlighted section and words matched on a query.",
+        "items": {
+          "type": "object",
+          "description": "Show highlighted section and words matched on a query.",
+          "additionalProperties": false,
           "properties": {
             "value": {
               "type": "string",
@@ -5258,11 +5292,6 @@
             "type": "object",
             "description": "Show highlighted section and words matched on a query.",
             "additionalProperties": false,
-            "x-discriminator-fields": [
-              "matchLevel",
-              "value",
-              "matchedWords"
-            ],
             "properties": {
               "value": {
                 "type": "string",
@@ -5306,11 +5335,50 @@
               "type": "object",
               "description": "Show highlighted section and words matched on a query.",
               "additionalProperties": false,
-              "x-discriminator-fields": [
-                "matchLevel",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "Markup text with `facetQuery` matches highlighted.",
+                  "example": "<em>George</em> <em>Clo</em>oney"
+                },
+                "matchLevel": {
+                  "type": "string",
+                  "description": "Indicates how well the attribute matched the search query.",
+                  "enum": [
+                    "none",
+                    "partial",
+                    "full"
+                  ]
+                },
+                "matchedWords": {
+                  "type": "array",
+                  "description": "List of words from the query that matched the object.",
+                  "example": [
+                    "action"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "fullyHighlighted": {
+                  "type": "boolean",
+                  "description": "Whether the entire attribute value is highlighted."
+                }
+              },
+              "required": [
                 "value",
+                "matchLevel",
                 "matchedWords"
-              ],
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "description": "Show highlighted section and words matched on a query.",
+            "items": {
+              "type": "object",
+              "description": "Show highlighted section and words matched on a query.",
+              "additionalProperties": false,
               "properties": {
                 "value": {
                   "type": "string",
@@ -5359,11 +5427,6 @@
               "type": "object",
               "description": "Show highlighted section and words matched on a query.",
               "additionalProperties": false,
-              "x-discriminator-fields": [
-                "matchLevel",
-                "value",
-                "matchedWords"
-              ],
               "properties": {
                 "value": {
                   "type": "string",
@@ -5407,11 +5470,50 @@
                 "type": "object",
                 "description": "Show highlighted section and words matched on a query.",
                 "additionalProperties": false,
-                "x-discriminator-fields": [
-                  "matchLevel",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Markup text with `facetQuery` matches highlighted.",
+                    "example": "<em>George</em> <em>Clo</em>oney"
+                  },
+                  "matchLevel": {
+                    "type": "string",
+                    "description": "Indicates how well the attribute matched the search query.",
+                    "enum": [
+                      "none",
+                      "partial",
+                      "full"
+                    ]
+                  },
+                  "matchedWords": {
+                    "type": "array",
+                    "description": "List of words from the query that matched the object.",
+                    "example": [
+                      "action"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "fullyHighlighted": {
+                    "type": "boolean",
+                    "description": "Whether the entire attribute value is highlighted."
+                  }
+                },
+                "required": [
                   "value",
+                  "matchLevel",
                   "matchedWords"
-                ],
+                ]
+              }
+            },
+            {
+              "type": "array",
+              "description": "Show highlighted section and words matched on a query.",
+              "items": {
+                "type": "object",
+                "description": "Show highlighted section and words matched on a query.",
+                "additionalProperties": false,
                 "properties": {
                   "value": {
                     "type": "string",
@@ -5506,6 +5608,35 @@
           ]
         }
       },
+      "snippetResultOptionArray": {
+        "type": "array",
+        "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+        "items": {
+          "type": "object",
+          "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "Markup text with `facetQuery` matches highlighted.",
+              "example": "<em>George</em> <em>Clo</em>oney"
+            },
+            "matchLevel": {
+              "type": "string",
+              "description": "Indicates how well the attribute matched the search query.",
+              "enum": [
+                "none",
+                "partial",
+                "full"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "matchLevel"
+          ]
+        }
+      },
       "snippetResult": {
         "oneOf": [
           {
@@ -5537,6 +5668,35 @@
             "type": "object",
             "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
             "additionalProperties": {
+              "type": "object",
+              "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "Markup text with `facetQuery` matches highlighted.",
+                  "example": "<em>George</em> <em>Clo</em>oney"
+                },
+                "matchLevel": {
+                  "type": "string",
+                  "description": "Indicates how well the attribute matched the search query.",
+                  "enum": [
+                    "none",
+                    "partial",
+                    "full"
+                  ]
+                }
+              },
+              "required": [
+                "value",
+                "matchLevel"
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+            "items": {
               "type": "object",
               "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
               "additionalProperties": false,
@@ -5598,6 +5758,35 @@
               "type": "object",
               "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
               "additionalProperties": {
+                "type": "object",
+                "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Markup text with `facetQuery` matches highlighted.",
+                    "example": "<em>George</em> <em>Clo</em>oney"
+                  },
+                  "matchLevel": {
+                    "type": "string",
+                    "description": "Indicates how well the attribute matched the search query.",
+                    "enum": [
+                      "none",
+                      "partial",
+                      "full"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "matchLevel"
+                ]
+              }
+            },
+            {
+              "type": "array",
+              "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+              "items": {
                 "type": "object",
                 "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                 "additionalProperties": false,
@@ -5784,11 +5973,6 @@
                   "type": "object",
                   "description": "Show highlighted section and words matched on a query.",
                   "additionalProperties": false,
-                  "x-discriminator-fields": [
-                    "matchLevel",
-                    "value",
-                    "matchedWords"
-                  ],
                   "properties": {
                     "value": {
                       "type": "string",
@@ -5832,11 +6016,50 @@
                     "type": "object",
                     "description": "Show highlighted section and words matched on a query.",
                     "additionalProperties": false,
-                    "x-discriminator-fields": [
-                      "matchLevel",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Markup text with `facetQuery` matches highlighted.",
+                        "example": "<em>George</em> <em>Clo</em>oney"
+                      },
+                      "matchLevel": {
+                        "type": "string",
+                        "description": "Indicates how well the attribute matched the search query.",
+                        "enum": [
+                          "none",
+                          "partial",
+                          "full"
+                        ]
+                      },
+                      "matchedWords": {
+                        "type": "array",
+                        "description": "List of words from the query that matched the object.",
+                        "example": [
+                          "action"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "fullyHighlighted": {
+                        "type": "boolean",
+                        "description": "Whether the entire attribute value is highlighted."
+                      }
+                    },
+                    "required": [
                       "value",
+                      "matchLevel",
                       "matchedWords"
-                    ],
+                    ]
+                  }
+                },
+                {
+                  "type": "array",
+                  "description": "Show highlighted section and words matched on a query.",
+                  "items": {
+                    "type": "object",
+                    "description": "Show highlighted section and words matched on a query.",
+                    "additionalProperties": false,
                     "properties": {
                       "value": {
                         "type": "string",
@@ -5911,6 +6134,35 @@
                   "type": "object",
                   "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                   "additionalProperties": {
+                    "type": "object",
+                    "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                    "additionalProperties": false,
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Markup text with `facetQuery` matches highlighted.",
+                        "example": "<em>George</em> <em>Clo</em>oney"
+                      },
+                      "matchLevel": {
+                        "type": "string",
+                        "description": "Indicates how well the attribute matched the search query.",
+                        "enum": [
+                          "none",
+                          "partial",
+                          "full"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "matchLevel"
+                    ]
+                  }
+                },
+                {
+                  "type": "array",
+                  "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                  "items": {
                     "type": "object",
                     "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                     "additionalProperties": false,
@@ -6069,11 +6321,6 @@
                         "type": "object",
                         "description": "Show highlighted section and words matched on a query.",
                         "additionalProperties": false,
-                        "x-discriminator-fields": [
-                          "matchLevel",
-                          "value",
-                          "matchedWords"
-                        ],
                         "properties": {
                           "value": {
                             "type": "string",
@@ -6117,11 +6364,50 @@
                           "type": "object",
                           "description": "Show highlighted section and words matched on a query.",
                           "additionalProperties": false,
-                          "x-discriminator-fields": [
-                            "matchLevel",
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "description": "Markup text with `facetQuery` matches highlighted.",
+                              "example": "<em>George</em> <em>Clo</em>oney"
+                            },
+                            "matchLevel": {
+                              "type": "string",
+                              "description": "Indicates how well the attribute matched the search query.",
+                              "enum": [
+                                "none",
+                                "partial",
+                                "full"
+                              ]
+                            },
+                            "matchedWords": {
+                              "type": "array",
+                              "description": "List of words from the query that matched the object.",
+                              "example": [
+                                "action"
+                              ],
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "fullyHighlighted": {
+                              "type": "boolean",
+                              "description": "Whether the entire attribute value is highlighted."
+                            }
+                          },
+                          "required": [
                             "value",
+                            "matchLevel",
                             "matchedWords"
-                          ],
+                          ]
+                        }
+                      },
+                      {
+                        "type": "array",
+                        "description": "Show highlighted section and words matched on a query.",
+                        "items": {
+                          "type": "object",
+                          "description": "Show highlighted section and words matched on a query.",
+                          "additionalProperties": false,
                           "properties": {
                             "value": {
                               "type": "string",
@@ -6196,6 +6482,35 @@
                         "type": "object",
                         "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                         "additionalProperties": {
+                          "type": "object",
+                          "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "description": "Markup text with `facetQuery` matches highlighted.",
+                              "example": "<em>George</em> <em>Clo</em>oney"
+                            },
+                            "matchLevel": {
+                              "type": "string",
+                              "description": "Indicates how well the attribute matched the search query.",
+                              "enum": [
+                                "none",
+                                "partial",
+                                "full"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "value",
+                            "matchLevel"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "array",
+                        "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                        "items": {
                           "type": "object",
                           "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                           "additionalProperties": false,
@@ -6698,11 +7013,6 @@
                             "type": "object",
                             "description": "Show highlighted section and words matched on a query.",
                             "additionalProperties": false,
-                            "x-discriminator-fields": [
-                              "matchLevel",
-                              "value",
-                              "matchedWords"
-                            ],
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -6746,11 +7056,50 @@
                               "type": "object",
                               "description": "Show highlighted section and words matched on a query.",
                               "additionalProperties": false,
-                              "x-discriminator-fields": [
-                                "matchLevel",
+                              "properties": {
+                                "value": {
+                                  "type": "string",
+                                  "description": "Markup text with `facetQuery` matches highlighted.",
+                                  "example": "<em>George</em> <em>Clo</em>oney"
+                                },
+                                "matchLevel": {
+                                  "type": "string",
+                                  "description": "Indicates how well the attribute matched the search query.",
+                                  "enum": [
+                                    "none",
+                                    "partial",
+                                    "full"
+                                  ]
+                                },
+                                "matchedWords": {
+                                  "type": "array",
+                                  "description": "List of words from the query that matched the object.",
+                                  "example": [
+                                    "action"
+                                  ],
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "fullyHighlighted": {
+                                  "type": "boolean",
+                                  "description": "Whether the entire attribute value is highlighted."
+                                }
+                              },
+                              "required": [
                                 "value",
+                                "matchLevel",
                                 "matchedWords"
-                              ],
+                              ]
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "description": "Show highlighted section and words matched on a query.",
+                            "items": {
+                              "type": "object",
+                              "description": "Show highlighted section and words matched on a query.",
+                              "additionalProperties": false,
                               "properties": {
                                 "value": {
                                   "type": "string",
@@ -6825,6 +7174,35 @@
                             "type": "object",
                             "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                             "additionalProperties": {
+                              "type": "object",
+                              "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                              "additionalProperties": false,
+                              "properties": {
+                                "value": {
+                                  "type": "string",
+                                  "description": "Markup text with `facetQuery` matches highlighted.",
+                                  "example": "<em>George</em> <em>Clo</em>oney"
+                                },
+                                "matchLevel": {
+                                  "type": "string",
+                                  "description": "Indicates how well the attribute matched the search query.",
+                                  "enum": [
+                                    "none",
+                                    "partial",
+                                    "full"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "matchLevel"
+                              ]
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                            "items": {
                               "type": "object",
                               "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                               "additionalProperties": false,
@@ -12134,11 +12512,6 @@
                                 "type": "object",
                                 "description": "Show highlighted section and words matched on a query.",
                                 "additionalProperties": false,
-                                "x-discriminator-fields": [
-                                  "matchLevel",
-                                  "value",
-                                  "matchedWords"
-                                ],
                                 "properties": {
                                   "value": {
                                     "type": "string",
@@ -12182,11 +12555,50 @@
                                   "type": "object",
                                   "description": "Show highlighted section and words matched on a query.",
                                   "additionalProperties": false,
-                                  "x-discriminator-fields": [
-                                    "matchLevel",
+                                  "properties": {
+                                    "value": {
+                                      "type": "string",
+                                      "description": "Markup text with `facetQuery` matches highlighted.",
+                                      "example": "<em>George</em> <em>Clo</em>oney"
+                                    },
+                                    "matchLevel": {
+                                      "type": "string",
+                                      "description": "Indicates how well the attribute matched the search query.",
+                                      "enum": [
+                                        "none",
+                                        "partial",
+                                        "full"
+                                      ]
+                                    },
+                                    "matchedWords": {
+                                      "type": "array",
+                                      "description": "List of words from the query that matched the object.",
+                                      "example": [
+                                        "action"
+                                      ],
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "fullyHighlighted": {
+                                      "type": "boolean",
+                                      "description": "Whether the entire attribute value is highlighted."
+                                    }
+                                  },
+                                  "required": [
                                     "value",
+                                    "matchLevel",
                                     "matchedWords"
-                                  ],
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "array",
+                                "description": "Show highlighted section and words matched on a query.",
+                                "items": {
+                                  "type": "object",
+                                  "description": "Show highlighted section and words matched on a query.",
+                                  "additionalProperties": false,
                                   "properties": {
                                     "value": {
                                       "type": "string",
@@ -12261,6 +12673,35 @@
                                 "type": "object",
                                 "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                 "additionalProperties": {
+                                  "type": "object",
+                                  "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "value": {
+                                      "type": "string",
+                                      "description": "Markup text with `facetQuery` matches highlighted.",
+                                      "example": "<em>George</em> <em>Clo</em>oney"
+                                    },
+                                    "matchLevel": {
+                                      "type": "string",
+                                      "description": "Indicates how well the attribute matched the search query.",
+                                      "enum": [
+                                        "none",
+                                        "partial",
+                                        "full"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "value",
+                                    "matchLevel"
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "array",
+                                "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                "items": {
                                   "type": "object",
                                   "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                   "additionalProperties": false,
@@ -15088,11 +15529,6 @@
                             "type": "object",
                             "description": "Show highlighted section and words matched on a query.",
                             "additionalProperties": false,
-                            "x-discriminator-fields": [
-                              "matchLevel",
-                              "value",
-                              "matchedWords"
-                            ],
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -15136,11 +15572,50 @@
                               "type": "object",
                               "description": "Show highlighted section and words matched on a query.",
                               "additionalProperties": false,
-                              "x-discriminator-fields": [
-                                "matchLevel",
+                              "properties": {
+                                "value": {
+                                  "type": "string",
+                                  "description": "Markup text with `facetQuery` matches highlighted.",
+                                  "example": "<em>George</em> <em>Clo</em>oney"
+                                },
+                                "matchLevel": {
+                                  "type": "string",
+                                  "description": "Indicates how well the attribute matched the search query.",
+                                  "enum": [
+                                    "none",
+                                    "partial",
+                                    "full"
+                                  ]
+                                },
+                                "matchedWords": {
+                                  "type": "array",
+                                  "description": "List of words from the query that matched the object.",
+                                  "example": [
+                                    "action"
+                                  ],
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "fullyHighlighted": {
+                                  "type": "boolean",
+                                  "description": "Whether the entire attribute value is highlighted."
+                                }
+                              },
+                              "required": [
                                 "value",
+                                "matchLevel",
                                 "matchedWords"
-                              ],
+                              ]
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "description": "Show highlighted section and words matched on a query.",
+                            "items": {
+                              "type": "object",
+                              "description": "Show highlighted section and words matched on a query.",
+                              "additionalProperties": false,
                               "properties": {
                                 "value": {
                                   "type": "string",
@@ -15215,6 +15690,35 @@
                             "type": "object",
                             "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                             "additionalProperties": {
+                              "type": "object",
+                              "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                              "additionalProperties": false,
+                              "properties": {
+                                "value": {
+                                  "type": "string",
+                                  "description": "Markup text with `facetQuery` matches highlighted.",
+                                  "example": "<em>George</em> <em>Clo</em>oney"
+                                },
+                                "matchLevel": {
+                                  "type": "string",
+                                  "description": "Indicates how well the attribute matched the search query.",
+                                  "enum": [
+                                    "none",
+                                    "partial",
+                                    "full"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "matchLevel"
+                              ]
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                            "items": {
                               "type": "object",
                               "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                               "additionalProperties": false,
@@ -24746,11 +25250,6 @@
                                       "type": "object",
                                       "description": "Show highlighted section and words matched on a query.",
                                       "additionalProperties": false,
-                                      "x-discriminator-fields": [
-                                        "matchLevel",
-                                        "value",
-                                        "matchedWords"
-                                      ],
                                       "properties": {
                                         "value": {
                                           "type": "string",
@@ -24794,11 +25293,50 @@
                                         "type": "object",
                                         "description": "Show highlighted section and words matched on a query.",
                                         "additionalProperties": false,
-                                        "x-discriminator-fields": [
-                                          "matchLevel",
+                                        "properties": {
+                                          "value": {
+                                            "type": "string",
+                                            "description": "Markup text with `facetQuery` matches highlighted.",
+                                            "example": "<em>George</em> <em>Clo</em>oney"
+                                          },
+                                          "matchLevel": {
+                                            "type": "string",
+                                            "description": "Indicates how well the attribute matched the search query.",
+                                            "enum": [
+                                              "none",
+                                              "partial",
+                                              "full"
+                                            ]
+                                          },
+                                          "matchedWords": {
+                                            "type": "array",
+                                            "description": "List of words from the query that matched the object.",
+                                            "example": [
+                                              "action"
+                                            ],
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "fullyHighlighted": {
+                                            "type": "boolean",
+                                            "description": "Whether the entire attribute value is highlighted."
+                                          }
+                                        },
+                                        "required": [
                                           "value",
+                                          "matchLevel",
                                           "matchedWords"
-                                        ],
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "type": "array",
+                                      "description": "Show highlighted section and words matched on a query.",
+                                      "items": {
+                                        "type": "object",
+                                        "description": "Show highlighted section and words matched on a query.",
+                                        "additionalProperties": false,
                                         "properties": {
                                           "value": {
                                             "type": "string",
@@ -24873,6 +25411,35 @@
                                       "type": "object",
                                       "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                       "additionalProperties": {
+                                        "type": "object",
+                                        "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "type": "string",
+                                            "description": "Markup text with `facetQuery` matches highlighted.",
+                                            "example": "<em>George</em> <em>Clo</em>oney"
+                                          },
+                                          "matchLevel": {
+                                            "type": "string",
+                                            "description": "Indicates how well the attribute matched the search query.",
+                                            "enum": [
+                                              "none",
+                                              "partial",
+                                              "full"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "value",
+                                          "matchLevel"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "type": "array",
+                                      "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                      "items": {
                                         "type": "object",
                                         "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                         "additionalProperties": false,
@@ -27840,11 +28407,6 @@
                                                 "type": "object",
                                                 "description": "Show highlighted section and words matched on a query.",
                                                 "additionalProperties": false,
-                                                "x-discriminator-fields": [
-                                                  "matchLevel",
-                                                  "value",
-                                                  "matchedWords"
-                                                ],
                                                 "properties": {
                                                   "value": {
                                                     "type": "string",
@@ -27888,11 +28450,50 @@
                                                   "type": "object",
                                                   "description": "Show highlighted section and words matched on a query.",
                                                   "additionalProperties": false,
-                                                  "x-discriminator-fields": [
-                                                    "matchLevel",
+                                                  "properties": {
+                                                    "value": {
+                                                      "type": "string",
+                                                      "description": "Markup text with `facetQuery` matches highlighted.",
+                                                      "example": "<em>George</em> <em>Clo</em>oney"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string",
+                                                      "description": "Indicates how well the attribute matched the search query.",
+                                                      "enum": [
+                                                        "none",
+                                                        "partial",
+                                                        "full"
+                                                      ]
+                                                    },
+                                                    "matchedWords": {
+                                                      "type": "array",
+                                                      "description": "List of words from the query that matched the object.",
+                                                      "example": [
+                                                        "action"
+                                                      ],
+                                                      "items": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "fullyHighlighted": {
+                                                      "type": "boolean",
+                                                      "description": "Whether the entire attribute value is highlighted."
+                                                    }
+                                                  },
+                                                  "required": [
                                                     "value",
+                                                    "matchLevel",
                                                     "matchedWords"
-                                                  ],
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "type": "array",
+                                                "description": "Show highlighted section and words matched on a query.",
+                                                "items": {
+                                                  "type": "object",
+                                                  "description": "Show highlighted section and words matched on a query.",
+                                                  "additionalProperties": false,
                                                   "properties": {
                                                     "value": {
                                                       "type": "string",
@@ -27967,6 +28568,35 @@
                                                 "type": "object",
                                                 "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                                 "additionalProperties": {
+                                                  "type": "object",
+                                                  "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                                  "additionalProperties": false,
+                                                  "properties": {
+                                                    "value": {
+                                                      "type": "string",
+                                                      "description": "Markup text with `facetQuery` matches highlighted.",
+                                                      "example": "<em>George</em> <em>Clo</em>oney"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string",
+                                                      "description": "Indicates how well the attribute matched the search query.",
+                                                      "enum": [
+                                                        "none",
+                                                        "partial",
+                                                        "full"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "value",
+                                                    "matchLevel"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "type": "array",
+                                                "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                                "items": {
                                                   "type": "object",
                                                   "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                                   "additionalProperties": false,
@@ -29984,11 +30614,6 @@
                                       "type": "object",
                                       "description": "Show highlighted section and words matched on a query.",
                                       "additionalProperties": false,
-                                      "x-discriminator-fields": [
-                                        "matchLevel",
-                                        "value",
-                                        "matchedWords"
-                                      ],
                                       "properties": {
                                         "value": {
                                           "type": "string",
@@ -30032,11 +30657,50 @@
                                         "type": "object",
                                         "description": "Show highlighted section and words matched on a query.",
                                         "additionalProperties": false,
-                                        "x-discriminator-fields": [
-                                          "matchLevel",
+                                        "properties": {
+                                          "value": {
+                                            "type": "string",
+                                            "description": "Markup text with `facetQuery` matches highlighted.",
+                                            "example": "<em>George</em> <em>Clo</em>oney"
+                                          },
+                                          "matchLevel": {
+                                            "type": "string",
+                                            "description": "Indicates how well the attribute matched the search query.",
+                                            "enum": [
+                                              "none",
+                                              "partial",
+                                              "full"
+                                            ]
+                                          },
+                                          "matchedWords": {
+                                            "type": "array",
+                                            "description": "List of words from the query that matched the object.",
+                                            "example": [
+                                              "action"
+                                            ],
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "fullyHighlighted": {
+                                            "type": "boolean",
+                                            "description": "Whether the entire attribute value is highlighted."
+                                          }
+                                        },
+                                        "required": [
                                           "value",
+                                          "matchLevel",
                                           "matchedWords"
-                                        ],
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "type": "array",
+                                      "description": "Show highlighted section and words matched on a query.",
+                                      "items": {
+                                        "type": "object",
+                                        "description": "Show highlighted section and words matched on a query.",
+                                        "additionalProperties": false,
                                         "properties": {
                                           "value": {
                                             "type": "string",
@@ -30111,6 +30775,35 @@
                                       "type": "object",
                                       "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                       "additionalProperties": {
+                                        "type": "object",
+                                        "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "type": "string",
+                                            "description": "Markup text with `facetQuery` matches highlighted.",
+                                            "example": "<em>George</em> <em>Clo</em>oney"
+                                          },
+                                          "matchLevel": {
+                                            "type": "string",
+                                            "description": "Indicates how well the attribute matched the search query.",
+                                            "enum": [
+                                              "none",
+                                              "partial",
+                                              "full"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "value",
+                                          "matchLevel"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "type": "array",
+                                      "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
+                                      "items": {
                                         "type": "object",
                                         "description": "Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.",
                                         "additionalProperties": false,
@@ -45156,11 +45849,6 @@
                                     "type": "object",
                                     "description": "Show highlighted section and words matched on a query.",
                                     "additionalProperties": false,
-                                    "x-discriminator-fields": [
-                                      "matchLevel",
-                                      "value",
-                                      "matchedWords"
-                                    ],
                                     "properties": {
                                       "value": {
                                         "type": "string",
@@ -45204,11 +45892,50 @@
                                       "type": "object",
                                       "description": "Show highlighted section and words matched on a query.",
                                       "additionalProperties": false,
-                                      "x-discriminator-fields": [
-                                        "matchLevel",
+                                      "properties": {
+                                        "value": {
+                                          "type": "string",
+                                          "description": "Markup text with `facetQuery` matches highlighted.",
+                                          "example": "<em>George</em> <em>Clo</em>oney"
+                                        },
+                                        "matchLevel": {
+                                          "type": "string",
+                                          "description": "Indicates how well the attribute matched the search query.",
+                                          "enum": [
+                                            "none",
+                                            "partial",
+                                            "full"
+                                          ]
+                                        },
+                                        "matchedWords": {
+                                          "type": "array",
+                                          "description": "List of words from the query that matched the object.",
+                                          "example": [
+                                            "action"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "fullyHighlighted": {
+                                          "type": "boolean",
+                                          "description": "Whether the entire attribute value is highlighted."
+                                        }
+                                      },
+                                      "required": [
                                         "value",
+                                        "matchLevel",
                                         "matchedWords"
-                                      ],
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "description": "Show highlighted section and words matched on a query.",
+                                    "items": {
+                                      "type": "object",
+                                      "description": "Show highlighted section and words matched on a query.",
+                                      "additionalProperties": false,
                                       "properties": {
                                         "value": {
                                           "type": "string",
@@ -45254,11 +45981,6 @@
                                     "type": "object",
                                     "description": "Show highlighted section and words matched on a query.",
                                     "additionalProperties": false,
-                                    "x-discriminator-fields": [
-                                      "matchLevel",
-                                      "value",
-                                      "matchedWords"
-                                    ],
                                     "properties": {
                                       "value": {
                                         "type": "string",
@@ -45302,11 +46024,50 @@
                                       "type": "object",
                                       "description": "Show highlighted section and words matched on a query.",
                                       "additionalProperties": false,
-                                      "x-discriminator-fields": [
-                                        "matchLevel",
+                                      "properties": {
+                                        "value": {
+                                          "type": "string",
+                                          "description": "Markup text with `facetQuery` matches highlighted.",
+                                          "example": "<em>George</em> <em>Clo</em>oney"
+                                        },
+                                        "matchLevel": {
+                                          "type": "string",
+                                          "description": "Indicates how well the attribute matched the search query.",
+                                          "enum": [
+                                            "none",
+                                            "partial",
+                                            "full"
+                                          ]
+                                        },
+                                        "matchedWords": {
+                                          "type": "array",
+                                          "description": "List of words from the query that matched the object.",
+                                          "example": [
+                                            "action"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "fullyHighlighted": {
+                                          "type": "boolean",
+                                          "description": "Whether the entire attribute value is highlighted."
+                                        }
+                                      },
+                                      "required": [
                                         "value",
+                                        "matchLevel",
                                         "matchedWords"
-                                      ],
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "description": "Show highlighted section and words matched on a query.",
+                                    "items": {
+                                      "type": "object",
+                                      "description": "Show highlighted section and words matched on a query.",
+                                      "additionalProperties": false,
                                       "properties": {
                                         "value": {
                                           "type": "string",
