@@ -472,7 +472,7 @@ public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsyn
     final SearchMethodParams params = new SearchMethodParams()
             .setRequests(searchQueries)
             .setStrategy(strategy);
-    return searchAsync(params, Object.class)
+    return searchAsync(params, Hit.class)
             .thenApply(searchResponses -> searchResponses
                     .getResults()
                     .stream()
