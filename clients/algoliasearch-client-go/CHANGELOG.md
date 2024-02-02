@@ -1,4 +1,4 @@
-## [4.0.0-alpha.45](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.44...4.0.0-alpha.45)
+## [4.0.0-beta.0](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-alpha.44...4.0.0-beta.0)
 
 - [366c9949d](https://github.com/algolia/api-clients-automation/commit/366c9949d) fix(go): support http ([#2639](https://github.com/algolia/api-clients-automation/pull/2639)) by [@millotp](https://github.com/millotp/)
 - [b3d61128a](https://github.com/algolia/api-clients-automation/commit/b3d61128a) docs(clients): add ACL section to code doc ([#2576](https://github.com/algolia/api-clients-automation/pull/2576)) by [@millotp](https://github.com/millotp/)
