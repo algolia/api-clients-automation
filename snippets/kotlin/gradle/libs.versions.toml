@@ -2,7 +2,7 @@
 kotlin = "1.9.22"
 coroutines = "1.7.3"
 serialization = "1.5.0"
-ktor = "2.3.7"
+ktor = "2.3.8"
 
 [libraries]
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.2" }
