@@ -8,7 +8,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Algolia.Search" Version="6.16.0" />
+      <PackageReference Include="WireMock.Net" Version="1.5.47" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Data\searchResult.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Tests\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\..\RiderProjects\algoliasearch-client-csharp\src\Algolia.Search\Algolia.Search.csproj" />
     </ItemGroup>
 
 </Project>

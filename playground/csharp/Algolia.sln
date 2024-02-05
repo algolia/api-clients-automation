@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performaces", "Performaces\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceLegacy", "PerformanceLegacy\PerformanceLegacy.csproj", "{67814440-28A1-4344-873A-2E1F6F2FAAAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\..\..\RiderProjects\algoliasearch-client-csharp\src\Algolia.Search\Algolia.Search.csproj", "{FA9B6991-346D-4C75-A63C-01CD6B207A47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
