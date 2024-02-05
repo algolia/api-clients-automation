@@ -30,7 +30,7 @@ function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined
       }
 
       // check that the run was created less than 10 minutes ago
-      if (Date.now() - Date.parse(ciRun.data.workflow_runs[0].created_at) > 10 * 60 * 1000) {
+      if (Date.now() - Date.parse(ciRun.data.workflow_runs[0].created_at) > 15 * 60 * 1000) {
         return null;
       }
 
@@ -79,7 +79,8 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
   const failures: Language[] = [];
 
   const start = Date.now();
-  while (Date.now() - start < 1000 * 60 * 5) {
+  // kotlin release can take a long time
+  while (Date.now() - start < 1000 * 60 * 10) {
     const runs = await getAllRuns(languages, workflowIDs);
     for (let i = 0; i < languages.length; i++) {
       if (runs[i] === null) {

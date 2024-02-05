@@ -39,7 +39,7 @@ async function pushToNewWorld(): Promise<void> {
   const tempGitDir = resolve(process.env.RUNNER_TEMP!, repository);
   await fsp.rm(tempGitDir, { force: true, recursive: true });
   await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
-  await run(`git checkout -B ${targetBranch}`);
+  await run(`git checkout -B ${targetBranch}`, { cwd: tempGitDir });
 
   const dest = toAbsolutePath(`${tempGitDir}/apps/docs/public/specs`);
   await emptyDirExceptForDotGit(dest);
