@@ -99,7 +99,7 @@ end
 def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new(hits_per_page: 1000, page: 0), request_options = {}, &block)
   rules = []
   loop do
-    res = searchRules(index_name, search_rules_params, request_options)
+    res = search_rules(index_name, search_rules_params, request_options)
     if block_given?
       res.hits.each do |rule|
         block.call(rule)
@@ -111,7 +111,7 @@ def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new
     break if res.nb_hits < search_rules_params.hits_per_page
   end
 
-  hits unless block_given?
+  rules unless block_given?
 end
 
 # Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating synonyms of an index.
@@ -123,7 +123,7 @@ end
 def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsParams.new(hits_per_page: 1000, page: 0), request_options = {}, &block)
   synonyms = []
   loop do
-    res = searchSynonyms(index_name, search_synonyms_params, request_options)
+    res = search_synonyms(index_name, search_synonyms_params, request_options)
     if block_given?
       res.hits.each do |synonym|
         block.call(synonym)
@@ -135,5 +135,5 @@ def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsP
     break if res.nb_hits < search_synonyms_params.hits_per_page
   end
 
-  hits unless block_given?
+  synonyms unless block_given?
 end
