@@ -113,3 +113,27 @@ def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new
 
   hits unless block_given?
 end
+
+# Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating synonyms of an index.
+#
+# @param index_name [String] the `index_name` to browse synonyms from. (required)
+# @param search_synonyms_params [SearchSynonymsParams] the parameters to send along with the query, they will be forwarded to the `searchSynonyms` method.
+# @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method.
+# @param block [Proc] the block to execute on each synonym of the index.
+def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsParams.new(hits_per_page: 1000, page: 0), request_options = {}, &block)
+  synonyms = []
+  loop do
+    res = searchSynonyms(index_name, search_synonyms_params, request_options)
+    if block_given?
+      res.hits.each do |synonym|
+        block.call(synonym)
+      end
+    else
+      synonyms.concat(res.hits)
+    end
+    search_synonyms_params.page += 1
+    break if res.nb_hits < search_synonyms_params.hits_per_page
+  end
+
+  hits unless block_given?
+end
