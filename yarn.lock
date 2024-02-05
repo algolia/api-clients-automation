@@ -4034,10 +4034,11 @@ __metadata:
   linkType: hard
 
 "@redocly/openapi-core@npm:^1.0.0-beta.104":
-  version: 1.8.2
-  resolution: "@redocly/openapi-core@npm:1.8.2"
+  version: 1.6.0
+  resolution: "@redocly/openapi-core@npm:1.6.0"
   dependencies:
     "@redocly/ajv": "npm:^8.11.0"
+    "@types/node": "npm:^14.11.8"
     colorette: "npm:^1.2.0"
     js-levenshtein: "npm:^1.1.6"
     js-yaml: "npm:^4.1.0"
@@ -4046,7 +4047,7 @@ __metadata:
     node-fetch: "npm:^2.6.1"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 77560cd9e95ed364b7121088259b0495f87aceee9a8ec61382ef80329137f474af580468dabb6f345fa3418dcc0a50116fe74038f16ecd855253dbe2c1e2e42e
+  checksum: 6e023957c7668602ec09c0917ee2b9c663805b461ba7b71757dccb663e815b8cded6881c12eb451def48ea6da266cb8a7891d69ca2217ad6baccd1b0c6a2625f
   languageName: node
   linkType: hard
 
@@ -7355,11 +7356,11 @@ __metadata:
   linkType: hard
 
 "fastq@npm:^1.15.0, fastq@npm:^1.6.0":
-  version: 1.17.0
-  resolution: "fastq@npm:1.17.0"
+  version: 1.17.1
+  resolution: "fastq@npm:1.17.1"
   dependencies:
     reusify: "npm:^1.0.4"
-  checksum: f81e9fdb1395806f49f0caa30a06978d4949fd723709e1b564c7d0f8e6d0c7681d7c632540d56e81bc22321f7f51160b47c9bc5814c058102a65dd345b5d9f0a
+  checksum: a443180068b527dd7b3a63dc7f2a47ceca2f3e97b9c00a1efe5538757e6cc4056a3526df94308075d7727561baf09ebaa5b67da8dcbddb913a021c5ae69d1f69
   languageName: node
   linkType: hard
 
@@ -12819,11 +12820,11 @@ __metadata:
   linkType: hard
 
 "ts-api-utils@npm:^1.0.1":
-  version: 1.0.3
-  resolution: "ts-api-utils@npm:1.0.3"
+  version: 1.1.0
+  resolution: "ts-api-utils@npm:1.1.0"
   peerDependencies:
     typescript: ">=4.2.0"
-  checksum: 1350a5110eb1e534e9a6178f4081fb8a4fcc439749e19f4ad699baec9090fcb90fe532d5e191d91a062dc6e454a14a8d7eb2ad202f57135a30c4a44a3024f039
+  checksum: fe48e52516cb9c9c0fd2d40dd9c41b4e05fc8542087ab56b425ccd2720e09cd56cc0f5c64fdc14cc75d5d16c254a7fb558c0a10ccf50a6c16e90a8e3e74c597b
   languageName: node
   linkType: hard
 
