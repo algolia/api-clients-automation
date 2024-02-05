@@ -1830,6 +1830,47 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # single search retrieve snippets
+  def test_search_single_index3
+    req = @client.search_single_index_with_http_info(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/cts_e2e_browse/query', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}'), JSON.parse(req.body)
+    )
+
+    res = @e2e_client.search_single_index_with_http_info(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.search_single_index(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+    expected_body = JSON.parse('{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # searchSynonyms with minimal parameters
   def test_search_synonyms0
     req = @client.search_synonyms_with_http_info("indexName")

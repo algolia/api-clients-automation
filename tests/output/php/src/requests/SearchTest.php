@@ -2858,6 +2858,51 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for SearchSingleIndex
+     * single search retrieve snippets.
+     */
+    public function testSearchSingleIndex3()
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'cts_e2e_browse',
+            ['query' => 'batman mask of the phantasm',
+                'attributesToRetrieve' => [
+                    '*',
+                ],
+                'attributesToSnippet' => [
+                    '*:20',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_browse/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}'),
+            ],
+        ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->searchSingleIndex(
+            'cts_e2e_browse',
+            ['query' => 'batman mask of the phantasm',
+                'attributesToRetrieve' => [
+                    '*',
+                ],
+                'attributesToSnippet' => [
+                    '*:20',
+                ],
+            ],
+        );
+
+        $expected = json_decode('{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
+    /**
      * Test case for SearchSynonyms
      * searchSynonyms with minimal parameters.
      */

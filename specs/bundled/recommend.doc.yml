@@ -1539,10 +1539,6 @@ components:
       type: object
       description: Show highlighted section and words matched on a query.
       additionalProperties: false
-      x-discriminator-fields:
-        - matchLevel
-        - value
-        - matchedWords
       properties:
         value:
           $ref: '#/components/schemas/highlightedValue'
@@ -1567,10 +1563,16 @@ components:
       description: Show highlighted section and words matched on a query.
       additionalProperties:
         $ref: '#/components/schemas/highlightResultOption'
+    highlightResultOptionArray:
+      type: array
+      description: Show highlighted section and words matched on a query.
+      items:
+        $ref: '#/components/schemas/highlightResultOption'
     highlightResult:
       oneOf:
         - $ref: '#/components/schemas/highlightResultOption'
         - $ref: '#/components/schemas/highlightResultOptionMap'
+        - $ref: '#/components/schemas/highlightResultOptionArray'
     highlightResultMap:
       type: object
       description: Show highlighted section and words matched on a query.
@@ -1597,10 +1599,18 @@ components:
         when attributesToSnippet is non-empty.
       additionalProperties:
         $ref: '#/components/schemas/snippetResultOption'
+    snippetResultOptionArray:
+      type: array
+      description: >-
+        Snippeted attributes show parts of the matched attributes. Only returned
+        when attributesToSnippet is non-empty.
+      items:
+        $ref: '#/components/schemas/snippetResultOption'
     snippetResult:
       oneOf:
         - $ref: '#/components/schemas/snippetResultOption'
         - $ref: '#/components/schemas/snippetResultOptionMap'
+        - $ref: '#/components/schemas/snippetResultOptionArray'
     snippetResultMap:
       type: object
       description: >-
