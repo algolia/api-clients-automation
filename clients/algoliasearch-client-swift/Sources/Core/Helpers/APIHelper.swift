@@ -117,13 +117,18 @@ public enum APIHelper {
             result, item in
             if let collection = item.value as? [Any?] {
                 let collectionValues: [String] = collection.compactMap { value in
-                    convertAnyToString(value)
+                    convertAnyToString(value)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 }
                 result.append(
                     URLQueryItem(name: item.key, value: collectionValues.joined(separator: ","))
                 )
             } else if let value = item.value {
-                result.append(URLQueryItem(name: item.key, value: convertAnyToString(value)))
+                result.append(
+                    URLQueryItem(
+                        name: item.key,
+                        value: convertAnyToString(value)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                    )
+                )
             }
         }
 
