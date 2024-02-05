@@ -114,7 +114,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.browse("cts_e2e_browse", Object.class);
+    client.browse("cts_e2e_browse", Hit.class);
   }
 
   // Snippet for the clearObjects method.
@@ -341,7 +341,7 @@ class SnippetSearchClient {
             new GetObjectsRequest().setAttributesToRetrieve(List.of("attr1", "attr2")).setObjectID("uniqueID").setIndexName("theIndexName")
           )
         ),
-      Object.class
+      Hit.class
     );
   }
 
@@ -662,10 +662,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.search(
-      new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
-      Object.class
-    );
+    client.search(new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))), Hit.class);
   }
 
   // Snippet for the searchDictionaryEntries method.
@@ -709,7 +706,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("indexName", Object.class);
+    client.searchSingleIndex("indexName", Hit.class);
   }
 
   // Snippet for the searchSynonyms method.

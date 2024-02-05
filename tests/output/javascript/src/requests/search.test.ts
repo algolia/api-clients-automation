@@ -2165,6 +2165,61 @@ describe('searchSingleIndex', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('single search retrieve snippets', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'cts_e2e_browse',
+      searchParams: {
+        query: 'batman mask of the phantasm',
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*:20'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'batman mask of the phantasm',
+      attributesToRetrieve: ['*'],
+      attributesToSnippet: ['*:20'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.searchSingleIndex({
+      indexName: 'cts_e2e_browse',
+      searchParams: {
+        query: 'batman mask of the phantasm',
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*:20'],
+      },
+    });
+
+    const expectedBody = {
+      nbHits: 1,
+      hits: [
+        {
+          _snippetResult: {
+            genres: [
+              { value: 'Animated', matchLevel: 'none' },
+              { value: 'Superhero', matchLevel: 'none' },
+              { value: 'Romance', matchLevel: 'none' },
+            ],
+            year: { value: '1993', matchLevel: 'none' },
+          },
+          _highlightResult: {
+            genres: [
+              { value: 'Animated', matchLevel: 'none', matchedWords: [] },
+              { value: 'Superhero', matchLevel: 'none', matchedWords: [] },
+              { value: 'Romance', matchLevel: 'none', matchedWords: [] },
+            ],
+            year: { value: '1993', matchLevel: 'none', matchedWords: [] },
+          },
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
 });
 
 describe('searchSynonyms', () => {

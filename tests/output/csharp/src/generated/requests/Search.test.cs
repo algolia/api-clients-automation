@@ -2622,6 +2622,59 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "single search retrieve snippets")]
+  public async Task SearchSingleIndexTest3()
+  {
+    await _client.SearchSingleIndexAsync<Object>(
+      "cts_e2e_browse",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "batman mask of the phantasm",
+          AttributesToRetrieve = new List<string> { "*" },
+          AttributesToSnippet = new List<string> { "*:20" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_browse/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"batman mask of the phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SearchSingleIndexAsync<Object>(
+        "cts_e2e_browse",
+        new SearchParams(
+          new SearchParamsObject
+          {
+            Query = "batman mask of the phantasm",
+            AttributesToRetrieve = new List<string> { "*" },
+            AttributesToSnippet = new List<string> { "*:20" },
+          }
+        )
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}",
+        JsonConvert.SerializeObject(resp),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
   public async Task SearchSynonymsTest0()
   {

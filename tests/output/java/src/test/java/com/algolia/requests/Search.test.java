@@ -409,14 +409,14 @@ class SearchClientRequestsTests {
   @DisplayName("browse with minimal parameters")
   void browseTest0() {
     assertDoesNotThrow(() -> {
-      client.browse("cts_e2e_browse", Object.class);
+      client.browse("cts_e2e_browse", Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/cts_e2e_browse/browse", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
 
-    var res = clientE2E.browse("cts_e2e_browse", Object.class);
+    var res = clientE2E.browse("cts_e2e_browse", Hit.class);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
@@ -433,7 +433,7 @@ class SearchClientRequestsTests {
       client.browse(
         "indexName",
         new BrowseParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("tags:algolia")))),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -448,7 +448,7 @@ class SearchClientRequestsTests {
   @DisplayName("browse allow a cursor in parameters")
   void browseTest2() {
     assertDoesNotThrow(() -> {
-      client.browse("indexName", new BrowseParamsObject().setCursor("test"), Object.class);
+      client.browse("indexName", new BrowseParamsObject().setCursor("test"), Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/browse", req.path);
@@ -1158,7 +1158,7 @@ class SearchClientRequestsTests {
                 .setIndexName("theIndexName")
             )
           ),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1842,7 +1842,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1854,7 +1854,7 @@ class SearchClientRequestsTests {
 
     var res = clientE2E.search(
       new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
-      Object.class
+      Hit.class
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -1877,7 +1877,7 @@ class SearchClientRequestsTests {
             )
           )
           .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1897,7 +1897,7 @@ class SearchClientRequestsTests {
           List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.fromValue("facet")).setFacet("editor"))
         )
         .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
-      Object.class
+      Hit.class
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -1923,7 +1923,7 @@ class SearchClientRequestsTests {
                 .setType(SearchTypeDefault.fromValue("default"))
             )
           ),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1956,7 +1956,7 @@ class SearchClientRequestsTests {
             )
           )
           .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1985,7 +1985,7 @@ class SearchClientRequestsTests {
             )
           )
           .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2023,7 +2023,7 @@ class SearchClientRequestsTests {
             )
           )
           .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2074,7 +2074,7 @@ class SearchClientRequestsTests {
                 )
             )
           ),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2186,7 +2186,7 @@ class SearchClientRequestsTests {
                 .setUserToken("")
             )
           ),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2280,7 +2280,7 @@ class SearchClientRequestsTests {
   @DisplayName("search with minimal parameters")
   void searchSingleIndexTest0() {
     assertDoesNotThrow(() -> {
-      client.searchSingleIndex("indexName", Object.class);
+      client.searchSingleIndex("indexName", Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
@@ -2292,14 +2292,14 @@ class SearchClientRequestsTests {
   @DisplayName("search with special characters in indexName")
   void searchSingleIndexTest1() {
     assertDoesNotThrow(() -> {
-      client.searchSingleIndex("cts_e2e_space in index", Object.class);
+      client.searchSingleIndex("cts_e2e_space in index", Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/cts_e2e_space%20in%20index/query", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
 
-    var res = clientE2E.searchSingleIndex("cts_e2e_space in index", Object.class);
+    var res = clientE2E.searchSingleIndex("cts_e2e_space in index", Hit.class);
   }
 
   @Test
@@ -2309,7 +2309,7 @@ class SearchClientRequestsTests {
       client.searchSingleIndex(
         "indexName",
         new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("tags:algolia")))),
-        Object.class
+        Hit.class
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2317,6 +2317,47 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("single search retrieve snippets")
+  void searchSingleIndexTest3() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "cts_e2e_browse",
+        new SearchParamsObject()
+          .setQuery("batman mask of the phantasm")
+          .setAttributesToRetrieve(List.of("*"))
+          .setAttributesToSnippet(List.of("*:20")),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_browse/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"query\":\"batman mask of the" + " phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    var res = clientE2E.searchSingleIndex(
+      "cts_e2e_browse",
+      new SearchParamsObject()
+        .setQuery("batman mask of the phantasm")
+        .setAttributesToRetrieve(List.of("*"))
+        .setAttributesToSnippet(List.of("*:20")),
+      Hit.class
+    );
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
     );
   }
 

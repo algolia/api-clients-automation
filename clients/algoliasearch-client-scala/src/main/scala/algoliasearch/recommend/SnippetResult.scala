@@ -24,9 +24,13 @@ trait SnippetResultTrait extends SnippetResult
 object SnippetResult {
 
   case class MapOfStringSnippetResultOption(value: Map[String, SnippetResultOption]) extends SnippetResult
+  case class SeqOfSnippetResultOption(value: Seq[SnippetResultOption]) extends SnippetResult
 
   def apply(value: Map[String, SnippetResultOption]): SnippetResult = {
     SnippetResult.MapOfStringSnippetResultOption(value)
+  }
+  def apply(value: Seq[SnippetResultOption]): SnippetResult = {
+    SnippetResult.SeqOfSnippetResultOption(value)
   }
 }
 
@@ -37,13 +41,16 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
       json match {
         case value: JObject => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
-        case _              => throw new MappingException("Can't convert " + json + " to SnippetResult")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          SnippetResult.SeqOfSnippetResultOption(value.map(_.extract))
+        case _ => throw new MappingException("Can't convert " + json + " to SnippetResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SnippetResult =>
     value match {
-      case value: SnippetResultOption => Extraction.decompose(value)(format - this)
+      case value: SnippetResultOption                    => Extraction.decompose(value)(format - this)
+      case SnippetResult.SeqOfSnippetResultOption(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

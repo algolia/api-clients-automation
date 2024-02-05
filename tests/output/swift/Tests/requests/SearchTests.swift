@@ -2476,6 +2476,32 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /**
+     single search retrieve snippets
+     */
+    func testSearchSingleIndexTest3() async throws {
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_browse", searchParams: SearchParams.searchParamsObject(SearchParamsObject(query: "batman mask of the phantasm", attributesToRetrieve: ["*"], attributesToSnippet: ["*:20"])), requestOptions: nil)
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let comparableData = "{\"query\":\"batman mask of the phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryItems)
+    }
+
+    /**
      searchSynonyms with minimal parameters
      */
     func testSearchSynonymsTest0() async throws {

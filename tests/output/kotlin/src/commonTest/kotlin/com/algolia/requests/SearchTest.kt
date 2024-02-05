@@ -2439,6 +2439,27 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `single search retrieve snippets`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "cts_e2e_browse",
+          searchParams = SearchParamsObject(
+            query = "batman mask of the phantasm",
+            attributesToRetrieve = listOf("*"),
+            attributesToSnippet = listOf("*:20"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_browse/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""", it.body)
+      },
+    )
+  }
+
   // searchSynonyms
 
   @Test

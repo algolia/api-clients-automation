@@ -302,7 +302,7 @@ func (o {{classname}}) MarshalJSON() ([]byte, error) {
 }
 
 {{#isAdditionalPropertiesTrue}}
-func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
+func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 {{#parent}}
 {{^isMap}}
 	type {{classname}}WithoutEmbeddedStruct struct {
@@ -377,9 +377,12 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 {{#isMap}}
 	var{{{classname}}} := _{{{classname}}}{}
 
-	if err = json.Unmarshal(bytes, &var{{{classname}}}); err == nil {
-		*o = {{{classname}}}(var{{{classname}}})
-	}
+  err := json.Unmarshal(bytes, &var{{{classname}}})
+  if err != nil {
+    return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
+  }
+
+	*o = {{{classname}}}(var{{{classname}}})
 
 	additionalProperties := make(map[string]any)
 
@@ -399,9 +402,12 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 {{^parent}}
 	var{{{classname}}} := _{{{classname}}}{}
 
-	if err = json.Unmarshal(bytes, &var{{{classname}}}); err == nil {
-		*o = {{{classname}}}(var{{{classname}}})
-	}
+  err := json.Unmarshal(bytes, &var{{{classname}}})
+  if err != nil {
+    return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
+  }
+
+	*o = {{{classname}}}(var{{{classname}}})
 
 	additionalProperties := make(map[string]any)
 
@@ -421,7 +427,7 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
 
 {{/isAdditionalPropertiesTrue}}
 {{#isArray}}
-func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) (err error) {
+func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 	return json.Unmarshal(bytes, &o.Items)
 }
 

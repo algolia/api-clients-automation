@@ -143,6 +143,7 @@ export function toAbsolutePath(ppath: string): string {
 export async function gitCommit({
   message,
   coAuthors,
+  // the cwd must be absolute !
   cwd = ROOT_DIR,
 }: {
   message: string;

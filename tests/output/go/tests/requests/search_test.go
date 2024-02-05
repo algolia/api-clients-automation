@@ -1859,6 +1859,49 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
 	})
+	t.Run("single search retrieve snippets", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"cts_e2e_browse",
+		).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("batman mask of the phantasm").SetAttributesToRetrieve(
+				[]string{"*"}).SetAttributesToSnippet(
+				[]string{"*:20"}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/cts_e2e_browse/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"cts_e2e_browse",
+		).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("batman mask of the phantasm").SetAttributesToRetrieve(
+				[]string{"*"}).SetAttributesToSnippet(
+				[]string{"*:20"}))))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+	})
 }
 
 func TestSearch_SearchSynonyms(t *testing.T) {
