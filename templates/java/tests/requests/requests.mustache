@@ -62,7 +62,7 @@ class {{client}}RequestsTests {
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+            client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
               {{#requestOptions.queryParameters.parametersWithDataType}}
                 .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
               {{/requestOptions.queryParameters.parametersWithDataType}}
@@ -116,7 +116,7 @@ class {{client}}RequestsTests {
         {{/request}}
 
         {{#response}}
-        var res = clientE2E.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Object.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+        var res = clientE2E.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
               {{#requestOptions.queryParameters.parametersWithDataType}}
                 .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
               {{/requestOptions.queryParameters.parametersWithDataType}}

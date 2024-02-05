@@ -384,7 +384,7 @@ jobs:
 
   codegen:
     runs-on: ubuntu-22.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     needs:
       - setup
       - client_gen

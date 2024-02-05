@@ -2886,6 +2886,36 @@ void main() {
     ),
   );
 
+  // searchSingleIndex
+  test(
+    'single search retrieve snippets',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "cts_e2e_browse",
+        searchParams: SearchParamsObject(
+          query: "batman mask of the phantasm",
+          attributesToRetrieve: [
+            "*",
+          ],
+          attributesToSnippet: [
+            "*:20",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/cts_e2e_browse/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""");
+      },
+    ),
+  );
+
   // searchSynonyms
   test(
     'searchSynonyms with minimal parameters',

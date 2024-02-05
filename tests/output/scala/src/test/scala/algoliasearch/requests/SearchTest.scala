@@ -2447,6 +2447,30 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("single search retrieve snippets") {
+    val (client, echo) = testClient()
+    val future = client.searchSingleIndex(
+      indexName = "cts_e2e_browse",
+      searchParams = Some(
+        SearchParamsObject(
+          query = Some("batman mask of the phantasm"),
+          attributesToRetrieve = Some(Seq("*")),
+          attributesToSnippet = Some(Seq("*:20"))
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_browse/query")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("searchSynonyms with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.searchSynonyms(
