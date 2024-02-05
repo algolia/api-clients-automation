@@ -123,13 +123,44 @@ func getUserAgent() string {
 }
 
 // parameterToString convert any parameters to string.
-func parameterToString(obj any) string {
+func parameterToString(obj any, isQueryParam bool) string {
 	if reflect.TypeOf(obj).Kind() == reflect.Slice {
-		return strings.Trim(strings.ReplaceAll(fmt.Sprint(obj), " ", ","), "[]")
+		var result []string
+		sliceValue := reflect.ValueOf(obj)
+		for i := 0; i < sliceValue.Len(); i++ {
+			element := sliceValue.Index(i).Interface()
+			result = append(result, parameterToString(element, isQueryParam))
+		}
+		return strings.Join(result, ",")
 	} else if t, ok := obj.(time.Time); ok {
 		return t.Format(time.RFC3339)
+	} else if reflect.TypeOf(obj).Kind() == reflect.Struct {
+		unmarshalled, err := json.Marshal(obj)
+		if err != nil {
+			return fmt.Sprintf("%v", obj)
+		}
+
+		jsonString := fmt.Sprintf(`{"data":%v}`, string(unmarshalled))
+
+		var jsonMap map[string]any
+		if err := json.Unmarshal([]byte(jsonString), &jsonMap); err != nil {
+			return fmt.Sprintf("%v", obj)
+		}
+
+		jsonMapData, ok := jsonMap["data"]
+		if !ok {
+			return fmt.Sprintf("%v", obj)
+		}
+
+		if isQueryParam {
+			return url.PathEscape(fmt.Sprintf("%v", jsonMapData))
+		}
+		return fmt.Sprintf("%v", jsonMapData)
 	}
 
+	if isQueryParam {
+		return url.PathEscape(fmt.Sprintf("%v", obj))
+	}
 	return fmt.Sprintf("%v", obj)
 }
 
