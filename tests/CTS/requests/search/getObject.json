@@ -12,7 +12,7 @@
       "path": "/1/indexes/theIndexName/uniqueID",
       "method": "GET",
       "queryParameters": {
-        "attributesToRetrieve": "attr1,attr2"
+        "attributesToRetrieve": "attr1%2Cattr2"
       }
     }
   }
