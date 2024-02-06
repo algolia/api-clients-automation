@@ -18,7 +18,6 @@ use Psr\Http\Message\RequestInterface;
  * @category Class
  *
  * @internal
- *
  * @coversNothing
  */
 class PersonalizationTest extends TestCase implements HttpClientInterface
@@ -375,7 +374,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c', 'd',
+                'myParam' => ['c',  'd',
                 ],
             ],
             'headers' => [
@@ -409,7 +408,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [true, true, false,
+                'myParam' => [true,  true,  false,
                 ],
             ],
             'headers' => [
@@ -443,7 +442,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [1, 2,
+                'myParam' => [1,  2,
                 ],
             ],
             'headers' => [

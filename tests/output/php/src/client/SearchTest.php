@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for SearchClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class SearchTest extends TestCase implements HttpClientInterface

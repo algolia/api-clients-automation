@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for RecommendClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class RecommendTest extends TestCase implements HttpClientInterface
