@@ -30,7 +30,7 @@ func QueryParamOption(name string, val any) Option {
 	return Option{
     optionType:  "query",
 		name:  name,
-		value: parameterToString(val, true),
+		value: queryParameterToString(val),
 	}
 }
 
@@ -38,7 +38,7 @@ func HeaderParamOption(name string, val any) Option {
 	return Option{
     optionType:  "header",
 		name:  name,
-		value: parameterToString(val, false),
+		value: parameterToString(val),
 	}
 }
 
@@ -162,7 +162,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}, false){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}}, false)){{/x-is-custom-request}}){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
   {{/vendorExtensions}}
 
 	headers := make(map[string]string)
@@ -223,7 +223,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
     {{#queryParams}}
       {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
-           queryParams.Set(k, parameterToString(v, true))
+           queryParams.Set(k, queryParameterToString(v))
           }
       {{^required}} } {{/required}}
     {{/queryParams}}
@@ -231,22 +231,22 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
   {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}, true))
+	queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}, true))
+    queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}
   {{/vendorExtensions.x-is-custom-request}}
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}, false)
+	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}, false)
+    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
 {{/headerParams}}
