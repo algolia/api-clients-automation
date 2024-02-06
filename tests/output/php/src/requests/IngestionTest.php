@@ -18,7 +18,6 @@ use Psr\Http\Message\RequestInterface;
  * @category Class
  *
  * @internal
- *
  * @coversNothing
  */
 class IngestionTest extends TestCase implements HttpClientInterface
@@ -559,7 +558,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c', 'd',
+                'myParam' => ['c',  'd',
                 ],
             ],
             'headers' => [
@@ -593,7 +592,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [true, true, false,
+                'myParam' => [true,  true,  false,
                 ],
             ],
             'headers' => [
@@ -627,7 +626,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [1, 2,
+                'myParam' => [1,  2,
                 ],
             ],
             'headers' => [

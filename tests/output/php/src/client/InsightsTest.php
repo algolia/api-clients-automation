@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for InsightsClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class InsightsTest extends TestCase implements HttpClientInterface

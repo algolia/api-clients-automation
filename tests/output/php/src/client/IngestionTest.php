@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for IngestionClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class IngestionTest extends TestCase implements HttpClientInterface

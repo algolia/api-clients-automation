@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for AbtestingClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class AbtestingTest extends TestCase implements HttpClientInterface
