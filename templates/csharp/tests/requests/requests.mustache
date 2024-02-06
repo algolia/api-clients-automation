@@ -31,7 +31,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
       }
 
-      _e2eClient = new SearchClient(new SearchConfig(e2EAppId, e2EApiKey));
+      _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
     {{/hasE2E}}
   }
 
