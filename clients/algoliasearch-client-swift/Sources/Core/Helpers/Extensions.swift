@@ -107,6 +107,12 @@ extension Date: JSONEncodable {
     }
 }
 
+public extension AbstractEncodable {
+    func encodeToJSON() -> Any {
+        encodeIfPossible(GetActualInstance())
+    }
+}
+
 public extension JSONEncodable where Self: Encodable {
     func encodeToJSON() -> Any {
         guard let data = try? CodableHelper.jsonEncoder.encode(self) else {
