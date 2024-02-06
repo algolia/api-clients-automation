@@ -19,7 +19,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
     _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
 
     {{#hasE2E}}
-      DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: false, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+      DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
 
       var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
       if (e2EAppId == null)
