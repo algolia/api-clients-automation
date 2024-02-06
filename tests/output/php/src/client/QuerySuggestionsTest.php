@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for QuerySuggestionsClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class QuerySuggestionsTest extends TestCase implements HttpClientInterface
