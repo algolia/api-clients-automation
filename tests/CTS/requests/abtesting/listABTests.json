@@ -10,19 +10,55 @@
   {
     "testName": "listABTests with parameters",
     "parameters": {
-      "offset": 42,
+      "offset": 0,
       "limit": 21,
-      "indexPrefix": "foo",
-      "indexSuffix": "bar"
+      "indexPrefix": "cts_e2e ab",
+      "indexSuffix": "t"
     },
     "request": {
       "path": "/2/abtests",
       "method": "GET",
       "queryParameters": {
-        "offset": "42",
+        "offset": "0",
         "limit": "21",
-        "indexPrefix": "foo",
-        "indexSuffix": "bar"
+        "indexPrefix": "cts_e2e ab",
+        "indexSuffix": "t"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "abtests": [
+          {
+            "abTestID": 84617,
+            "createdAt": "2024-02-06T10:04:30.209477Z",
+            "endAt": "2024-05-06T09:04:26.469Z",
+            "name": "cts_e2e_abtest",
+            "status": "active",
+            "variants": [
+              {
+                "addToCartCount": 0,
+                "clickCount": 0,
+                "conversionCount": 0,
+                "description": "",
+                "index": "cts_e2e_search_facet",
+                "purchaseCount": 0,
+                "trafficPercentage": 25
+              },
+              {
+                "addToCartCount": 0,
+                "clickCount": 0,
+                "conversionCount": 0,
+                "description": "",
+                "index": "cts_e2e abtest",
+                "purchaseCount": 0,
+                "trafficPercentage": 75
+              }
+            ]
+          }
+        ],
+        "count": 1,
+        "total": 1
       }
     }
   }
