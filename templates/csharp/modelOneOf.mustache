@@ -123,12 +123,6 @@
         /// <returns>An instance of {{classname}}</returns>
         public static {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} FromJson(string jsonString)
         {
-            {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} new{{classname}} = null;
-
-            if (string.IsNullOrEmpty(jsonString))
-            {
-                return new{{classname}};
-            }
             {{#useOneOfDiscriminatorLookup}}
             {{#discriminator}}
 
@@ -159,15 +153,8 @@
             {{#composedSchemas.oneOf}}
             try
             {
-                // if it does not contains "AdditionalProperties", use SerializerSettings to deserialize
-                if (typeof({{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}).GetProperty("AdditionalProperties") == null)
-                {
-                  return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));
-                }
-                else
-                {
-                  return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
-                }
+              {{#getAdditionalPropertiesIsAnyType}}return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));{{/getAdditionalPropertiesIsAnyType}}
+              {{^getAdditionalPropertiesIsAnyType}}return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));{{/getAdditionalPropertiesIsAnyType}}
             }
             catch (Exception exception)
             {
