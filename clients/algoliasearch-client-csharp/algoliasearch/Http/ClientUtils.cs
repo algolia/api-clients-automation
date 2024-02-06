@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
+using Algolia.Search.Models.Common;
+using AbstractSchema = Algolia.Search.Models.AbstractSchema;
 
 namespace Algolia.Search.Http
 {
@@ -33,6 +35,14 @@ namespace Algolia.Search.Http
       if (obj is Enum && HasEnumMemberAttrValue(obj))
         return GetEnumMemberAttrValue(obj);
 
+      if (obj.GetType().IsClass)
+      {
+        if (obj is AbstractSchema schema)
+        {
+          return ParameterToString(schema.ActualInstance);
+        }
+      }
+      
       return Convert.ToString(obj, CultureInfo.InvariantCulture);
     }
 
