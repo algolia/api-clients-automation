@@ -18,9 +18,9 @@ public class StatefulHost
   public HttpScheme Scheme { get; set; } = HttpScheme.Https;
 
   /// <summary>
-  /// Port of the URL (Optional - Default is -1)
+  /// Port of the URL (Optional)
   /// </summary>
-  public int Port { get; set; } = -1;
+  public int? Port { get; set; }
 
   /// <summary>
   /// Is the host up or not

@@ -256,14 +256,19 @@ internal class HttpTransport
       }
     }
 
-    if (optionalQueryParameters != null)
+    var builder = new UriBuilder { Scheme = host.Scheme.ToString(), Host = host.Url, Path = path };
+
+    if (optionalQueryParameters != null && optionalQueryParameters.Any())
     {
-      var queryParams = optionalQueryParameters.ToQueryString();
-      return new UriBuilder
-      { Scheme = host.Scheme.ToString(), Host = host.Url, Port = host.Port, Path = path, Query = queryParams }.Uri;
+      builder.Query = optionalQueryParameters.ToQueryString();
     }
 
-    return new UriBuilder { Scheme = host.Scheme.ToString(), Host = host.Url, Port = host.Port, Path = path }.Uri;
+    if (host.Port.HasValue)
+    {
+      builder.Port = host.Port.Value;
+    }
+
+    return builder.Uri;
   }
 
   /// <summary>
