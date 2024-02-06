@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -44,7 +43,7 @@ internal class HttpTransport
     _algoliaConfig = config ?? throw new ArgumentNullException(nameof(config));
     _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     _retryStrategy = new RetryStrategy(config);
-    _serializer = new DefaultJsonSerializer(JsonConfig.AlgoliaJsonSerializerSettings, loggerFactory);
+    _serializer = new DefaultJsonSerializer(loggerFactory);
     _logger = loggerFactory.CreateLogger<HttpTransport>();
   }
 

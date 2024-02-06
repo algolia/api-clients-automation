@@ -23,13 +23,6 @@ console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-
-    let start = Date.now();
-
-    let resp = await client.searchSingleIndex({ indexName: "test-csharp-new-client", searchParams: { query: " " } });
-
-    console.log('searchSingleIndex', Date.now() - start);
-
     const res = await client.browseRules({ indexName: "cts_e2e_search_facet", aggregator: (resp: any) => {console.log(resp)} });
 
     console.log(`[OK]`, res);
