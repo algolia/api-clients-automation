@@ -42,7 +42,7 @@ namespace Algolia.Search.Http
           return ParameterToString(schema.ActualInstance);
         }
       }
-      
+
       return Convert.ToString(obj, CultureInfo.InvariantCulture);
     }
 
