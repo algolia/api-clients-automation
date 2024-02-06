@@ -28,7 +28,7 @@
       "queryParameters": {
         "itemsPerPage": "10",
         "page": "5",
-        "type": "basic,algolia",
+        "type": "basic%2Calgolia",
         "platform": "none",
         "sort": "createdAt",
         "order": "desc"
