@@ -8,15 +8,15 @@ on:
 jobs:
   release:
     name: Publish
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
 
       - name: Create Nugget package
         run: dotnet pack --configuration Release --output nugget
