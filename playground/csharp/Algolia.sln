@@ -4,13 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj", "{2485A285-E565-4407-95E1-0F216142AAA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search.Tests", "..\..\tests\output\csharp\src\Algolia.Search.Tests.csproj", "{5F6F1865-31E1-4984-B575-430A42217820}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performaces", "Performaces\Performaces.csproj", "{5E5DD034-6BC2-46FB-B9EF-7C18C3C214EF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceLegacy", "PerformanceLegacy\PerformanceLegacy.csproj", "{67814440-28A1-4344-873A-2E1F6F2FAAAC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\..\..\RiderProjects\algoliasearch-client-csharp\src\Algolia.Search\Algolia.Search.csproj", "{FA9B6991-346D-4C75-A63C-01CD6B207A47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performances", "Performances\Performances.csproj", "{229F8B19-7731-47C3-9DB4-323577B95E97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,21 +20,9 @@ Global
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E5DD034-6BC2-46FB-B9EF-7C18C3C214EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E5DD034-6BC2-46FB-B9EF-7C18C3C214EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E5DD034-6BC2-46FB-B9EF-7C18C3C214EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E5DD034-6BC2-46FB-B9EF-7C18C3C214EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67814440-28A1-4344-873A-2E1F6F2FAAAC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA9B6991-346D-4C75-A63C-01CD6B207A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

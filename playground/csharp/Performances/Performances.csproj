@@ -5,6 +5,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Performaces</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,10 +20,6 @@
       <None Update="Data\searchResult.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Tests\" />
     </ItemGroup>
 
 </Project>

@@ -153,8 +153,7 @@
             {{#composedSchemas.oneOf}}
             try
             {
-              {{#getAdditionalPropertiesIsAnyType}}return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));{{/getAdditionalPropertiesIsAnyType}}
-              {{^getAdditionalPropertiesIsAnyType}}return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));{{/getAdditionalPropertiesIsAnyType}}
+              return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));
             }
             catch (Exception exception)
             {
