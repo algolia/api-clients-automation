@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for AnalyticsClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class AnalyticsTest extends TestCase implements HttpClientInterface
