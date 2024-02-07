@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Monitoring;
+using Algolia.Search.Serializer;
 using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
