@@ -1,6 +1,7 @@
 using Algolia.Search.Http;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.{{clientPrefix}};
+using Algolia.Search.Serializer;
 using Xunit;
 using Newtonsoft.Json;
 using Quibble.Xunit;
@@ -18,7 +19,8 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
     _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
 
     {{#hasE2E}}
-      DotEnv.Load();
+      DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+
       var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
       if (e2EAppId == null)
       {
@@ -46,7 +48,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
       {{#requestOptions.queryParameters.parametersWithDataType}}
         QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
       {{/requestOptions.queryParameters.parametersWithDataType}}
@@ -99,7 +101,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
     {{#response}}
       // e2e
       try {
-        var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+        var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
       {{#requestOptions.queryParameters.parametersWithDataType}}
           QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
       {{/requestOptions.queryParameters.parametersWithDataType}}
@@ -113,7 +115,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/statusCode}}
 
       {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp), new JsonDiffConfig(true));
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings), new JsonDiffConfig(true));
       {{/body}}
       } catch (Exception e)
       {
