@@ -6,7 +6,7 @@ async function runCtsOne(language: string): Promise<void> {
   const cwd = `tests/output/${language}`;
   switch (language) {
     case 'csharp':
-      await run('dotnet test', { cwd, language });
+      await run('dotnet test /clp:ErrorsOnly', { cwd, language });
       break;
     case 'dart':
       await run('dart test', { cwd, language });
