@@ -51,10 +51,10 @@ public class StringUtils {
       throw new UnsupportedOperationException("Date must come as string (already serialized)");
     }
     if (value instanceof Collection) {
-      List<String> strings = ((Collection<?>) value).stream().map(String::valueOf).collect(Collectors.toList());
-      return String.join(",", strings);
+      List<String> strings = ((Collection<?>) value).stream().map(StringUtils::paramToString).collect(Collectors.toList());
+      return String.join("%2C", strings);
     }
 
-    return String.valueOf(value);
+    return escape(String.valueOf(value));
   }
 }
