@@ -1,6 +1,7 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
 using dotenv.net;
 using Newtonsoft.Json;
 using Quibble.Xunit;
@@ -18,7 +19,15 @@ public class SearchClientRequestTests
     _echo = new EchoHttpRequester();
     _client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
 
-    DotEnv.Load();
+    DotEnv.Load(
+      options: new DotEnvOptions(
+        ignoreExceptions: true,
+        probeForEnv: true,
+        probeLevelsToSearch: 8,
+        envFilePaths: new[] { ".env" }
+      )
+    );
+
     var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
     if (e2EAppId == null)
     {
@@ -465,7 +474,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse with minimal parameters")]
   public async Task BrowseTest0()
   {
-    await _client.BrowseAsync<Object>("cts_e2e_browse");
+    await _client.BrowseAsync<Hit>("cts_e2e_browse");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_browse/browse", req.Path);
@@ -475,13 +484,13 @@ public class SearchClientRequestTests
     // e2e
     try
     {
-      var resp = await _e2eClient.BrowseAsync<Object>("cts_e2e_browse");
+      var resp = await _e2eClient.BrowseAsync<Hit>("cts_e2e_browse");
       // Check status code 200
       Assert.NotNull(resp);
 
       JsonAssert.EqualOverrideDefault(
         "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
-        JsonConvert.SerializeObject(resp),
+        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
         new JsonDiffConfig(true)
       );
     }
@@ -494,7 +503,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse with search parameters")]
   public async Task BrowseTest1()
   {
-    await _client.BrowseAsync<Object>(
+    await _client.BrowseAsync<Hit>(
       "indexName",
       new BrowseParams(
         new BrowseParamsObject
@@ -520,7 +529,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse allow a cursor in parameters")]
   public async Task BrowseTest2()
   {
-    await _client.BrowseAsync<Object>(
+    await _client.BrowseAsync<Hit>(
       "indexName",
       new BrowseParams(new BrowseParamsObject { Cursor = "test", })
     );
@@ -1242,7 +1251,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getObjects0")]
   public async Task GetObjectsTest0()
   {
-    await _client.GetObjectsAsync<Object>(
+    await _client.GetObjectsAsync<Hit>(
       new GetObjectsParams
       {
         Requests = new List<GetObjectsRequest>
@@ -1297,7 +1306,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":20,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
-        JsonConvert.SerializeObject(resp),
+        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
         new JsonDiffConfig(true)
       );
     }
@@ -1992,7 +2001,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single hits request with minimal parameters")]
   public async Task SearchTest0()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2014,7 +2023,7 @@ public class SearchClientRequestTests
     // e2e
     try
     {
-      var resp = await _e2eClient.SearchAsync<Object>(
+      var resp = await _e2eClient.SearchAsync<Hit>(
         new SearchMethodParams
         {
           Requests = new List<SearchQuery>
@@ -2028,7 +2037,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}",
-        JsonConvert.SerializeObject(resp),
+        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
         new JsonDiffConfig(true)
       );
     }
@@ -2041,7 +2050,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
   public async Task SearchTest1()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2071,7 +2080,7 @@ public class SearchClientRequestTests
     // e2e
     try
     {
-      var resp = await _e2eClient.SearchAsync<Object>(
+      var resp = await _e2eClient.SearchAsync<Hit>(
         new SearchMethodParams
         {
           Requests = new List<SearchQuery>
@@ -2093,7 +2102,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
-        JsonConvert.SerializeObject(resp),
+        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
         new JsonDiffConfig(true)
       );
     }
@@ -2106,7 +2115,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single hits request with all parameters")]
   public async Task SearchTest2()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2137,7 +2146,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single facet request with all parameters")]
   public async Task SearchTest3()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2173,7 +2182,7 @@ public class SearchClientRequestTests
   )]
   public async Task SearchTest4()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2212,7 +2221,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for multiple mixed requests in multiple indices with all parameters")]
   public async Task SearchTest5()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2255,7 +2264,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search filters accept all of the possible shapes")]
   public async Task SearchTest6()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2329,7 +2338,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with all search parameters")]
   public async Task SearchTest7()
   {
-    await _client.SearchAsync<Object>(
+    await _client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2565,7 +2574,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with minimal parameters")]
   public async Task SearchSingleIndexTest0()
   {
-    await _client.SearchSingleIndexAsync<Object>("indexName");
+    await _client.SearchSingleIndexAsync<Hit>("indexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/query", req.Path);
@@ -2576,7 +2585,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with special characters in indexName")]
   public async Task SearchSingleIndexTest1()
   {
-    await _client.SearchSingleIndexAsync<Object>("cts_e2e_space in index");
+    await _client.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_space%20in%20index/query", req.Path);
@@ -2586,7 +2595,7 @@ public class SearchClientRequestTests
     // e2e
     try
     {
-      var resp = await _e2eClient.SearchSingleIndexAsync<Object>("cts_e2e_space in index");
+      var resp = await _e2eClient.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
       // Check status code 200
       Assert.NotNull(resp);
     }
@@ -2599,7 +2608,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with searchParams")]
   public async Task SearchSingleIndexTest2()
   {
-    await _client.SearchSingleIndexAsync<Object>(
+    await _client.SearchSingleIndexAsync<Hit>(
       "indexName",
       new SearchParams(
         new SearchParamsObject
@@ -2625,7 +2634,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "single search retrieve snippets")]
   public async Task SearchSingleIndexTest3()
   {
-    await _client.SearchSingleIndexAsync<Object>(
+    await _client.SearchSingleIndexAsync<Hit>(
       "cts_e2e_browse",
       new SearchParams(
         new SearchParamsObject
@@ -2649,7 +2658,7 @@ public class SearchClientRequestTests
     // e2e
     try
     {
-      var resp = await _e2eClient.SearchSingleIndexAsync<Object>(
+      var resp = await _e2eClient.SearchSingleIndexAsync<Hit>(
         "cts_e2e_browse",
         new SearchParams(
           new SearchParamsObject
@@ -2665,7 +2674,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}",
-        JsonConvert.SerializeObject(resp),
+        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
         new JsonDiffConfig(true)
       );
     }
