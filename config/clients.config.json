@@ -14,8 +14,8 @@
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
     "packageVersion": "7.0.0-alpha.7",
-    "modelFolder": "algoliasearch",
-    "apiFolder": "algoliasearch",
+    "modelFolder": "algoliasearch/Models",
+    "apiFolder": "algoliasearch/Clients",
     "dockerImage": "apic_base",
     "tests": {
       "extension": ".test.cs",
