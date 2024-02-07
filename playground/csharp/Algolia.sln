@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search", "..\..\clients\algoliasearch-client-csharp\algoliasearch\Algolia.Search.csproj", "{2485A285-E565-4407-95E1-0F216142AAA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algolia.Search.Tests", "..\..\tests\output\csharp\src\Algolia.Search.Tests.csproj", "{5F6F1865-31E1-4984-B575-430A42217820}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performances", "Performances\Performances.csproj", "{229F8B19-7731-47C3-9DB4-323577B95E97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2485A285-E565-4407-95E1-0F216142AAA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F6F1865-31E1-4984-B575-430A42217820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{229F8B19-7731-47C3-9DB4-323577B95E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

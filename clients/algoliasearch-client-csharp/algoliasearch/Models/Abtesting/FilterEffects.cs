@@ -36,13 +36,13 @@ public partial class FilterEffects
   /// <summary>
   /// Gets or Sets Outliers
   /// </summary>
-  [DataMember(Name = "outliers", EmitDefaultValue = false)]
+  [DataMember(Name = "outliers")]
   public FilterEffectsOutliers Outliers { get; set; }
 
   /// <summary>
   /// Gets or Sets EmptySearch
   /// </summary>
-  [DataMember(Name = "emptySearch", EmitDefaultValue = false)]
+  [DataMember(Name = "emptySearch")]
   public FilterEffectsEmptySearch EmptySearch { get; set; }
 
   /// <summary>

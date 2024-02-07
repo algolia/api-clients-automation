@@ -37,7 +37,7 @@ public partial class SearchParamsString
   /// Search parameters as a URL-encoded query string.
   /// </summary>
   /// <value>Search parameters as a URL-encoded query string.</value>
-  [DataMember(Name = "params", EmitDefaultValue = false)]
+  [DataMember(Name = "params")]
   public string VarParams { get; set; }
 
   /// <summary>

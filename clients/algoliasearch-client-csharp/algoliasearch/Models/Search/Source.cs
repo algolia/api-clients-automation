@@ -44,14 +44,14 @@ public partial class Source
   /// IP address range of the source.
   /// </summary>
   /// <value>IP address range of the source.</value>
-  [DataMember(Name = "source", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "source")]
   public string VarSource { get; set; }
 
   /// <summary>
   /// Source description.
   /// </summary>
   /// <value>Source description.</value>
-  [DataMember(Name = "description", EmitDefaultValue = false)]
+  [DataMember(Name = "description")]
   public string Description { get; set; }
 
   /// <summary>

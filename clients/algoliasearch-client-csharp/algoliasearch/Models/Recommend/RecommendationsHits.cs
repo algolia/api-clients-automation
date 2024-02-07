@@ -43,21 +43,21 @@ public partial class RecommendationsHits
   /// <summary>
   /// Gets or Sets Hits
   /// </summary>
-  [DataMember(Name = "hits", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "hits")]
   public List<RecommendationsHit> Hits { get; set; }
 
   /// <summary>
   /// Text to search for in an index.
   /// </summary>
   /// <value>Text to search for in an index.</value>
-  [DataMember(Name = "query", EmitDefaultValue = false)]
+  [DataMember(Name = "query")]
   public string Query { get; set; }
 
   /// <summary>
   /// URL-encoded string of all search parameters.
   /// </summary>
   /// <value>URL-encoded string of all search parameters.</value>
-  [DataMember(Name = "params", EmitDefaultValue = false)]
+  [DataMember(Name = "params")]
   public string VarParams { get; set; }
 
   /// <summary>

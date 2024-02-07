@@ -37,7 +37,7 @@ public partial class SearchParamsQuery
   /// Text to search for in an index.
   /// </summary>
   /// <value>Text to search for in an index.</value>
-  [DataMember(Name = "query", EmitDefaultValue = false)]
+  [DataMember(Name = "query")]
   public string Query { get; set; }
 
   /// <summary>

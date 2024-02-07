@@ -37,7 +37,7 @@ public partial class RuleResponseMetadata
   /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
   /// </summary>
   /// <value>Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-  [DataMember(Name = "lastUpdate", EmitDefaultValue = false)]
+  [DataMember(Name = "lastUpdate")]
   public string LastUpdate { get; set; }
 
   /// <summary>

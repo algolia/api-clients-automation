@@ -22,7 +22,7 @@ public static class Monitoring
     foreach (var incident in incidentsResponse.Incidents)
     {
       Console.WriteLine(
-        $"{incident.Key}: {Environment.NewLine}- {string.Join($"{Environment.NewLine} -", incident.Value.Select(inner =>  $" { DateTimeOffset.FromUnixTimeMilliseconds(inner.T).ToString(CultureInfo.InvariantCulture)} - {inner.V.Title}"))} {Environment.NewLine}");
+        $"{incident.Key}: {Environment.NewLine}- {string.Join($"{Environment.NewLine} -", incident.Value.Select(inner =>  $" { DateTimeOffset.FromUnixTimeMilliseconds(inner.T.Value).ToString(CultureInfo.InvariantCulture)} - {inner.V.Title}"))} {Environment.NewLine}");
     }
   }
 }
