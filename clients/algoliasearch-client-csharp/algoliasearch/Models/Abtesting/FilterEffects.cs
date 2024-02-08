@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Abtesting;
 /// A/B test filter effects resulting from configuration settings.
 /// </summary>
 [DataContract(Name = "filterEffects")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class FilterEffects
 {
   /// <summary>
@@ -37,13 +36,13 @@ public partial class FilterEffects
   /// Gets or Sets Outliers
   /// </summary>
   [DataMember(Name = "outliers")]
-  public FilterEffectsOutliers? Outliers { get; set; }
+  public FilterEffectsOutliers Outliers { get; set; }
 
   /// <summary>
   /// Gets or Sets EmptySearch
   /// </summary>
   [DataMember(Name = "emptySearch")]
-  public FilterEffectsEmptySearch? EmptySearch { get; set; }
+  public FilterEffectsEmptySearch EmptySearch { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

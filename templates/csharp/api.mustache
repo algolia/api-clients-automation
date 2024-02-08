@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 {{/hasImport}}
 using Algolia.Search.Transport;
 using Algolia.Search.Http;
+using Algolia.Search.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -21,7 +22,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{>visibility}} interface {{interfacePrefix}}{{classname}}
+  {{> visibility}} interface {{interfacePrefix}}{{classname}}
   {
       {{#operation}}
       /// <summary>
@@ -41,6 +42,23 @@ namespace Algolia.Search.Clients;
       /// <returns>Task of {{> return_type_doc}}</returns>
       Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// {{{notes}}} (Synchronous version)
+        /// </summary>
+      {{#allParams}}
+          /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      {{/allParams}}
+        /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      {{#isDeprecated}}
+          [Obsolete]
+      {{/isDeprecated}}
+        /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+        /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+        /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+        /// <returns>{{> return_type_doc}}</returns>
+      {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+
       {{/operation}}
   }
 
@@ -50,7 +68,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
+  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       private readonly HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
@@ -205,6 +223,32 @@ namespace Algolia.Search.Clients;
           {{/vendorExtensions}}
           {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
       }
+
+
+          /// <summary>
+          /// {{{notes}}} (Synchronous version)
+          /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+            ///
+            /// Required API Key ACLs:{{/x-acl.0}}
+        {{#x-acl}}
+            ///   - {{.}}
+        {{/x-acl}}
+        {{/vendorExtensions}}
+        {{#allParams}}
+            /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+        {{/allParams}}
+          /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+          /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        {{#isDeprecated}}
+            [Obsolete]
+        {{/isDeprecated}}
+          /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+          /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+          /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+          /// <returns>{{> return_type_doc}}</returns>
+          public {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}}{{#isEnumRef}}{{^required}}?{{/required}}{{/isEnumRef}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
+            AsyncHelper.RunSync(() => {{operationId}}Async{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
+
       {{/supportsAsync}}
       {{/operation}}
   }

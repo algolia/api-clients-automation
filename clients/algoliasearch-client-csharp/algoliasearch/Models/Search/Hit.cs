@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// A single hit.
 /// </summary>
 [DataContract(Name = "hit")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Hit
 {
   /// <summary>
@@ -69,7 +68,7 @@ public partial class Hit
   /// Gets or Sets RankingInfo
   /// </summary>
   [DataMember(Name = "_rankingInfo")]
-  public RankingInfo? RankingInfo { get; set; }
+  public RankingInfo RankingInfo { get; set; }
 
   /// <summary>
   /// Gets or Sets DistinctSeqID

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// Use this event to track when users click items unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.  To track click events related to Algolia requests, use the \"Clicked object IDs after search\" event. 
 /// </summary>
 [DataContract(Name = "ClickedObjectIDs")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ClickedObjectIDs
 {
 
@@ -87,7 +86,7 @@ public partial class ClickedObjectIDs
   /// </summary>
   /// <value>An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. </value>
   [DataMember(Name = "authenticatedUserToken")]
-  public string? AuthenticatedUserToken { get; set; }
+  public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
   /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. 

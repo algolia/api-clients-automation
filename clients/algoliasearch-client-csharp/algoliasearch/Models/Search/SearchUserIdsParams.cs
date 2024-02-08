@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// OK
 /// </summary>
 [DataContract(Name = "searchUserIdsParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchUserIdsParams
 {
   /// <summary>
@@ -52,7 +51,7 @@ public partial class SearchUserIdsParams
   /// </summary>
   /// <value>Cluster name.</value>
   [DataMember(Name = "clusterName")]
-  public string? ClusterName { get; set; }
+  public string ClusterName { get; set; }
 
   /// <summary>
   /// Page to retrieve (the first page is `0`, not `1`).

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Run
 /// </summary>
 [DataContract(Name = "Run")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Run
 {
 
@@ -98,7 +97,7 @@ public partial class Run
   /// Gets or Sets Progress
   /// </summary>
   [DataMember(Name = "progress")]
-  public RunProgress? Progress { get; set; }
+  public RunProgress Progress { get; set; }
 
   /// <summary>
   /// A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
@@ -112,7 +111,7 @@ public partial class Run
   /// </summary>
   /// <value>Explains the result of outcome.</value>
   [DataMember(Name = "reason")]
-  public string? Reason { get; set; }
+  public string Reason { get; set; }
 
   /// <summary>
   /// Date of creation (RFC3339 format).
@@ -126,14 +125,14 @@ public partial class Run
   /// </summary>
   /// <value>Date of start (RFC3339 format).</value>
   [DataMember(Name = "startedAt")]
-  public string? StartedAt { get; set; }
+  public string StartedAt { get; set; }
 
   /// <summary>
   /// Date of finish (RFC3339 format).
   /// </summary>
   /// <value>Date of finish (RFC3339 format).</value>
   [DataMember(Name = "finishedAt")]
-  public string? FinishedAt { get; set; }
+  public string FinishedAt { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Authentication input used for token credentials.
 /// </summary>
 [DataContract(Name = "AuthAPIKeyPartial")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthAPIKeyPartial
 {
   /// <summary>
@@ -37,7 +36,7 @@ public partial class AuthAPIKeyPartial
   /// Gets or Sets Key
   /// </summary>
   [DataMember(Name = "key")]
-  public string? Key { get; set; }
+  public string Key { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

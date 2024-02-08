@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceBigCommerce
 /// </summary>
 [DataContract(Name = "SourceBigCommerce")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceBigCommerce
 {
   /// <summary>
@@ -38,13 +37,13 @@ public partial class SourceBigCommerce
   /// </summary>
   /// <value>The store hash identifying the store the shopper is signing in to.</value>
   [DataMember(Name = "storeHash")]
-  public string? StoreHash { get; set; }
+  public string StoreHash { get; set; }
 
   /// <summary>
   /// Gets or Sets Channel
   /// </summary>
   [DataMember(Name = "channel")]
-  public BigCommerceChannel? Channel { get; set; }
+  public BigCommerceChannel Channel { get; set; }
 
   /// <summary>
   /// Gets or Sets CustomFields

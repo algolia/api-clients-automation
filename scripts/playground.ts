@@ -12,6 +12,12 @@ export async function playground({
     case 'go':
       await run(`go run . --client ${client}`, { cwd: 'playground/go', language });
       break;
+    case 'dart':
+      await run(`dart pub get && dart run lib/${client}.dart`, {
+        cwd: 'playground/dart',
+        language,
+      });
+      break;
     case 'javascript':
       await run(`yarn workspace javascript-playground start:${client}`);
       break;

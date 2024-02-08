@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Abtesting;
 /// AbTestsVariantSearchParams
 /// </summary>
 [DataContract(Name = "abTestsVariantSearchParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AbTestsVariantSearchParams
 {
   /// <summary>
@@ -63,7 +62,7 @@ public partial class AbTestsVariantSearchParams
   /// </summary>
   /// <value>A/B test description.</value>
   [DataMember(Name = "description")]
-  public string? Description { get; set; }
+  public string Description { get; set; }
 
   /// <summary>
   /// Gets or Sets CustomSearchParameters

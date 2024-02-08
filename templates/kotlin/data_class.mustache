@@ -24,7 +24,7 @@ public data class {{classname}}(
 {{#vendorExtensions.x-map-parent}}
 {{#vars}}
 
-{{>json_object_field}},
+{{> json_object_field}},
 {{/vars}}
 
     val additionalProperties: Map<String, JsonElement>? = null,
@@ -32,10 +32,10 @@ public data class {{classname}}(
 {{^vendorExtensions.x-map-parent}}
 {{#vars}}
 
-{{>data_class_field}},
+{{> data_class_field}},
 {{/vars}}
 {{/vendorExtensions.x-map-parent}}    
-){{^vendorExtensions.x-map-parent}}{{#parent}} : {{{.}}}{{/parent}}{{/vendorExtensions.x-map-parent}}{{>oneof_parent}}{{#vendorExtensions.x-has-data-class-body}} {
+){{^vendorExtensions.x-map-parent}}{{#parent}} : {{{.}}}{{/parent}}{{/vendorExtensions.x-map-parent}}{{> oneof_parent}}{{#vendorExtensions.x-has-data-class-body}} {
 {{/vendorExtensions.x-has-data-class-body}}
 {{#hasEnums}}
 {{#vars}}

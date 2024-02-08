@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule. 
 /// </summary>
 [DataContract(Name = "consequence")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Consequence
 {
   /// <summary>
@@ -37,7 +36,7 @@ public partial class Consequence
   /// Gets or Sets VarParams
   /// </summary>
   [DataMember(Name = "params")]
-  public ConsequenceParams? VarParams { get; set; }
+  public ConsequenceParams VarParams { get; set; }
 
   /// <summary>
   /// Records to promote.

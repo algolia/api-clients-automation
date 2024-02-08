@@ -8,7 +8,6 @@
     [ComVisible({{{vendorExtensions.x-com-visible}}})]
     {{/vendorExtensions.x-com-visible}}
     [DataContract(Name = "{{{name}}}")]
-    [JsonObject(MemberSerialization.OptOut)]
     {{^useUnityWebRequest}}
     {{#discriminator}}
     [JsonConverter(typeof(JsonSubtypes), "{{{discriminatorName}}}")]
@@ -17,19 +16,19 @@
     {{/mappedModels}}
     {{/discriminator}}
     {{/useUnityWebRequest}}
-    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}
+    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}
     {
         {{#vars}}
         {{#items.isEnum}}
         {{#items}}
         {{^complexType}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
         {{/complexType}}
         {{/items}}
         {{/items.isEnum}}
         {{#isEnum}}
         {{^complexType}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
         {{/complexType}}
         {{/isEnum}}
         {{#isEnum}}
@@ -379,6 +378,6 @@
         {{/equatable}}
 
 {{#validatable}}
-{{>validatable}}
+{{> validatable}}
 {{/validatable}}
     }

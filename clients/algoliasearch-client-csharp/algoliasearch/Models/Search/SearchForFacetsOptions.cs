@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// SearchForFacetsOptions
 /// </summary>
 [DataContract(Name = "searchForFacetsOptions")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchForFacetsOptions
 {
 
@@ -69,7 +68,7 @@ public partial class SearchForFacetsOptions
   /// </summary>
   /// <value>Text to search inside the facet's values.</value>
   [DataMember(Name = "facetQuery")]
-  public string? FacetQuery { get; set; }
+  public string FacetQuery { get; set; }
 
   /// <summary>
   /// Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).

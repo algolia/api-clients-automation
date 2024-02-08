@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.  To track purchase events related to Algolia requests, use the \"Purchased object IDs after search\" event. 
 /// </summary>
 [DataContract(Name = "PurchasedObjectIDs")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class PurchasedObjectIDs
 {
 
@@ -95,14 +94,14 @@ public partial class PurchasedObjectIDs
   /// </summary>
   /// <value>An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. </value>
   [DataMember(Name = "authenticatedUserToken")]
-  public string? AuthenticatedUserToken { get; set; }
+  public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
   /// Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
   /// </summary>
   /// <value>Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).</value>
   [DataMember(Name = "currency")]
-  public string? Currency { get; set; }
+  public string Currency { get; set; }
 
   /// <summary>
   /// Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the same length as `objectIDs`. 
@@ -122,7 +121,7 @@ public partial class PurchasedObjectIDs
   /// Gets or Sets Value
   /// </summary>
   [DataMember(Name = "value")]
-  public Value? Value { get; set; }
+  public Value Value { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

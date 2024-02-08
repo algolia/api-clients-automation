@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// GetInventory403Response
 /// </summary>
 [DataContract(Name = "getInventory_403_response")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetInventory403Response
 {
   /// <summary>
@@ -37,7 +36,7 @@ public partial class GetInventory403Response
   /// Gets or Sets Reason
   /// </summary>
   [DataMember(Name = "reason")]
-  public string? Reason { get; set; }
+  public string Reason { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

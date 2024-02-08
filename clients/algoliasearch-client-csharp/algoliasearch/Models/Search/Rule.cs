@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Rule object.
 /// </summary>
 [DataContract(Name = "rule")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Rule
 {
   /// <summary>
@@ -58,14 +57,14 @@ public partial class Rule
   /// Gets or Sets Consequence
   /// </summary>
   [DataMember(Name = "consequence")]
-  public Consequence? Consequence { get; set; }
+  public Consequence Consequence { get; set; }
 
   /// <summary>
   /// Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
   /// </summary>
   /// <value>Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.</value>
   [DataMember(Name = "description")]
-  public string? Description { get; set; }
+  public string Description { get; set; }
 
   /// <summary>
   /// Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.

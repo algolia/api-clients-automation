@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceJSON
 /// </summary>
 [DataContract(Name = "SourceJSON")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceJSON
 {
 
@@ -58,7 +57,7 @@ public partial class SourceJSON
   /// </summary>
   /// <value>The name of the column that contains the unique ID, used as `objectID` in Algolia.</value>
   [DataMember(Name = "uniqueIDColumn")]
-  public string? UniqueIDColumn { get; set; }
+  public string UniqueIDColumn { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

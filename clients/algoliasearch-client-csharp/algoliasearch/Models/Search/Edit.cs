@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Edit
 /// </summary>
 [DataContract(Name = "edit")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Edit
 {
 
@@ -44,14 +43,14 @@ public partial class Edit
   /// </summary>
   /// <value>Text or patterns to remove from the query string.</value>
   [DataMember(Name = "delete")]
-  public string? Delete { get; set; }
+  public string Delete { get; set; }
 
   /// <summary>
   /// Text that should be inserted in place of the removed text inside the query string.
   /// </summary>
   /// <value>Text that should be inserted in place of the removed text inside the query string.</value>
   [DataMember(Name = "insert")]
-  public string? Insert { get; set; }
+  public string Insert { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

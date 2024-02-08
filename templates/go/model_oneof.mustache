@@ -184,13 +184,10 @@ func (src {{classname}}) MarshalJSON() ([]byte, error) {
 }
 
 // Get the actual instance
-func (obj *{{classname}}) GetActualInstance() (any) {
-	if obj == nil {
-		return nil
-	}
+func (obj {{classname}}) GetActualInstance() (any) {
 {{#oneOf}}
 	if obj.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} != nil {
-		return obj.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}
+		return *obj.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}
 	}
 
 {{/oneOf}}
@@ -198,4 +195,4 @@ func (obj *{{classname}}) GetActualInstance() (any) {
 	return nil
 }
 
-{{>nullable_model}}
+{{> nullable_model}}

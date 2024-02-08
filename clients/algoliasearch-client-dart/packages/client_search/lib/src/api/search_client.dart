@@ -1044,7 +1044,7 @@ final class SearchClient implements ApiClient {
               '{' r'objectID' '}', Uri.encodeComponent(objectID.toString())),
       queryParams: {
         if (attributesToRetrieve != null)
-          'attributesToRetrieve': attributesToRetrieve.join(','),
+          'attributesToRetrieve': attributesToRetrieve,
       },
     );
     final response = await _retryStrategy.execute(

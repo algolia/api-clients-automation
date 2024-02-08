@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Abtesting;
 /// AbTestsVariant
 /// </summary>
 [DataContract(Name = "abTestsVariant")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AbTestsVariant
 {
   /// <summary>
@@ -61,7 +60,7 @@ public partial class AbTestsVariant
   /// </summary>
   /// <value>A/B test description.</value>
   [DataMember(Name = "description")]
-  public string? Description { get; set; }
+  public string Description { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

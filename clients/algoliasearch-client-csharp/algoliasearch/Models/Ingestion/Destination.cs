@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// A destination describe how the data is indexed on the Algolia side.
 /// </summary>
 [DataContract(Name = "Destination")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Destination
 {
 
@@ -86,13 +85,13 @@ public partial class Destination
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
   [DataMember(Name = "updatedAt")]
-  public string? UpdatedAt { get; set; }
+  public string UpdatedAt { get; set; }
 
   /// <summary>
   /// Gets or Sets AuthenticationID
   /// </summary>
   [DataMember(Name = "authenticationID")]
-  public string? AuthenticationID { get; set; }
+  public string AuthenticationID { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

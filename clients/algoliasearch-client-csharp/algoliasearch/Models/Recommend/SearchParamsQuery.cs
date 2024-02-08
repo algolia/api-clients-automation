@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// SearchParamsQuery
 /// </summary>
 [DataContract(Name = "searchParamsQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchParamsQuery
 {
   /// <summary>
@@ -38,7 +37,7 @@ public partial class SearchParamsQuery
   /// </summary>
   /// <value>Text to search for in an index.</value>
   [DataMember(Name = "query")]
-  public string? Query { get; set; }
+  public string Query { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

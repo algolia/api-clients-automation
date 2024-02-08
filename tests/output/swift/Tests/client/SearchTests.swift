@@ -156,7 +156,9 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: TestNullString(),
+
                 objectID: "my-object-id",
+
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -169,7 +171,9 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
+
                 objectID: TestNullString(),
+
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -182,7 +186,9 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
+
                 objectID: "my-object-id",
+
                 body: TestNullObject()
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)

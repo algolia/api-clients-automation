@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Source
 /// </summary>
 [DataContract(Name = "Source")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Source
 {
 
@@ -78,7 +77,7 @@ public partial class Source
   /// </summary>
   /// <value>The authentication UUID.</value>
   [DataMember(Name = "authenticationID")]
-  public string? AuthenticationID { get; set; }
+  public string AuthenticationID { get; set; }
 
   /// <summary>
   /// Date of creation (RFC3339 format).
@@ -92,7 +91,7 @@ public partial class Source
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
   [DataMember(Name = "updatedAt")]
-  public string? UpdatedAt { get; set; }
+  public string UpdatedAt { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

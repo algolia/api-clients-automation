@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The payload when creating a destination.
 /// </summary>
 [DataContract(Name = "DestinationCreate")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationCreate
 {
 
@@ -68,7 +67,7 @@ public partial class DestinationCreate
   /// </summary>
   /// <value>The authentication UUID.</value>
   [DataMember(Name = "authenticationID")]
-  public string? AuthenticationID { get; set; }
+  public string AuthenticationID { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

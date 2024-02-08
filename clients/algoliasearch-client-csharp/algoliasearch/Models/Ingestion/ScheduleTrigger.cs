@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The trigger information for a task of type 'schedule'.
 /// </summary>
 [DataContract(Name = "ScheduleTrigger")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ScheduleTrigger
 {
 
@@ -62,7 +61,7 @@ public partial class ScheduleTrigger
   /// </summary>
   /// <value>The last time the scheduled task ran (RFC3339 format).</value>
   [DataMember(Name = "lastRun")]
-  public string? LastRun { get; set; }
+  public string LastRun { get; set; }
 
   /// <summary>
   /// The next scheduled run of the task (RFC3339 format).

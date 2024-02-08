@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// Use this event to track when users convert after a previous Algolia request. For example, a user clicks on an item in the search results to view the product detail page. Then, the user adds the item to their shopping cart.  If you're building your category pages with Algolia, you'll also use this event. 
 /// </summary>
 [DataContract(Name = "ConvertedObjectIDsAfterSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ConvertedObjectIDsAfterSearch
 {
 
@@ -96,7 +95,7 @@ public partial class ConvertedObjectIDsAfterSearch
   /// </summary>
   /// <value>An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. </value>
   [DataMember(Name = "authenticatedUserToken")]
-  public string? AuthenticatedUserToken { get; set; }
+  public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
   /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. 

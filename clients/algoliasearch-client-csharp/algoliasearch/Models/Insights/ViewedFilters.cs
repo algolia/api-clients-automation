@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// Use this method to capture active filters. For example, when browsing a category page, users see content filtered on that specific category. 
 /// </summary>
 [DataContract(Name = "ViewedFilters")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ViewedFilters
 {
 
@@ -87,7 +86,7 @@ public partial class ViewedFilters
   /// </summary>
   /// <value>An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. </value>
   [DataMember(Name = "authenticatedUserToken")]
-  public string? AuthenticatedUserToken { get; set; }
+  public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
   /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. 

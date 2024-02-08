@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// SaveObjectResponse
 /// </summary>
 [DataContract(Name = "saveObjectResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SaveObjectResponse
 {
   /// <summary>
@@ -61,7 +60,7 @@ public partial class SaveObjectResponse
   /// </summary>
   /// <value>Unique object identifier.</value>
   [DataMember(Name = "objectID")]
-  public string? ObjectID { get; set; }
+  public string ObjectID { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

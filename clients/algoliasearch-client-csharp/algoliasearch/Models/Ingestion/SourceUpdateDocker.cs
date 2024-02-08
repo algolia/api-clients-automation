@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceUpdateDocker
 /// </summary>
 [DataContract(Name = "SourceUpdateDocker")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceUpdateDocker
 {
 
@@ -51,14 +50,14 @@ public partial class SourceUpdateDocker
   /// </summary>
   /// <value>The name of the image to pull.</value>
   [DataMember(Name = "image")]
-  public string? Image { get; set; }
+  public string Image { get; set; }
 
   /// <summary>
   /// The version of the image, defaults to `latest`.
   /// </summary>
   /// <value>The version of the image, defaults to `latest`.</value>
   [DataMember(Name = "version")]
-  public string? VarVersion { get; set; }
+  public string VarVersion { get; set; }
 
   /// <summary>
   /// The configuration of the spec.

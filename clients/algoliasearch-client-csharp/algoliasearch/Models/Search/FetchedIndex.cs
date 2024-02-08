@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// FetchedIndex
 /// </summary>
 [DataContract(Name = "fetchedIndex")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class FetchedIndex
 {
   /// <summary>
@@ -124,7 +123,7 @@ public partial class FetchedIndex
   /// </summary>
   /// <value>Only present if the index is a replica. Contains the name of the related primary index.</value>
   [DataMember(Name = "primary")]
-  public string? Primary { get; set; }
+  public string Primary { get; set; }
 
   /// <summary>
   /// Only present if the index is a primary index with replicas. Contains the names of all linked replicas.

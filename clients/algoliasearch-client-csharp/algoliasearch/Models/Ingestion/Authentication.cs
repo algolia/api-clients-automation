@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// An authentication is used to login into a Source or a Destination.
 /// </summary>
 [DataContract(Name = "Authentication")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Authentication
 {
 
@@ -92,7 +91,7 @@ public partial class Authentication
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
   [DataMember(Name = "updatedAt")]
-  public string? UpdatedAt { get; set; }
+  public string UpdatedAt { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

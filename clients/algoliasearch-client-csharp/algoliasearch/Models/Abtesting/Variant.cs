@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Abtesting;
 /// Variant
 /// </summary>
 [DataContract(Name = "variant")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Variant
 {
   /// <summary>
@@ -141,7 +140,7 @@ public partial class Variant
   /// Gets or Sets FilterEffects
   /// </summary>
   [DataMember(Name = "filterEffects")]
-  public FilterEffects? FilterEffects { get; set; }
+  public FilterEffects FilterEffects { get; set; }
 
   /// <summary>
   /// A/B test index.

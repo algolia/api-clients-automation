@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseRecommendationsQuery
 /// </summary>
 [DataContract(Name = "baseRecommendationsQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseRecommendationsQuery
 {
 
@@ -59,13 +58,13 @@ public partial class BaseRecommendationsQuery
   /// Gets or Sets QueryParameters
   /// </summary>
   [DataMember(Name = "queryParameters")]
-  public SearchParamsObject? QueryParameters { get; set; }
+  public SearchParamsObject QueryParameters { get; set; }
 
   /// <summary>
   /// Gets or Sets FallbackParameters
   /// </summary>
   [DataMember(Name = "fallbackParameters")]
-  public SearchParamsObject? FallbackParameters { get; set; }
+  public SearchParamsObject FallbackParameters { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

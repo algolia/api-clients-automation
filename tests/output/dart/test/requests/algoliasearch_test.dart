@@ -278,7 +278,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"c,d"}""");
+            """{"query":"parameters","myParam":"c%2Cd"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),
@@ -315,7 +315,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"true,true,false"}""");
+            """{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),
@@ -351,7 +351,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"1,2"}""");
+            """{"query":"parameters","myParam":"1%2C2"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),

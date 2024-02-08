@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// IngestionTask
 /// </summary>
 [DataContract(Name = "Task")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class IngestionTask
 {
 
@@ -89,7 +88,7 @@ public partial class IngestionTask
   /// Gets or Sets Input
   /// </summary>
   [DataMember(Name = "input")]
-  public TaskInput? Input { get; set; }
+  public TaskInput Input { get; set; }
 
   /// <summary>
   /// Whether the task is enabled or not.
@@ -117,7 +116,7 @@ public partial class IngestionTask
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
   [DataMember(Name = "updatedAt")]
-  public string? UpdatedAt { get; set; }
+  public string UpdatedAt { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

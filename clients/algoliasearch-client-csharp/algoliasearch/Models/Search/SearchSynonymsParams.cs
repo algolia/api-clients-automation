@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// SearchSynonymsParams
 /// </summary>
 [DataContract(Name = "searchSynonymsParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchSynonymsParams
 {
 
@@ -44,7 +43,7 @@ public partial class SearchSynonymsParams
   /// </summary>
   /// <value>Text to search for in an index.</value>
   [DataMember(Name = "query")]
-  public string? Query { get; set; }
+  public string Query { get; set; }
 
   /// <summary>
   /// Page to retrieve (the first page is `0`, not `1`).

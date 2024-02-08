@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.QuerySuggestions;
 /// Query Suggestions configuration.
 /// </summary>
 [DataContract(Name = "QuerySuggestionsConfigurationWithIndex")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class QuerySuggestionsConfigurationWithIndex
 {
   /// <summary>
@@ -60,7 +59,7 @@ public partial class QuerySuggestionsConfigurationWithIndex
   /// Gets or Sets Languages
   /// </summary>
   [DataMember(Name = "languages")]
-  public Languages? Languages { get; set; }
+  public Languages Languages { get; set; }
 
   /// <summary>
   /// Patterns to exclude from query suggestions.

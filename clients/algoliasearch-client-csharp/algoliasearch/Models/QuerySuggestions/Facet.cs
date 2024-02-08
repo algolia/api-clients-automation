@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.QuerySuggestions;
 /// Facet to use as category.
 /// </summary>
 [DataContract(Name = "Facet")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Facet
 {
   /// <summary>
@@ -38,7 +37,7 @@ public partial class Facet
   /// </summary>
   /// <value>Facet name.</value>
   [DataMember(Name = "attribute")]
-  public string? Attribute { get; set; }
+  public string Attribute { get; set; }
 
   /// <summary>
   /// Number of suggestions.

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseRecommendedForYouQuery
 /// </summary>
 [DataContract(Name = "baseRecommendedForYouQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseRecommendedForYouQuery
 {
 
@@ -50,13 +49,13 @@ public partial class BaseRecommendedForYouQuery
   /// Gets or Sets QueryParameters
   /// </summary>
   [DataMember(Name = "queryParameters")]
-  public RecommendedForYouQueryParameters? QueryParameters { get; set; }
+  public RecommendedForYouQueryParameters QueryParameters { get; set; }
 
   /// <summary>
   /// Gets or Sets FallbackParameters
   /// </summary>
   [DataMember(Name = "fallbackParameters")]
-  public RecommendedForYouQueryParameters? FallbackParameters { get; set; }
+  public RecommendedForYouQueryParameters FallbackParameters { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

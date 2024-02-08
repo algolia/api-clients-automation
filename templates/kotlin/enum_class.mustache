@@ -6,7 +6,7 @@ import kotlinx.serialization.*
  */
 {{/description}}
 @Serializable
-public enum class {{classname}}(public val value: kotlin.String){{>oneof_parent}} {
+public enum class {{classname}}(public val value: kotlin.String){{> oneof_parent}} {
 {{#allowableValues}}{{#enumVars}}
     {{#enumDescription}}
     /**

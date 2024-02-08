@@ -1,4 +1,4 @@
-package algoliasearch.methods.requests
+package algoliasearch.requests
 
 import algoliasearch.EchoInterceptor
 import algoliasearch.api.IngestionClient
@@ -264,7 +264,7 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "/test/all",
-      parameters = Some(Map("query" -> "parameters"))
+      parameters = Some(Map("query" -> "parameters with space"))
     )
 
     Await.ready(future, Duration.Inf)
@@ -273,7 +273,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/test/all")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters%20with%20space"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -543,7 +543,7 @@ class IngestionTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"c,d"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"c%2Cd"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -574,7 +574,8 @@ class IngestionTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"true,true,false"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery =
+      parse("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -605,7 +606,7 @@ class IngestionTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"1,2"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"1%2C2"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -764,6 +765,34 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/authentications")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
+  }
+
+  test("getAuthentications with query params") {
+    val (client, echo) = testClient()
+    val future = client.getAuthentications(
+      itemsPerPage = Some(10),
+      page = Some(5),
+      `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
+      platform = Some(Seq(PlatformNone.withName("none"))),
+      sort = Some(AuthenticationSortKeys.withName("createdAt")),
+      order = Some(OrderKeys.withName("desc"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/authentications")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse(
+      """{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}"""
+    ).asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
   }
 
   test("getDestination") {

@@ -79,13 +79,14 @@ void main() {
       call: (client) => client.customGet(
         path: "/test/all",
         parameters: {
-          'query': "parameters",
+          'query': "parameters with space",
         },
       ),
       intercept: (request) {
         expectPath(request.path, '/1/test/all');
         expect(request.method, 'get');
-        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectParams(request.queryParameters,
+            """{"query":"parameters%20with%20space"}""");
         expect(request.body, null);
       },
     ),
@@ -366,7 +367,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"c,d"}""");
+            """{"query":"parameters","myParam":"c%2Cd"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),
@@ -403,7 +404,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"true,true,false"}""");
+            """{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),
@@ -439,7 +440,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"1,2"}""");
+            """{"query":"parameters","myParam":"1%2C2"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),

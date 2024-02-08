@@ -237,10 +237,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -260,7 +260,7 @@ public class IngestionClientRequestTests
   {
     await _client.CustomGetAsync(
       "/test/all",
-      new Dictionary<string, object> { { "query", "parameters" } }
+      new Dictionary<string, object> { { "query", "parameters with space" } }
     );
 
     var req = _echo.LastResponse;
@@ -268,17 +268,17 @@ public class IngestionClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\"}"
+      "{\"query\":\"parameters%20with%20space\"}"
     );
     Assert.NotNull(expectedQuery);
 
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -318,10 +318,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -350,10 +350,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -382,10 +382,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -414,10 +414,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
@@ -456,10 +456,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
@@ -498,10 +498,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -530,10 +530,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -561,17 +561,17 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\",\"myParam\":\"c,d\"}"
+      "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}"
     );
     Assert.NotNull(expectedQuery);
 
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -599,17 +599,17 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}"
+      "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
     );
     Assert.NotNull(expectedQuery);
 
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -637,17 +637,17 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\",\"myParam\":\"1,2\"}"
+      "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
     );
     Assert.NotNull(expectedQuery);
 
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -687,10 +687,10 @@ public class IngestionClientRequestTests
     var actualQuery = req.QueryParameters;
     Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-    foreach (var query in actualQuery)
+    foreach (var actual in actualQuery)
     {
-      expectedQuery.TryGetValue(query.Key, out var result);
-      Assert.Equal(query.Value, result);
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
     }
   }
 
@@ -780,6 +780,41 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/authentications", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getAuthentications with query params")]
+  public async Task GetAuthenticationsTest1()
+  {
+    await _client.GetAuthenticationsAsync(
+      10,
+      5,
+      new List<AuthenticationType>
+      {
+        Enum.Parse<AuthenticationType>("Basic"),
+        Enum.Parse<AuthenticationType>("Algolia")
+      },
+      new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
+      Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
+      Enum.Parse<OrderKeys>("Desc")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/authentications", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"itemsPerPage\":\"10\",\"page\":\"5\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"desc\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
   }
 
   [Fact(DisplayName = "getDestination")]

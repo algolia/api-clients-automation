@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Payload to partially update an Authentication.
 /// </summary>
 [DataContract(Name = "AuthenticationUpdate")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthenticationUpdate
 {
 
@@ -50,13 +49,13 @@ public partial class AuthenticationUpdate
   /// </summary>
   /// <value>An human readable name describing the object.</value>
   [DataMember(Name = "name")]
-  public string? Name { get; set; }
+  public string Name { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
   /// </summary>
   [DataMember(Name = "input")]
-  public AuthInputPartial? Input { get; set; }
+  public AuthInputPartial Input { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

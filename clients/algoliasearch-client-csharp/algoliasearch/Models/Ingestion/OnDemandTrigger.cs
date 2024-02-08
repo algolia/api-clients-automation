@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The trigger information of a task of type `onDemand`.
 /// </summary>
 [DataContract(Name = "OnDemandTrigger")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class OnDemandTrigger
 {
 
@@ -51,7 +50,7 @@ public partial class OnDemandTrigger
   /// </summary>
   /// <value>The last time the scheduled task ran (RFC3339 format).</value>
   [DataMember(Name = "lastRun")]
-  public string? LastRun { get; set; }
+  public string LastRun { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// Recommend rules search parameters.
 /// </summary>
 [DataContract(Name = "searchRecommendRulesParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchRecommendRulesParams
 {
   /// <summary>
@@ -38,14 +37,14 @@ public partial class SearchRecommendRulesParams
   /// </summary>
   /// <value>Full-text query.</value>
   [DataMember(Name = "query")]
-  public string? Query { get; set; }
+  public string Query { get; set; }
 
   /// <summary>
   /// Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
   /// </summary>
   /// <value>Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).</value>
   [DataMember(Name = "context")]
-  public string? Context { get; set; }
+  public string Context { get; set; }
 
   /// <summary>
   /// Requested page (the first page is page 0).
