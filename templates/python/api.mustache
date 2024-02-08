@@ -1,5 +1,5 @@
-{{>partial_header}}
-{{>imports}}
+{{> partial_header}}
+{{> imports}}
 
 {{#operations}}{{#operation}}{{#imports}}
 from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
@@ -78,7 +78,7 @@ class {{classname}}:
 
     {{#operation}}
 
-    async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[str]:
+    async def {{operationId}}_with_http_info{{> partial_api_args}} -> ApiResponse[str]:
         """
         {{#isDeprecated}}
         (Deprecated) {{operationId}}
@@ -153,7 +153,7 @@ class {{classname}}:
             {{/vendorExtensions}}
         )
 
-    async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+    async def {{operationId}}{{> partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
         {{#isDeprecated}}
         (Deprecated) {{operationId}}

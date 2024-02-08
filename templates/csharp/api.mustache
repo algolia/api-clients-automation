@@ -22,7 +22,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{>visibility}} interface {{interfacePrefix}}{{classname}}
+  {{> visibility}} interface {{interfacePrefix}}{{classname}}
   {
       {{#operation}}
       /// <summary>
@@ -68,7 +68,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
+  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       private readonly HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;

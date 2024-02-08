@@ -6,5 +6,33 @@
       "path": "/1/authentications",
       "method": "GET"
     }
+  },
+  {
+    "testName": "getAuthentications with query params",
+    "parameters": {
+      "itemsPerPage": 10,
+      "page": 5,
+      "type": [
+        "basic",
+        "algolia"
+      ],
+      "platform": [
+        "none"
+      ],
+      "sort": "createdAt",
+      "order": "desc"
+    },
+    "request": {
+      "path": "/1/authentications",
+      "method": "GET",
+      "queryParameters": {
+        "itemsPerPage": "10",
+        "page": "5",
+        "type": "basic%2Calgolia",
+        "platform": "none",
+        "sort": "createdAt",
+        "order": "desc"
+      }
+    }
   }
 ]

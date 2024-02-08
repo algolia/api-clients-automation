@@ -51,12 +51,10 @@ void expectPath(String actual, String expected) {
 /// parameters given as a JSON string.
 void expectParams(Map<String, dynamic> actual, String expected) {
   final expectedMap = jsonDecode(expected) as Map<String, dynamic>;
-  final actualMap = Map<String, String>.from(actual.map((key, value) =>
-      MapEntry(key, value is Iterable ? value.join(",") : value.toString())));
   expect(
-    const DeepCollectionEquality.unordered().equals(actualMap, expectedMap),
+    const DeepCollectionEquality.unordered().equals(actual, expectedMap),
     true,
-    reason: "expected params: $expectedMap, \nactual params: $actualMap",
+    reason: "expected params: $expectedMap, \nactual params: $actual",
   );
 }
 
