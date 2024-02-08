@@ -32,16 +32,12 @@ public static class ClientUtils
             entries.Add(ParameterToString(entry));
           return string.Join(",", entries);
         }
-
-             if (obj.GetType().IsClass)
-              {
-                if (obj is AbstractSchema schema)
-                {
-                  return ParameterToString(schema.ActualInstance);
-                }
-              }
       case Enum when HasEnumMemberAttrValue(obj):
         return GetEnumMemberAttrValue(obj);
+      case AbstractSchema schema when obj.GetType().IsClass:
+        {
+          return ParameterToString(schema.ActualInstance);
+        }
       default:
         return Convert.ToString(obj, CultureInfo.InvariantCulture);
     }
