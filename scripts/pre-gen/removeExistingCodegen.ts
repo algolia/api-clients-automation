@@ -23,9 +23,7 @@ export async function removeExistingCodegen({
   switch (language) {
     case 'csharp':
       clientModel = clientName;
-      clientApi = clientName;
-      baseModelFolder = '';
-      baseApiFolder = '';
+      clientApi = `${clientName}*.cs`;
       break;
     case 'go':
       clientModel = clientName.toLowerCase();

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The window parameter represents the holds the dates used to query the Observability data from the database in a given window.
 /// </summary>
 [DataContract(Name = "Window")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Window
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class Window
   /// A date in format RFC3339 representing the oldest possible data in query window.
   /// </summary>
   /// <value>A date in format RFC3339 representing the oldest possible data in query window.</value>
-  [DataMember(Name = "startDate", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "startDate")]
   public string StartDate { get; set; }
 
   /// <summary>
   /// A date in format RFC3339 representing the newest possible data in query window.
   /// </summary>
   /// <value>A date in format RFC3339 representing the newest possible data in query window.</value>
-  [DataMember(Name = "endDate", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "endDate")]
   public string EndDate { get; set; }
 
   /// <summary>

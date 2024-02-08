@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// ListIndicesResponse
 /// </summary>
 [DataContract(Name = "listIndicesResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ListIndicesResponse
 {
   /// <summary>
@@ -44,14 +43,14 @@ public partial class ListIndicesResponse
   /// All indices in your Algolia application.
   /// </summary>
   /// <value>All indices in your Algolia application.</value>
-  [DataMember(Name = "items", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "items")]
   public List<FetchedIndex> Items { get; set; }
 
   /// <summary>
   /// Number of pages.
   /// </summary>
   /// <value>Number of pages.</value>
-  [DataMember(Name = "nbPages", EmitDefaultValue = false)]
+  [DataMember(Name = "nbPages")]
   public int? NbPages { get; set; }
 
   /// <summary>

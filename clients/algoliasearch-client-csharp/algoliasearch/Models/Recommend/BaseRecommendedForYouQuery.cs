@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseRecommendedForYouQuery
 /// </summary>
 [DataContract(Name = "baseRecommendedForYouQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseRecommendedForYouQuery
 {
 
   /// <summary>
   /// Gets or Sets Model
   /// </summary>
-  [DataMember(Name = "model", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "model")]
   public RecommendedForYouModel Model { get; set; }
   /// <summary>
   /// Initializes a new instance of the BaseRecommendedForYouQuery class.
@@ -49,13 +48,13 @@ public partial class BaseRecommendedForYouQuery
   /// <summary>
   /// Gets or Sets QueryParameters
   /// </summary>
-  [DataMember(Name = "queryParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "queryParameters")]
   public RecommendedForYouQueryParameters QueryParameters { get; set; }
 
   /// <summary>
   /// Gets or Sets FallbackParameters
   /// </summary>
-  [DataMember(Name = "fallbackParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "fallbackParameters")]
   public RecommendedForYouQueryParameters FallbackParameters { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// Additional search parameters.
 /// </summary>
 [DataContract(Name = "varParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Params
 {
   /// <summary>
@@ -36,25 +35,25 @@ public partial class Params
   /// <summary>
   /// Gets or Sets Query
   /// </summary>
-  [DataMember(Name = "query", EmitDefaultValue = false)]
+  [DataMember(Name = "query")]
   public ConsequenceQuery Query { get; set; }
 
   /// <summary>
   /// Gets or Sets AutomaticFacetFilters
   /// </summary>
-  [DataMember(Name = "automaticFacetFilters", EmitDefaultValue = false)]
+  [DataMember(Name = "automaticFacetFilters")]
   public AutomaticFacetFilters AutomaticFacetFilters { get; set; }
 
   /// <summary>
   /// Gets or Sets AutomaticOptionalFacetFilters
   /// </summary>
-  [DataMember(Name = "automaticOptionalFacetFilters", EmitDefaultValue = false)]
+  [DataMember(Name = "automaticOptionalFacetFilters")]
   public AutomaticFacetFilters AutomaticOptionalFacetFilters { get; set; }
 
   /// <summary>
   /// Gets or Sets RenderingContent
   /// </summary>
-  [DataMember(Name = "renderingContent", EmitDefaultValue = false)]
+  [DataMember(Name = "renderingContent")]
   public RenderingContent RenderingContent { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Enable or turn off the built-in Algolia stop words for a specific language.
 /// </summary>
 [DataContract(Name = "dictionarySettingsParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DictionarySettingsParams
 {
   /// <summary>
@@ -43,7 +42,7 @@ public partial class DictionarySettingsParams
   /// <summary>
   /// Gets or Sets DisableStandardEntries
   /// </summary>
-  [DataMember(Name = "disableStandardEntries", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "disableStandardEntries")]
   public StandardEntries DisableStandardEntries { get; set; }
 
   /// <summary>

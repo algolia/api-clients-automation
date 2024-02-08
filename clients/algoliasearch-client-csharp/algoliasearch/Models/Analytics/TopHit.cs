@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Analytics;
 /// TopHit
 /// </summary>
 [DataContract(Name = "topHit")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class TopHit
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class TopHit
   /// </summary>
   /// <param name="hit">Hit. (required).</param>
   /// <param name="count">Number of occurrences. (required).</param>
-  public TopHit(string hit, int? count)
+  public TopHit(string hit, int count)
   {
     Hit = hit ?? throw new ArgumentNullException(nameof(hit));
     Count = count;
@@ -46,15 +45,15 @@ public partial class TopHit
   /// Hit.
   /// </summary>
   /// <value>Hit.</value>
-  [DataMember(Name = "hit", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "hit")]
   public string Hit { get; set; }
 
   /// <summary>
   /// Number of occurrences.
   /// </summary>
   /// <value>Number of occurrences.</value>
-  [DataMember(Name = "count", IsRequired = true, EmitDefaultValue = false)]
-  public int? Count { get; set; }
+  [DataMember(Name = "count")]
+  public int Count { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

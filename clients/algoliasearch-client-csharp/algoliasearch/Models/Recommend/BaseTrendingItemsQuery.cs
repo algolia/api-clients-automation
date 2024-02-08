@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseTrendingItemsQuery
 /// </summary>
 [DataContract(Name = "baseTrendingItemsQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseTrendingItemsQuery
 {
 
   /// <summary>
   /// Gets or Sets Model
   /// </summary>
-  [DataMember(Name = "model", EmitDefaultValue = false)]
-  public TrendingItemsModel Model { get; set; }
+  [DataMember(Name = "model")]
+  public TrendingItemsModel? Model { get; set; }
   /// <summary>
   /// Initializes a new instance of the BaseTrendingItemsQuery class.
   /// </summary>
@@ -43,26 +42,26 @@ public partial class BaseTrendingItemsQuery
   /// Facet name for trending models.
   /// </summary>
   /// <value>Facet name for trending models.</value>
-  [DataMember(Name = "facetName", EmitDefaultValue = false)]
+  [DataMember(Name = "facetName")]
   public string FacetName { get; set; }
 
   /// <summary>
   /// Facet value for trending models.
   /// </summary>
   /// <value>Facet value for trending models.</value>
-  [DataMember(Name = "facetValue", EmitDefaultValue = false)]
+  [DataMember(Name = "facetValue")]
   public string FacetValue { get; set; }
 
   /// <summary>
   /// Gets or Sets QueryParameters
   /// </summary>
-  [DataMember(Name = "queryParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "queryParameters")]
   public SearchParamsObject QueryParameters { get; set; }
 
   /// <summary>
   /// Gets or Sets FallbackParameters
   /// </summary>
-  [DataMember(Name = "fallbackParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "fallbackParameters")]
   public SearchParamsObject FallbackParameters { get; set; }
 
   /// <summary>

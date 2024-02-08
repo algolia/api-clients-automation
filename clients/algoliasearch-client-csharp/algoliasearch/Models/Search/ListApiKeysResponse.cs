@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// ListApiKeysResponse
 /// </summary>
 [DataContract(Name = "listApiKeysResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ListApiKeysResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class ListApiKeysResponse
   /// API keys.
   /// </summary>
   /// <value>API keys.</value>
-  [DataMember(Name = "keys", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "keys")]
   public List<GetApiKeyResponse> Keys { get; set; }
 
   /// <summary>

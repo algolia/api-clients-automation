@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Authentication input to connect to a Google service (e.g. BigQuery).
 /// </summary>
 [DataContract(Name = "AuthGoogleServiceAccount")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthGoogleServiceAccount
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class AuthGoogleServiceAccount
   /// Email address of the Service Account.
   /// </summary>
   /// <value>Email address of the Service Account.</value>
-  [DataMember(Name = "clientEmail", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "clientEmail")]
   public string ClientEmail { get; set; }
 
   /// <summary>
   /// Private key of the Service Account.
   /// </summary>
   /// <value>Private key of the Service Account.</value>
-  [DataMember(Name = "privateKey", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "privateKey")]
   public string PrivateKey { get; set; }
 
   /// <summary>

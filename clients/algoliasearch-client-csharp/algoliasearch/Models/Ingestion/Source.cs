@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Ingestion;
 /// Source
 /// </summary>
 [DataContract(Name = "Source")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Source
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "type")]
   public SourceType Type { get; set; }
   /// <summary>
   /// Initializes a new instance of the Source class.
@@ -58,40 +57,40 @@ public partial class Source
   /// The source UUID.
   /// </summary>
   /// <value>The source UUID.</value>
-  [DataMember(Name = "sourceID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "sourceID")]
   public string SourceID { get; set; }
 
   /// <summary>
   /// Gets or Sets Name
   /// </summary>
-  [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
   /// </summary>
-  [DataMember(Name = "input", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "input")]
   public SourceInput Input { get; set; }
 
   /// <summary>
   /// The authentication UUID.
   /// </summary>
   /// <value>The authentication UUID.</value>
-  [DataMember(Name = "authenticationID", EmitDefaultValue = false)]
+  [DataMember(Name = "authenticationID")]
   public string AuthenticationID { get; set; }
 
   /// <summary>
   /// Date of creation (RFC3339 format).
   /// </summary>
   /// <value>Date of creation (RFC3339 format).</value>
-  [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "createdAt")]
   public string CreatedAt { get; set; }
 
   /// <summary>
   /// Date of last update (RFC3339 format).
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
-  [DataMember(Name = "updatedAt", EmitDefaultValue = false)]
+  [DataMember(Name = "updatedAt")]
   public string UpdatedAt { get; set; }
 
   /// <summary>

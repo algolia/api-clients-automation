@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseTrendingFacetsQuery
 /// </summary>
 [DataContract(Name = "baseTrendingFacetsQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseTrendingFacetsQuery
 {
 
   /// <summary>
   /// Gets or Sets Model
   /// </summary>
-  [DataMember(Name = "model", EmitDefaultValue = false)]
-  public TrendingFacetsModel Model { get; set; }
+  [DataMember(Name = "model")]
+  public TrendingFacetsModel? Model { get; set; }
   /// <summary>
   /// Initializes a new instance of the BaseTrendingFacetsQuery class.
   /// </summary>
@@ -50,7 +49,7 @@ public partial class BaseTrendingFacetsQuery
   /// Facet name for trending models.
   /// </summary>
   /// <value>Facet name for trending models.</value>
-  [DataMember(Name = "facetName", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "facetName")]
   public string FacetName { get; set; }
 
   /// <summary>

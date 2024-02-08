@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// ListDestinationsResponse
 /// </summary>
 [DataContract(Name = "listDestinationsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ListDestinationsResponse
 {
   /// <summary>
@@ -45,13 +44,13 @@ public partial class ListDestinationsResponse
   /// <summary>
   /// Gets or Sets Destinations
   /// </summary>
-  [DataMember(Name = "destinations", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "destinations")]
   public List<Destination> Destinations { get; set; }
 
   /// <summary>
   /// Gets or Sets Pagination
   /// </summary>
-  [DataMember(Name = "pagination", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "pagination")]
   public Pagination Pagination { get; set; }
 
   /// <summary>

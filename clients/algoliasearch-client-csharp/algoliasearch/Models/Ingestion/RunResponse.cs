@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The response from the run task API, containing an Observability Run ID and the time it was created at.
 /// </summary>
 [DataContract(Name = "RunResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class RunResponse
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class RunResponse
   /// The run UUID.
   /// </summary>
   /// <value>The run UUID.</value>
-  [DataMember(Name = "runID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "runID")]
   public string RunID { get; set; }
 
   /// <summary>
   /// Date of creation (RFC3339 format).
   /// </summary>
   /// <value>Date of creation (RFC3339 format).</value>
-  [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "createdAt")]
   public string CreatedAt { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// Error.
 /// </summary>
 [DataContract(Name = "ErrorBase")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ErrorBase
 {
   /// <summary>
@@ -37,7 +36,7 @@ public partial class ErrorBase
   /// <summary>
   /// Gets or Sets Message
   /// </summary>
-  [DataMember(Name = "message", EmitDefaultValue = false)]
+  [DataMember(Name = "message")]
   public string Message { get; set; }
 
   /// <summary>

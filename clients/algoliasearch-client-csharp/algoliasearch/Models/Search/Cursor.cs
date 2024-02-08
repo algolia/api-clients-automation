@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Cursor
 /// </summary>
 [DataContract(Name = "cursor")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Cursor
 {
   /// <summary>
@@ -37,7 +36,7 @@ public partial class Cursor
   /// Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. 
   /// </summary>
   /// <value>Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. </value>
-  [DataMember(Name = "cursor", EmitDefaultValue = false)]
+  [DataMember(Name = "cursor")]
   public string VarCursor { get; set; }
 
   /// <summary>

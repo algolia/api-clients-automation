@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Search;
 /// MultipleBatchRequest
 /// </summary>
 [DataContract(Name = "multipleBatchRequest")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class MultipleBatchRequest
 {
 
   /// <summary>
   /// Gets or Sets Action
   /// </summary>
-  [DataMember(Name = "action", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "action")]
   public Action Action { get; set; }
   /// <summary>
   /// Initializes a new instance of the MultipleBatchRequest class.
@@ -54,14 +53,14 @@ public partial class MultipleBatchRequest
   /// Operation arguments (varies with specified `action`).
   /// </summary>
   /// <value>Operation arguments (varies with specified `action`).</value>
-  [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "body")]
   public object Body { get; set; }
 
   /// <summary>
   /// Index to target for this operation.
   /// </summary>
   /// <value>Index to target for this operation.</value>
-  [DataMember(Name = "indexName", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "indexName")]
   public string IndexName { get; set; }
 
   /// <summary>

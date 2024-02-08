@@ -23,7 +23,7 @@ public static class SearchPlayground
 
     var searchConfig = new SearchConfig(configuration.AppId, configuration.AdminApiKey)
     {
-      Compression = CompressionType.NONE
+      Compression = CompressionType.None
     };
 
 
@@ -34,7 +34,7 @@ public static class SearchPlayground
 
     var metisClient = new SearchClient(new SearchConfig(configuration.MetisAppId, configuration.MetisApiKey)
     {
-      Compression = CompressionType.NONE
+      Compression = CompressionType.None
     });
 
     // Save a single object

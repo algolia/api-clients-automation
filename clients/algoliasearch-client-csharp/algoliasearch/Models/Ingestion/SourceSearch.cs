@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceSearch
 /// </summary>
 [DataContract(Name = "SourceSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceSearch
 {
   /// <summary>
@@ -43,7 +42,7 @@ public partial class SourceSearch
   /// <summary>
   /// Gets or Sets SourceIDs
   /// </summary>
-  [DataMember(Name = "sourceIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "sourceIDs")]
   public List<string> SourceIDs { get; set; }
 
   /// <summary>

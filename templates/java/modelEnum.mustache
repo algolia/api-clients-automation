@@ -2,7 +2,7 @@
  * {{{description}}}{{^description}}Gets or Sets {{{name}}}{{/description}}
  */
  {{#vendorExtensions.x-one-of-element}}@JsonDeserialize(as = {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.class){{/vendorExtensions.x-one-of-element}}
-{{>additionalEnumTypeAnnotations}}public enum {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}{{#vendorExtensions.x-one-of-element}} implements {{#vendorExtensions.x-one-of-element-parents}}{{parent_classname}}{{^-last}}, {{/-last}}{{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}  {
+{{> additionalEnumTypeAnnotations}}public enum {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}{{#vendorExtensions.x-one-of-element}} implements {{#vendorExtensions.x-one-of-element-parents}}{{parent_classname}}{{^-last}}, {{/-last}}{{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}  {
   {{#allowableValues}}{{#enumVars}}
   {{#enumDescription}}/**
    * {{{.}}}

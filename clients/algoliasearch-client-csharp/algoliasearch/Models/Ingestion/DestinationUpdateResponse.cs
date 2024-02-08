@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Response from the API when the Destination is successfully updated.
 /// </summary>
 [DataContract(Name = "DestinationUpdateResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationUpdateResponse
 {
   /// <summary>
@@ -48,21 +47,21 @@ public partial class DestinationUpdateResponse
   /// The destination UUID.
   /// </summary>
   /// <value>The destination UUID.</value>
-  [DataMember(Name = "destinationID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "destinationID")]
   public string DestinationID { get; set; }
 
   /// <summary>
   /// An human readable name describing the object.
   /// </summary>
   /// <value>An human readable name describing the object.</value>
-  [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Date of last update (RFC3339 format).
   /// </summary>
   /// <value>Date of last update (RFC3339 format).</value>
-  [DataMember(Name = "updatedAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "updatedAt")]
   public string UpdatedAt { get; set; }
 
   /// <summary>

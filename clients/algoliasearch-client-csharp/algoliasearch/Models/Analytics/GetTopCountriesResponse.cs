@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Analytics;
 /// GetTopCountriesResponse
 /// </summary>
 [DataContract(Name = "getTopCountriesResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetTopCountriesResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class GetTopCountriesResponse
   /// Countries
   /// </summary>
   /// <value>Countries</value>
-  [DataMember(Name = "countries", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "countries")]
   public List<TopCountry> Countries { get; set; }
 
   /// <summary>

@@ -8,7 +8,6 @@
     [ComVisible({{{vendorExtensions.x-com-visible}}})]
     {{/vendorExtensions.x-com-visible}}
     [DataContract(Name = "{{{name}}}")]
-    [JsonObject(MemberSerialization.OptOut)]
     {{^useUnityWebRequest}}
     {{#discriminator}}
     [JsonConverter(typeof(JsonSubtypes), "{{{discriminatorName}}}")]
@@ -17,19 +16,19 @@
     {{/mappedModels}}
     {{/discriminator}}
     {{/useUnityWebRequest}}
-    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}
+    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}
     {
         {{#vars}}
         {{#items.isEnum}}
         {{#items}}
         {{^complexType}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
         {{/complexType}}
         {{/items}}
         {{/items.isEnum}}
         {{#isEnum}}
         {{^complexType}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
         {{/complexType}}
         {{/isEnum}}
         {{#isEnum}}
@@ -41,7 +40,7 @@
         /// <value>{{{.}}}</value>
         {{/description}}
         {{^conditionalSerialization}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -60,7 +59,7 @@
         {{/conditionalSerialization}}
         {{#conditionalSerialization}}
         {{#isReadOnly}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -78,7 +77,7 @@
         {{/isReadOnly}}
 
         {{^isReadOnly}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -177,7 +176,7 @@
         /// </summary>{{#description}}
         /// <value>{{{.}}}</value>{{/description}}
         {{^conditionalSerialization}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
@@ -199,7 +198,7 @@
         {{/conditionalSerialization}}
         {{#conditionalSerialization}}
         {{#isReadOnly}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
@@ -221,7 +220,7 @@
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
-        [DataMember(Name = "{{baseName}}"{{#required}}, IsRequired = true{{/required}}, EmitDefaultValue = false)]
+        [DataMember(Name = "{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -379,6 +378,6 @@
         {{/equatable}}
 
 {{#validatable}}
-{{>validatable}}
+{{> validatable}}
 {{/validatable}}
     }

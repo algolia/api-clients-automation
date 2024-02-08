@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// GetObjectsResponse
 /// </summary>
 [DataContract(Name = "getObjectsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetObjectsResponse<T>
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class GetObjectsResponse<T>
   /// Retrieved results.
   /// </summary>
   /// <value>Retrieved results.</value>
-  [DataMember(Name = "results", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "results")]
   public List<T> Results { get; set; }
 
   /// <summary>

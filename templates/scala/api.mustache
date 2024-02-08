@@ -114,7 +114,7 @@ class {{classname}}(
 {{/description}}
 {{/allParams}}
 */
-  def {{operationId}}{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{>methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}] = Future {
+  def {{operationId}}{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{> methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}] = Future {
     {{#requiredParams}}
     requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
     {{/requiredParams}}

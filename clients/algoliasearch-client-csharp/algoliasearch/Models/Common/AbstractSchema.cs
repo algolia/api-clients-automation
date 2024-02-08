@@ -1,48 +1,10 @@
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
 namespace Algolia.Search.Models.Common;
 
 /// <summary>
-///  Abstract base class for oneOf, anyOf schemas in the API specification
+///  Abstract base class for oneOf, anyOf schemas in the OpenAPI specification
 /// </summary>
 public abstract class AbstractSchema
 {
-  /// <summary>
-  ///  Custom JSON serializer
-  /// </summary>
-  public static readonly JsonSerializerSettings SerializerSettings = new()
-  {
-    // OpenAPI generated types generally hide default constructors.
-    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-    MissingMemberHandling = MissingMemberHandling.Error,
-    ContractResolver = new DefaultContractResolver
-    {
-      NamingStrategy = new CamelCaseNamingStrategy
-      {
-        OverrideSpecifiedNames = false
-      }
-    }
-  };
-
-  /// <summary>
-  ///  Custom JSON serializer for objects with additional properties
-  /// </summary>
-  public static readonly JsonSerializerSettings AdditionalPropertiesSerializerSettings = new JsonSerializerSettings
-  {
-    // OpenAPI generated types generally hide default constructors.
-    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-    MissingMemberHandling = MissingMemberHandling.Ignore,
-    ContractResolver = new DefaultContractResolver
-    {
-      NamingStrategy = new CamelCaseNamingStrategy
-      {
-        OverrideSpecifiedNames = false
-      }
-    }
-  };
-
   /// <summary>
   /// Gets or Sets the actual instance
   /// </summary>

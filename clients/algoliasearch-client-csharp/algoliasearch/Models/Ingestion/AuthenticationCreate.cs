@@ -23,21 +23,20 @@ namespace Algolia.Search.Models.Ingestion;
 /// The payload when creating an authentication.
 /// </summary>
 [DataContract(Name = "AuthenticationCreate")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthenticationCreate
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "type")]
   public AuthenticationType Type { get; set; }
 
   /// <summary>
   /// Gets or Sets Platform
   /// </summary>
-  [DataMember(Name = "platform", EmitDefaultValue = false)]
-  public Platform Platform { get; set; }
+  [DataMember(Name = "platform")]
+  public Platform? Platform { get; set; }
   /// <summary>
   /// Initializes a new instance of the AuthenticationCreate class.
   /// </summary>
@@ -60,13 +59,13 @@ public partial class AuthenticationCreate
   /// An human readable name describing the object.
   /// </summary>
   /// <value>An human readable name describing the object.</value>
-  [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
   /// </summary>
-  [DataMember(Name = "input", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "input")]
   public AuthInput Input { get; set; }
 
   /// <summary>

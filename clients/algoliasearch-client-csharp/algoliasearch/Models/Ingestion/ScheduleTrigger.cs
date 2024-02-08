@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Ingestion;
 /// The trigger information for a task of type 'schedule'.
 /// </summary>
 [DataContract(Name = "ScheduleTrigger")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ScheduleTrigger
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "type")]
   public ScheduleTriggerType Type { get; set; }
   /// <summary>
   /// Initializes a new instance of the ScheduleTrigger class.
@@ -54,21 +53,21 @@ public partial class ScheduleTrigger
   /// A cron expression that represent at which regularity the task should run.
   /// </summary>
   /// <value>A cron expression that represent at which regularity the task should run.</value>
-  [DataMember(Name = "cron", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "cron")]
   public string Cron { get; set; }
 
   /// <summary>
   /// The last time the scheduled task ran (RFC3339 format).
   /// </summary>
   /// <value>The last time the scheduled task ran (RFC3339 format).</value>
-  [DataMember(Name = "lastRun", EmitDefaultValue = false)]
+  [DataMember(Name = "lastRun")]
   public string LastRun { get; set; }
 
   /// <summary>
   /// The next scheduled run of the task (RFC3339 format).
   /// </summary>
   /// <value>The next scheduled run of the task (RFC3339 format).</value>
-  [DataMember(Name = "nextRun", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "nextRun")]
   public string NextRun { get; set; }
 
   /// <summary>

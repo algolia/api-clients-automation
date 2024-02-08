@@ -30,7 +30,7 @@ func QueryParamOption(name string, val any) Option {
 	return Option{
     optionType:  "query",
 		name:  name,
-		value: parameterToString(val),
+		value: queryParameterToString(val),
 	}
 }
 
@@ -223,7 +223,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
     {{#queryParams}}
       {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
-           queryParams.Set(k, parameterToString(v))
+           queryParams.Set(k, queryParameterToString(v))
           }
       {{^required}} } {{/required}}
     {{/queryParams}}
@@ -231,11 +231,11 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
   {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    queryParams.Set("{{baseName}}", parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+    queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}

@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */{{#isDeprecated}}
 @Deprecated{{/isDeprecated}}
 @JsonDeserialize(using = {{classname}}.Deserializer.class)
-{{>additionalModelTypeAnnotations}}
+{{> additionalModelTypeAnnotations}}
 public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {
 
     {{#vendorExtensions.x-is-multi-array}}

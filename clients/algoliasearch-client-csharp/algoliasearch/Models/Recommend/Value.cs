@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Recommend;
 /// Value
 /// </summary>
 [DataContract(Name = "value")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Value
 {
 
   /// <summary>
   /// Gets or Sets SortRemainingBy
   /// </summary>
-  [DataMember(Name = "sortRemainingBy", EmitDefaultValue = false)]
-  public SortRemainingBy SortRemainingBy { get; set; }
+  [DataMember(Name = "sortRemainingBy")]
+  public SortRemainingBy? SortRemainingBy { get; set; }
   /// <summary>
   /// Initializes a new instance of the Value class.
   /// </summary>
@@ -43,7 +42,7 @@ public partial class Value
   /// Pinned order of facet lists.
   /// </summary>
   /// <value>Pinned order of facet lists.</value>
-  [DataMember(Name = "order", EmitDefaultValue = false)]
+  [DataMember(Name = "order")]
   public List<string> Order { get; set; }
 
   /// <summary>

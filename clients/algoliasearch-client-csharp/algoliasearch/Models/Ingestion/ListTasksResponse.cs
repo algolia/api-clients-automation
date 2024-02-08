@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// A list of tasks with pagination details.
 /// </summary>
 [DataContract(Name = "listTasksResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ListTasksResponse
 {
   /// <summary>
@@ -45,13 +44,13 @@ public partial class ListTasksResponse
   /// <summary>
   /// Gets or Sets Tasks
   /// </summary>
-  [DataMember(Name = "tasks", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "tasks")]
   public List<IngestionTask> Tasks { get; set; }
 
   /// <summary>
   /// Gets or Sets Pagination
   /// </summary>
-  [DataMember(Name = "pagination", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "pagination")]
   public Pagination Pagination { get; set; }
 
   /// <summary>

@@ -1,5 +1,5 @@
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
-{{>model_description}}
+{{> model_description}}
 
 {{#composedSchemas.oneOf}}
     {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}

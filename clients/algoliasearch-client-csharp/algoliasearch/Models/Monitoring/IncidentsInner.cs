@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// IncidentsInner
 /// </summary>
 [DataContract(Name = "Incidents_inner")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class IncidentsInner
 {
   /// <summary>
@@ -37,13 +36,13 @@ public partial class IncidentsInner
   /// Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds.
   /// </summary>
   /// <value>Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds.</value>
-  [DataMember(Name = "t", EmitDefaultValue = false)]
-  public long T { get; set; }
+  [DataMember(Name = "t")]
+  public long? T { get; set; }
 
   /// <summary>
   /// Gets or Sets V
   /// </summary>
-  [DataMember(Name = "v", EmitDefaultValue = false)]
+  [DataMember(Name = "v")]
   public Incident V { get; set; }
 
   /// <summary>

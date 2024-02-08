@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// MultipleBatchResponse
 /// </summary>
 [DataContract(Name = "multipleBatchResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class MultipleBatchResponse
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class MultipleBatchResponse
   /// TaskIDs per index.
   /// </summary>
   /// <value>TaskIDs per index.</value>
-  [DataMember(Name = "taskID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "taskID")]
   public Dictionary<string, long> TaskID { get; set; }
 
   /// <summary>
   /// Unique object (record) identifiers.
   /// </summary>
   /// <value>Unique object (record) identifiers.</value>
-  [DataMember(Name = "objectIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "objectIDs")]
   public List<string> ObjectIDs { get; set; }
 
   /// <summary>

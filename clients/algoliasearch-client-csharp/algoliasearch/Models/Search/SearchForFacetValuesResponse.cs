@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// SearchForFacetValuesResponse
 /// </summary>
 [DataContract(Name = "searchForFacetValuesResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchForFacetValuesResponse
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class SearchForFacetValuesResponse
   /// </summary>
   /// <param name="facetHits">facetHits (required).</param>
   /// <param name="exhaustiveFacetsCount">See the &#x60;facetsCount&#x60; field of the &#x60;exhaustive&#x60; object in the response. (required).</param>
-  public SearchForFacetValuesResponse(List<FacetHits> facetHits, bool? exhaustiveFacetsCount)
+  public SearchForFacetValuesResponse(List<FacetHits> facetHits, bool exhaustiveFacetsCount)
   {
     FacetHits = facetHits ?? throw new ArgumentNullException(nameof(facetHits));
     ExhaustiveFacetsCount = exhaustiveFacetsCount;
@@ -45,22 +44,22 @@ public partial class SearchForFacetValuesResponse
   /// <summary>
   /// Gets or Sets FacetHits
   /// </summary>
-  [DataMember(Name = "facetHits", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "facetHits")]
   public List<FacetHits> FacetHits { get; set; }
 
   /// <summary>
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   /// </summary>
   /// <value>See the `facetsCount` field of the `exhaustive` object in the response.</value>
-  [DataMember(Name = "exhaustiveFacetsCount", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "exhaustiveFacetsCount")]
   [Obsolete]
-  public bool? ExhaustiveFacetsCount { get; set; }
+  public bool ExhaustiveFacetsCount { get; set; }
 
   /// <summary>
   /// Time the server took to process the request, in milliseconds.
   /// </summary>
   /// <value>Time the server took to process the request, in milliseconds.</value>
-  [DataMember(Name = "processingTimeMS", EmitDefaultValue = false)]
+  [DataMember(Name = "processingTimeMS")]
   public int? ProcessingTimeMS { get; set; }
 
   /// <summary>

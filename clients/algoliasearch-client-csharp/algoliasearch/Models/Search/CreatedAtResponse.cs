@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Response and creation timestamp.
 /// </summary>
 [DataContract(Name = "createdAtResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class CreatedAtResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class CreatedAtResponse
   /// Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
   /// </summary>
   /// <value>Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.</value>
-  [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "createdAt")]
   public string CreatedAt { get; set; }
 
   /// <summary>

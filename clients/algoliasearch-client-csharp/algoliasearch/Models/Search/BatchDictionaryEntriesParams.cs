@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// `batchDictionaryEntries` parameters. 
 /// </summary>
 [DataContract(Name = "batchDictionaryEntriesParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BatchDictionaryEntriesParams
 {
   /// <summary>
@@ -44,14 +43,14 @@ public partial class BatchDictionaryEntriesParams
   /// Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
   /// </summary>
   /// <value>Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.</value>
-  [DataMember(Name = "clearExistingDictionaryEntries", EmitDefaultValue = false)]
+  [DataMember(Name = "clearExistingDictionaryEntries")]
   public bool? ClearExistingDictionaryEntries { get; set; }
 
   /// <summary>
   /// Operations to batch.
   /// </summary>
   /// <value>Operations to batch.</value>
-  [DataMember(Name = "requests", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "requests")]
   public List<BatchDictionaryEntriesRequest> Requests { get; set; }
 
   /// <summary>

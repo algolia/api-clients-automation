@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// The response of the Insights API.
 /// </summary>
 [DataContract(Name = "EventsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class EventsResponse
 {
   /// <summary>
@@ -37,14 +36,14 @@ public partial class EventsResponse
   /// Details about the response, such as error messages.
   /// </summary>
   /// <value>Details about the response, such as error messages.</value>
-  [DataMember(Name = "message", EmitDefaultValue = false)]
+  [DataMember(Name = "message")]
   public string Message { get; set; }
 
   /// <summary>
   /// The HTTP status code of the response.
   /// </summary>
   /// <value>The HTTP status code of the response.</value>
-  [DataMember(Name = "status", EmitDefaultValue = false)]
+  [DataMember(Name = "status")]
   public int? Status { get; set; }
 
   /// <summary>
