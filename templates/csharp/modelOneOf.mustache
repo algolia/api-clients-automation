@@ -150,16 +150,20 @@
             {{/discriminator}}
             {{/useOneOfDiscriminatorLookup}}
             {{#vendorExtensions}}
+                var jToken = JToken.Parse(jsonString);
             {{#composedSchemas.oneOf}}
-            try
-            {
-              return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.DeserializeOneOfSettings));
-            }
-            catch (Exception exception)
-            {
-                // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into {{{datatypeWithEnum}}}: {exception}");
-            }
+                  if (jToken.Type == JTokenType.{{#isModel}}Object{{#vendorExtensions.x-discriminator-fields}} && jToken["{{{.}}}"] != null{{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}String{{/isEnumRef}}{{#isArray}}Array{{/isArray}}{{#isInteger}}Integer{{/isInteger}}{{#isLong}}Integer{{/isLong}}{{#isDouble}}Float{{/isDouble}}{{#isBoolean}}Boolean{{/isBoolean}}{{#isString}}String{{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}Object{{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}})
+                  {
+                    try
+                    {
+                      return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+                    }
+                    catch (Exception exception)
+                    {
+                      // deserialization failed, try the next one
+                      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into {{{datatypeWithEnum}}}: {exception}");
+                    }
+                  }
             {{/composedSchemas.oneOf}}
             {{/vendorExtensions}}
 
