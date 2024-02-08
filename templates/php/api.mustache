@@ -474,6 +474,23 @@ use {{invokerPackage}}\Support\Helpers;
 
         $this->waitForTask($tmpIndex, $moveResponse['taskID']);
     }
+
+    /**
+    * Helper: Generate a secured API Key
+    *
+    * @param string $parentApiKey Parent API Key
+    * @param array  $restrictions API Key's restrictions
+    *
+    * @return string
+    */
+    public static function generateSecuredApiKey($parentApiKey, $restrictions)
+    {
+        $urlEncodedRestrictions = Helpers::buildQuery($restrictions);
+
+        $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
+
+        return base64_encode($content);
+    }
     {{/isSearchClient}}
 
     private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)

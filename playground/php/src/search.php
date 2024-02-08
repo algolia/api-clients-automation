@@ -41,6 +41,9 @@ var_dump(
     ])
 );
 
+// $apiKey = SearchClient::generateSecuredApiKey($env['ALGOLIA_APPLICATION_ID'], ['edit','browse','listIndices']);
+// var_dump($apiKey);
+
 // // browse records
 // $results = $client->browseObjects($indexName);
 //
