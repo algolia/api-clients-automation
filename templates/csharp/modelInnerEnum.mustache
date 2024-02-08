@@ -10,7 +10,7 @@
         [JsonConverter(typeof(StringEnumConverter))]
         {{/useGenericHost}}
         {{/isString}}
-        {{>visibility}} enum {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}{{#vendorExtensions.x-enum-byte}}: byte{{/vendorExtensions.x-enum-byte}}
+        {{> visibility}} enum {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}{{#vendorExtensions.x-enum-byte}}: byte{{/vendorExtensions.x-enum-byte}}
         {
             {{#allowableValues}}
             {{#enumVars}}
@@ -74,10 +74,10 @@
         {{#isString}}
         /// <exception cref="NotImplementedException"></exception>
         {{/isString}}
-        public static {{>EnumValueDataType}}{{#nrt}}{{#isString}}{{#isNullable}}{{nrt?}}  {{^nrt}}{{#vendorExtensions.x-is-value-type}}?  {{/vendorExtensions.x-is-value-type}}{{/nrt}}{{/isNullable}}{{/isString}}{{/nrt}} {{datatypeWithEnum}}ToJsonValue({{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}{{#isString}}{{>NullConditionalProperty}}{{/isString}} value)
+        public static {{> EnumValueDataType}}{{#nrt}}{{#isString}}{{#isNullable}}{{nrt?}}  {{^nrt}}{{#vendorExtensions.x-is-value-type}}?  {{/vendorExtensions.x-is-value-type}}{{/nrt}}{{/isNullable}}{{/isString}}{{/nrt}} {{datatypeWithEnum}}ToJsonValue({{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}{{#isString}}{{> NullConditionalProperty}}{{/isString}} value)
         {
             {{^isString}}
-            return ({{>EnumValueDataType}}) value;
+            return ({{> EnumValueDataType}}) value;
             {{/isString}}
             {{#isString}}
             {{#isNullable}}

@@ -10,7 +10,7 @@
     {{/vendorExtensions.x-com-visible}}
     [JsonConverter(typeof({{classname}}JsonConverter))]
     [DataContract(Name = "{{{name}}}")]
-    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
+    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
     {
         {{#isNullable}}
         /// <summary>

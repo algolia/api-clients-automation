@@ -147,7 +147,7 @@ final class {{classname}} implements ApiClient {
           '{{baseName}}' : {{paramName}},
           {{/required}}
           {{^required}}
-          if ({{paramName}} != null) '{{baseName}}' : {{paramName}}{{#isArray}}.join(','){{/isArray}},
+          if ({{paramName}} != null) '{{baseName}}' : {{paramName}},
           {{/required}}
           {{/queryParams}}
           {{/vendorExtensions.x-is-custom-request}}

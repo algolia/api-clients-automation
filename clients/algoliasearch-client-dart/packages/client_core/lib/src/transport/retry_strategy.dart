@@ -100,18 +100,18 @@ final class RetryStrategy {
     final baseTimeout = _timeoutOf(callType, options);
     final timeout = baseTimeout * (host.retryCount + 1);
     return HttpRequest(
-      method: request.method.name,
-      host: host.host,
-      path: request.path,
-      timeout: timeout,
-      headers: {...?options?.headers, ...?request.headers},
-      body: options?.body ?? request.body != null
-          ? request.body
-          : _requiresBody(request)
-              ? const <String, dynamic>{}
-              : null,
-      queryParameters: {...?request.queryParams, ...?options?.urlParameters},
-    );
+        method: request.method.name,
+        host: host.host,
+        path: request.path,
+        timeout: timeout,
+        headers: {...?options?.headers, ...?request.headers},
+        body: options?.body ?? request.body != null
+            ? request.body
+            : _requiresBody(request)
+                ? const <String, dynamic>{}
+                : null,
+        queryParameters: {...?request.queryParams, ...?options?.urlParameters}
+            .map((key, value) => MapEntry(key, _encodeQueryParameter(value))));
   }
 
   /// Determines the call type of a given [config].
@@ -128,6 +128,13 @@ final class RetryStrategy {
       case CallType.write:
         return requestOptions?.writeTimeout ?? writeTimeout;
     }
+  }
+
+  String _encodeQueryParameter(dynamic value) {
+    if (value is Iterable) {
+      return value.map(_encodeQueryParameter).join('%2C');
+    }
+    return Uri.encodeComponent(value.toString());
   }
 
   /// Checks if a given [request] requires a body
