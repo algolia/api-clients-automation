@@ -13,7 +13,7 @@ namespace Algolia.Search.Utils;
 /// <summary>
 /// A tool class to help with common tasks
 /// </summary>
-public static class Helpers
+public static class ClientExtensions
 {
   private const int DefaultMaxRetries = 50;
 
@@ -33,6 +33,19 @@ public static class Helpers
       async () => await client.GetTaskAsync(indexName, taskId, requestOptions, ct),
       resp => resp.Status == Models.Search.TaskStatus.Published, maxRetries, ct).ConfigureAwait(false);
   }
+
+  /// <summary>
+  /// Wait for a task to complete with `indexName` and `taskID`. (Synchronous version)
+  /// </summary>
+  /// <param name="client">Algolia Search Client instance</param>
+  /// <param name="indexName">The `indexName` where the operation was performed.</param>
+  /// <param name="taskId">The `taskID` returned in the method response.</param>
+  /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
+  /// <param name="ct">Cancellation token (optional)</param>
+  public static GetTaskResponse WaitForTask(this SearchClient client, string indexName, long taskId,
+    int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null, CancellationToken ct = default) =>
+    AsyncHelper.RunSync(() => client.WaitForTaskAsync(indexName, taskId, maxRetries, requestOptions, ct));
 
   /// <summary>
   /// Helper method that waits for an API key task to be processed.
@@ -108,6 +121,23 @@ public static class Helpers
   }
 
   /// <summary>
+  /// Helper method that waits for an API key task to be processed. (Synchronous version)
+  /// </summary>
+  /// <param name="client">Algolia Search Client instance</param>
+  /// <param name="operation">The `operation` that was done on a `key`.</param>
+  /// <param name="key">The key that has been added, deleted or updated.</param>
+  /// <param name="apiKey">Necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)</param>
+  /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
+  /// <param name="ct">Cancellation token (optional)</param>
+  public static GetApiKeyResponse WaitForApiKey(this SearchClient client,
+    ApiKeyOperation operation, string key,
+    ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null,
+    CancellationToken ct = default) =>
+    AsyncHelper.RunSync(() => client.WaitForApiKeyAsync(operation, key, apiKey, maxRetries, requestOptions, ct));
+
+
+  /// <summary>
   /// Iterate on the `browse` method of the client to allow aggregating objects of an index.
   /// </summary>
   /// <param name="client"></param>
@@ -128,6 +158,21 @@ public static class Helpers
 
     return all.SelectMany(u => u.Hits);
   }
+
+
+  /// <summary>
+  /// Iterate on the `browse` method of the client to allow aggregating objects of an index. (Synchronous version)
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="browseParams">The `browse` parameters.</param>
+  /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.</param>
+  /// <typeparam name="T">The model of the record</typeparam>
+  public static IEnumerable<T> BrowseObjects<T>(this SearchClient client, string indexName,
+    BrowseParamsObject browseParams,
+    RequestOptions requestOptions = null) =>
+    AsyncHelper.RunSync(() => client.BrowseObjectsAsync<T>(indexName, browseParams, requestOptions));
+
 
   /// <summary>
   /// Iterate on the `SearchRules` method of the client to allow aggregating rules of an index.
@@ -153,6 +198,18 @@ public static class Helpers
     return all.SelectMany(u => u.Item1.Hits);
   }
 
+  /// <summary>
+  /// Iterate on the `SearchRules` method of the client to allow aggregating rules of an index. (Synchronous version)
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="searchRulesParams">The `SearchRules` parameters</param>
+  /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `searchRules` method and merged with the transporter requestOptions.</param>
+  public static IEnumerable<Rule> BrowseRules(this SearchClient client, string indexName,
+    SearchRulesParams searchRulesParams,
+    RequestOptions requestOptions = null) =>
+    AsyncHelper.RunSync(() => client.BrowseRulesAsync(indexName, searchRulesParams, requestOptions));
+
 
   /// <summary>
   /// Iterate on the `SearchSynonyms` method of the client to allow aggregating rules of an index.
@@ -176,6 +233,19 @@ public static class Helpers
 
     return all.SelectMany(u => u.Item1.Hits);
   }
+  
+  /// <summary>
+  /// Iterate on the `SearchSynonyms` method of the client to allow aggregating rules of an index. (Synchronous version)
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="synonymsParams">The `SearchSynonyms` parameters.</param>
+  /// <param name="requestOptions">The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.</param>
+  public static IEnumerable<SynonymHit> BrowseSynonyms(this SearchClient client, string indexName,
+    SearchSynonymsParams synonymsParams,
+    RequestOptions requestOptions = null) =>
+    AsyncHelper.RunSync(() => client.BrowseSynonymsAsync(indexName, synonymsParams, requestOptions));
+
 
   private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
     int maxRetries = DefaultMaxRetries, CancellationToken ct = default)
@@ -196,7 +266,6 @@ public static class Helpers
     throw new AlgoliaException(
       "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
   }
-
   private static int NextDelay(int retryCount)
   {
     return Math.Min(retryCount * 200, 5000);

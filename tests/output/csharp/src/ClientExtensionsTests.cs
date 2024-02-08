@@ -12,7 +12,7 @@ using TaskStatus = Algolia.Search.Models.Search.TaskStatus;
 
 namespace Algolia.Search.Tests;
 
-public class HelpersTests
+public class ClientExtensionsTests
 {
   [Fact]
   public async Task ShouldWaitForTask()
