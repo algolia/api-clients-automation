@@ -45,13 +45,13 @@ switch (client)
     break;
   case "all":
     await SearchPlayground.Run(config);
-    // await ABTesting.Run(config);
-    // await Analytics.Run(config);
-    // await Insights.Run(config);
-    // await Monitoring.Run(config);
-    // await Personalization.Run(config);
-    // await QuerySuggestions.Run(config);
-    // await Recommend.Run(config);
-    // await Ingestion.Run(config);
+    await ABTesting.Run(config);
+    await Analytics.Run(config);
+    await Insights.Run(config);
+    await Monitoring.Run(config);
+    await Personalization.Run(config);
+    await QuerySuggestions.Run(config);
+    await Recommend.Run(config);
+    await Ingestion.Run(config);
     break;
 }
