@@ -1,5 +1,6 @@
 package algoliasearch
 
+import algoliasearch.internal.util.escape
 import okhttp3.*
 import okhttp3.Interceptor.Chain
 import okio.Buffer
@@ -56,7 +57,7 @@ class EchoInterceptor(private val httpCode: Int = 200) extends Interceptor {
     val params = mutable.Map[String, String]()
     for (name: String <- url.queryParameterNames()) {
       for (value: String <- url.queryParameterValues(name)) {
-        params.put(name, value)
+        params.put(escape(name), escape(value))
       }
     }
     params.toMap

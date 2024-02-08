@@ -79,10 +79,10 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         var actualQuery = req.QueryParameters;
         Assert.Equal(expectedQuery.Count, actualQuery.Count);
 
-        foreach (var query in actualQuery)
+        foreach (var actual in actualQuery)
         {
-          expectedQuery.TryGetValue(query.Key, out var result);
-          Assert.Equal(query.Value, result);
+          expectedQuery.TryGetValue(actual.Key, out var expected);
+          Assert.Equal(expected, actual.Value);
         }
     {{/queryParameters}}
     {{#headers}}

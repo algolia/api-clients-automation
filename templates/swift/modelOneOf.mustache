@@ -1,6 +1,6 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: Codable, JSONEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
     {{#oneOf}}
-    case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{.}})
+    case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{.}}})
     {{/oneOf}}
 
     public func encode(to encoder: Encoder) throws {
@@ -20,12 +20,21 @@
         if let value = try? container.decode({{.}}.self) {
         {{/-first}}
         {{^-first}}
-        } else if let value = try? container.decode({{.}}.self) {
+        } else if let value = try? container.decode({{{.}}}.self) {
         {{/-first}}
             self = .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(value)
         {{/oneOf}}
         } else {
             throw DecodingError.typeMismatch(Self.Type.self, .init(codingPath: decoder.codingPath, debugDescription: "Unable to decode instance of {{classname}}"))
+        }
+    }
+
+    public func GetActualInstance() -> Encodable {
+        switch self {
+        {{#oneOf}}
+          case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
+          return value as {{{.}}}
+        {{/oneOf}}
         }
     }
 }

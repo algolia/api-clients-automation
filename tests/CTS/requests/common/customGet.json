@@ -14,14 +14,14 @@
     "parameters": {
       "path": "/test/all",
       "parameters": {
-        "query": "parameters"
+        "query": "parameters with space"
       }
     },
     "request": {
       "path": "/1/test/all",
       "method": "GET",
       "queryParameters": {
-        "query": "parameters"
+        "query": "parameters%20with%20space"
       }
     }
   }

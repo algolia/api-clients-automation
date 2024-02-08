@@ -3,6 +3,7 @@ package algoliasearch.internal
 import algoliasearch.config._
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.internal.interceptor.{GzipRequestInterceptor, HeaderInterceptor, LogInterceptor}
+import algoliasearch.internal.util.escape
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
 import okio.BufferedSink
@@ -56,11 +57,11 @@ private[algoliasearch] class HttpRequester private (
       .host("algolia.com") // will be overridden by the retry strategy
       .encodedPath(request.path)
     for ((key, value) <- request.queryParameters)
-      urlBuilder.addQueryParameter(key, value)
+      urlBuilder.addEncodedQueryParameter(escape(key), escape(value))
 
     if (requestOptions.isDefined) {
       for ((key, value) <- requestOptions.get.queryParameters)
-        urlBuilder.addQueryParameter(key, value)
+        urlBuilder.addEncodedQueryParameter(escape(key), escape(value))
     }
     urlBuilder.build
   }

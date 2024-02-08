@@ -3,7 +3,7 @@
  * @deprecated{{/isDeprecated}}
  */{{#isDeprecated}}
 @Deprecated{{/isDeprecated}}
-{{>additionalModelTypeAnnotations}}
+{{> additionalModelTypeAnnotations}}
 
 {{#vendorExtensions.x-one-of-element}}@JsonDeserialize(as = {{classname}}.class){{/vendorExtensions.x-one-of-element}}
 public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}{{#vendorExtensions.x-one-of-element}} implements {{#vendorExtensions.x-one-of-element-parents}}{{parent_classname}}{{#parent_is_generic}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}{{/parent_is_generic}}{{^-last}}, {{/-last}}{{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}} {
@@ -14,11 +14,11 @@ public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorE
   {{#vars}}
     {{#isEnum}}
     {{^isContainer}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
     {{/isContainer}}
     {{#isContainer}}
     {{#mostInnerItems}}
-{{>modelInnerEnum}}
+{{> modelInnerEnum}}
     {{/mostInnerItems}}
     {{/isContainer}}
     {{/isEnum}}
