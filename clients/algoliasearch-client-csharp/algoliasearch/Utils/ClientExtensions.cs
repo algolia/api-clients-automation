@@ -233,7 +233,7 @@ public static class ClientExtensions
 
     return all.SelectMany(u => u.Item1.Hits);
   }
-  
+
   /// <summary>
   /// Iterate on the `SearchSynonyms` method of the client to allow aggregating rules of an index. (Synchronous version)
   /// </summary>

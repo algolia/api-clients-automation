@@ -25,12 +25,12 @@ public static class ClientUtils
       case bool boolean:
         return boolean ? "true" : "false";
       case ICollection collection:
-      {
-        var entries = new List<string>();
-        foreach (var entry in collection)
-          entries.Add(ParameterToString(entry));
-        return string.Join(",", entries);
-      }
+        {
+          var entries = new List<string>();
+          foreach (var entry in collection)
+            entries.Add(ParameterToString(entry));
+          return string.Join(",", entries);
+        }
       case Enum when HasEnumMemberAttrValue(obj):
         return GetEnumMemberAttrValue(obj);
       default:
