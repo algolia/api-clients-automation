@@ -88,5 +88,44 @@
         }
       }
     ]
+  },
+  {
+    "testName": "test the compression strategy",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            "localhost:6679"
+          ]
+        },
+        "expected": {}
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "customPost",
+        "parameters": {
+          "path": "/test",
+          "body": {
+            "message": "this is a compressed body"
+          }
+        },
+        "requestOptions": {
+          "headers": {
+            "content-encoding": "gzip"
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok compression test server response"
+          }
+        }
+      }
+    ]
   }
 ]
