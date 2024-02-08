@@ -6,7 +6,7 @@ using Algolia.Search.Models.Common;
 
 namespace Algolia.Search.Transport;
 
-internal class Compression
+internal static class Compression
 {
   private static readonly UTF8Encoding DefaultEncoding = new(false);
 

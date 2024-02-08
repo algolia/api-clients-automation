@@ -1,6 +1,5 @@
 using System.IO;
 using System.Threading.Tasks;
-using Algolia.Search.Models.Common;
 
 namespace Algolia.Search.Serializer
 {

@@ -48,8 +48,8 @@ namespace Algolia.Search.Http
           return false;
         }
 
-        bool isMethodValid = Method.Equals(HttpMethod.Post) || Method.Equals(HttpMethod.Put);
-        bool isCompressionEnabled = Compression.Equals(CompressionType.GZIP);
+        var isMethodValid = Method.Equals(HttpMethod.Post) || Method.Equals(HttpMethod.Put);
+        var isCompressionEnabled = Compression.Equals(CompressionType.GZIP);
 
         return isMethodValid && isCompressionEnabled;
       }

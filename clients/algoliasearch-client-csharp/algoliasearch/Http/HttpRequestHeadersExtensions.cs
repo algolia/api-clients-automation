@@ -29,14 +29,16 @@ namespace Algolia.Search.Http
     /// <param name="request"></param>
     internal static HttpContentHeaders Fill(this HttpContentHeaders headers, Request request)
     {
-      if (request.Body != null)
+      if (request.Body == null)
       {
-        headers.Add(Defaults.ContentType, Defaults.ApplicationJson);
+        return headers;
+      }
 
-        if (request.CanCompress)
-        {
-          headers.ContentEncoding.Add(Defaults.GzipEncoding);
-        }
+      headers.Add(Defaults.ContentType, Defaults.ApplicationJson);
+
+      if (request.CanCompress)
+      {
+        headers.ContentEncoding.Add(Defaults.GzipEncoding);
       }
 
       return headers;

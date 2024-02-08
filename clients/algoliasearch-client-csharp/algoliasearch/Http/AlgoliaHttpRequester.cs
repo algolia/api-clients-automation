@@ -77,22 +77,22 @@ namespace Algolia.Search.Http
         {
           using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
           {
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-              var outputStream = new MemoryStream();
-              await stream.CopyToAsync(outputStream).ConfigureAwait(false);
-              outputStream.Seek(0, SeekOrigin.Begin);
-
               return new AlgoliaHttpResponse
               {
-                Body = outputStream,
+                Error = await StreamToStringAsync(stream),
                 HttpStatusCode = (int)response.StatusCode
               };
             }
 
+            var outputStream = new MemoryStream();
+            await stream.CopyToAsync(outputStream).ConfigureAwait(false);
+            outputStream.Seek(0, SeekOrigin.Begin);
+
             return new AlgoliaHttpResponse
             {
-              Error = await StreamToStringAsync(stream),
+              Body = outputStream,
               HttpStatusCode = (int)response.StatusCode
             };
           }
@@ -120,7 +120,7 @@ namespace Algolia.Search.Http
       }
     }
 
-    private async Task<string> StreamToStringAsync(Stream stream)
+    private static async Task<string> StreamToStringAsync(Stream stream)
     {
       if (stream == null)
         return null;

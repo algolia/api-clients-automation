@@ -16,7 +16,7 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Add custom queries parameters
     /// </summary>
-    public IDictionary<string, Object> QueryParameters { get; set; }
+    public IDictionary<string, object> QueryParameters { get; set; }
 
     /// <summary>
     /// Request timeout in seconds
@@ -28,7 +28,7 @@ namespace Algolia.Search.Http
     /// </summary>
     public RequestOptions()
     {
-      QueryParameters = new Dictionary<string, Object>();
+      QueryParameters = new Dictionary<string, object>();
       Headers = new Dictionary<string, string>();
     }
   }
@@ -42,7 +42,7 @@ namespace Algolia.Search.Http
     public InternalRequestOptions(RequestOptions options = null)
     {
       QueryParameters = new Dictionary<string, string>();
-      foreach (var t in options?.QueryParameters ?? new Dictionary<string, Object>())
+      foreach (var t in options?.QueryParameters ?? new Dictionary<string, object>())
       {
         QueryParameters.Add(t.Key, ClientUtils.ParameterToString(t.Value));
       }
@@ -103,7 +103,7 @@ namespace Algolia.Search.Http
     /// <summary>
     /// Any data associated with a request body.
     /// </summary>
-    public Object Data { get; set; }
+    public object Data { get; set; }
 
     /// <summary>
     /// Request timeout

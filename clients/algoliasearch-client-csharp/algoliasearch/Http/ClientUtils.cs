@@ -20,20 +20,22 @@ namespace Algolia.Search.Http
     /// <returns>Formatted string.</returns>
     public static string ParameterToString(object obj)
     {
-      if (obj is bool boolean)
-        return boolean ? "true" : "false";
-      if (obj is ICollection collection)
+      switch (obj)
       {
-        List<string> entries = new List<string>();
-        foreach (var entry in collection)
-          entries.Add(ParameterToString(entry));
-        return string.Join(",", entries);
+        case bool boolean:
+          return boolean ? "true" : "false";
+        case ICollection collection:
+        {
+          var entries = new List<string>();
+          foreach (var entry in collection)
+            entries.Add(ParameterToString(entry));
+          return string.Join(",", entries);
+        }
+        case Enum when HasEnumMemberAttrValue(obj):
+          return GetEnumMemberAttrValue(obj);
+        default:
+          return Convert.ToString(obj, CultureInfo.InvariantCulture);
       }
-
-      if (obj is Enum && HasEnumMemberAttrValue(obj))
-        return GetEnumMemberAttrValue(obj);
-
-      return Convert.ToString(obj, CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -48,8 +50,7 @@ namespace Algolia.Search.Http
       var enumType = enumVal.GetType();
       var memInfo = enumType.GetMember(enumVal.ToString() ?? throw new InvalidOperationException());
       var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
-      if (attr != null) return true;
-      return false;
+      return attr != null;
     }
 
     /// <summary>
@@ -64,12 +65,7 @@ namespace Algolia.Search.Http
       var enumType = enumVal.GetType();
       var memInfo = enumType.GetMember(enumVal.ToString() ?? throw new InvalidOperationException());
       var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
-      if (attr != null)
-      {
-        return attr.Value;
-      }
-
-      return null;
+      return attr?.Value;
     }
   }
 }
