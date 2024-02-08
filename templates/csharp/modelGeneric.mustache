@@ -8,7 +8,6 @@
     [ComVisible({{{vendorExtensions.x-com-visible}}})]
     {{/vendorExtensions.x-com-visible}}
     [DataContract(Name = "{{{name}}}")]
-    [JsonObject(MemberSerialization.OptOut)]
     {{^useUnityWebRequest}}
     {{#discriminator}}
     [JsonConverter(typeof(JsonSubtypes), "{{{discriminatorName}}}")]

@@ -55,7 +55,7 @@ public class CompressionTests
   {
     var searchConfig = new SearchConfig("test-app-id", "test-api-key")
     {
-      Compression = CompressionType.GZIP
+      Compression = CompressionType.Gzip
     };
 
     var client = new SearchClient(searchConfig, _echo);
