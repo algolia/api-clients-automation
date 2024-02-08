@@ -461,11 +461,17 @@ class TestSearchClient < Test::Unit::TestCase
 
   # allow get method for a custom path with all parameters
   def test_custom_get1
-    req = @client.custom_get_with_http_info("/test/all", { query: "parameters" })
+    req = @client.custom_get_with_http_info(
+      "/test/all",
+      { query: "parameters with space" }
+    )
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters%20with%20space" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -622,7 +628,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(
-      ({ 'query': "parameters", 'myParam': "c,d" }.to_a - req.query_params.to_a).empty?,
+      ({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -642,7 +648,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal('/1/test/requestOptions', req.path)
     assert(
       ({ 'query': "parameters",
-         'myParam': "true,true,false" }.to_a - req.query_params.to_a).empty?,
+         'myParam': "true%2Ctrue%2Cfalse" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -661,7 +667,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(
-      ({ 'query': "parameters", 'myParam': "1,2" }.to_a - req.query_params.to_a).empty?,
+      ({ 'query': "parameters", 'myParam': "1%2C2" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -869,7 +875,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal('/1/indexes/theIndexName/uniqueID', req.path)
     assert(
-      ({ 'attributesToRetrieve': "attr1,attr2" }.to_a - req.query_params.to_a).empty?,
+      ({ 'attributesToRetrieve': "attr1%2Cattr2" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)

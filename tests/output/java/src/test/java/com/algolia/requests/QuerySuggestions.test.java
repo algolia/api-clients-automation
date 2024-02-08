@@ -124,7 +124,7 @@ class QuerySuggestionsClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("/test/all", Map.of("query", "parameters"));
+      client.customGet("/test/all", Map.of("query", "parameters with space"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/test/all", req.path);
@@ -132,7 +132,10 @@ class QuerySuggestionsClientRequestsTests {
     assertNull(req.body);
 
     try {
-      Map<String, String> expectedQuery = json.readValue("{\"query\":\"parameters\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"query\":\"parameters%20with%20space\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
       Map<String, Object> actualQuery = req.queryParameters;
 
       assertEquals(expectedQuery.size(), actualQuery.size());
@@ -412,7 +415,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"query\":\"parameters\",\"myParam\":\"c,d\"}",
+        "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -444,7 +447,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}",
+        "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -476,7 +479,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"query\":\"parameters\",\"myParam\":\"1,2\"}",
+        "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
