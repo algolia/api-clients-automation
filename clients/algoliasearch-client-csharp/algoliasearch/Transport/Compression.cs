@@ -1,7 +1,6 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-using System.Threading.Tasks;
 using Algolia.Search.Models.Common;
 
 namespace Algolia.Search.Transport;
@@ -19,8 +18,8 @@ internal static class Compression
   {
     var stream = new MemoryStream();
 
-    var compressionType = compress ? CompressionType.GZIP : CompressionType.NONE;
-    if (compressionType == CompressionType.GZIP)
+    var compressionType = compress ? CompressionType.Gzip : CompressionType.None;
+    if (compressionType == CompressionType.Gzip)
     {
       using var gzipStream = new GZipStream(stream, CompressionMode.Compress, true);
       using var sw = new StreamWriter(gzipStream, DefaultEncoding, GZipBufferSize);
