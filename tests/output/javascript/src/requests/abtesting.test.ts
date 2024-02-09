@@ -74,13 +74,15 @@ describe('customGet', () => {
   test('allow get method for a custom path with all parameters', async () => {
     const req = (await client.customGet({
       path: '/test/all',
-      parameters: { query: 'parameters' },
+      parameters: { query: 'parameters with space' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({
+      query: 'parameters%20with%20space',
+    });
   });
 });
 
@@ -263,7 +265,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c,d',
+      myParam: 'c%2Cd',
     });
   });
 
@@ -286,7 +288,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'true,true,false',
+      myParam: 'true%2Ctrue%2Cfalse',
     });
   });
 
@@ -309,7 +311,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: '1,2',
+      myParam: '1%2C2',
     });
   });
 });

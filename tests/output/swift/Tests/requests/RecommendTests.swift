@@ -20,7 +20,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -40,7 +41,9 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all",
+                                                                 parameters: ["query": AnyCodable("parameters")],
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -63,7 +66,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -83,7 +87,9 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters with space")],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -92,7 +98,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -106,7 +112,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -132,7 +139,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/all",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["body": "parameters"],
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -164,10 +174,14 @@ final class RecommendClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -199,10 +213,14 @@ final class RecommendClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query2": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -237,7 +255,10 @@ final class RecommendClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -280,7 +301,10 @@ final class RecommendClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -320,10 +344,14 @@ final class RecommendClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "isItWorking": true,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -355,10 +383,14 @@ final class RecommendClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "myParam": 2,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -389,11 +421,17 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": ["c", "d"],
+                "myParam": ["c",
+                            "d",
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -408,7 +446,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c,d\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -424,11 +462,18 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [true, true, false],
+                "myParam": [true,
+                            true,
+                            false,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -443,7 +488,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -459,11 +504,17 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [1, 2],
+                "myParam": [1,
+                            2,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -478,7 +529,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1,2\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -492,7 +543,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -518,7 +570,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters")],
+                                                              body: ["body": "parameters"],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -547,7 +602,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteRecommendRuleWithHTTPInfo(indexName: "indexName", model: RecommendModels.relatedProducts, objectID: "objectID", requestOptions: nil)
+        let response = try await client.deleteRecommendRuleWithHTTPInfo(indexName: "indexName",
+                                                                        model: RecommendModels.relatedProducts,
+                                                                        objectID: "objectID",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -567,7 +625,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendRuleWithHTTPInfo(indexName: "indexName", model: RecommendModels.relatedProducts, objectID: "objectID", requestOptions: nil)
+        let response = try await client.getRecommendRuleWithHTTPInfo(indexName: "indexName",
+                                                                     model: RecommendModels.relatedProducts,
+                                                                     objectID: "objectID",
+                                                                     requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -587,7 +648,10 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendStatusWithHTTPInfo(indexName: "indexName", model: RecommendModels.relatedProducts, taskID: Int64(12345), requestOptions: nil)
+        let response = try await client.getRecommendStatusWithHTTPInfo(indexName: "indexName",
+                                                                       model: RecommendModels.relatedProducts,
+                                                                       taskID: Int64(12345),
+                                                                       requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -607,7 +671,13 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName", threshold: 42, model: RecommendationModels.relatedProducts, objectID: "objectID"))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName",
+                                                                                                                                                                                                      threshold: 42,
+                                                                                                                                                                                                      model: RecommendationModels.relatedProducts,
+                                                                                                                                                                                                      objectID: "objectID")
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -633,7 +703,22 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName", threshold: 42, maxRecommendations: 10, model: RecommendationModels.relatedProducts, objectID: "objectID", queryParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query")])), fallbackParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback")]))))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName",
+                                                                                                                                                                                                      threshold: 42,
+                                                                                                                                                                                                      maxRecommendations: 10,
+                                                                                                                                                                                                      model: RecommendationModels.relatedProducts,
+                                                                                                                                                                                                      objectID: "objectID",
+                                                                                                                                                                                                      queryParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                          facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query"
+                                                                                                                                                                                                                                          )]
+                                                                                                                                                                                                                                          )),
+                                                                                                                                                                                                      fallbackParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                             facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback"
+                                                                                                                                                                                                                                             )]
+                                                                                                                                                                                                                                             )))
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -659,7 +744,12 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.trendingItemsQuery(TrendingItemsQuery(indexName: "indexName", threshold: 42, model: TrendingItemsModel.trendingItems))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.trendingItemsQuery(TrendingItemsQuery(indexName: "indexName",
+                                                                                                                                                                                                  threshold: 42,
+                                                                                                                                                                                                  model: TrendingItemsModel.trendingItems)
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -685,7 +775,23 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.trendingItemsQuery(TrendingItemsQuery(indexName: "indexName", threshold: 42, maxRecommendations: 10, facetName: "myFacetName", facetValue: "myFacetValue", model: TrendingItemsModel.trendingItems, queryParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query")])), fallbackParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback")]))))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.trendingItemsQuery(TrendingItemsQuery(indexName: "indexName",
+                                                                                                                                                                                                  threshold: 42,
+                                                                                                                                                                                                  maxRecommendations: 10,
+                                                                                                                                                                                                  facetName: "myFacetName",
+                                                                                                                                                                                                  facetValue: "myFacetValue",
+                                                                                                                                                                                                  model: TrendingItemsModel.trendingItems,
+                                                                                                                                                                                                  queryParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                      facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query"
+                                                                                                                                                                                                                                      )]
+                                                                                                                                                                                                                                      )),
+                                                                                                                                                                                                  fallbackParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                         facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback"
+                                                                                                                                                                                                                                         )]
+                                                                                                                                                                                                                                         )))
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -711,7 +817,17 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1", threshold: 21, model: RecommendationModels.relatedProducts, objectID: "objectID1")), RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName2", threshold: 21, model: RecommendationModels.relatedProducts, objectID: "objectID2"))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1",
+                                                                                                                                                                                                      threshold: 21,
+                                                                                                                                                                                                      model: RecommendationModels.relatedProducts,
+                                                                                                                                                                                                      objectID: "objectID1")
+                                                                       ), RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName2",
+                                                                                                                                           threshold: 21,
+                                                                                                                                           model: RecommendationModels.relatedProducts,
+                                                                                                                                           objectID: "objectID2")
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -737,7 +853,35 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1", threshold: 21, maxRecommendations: 10, model: RecommendationModels.relatedProducts, objectID: "objectID1", queryParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query1")])), fallbackParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback1")])))), RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName2", threshold: 21, maxRecommendations: 10, model: RecommendationModels.relatedProducts, objectID: "objectID2", queryParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query2")])), fallbackParameters: SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback2")]))))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1",
+                                                                                                                                                                                                      threshold: 21,
+                                                                                                                                                                                                      maxRecommendations: 10,
+                                                                                                                                                                                                      model: RecommendationModels.relatedProducts,
+                                                                                                                                                                                                      objectID: "objectID1",
+                                                                                                                                                                                                      queryParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                          facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query1"
+                                                                                                                                                                                                                                          )]
+                                                                                                                                                                                                                                          )),
+                                                                                                                                                                                                      fallbackParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                                                                             facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback1"
+                                                                                                                                                                                                                                             )]
+                                                                                                                                                                                                                                             )))
+                                                                       ), RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName2",
+                                                                                                                                           threshold: 21,
+                                                                                                                                           maxRecommendations: 10,
+                                                                                                                                           model: RecommendationModels.relatedProducts,
+                                                                                                                                           objectID: "objectID2",
+                                                                                                                                           queryParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                               facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query2"
+                                                                                                                                                                               )]
+                                                                                                                                                                               )),
+                                                                                                                                           fallbackParameters: SearchParamsObject(query: "myQuery",
+                                                                                                                                                                                  facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback2"
+                                                                                                                                                                                  )]
+                                                                                                                                                                                  )))
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -763,7 +907,13 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1", threshold: 42, model: RecommendationModels.boughtTogether, objectID: "objectID1"))]), requestOptions: nil)
+        let response = try await client.getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest.recommendationsQuery(RecommendationsQuery(indexName: "indexName1",
+                                                                                                                                                                                                      threshold: 42,
+                                                                                                                                                                                                      model: RecommendationModels.boughtTogether,
+                                                                                                                                                                                                      objectID: "objectID1")
+                                                                       )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -789,7 +939,9 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchRecommendRulesWithHTTPInfo(indexName: "indexName", model: RecommendModels.relatedProducts, requestOptions: nil)
+        let response = try await client.searchRecommendRulesWithHTTPInfo(indexName: "indexName",
+                                                                         model: RecommendModels.relatedProducts,
+                                                                         requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
