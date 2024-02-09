@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Models.Common;
@@ -28,7 +27,7 @@ public static class SearchPlayground
 
 
     var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
-                                                                        .AddConsole());
+      .AddConsole());
 
     var client = new SearchClient(searchConfig, loggerFactory);
 
@@ -75,7 +74,8 @@ public static class SearchPlayground
     Console.WriteLine("--- Browse all objects, one page `BrowseAsync` ---");
     var r = await client.BrowseAsync<TestObject>(defaultIndex,
       new BrowseParams(new BrowseParamsObject { HitsPerPage = 100 }));
-    r.Hits.ForEach(h => Console.WriteLine($"  - Record ObjectID: {h.ObjectID}"));
+    r.Hits.ForEach(h => Console.WriteLine($"  - Record ObjectID: {h.ObjectID}, {h.AdditionalProperties.Count}"));
+
 
     // Browse Helper, to fetch all pages
     Console.WriteLine("--- Browse all objects, all pages `BrowseObjectsAsync` ---");
@@ -102,14 +102,13 @@ public static class SearchPlayground
 
     var getObjResults = await client.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
     getObjResults.Results.ForEach(t =>
-      Console.WriteLine($"  - Record ObjectID: {t.ObjectID} - Property `otherValue`: {t.otherValue}"));
+      Console.WriteLine($"  - Record ObjectID: {t.ObjectID} - Property `otherValue`: {t.OtherValue}"));
 
     // Search single index
     Console.WriteLine("--- Search single index `SearchSingleIndexAsync` ---");
     var t = await client.SearchSingleIndexAsync<TestObject>(defaultIndex);
     t.Hits.ForEach(h => Console.WriteLine($"  - Record ObjectID: {h.ObjectID}"));
 
-    // Search
     Console.WriteLine("--- Search multiple indices `SearchAsync` ---");
     var searchQueries = new List<SearchQuery>
     {
@@ -122,7 +121,8 @@ public static class SearchPlayground
     {
       if (result.IsSearchResponse())
       {
-        Console.WriteLine($"Record with Hits: ObjectID = {result.AsSearchResponse().Hits.First().ObjectID}");
+        Console.WriteLine(
+          $"Record with Hits: ObjectID = {result.AsSearchResponse().Hits.First().ObjectID}, {result.AsSearchResponse().Hits.First().AdditionalProperties.Count}");
       }
       else if (result.IsSearchForFacetValuesResponse())
       {
@@ -189,7 +189,7 @@ public static class SearchPlayground
         },
       }).ConfigureAwait(false);
 
-    await PlaygroundHelper.Start("Creating new Synonyms - Async TaskID: `{synonymsResponse.TaskID}`", async () =>
+    await PlaygroundHelper.Start($"Creating new Synonyms - Async TaskID: `{synonymsResponse.TaskID}`", async () =>
       await client.WaitForTaskAsync(defaultIndex, synonymsResponse.TaskID), "New Synonyms has been created !");
 
     // Search Synonyms
@@ -198,13 +198,16 @@ public static class SearchPlayground
       .SearchSynonymsAsync(defaultIndex,
         new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym, HitsPerPage = 1 })
       .ConfigureAwait(false);
-    Console.WriteLine(searchSynonymsAsync.Hits.Count);
+
+    searchSynonymsAsync.Hits.ForEach(s => Console.WriteLine("Found :" + string.Join(',', s.Synonyms)));
 
     // Browse Synonyms
-    // var configuredTaskAwaitable = await client
-    //   .BrowseSynonymsAsync("test-csharp-new-client", SynonymType.Onewaysynonym, new SearchSynonymsParams { Query = "" })
-    //   .ConfigureAwait(false);
-    // configuredTaskAwaitable.ToList().ForEach(s => Console.WriteLine("Found :" + string.Join(',', s.Synonyms)));
+    Console.WriteLine("--- Browse Synonyms `BrowseSynonymsAsync` ---");
+    var configuredTaskAwaitable = await client
+      .BrowseSynonymsAsync("test-csharp-new-client",
+        new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym })
+      .ConfigureAwait(false);
+    configuredTaskAwaitable.ToList().ForEach(s => Console.WriteLine("Found :" + string.Join(',', s.Synonyms)));
 
     // Add Rule
     Console.WriteLine("--- Create new Rule `SaveRulesAsync` ---");
