@@ -48,7 +48,7 @@
     "husky": "9.0.10",
     "lint-staged": "15.2.2",
     "pinst": "3.0.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "prettier-plugin-java": "2.5.0",
     "renovate-config-algolia": "2.1.10"
   },
