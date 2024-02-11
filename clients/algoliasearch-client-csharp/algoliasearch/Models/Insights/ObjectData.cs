@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// ObjectData
 /// </summary>
 [DataContract(Name = "objectData")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ObjectData
 {
   /// <summary>
@@ -36,20 +35,20 @@ public partial class ObjectData
   /// <summary>
   /// Gets or Sets Price
   /// </summary>
-  [DataMember(Name = "price", EmitDefaultValue = false)]
+  [DataMember(Name = "price")]
   public Price Price { get; set; }
 
   /// <summary>
   /// The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item. 
   /// </summary>
   /// <value>The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item. </value>
-  [DataMember(Name = "quantity", EmitDefaultValue = false)]
+  [DataMember(Name = "quantity")]
   public int? Quantity { get; set; }
 
   /// <summary>
   /// Gets or Sets Discount
   /// </summary>
-  [DataMember(Name = "discount", EmitDefaultValue = false)]
+  [DataMember(Name = "discount")]
   public Discount Discount { get; set; }
 
   /// <summary>

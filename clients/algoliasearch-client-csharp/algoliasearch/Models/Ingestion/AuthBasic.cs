@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Authentication input for Basic login with username and password.
 /// </summary>
 [DataContract(Name = "AuthBasic")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthBasic
 {
   /// <summary>
@@ -45,13 +44,13 @@ public partial class AuthBasic
   /// <summary>
   /// Gets or Sets Username
   /// </summary>
-  [DataMember(Name = "username", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "username")]
   public string Username { get; set; }
 
   /// <summary>
   /// Gets or Sets Password
   /// </summary>
-  [DataMember(Name = "password", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "password")]
   public string Password { get; set; }
 
   /// <summary>

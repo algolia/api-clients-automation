@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// IndexingTimeResponse
 /// </summary>
 [DataContract(Name = "IndexingTimeResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class IndexingTimeResponse
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class IndexingTimeResponse
   /// <summary>
   /// Gets or Sets Metrics
   /// </summary>
-  [DataMember(Name = "metrics", EmitDefaultValue = false)]
+  [DataMember(Name = "metrics")]
   public IndexingTimeResponseMetrics Metrics { get; set; }
 
   /// <summary>

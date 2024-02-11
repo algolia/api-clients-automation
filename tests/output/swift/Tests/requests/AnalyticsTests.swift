@@ -20,7 +20,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -40,7 +41,9 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all",
+                                                                 parameters: ["query": AnyCodable("parameters")],
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -63,7 +66,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -83,7 +87,9 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters with space")],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -92,7 +98,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -106,7 +112,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -132,7 +139,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/all",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["body": "parameters"],
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -164,10 +174,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -199,10 +213,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query2": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -237,7 +255,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -280,7 +301,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -320,10 +344,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "isItWorking": true,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -355,10 +383,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "myParam": 2,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -389,11 +421,17 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": ["c", "d"],
+                "myParam": ["c",
+                            "d",
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -408,7 +446,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c,d\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -424,11 +462,18 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [true, true, false],
+                "myParam": [true,
+                            true,
+                            false,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -443,7 +488,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -459,11 +504,17 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [1, 2],
+                "myParam": [1,
+                            2,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -478,7 +529,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1,2\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -492,7 +543,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -518,7 +570,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters")],
+                                                              body: ["body": "parameters"],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -547,7 +602,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getAverageClickPositionWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getAverageClickPositionWithHTTPInfo(index: "index",
+                                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -570,7 +626,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getAverageClickPositionWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getAverageClickPositionWithHTTPInfo(index: "index",
+                                                                            startDate: "1999-09-19",
+                                                                            endDate: "2001-01-01",
+                                                                            tags: "tag",
+                                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -593,7 +653,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getClickPositionsWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getClickPositionsWithHTTPInfo(index: "index",
+                                                                      requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -616,7 +677,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getClickPositionsWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getClickPositionsWithHTTPInfo(index: "index",
+                                                                      startDate: "1999-09-19",
+                                                                      endDate: "2001-01-01",
+                                                                      tags: "tag",
+                                                                      requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -639,7 +704,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getClickThroughRateWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getClickThroughRateWithHTTPInfo(index: "index",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -662,7 +728,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getClickThroughRateWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getClickThroughRateWithHTTPInfo(index: "index",
+                                                                        startDate: "1999-09-19",
+                                                                        endDate: "2001-01-01",
+                                                                        tags: "tag",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -685,7 +755,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConversationRateWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getConversationRateWithHTTPInfo(index: "index",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -708,7 +779,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConversationRateWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getConversationRateWithHTTPInfo(index: "index",
+                                                                        startDate: "1999-09-19",
+                                                                        endDate: "2001-01-01",
+                                                                        tags: "tag",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -731,7 +806,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getNoClickRateWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getNoClickRateWithHTTPInfo(index: "index",
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -754,7 +830,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getNoClickRateWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getNoClickRateWithHTTPInfo(index: "index",
+                                                                   startDate: "1999-09-19",
+                                                                   endDate: "2001-01-01",
+                                                                   tags: "tag",
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -777,7 +857,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getNoResultsRateWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getNoResultsRateWithHTTPInfo(index: "index",
+                                                                     requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -800,7 +881,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getNoResultsRateWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getNoResultsRateWithHTTPInfo(index: "index",
+                                                                     startDate: "1999-09-19",
+                                                                     endDate: "2001-01-01",
+                                                                     tags: "tag",
+                                                                     requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -823,7 +908,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesCountWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getSearchesCountWithHTTPInfo(index: "index",
+                                                                     requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -846,7 +932,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesCountWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getSearchesCountWithHTTPInfo(index: "index",
+                                                                     startDate: "1999-09-19",
+                                                                     endDate: "2001-01-01",
+                                                                     tags: "tag",
+                                                                     requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -869,7 +959,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesNoClicksWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getSearchesNoClicksWithHTTPInfo(index: "index",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -892,7 +983,13 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesNoClicksWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getSearchesNoClicksWithHTTPInfo(index: "index",
+                                                                        startDate: "1999-09-19",
+                                                                        endDate: "2001-01-01",
+                                                                        limit: 21,
+                                                                        offset: 42,
+                                                                        tags: "tag",
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -915,7 +1012,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesNoResultsWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getSearchesNoResultsWithHTTPInfo(index: "index",
+                                                                         requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -938,7 +1036,13 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSearchesNoResultsWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getSearchesNoResultsWithHTTPInfo(index: "index",
+                                                                         startDate: "1999-09-19",
+                                                                         endDate: "2001-01-01",
+                                                                         limit: 21,
+                                                                         offset: 42,
+                                                                         tags: "tag",
+                                                                         requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -961,7 +1065,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getStatusWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getStatusWithHTTPInfo(index: "index",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -984,7 +1089,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopCountriesWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getTopCountriesWithHTTPInfo(index: "index",
+                                                                    requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1007,7 +1113,13 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopCountriesWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopCountriesWithHTTPInfo(index: "index",
+                                                                    startDate: "1999-09-19",
+                                                                    endDate: "2001-01-01",
+                                                                    limit: 21,
+                                                                    offset: 42,
+                                                                    tags: "tag",
+                                                                    requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1030,7 +1142,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterAttributesWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getTopFilterAttributesWithHTTPInfo(index: "index",
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1053,7 +1166,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterAttributesWithHTTPInfo(index: "index", search: "mySearch", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopFilterAttributesWithHTTPInfo(index: "index",
+                                                                           search: "mySearch",
+                                                                           startDate: "1999-09-19",
+                                                                           endDate: "2001-01-01",
+                                                                           limit: 21,
+                                                                           offset: 42,
+                                                                           tags: "tag",
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1076,7 +1196,9 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute", index: "index", requestOptions: nil)
+        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute",
+                                                                             index: "index",
+                                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1099,7 +1221,9 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute1,myAttribute2", index: "index", requestOptions: nil)
+        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute1,myAttribute2",
+                                                                             index: "index",
+                                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1122,7 +1246,15 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute", index: "index", search: "mySearch", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute",
+                                                                             index: "index",
+                                                                             search: "mySearch",
+                                                                             startDate: "1999-09-19",
+                                                                             endDate: "2001-01-01",
+                                                                             limit: 21,
+                                                                             offset: 42,
+                                                                             tags: "tag",
+                                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1145,7 +1277,15 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute1,myAttribute2", index: "index", search: "mySearch", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopFilterForAttributeWithHTTPInfo(attribute: "myAttribute1,myAttribute2",
+                                                                             index: "index",
+                                                                             search: "mySearch",
+                                                                             startDate: "1999-09-19",
+                                                                             endDate: "2001-01-01",
+                                                                             limit: 21,
+                                                                             offset: 42,
+                                                                             tags: "tag",
+                                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1168,7 +1308,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFiltersNoResultsWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getTopFiltersNoResultsWithHTTPInfo(index: "index",
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1191,7 +1332,14 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopFiltersNoResultsWithHTTPInfo(index: "index", search: "mySearch", startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopFiltersNoResultsWithHTTPInfo(index: "index",
+                                                                           search: "mySearch",
+                                                                           startDate: "1999-09-19",
+                                                                           endDate: "2001-01-01",
+                                                                           limit: 21,
+                                                                           offset: 42,
+                                                                           tags: "tag",
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1214,7 +1362,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopHitsWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getTopHitsWithHTTPInfo(index: "index",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1237,7 +1386,15 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopHitsWithHTTPInfo(index: "index", search: "mySearch", clickAnalytics: true, startDate: "1999-09-19", endDate: "2001-01-01", limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopHitsWithHTTPInfo(index: "index",
+                                                               search: "mySearch",
+                                                               clickAnalytics: true,
+                                                               startDate: "1999-09-19",
+                                                               endDate: "2001-01-01",
+                                                               limit: 21,
+                                                               offset: 42,
+                                                               tags: "tag",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1260,7 +1417,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopSearchesWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getTopSearchesWithHTTPInfo(index: "index",
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1283,7 +1441,16 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTopSearchesWithHTTPInfo(index: "index", clickAnalytics: true, startDate: "1999-09-19", endDate: "2001-01-01", orderBy: OrderBy.searchCount, direction: Direction.asc, limit: 21, offset: 42, tags: "tag", requestOptions: nil)
+        let response = try await client.getTopSearchesWithHTTPInfo(index: "index",
+                                                                   clickAnalytics: true,
+                                                                   startDate: "1999-09-19",
+                                                                   endDate: "2001-01-01",
+                                                                   orderBy: OrderBy.searchCount,
+                                                                   direction: Direction.asc,
+                                                                   limit: 21,
+                                                                   offset: 42,
+                                                                   tags: "tag",
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1306,7 +1473,8 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getUsersCountWithHTTPInfo(index: "index", requestOptions: nil)
+        let response = try await client.getUsersCountWithHTTPInfo(index: "index",
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1329,7 +1497,11 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getUsersCountWithHTTPInfo(index: "index", startDate: "1999-09-19", endDate: "2001-01-01", tags: "tag", requestOptions: nil)
+        let response = try await client.getUsersCountWithHTTPInfo(index: "index",
+                                                                  startDate: "1999-09-19",
+                                                                  endDate: "2001-01-01",
+                                                                  tags: "tag",
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

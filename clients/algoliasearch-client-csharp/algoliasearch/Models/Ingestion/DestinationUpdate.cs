@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Ingestion;
 /// Payload to partially update a Destination.
 /// </summary>
 [DataContract(Name = "DestinationUpdate")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationUpdate
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", EmitDefaultValue = false)]
-  public DestinationType Type { get; set; }
+  [DataMember(Name = "type")]
+  public DestinationType? Type { get; set; }
   /// <summary>
   /// Initializes a new instance of the DestinationUpdate class.
   /// </summary>
@@ -43,19 +42,19 @@ public partial class DestinationUpdate
   /// An human readable name describing the object.
   /// </summary>
   /// <value>An human readable name describing the object.</value>
-  [DataMember(Name = "name", EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
   /// </summary>
-  [DataMember(Name = "input", EmitDefaultValue = false)]
+  [DataMember(Name = "input")]
   public DestinationInput Input { get; set; }
 
   /// <summary>
   /// Gets or Sets AuthenticationID
   /// </summary>
-  [DataMember(Name = "authenticationID", EmitDefaultValue = false)]
+  [DataMember(Name = "authenticationID")]
   public string AuthenticationID { get; set; }
 
   /// <summary>

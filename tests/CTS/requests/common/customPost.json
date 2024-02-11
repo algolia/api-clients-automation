@@ -229,7 +229,7 @@
       },
       "queryParameters": {
         "query": "parameters",
-        "myParam": "c,d"
+        "myParam": "c%2Cd"
       }
     }
   },
@@ -261,7 +261,7 @@
       },
       "queryParameters": {
         "query": "parameters",
-        "myParam": "true,true,false"
+        "myParam": "true%2Ctrue%2Cfalse"
       }
     }
   },
@@ -292,7 +292,7 @@
       },
       "queryParameters": {
         "query": "parameters",
-        "myParam": "1,2"
+        "myParam": "1%2C2"
       }
     }
   }

@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Search;
 /// BatchDictionaryEntriesRequest
 /// </summary>
 [DataContract(Name = "batchDictionaryEntriesRequest")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BatchDictionaryEntriesRequest
 {
 
   /// <summary>
   /// Gets or Sets Action
   /// </summary>
-  [DataMember(Name = "action", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "action")]
   public DictionaryAction Action { get; set; }
   /// <summary>
   /// Initializes a new instance of the BatchDictionaryEntriesRequest class.
@@ -51,7 +50,7 @@ public partial class BatchDictionaryEntriesRequest
   /// <summary>
   /// Gets or Sets Body
   /// </summary>
-  [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "body")]
   public DictionaryEntry Body { get; set; }
 
   /// <summary>

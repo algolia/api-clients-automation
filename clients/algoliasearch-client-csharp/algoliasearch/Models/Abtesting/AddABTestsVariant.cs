@@ -125,29 +125,30 @@ public partial class AddABTestsVariant : AbstractSchema
   /// <returns>An instance of AddABTestsVariant</returns>
   public static AddABTestsVariant FromJson(string jsonString)
   {
-    AddABTestsVariant newAddABTestsVariant = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newAddABTestsVariant;
+      try
+      {
+        return new AddABTestsVariant(JsonConvert.DeserializeObject<AbTestsVariant>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AbTestsVariant: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new AddABTestsVariant(JsonConvert.DeserializeObject<AbTestsVariant>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AbTestsVariant: {exception}");
-    }
-    try
-    {
-      return new AddABTestsVariant(JsonConvert.DeserializeObject<AbTestsVariantSearchParams>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AbTestsVariantSearchParams: {exception}");
+      try
+      {
+        return new AddABTestsVariant(JsonConvert.DeserializeObject<AbTestsVariantSearchParams>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AbTestsVariantSearchParams: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -168,7 +169,7 @@ public class AddABTestsVariantJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(AddABTestsVariant).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -183,7 +184,7 @@ public class AddABTestsVariantJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

@@ -125,29 +125,30 @@ public partial class AutomaticFacetFilters : AbstractSchema
   /// <returns>An instance of AutomaticFacetFilters</returns>
   public static AutomaticFacetFilters FromJson(string jsonString)
   {
-    AutomaticFacetFilters newAutomaticFacetFilters = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Array)
     {
-      return newAutomaticFacetFilters;
+      try
+      {
+        return new AutomaticFacetFilters(JsonConvert.DeserializeObject<List<AutomaticFacetFilter>>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into List<AutomaticFacetFilter>: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Array)
     {
-      return new AutomaticFacetFilters(JsonConvert.DeserializeObject<List<AutomaticFacetFilter>>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into List<AutomaticFacetFilter>: {exception}");
-    }
-    try
-    {
-      return new AutomaticFacetFilters(JsonConvert.DeserializeObject<List<string>>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into List<string>: {exception}");
+      try
+      {
+        return new AutomaticFacetFilters(JsonConvert.DeserializeObject<List<string>>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into List<string>: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -168,7 +169,7 @@ public class AutomaticFacetFiltersJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(AutomaticFacetFilters).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -183,7 +184,7 @@ public class AutomaticFacetFiltersJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

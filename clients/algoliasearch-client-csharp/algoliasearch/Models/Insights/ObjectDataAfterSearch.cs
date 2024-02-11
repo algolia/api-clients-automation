@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// ObjectDataAfterSearch
 /// </summary>
 [DataContract(Name = "objectDataAfterSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ObjectDataAfterSearch
 {
   /// <summary>
@@ -37,26 +36,26 @@ public partial class ObjectDataAfterSearch
   /// Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
   /// </summary>
   /// <value>Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.</value>
-  [DataMember(Name = "queryID", EmitDefaultValue = false)]
+  [DataMember(Name = "queryID")]
   public string QueryID { get; set; }
 
   /// <summary>
   /// Gets or Sets Price
   /// </summary>
-  [DataMember(Name = "price", EmitDefaultValue = false)]
+  [DataMember(Name = "price")]
   public Price Price { get; set; }
 
   /// <summary>
   /// The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item. 
   /// </summary>
   /// <value>The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item. </value>
-  [DataMember(Name = "quantity", EmitDefaultValue = false)]
+  [DataMember(Name = "quantity")]
   public int? Quantity { get; set; }
 
   /// <summary>
   /// Gets or Sets Discount
   /// </summary>
-  [DataMember(Name = "discount", EmitDefaultValue = false)]
+  [DataMember(Name = "discount")]
   public Discount Discount { get; set; }
 
   /// <summary>

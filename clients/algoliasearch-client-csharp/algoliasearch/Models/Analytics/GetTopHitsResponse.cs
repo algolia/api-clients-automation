@@ -125,29 +125,30 @@ public partial class GetTopHitsResponse : AbstractSchema
   /// <returns>An instance of GetTopHitsResponse</returns>
   public static GetTopHitsResponse FromJson(string jsonString)
   {
-    GetTopHitsResponse newGetTopHitsResponse = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newGetTopHitsResponse;
+      try
+      {
+        return new GetTopHitsResponse(JsonConvert.DeserializeObject<TopHitsResponse>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into TopHitsResponse: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new GetTopHitsResponse(JsonConvert.DeserializeObject<TopHitsResponse>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into TopHitsResponse: {exception}");
-    }
-    try
-    {
-      return new GetTopHitsResponse(JsonConvert.DeserializeObject<TopHitsResponseWithAnalytics>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into TopHitsResponseWithAnalytics: {exception}");
+      try
+      {
+        return new GetTopHitsResponse(JsonConvert.DeserializeObject<TopHitsResponseWithAnalytics>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into TopHitsResponseWithAnalytics: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -168,7 +169,7 @@ public class GetTopHitsResponseJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(GetTopHitsResponse).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -183,7 +184,7 @@ public class GetTopHitsResponseJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

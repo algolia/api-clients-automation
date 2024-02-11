@@ -218,56 +218,66 @@ public partial class AuthInput : AbstractSchema
   /// <returns>An instance of AuthInput</returns>
   public static AuthInput FromJson(string jsonString)
   {
-    AuthInput newAuthInput = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newAuthInput;
+      try
+      {
+        return new AuthInput(JsonConvert.DeserializeObject<AuthGoogleServiceAccount>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthGoogleServiceAccount: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new AuthInput(JsonConvert.DeserializeObject<AuthGoogleServiceAccount>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new AuthInput(JsonConvert.DeserializeObject<AuthBasic>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthBasic: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthGoogleServiceAccount: {exception}");
+      try
+      {
+        return new AuthInput(JsonConvert.DeserializeObject<AuthAPIKey>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAPIKey: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new AuthInput(JsonConvert.DeserializeObject<AuthBasic>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new AuthInput(JsonConvert.DeserializeObject<AuthOAuth>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthOAuth: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthBasic: {exception}");
-    }
-    try
-    {
-      return new AuthInput(JsonConvert.DeserializeObject<AuthAPIKey>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAPIKey: {exception}");
-    }
-    try
-    {
-      return new AuthInput(JsonConvert.DeserializeObject<AuthOAuth>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthOAuth: {exception}");
-    }
-    try
-    {
-      return new AuthInput(JsonConvert.DeserializeObject<AuthAlgolia>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAlgolia: {exception}");
+      try
+      {
+        return new AuthInput(JsonConvert.DeserializeObject<AuthAlgolia>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAlgolia: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -288,7 +298,7 @@ public class AuthInputJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(AuthInput).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -303,7 +313,7 @@ public class AuthInputJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

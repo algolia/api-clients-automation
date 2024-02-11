@@ -218,56 +218,66 @@ public partial class AuthInputPartial : AbstractSchema
   /// <returns>An instance of AuthInputPartial</returns>
   public static AuthInputPartial FromJson(string jsonString)
   {
-    AuthInputPartial newAuthInputPartial = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newAuthInputPartial;
+      try
+      {
+        return new AuthInputPartial(JsonConvert.DeserializeObject<AuthGoogleServiceAccountPartial>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthGoogleServiceAccountPartial: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new AuthInputPartial(JsonConvert.DeserializeObject<AuthGoogleServiceAccountPartial>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new AuthInputPartial(JsonConvert.DeserializeObject<AuthBasicPartial>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthBasicPartial: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthGoogleServiceAccountPartial: {exception}");
+      try
+      {
+        return new AuthInputPartial(JsonConvert.DeserializeObject<AuthAPIKeyPartial>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAPIKeyPartial: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new AuthInputPartial(JsonConvert.DeserializeObject<AuthBasicPartial>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new AuthInputPartial(JsonConvert.DeserializeObject<AuthOAuthPartial>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthOAuthPartial: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthBasicPartial: {exception}");
-    }
-    try
-    {
-      return new AuthInputPartial(JsonConvert.DeserializeObject<AuthAPIKeyPartial>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAPIKeyPartial: {exception}");
-    }
-    try
-    {
-      return new AuthInputPartial(JsonConvert.DeserializeObject<AuthOAuthPartial>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthOAuthPartial: {exception}");
-    }
-    try
-    {
-      return new AuthInputPartial(JsonConvert.DeserializeObject<AuthAlgoliaPartial>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAlgoliaPartial: {exception}");
+      try
+      {
+        return new AuthInputPartial(JsonConvert.DeserializeObject<AuthAlgoliaPartial>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into AuthAlgoliaPartial: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -288,7 +298,7 @@ public class AuthInputPartialJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(AuthInputPartial).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -303,7 +313,7 @@ public class AuthInputPartialJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

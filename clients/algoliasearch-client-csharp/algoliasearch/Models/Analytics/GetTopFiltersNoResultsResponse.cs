@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Analytics;
 /// GetTopFiltersNoResultsResponse
 /// </summary>
 [DataContract(Name = "getTopFiltersNoResultsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetTopFiltersNoResultsResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class GetTopFiltersNoResultsResponse
   /// Filters with no results.
   /// </summary>
   /// <value>Filters with no results.</value>
-  [DataMember(Name = "values", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "values")]
   public List<GetTopFiltersNoResultsValues> Values { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// AuthAlgoliaPartial
 /// </summary>
 [DataContract(Name = "AuthAlgoliaPartial")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthAlgoliaPartial
 {
   /// <summary>
@@ -37,14 +36,14 @@ public partial class AuthAlgoliaPartial
   /// Algolia Application ID.
   /// </summary>
   /// <value>Algolia Application ID.</value>
-  [DataMember(Name = "appID", EmitDefaultValue = false)]
+  [DataMember(Name = "appID")]
   public string AppID { get; set; }
 
   /// <summary>
   /// Algolia API Key, with the correct rights to push to an index and change settings.
   /// </summary>
   /// <value>Algolia API Key, with the correct rights to push to an index and change settings.</value>
-  [DataMember(Name = "apiKey", EmitDefaultValue = false)]
+  [DataMember(Name = "apiKey")]
   public string ApiKey { get; set; }
 
   /// <summary>

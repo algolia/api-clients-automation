@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// LatencyResponseMetrics
 /// </summary>
 [DataContract(Name = "LatencyResponse_metrics")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class LatencyResponseMetrics
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class LatencyResponseMetrics
   /// <summary>
   /// Gets or Sets Latency
   /// </summary>
-  [DataMember(Name = "latency", EmitDefaultValue = false)]
+  [DataMember(Name = "latency")]
   public Dictionary<string, List<TimeInner>> Latency { get; set; }
 
   /// <summary>

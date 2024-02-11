@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Ingestion;
 /// The payload when creating a destination.
 /// </summary>
 [DataContract(Name = "DestinationCreate")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationCreate
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "type")]
   public DestinationType Type { get; set; }
   /// <summary>
   /// Initializes a new instance of the DestinationCreate class.
@@ -54,20 +53,20 @@ public partial class DestinationCreate
   /// An human readable name describing the object.
   /// </summary>
   /// <value>An human readable name describing the object.</value>
-  [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
   /// </summary>
-  [DataMember(Name = "input", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "input")]
   public DestinationInput Input { get; set; }
 
   /// <summary>
   /// The authentication UUID.
   /// </summary>
   /// <value>The authentication UUID.</value>
-  [DataMember(Name = "authenticationID", EmitDefaultValue = false)]
+  [DataMember(Name = "authenticationID")]
   public string AuthenticationID { get; set; }
 
   /// <summary>

@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Ingestion;
 /// The trigger input for a task of type 'schedule'.
 /// </summary>
 [DataContract(Name = "ScheduleTriggerInput")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ScheduleTriggerInput
 {
 
   /// <summary>
   /// Gets or Sets Type
   /// </summary>
-  [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "type")]
   public ScheduleTriggerType Type { get; set; }
   /// <summary>
   /// Initializes a new instance of the ScheduleTriggerInput class.
@@ -52,7 +51,7 @@ public partial class ScheduleTriggerInput
   /// A cron expression that represent at which regularity the task should run.
   /// </summary>
   /// <value>A cron expression that represent at which regularity the task should run.</value>
-  [DataMember(Name = "cron", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "cron")]
   public string Cron { get; set; }
 
   /// <summary>

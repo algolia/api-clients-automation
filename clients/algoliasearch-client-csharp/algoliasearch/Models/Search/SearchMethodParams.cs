@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Search;
 /// SearchMethodParams
 /// </summary>
 [DataContract(Name = "searchMethodParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SearchMethodParams
 {
 
   /// <summary>
   /// Gets or Sets Strategy
   /// </summary>
-  [DataMember(Name = "strategy", EmitDefaultValue = false)]
-  public SearchStrategy Strategy { get; set; }
+  [DataMember(Name = "strategy")]
+  public SearchStrategy? Strategy { get; set; }
   /// <summary>
   /// Initializes a new instance of the SearchMethodParams class.
   /// </summary>
@@ -49,7 +48,7 @@ public partial class SearchMethodParams
   /// <summary>
   /// Gets or Sets Requests
   /// </summary>
-  [DataMember(Name = "requests", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "requests")]
   public List<SearchQuery> Requests { get; set; }
 
   /// <summary>

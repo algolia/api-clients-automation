@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Recommend;
 /// BaseRecommendationsQuery
 /// </summary>
 [DataContract(Name = "baseRecommendationsQuery")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseRecommendationsQuery
 {
 
   /// <summary>
   /// Gets or Sets Model
   /// </summary>
-  [DataMember(Name = "model", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "model")]
   public RecommendationModels Model { get; set; }
   /// <summary>
   /// Initializes a new instance of the BaseRecommendationsQuery class.
@@ -52,19 +51,19 @@ public partial class BaseRecommendationsQuery
   /// Unique object identifier.
   /// </summary>
   /// <value>Unique object identifier.</value>
-  [DataMember(Name = "objectID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "objectID")]
   public string ObjectID { get; set; }
 
   /// <summary>
   /// Gets or Sets QueryParameters
   /// </summary>
-  [DataMember(Name = "queryParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "queryParameters")]
   public SearchParamsObject QueryParameters { get; set; }
 
   /// <summary>
   /// Gets or Sets FallbackParameters
   /// </summary>
-  [DataMember(Name = "fallbackParameters", EmitDefaultValue = false)]
+  [DataMember(Name = "fallbackParameters")]
   public SearchParamsObject FallbackParameters { get; set; }
 
   /// <summary>

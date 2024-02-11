@@ -587,7 +587,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -617,13 +617,13 @@ class SearchTest {
       call = {
         customGet(
           path = "/test/all",
-          parameters = mapOf("query" to "parameters"),
+          parameters = mapOf("query" to "parameters with space"),
         )
       },
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -665,7 +665,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
@@ -694,7 +694,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"myQueryParameter"}""", it.url.parameters)
+        assertContainsAll("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -723,7 +723,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -753,7 +753,7 @@ class SearchTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -783,7 +783,7 @@ class SearchTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -812,7 +812,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","isItWorking":"true"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -841,7 +841,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"2"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -870,7 +870,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"c,d"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","myParam":"c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -899,7 +899,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"true,true,false"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -928,7 +928,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"1,2"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -970,7 +970,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.parameters)
+        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
@@ -1205,7 +1205,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/logs".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"offset":"5","length":"10","indexName":"theIndexName","type":"all"}""", it.url.parameters)
+        assertContainsAll("""{"offset":"5","length":"10","indexName":"theIndexName","type":"all"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1226,7 +1226,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/uniqueID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"attributesToRetrieve":"attr1,attr2"}""", it.url.parameters)
+        assertContainsAll("""{"attributesToRetrieve":"attr1%2Cattr2"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1410,7 +1410,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/clusters/mapping/pending".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"getClusters":"true"}""", it.url.parameters)
+        assertContainsAll("""{"getClusters":"true"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1476,7 +1476,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"page":"8","hitsPerPage":"3"}""", it.url.parameters)
+        assertContainsAll("""{"page":"8","hitsPerPage":"3"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1510,7 +1510,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"page":"8","hitsPerPage":"100"}""", it.url.parameters)
+        assertContainsAll("""{"page":"8","hitsPerPage":"100"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1592,7 +1592,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"createIfNotExists":"true"}""", it.url.parameters)
+        assertContainsAll("""{"createIfNotExists":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""", it.body)
       },
     )
@@ -1784,7 +1784,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}""", it.body)
       },
     )
@@ -1901,7 +1901,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/indexName/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true","clearExistingRules":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true","clearExistingRules":"true"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]""", it.body)
       },
     )
@@ -1927,7 +1927,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}""", it.body)
       },
     )
@@ -1961,7 +1961,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]""", it.body)
       },
     )
@@ -2439,6 +2439,27 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `single search retrieve snippets`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "cts_e2e_browse",
+          searchParams = SearchParamsObject(
+            query = "batman mask of the phantasm",
+            attributesToRetrieve = listOf("*"),
+            attributesToSnippet = listOf("*:20"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_browse/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""", it.body)
+      },
+    )
+  }
+
   // searchSynonyms
 
   @Test
@@ -2563,7 +2584,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"paginationLimitedTo":10}""", it.body)
       },
     )
@@ -2584,7 +2605,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"typoTolerance":true}""", it.body)
       },
     )
@@ -2605,7 +2626,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"typoTolerance":"min"}""", it.body)
       },
     )
@@ -2626,7 +2647,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"ignorePlurals":true}""", it.body)
       },
     )
@@ -2647,7 +2668,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"ignorePlurals":["algolia"]}""", it.body)
       },
     )
@@ -2668,7 +2689,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"removeStopWords":true}""", it.body)
       },
     )
@@ -2689,7 +2710,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"removeStopWords":["algolia"]}""", it.body)
       },
     )
@@ -2710,7 +2731,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"distinct":true}""", it.body)
       },
     )
@@ -2731,7 +2752,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.parameters)
+        assertContainsAll("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"distinct":1}""", it.body)
       },
     )

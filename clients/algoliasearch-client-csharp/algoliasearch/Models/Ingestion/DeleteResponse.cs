@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// DeleteResponse
 /// </summary>
 [DataContract(Name = "DeleteResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DeleteResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class DeleteResponse
   /// Date of deletion (RFC3339 format).
   /// </summary>
   /// <value>Date of deletion (RFC3339 format).</value>
-  [DataMember(Name = "deletedAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "deletedAt")]
   public string DeletedAt { get; set; }
 
   /// <summary>

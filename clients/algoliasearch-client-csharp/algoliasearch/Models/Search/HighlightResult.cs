@@ -51,6 +51,18 @@ public partial class HighlightResult : AbstractSchema
     ActualInstance = actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
+  /// <summary>
+  /// Initializes a new instance of the HighlightResult class
+  /// with a List{HighlightResultOption}
+  /// </summary>
+  /// <param name="actualInstance">An instance of List&lt;HighlightResultOption&gt;.</param>
+  public HighlightResult(List<HighlightResultOption> actualInstance)
+  {
+    IsNullable = false;
+    SchemaType = "oneOf";
+    ActualInstance = actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
 
   /// <summary>
   /// Gets or Sets ActualInstance
@@ -77,6 +89,16 @@ public partial class HighlightResult : AbstractSchema
     return (Dictionary<string, HighlightResultOption>)ActualInstance;
   }
 
+  /// <summary>
+  /// Get the actual instance of `List{HighlightResultOption}`. If the actual instance is not `List{HighlightResultOption}`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of List&lt;HighlightResultOption&gt;</returns>
+  public List<HighlightResultOption> AsList()
+  {
+    return (List<HighlightResultOption>)ActualInstance;
+  }
+
 
   /// <summary>
   /// Check if the actual instance is of `HighlightResultOption` type.
@@ -94,6 +116,15 @@ public partial class HighlightResult : AbstractSchema
   public bool IsDictionary()
   {
     return ActualInstance.GetType() == typeof(Dictionary<string, HighlightResultOption>);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `List{HighlightResultOption}` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsList()
+  {
+    return ActualInstance.GetType() == typeof(List<HighlightResultOption>);
   }
 
   /// <summary>
@@ -125,29 +156,42 @@ public partial class HighlightResult : AbstractSchema
   /// <returns>An instance of HighlightResult</returns>
   public static HighlightResult FromJson(string jsonString)
   {
-    HighlightResult newHighlightResult = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newHighlightResult;
+      try
+      {
+        return new HighlightResult(JsonConvert.DeserializeObject<HighlightResultOption>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into HighlightResultOption: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new HighlightResult(JsonConvert.DeserializeObject<HighlightResultOption>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new HighlightResult(JsonConvert.DeserializeObject<Dictionary<string, HighlightResultOption>>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into Dictionary<string, HighlightResultOption>: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Array)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into HighlightResultOption: {exception}");
-    }
-    try
-    {
-      return new HighlightResult(JsonConvert.DeserializeObject<Dictionary<string, HighlightResultOption>>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into Dictionary<string, HighlightResultOption>: {exception}");
+      try
+      {
+        return new HighlightResult(JsonConvert.DeserializeObject<List<HighlightResultOption>>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into List<HighlightResultOption>: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -168,7 +212,7 @@ public class HighlightResultJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(HighlightResult).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -183,7 +227,7 @@ public class HighlightResultJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

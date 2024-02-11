@@ -6125,7 +6125,7 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params, Object.class)
+    return searchAsync(params, Hit.class)
       .thenApply(searchResponses ->
         searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
       );

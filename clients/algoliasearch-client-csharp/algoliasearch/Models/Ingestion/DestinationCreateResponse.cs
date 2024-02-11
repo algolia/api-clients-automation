@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Response from the API when the Destination is successfully created.
 /// </summary>
 [DataContract(Name = "DestinationCreateResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationCreateResponse
 {
   /// <summary>
@@ -48,21 +47,21 @@ public partial class DestinationCreateResponse
   /// The destination UUID.
   /// </summary>
   /// <value>The destination UUID.</value>
-  [DataMember(Name = "destinationID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "destinationID")]
   public string DestinationID { get; set; }
 
   /// <summary>
   /// An human readable name describing the object.
   /// </summary>
   /// <value>An human readable name describing the object.</value>
-  [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "name")]
   public string Name { get; set; }
 
   /// <summary>
   /// Date of creation (RFC3339 format).
   /// </summary>
   /// <value>Date of creation (RFC3339 format).</value>
-  [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "createdAt")]
   public string CreatedAt { get; set; }
 
   /// <summary>

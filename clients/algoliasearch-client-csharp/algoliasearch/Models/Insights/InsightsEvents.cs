@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Insights;
 /// InsightsEvents
 /// </summary>
 [DataContract(Name = "InsightsEvents")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class InsightsEvents
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class InsightsEvents
   /// List of click and conversion events.  An event is an object representing a user interaction. Events have attributes that describe the interaction, such as an event name, a type, or a user token.  **All** events must be valid, otherwise the API returns an error. 
   /// </summary>
   /// <value>List of click and conversion events.  An event is an object representing a user interaction. Events have attributes that describe the interaction, such as an event name, a type, or a user token.  **All** events must be valid, otherwise the API returns an error. </value>
-  [DataMember(Name = "events", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "events")]
   public List<EventsItems> Events { get; set; }
 
   /// <summary>

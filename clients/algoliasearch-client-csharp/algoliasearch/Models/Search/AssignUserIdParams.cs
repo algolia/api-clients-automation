@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// Assign userID parameters.
 /// </summary>
 [DataContract(Name = "assignUserIdParams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AssignUserIdParams
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class AssignUserIdParams
   /// Cluster name.
   /// </summary>
   /// <value>Cluster name.</value>
-  [DataMember(Name = "cluster", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "cluster")]
   public string Cluster { get; set; }
 
   /// <summary>

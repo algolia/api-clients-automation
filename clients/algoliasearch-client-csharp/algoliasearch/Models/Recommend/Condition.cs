@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Recommend;
 /// Condition
 /// </summary>
 [DataContract(Name = "condition")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Condition
 {
 
   /// <summary>
   /// Gets or Sets Anchoring
   /// </summary>
-  [DataMember(Name = "anchoring", EmitDefaultValue = false)]
-  public Anchoring Anchoring { get; set; }
+  [DataMember(Name = "anchoring")]
+  public Anchoring? Anchoring { get; set; }
   /// <summary>
   /// Initializes a new instance of the Condition class.
   /// </summary>
@@ -43,21 +42,21 @@ public partial class Condition
   /// Query pattern syntax.
   /// </summary>
   /// <value>Query pattern syntax.</value>
-  [DataMember(Name = "pattern", EmitDefaultValue = false)]
+  [DataMember(Name = "pattern")]
   public string Pattern { get; set; }
 
   /// <summary>
   /// Whether the pattern matches on plurals, synonyms, and typos.
   /// </summary>
   /// <value>Whether the pattern matches on plurals, synonyms, and typos.</value>
-  [DataMember(Name = "alternatives", EmitDefaultValue = false)]
+  [DataMember(Name = "alternatives")]
   public bool? Alternatives { get; set; }
 
   /// <summary>
   /// Rule context format: [A-Za-z0-9_-]+).
   /// </summary>
   /// <value>Rule context format: [A-Za-z0-9_-]+).</value>
-  [DataMember(Name = "context", EmitDefaultValue = false)]
+  [DataMember(Name = "context")]
   public string Context { get; set; }
 
   /// <summary>

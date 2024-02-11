@@ -4,6 +4,10 @@ require 'faraday/net_http_persistent' unless Faraday::VERSION < '1'
 
 module Algolia
   module Transport
+    def self.encode_uri(uri)
+      CGI.escape(uri).gsub('+', '%20')
+    end
+
     class Transport
       include RetryOutcomeType
       include CallType
@@ -50,7 +54,6 @@ module Algolia
           outcome = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
           if outcome == FAILURE
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
-            puts decoded_error
             raise AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
           end
           return response unless outcome == RETRY
@@ -114,7 +117,7 @@ module Algolia
       def stringify_query_params(query_params)
         query_params.to_h do |key, value|
           value = value.join(',') if value.is_a?(Array)
-          [key, value.to_s]
+          [key, Algolia::Transport.encode_uri(value.to_s)]
         end
       end
     end

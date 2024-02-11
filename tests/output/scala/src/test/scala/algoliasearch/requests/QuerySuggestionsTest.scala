@@ -1,4 +1,4 @@
-package algoliasearch.methods.requests
+package algoliasearch.requests
 
 import algoliasearch.EchoInterceptor
 import algoliasearch.api.QuerySuggestionsClient
@@ -120,7 +120,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "/test/all",
-      parameters = Some(Map("query" -> "parameters"))
+      parameters = Some(Map("query" -> "parameters with space"))
     )
 
     Await.ready(future, Duration.Inf)
@@ -129,7 +129,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.path == "/1/test/all")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters%20with%20space"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -399,7 +399,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"c,d"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"c%2Cd"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -430,7 +430,8 @@ class QuerySuggestionsTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"true,true,false"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery =
+      parse("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -461,7 +462,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"1,2"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"1%2C2"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {

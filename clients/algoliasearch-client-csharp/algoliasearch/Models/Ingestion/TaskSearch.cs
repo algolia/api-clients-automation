@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// TaskSearch
 /// </summary>
 [DataContract(Name = "TaskSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class TaskSearch
 {
   /// <summary>
@@ -43,7 +42,7 @@ public partial class TaskSearch
   /// <summary>
   /// Gets or Sets TaskIDs
   /// </summary>
-  [DataMember(Name = "taskIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "taskIDs")]
   public List<string> TaskIDs { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// InventoryResponse
 /// </summary>
 [DataContract(Name = "InventoryResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class InventoryResponse
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class InventoryResponse
   /// <summary>
   /// Gets or Sets Inventory
   /// </summary>
-  [DataMember(Name = "inventory", EmitDefaultValue = false)]
+  [DataMember(Name = "inventory")]
   public List<Server> Inventory { get; set; }
 
   /// <summary>

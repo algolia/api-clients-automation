@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Payload to search for multiple authentications, based on the given `authenticationIDs`.
 /// </summary>
 [DataContract(Name = "AuthenticationSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AuthenticationSearch
 {
   /// <summary>
@@ -43,7 +42,7 @@ public partial class AuthenticationSearch
   /// <summary>
   /// Gets or Sets AuthenticationIDs
   /// </summary>
-  [DataMember(Name = "authenticationIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "authenticationIDs")]
   public List<string> AuthenticationIDs { get; set; }
 
   /// <summary>

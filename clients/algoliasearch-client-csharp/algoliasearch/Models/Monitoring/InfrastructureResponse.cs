@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// InfrastructureResponse
 /// </summary>
 [DataContract(Name = "InfrastructureResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class InfrastructureResponse
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class InfrastructureResponse
   /// <summary>
   /// Gets or Sets Metrics
   /// </summary>
-  [DataMember(Name = "metrics", EmitDefaultValue = false)]
+  [DataMember(Name = "metrics")]
   public InfrastructureResponseMetrics Metrics { get; set; }
 
   /// <summary>

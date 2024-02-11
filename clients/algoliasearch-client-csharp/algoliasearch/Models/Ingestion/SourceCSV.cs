@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceCSV
 /// </summary>
 [DataContract(Name = "SourceCSV")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceCSV
 {
 
   /// <summary>
   /// Gets or Sets Method
   /// </summary>
-  [DataMember(Name = "method", EmitDefaultValue = false)]
-  public MethodType Method { get; set; }
+  [DataMember(Name = "method")]
+  public MethodType? Method { get; set; }
   /// <summary>
   /// Initializes a new instance of the SourceCSV class.
   /// </summary>
@@ -50,28 +49,28 @@ public partial class SourceCSV
   /// The URL of the file.
   /// </summary>
   /// <value>The URL of the file.</value>
-  [DataMember(Name = "url", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "url")]
   public string Url { get; set; }
 
   /// <summary>
   /// The name of the column that contains the unique ID, used as `objectID` in Algolia.
   /// </summary>
   /// <value>The name of the column that contains the unique ID, used as `objectID` in Algolia.</value>
-  [DataMember(Name = "uniqueIDColumn", EmitDefaultValue = false)]
+  [DataMember(Name = "uniqueIDColumn")]
   public string UniqueIDColumn { get; set; }
 
   /// <summary>
   /// Mapping of type for every column. For example {\"myColumn\": \"boolean\", \"myOtherColumn\": \"json\"}. 
   /// </summary>
   /// <value>Mapping of type for every column. For example {\"myColumn\": \"boolean\", \"myOtherColumn\": \"json\"}. </value>
-  [DataMember(Name = "mapping", EmitDefaultValue = false)]
+  [DataMember(Name = "mapping")]
   public Dictionary<string, MappingTypeCSV> Mapping { get; set; }
 
   /// <summary>
   /// The character used to split the value on each line, default to a comma (\\r, \\n, 0xFFFD, and space are forbidden).
   /// </summary>
   /// <value>The character used to split the value on each line, default to a comma (\\r, \\n, 0xFFFD, and space are forbidden).</value>
-  [DataMember(Name = "delimiter", EmitDefaultValue = false)]
+  [DataMember(Name = "delimiter")]
   public string Delimiter { get; set; }
 
   /// <summary>

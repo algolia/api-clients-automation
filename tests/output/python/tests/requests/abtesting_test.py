@@ -92,13 +92,16 @@ class TestAbtestingClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test/all",
             parameters={
-                "query": "parameters",
+                "query": "parameters with space",
             },
         )
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert (
+            _req.query_parameters.items()
+            >= {"query": "parameters%20with%20space"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -304,7 +307,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c,d"}.items()
+            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -330,7 +333,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true,true,false"}.items()
+            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -356,7 +359,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1,2"}.items()
+            >= {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")

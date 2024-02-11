@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Search;
 /// BatchRequest
 /// </summary>
 [DataContract(Name = "batchRequest")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BatchRequest
 {
 
   /// <summary>
   /// Gets or Sets Action
   /// </summary>
-  [DataMember(Name = "action", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "action")]
   public Action Action { get; set; }
   /// <summary>
   /// Initializes a new instance of the BatchRequest class.
@@ -52,7 +51,7 @@ public partial class BatchRequest
   /// Operation arguments (varies with specified `action`).
   /// </summary>
   /// <value>Operation arguments (varies with specified `action`).</value>
-  [DataMember(Name = "body", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "body")]
   public object Body { get; set; }
 
   /// <summary>

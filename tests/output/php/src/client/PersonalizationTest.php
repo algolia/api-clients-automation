@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for PersonalizationClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class PersonalizationTest extends TestCase implements HttpClientInterface

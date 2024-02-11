@@ -10,7 +10,7 @@
     {{/vendorExtensions.x-com-visible}}
     [JsonConverter(typeof({{classname}}JsonConverter))]
     [DataContract(Name = "{{{name}}}")]
-    {{>visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
+    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
     {
         {{#isNullable}}
         /// <summary>
@@ -123,12 +123,6 @@
         /// <returns>An instance of {{classname}}</returns>
         public static {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} FromJson(string jsonString)
         {
-            {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} new{{classname}} = null;
-
-            if (string.IsNullOrEmpty(jsonString))
-            {
-                return new{{classname}};
-            }
             {{#useOneOfDiscriminatorLookup}}
             {{#discriminator}}
 
@@ -156,16 +150,20 @@
             {{/discriminator}}
             {{/useOneOfDiscriminatorLookup}}
             {{#vendorExtensions}}
+                var jToken = JToken.Parse(jsonString);
             {{#composedSchemas.oneOf}}
-            try
-            {
-                return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, AdditionalPropertiesSerializerSettings));
-            }
-            catch (Exception exception)
-            {
-                // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into {{{datatypeWithEnum}}}: {exception}");
-            }
+                  if (jToken.Type == JTokenType.{{#isModel}}Object{{#vendorExtensions.x-discriminator-fields}} && jToken["{{{.}}}"] != null{{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}String{{/isEnumRef}}{{#isArray}}Array{{/isArray}}{{#isInteger}}Integer{{/isInteger}}{{#isLong}}Integer{{/isLong}}{{#isDouble}}Float{{/isDouble}}{{#isBoolean}}Boolean{{/isBoolean}}{{#isString}}String{{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}Object{{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}})
+                  {
+                    try
+                    {
+                      return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(JsonConvert.DeserializeObject<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+                    }
+                    catch (Exception exception)
+                    {
+                      // deserialization failed, try the next one
+                      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into {{{datatypeWithEnum}}}: {exception}");
+                    }
+                  }
             {{/composedSchemas.oneOf}}
             {{/vendorExtensions}}
 
@@ -248,7 +246,7 @@
         /// <param name="serializer">JSON Serializer</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue((string)(typeof({{classname}}{{#vendorExtensions.x-has-child-generic}}<object>{{/vendorExtensions.x-has-child-generic}}).GetMethod("ToJson")?.Invoke(value, null)));
+            writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
         }
 
         /// <summary>
@@ -263,7 +261,7 @@
         {
             if(reader.TokenType != JsonToken.Null)
             {
-                return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+                return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
             }
             return null;
         }

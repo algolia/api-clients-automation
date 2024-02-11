@@ -461,11 +461,17 @@ class TestSearchClient < Test::Unit::TestCase
 
   # allow get method for a custom path with all parameters
   def test_custom_get1
-    req = @client.custom_get_with_http_info("/test/all", { query: "parameters" })
+    req = @client.custom_get_with_http_info(
+      "/test/all",
+      { query: "parameters with space" }
+    )
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(
+      ({ 'query': "parameters%20with%20space" }.to_a - req.query_params.to_a).empty?,
+      req.query_params.to_s
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -622,7 +628,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(
-      ({ 'query': "parameters", 'myParam': "c,d" }.to_a - req.query_params.to_a).empty?,
+      ({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -642,7 +648,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal('/1/test/requestOptions', req.path)
     assert(
       ({ 'query': "parameters",
-         'myParam': "true,true,false" }.to_a - req.query_params.to_a).empty?,
+         'myParam': "true%2Ctrue%2Cfalse" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -661,7 +667,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
     assert(
-      ({ 'query': "parameters", 'myParam': "1,2" }.to_a - req.query_params.to_a).empty?,
+      ({ 'query': "parameters", 'myParam': "1%2C2" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -869,7 +875,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal('/1/indexes/theIndexName/uniqueID', req.path)
     assert(
-      ({ 'attributesToRetrieve': "attr1,attr2" }.to_a - req.query_params.to_a).empty?,
+      ({ 'attributesToRetrieve': "attr1%2Cattr2" }.to_a - req.query_params.to_a).empty?,
       req.query_params.to_s
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -1828,6 +1834,47 @@ class TestSearchClient < Test::Unit::TestCase
       JSON.parse('{"query":"myQuery","facetFilters":["tags:algolia"]}'),
       JSON.parse(req.body)
     )
+  end
+
+  # single search retrieve snippets
+  def test_search_single_index3
+    req = @client.search_single_index_with_http_info(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/cts_e2e_browse/query', req.path)
+    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}'), JSON.parse(req.body)
+    )
+
+    res = @e2e_client.search_single_index_with_http_info(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.search_single_index(
+      "cts_e2e_browse",
+      SearchParamsObject.new(
+        query: "batman mask of the phantasm",
+        attributes_to_retrieve: ["*"],
+        attributes_to_snippet: ["*:20"]
+      )
+    )
+    expected_body = JSON.parse('{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # searchSynonyms with minimal parameters

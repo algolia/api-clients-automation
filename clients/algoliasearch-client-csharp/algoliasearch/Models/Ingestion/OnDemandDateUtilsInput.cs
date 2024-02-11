@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
 /// </summary>
 [DataContract(Name = "OnDemandDateUtilsInput")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class OnDemandDateUtilsInput
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class OnDemandDateUtilsInput
   /// The start date of the extraction (RFC3339 format).
   /// </summary>
   /// <value>The start date of the extraction (RFC3339 format).</value>
-  [DataMember(Name = "startDate", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "startDate")]
   public string StartDate { get; set; }
 
   /// <summary>
   /// The end date of the extraction (RFC3339 format).
   /// </summary>
   /// <value>The end date of the extraction (RFC3339 format).</value>
-  [DataMember(Name = "endDate", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "endDate")]
   public string EndDate { get; set; }
 
   /// <summary>

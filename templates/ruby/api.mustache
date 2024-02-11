@@ -156,7 +156,7 @@ module {{moduleName}}
       {{/hasValidation}}
       {{/allParams}}
       {{#vendorExtensions}}
-      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}@api_client.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
+      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
       query_params = {}
       {{#queryParams}}
       {{#x-is-custom-request}}

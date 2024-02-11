@@ -35,6 +35,8 @@
     <NoWarn>CS0612;CS1570</NoWarn>{{#useGenericHost}}
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo> <!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}{{^useGenericHost}}
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo><!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->{{/useGenericHost}}
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,4 +45,17 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-{{>netcore_project.additions}}</Project>
+  <ItemGroup>
+    <Content Include="..\icon.png">
+      <Pack>true</Pack>
+      <PackagePath>/</PackagePath>
+      <Link>icon.png</Link>
+    </Content>
+    <Content Include="..\README.md">
+      <Pack>true</Pack>
+      <PackagePath>/</PackagePath>
+      <Link>README.md</Link>
+    </Content>
+  </ItemGroup>
+
+{{> netcore_project.additions}}</Project>

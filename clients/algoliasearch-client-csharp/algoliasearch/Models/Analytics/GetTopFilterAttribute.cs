@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Analytics;
 /// GetTopFilterAttribute
 /// </summary>
 [DataContract(Name = "getTopFilterAttribute")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetTopFilterAttribute
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class GetTopFilterAttribute
   /// </summary>
   /// <param name="attribute">Attribute name. (required).</param>
   /// <param name="count">Number of occurrences. (required).</param>
-  public GetTopFilterAttribute(string attribute, int? count)
+  public GetTopFilterAttribute(string attribute, int count)
   {
     Attribute = attribute ?? throw new ArgumentNullException(nameof(attribute));
     Count = count;
@@ -46,15 +45,15 @@ public partial class GetTopFilterAttribute
   /// Attribute name.
   /// </summary>
   /// <value>Attribute name.</value>
-  [DataMember(Name = "attribute", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "attribute")]
   public string Attribute { get; set; }
 
   /// <summary>
   /// Number of occurrences.
   /// </summary>
   /// <value>Number of occurrences.</value>
-  [DataMember(Name = "count", IsRequired = true, EmitDefaultValue = false)]
-  public int? Count { get; set; }
+  [DataMember(Name = "count")]
+  public int Count { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

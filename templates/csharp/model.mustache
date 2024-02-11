@@ -47,6 +47,6 @@ using Algolia.Search.Serializer;
 
 namespace Algolia.Search.Models.{{apiPackageName}};
 
-{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{#anyOf}}{{#-first}}{{>modelAnyOf}}{{/-first}}{{/anyOf}}{{^oneOf}}{{^anyOf}}{{>modelGeneric}}{{/anyOf}}{{/oneOf}}{{/isEnum}}
+{{#isEnum}}{{> modelEnum}}{{/isEnum}}{{^isEnum}}{{#oneOf}}{{#-first}}{{> modelOneOf}}{{/-first}}{{/oneOf}}{{#anyOf}}{{#-first}}{{> modelAnyOf}}{{/-first}}{{/anyOf}}{{^oneOf}}{{^anyOf}}{{> modelGeneric}}{{/anyOf}}{{/oneOf}}{{/isEnum}}
 {{/model}}
 {{/models}}

@@ -488,13 +488,15 @@ describe('customGet', () => {
   test('allow get method for a custom path with all parameters', async () => {
     const req = (await client.customGet({
       path: '/test/all',
-      parameters: { query: 'parameters' },
+      parameters: { query: 'parameters with space' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({ query: 'parameters' });
+    expect(req.searchParams).toStrictEqual({
+      query: 'parameters%20with%20space',
+    });
   });
 });
 
@@ -677,7 +679,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c,d',
+      myParam: 'c%2Cd',
     });
   });
 
@@ -700,7 +702,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'true,true,false',
+      myParam: 'true%2Ctrue%2Cfalse',
     });
   });
 
@@ -723,7 +725,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: '1,2',
+      myParam: '1%2C2',
     });
   });
 });
@@ -940,7 +942,7 @@ describe('getObject', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
-      attributesToRetrieve: 'attr1,attr2',
+      attributesToRetrieve: 'attr1%2Cattr2',
     });
   });
 });
@@ -2164,6 +2166,61 @@ describe('searchSingleIndex', () => {
       facetFilters: ['tags:algolia'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('single search retrieve snippets', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'cts_e2e_browse',
+      searchParams: {
+        query: 'batman mask of the phantasm',
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*:20'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'batman mask of the phantasm',
+      attributesToRetrieve: ['*'],
+      attributesToSnippet: ['*:20'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.searchSingleIndex({
+      indexName: 'cts_e2e_browse',
+      searchParams: {
+        query: 'batman mask of the phantasm',
+        attributesToRetrieve: ['*'],
+        attributesToSnippet: ['*:20'],
+      },
+    });
+
+    const expectedBody = {
+      nbHits: 1,
+      hits: [
+        {
+          _snippetResult: {
+            genres: [
+              { value: 'Animated', matchLevel: 'none' },
+              { value: 'Superhero', matchLevel: 'none' },
+              { value: 'Romance', matchLevel: 'none' },
+            ],
+            year: { value: '1993', matchLevel: 'none' },
+          },
+          _highlightResult: {
+            genres: [
+              { value: 'Animated', matchLevel: 'none', matchedWords: [] },
+              { value: 'Superhero', matchLevel: 'none', matchedWords: [] },
+              { value: 'Romance', matchLevel: 'none', matchedWords: [] },
+            ],
+            year: { value: '1993', matchLevel: 'none', matchedWords: [] },
+          },
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 

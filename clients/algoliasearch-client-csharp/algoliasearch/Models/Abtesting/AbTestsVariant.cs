@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Abtesting;
 /// AbTestsVariant
 /// </summary>
 [DataContract(Name = "abTestsVariant")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class AbTestsVariant
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class AbTestsVariant
   /// </summary>
   /// <param name="index">A/B test index. (required).</param>
   /// <param name="trafficPercentage">A/B test traffic percentage. (required).</param>
-  public AbTestsVariant(string index, int? trafficPercentage)
+  public AbTestsVariant(string index, int trafficPercentage)
   {
     Index = index ?? throw new ArgumentNullException(nameof(index));
     TrafficPercentage = trafficPercentage;
@@ -46,21 +45,21 @@ public partial class AbTestsVariant
   /// A/B test index.
   /// </summary>
   /// <value>A/B test index.</value>
-  [DataMember(Name = "index", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "index")]
   public string Index { get; set; }
 
   /// <summary>
   /// A/B test traffic percentage.
   /// </summary>
   /// <value>A/B test traffic percentage.</value>
-  [DataMember(Name = "trafficPercentage", IsRequired = true, EmitDefaultValue = false)]
-  public int? TrafficPercentage { get; set; }
+  [DataMember(Name = "trafficPercentage")]
+  public int TrafficPercentage { get; set; }
 
   /// <summary>
   /// A/B test description.
   /// </summary>
   /// <value>A/B test description.</value>
-  [DataMember(Name = "description", EmitDefaultValue = false)]
+  [DataMember(Name = "description")]
   public string Description { get; set; }
 
   /// <summary>

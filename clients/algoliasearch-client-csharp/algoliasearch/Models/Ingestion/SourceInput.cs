@@ -249,65 +249,78 @@ public partial class SourceInput : AbstractSchema
   /// <returns>An instance of SourceInput</returns>
   public static SourceInput FromJson(string jsonString)
   {
-    SourceInput newSourceInput = null;
-
-    if (string.IsNullOrEmpty(jsonString))
+    var jToken = JToken.Parse(jsonString);
+    if (jToken.Type == JTokenType.Object)
     {
-      return newSourceInput;
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceCommercetools>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceCommercetools: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceCommercetools>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceBigCommerce>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceBigCommerce: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceCommercetools: {exception}");
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceJSON>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceJSON: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceBigCommerce>(jsonString, AdditionalPropertiesSerializerSettings));
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceCSV>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceCSV: {exception}");
+      }
     }
-    catch (Exception exception)
+    if (jToken.Type == JTokenType.Object)
     {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceBigCommerce: {exception}");
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceBigQuery>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceBigQuery: {exception}");
+      }
     }
-    try
+    if (jToken.Type == JTokenType.Object)
     {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceJSON>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceJSON: {exception}");
-    }
-    try
-    {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceCSV>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceCSV: {exception}");
-    }
-    try
-    {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceBigQuery>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceBigQuery: {exception}");
-    }
-    try
-    {
-      return new SourceInput(JsonConvert.DeserializeObject<SourceDocker>(jsonString, AdditionalPropertiesSerializerSettings));
-    }
-    catch (Exception exception)
-    {
-      // deserialization failed, try the next one
-      System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceDocker: {exception}");
+      try
+      {
+        return new SourceInput(JsonConvert.DeserializeObject<SourceDocker>(jsonString, JsonConfig.AlgoliaJsonSerializerSettings));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize `{jsonString}` into SourceDocker: {exception}");
+      }
     }
 
     throw new InvalidDataException($"The JSON string `{jsonString}` cannot be deserialized into any schema defined.");
@@ -328,7 +341,7 @@ public class SourceInputJsonConverter : JsonConverter
   /// <param name="serializer">JSON Serializer</param>
   public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    writer.WriteRawValue((string)(typeof(SourceInput).GetMethod("ToJson")?.Invoke(value, null)));
+    writer.WriteRawValue((string)value?.GetType().GetMethod("ToJson")?.Invoke(value, null));
   }
 
   /// <summary>
@@ -343,7 +356,7 @@ public class SourceInputJsonConverter : JsonConverter
   {
     if (reader.TokenType != JsonToken.Null)
     {
-      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JObject.Load(reader).ToString(Formatting.None) });
+      return objectType.GetMethod("FromJson")?.Invoke(null, new object[] { JToken.Load(reader).ToString(Formatting.None) });
     }
     return null;
   }

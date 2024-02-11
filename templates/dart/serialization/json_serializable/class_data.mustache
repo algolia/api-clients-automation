@@ -87,12 +87,12 @@ final class {{{classname}}}{
     {{#isEnum}}
         {{^isContainer}}
 
-{{>serialization/json_serializable/enum_inline}}
+{{> serialization/json_serializable/enum_inline}}
         {{/isContainer}}
         {{#isContainer}}
             {{#mostInnerItems}}
 
-{{>serialization/json_serializable/enum_inline}}
+{{> serialization/json_serializable/enum_inline}}
             {{/mostInnerItems}}
         {{/isContainer}}
     {{/isEnum}}

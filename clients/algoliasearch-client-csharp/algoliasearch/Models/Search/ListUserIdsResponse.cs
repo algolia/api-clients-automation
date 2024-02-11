@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Search;
 /// User ID data.
 /// </summary>
 [DataContract(Name = "listUserIdsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ListUserIdsResponse
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class ListUserIdsResponse
   /// User IDs.
   /// </summary>
   /// <value>User IDs.</value>
-  [DataMember(Name = "userIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "userIDs")]
   public List<UserId> UserIDs { get; set; }
 
   /// <summary>

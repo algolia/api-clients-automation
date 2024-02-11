@@ -18,7 +18,6 @@ use Psr\Http\Message\RequestInterface;
  * @category Class
  *
  * @internal
- *
  * @coversNothing
  */
 class IngestionTest extends TestCase implements HttpClientInterface
@@ -291,7 +290,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->customGet(
             '/test/all',
-            ['query' => 'parameters',
+            ['query' => 'parameters with space',
             ],
         );
 
@@ -300,7 +299,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/all',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
     }
@@ -559,7 +558,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c', 'd',
+                'myParam' => ['c',  'd',
                 ],
             ],
             'headers' => [
@@ -579,7 +578,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"c,d"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"c%2Cd"}', true),
             ],
         ]);
     }
@@ -593,7 +592,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [true, true, false,
+                'myParam' => [true,  true,  false,
                 ],
             ],
             'headers' => [
@@ -613,7 +612,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"true,true,false"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
             ],
         ]);
     }
@@ -627,7 +626,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => [1, 2,
+                'myParam' => [1,  2,
                 ],
             ],
             'headers' => [
@@ -647,7 +646,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"1,2"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
             ],
         ]);
     }
@@ -851,6 +850,38 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/authentications',
                 'method' => 'GET',
                 'body' => null,
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetAuthentications
+     * getAuthentications with query params.
+     */
+    public function testGetAuthentications1()
+    {
+        $client = $this->getClient();
+        $client->getAuthentications(
+            10,
+            5,
+            [
+                'basic',
+
+                'algolia',
+            ],
+            [
+                'none',
+            ],
+            'createdAt',
+            'desc',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/authentications',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}', true),
             ],
         ]);
     }
@@ -1317,7 +1348,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
             if (isset($request['queryParameters'])) {
                 $this->assertEquals(
-                    Query::build($request['queryParameters']),
+                    Query::build($request['queryParameters'], false),
                     $recordedRequest->getUri()->getQuery()
                 );
             }

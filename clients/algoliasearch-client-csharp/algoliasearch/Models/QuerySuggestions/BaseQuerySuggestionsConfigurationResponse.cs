@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.QuerySuggestions;
 /// BaseQuerySuggestionsConfigurationResponse
 /// </summary>
 [DataContract(Name = "baseQuerySuggestionsConfigurationResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BaseQuerySuggestionsConfigurationResponse
 {
   /// <summary>
@@ -37,28 +36,28 @@ public partial class BaseQuerySuggestionsConfigurationResponse
   /// Your Algolia application ID.
   /// </summary>
   /// <value>Your Algolia application ID.</value>
-  [DataMember(Name = "appId", EmitDefaultValue = false)]
+  [DataMember(Name = "appId")]
   public string AppId { get; set; }
 
   /// <summary>
   /// API key used to read from your source index.
   /// </summary>
   /// <value>API key used to read from your source index.</value>
-  [DataMember(Name = "sourceIndicesAPIKey", EmitDefaultValue = false)]
+  [DataMember(Name = "sourceIndicesAPIKey")]
   public string SourceIndicesAPIKey { get; set; }
 
   /// <summary>
   /// API key used to write and configure your Query Suggestions index.
   /// </summary>
   /// <value>API key used to write and configure your Query Suggestions index.</value>
-  [DataMember(Name = "suggestionsIndicesAPIKey", EmitDefaultValue = false)]
+  [DataMember(Name = "suggestionsIndicesAPIKey")]
   public string SuggestionsIndicesAPIKey { get; set; }
 
   /// <summary>
   /// API key used to read from external Algolia indices.
   /// </summary>
   /// <value>API key used to read from external Algolia indices.</value>
-  [DataMember(Name = "externalIndicesAPIKey", EmitDefaultValue = false)]
+  [DataMember(Name = "externalIndicesAPIKey")]
   public string ExternalIndicesAPIKey { get; set; }
 
   /// <summary>

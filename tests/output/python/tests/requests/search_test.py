@@ -590,13 +590,16 @@ class TestSearchClient:
         _req = await self._client.custom_get_with_http_info(
             path="/test/all",
             parameters={
-                "query": "parameters",
+                "query": "parameters with space",
             },
         )
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert (
+            _req.query_parameters.items()
+            >= {"query": "parameters%20with%20space"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -802,7 +805,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c,d"}.items()
+            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -828,7 +831,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true,true,false"}.items()
+            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -854,7 +857,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1,2"}.items()
+            >= {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -1104,7 +1107,7 @@ class TestSearchClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"attributesToRetrieve": "attr1,attr2"}.items()
+            >= {"attributesToRetrieve": "attr1%2Cattr2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -2425,6 +2428,68 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"myQuery","facetFilters":["tags:algolia"]}"""
+        )
+
+    async def test_search_single_index_3(self):
+        """
+        single search retrieve snippets
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="cts_e2e_browse",
+            search_params={
+                "query": "batman mask of the phantasm",
+                "attributesToRetrieve": [
+                    "*",
+                ],
+                "attributesToSnippet": [
+                    "*:20",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_browse/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() >= {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}"""
+        )
+
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index_with_http_info(
+            index_name="cts_e2e_browse",
+            search_params={
+                "query": "batman mask of the phantasm",
+                "attributesToRetrieve": [
+                    "*",
+                ],
+                "attributesToSnippet": [
+                    "*:20",
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index(
+            index_name="cts_e2e_browse",
+            search_params={
+                "query": "batman mask of the phantasm",
+                "attributesToRetrieve": [
+                    "*",
+                ],
+                "attributesToSnippet": [
+                    "*:20",
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
         )
 
     async def test_search_synonyms_0(self):

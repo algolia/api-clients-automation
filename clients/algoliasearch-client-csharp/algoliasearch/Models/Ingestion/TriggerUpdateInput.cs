@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// The trigger input for a task update.
 /// </summary>
 [DataContract(Name = "TriggerUpdateInput")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class TriggerUpdateInput
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class TriggerUpdateInput
   /// A cron expression that represent at which regularity the task should run.
   /// </summary>
   /// <value>A cron expression that represent at which regularity the task should run.</value>
-  [DataMember(Name = "cron", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "cron")]
   public string Cron { get; set; }
 
   /// <summary>

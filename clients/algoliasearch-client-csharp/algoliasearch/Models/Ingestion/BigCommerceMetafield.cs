@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// BigCommerceMetafield
 /// </summary>
 [DataContract(Name = "BigCommerceMetafield")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class BigCommerceMetafield
 {
   /// <summary>
@@ -46,14 +45,14 @@ public partial class BigCommerceMetafield
   /// The namespace of the metafield.
   /// </summary>
   /// <value>The namespace of the metafield.</value>
-  [DataMember(Name = "namespace", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "namespace")]
   public string VarNamespace { get; set; }
 
   /// <summary>
   /// The key identifier of the metafield.
   /// </summary>
   /// <value>The key identifier of the metafield.</value>
-  [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "key")]
   public string Key { get; set; }
 
   /// <summary>

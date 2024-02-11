@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Insights;
 /// Use this event to track when users convert after a previous Algolia request. For example, a user clicks on an item in the search results to view the product detail page. Then, the user adds the item to their shopping cart.  If you're building your category pages with Algolia, you'll also use this event. 
 /// </summary>
 [DataContract(Name = "ConvertedObjectIDsAfterSearch")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class ConvertedObjectIDsAfterSearch
 {
 
   /// <summary>
   /// Gets or Sets EventType
   /// </summary>
-  [DataMember(Name = "eventType", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "eventType")]
   public ConversionEvent EventType { get; set; }
   /// <summary>
   /// Initializes a new instance of the ConvertedObjectIDsAfterSearch class.
@@ -60,50 +59,50 @@ public partial class ConvertedObjectIDsAfterSearch
   /// The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework. 
   /// </summary>
   /// <value>The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework. </value>
-  [DataMember(Name = "eventName", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "eventName")]
   public string EventName { get; set; }
 
   /// <summary>
   /// The name of an Algolia index.
   /// </summary>
   /// <value>The name of an Algolia index.</value>
-  [DataMember(Name = "index", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "index")]
   public string Index { get; set; }
 
   /// <summary>
   /// The object IDs of the records that are part of the event.
   /// </summary>
   /// <value>The object IDs of the records that are part of the event.</value>
-  [DataMember(Name = "objectIDs", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "objectIDs")]
   public List<string> ObjectIDs { get; set; }
 
   /// <summary>
   /// Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. 
   /// </summary>
   /// <value>Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. </value>
-  [DataMember(Name = "queryID", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "queryID")]
   public string QueryID { get; set; }
 
   /// <summary>
   /// An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens. 
   /// </summary>
   /// <value>An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens. </value>
-  [DataMember(Name = "userToken", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "userToken")]
   public string UserToken { get; set; }
 
   /// <summary>
   /// An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. 
   /// </summary>
   /// <value>An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens. </value>
-  [DataMember(Name = "authenticatedUserToken", EmitDefaultValue = false)]
+  [DataMember(Name = "authenticatedUserToken")]
   public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
   /// The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. 
   /// </summary>
   /// <value>The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp. </value>
-  [DataMember(Name = "timestamp", EmitDefaultValue = false)]
-  public long Timestamp { get; set; }
+  [DataMember(Name = "timestamp")]
+  public long? Timestamp { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

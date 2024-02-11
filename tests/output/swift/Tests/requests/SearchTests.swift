@@ -20,7 +20,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.addApiKeyWithHTTPInfo(apiKey: ApiKey(acl: [Acl.search, Acl.addObject], description: "my new api key", maxHitsPerQuery: 20, maxQueriesPerIPPerHour: 100, validity: 300), requestOptions: nil)
+        let response = try await client.addApiKeyWithHTTPInfo(apiKey: ApiKey(acl: [Acl.search,
+                                                                                   Acl.addObject],
+                                                                             description: "my new api key",
+                                                                             maxHitsPerQuery: 20,
+                                                                             maxQueriesPerIPPerHour: 100,
+                                                                             validity: 300),
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -46,7 +52,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.addOrUpdateObjectWithHTTPInfo(indexName: "indexName", objectID: "uniqueID", body: ["key": "value"], requestOptions: nil)
+        let response = try await client.addOrUpdateObjectWithHTTPInfo(indexName: "indexName",
+                                                                      objectID: "uniqueID",
+                                                                      body: ["key": "value"],
+                                                                      requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -72,7 +81,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.appendSourceWithHTTPInfo(source: Source(source: "theSource", description: "theDescription"), requestOptions: nil)
+        let response = try await client.appendSourceWithHTTPInfo(source: Source(source: "theSource",
+                                                                                description: "theDescription"),
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -98,7 +109,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.assignUserIdWithHTTPInfo(xAlgoliaUserID: "userID", assignUserIdParams: AssignUserIdParams(cluster: "theCluster"), requestOptions: nil)
+        let response = try await client.assignUserIdWithHTTPInfo(xAlgoliaUserID: "userID",
+                                                                 assignUserIdParams: AssignUserIdParams(cluster: "theCluster"
+                                                                 ),
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -132,7 +146,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.addObject, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.addObject,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -158,7 +176,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -184,7 +206,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -210,7 +236,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.deleteObject, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.deleteObject,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -236,7 +266,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.partialUpdateObject, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.partialUpdateObject,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -262,7 +296,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.partialUpdateObjectNoCreate, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.partialUpdateObjectNoCreate,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -288,7 +326,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName", batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.updateObject, body: ["key": "value"])]), requestOptions: nil)
+        let response = try await client.batchWithHTTPInfo(indexName: "theIndexName",
+                                                          batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.updateObject,
+                                                                                                                     body: ["key": "value"])]
+                                                          ),
+                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -314,7 +356,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchAssignUserIdsWithHTTPInfo(xAlgoliaUserID: "userID", batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"]), requestOptions: nil)
+        let response = try await client.batchAssignUserIdsWithHTTPInfo(xAlgoliaUserID: "userID",
+                                                                       batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster",
+                                                                                                                          users: ["user1",
+                                                                                                                                  "user2"]),
+                                                                       requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -348,7 +394,15 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds, batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(objectID: "1", language: "en")), BatchDictionaryEntriesRequest(action: DictionaryAction.deleteEntry, body: DictionaryEntry(objectID: "2", language: "fr"))]), requestOptions: nil)
+        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds,
+                                                                           batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry,
+                                                                                                                                                                               body: DictionaryEntry(objectID: "1",
+                                                                                                                                                                                                     language: "en")),
+                                                                                                                                                 BatchDictionaryEntriesRequest(action: DictionaryAction.deleteEntry,
+                                                                                                                                                                               body: DictionaryEntry(objectID: "2",
+                                                                                                                                                                                                     language: "fr"))]
+                                                                           ),
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -374,7 +428,27 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds, batchDictionaryEntriesParams: BatchDictionaryEntriesParams(clearExistingDictionaryEntries: false, requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(objectID: "1", language: "en", word: "fancy", words: ["believe", "algolia"], decomposition: ["trust", "algolia"], state: DictionaryEntryState.enabled)), BatchDictionaryEntriesRequest(action: DictionaryAction.deleteEntry, body: DictionaryEntry(objectID: "2", language: "fr", word: "humility", words: ["candor", "algolia"], decomposition: ["grit", "algolia"], state: DictionaryEntryState.enabled))]), requestOptions: nil)
+        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds,
+                                                                           batchDictionaryEntriesParams: BatchDictionaryEntriesParams(clearExistingDictionaryEntries: false,
+                                                                                                                                      requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry,
+                                                                                                                                                                               body: DictionaryEntry(objectID: "1",
+                                                                                                                                                                                                     language: "en",
+                                                                                                                                                                                                     word: "fancy",
+                                                                                                                                                                                                     words: ["believe",
+                                                                                                                                                                                                             "algolia"],
+                                                                                                                                                                                                     decomposition: ["trust",
+                                                                                                                                                                                                                     "algolia"],
+                                                                                                                                                                                                     state: DictionaryEntryState.enabled)),
+                                                                                                                                                 BatchDictionaryEntriesRequest(action: DictionaryAction.deleteEntry,
+                                                                                                                                                                               body: DictionaryEntry(objectID: "2",
+                                                                                                                                                                                                     language: "fr",
+                                                                                                                                                                                                     word: "humility",
+                                                                                                                                                                                                     words: ["candor",
+                                                                                                                                                                                                             "algolia"],
+                                                                                                                                                                                                     decomposition: ["grit",
+                                                                                                                                                                                                                     "algolia"],
+                                                                                                                                                                                                     state: DictionaryEntryState.enabled))]),
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -400,7 +474,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds, batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(from: ["objectID": "1", "language": "en", "additional": "try me"]))]), requestOptions: nil)
+        let response = try await client.batchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds,
+                                                                           batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry,
+                                                                                                                                                                               body: DictionaryEntry(from: ["objectID": "1",
+                                                                                                                                                                                                            "language": "en",
+                                                                                                                                                                                                            "additional": "try me"]))]
+                                                                           ),
+                                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -426,7 +506,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(indexName: "cts_e2e_browse", requestOptions: nil)
+        let response = try await client.browseWithHTTPInfo(indexName: "cts_e2e_browse",
+                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -452,7 +533,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(indexName: "indexName", browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("tags:algolia")]))), requestOptions: nil)
+        let response = try await client.browseWithHTTPInfo(indexName: "indexName",
+                                                           browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(query: "myQuery",
+                                                                                                                            facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("tags:algolia"
+                                                                                                                            )]
+                                                                                                                            ))
+                                                           ), requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -478,7 +564,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(indexName: "indexName", browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: "test")), requestOptions: nil)
+        let response = try await client.browseWithHTTPInfo(indexName: "indexName",
+                                                           browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: "test"
+                                                           )
+                                                           ), requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -504,7 +593,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.clearObjectsWithHTTPInfo(indexName: "theIndexName", requestOptions: nil)
+        let response = try await client.clearObjectsWithHTTPInfo(indexName: "theIndexName",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -526,7 +616,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.clearRulesWithHTTPInfo(indexName: "indexName", requestOptions: nil)
+        let response = try await client.clearRulesWithHTTPInfo(indexName: "indexName",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -548,7 +639,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.clearSynonymsWithHTTPInfo(indexName: "indexName", requestOptions: nil)
+        let response = try await client.clearSynonymsWithHTTPInfo(indexName: "indexName",
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -570,7 +662,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -590,7 +683,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all",
+                                                                 parameters: ["query": AnyCodable("parameters")],
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -613,7 +708,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -633,7 +729,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters with space")],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -642,7 +740,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -656,7 +754,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -682,7 +781,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/all",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["body": "parameters"],
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -714,10 +816,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -749,10 +855,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "query2": "myQueryParameter",
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -787,7 +897,10 @@ final class SearchClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -830,7 +943,10 @@ final class SearchClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -870,10 +986,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "isItWorking": true,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -905,10 +1025,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
                 "myParam": 2,
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -939,11 +1063,17 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": ["c", "d"],
+                "myParam": ["c",
+                            "d",
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -958,7 +1088,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c,d\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -974,11 +1104,18 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [true, true, false],
+                "myParam": [true,
+                            true,
+                            false,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -993,7 +1130,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true,true,false\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -1009,11 +1146,17 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryItems: APIHelper.mapValuesToQueryItems([
-                "myParam": [1, 2],
+                "myParam": [1,
+                            2,
+                ],
+
             ])
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions", parameters: ["query": AnyCodable("parameters")], body: ["facet": "filters"], requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
+                                                               parameters: ["query": AnyCodable("parameters")],
+                                                               body: ["facet": "filters"],
+                                                               requestOptions: requestOptions)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1028,7 +1171,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1,2\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -1042,7 +1185,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal", requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1068,7 +1212,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/all", parameters: ["query": AnyCodable("parameters")], body: ["body": "parameters"], requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(path: "/test/all",
+                                                              parameters: ["query": AnyCodable("parameters")],
+                                                              body: ["body": "parameters"],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1097,7 +1244,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteApiKeyWithHTTPInfo(key: "myTestApiKey", requestOptions: nil)
+        let response = try await client.deleteApiKeyWithHTTPInfo(key: "myTestApiKey",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1117,7 +1265,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteByWithHTTPInfo(indexName: "theIndexName", deleteByParams: DeleteByParams(filters: "brand:brandName"), requestOptions: nil)
+        let response = try await client.deleteByWithHTTPInfo(indexName: "theIndexName",
+                                                             deleteByParams: DeleteByParams(filters: "brand:brandName"
+                                                             ),
+                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1143,7 +1294,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteIndexWithHTTPInfo(indexName: "theIndexName", requestOptions: nil)
+        let response = try await client.deleteIndexWithHTTPInfo(indexName: "theIndexName",
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1163,7 +1315,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteObjectWithHTTPInfo(indexName: "theIndexName", objectID: "uniqueID", requestOptions: nil)
+        let response = try await client.deleteObjectWithHTTPInfo(indexName: "theIndexName",
+                                                                 objectID: "uniqueID",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1183,7 +1337,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteRuleWithHTTPInfo(indexName: "indexName", objectID: "id1", requestOptions: nil)
+        let response = try await client.deleteRuleWithHTTPInfo(indexName: "indexName",
+                                                               objectID: "id1",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1203,7 +1359,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteRuleWithHTTPInfo(indexName: "indexName", objectID: "test/with/slash", requestOptions: nil)
+        let response = try await client.deleteRuleWithHTTPInfo(indexName: "indexName",
+                                                               objectID: "test/with/slash",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1223,7 +1381,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteSourceWithHTTPInfo(source: "theSource", requestOptions: nil)
+        let response = try await client.deleteSourceWithHTTPInfo(source: "theSource",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1243,7 +1402,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteSynonymWithHTTPInfo(indexName: "indexName", objectID: "id1", requestOptions: nil)
+        let response = try await client.deleteSynonymWithHTTPInfo(indexName: "indexName",
+                                                                  objectID: "id1",
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1263,7 +1424,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getApiKeyWithHTTPInfo(key: "myTestApiKey", requestOptions: nil)
+        let response = try await client.getApiKeyWithHTTPInfo(key: "myTestApiKey",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1343,7 +1505,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getLogsWithHTTPInfo(offset: 5, length: 10, indexName: "theIndexName", type: LogType.all, requestOptions: nil)
+        let response = try await client.getLogsWithHTTPInfo(offset: 5,
+                                                            length: 10,
+                                                            indexName: "theIndexName",
+                                                            type: LogType.all,
+                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1366,7 +1532,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getObjectWithHTTPInfo(indexName: "theIndexName", objectID: "uniqueID", attributesToRetrieve: ["attr1", "attr2"], requestOptions: nil)
+        let response = try await client.getObjectWithHTTPInfo(indexName: "theIndexName",
+                                                              objectID: "uniqueID",
+                                                              attributesToRetrieve: ["attr1",
+                                                                                     "attr2"],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1375,7 +1545,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"attributesToRetrieve\":\"attr1,attr2\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"attributesToRetrieve\":\"attr1%2Cattr2\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
@@ -1389,7 +1559,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(attributesToRetrieve: ["attr1", "attr2"], objectID: "uniqueID", indexName: "theIndexName")]), requestOptions: nil)
+        let response = try await client.getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(attributesToRetrieve: ["attr1",
+                                                                                                                                                      "attr2"],
+            objectID: "uniqueID",
+            indexName: "theIndexName")]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1415,7 +1590,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRuleWithHTTPInfo(indexName: "indexName", objectID: "id1", requestOptions: nil)
+        let response = try await client.getRuleWithHTTPInfo(indexName: "indexName",
+                                                            objectID: "id1",
+                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1435,7 +1612,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings", requestOptions: nil)
+        let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings",
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1475,7 +1653,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSynonymWithHTTPInfo(indexName: "indexName", objectID: "id1", requestOptions: nil)
+        let response = try await client.getSynonymWithHTTPInfo(indexName: "indexName",
+                                                               objectID: "id1",
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1495,7 +1675,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTaskWithHTTPInfo(indexName: "theIndexName", taskID: Int64(123), requestOptions: nil)
+        let response = try await client.getTaskWithHTTPInfo(indexName: "theIndexName",
+                                                            taskID: Int64(123),
+                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1535,7 +1717,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getUserIdWithHTTPInfo(userID: "uniqueID", requestOptions: nil)
+        let response = try await client.getUserIdWithHTTPInfo(userID: "uniqueID",
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1575,7 +1758,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.hasPendingMappingsWithHTTPInfo(getClusters: true, requestOptions: nil)
+        let response = try await client.hasPendingMappingsWithHTTPInfo(getClusters: true,
+                                                                       requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1658,7 +1842,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.listIndicesWithHTTPInfo(page: 8, hitsPerPage: 3, requestOptions: nil)
+        let response = try await client.listIndicesWithHTTPInfo(page: 8,
+                                                                hitsPerPage: 3,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1701,7 +1887,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.listUserIdsWithHTTPInfo(page: 8, hitsPerPage: 100, requestOptions: nil)
+        let response = try await client.listUserIdsWithHTTPInfo(page: 8,
+                                                                hitsPerPage: 100,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1724,7 +1912,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.multipleBatchWithHTTPInfo(batchParams: BatchParams(requests: [MultipleBatchRequest(action: Action.addObject, body: ["key": "value"], indexName: "theIndexName")]), requestOptions: nil)
+        let response = try await client.multipleBatchWithHTTPInfo(batchParams: BatchParams(requests: [MultipleBatchRequest(action: Action.addObject,
+                                                                                                                           body: ["key": "value"],
+                                                                                                                           indexName: "theIndexName")]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1750,7 +1942,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.operationIndexWithHTTPInfo(indexName: "theIndexName", operationIndexParams: OperationIndexParams(operation: OperationType.copy, destination: "dest", scope: [ScopeType.rules, ScopeType.settings]), requestOptions: nil)
+        let response = try await client.operationIndexWithHTTPInfo(indexName: "theIndexName",
+                                                                   operationIndexParams: OperationIndexParams(operation: OperationType.copy,
+                                                                                                              destination: "dest",
+                                                                                                              scope: [ScopeType.rules,
+                                                                                                                      ScopeType.settings]),
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1776,7 +1973,15 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.partialUpdateObjectWithHTTPInfo(indexName: "theIndexName", objectID: "uniqueID", attributesToUpdate: ["id1": AttributeToUpdate.string("test"), "id2": AttributeToUpdate.builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: "test2"))], createIfNotExists: true, requestOptions: nil)
+        let response = try await client.partialUpdateObjectWithHTTPInfo(indexName: "theIndexName",
+                                                                        objectID: "uniqueID",
+                                                                        attributesToUpdate: ["id1": AttributeToUpdate.string("test"
+                                                                        ), "id2": AttributeToUpdate.builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique,
+                                                                                                                                      value: "test2"
+                                                                            )
+                                                                        )],
+                                                                        createIfNotExists: true,
+                                                                        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1805,7 +2010,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.removeUserIdWithHTTPInfo(userID: "uniqueID", requestOptions: nil)
+        let response = try await client.removeUserIdWithHTTPInfo(userID: "uniqueID",
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1825,7 +2031,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.replaceSourcesWithHTTPInfo(source: [Source(source: "theSource", description: "theDescription")], requestOptions: nil)
+        let response = try await client.replaceSourcesWithHTTPInfo(source: [Source(source: "theSource",
+                                                                                   description: "theDescription")],
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1851,7 +2059,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.restoreApiKeyWithHTTPInfo(key: "myApiKey", requestOptions: nil)
+        let response = try await client.restoreApiKeyWithHTTPInfo(key: "myApiKey",
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1873,7 +2082,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveObjectWithHTTPInfo(indexName: "theIndexName", body: ["objectID": "id", "test": "val"], requestOptions: nil)
+        let response = try await client.saveObjectWithHTTPInfo(indexName: "theIndexName",
+                                                               body: ["objectID": "id",
+                                                                      "test": "val"],
+                                                               requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1899,7 +2111,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveRuleWithHTTPInfo(indexName: "indexName", objectID: "id1", rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)]), requestOptions: nil)
+        let response = try await client.saveRuleWithHTTPInfo(indexName: "indexName",
+                                                             objectID: "id1",
+                                                             rule: Rule(objectID: "id1",
+                                                                        conditions: [Condition(pattern: "apple",
+                                                                                               anchoring: Anchoring.contains)]),
+                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1925,7 +2142,38 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveRuleWithHTTPInfo(indexName: "indexName", objectID: "id1", rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains, alternatives: false, context: "search")], consequence: Consequence(params: ConsequenceParams(filters: "brand:apple", query: ConsequenceQuery.consequenceQueryObject(ConsequenceQueryObject(remove: ["algolia"], edits: [Edit(type: EditType.remove, delete: "abc", insert: "cde"), Edit(type: EditType.replace, delete: "abc", insert: "cde")]))), promote: [Promote.promoteObjectID(PromoteObjectID(objectID: "abc", position: 3)), Promote.promoteObjectIDs(PromoteObjectIDs(objectIDs: ["abc", "def"], position: 1))], filterPromotes: false, hide: [ConsequenceHide(objectID: "321")], userData: ["algolia": "aloglia"]), description: "test", enabled: true, validity: [TimeRange(from: 1_656_670_273, until: 1_656_670_277)]), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.saveRuleWithHTTPInfo(indexName: "indexName",
+                                                             objectID: "id1",
+                                                             rule: Rule(objectID: "id1",
+                                                                        conditions: [Condition(pattern: "apple",
+                                                                                               anchoring: Anchoring.contains,
+                                                                                               alternatives: false,
+                                                                                               context: "search")],
+                                                                        consequence: Consequence(params: ConsequenceParams(filters: "brand:apple",
+                                                                                                                           query: ConsequenceQuery.consequenceQueryObject(ConsequenceQueryObject(remove: ["algolia"],
+                                                                                                                                                                                                 edits: [Edit(type: EditType.remove,
+                                                                                                                                                                                                              delete: "abc",
+                                                                                                                                                                                                              insert: "cde"),
+                                                                                                                                                                                                         Edit(type: EditType.replace,
+                                                                                                                                                                                                              delete: "abc",
+                                                                                                                                                                                                              insert: "cde")])
+                                                                                                                           )),
+                                                                                                 promote: [Promote.promoteObjectID(PromoteObjectID(objectID: "abc",
+                                                                                                                                                   position: 3)
+                                                                                                     ), Promote.promoteObjectIDs(PromoteObjectIDs(objectIDs: ["abc",
+                                                                                                                                                              "def"],
+                                                                                                                                                  position: 1)
+                                                                                                     )],
+                                                                                                 filterPromotes: false,
+                                                                                                 hide: [ConsequenceHide(objectID: "321"
+                                                                                                 )],
+                                                                                                 userData: ["algolia": "aloglia"]),
+                                                                        description: "test",
+                                                                        enabled: true,
+                                                                        validity: [TimeRange(from: 1_656_670_273,
+                                                                                             until: 1_656_670_277)]),
+                                                             forwardToReplicas: true,
+                                                             requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1954,7 +2202,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveRulesWithHTTPInfo(indexName: "indexName", rules: [Rule(objectID: "a-rule-id", conditions: [Condition(pattern: "smartphone", anchoring: Anchoring.contains)]), Rule(objectID: "a-second-rule-id", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)])], requestOptions: nil)
+        let response = try await client.saveRulesWithHTTPInfo(indexName: "indexName",
+                                                              rules: [Rule(objectID: "a-rule-id",
+                                                                           conditions: [Condition(pattern: "smartphone",
+                                                                                                  anchoring: Anchoring.contains)]),
+                                                                      Rule(objectID: "a-second-rule-id",
+                                                                           conditions: [Condition(pattern: "apple",
+                                                                                                  anchoring: Anchoring.contains)])],
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1980,7 +2235,38 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveRulesWithHTTPInfo(indexName: "indexName", rules: [Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains, alternatives: false, context: "search")], consequence: Consequence(params: ConsequenceParams(filters: "brand:apple", query: ConsequenceQuery.consequenceQueryObject(ConsequenceQueryObject(remove: ["algolia"], edits: [Edit(type: EditType.remove, delete: "abc", insert: "cde"), Edit(type: EditType.replace, delete: "abc", insert: "cde")]))), promote: [Promote.promoteObjectID(PromoteObjectID(objectID: "abc", position: 3)), Promote.promoteObjectIDs(PromoteObjectIDs(objectIDs: ["abc", "def"], position: 1))], filterPromotes: false, hide: [ConsequenceHide(objectID: "321")], userData: ["algolia": "aloglia"]), description: "test", enabled: true, validity: [TimeRange(from: 1_656_670_273, until: 1_656_670_277)])], forwardToReplicas: true, clearExistingRules: true, requestOptions: nil)
+        let response = try await client.saveRulesWithHTTPInfo(indexName: "indexName",
+                                                              rules: [Rule(objectID: "id1",
+                                                                           conditions: [Condition(pattern: "apple",
+                                                                                                  anchoring: Anchoring.contains,
+                                                                                                  alternatives: false,
+                                                                                                  context: "search")],
+                                                                           consequence: Consequence(params: ConsequenceParams(filters: "brand:apple",
+                                                                                                                              query: ConsequenceQuery.consequenceQueryObject(ConsequenceQueryObject(remove: ["algolia"],
+                                                                                                                                                                                                    edits: [Edit(type: EditType.remove,
+                                                                                                                                                                                                                 delete: "abc",
+                                                                                                                                                                                                                 insert: "cde"),
+                                                                                                                                                                                                            Edit(type: EditType.replace,
+                                                                                                                                                                                                                 delete: "abc",
+                                                                                                                                                                                                                 insert: "cde")])
+                                                                                                                              )),
+                                                                                                    promote: [Promote.promoteObjectID(PromoteObjectID(objectID: "abc",
+                                                                                                                                                      position: 3)
+                                                                                                        ), Promote.promoteObjectIDs(PromoteObjectIDs(objectIDs: ["abc",
+                                                                                                                                                                 "def"],
+                                                                                                                                                     position: 1)
+                                                                                                        )],
+                                                                                                    filterPromotes: false,
+                                                                                                    hide: [ConsequenceHide(objectID: "321"
+                                                                                                    )],
+                                                                                                    userData: ["algolia": "aloglia"]),
+                                                                           description: "test",
+                                                                           enabled: true,
+                                                                           validity: [TimeRange(from: 1_656_670_273,
+                                                                                                until: 1_656_670_277)])],
+                                                              forwardToReplicas: true,
+                                                              clearExistingRules: true,
+                                                              requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2009,7 +2295,15 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveSynonymWithHTTPInfo(indexName: "indexName", objectID: "id1", synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.saveSynonymWithHTTPInfo(indexName: "indexName",
+                                                                objectID: "id1",
+                                                                synonymHit: SynonymHit(objectID: "id1",
+                                                                                       type: SynonymType.synonym,
+                                                                                       synonyms: ["car",
+                                                                                                  "vehicule",
+                                                                                                  "auto"]),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2038,7 +2332,21 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.saveSynonymsWithHTTPInfo(indexName: "indexName", synonymHit: [SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]), SynonymHit(objectID: "id2", type: SynonymType.onewaysynonym, synonyms: ["ephone", "aphone", "yphone"], input: "iphone")], forwardToReplicas: true, replaceExistingSynonyms: false, requestOptions: nil)
+        let response = try await client.saveSynonymsWithHTTPInfo(indexName: "indexName",
+                                                                 synonymHit: [SynonymHit(objectID: "id1",
+                                                                                         type: SynonymType.synonym,
+                                                                                         synonyms: ["car",
+                                                                                                    "vehicule",
+                                                                                                    "auto"]),
+                                                                              SynonymHit(objectID: "id2",
+                                                                                         type: SynonymType.onewaysynonym,
+                                                                                         synonyms: ["ephone",
+                                                                                                    "aphone",
+                                                                                                    "yphone"],
+                                                                                         input: "iphone")],
+                                                                 forwardToReplicas: true,
+                                                                 replaceExistingSynonyms: false,
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2067,7 +2375,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index"))]), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index"
+        )
+        )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2093,7 +2405,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(facet: "editor", indexName: "cts_e2e_search_facet", type: SearchTypeFacet.facet))], strategy: SearchStrategy.stopIfEnoughMatches), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(facet: "editor",
+                                                                                                                                                         indexName: "cts_e2e_search_facet",
+                                                                                                                                                         type: SearchTypeFacet.facet)
+                                                                                                  )],
+                                                           strategy: SearchStrategy.stopIfEnoughMatches),
+                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2119,7 +2436,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(query: "myQuery", hitsPerPage: 50, indexName: "theIndexName", type: SearchTypeDefault.default))]), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(query: "myQuery",
+                                                                                                                                                     hitsPerPage: 50,
+                                                                                                                                                     indexName: "theIndexName",
+                                                                                                                                                     type: SearchTypeDefault.default)
+                                                           )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2145,7 +2468,15 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(query: "theQuery", maxFacetHits: 50, facet: "theFacet", indexName: "theIndexName", facetQuery: "theFacetQuery", type: SearchTypeFacet.facet))], strategy: SearchStrategy.stopIfEnoughMatches), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(query: "theQuery",
+                                                                                                                                                         maxFacetHits: 50,
+                                                                                                                                                         facet: "theFacet",
+                                                                                                                                                         indexName: "theIndexName",
+                                                                                                                                                         facetQuery: "theFacetQuery",
+                                                                                                                                                         type: SearchTypeFacet.facet)
+                                                                                                  )],
+                                                           strategy: SearchStrategy.stopIfEnoughMatches),
+                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2171,7 +2502,16 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName")), SearchQuery.searchForFacets(SearchForFacets(facet: "theFacet", indexName: "theIndexName2", type: SearchTypeFacet.facet)), SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName", type: SearchTypeDefault.default))], strategy: SearchStrategy.stopIfEnoughMatches), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName"
+                                                           )
+                                                           ), SearchQuery.searchForFacets(SearchForFacets(facet: "theFacet",
+                                                                                                          indexName: "theIndexName2",
+                                                                                                          type: SearchTypeFacet.facet)
+                                                           ), SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName",
+                                                                                                      type: SearchTypeDefault.default)
+                                                           )],
+                                                           strategy: SearchStrategy.stopIfEnoughMatches),
+                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2197,7 +2537,19 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(query: "theQuery", maxFacetHits: 50, facet: "theFacet", indexName: "theIndexName", facetQuery: "theFacetQuery", type: SearchTypeFacet.facet)), SearchQuery.searchForHits(SearchForHits(query: "myQuery", hitsPerPage: 50, indexName: "theIndexName", type: SearchTypeDefault.default))], strategy: SearchStrategy.stopIfEnoughMatches), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForFacets(SearchForFacets(query: "theQuery",
+                                                                                                                                                         maxFacetHits: 50,
+                                                                                                                                                         facet: "theFacet",
+                                                                                                                                                         indexName: "theIndexName",
+                                                                                                                                                         facetQuery: "theFacetQuery",
+                                                                                                                                                         type: SearchTypeFacet.facet)
+                                                                                                  ), SearchQuery.searchForHits(SearchForHits(query: "myQuery",
+                                                                                                                                             hitsPerPage: 50,
+                                                                                                                                             indexName: "theIndexName",
+                                                                                                                                             type: SearchTypeDefault.default)
+                                                                                                  )],
+                                                           strategy: SearchStrategy.stopIfEnoughMatches),
+                                                           requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2223,7 +2575,31 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(facetFilters: FacetFilters.string("mySearch:filters"), optionalFilters: OptionalFilters.string("mySearch:filters"), numericFilters: NumericFilters.string("mySearch:filters"), tagFilters: TagFilters.string("mySearch:filters"), reRankingApplyFilter: ReRankingApplyFilter.string("mySearch:filters"), indexName: "theIndexName")), SearchQuery.searchForHits(SearchForHits(facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"), MixedSearchFilters.arrayOfString(["mySearch:filters"])]), optionalFilters: OptionalFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"), MixedSearchFilters.arrayOfString(["mySearch:filters"])]), numericFilters: NumericFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"), MixedSearchFilters.arrayOfString(["mySearch:filters"])]), tagFilters: TagFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"), MixedSearchFilters.arrayOfString(["mySearch:filters"])]), reRankingApplyFilter: ReRankingApplyFilter.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"), MixedSearchFilters.arrayOfString(["mySearch:filters"])]), indexName: "theIndexName"))]), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(facetFilters: FacetFilters.string("mySearch:filters"
+        ), optionalFilters: OptionalFilters.string("mySearch:filters"
+        ), numericFilters: NumericFilters.string("mySearch:filters"
+        ), tagFilters: TagFilters.string("mySearch:filters"
+        ), reRankingApplyFilter: ReRankingApplyFilter.string("mySearch:filters"
+        ), indexName: "theIndexName")
+        ), SearchQuery.searchForHits(SearchForHits(facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"
+        ), MixedSearchFilters.arrayOfString(["mySearch:filters"]
+        )]
+        ), optionalFilters: OptionalFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"
+        ), MixedSearchFilters.arrayOfString(["mySearch:filters"]
+        )]
+        ), numericFilters: NumericFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"
+        ), MixedSearchFilters.arrayOfString(["mySearch:filters"]
+        )]
+        ), tagFilters: TagFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"
+        ), MixedSearchFilters.arrayOfString(["mySearch:filters"]
+        )]
+        ), reRankingApplyFilter: ReRankingApplyFilter.arrayOfMixedSearchFilters([MixedSearchFilters.string("mySearch:filters"
+        ), MixedSearchFilters.arrayOfString(["mySearch:filters"]
+        )]
+        ), indexName: "theIndexName")
+        )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2249,7 +2625,117 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(query: "", similarQuery: "", filters: "", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("")]), optionalFilters: OptionalFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("")]), numericFilters: NumericFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("")]), tagFilters: TagFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("")]), sumOrFiltersScores: true, restrictSearchableAttributes: [""], facets: [""], facetingAfterDistinct: true, page: 0, offset: 0, length: 1, aroundLatLng: "", aroundLatLngViaIP: true, aroundRadius: AroundRadius.aroundRadiusAll(AroundRadiusAll.all), aroundPrecision: AroundPrecision.int(0), minimumAroundRadius: 1, insideBoundingBox: [[47.3165, 4.9665, 47.3424, 5.0201], [40.9234, 2.1185, 38.643, 1.9916]], insidePolygon: [[47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9], [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104]], naturalLanguages: [""], ruleContexts: [""], personalizationImpact: 0, userToken: "", getRankingInfo: true, explain: ["foo", "bar"], synonyms: true, clickAnalytics: true, analytics: true, analyticsTags: [""], percentileComputation: true, enableABTest: true, attributesForFaceting: [""], attributesToRetrieve: [""], ranking: [""], customRanking: [""], relevancyStrictness: 0, attributesToHighlight: [""], attributesToSnippet: [""], highlightPreTag: "", highlightPostTag: "", snippetEllipsisText: "", restrictHighlightAndSnippetArrays: true, hitsPerPage: 1, minWordSizefor1Typo: 0, minWordSizefor2Typos: 0, typoTolerance: TypoTolerance.typoToleranceEnum(TypoToleranceEnum.min), allowTyposOnNumericTokens: true, disableTypoToleranceOnAttributes: [""], ignorePlurals: IgnorePlurals.bool(false), removeStopWords: RemoveStopWords.bool(true), keepDiacriticsOnCharacters: "", queryLanguages: [""], decompoundQuery: true, enableRules: true, enablePersonalization: true, queryType: QueryType.prefixAll, removeWordsIfNoResults: RemoveWordsIfNoResults.allOptional, advancedSyntax: true, optionalWords: [""], disableExactOnAttributes: [""], exactOnSingleWordQuery: ExactOnSingleWordQuery.attribute, alternativesAsExact: [AlternativesAsExact.multiWordsSynonym], advancedSyntaxFeatures: [AdvancedSyntaxFeatures.exactPhrase], distinct: Distinct.int(0), replaceSynonymsInHighlight: true, minProximity: 1, responseFields: [""], maxValuesPerFacet: 0, sortFacetValuesBy: "", attributeCriteriaComputedByMinProximity: true, renderingContent: RenderingContent(facetOrdering: FacetOrdering(facets: Facets(order: ["a", "b"]), values: ["a": Value(order: ["b"], sortRemainingBy: SortRemainingBy.count)])), enableReRanking: true, reRankingApplyFilter: ReRankingApplyFilter.arrayOfMixedSearchFilters([MixedSearchFilters.string("")]), indexName: "theIndexName", type: SearchTypeDefault.default))]), requestOptions: nil)
+        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(query: "",
+                                                                                                                                                     similarQuery: "",
+                                                                                                                                                     filters: "",
+                                                                                                                                                     facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string(""
+                                                                                                                                                     )]
+                                                                                                                                                     ), optionalFilters: OptionalFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string(""
+                                                                                                                                                     )]
+                                                                                                                                                     ), numericFilters: NumericFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string(""
+                                                                                                                                                     )]
+                                                                                                                                                     ), tagFilters: TagFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string(""
+                                                                                                                                                     )]
+                                                                                                                                                     ), sumOrFiltersScores: true,
+                                                                                                                                                     restrictSearchableAttributes: [""],
+                                                                                                                                                     facets: [""],
+                                                                                                                                                     facetingAfterDistinct: true,
+                                                                                                                                                     page: 0,
+                                                                                                                                                     offset: 0,
+                                                                                                                                                     length: 1,
+                                                                                                                                                     aroundLatLng: "",
+                                                                                                                                                     aroundLatLngViaIP: true,
+                                                                                                                                                     aroundRadius: AroundRadius.aroundRadiusAll(AroundRadiusAll.all
+                                                                                                                                                     ), aroundPrecision: AroundPrecision.int(0
+                                                                                                                                                     ), minimumAroundRadius: 1,
+                                                                                                                                                     insideBoundingBox: [[47.3165,
+                                                                                                                                                                          4.9665,
+                                                                                                                                                                          47.3424,
+                                                                                                                                                                          5.0201],
+                                                                                                                                                                         [40.9234,
+                                                                                                                                                                          2.1185,
+                                                                                                                                                                          38.643,
+                                                                                                                                                                          1.9916]],
+                                                                                                                                                     insidePolygon: [[47.3165,
+                                                                                                                                                                      4.9665,
+                                                                                                                                                                      47.3424,
+                                                                                                                                                                      5.0201,
+                                                                                                                                                                      47.32,
+                                                                                                                                                                      4.9],
+                                                                                                                                                                     [40.9234,
+                                                                                                                                                                      2.1185,
+                                                                                                                                                                      38.643,
+                                                                                                                                                                      1.9916,
+                                                                                                                                                                      39.2587,
+                                                                                                                                                                      2.0104]],
+                                                                                                                                                     naturalLanguages: [""],
+                                                                                                                                                     ruleContexts: [""],
+                                                                                                                                                     personalizationImpact: 0,
+                                                                                                                                                     userToken: "",
+                                                                                                                                                     getRankingInfo: true,
+                                                                                                                                                     explain: ["foo",
+                                                                                                                                                               "bar"],
+                                                                                                                                                     synonyms: true,
+                                                                                                                                                     clickAnalytics: true,
+                                                                                                                                                     analytics: true,
+                                                                                                                                                     analyticsTags: [""],
+                                                                                                                                                     percentileComputation: true,
+                                                                                                                                                     enableABTest: true,
+                                                                                                                                                     attributesForFaceting: [""],
+                                                                                                                                                     attributesToRetrieve: [""],
+                                                                                                                                                     ranking: [""],
+                                                                                                                                                     customRanking: [""],
+                                                                                                                                                     relevancyStrictness: 0,
+                                                                                                                                                     attributesToHighlight: [""],
+                                                                                                                                                     attributesToSnippet: [""],
+                                                                                                                                                     highlightPreTag: "",
+                                                                                                                                                     highlightPostTag: "",
+                                                                                                                                                     snippetEllipsisText: "",
+                                                                                                                                                     restrictHighlightAndSnippetArrays: true,
+                                                                                                                                                     hitsPerPage: 1,
+                                                                                                                                                     minWordSizefor1Typo: 0,
+                                                                                                                                                     minWordSizefor2Typos: 0,
+                                                                                                                                                     typoTolerance: TypoTolerance.typoToleranceEnum(TypoToleranceEnum.min
+                                                                                                                                                     ), allowTyposOnNumericTokens: true,
+                                                                                                                                                     disableTypoToleranceOnAttributes: [""],
+                                                                                                                                                     ignorePlurals: IgnorePlurals.bool(false
+                                                                                                                                                     ), removeStopWords: RemoveStopWords.bool(true
+                                                                                                                                                     ), keepDiacriticsOnCharacters: "",
+                                                                                                                                                     queryLanguages: [""],
+                                                                                                                                                     decompoundQuery: true,
+                                                                                                                                                     enableRules: true,
+                                                                                                                                                     enablePersonalization: true,
+                                                                                                                                                     queryType: QueryType.prefixAll,
+                                                                                                                                                     removeWordsIfNoResults: RemoveWordsIfNoResults.allOptional,
+                                                                                                                                                     advancedSyntax: true,
+                                                                                                                                                     optionalWords: [""],
+                                                                                                                                                     disableExactOnAttributes: [""],
+                                                                                                                                                     exactOnSingleWordQuery: ExactOnSingleWordQuery.attribute,
+                                                                                                                                                     alternativesAsExact: [AlternativesAsExact.multiWordsSynonym],
+                                                                                                                                                     advancedSyntaxFeatures: [AdvancedSyntaxFeatures.exactPhrase],
+                                                                                                                                                     distinct: Distinct.int(0
+                                                                                                                                                     ), replaceSynonymsInHighlight: true,
+                                                                                                                                                     minProximity: 1,
+                                                                                                                                                     responseFields: [""],
+                                                                                                                                                     maxValuesPerFacet: 0,
+                                                                                                                                                     sortFacetValuesBy: "",
+                                                                                                                                                     attributeCriteriaComputedByMinProximity: true,
+                                                                                                                                                     renderingContent: RenderingContent(facetOrdering: FacetOrdering(facets: Facets(order: ["a",
+                                                                                                                                                                                                                                            "b"]
+                                                                                                                                                                                                                     ),
+                                                                                                                                                                                                                     values: ["a": Value(order: ["b",
+                                                                                                                                                                                                                                         ],
+                                                                                                                                                                                                                                         sortRemainingBy: SortRemainingBy.count
+                                                                                                                                                                                                                         )])
+                                                                                                                                                     ),
+                                                                                                                                                     enableReRanking: true,
+                                                                                                                                                     reRankingApplyFilter: ReRankingApplyFilter.arrayOfMixedSearchFilters([MixedSearchFilters.string(""
+                                                                                                                                                     )]
+                                                                                                                                                     ), indexName: "theIndexName",
+                                                                                                                                                     type: SearchTypeDefault.default)
+                                                           )]
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2275,7 +2761,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds, searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "foo"), requestOptions: nil)
+        let response = try await client.searchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds,
+                                                                            searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "foo"
+                                                                            ),
+                                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2301,7 +2790,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds, searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "foo", page: 4, hitsPerPage: 2, language: "fr"), requestOptions: nil)
+        let response = try await client.searchDictionaryEntriesWithHTTPInfo(dictionaryName: DictionaryType.compounds,
+                                                                            searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "foo",
+                                                                                                                                         page: 4,
+                                                                                                                                         hitsPerPage: 2,
+                                                                                                                                         language: "fr"),
+                                                                            requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2327,7 +2821,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchForFacetValuesWithHTTPInfo(indexName: "indexName", facetName: "facetName", requestOptions: nil)
+        let response = try await client.searchForFacetValuesWithHTTPInfo(indexName: "indexName",
+                                                                         facetName: "facetName",
+                                                                         requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2353,7 +2849,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchForFacetValuesWithHTTPInfo(indexName: "indexName", facetName: "facetName", searchForFacetValuesRequest: SearchForFacetValuesRequest(params: "query=foo&facetFilters=['bar']", facetQuery: "foo", maxFacetHits: 42), requestOptions: nil)
+        let response = try await client.searchForFacetValuesWithHTTPInfo(indexName: "indexName",
+                                                                         facetName: "facetName",
+                                                                         searchForFacetValuesRequest: SearchForFacetValuesRequest(params: "query=foo&facetFilters=['bar']",
+                                                                                                                                  facetQuery: "foo",
+                                                                                                                                  maxFacetHits: 42),
+                                                                         requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2379,7 +2880,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchRulesWithHTTPInfo(indexName: "indexName", searchRulesParams: SearchRulesParams(query: "something"), requestOptions: nil)
+        let response = try await client.searchRulesWithHTTPInfo(indexName: "indexName",
+                                                                searchRulesParams: SearchRulesParams(query: "something"
+                                                                ),
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2405,7 +2909,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "indexName", requestOptions: nil)
+        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "indexName",
+                                                                      requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2431,7 +2936,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index", requestOptions: nil)
+        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index",
+                                                                      requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2457,7 +2963,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "indexName", searchParams: SearchParams.searchParamsObject(SearchParamsObject(query: "myQuery", facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("tags:algolia")]))), requestOptions: nil)
+        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "indexName",
+                                                                      searchParams: SearchParams.searchParamsObject(SearchParamsObject(query: "myQuery",
+                                                                                                                                       facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("tags:algolia"
+                                                                                                                                       )]
+                                                                                                                                       ))
+                                                                      ), requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2476,6 +2987,36 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /**
+     single search retrieve snippets
+     */
+    func testSearchSingleIndexTest3() async throws {
+        let configuration: Search.Configuration = try Search.Configuration(appId: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_browse",
+                                                                      searchParams: SearchParams.searchParamsObject(SearchParamsObject(query: "batman mask of the phantasm",
+                                                                                                                                       attributesToRetrieve: ["*"],
+                                                                                                                                       attributesToSnippet: ["*:20"])
+                                                                      ), requestOptions: nil)
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let comparableData = "{\"query\":\"batman mask of the phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryItems)
+    }
+
+    /**
      searchSynonyms with minimal parameters
      */
     func testSearchSynonymsTest0() async throws {
@@ -2483,7 +3024,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSynonymsWithHTTPInfo(indexName: "indexName", requestOptions: nil)
+        let response = try await client.searchSynonymsWithHTTPInfo(indexName: "indexName",
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2509,7 +3051,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSynonymsWithHTTPInfo(indexName: "indexName", searchSynonymsParams: SearchSynonymsParams(query: "myQuery", type: SynonymType.altcorrection1, page: 10, hitsPerPage: 10), requestOptions: nil)
+        let response = try await client.searchSynonymsWithHTTPInfo(indexName: "indexName",
+                                                                   searchSynonymsParams: SearchSynonymsParams(query: "myQuery",
+                                                                                                              type: SynonymType.altcorrection1,
+                                                                                                              page: 10,
+                                                                                                              hitsPerPage: 10),
+                                                                   requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2535,7 +3082,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchUserIdsWithHTTPInfo(searchUserIdsParams: SearchUserIdsParams(query: "test", clusterName: "theClusterName", page: 5, hitsPerPage: 10), requestOptions: nil)
+        let response = try await client.searchUserIdsWithHTTPInfo(searchUserIdsParams: SearchUserIdsParams(query: "test",
+                                                                                                           clusterName: "theClusterName",
+                                                                                                           page: 5,
+                                                                                                           hitsPerPage: 10),
+                                                                  requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2561,7 +3112,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setDictionarySettingsWithHTTPInfo(dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: ["fr": false, "en": false, "ru": true])), requestOptions: nil)
+        let response = try await client.setDictionarySettingsWithHTTPInfo(dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: ["fr": false,
+                                                                                                                                                                               "en": false,
+                                                                                                                                                                               "ru": true]
+                                                                          )
+        ),
+        requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2587,7 +3143,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setDictionarySettingsWithHTTPInfo(dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: ["fr": false, "en": false, "ru": true], stopwords: ["fr": false], compounds: ["ru": true])), requestOptions: nil)
+        let response = try await client.setDictionarySettingsWithHTTPInfo(dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: ["fr": false,
+                                                                                                                                                                               "en": false,
+                                                                                                                                                                               "ru": true],
+            stopwords: ["fr": false],
+            compounds: ["ru": true])
+                                                                          ),
+                                                                          requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2613,7 +3175,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "cts_e2e_settings", indexSettings: IndexSettings(paginationLimitedTo: 10), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "cts_e2e_settings",
+                                                                indexSettings: IndexSettings(paginationLimitedTo: 10
+                                                                ),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2642,7 +3208,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(typoTolerance: TypoTolerance.bool(true)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(typoTolerance: TypoTolerance.bool(true
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2671,7 +3241,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(typoTolerance: TypoTolerance.typoToleranceEnum(TypoToleranceEnum.min)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(typoTolerance: TypoTolerance.typoToleranceEnum(TypoToleranceEnum.min
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2700,7 +3274,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(ignorePlurals: IgnorePlurals.bool(true)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(ignorePlurals: IgnorePlurals.bool(true
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2729,7 +3307,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(ignorePlurals: IgnorePlurals.arrayOfString(["algolia"])), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(ignorePlurals: IgnorePlurals.arrayOfString(["algolia"]
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2758,7 +3340,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(removeStopWords: RemoveStopWords.bool(true)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(removeStopWords: RemoveStopWords.bool(true
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2787,7 +3373,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(removeStopWords: RemoveStopWords.arrayOfString(["algolia"])), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(removeStopWords: RemoveStopWords.arrayOfString(["algolia"]
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2816,7 +3406,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(distinct: Distinct.bool(true)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(distinct: Distinct.bool(true
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2845,7 +3439,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(distinct: Distinct.int(1)), forwardToReplicas: true, requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(distinct: Distinct.int(1
+                                                                )),
+                                                                forwardToReplicas: true,
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2874,7 +3472,79 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName", indexSettings: IndexSettings(replicas: [""], paginationLimitedTo: 0, unretrievableAttributes: ["foo"], disableTypoToleranceOnWords: ["algolia"], attributesToTransliterate: ["algolia"], camelCaseAttributes: ["algolia"], decompoundedAttributes: ["algolia": "aloglia"], indexLanguages: ["algolia"], disablePrefixOnAttributes: ["algolia"], allowCompressionOfIntegerArray: true, numericAttributesForFiltering: ["algolia"], separatorsToIndex: "bar", searchableAttributes: ["foo"], userData: ["user": "data"], customNormalization: ["algolia": ["aloglia": "aglolia"]], attributeForDistinct: "test", attributesForFaceting: ["algolia"], attributesToRetrieve: ["algolia"], ranking: ["geo"], customRanking: ["algolia"], relevancyStrictness: 10, attributesToHighlight: ["algolia"], attributesToSnippet: ["algolia"], highlightPreTag: "<span>", highlightPostTag: "</span>", snippetEllipsisText: "---", restrictHighlightAndSnippetArrays: true, hitsPerPage: 10, minWordSizefor1Typo: 5, minWordSizefor2Typos: 11, typoTolerance: TypoTolerance.bool(false), allowTyposOnNumericTokens: true, disableTypoToleranceOnAttributes: ["algolia"], ignorePlurals: IgnorePlurals.bool(false), removeStopWords: RemoveStopWords.bool(false), keepDiacriticsOnCharacters: "abc", queryLanguages: ["algolia"], decompoundQuery: false, enableRules: true, enablePersonalization: true, queryType: QueryType.prefixLast, removeWordsIfNoResults: RemoveWordsIfNoResults.lastWords, mode: Mode.neuralSearch, semanticSearch: SemanticSearch(eventSources: ["foo"]), advancedSyntax: true, optionalWords: ["myspace"], disableExactOnAttributes: ["algolia"], exactOnSingleWordQuery: ExactOnSingleWordQuery.attribute, alternativesAsExact: [AlternativesAsExact.singleWordSynonym], advancedSyntaxFeatures: [AdvancedSyntaxFeatures.exactPhrase], distinct: Distinct.int(3), replaceSynonymsInHighlight: true, minProximity: 6, responseFields: ["algolia"], maxFacetHits: 20, maxValuesPerFacet: 30, sortFacetValuesBy: "date", attributeCriteriaComputedByMinProximity: true, renderingContent: RenderingContent(facetOrdering: FacetOrdering(facets: Facets(order: ["a", "b"]), values: ["a": Value(order: ["b"], sortRemainingBy: SortRemainingBy.count)])), enableReRanking: false, reRankingApplyFilter: ReRankingApplyFilter.string("mySearch:filters")), requestOptions: nil)
+        let response = try await client.setSettingsWithHTTPInfo(indexName: "theIndexName",
+                                                                indexSettings: IndexSettings(replicas: [""],
+                                                                                             paginationLimitedTo: 0,
+                                                                                             unretrievableAttributes: ["foo"],
+                                                                                             disableTypoToleranceOnWords: ["algolia"],
+                                                                                             attributesToTransliterate: ["algolia"],
+                                                                                             camelCaseAttributes: ["algolia"],
+                                                                                             decompoundedAttributes: ["algolia": "aloglia"],
+                                                                                             indexLanguages: ["algolia"],
+                                                                                             disablePrefixOnAttributes: ["algolia"],
+                                                                                             allowCompressionOfIntegerArray: true,
+                                                                                             numericAttributesForFiltering: ["algolia"],
+                                                                                             separatorsToIndex: "bar",
+                                                                                             searchableAttributes: ["foo"],
+                                                                                             userData: ["user": "data"],
+                                                                                             customNormalization: ["algolia": ["aloglia": "aglolia",
+                                                                                                 ]],
+                                                                                             attributeForDistinct: "test",
+                                                                                             attributesForFaceting: ["algolia"],
+                                                                                             attributesToRetrieve: ["algolia"],
+                                                                                             ranking: ["geo"],
+                                                                                             customRanking: ["algolia"],
+                                                                                             relevancyStrictness: 10,
+                                                                                             attributesToHighlight: ["algolia"],
+                                                                                             attributesToSnippet: ["algolia"],
+                                                                                             highlightPreTag: "<span>",
+                                                                                             highlightPostTag: "</span>",
+                                                                                             snippetEllipsisText: "---",
+                                                                                             restrictHighlightAndSnippetArrays: true,
+                                                                                             hitsPerPage: 10,
+                                                                                             minWordSizefor1Typo: 5,
+                                                                                             minWordSizefor2Typos: 11,
+                                                                                             typoTolerance: TypoTolerance.bool(false
+                                                                                             ), allowTyposOnNumericTokens: true,
+                                                                                             disableTypoToleranceOnAttributes: ["algolia"],
+                                                                                             ignorePlurals: IgnorePlurals.bool(false
+                                                                                             ), removeStopWords: RemoveStopWords.bool(false
+                                                                                             ), keepDiacriticsOnCharacters: "abc",
+                                                                                             queryLanguages: ["algolia"],
+                                                                                             decompoundQuery: false,
+                                                                                             enableRules: true,
+                                                                                             enablePersonalization: true,
+                                                                                             queryType: QueryType.prefixLast,
+                                                                                             removeWordsIfNoResults: RemoveWordsIfNoResults.lastWords,
+                                                                                             mode: Mode.neuralSearch,
+                                                                                             semanticSearch: SemanticSearch(eventSources: ["foo"]
+                                                                                             ),
+                                                                                             advancedSyntax: true,
+                                                                                             optionalWords: ["myspace"],
+                                                                                             disableExactOnAttributes: ["algolia"],
+                                                                                             exactOnSingleWordQuery: ExactOnSingleWordQuery.attribute,
+                                                                                             alternativesAsExact: [AlternativesAsExact.singleWordSynonym],
+                                                                                             advancedSyntaxFeatures: [AdvancedSyntaxFeatures.exactPhrase],
+                                                                                             distinct: Distinct.int(3
+                                                                                             ), replaceSynonymsInHighlight: true,
+                                                                                             minProximity: 6,
+                                                                                             responseFields: ["algolia"],
+                                                                                             maxFacetHits: 20,
+                                                                                             maxValuesPerFacet: 30,
+                                                                                             sortFacetValuesBy: "date",
+                                                                                             attributeCriteriaComputedByMinProximity: true,
+                                                                                             renderingContent: RenderingContent(facetOrdering: FacetOrdering(facets: Facets(order: ["a",
+                                                                                                                                                                                    "b"]
+                                                                                                                                                             ),
+                                                                                                                                                             values: ["a": Value(order: ["b",
+                                                                                                                                                                                 ],
+                                                                                                                                                                                 sortRemainingBy: SortRemainingBy.count
+                                                                                                                                                                 )])
+                                                                                             ),
+                                                                                             enableReRanking: false,
+                                                                                             reRankingApplyFilter: ReRankingApplyFilter.string("mySearch:filters"
+                                                                                             )),
+                                                                requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2900,7 +3570,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.updateApiKeyWithHTTPInfo(key: "myApiKey", apiKey: ApiKey(acl: [Acl.search, Acl.addObject], maxHitsPerQuery: 20, maxQueriesPerIPPerHour: 100, validity: 300), requestOptions: nil)
+        let response = try await client.updateApiKeyWithHTTPInfo(key: "myApiKey",
+                                                                 apiKey: ApiKey(acl: [Acl.search,
+                                                                                      Acl.addObject],
+                                                                                maxHitsPerQuery: 20,
+                                                                                maxQueriesPerIPPerHour: 100,
+                                                                                validity: 300),
+                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

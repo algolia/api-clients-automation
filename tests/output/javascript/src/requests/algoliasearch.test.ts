@@ -208,7 +208,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c,d',
+      myParam: 'c%2Cd',
     });
   });
 
@@ -231,7 +231,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'true,true,false',
+      myParam: 'true%2Ctrue%2Cfalse',
     });
   });
 
@@ -254,7 +254,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: '1,2',
+      myParam: '1%2C2',
     });
   });
 });

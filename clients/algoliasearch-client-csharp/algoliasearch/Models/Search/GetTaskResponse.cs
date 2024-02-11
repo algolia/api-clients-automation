@@ -23,14 +23,13 @@ namespace Algolia.Search.Models.Search;
 /// GetTaskResponse
 /// </summary>
 [DataContract(Name = "getTaskResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class GetTaskResponse
 {
 
   /// <summary>
   /// Gets or Sets Status
   /// </summary>
-  [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "status")]
   public TaskStatus Status { get; set; }
   /// <summary>
   /// Initializes a new instance of the GetTaskResponse class.

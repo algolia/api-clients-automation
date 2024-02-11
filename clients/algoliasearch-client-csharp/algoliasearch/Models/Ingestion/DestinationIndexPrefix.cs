@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// DestinationIndexPrefix
 /// </summary>
 [DataContract(Name = "DestinationIndexPrefix")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DestinationIndexPrefix
 {
   /// <summary>
@@ -44,7 +43,7 @@ public partial class DestinationIndexPrefix
   /// The prefix of the final index name.
   /// </summary>
   /// <value>The prefix of the final index name.</value>
-  [DataMember(Name = "indexPrefix", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "indexPrefix")]
   public string IndexPrefix { get; set; }
 
   /// <summary>

@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Monitoring;
 /// IncidentsResponse
 /// </summary>
 [DataContract(Name = "IncidentsResponse")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class IncidentsResponse
 {
   /// <summary>
@@ -36,7 +35,7 @@ public partial class IncidentsResponse
   /// <summary>
   /// Gets or Sets Incidents
   /// </summary>
-  [DataMember(Name = "incidents", EmitDefaultValue = false)]
+  [DataMember(Name = "incidents")]
   public Dictionary<string, List<IncidentsInner>> Incidents { get; set; }
 
   /// <summary>

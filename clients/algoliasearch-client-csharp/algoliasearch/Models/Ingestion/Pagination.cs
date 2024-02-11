@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// Pagination
 /// </summary>
 [DataContract(Name = "Pagination")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class Pagination
 {
   /// <summary>
@@ -38,7 +37,7 @@ public partial class Pagination
   /// <param name="page">page (required).</param>
   /// <param name="nbItems">nbItems (required).</param>
   /// <param name="itemsPerPage">itemsPerPage (required).</param>
-  public Pagination(int? nbPages, int? page, int? nbItems, int? itemsPerPage)
+  public Pagination(int nbPages, int page, int nbItems, int itemsPerPage)
   {
     NbPages = nbPages;
     Page = page;
@@ -49,26 +48,26 @@ public partial class Pagination
   /// <summary>
   /// Gets or Sets NbPages
   /// </summary>
-  [DataMember(Name = "nbPages", IsRequired = true, EmitDefaultValue = false)]
-  public int? NbPages { get; set; }
+  [DataMember(Name = "nbPages")]
+  public int NbPages { get; set; }
 
   /// <summary>
   /// Gets or Sets Page
   /// </summary>
-  [DataMember(Name = "page", IsRequired = true, EmitDefaultValue = false)]
-  public int? Page { get; set; }
+  [DataMember(Name = "page")]
+  public int Page { get; set; }
 
   /// <summary>
   /// Gets or Sets NbItems
   /// </summary>
-  [DataMember(Name = "nbItems", IsRequired = true, EmitDefaultValue = false)]
-  public int? NbItems { get; set; }
+  [DataMember(Name = "nbItems")]
+  public int NbItems { get; set; }
 
   /// <summary>
   /// Gets or Sets ItemsPerPage
   /// </summary>
-  [DataMember(Name = "itemsPerPage", IsRequired = true, EmitDefaultValue = false)]
-  public int? ItemsPerPage { get; set; }
+  [DataMember(Name = "itemsPerPage")]
+  public int ItemsPerPage { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

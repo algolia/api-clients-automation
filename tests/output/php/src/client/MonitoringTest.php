@@ -14,7 +14,6 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for MonitoringClient.
  *
  * @internal
- *
  * @coversNothing
  */
 class MonitoringTest extends TestCase implements HttpClientInterface

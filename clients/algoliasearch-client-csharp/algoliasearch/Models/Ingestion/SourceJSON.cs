@@ -23,15 +23,14 @@ namespace Algolia.Search.Models.Ingestion;
 /// SourceJSON
 /// </summary>
 [DataContract(Name = "SourceJSON")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class SourceJSON
 {
 
   /// <summary>
   /// Gets or Sets Method
   /// </summary>
-  [DataMember(Name = "method", EmitDefaultValue = false)]
-  public MethodType Method { get; set; }
+  [DataMember(Name = "method")]
+  public MethodType? Method { get; set; }
   /// <summary>
   /// Initializes a new instance of the SourceJSON class.
   /// </summary>
@@ -50,14 +49,14 @@ public partial class SourceJSON
   /// The URL of the file.
   /// </summary>
   /// <value>The URL of the file.</value>
-  [DataMember(Name = "url", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "url")]
   public string Url { get; set; }
 
   /// <summary>
   /// The name of the column that contains the unique ID, used as `objectID` in Algolia.
   /// </summary>
   /// <value>The name of the column that contains the unique ID, used as `objectID` in Algolia.</value>
-  [DataMember(Name = "uniqueIDColumn", EmitDefaultValue = false)]
+  [DataMember(Name = "uniqueIDColumn")]
   public string UniqueIDColumn { get; set; }
 
   /// <summary>

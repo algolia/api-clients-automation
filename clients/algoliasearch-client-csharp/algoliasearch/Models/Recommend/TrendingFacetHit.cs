@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Recommend;
 /// Trending facet hit.
 /// </summary>
 [DataContract(Name = "trendingFacetHit")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class TrendingFacetHit
 {
   /// <summary>
@@ -48,21 +47,21 @@ public partial class TrendingFacetHit
   /// Recommendation score.
   /// </summary>
   /// <value>Recommendation score.</value>
-  [DataMember(Name = "_score", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "_score")]
   public double Score { get; set; }
 
   /// <summary>
   /// Facet name for trending models.
   /// </summary>
   /// <value>Facet name for trending models.</value>
-  [DataMember(Name = "facetName", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "facetName")]
   public string FacetName { get; set; }
 
   /// <summary>
   /// Facet value for trending models.
   /// </summary>
   /// <value>Facet value for trending models.</value>
-  [DataMember(Name = "facetValue", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "facetValue")]
   public string FacetValue { get; set; }
 
   /// <summary>

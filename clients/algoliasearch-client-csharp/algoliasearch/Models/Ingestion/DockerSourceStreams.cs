@@ -23,7 +23,6 @@ namespace Algolia.Search.Models.Ingestion;
 /// DockerSourceStreams
 /// </summary>
 [DataContract(Name = "dockerSourceStreams")]
-[JsonObject(MemberSerialization.OptOut)]
 public partial class DockerSourceStreams
 {
   /// <summary>
@@ -43,7 +42,7 @@ public partial class DockerSourceStreams
   /// <summary>
   /// Gets or Sets Streams
   /// </summary>
-  [DataMember(Name = "streams", IsRequired = true, EmitDefaultValue = false)]
+  [DataMember(Name = "streams")]
   public List<object> Streams { get; set; }
 
   /// <summary>
