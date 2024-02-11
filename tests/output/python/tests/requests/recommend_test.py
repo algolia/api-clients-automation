@@ -21,7 +21,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -38,7 +38,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -52,7 +52,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -71,7 +71,7 @@ class TestRecommendClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -86,7 +86,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -106,7 +106,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -129,7 +129,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -154,7 +154,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -178,7 +178,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -201,7 +201,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -226,7 +226,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -252,7 +252,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -278,7 +278,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -304,7 +304,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -330,7 +330,7 @@ class TestRecommendClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -345,7 +345,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -365,7 +365,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -384,7 +384,7 @@ class TestRecommendClient:
             == "/1/indexes/indexName/related-products/recommend/rules/objectID"
         )
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -403,7 +403,7 @@ class TestRecommendClient:
             == "/1/indexes/indexName/related-products/recommend/rules/objectID"
         )
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -419,7 +419,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/indexName/related-products/task/12345"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -442,7 +442,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}"""
@@ -480,7 +480,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
@@ -504,7 +504,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}"""
@@ -543,7 +543,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
@@ -574,7 +574,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}"""
@@ -631,7 +631,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
@@ -656,7 +656,7 @@ class TestRecommendClient:
 
         assert _req.path == "/1/indexes/*/recommendations"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}"""
@@ -675,6 +675,6 @@ class TestRecommendClient:
             _req.path == "/1/indexes/indexName/related-products/recommend/rules/search"
         )
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")

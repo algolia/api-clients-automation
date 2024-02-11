@@ -48,7 +48,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"indexName":"theIndexName","sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}"""
@@ -64,7 +64,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -81,7 +81,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -95,7 +95,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -114,7 +114,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -129,7 +129,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -149,7 +149,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -172,7 +172,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -197,7 +197,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -221,7 +221,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -244,7 +244,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -269,7 +269,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -295,7 +295,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -321,7 +321,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -347,7 +347,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -373,7 +373,7 @@ class TestQuerySuggestionsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -388,7 +388,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -408,7 +408,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -422,7 +422,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs/theIndexName"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -434,7 +434,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -448,7 +448,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs/theIndexName"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -462,7 +462,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs/theIndexName/status"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -476,7 +476,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/logs/theIndexName"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -517,7 +517,7 @@ class TestQuerySuggestionsClient:
 
         assert _req.path == "/1/configs/theIndexName"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"sourceIndices":[{"indexName":"testIndex","facets":[{"attribute":"test"}],"generate":[["facetA","facetB"],["facetC"]]}],"languages":["french"],"exclude":["test"]}"""

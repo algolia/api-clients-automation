@@ -57,6 +57,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -89,6 +90,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -123,6 +125,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -142,6 +145,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -161,6 +165,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -185,6 +190,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -209,6 +215,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -228,6 +235,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -247,6 +255,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -267,6 +276,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c%2Cd"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -287,6 +297,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -307,6 +318,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -341,6 +353,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -362,6 +375,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -378,6 +392,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -399,6 +414,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -415,6 +431,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -436,6 +453,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -452,6 +470,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -473,6 +492,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -489,6 +509,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -510,6 +531,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -526,6 +548,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -547,6 +570,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -563,6 +587,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -584,6 +609,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -600,6 +626,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -621,6 +648,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -637,6 +665,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -658,6 +687,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -674,6 +704,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -695,6 +726,7 @@ func TestAnalytics_GetStatus(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -716,6 +748,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -732,6 +765,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -753,6 +787,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -769,6 +804,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -790,6 +826,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -806,6 +843,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -822,6 +860,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -838,6 +877,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -859,6 +899,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -875,6 +916,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -896,6 +938,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -912,6 +955,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -933,6 +977,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -949,6 +994,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -970,6 +1016,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -986,6 +1033,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}

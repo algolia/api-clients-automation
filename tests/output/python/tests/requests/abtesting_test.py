@@ -34,7 +34,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
@@ -50,7 +50,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -67,7 +67,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -81,7 +81,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -100,7 +100,7 @@ class TestAbtestingClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -115,7 +115,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -135,7 +135,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -158,7 +158,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -183,7 +183,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -207,7 +207,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -230,7 +230,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -255,7 +255,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -281,7 +281,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -307,7 +307,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -333,7 +333,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -359,7 +359,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -374,7 +374,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -394,7 +394,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -408,7 +408,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -422,7 +422,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -434,7 +434,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -453,7 +453,7 @@ class TestAbtestingClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "offset": "42",
                 "limit": "21",
                 "indexPrefix": "foo",
@@ -473,5 +473,5 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42/stop"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
