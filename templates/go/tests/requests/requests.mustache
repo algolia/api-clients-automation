@@ -91,6 +91,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       {{#request.queryParameters}}
         queryParams := map[string]string{}
         require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &queryParams))
+        require.Len(t, queryParams, len(echo.Query))
         for k, v := range queryParams {
             require.Equal(t, v, echo.Query.Get(k))
         }

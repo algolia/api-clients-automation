@@ -61,7 +61,7 @@ class {{clientPrefix}}Test {
                 assertContainsAll("""{{{.}}}""", it.headers)
                 {{/headers}}
                 {{#queryParameters}}
-                assertContainsAll("""{{{.}}}""", it.url.encodedParameters)
+                assertQueryParams("""{{{.}}}""", it.url.encodedParameters)
                 {{/queryParameters}}
                 {{#body}}
                 assertJsonBody("""{{{.}}}""", it.body)
