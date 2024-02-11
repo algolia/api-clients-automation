@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
 
 namespace Algolia.Search.Utils;
@@ -245,7 +246,13 @@ public static class ClientExtensions
     SearchSynonymsParams synonymsParams,
     RequestOptions requestOptions = null) =>
     AsyncHelper.RunSync(() => client.BrowseSynonymsAsync(indexName, synonymsParams, requestOptions));
-
+  
+  public static string GenerateSecuredApiKeys(this SearchClient client, string parentApiKey, SecuredApiKeyRestriction restriction)
+  {
+    string queryParams = QueryStringHelper.BuildRestrictionQueryString(restriction);
+    var hash = HmacShaHelper.GetHash(parentApiKey, queryParams);
+    return HmacShaHelper.Base64Encode($"{hash}{queryParams}");
+  }
 
   private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
     int maxRetries = DefaultMaxRetries, CancellationToken ct = default)
