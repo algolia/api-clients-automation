@@ -6,9 +6,14 @@ class Host:
     TTL = 300.0
 
     def __init__(
-        self, url: str, priority: Optional[int] = 0, accept: Optional[int] = None
+        self,
+        url: str,
+        scheme="https",
+        priority: Optional[int] = 0,
+        accept: Optional[int] = None,
     ) -> None:
         self.url = url
+        self.scheme = scheme
         self.priority = cast(int, priority)
         self.accept = (CallType.WRITE | CallType.READ) if accept is None else accept
 

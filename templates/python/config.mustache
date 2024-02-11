@@ -65,8 +65,8 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
             {{/uniqueHost}}
             {{#hostWithAppID}}
             [
-                Host("{}-dsn.algolia.net".format(self.app_id), 10, CallType.READ),
-                Host("{}.algolia.net".format(self.app_id), 10, CallType.WRITE),
+                Host("{}-dsn.algolia.net".format(self.app_id), 'https', 10, CallType.READ),
+                Host("{}.algolia.net".format(self.app_id), 'https', 10, CallType.WRITE),
                 Host("{}-1.algolianet.com".format(self.app_id)),
                 Host("{}-2.algolianet.com".format(self.app_id)),
                 Host("{}-3.algolianet.com".format(self.app_id)),
