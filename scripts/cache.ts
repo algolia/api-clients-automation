@@ -46,6 +46,13 @@ export class Cache {
       return false;
     }
 
+    // hashElement throws when the folder is missing, we need to make sure it exists.
+    for (const generatedFiles of this.generatedFiles) {
+      if (!(await exists(`${this.folder}/${generatedFiles}`))) {
+        return false;
+      }
+    }
+
     const storedHash = (await fsp.readFile(this.cacheFile)).toString();
     return storedHash === (await this.computeHash());
   }

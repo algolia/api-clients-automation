@@ -21,7 +21,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -38,7 +38,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -52,7 +52,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -71,7 +71,7 @@ class TestPersonalizationClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -86,7 +86,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -106,7 +106,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -129,7 +129,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -154,7 +154,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -178,7 +178,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -201,7 +201,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -226,7 +226,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -252,7 +252,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -278,7 +278,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -304,7 +304,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -330,7 +330,7 @@ class TestPersonalizationClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -345,7 +345,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -365,7 +365,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -379,7 +379,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/profiles/UserToken"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -391,7 +391,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/strategies/personalization"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -405,7 +405,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/profiles/personalization/UserToken"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -434,7 +434,7 @@ class TestPersonalizationClient:
 
         assert _req.path == "/1/strategies/personalization"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""

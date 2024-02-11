@@ -51,6 +51,7 @@ void expectPath(String actual, String expected) {
 /// parameters given as a JSON string.
 void expectParams(Map<String, dynamic> actual, String expected) {
   final expectedMap = jsonDecode(expected) as Map<String, dynamic>;
+  expect(actual.length, expectedMap.length);
   expect(
     const DeepCollectionEquality.unordered().equals(actual, expectedMap),
     true,
