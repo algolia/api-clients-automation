@@ -326,7 +326,7 @@ public static class ClientExtensions
     IEnumerable<SearchForFacets> requests, SearchStrategy? searchStrategy, RequestOptions options = null,
     CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => client.SearchForFacetsAsync(requests, searchStrategy, options, cancellationToken));
-  
+
   private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
     int maxRetries = DefaultMaxRetries, CancellationToken ct = default)
   {
