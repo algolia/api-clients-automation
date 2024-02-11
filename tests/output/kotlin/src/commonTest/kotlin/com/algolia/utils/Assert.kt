@@ -30,6 +30,19 @@ fun assertContainsAll(json: String, builder: StringValuesBuilder) {
 }
 
 /**
+ * Asserts that the JSON content of the query params [queryParams] matches the expected JSON string [json].
+ * If the actual and expected JSON objects are not equal, an [AssertionError] is thrown.
+ *
+ * @param queryParams The actual query params content to be checked for equality with the expected JSON string.
+ * @param json The expected JSON string to compare against the actual JSON content in [queryParams].
+ */
+fun assertQueryParams(json: String, queryParams: StringValuesBuilder) {
+  val actual = Json.parseToJsonElement("{${queryParams.build().entries().joinToString { "\"${it.key}\":\"${it.value.joinToString(",")}\"" } }}")
+  val expected = Json.decodeFromString<JsonElement>(json)
+  if (!areJsonElementsEqual(actual, expected)) error("Expected $expected, but got $actual")
+}
+
+/**
  * Asserts that the JSON content of the given [body] matches the expected JSON string [json].
  * If the actual and expected JSON objects are not equal, an [AssertionError] is thrown.
  *

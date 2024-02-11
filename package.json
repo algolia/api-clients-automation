@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
-    "clean": "rm -rf **/dist **/build **/node_modules **/.gradle **/vendor || true",
+    "clean": "rm -rf **/dist **/build **/.build **/node_modules **/.gradle **/vendor **/bin **/obj **/__pycache__ || true",
     "cli": "yarn workspace scripts start",
     "docker:setup": "./scripts/docker/setup.sh",
     "fix:json": "eslint --ext=json . --fix",
