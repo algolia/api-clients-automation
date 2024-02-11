@@ -300,13 +300,13 @@ public static class ClientExtensions
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of List{SearchResponse{T}}</returns>
-  public static async Task<List<SearchForFacetValuesResponse>> SearchForFacetsAsync<T>(this SearchClient client,
+  public static async Task<List<SearchForFacetValuesResponse>> SearchForFacetsAsync(this SearchClient client,
     IEnumerable<SearchForFacets> requests, SearchStrategy? searchStrategy, RequestOptions options = null,
     CancellationToken cancellationToken = default)
   {
     var queries = requests.Select(t => new SearchQuery(t)).ToList();
     var searchMethod = new SearchMethodParams(queries) { Strategy = searchStrategy };
-    var searchResponses = await client.SearchAsync<T>(searchMethod, options, cancellationToken);
+    var searchResponses = await client.SearchAsync<object>(searchMethod, options, cancellationToken);
     return searchResponses.Results.Where(x => x.IsSearchForFacetValuesResponse()).Select(x => x.AsSearchForFacetValuesResponse()).ToList();
   }
 
@@ -322,12 +322,11 @@ public static class ClientExtensions
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of List{SearchResponse{T}}</returns>
-  public static List<SearchForFacetValuesResponse> SearchForFacets<T>(this SearchClient client,
+  public static List<SearchForFacetValuesResponse> SearchForFacets(this SearchClient client,
     IEnumerable<SearchForFacets> requests, SearchStrategy? searchStrategy, RequestOptions options = null,
     CancellationToken cancellationToken = default) =>
-    AsyncHelper.RunSync(() => client.SearchForFacetsAsync<T>(requests, searchStrategy, options, cancellationToken));
-
-
+    AsyncHelper.RunSync(() => client.SearchForFacetsAsync(requests, searchStrategy, options, cancellationToken));
+  
   private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
     int maxRetries = DefaultMaxRetries, CancellationToken ct = default)
   {
