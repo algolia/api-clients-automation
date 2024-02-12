@@ -56,7 +56,8 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
                 Host("{}-1.algolianet.com".format(self.app_id)),
                 Host("{}-2.algolianet.com".format(self.app_id)),
                 Host("{}-3.algolianet.com".format(self.app_id)),
-            ]
+            ],
+            reorder_hosts=True,
             {{/hostWithAppID}}
         )
         {{/hasRegionalHost}}

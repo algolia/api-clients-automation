@@ -26,15 +26,15 @@ class Host:
 
 
 class HostsCollection:
-    def __init__(self, hosts: List[Host]) -> None:
+    def __init__(self, hosts: List[Host], reorder_hosts=False) -> None:
         self._hosts = hosts
 
         for host in self._hosts:
             host.reset()
 
-        shuffle(self._hosts)
-
-        self._hosts = sorted(self._hosts, key=lambda x: x.priority, reverse=True)
+        if reorder_hosts:
+            shuffle(self._hosts)
+            self._hosts = sorted(self._hosts, key=lambda x: x.priority, reverse=True)
 
     def read(self) -> List[Host]:
         return [host for host in self._hosts if host.accept & CallType.READ]
