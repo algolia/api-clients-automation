@@ -5,6 +5,7 @@ using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Utils;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
@@ -468,5 +469,99 @@ public class ClientExtensionsTests
     );
 
     Assert.Equal(6, browseSynonymsAsync.Count());
+  }
+
+  [Fact]
+  public async Task ShouldSearchForHits()
+  {
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/*/queries")),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      ).Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                JsonConvert.SerializeObject(
+                  new SearchResponses<object>([
+                    new(new SearchForFacetValuesResponse(){ FacetHits = new List<FacetHits>()}),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                  ])
+                )
+              )
+            )
+          }
+        )
+      );
+
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), httpMock.Object);
+
+    var hits = await client.SearchForHitsAsync<Hit>(
+      new List<SearchForHits>
+      {
+        new()
+        {
+          IndexName = "my-test-index",
+          Query = " "
+        }
+      }, SearchStrategy.None);
+    
+    Assert.Equal(2, hits.Count);
+  }
+  
+  [Fact]
+  public async Task ShouldSearchForFacets()
+  {
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/*/queries")),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      ).Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                JsonConvert.SerializeObject(
+                  new SearchResponses<object>([
+                    new(new SearchForFacetValuesResponse(){ FacetHits = [] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                  ])
+                )
+              )
+            )
+          }
+        )
+      );
+
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), httpMock.Object);
+
+    var hits = await client.SearchForFacetsAsync(
+      new List<SearchForFacets>
+      {
+        new()
+        {
+          IndexName = "my-test-index",
+          Query = " "
+        }
+      }, SearchStrategy.None);
+    
+    Assert.Equal(1, hits.Count);
   }
 }

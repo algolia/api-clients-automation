@@ -138,7 +138,6 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
   /** Escape <> in generic with {} */
   private String escapeGenericForDoc(String type) {
-    Helpers.prettyPrint(type);
     return type.replaceAll("<", "{").replaceAll(">", "}");
   }
 

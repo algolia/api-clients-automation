@@ -177,6 +177,7 @@ func TestIngestion_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -209,6 +210,7 @@ func TestIngestion_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -243,6 +245,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -262,6 +265,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -281,6 +285,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -305,6 +310,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -329,6 +335,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -348,6 +355,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -367,6 +375,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -387,6 +396,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c%2Cd"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -407,6 +417,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -427,6 +438,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -461,6 +473,7 @@ func TestIngestion_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -603,6 +616,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
