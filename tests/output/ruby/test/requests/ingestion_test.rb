@@ -28,7 +28,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}'), JSON.parse(req.body)
@@ -47,7 +47,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}'), JSON.parse(req.body)
@@ -67,7 +67,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/destinations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'), JSON.parse(req.body)
@@ -92,7 +92,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/sources', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'), JSON.parse(req.body)
@@ -112,7 +112,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body)
@@ -132,7 +132,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}'), JSON.parse(req.body)
@@ -152,7 +152,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'), JSON.parse(req.body)
@@ -165,7 +165,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -177,7 +177,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -189,7 +189,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -204,10 +204,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(
-      ({ 'query': "parameters%20with%20space" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters%20with%20space" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -219,7 +216,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -234,7 +231,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -250,10 +247,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "myQueryParameter" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -269,10 +263,9 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'query2': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'query2': "myQueryParameter" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -289,7 +282,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -307,7 +300,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -325,10 +318,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'isItWorking': "true" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'isItWorking': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -344,10 +334,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -363,10 +350,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -382,10 +366,9 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'myParam': "true%2Ctrue%2Cfalse" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'myParam': "true%2Ctrue%2Cfalse" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -402,10 +385,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "1%2C2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "1%2C2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -416,7 +396,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -431,7 +411,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -442,7 +422,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -454,7 +434,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -466,7 +446,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -478,7 +458,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -490,7 +470,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
@@ -500,7 +480,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
@@ -510,7 +490,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -522,7 +502,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/authentications', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -541,14 +521,14 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/authentications', req.path)
-    assert(
-      ({ 'itemsPerPage': "10",
-         'page': "5",
-         'type': "basic%2Calgolia",
-         'platform': "none",
-         'sort': "createdAt",
-         'order': "desc" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'itemsPerPage': "10",
+        'page': "5",
+        'type': "basic%2Calgolia",
+        'platform': "none",
+        'sort': "createdAt",
+        'order': "desc" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -561,7 +541,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -573,7 +553,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/destinations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -585,7 +565,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -602,7 +582,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(
       '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c', req.path
     )
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -614,7 +594,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -626,7 +606,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -638,7 +618,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/runs', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -650,7 +630,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -662,7 +642,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/sources', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -674,7 +654,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -686,7 +666,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/tasks', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -698,7 +678,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
@@ -714,7 +694,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/authentications/search', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
@@ -733,7 +713,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/destinations/search', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
@@ -752,7 +732,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/sources/search', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
@@ -771,7 +751,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/tasks/search', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
@@ -784,7 +764,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
@@ -797,7 +777,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:patch, req.method)
     assert_equal('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"name":"newName"}'), JSON.parse(req.body))
   end
@@ -811,7 +791,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:patch, req.method)
     assert_equal('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"name":"newName"}'), JSON.parse(req.body))
   end
@@ -825,7 +805,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:patch, req.method)
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"name":"newName"}'), JSON.parse(req.body))
   end
@@ -839,7 +819,7 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:patch, req.method)
     assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"enabled":false}'), JSON.parse(req.body))
   end

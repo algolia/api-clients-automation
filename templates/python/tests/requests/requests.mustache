@@ -37,7 +37,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{#request}}
         assert _req.path == "{{{path}}}"
         assert _req.verb == "{{{method}}}"
-        assert _req.query_parameters.items()  >= {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
+        assert _req.query_parameters.items() == {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
         assert _req.headers.items() >= {{#headers}}{{{.}}}{{/headers}}{{^headers}}{}{{/headers}}.items()
         {{#body}}
         assert loads(_req.data) == loads("""{{{.}}}""")

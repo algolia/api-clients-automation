@@ -22,7 +22,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -34,7 +34,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -46,7 +46,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -61,10 +61,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(
-      ({ 'query': "parameters%20with%20space" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters%20with%20space" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -76,7 +73,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -91,7 +88,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -107,10 +104,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "myQueryParameter" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -126,10 +120,9 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'query2': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'query2': "myQueryParameter" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -146,7 +139,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -164,7 +157,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -182,10 +175,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'isItWorking': "true" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'isItWorking': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -201,10 +191,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -220,10 +207,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -239,10 +223,9 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'myParam': "true%2Ctrue%2Cfalse" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'myParam': "true%2Ctrue%2Cfalse" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -259,10 +242,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "1%2C2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "1%2C2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -273,7 +253,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -288,7 +268,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -299,7 +279,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/averageClickPosition', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -316,12 +296,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/averageClickPosition', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -334,7 +314,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/positions', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -351,12 +331,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/positions', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -369,7 +349,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/clickThroughRate', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -386,12 +366,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/clicks/clickThroughRate', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -404,7 +384,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/conversions/conversionRate', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -421,12 +401,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/conversions/conversionRate', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -439,7 +419,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noClickRate', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -451,12 +431,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noClickRate', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -469,7 +449,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noResultRate', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -486,12 +466,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noResultRate', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -504,7 +484,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/count', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -521,12 +501,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/count', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -539,7 +519,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noClicks', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -558,14 +538,14 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noClicks', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -578,7 +558,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noResults', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -597,14 +577,14 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noResults', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -617,7 +597,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/status', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -629,7 +609,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/countries', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -648,14 +628,14 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/countries', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -668,7 +648,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -688,15 +668,15 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters', req.path)
-    assert(
-      ({ 'index': "index",
-         'search': "mySearch",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'search': "mySearch",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -709,7 +689,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/myAttribute', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -724,7 +704,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/myAttribute1%2CmyAttribute2', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -745,15 +725,15 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/myAttribute', req.path)
-    assert(
-      ({ 'index': "index",
-         'search': "mySearch",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'search': "mySearch",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -775,15 +755,15 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/myAttribute1%2CmyAttribute2', req.path)
-    assert(
-      ({ 'index': "index",
-         'search': "mySearch",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'search': "mySearch",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -796,7 +776,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/noResults', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -816,15 +796,15 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/filters/noResults', req.path)
-    assert(
-      ({ 'index': "index",
-         'search': "mySearch",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'search': "mySearch",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -837,7 +817,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/hits', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -858,16 +838,16 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/hits', req.path)
-    assert(
-      ({ 'index': "index",
-         'search': "mySearch",
-         'clickAnalytics': "true",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'search': "mySearch",
+        'clickAnalytics': "true",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -880,7 +860,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -902,17 +882,17 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches', req.path)
-    assert(
-      ({ 'index': "index",
-         'clickAnalytics': "true",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'orderBy': "searchCount",
-         'direction': "asc",
-         'limit': "21",
-         'offset': "42",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'clickAnalytics': "true",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'orderBy': "searchCount",
+        'direction': "asc",
+        'limit': "21",
+        'offset': "42",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -925,7 +905,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/users/count', req.path)
-    assert(({ 'index': "index" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -937,12 +917,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/users/count', req.path)
-    assert(
-      ({ 'index': "index",
-         'startDate': "1999-09-19",
-         'endDate': "2001-01-01",
-         'tags': "tag" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 

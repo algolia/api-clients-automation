@@ -452,6 +452,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -484,6 +485,7 @@ func TestSearch_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -518,6 +520,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -537,6 +540,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -556,6 +560,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -580,6 +585,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -604,6 +610,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -623,6 +630,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -642,6 +650,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -662,6 +671,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c%2Cd"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -682,6 +692,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -702,6 +713,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -736,6 +748,7 @@ func TestSearch_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -933,6 +946,7 @@ func TestSearch_GetLogs(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"offset":"5","length":"10","indexName":"theIndexName","type":"all"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -955,6 +969,7 @@ func TestSearch_GetObject(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"attributesToRetrieve":"attr1%2Cattr2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1136,6 +1151,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"getClusters":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1192,6 +1208,7 @@ func TestSearch_ListIndices(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"3"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1220,6 +1237,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"page":"8","hitsPerPage":"100"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1281,6 +1299,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"createIfNotExists":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1397,6 +1416,7 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1447,6 +1467,7 @@ func TestSearch_SaveRules(t *testing.T) {
 		ja.Assertf(*echo.Body, `[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","clearExistingRules":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1471,6 +1492,7 @@ func TestSearch_SaveSynonym(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1496,6 +1518,7 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 		ja.Assertf(*echo.Body, `[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2002,6 +2025,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"paginationLimitedTo":10}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2028,6 +2052,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"typoTolerance":true}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2046,6 +2071,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"typoTolerance":"min"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2064,6 +2090,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ignorePlurals":true}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2083,6 +2110,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ignorePlurals":["algolia"]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2101,6 +2129,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"removeStopWords":true}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2120,6 +2149,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"removeStopWords":["algolia"]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2138,6 +2168,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"distinct":true}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -2156,6 +2187,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"distinct":1}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}

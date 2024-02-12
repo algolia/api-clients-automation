@@ -33,7 +33,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
     {{#request}}
     assert_equal(:{{#lambda.lowercase}}{{method}}{{/lambda.lowercase}}, req.method)
     assert_equal('{{path}}', req.path)
-    assert(({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}{}{{/request.queryParameters}}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}{}{{/request.queryParameters}}.to_a, req.query_params.to_a)
     assert(({{#request.headers}}{{{.}}}.transform_keys(&:to_s){{/request.headers}}{{^request.headers}}{}{{/request.headers}}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     {{#body}}
     assert_equal(JSON.parse(%q({{{.}}})), JSON.parse(req.body))

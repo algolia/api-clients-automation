@@ -21,7 +21,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -33,7 +33,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -45,7 +45,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -60,10 +60,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(
-      ({ 'query': "parameters%20with%20space" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters%20with%20space" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -75,7 +72,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -90,7 +87,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -106,10 +103,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "myQueryParameter" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -125,10 +119,9 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'query2': "myQueryParameter" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'query2': "myQueryParameter" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -145,7 +138,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -163,7 +156,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
     )
@@ -181,10 +174,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'isItWorking': "true" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'isItWorking': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -200,10 +190,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -219,10 +206,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -238,10 +222,9 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters",
-         'myParam': "true%2Ctrue%2Cfalse" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
+    assert_equal(
+      { 'query': "parameters", 'myParam': "true%2Ctrue%2Cfalse" }.to_a,
+      req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -258,10 +241,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert(
-      ({ 'query': "parameters", 'myParam': "1%2C2" }.to_a - req.query_params.to_a).empty?,
-      req.query_params.to_s
-    )
+    assert_equal({ 'query': "parameters", 'myParam': "1%2C2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end
@@ -272,7 +252,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/minimal', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
@@ -287,7 +267,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal('/1/test/all', req.path)
-    assert(({ 'query': "parameters" }.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
@@ -302,7 +282,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal('/1/indexes/indexName/related-products/recommend/rules/objectID', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -318,7 +298,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/indexes/indexName/related-products/recommend/rules/objectID', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -330,7 +310,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/indexes/indexName/related-products/task/12345', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
@@ -348,7 +328,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}'), JSON.parse(req.body)
@@ -378,7 +358,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
@@ -397,7 +377,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}'), JSON.parse(req.body)
@@ -428,7 +408,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
@@ -458,7 +438,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}'), JSON.parse(req.body)
@@ -503,7 +483,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'), JSON.parse(req.body)
@@ -522,7 +502,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/*/recommendations', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}'), JSON.parse(req.body)
@@ -535,7 +515,7 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal('/1/indexes/indexName/related-products/recommend/rules/search', req.path)
-    assert(({}.to_a - req.query_params.to_a).empty?, req.query_params.to_s)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
   end
