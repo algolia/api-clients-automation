@@ -15,6 +15,8 @@ private[algoliasearch] class StatefulHost(private val host: Host) {
 
   def getScheme: String = host.scheme
 
+  def getPort: Option[Int] = host.port
+
   def isUp: Boolean = up
 
   def getRetryCount: Int = retryCount

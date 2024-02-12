@@ -1,1 +1,12 @@
-val (client, echo) = testClient(appId = "{{parametersWithDataTypeMap.appId.value}}", apiKey = "{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}, region = "{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})
+{{#useEchoRequester}}
+val (client, echo) = testClient(appId = "{{parametersWithDataTypeMap.appId.value}}", apiKey = "{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}, region = "{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}){{/useEchoRequester}}{{#hasCustomHosts}}
+val client = {{client}}(
+        appId = "{{parametersWithDataTypeMap.appId.value}}",
+        apiKey = "{{parametersWithDataTypeMap.apiKey.value}}",
+        {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}, region = "{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
+        clientOptions = ClientOptions
+          .builder()
+          .withHosts(List({{#parametersWithDataTypeMap.customHosts.value}}Host("{{value}}".split(":")(0), Set(CallType.Read, CallType.Write), "http", Option("{{value}}".split(":")(1).toInt)){{^-last}},{{/-last}}{{/parametersWithDataTypeMap.customHosts.value}}))
+          .build()
+      )
+{{/hasCustomHosts}}
