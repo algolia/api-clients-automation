@@ -10,6 +10,5 @@ import io.ktor.http.URLProtocol
 public data class Host(
   public val url: String,
   public val callType: CallType? = null,
-  public val protocol: URLProtocol = URLProtocol.HTTPS,
-  public val port: Int? = null
+  public val protocol: String = "https",
 )

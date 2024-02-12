@@ -49,9 +49,8 @@ public class KtorRequester(
     val requestBuilder = httpRequestBuilderOf(requestConfig, requestOptions)
 
     for (host in hosts) {
+      requestBuilder.url.protocol = URLProtocol.createOrDefault(host.protocol)
       requestBuilder.url.host = host.url
-      requestBuilder.url.protocol = host.protocol
-      requestBuilder.url.port = host.port
       requestBuilder.setTimeout(requestOptions, callType, host)
       try {
         val response = httpClient.request(requestBuilder)
