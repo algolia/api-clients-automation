@@ -41,5 +41,26 @@ kotlin {
         implementation(libs.kotlin.datetime)
       }
     }
+
+    val commonTest by getting {
+      dependencies {
+        implementation(libs.kotlin.test.common)
+        implementation(libs.kotlin.test.annotations.common)
+        implementation(libs.ktor.client.mock)
+      }
+    }
+
+    val jvmTest by getting {
+      dependencies {
+        implementation(libs.kotlin.test.junit)
+        implementation(libs.ktor.client.okhttp)
+      }
+    }
+
+    val appleTest by getting {
+      dependencies {
+        implementation(libs.ktor.client.darwin)
+      }
+    }
   }
 }
