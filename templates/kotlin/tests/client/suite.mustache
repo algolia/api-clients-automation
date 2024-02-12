@@ -32,14 +32,15 @@ class {{clientPrefix}}Test {
         {{#isMethod}}
         client.runTest(
              call = {
-                {{path}}(
+                return {{path}}(
                     {{#parametersWithDataType}}
                     {{> tests/request_param}}
                     {{/parametersWithDataType}}
                 )
              },
+             {{#match}}
+             {{^testResponse}}
              intercept = {
-                {{#match}}
                 {{#testUserAgent}}
                     val regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}".toRegex()
                     val header = it.headers["User-Agent"].orEmpty()
@@ -52,8 +53,12 @@ class {{clientPrefix}}Test {
                 {{#testHost}}
                     assertEquals("{{{match}}}", it.url.host);
                 {{/testHost}}        
-                {{/match}}
-             }
+             }{{/testResponse}}{{#testResponse}}
+              response = {
+                  val response = Json.decodeFromString<Unit>("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}")
+                  assertEquals(response, it.receive())
+              }{{/testResponse}}
+              {{/match}}
         )
         {{/isMethod}}
         {{/isError}}

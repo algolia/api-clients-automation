@@ -50,6 +50,8 @@ public class KtorRequester(
 
     for (host in hosts) {
       requestBuilder.url.host = host.url
+      requestBuilder.url.protocol = host.protocol
+      requestBuilder.url.port = host.port
       requestBuilder.setTimeout(requestOptions, callType, host)
       try {
         val response = httpClient.request(requestBuilder)
@@ -132,8 +134,6 @@ public class KtorRequester(
   ): HttpRequestBuilder {
     return HttpRequestBuilder().apply {
       url {
-        protocol = URLProtocol.HTTPS
-        port = URLProtocol.HTTPS.defaultPort
         pathSegments = requestConfig.path
       }
       method = requestConfig.method.ktorHttpMethod

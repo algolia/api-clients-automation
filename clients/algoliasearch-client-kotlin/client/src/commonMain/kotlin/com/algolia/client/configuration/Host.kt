@@ -1,5 +1,7 @@
 package com.algolia.client.configuration
 
+import io.ktor.http.URLProtocol
+
 /**
  * @param url The url to target.
  * @param callType Whether this host should be used for [CallType.Read] or [CallType.Write]
@@ -8,4 +10,6 @@ package com.algolia.client.configuration
 public data class Host(
   public val url: String,
   public val callType: CallType? = null,
+  public val protocol: URLProtocol = URLProtocol.HTTPS,
+  public val port: Int? = null
 )
