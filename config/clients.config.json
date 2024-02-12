@@ -329,6 +329,10 @@
     "tests": {
       "extension": "Tests.swift",
       "outputFolder": "Tests"
+    },
+    "snippets": {
+      "extension": ".swift",
+      "outputFolder": "Sources"
     }
   }
 }
