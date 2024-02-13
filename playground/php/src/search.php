@@ -15,8 +15,12 @@ $config = SearchConfig::create(
     $env['ALGOLIA_ADMIN_KEY']
 );
 
-$config->setScheme('http');
-$config->setPort(6677);
+//$config->setFullHosts(
+//    [
+//       'http://localhost:6677',
+//       'http://localhost:6678',
+//    ]
+//);
 
 $client = SearchClient::createWithConfig($config);
 $indexName = $env['SEARCH_INDEX'];

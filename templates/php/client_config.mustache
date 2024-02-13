@@ -25,6 +25,7 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'appId' => '',
             'apiKey' => '',
             'hosts' => null,
+            'hasFullHosts' => false,
             'readTimeout' => $this->defaultReadTimeout,
             'writeTimeout' => $this->defaultWriteTimeout,
             'connectTimeout' => $this->defaultConnectTimeout,

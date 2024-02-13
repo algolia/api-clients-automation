@@ -139,7 +139,8 @@ final class ApiWrapper implements ApiWrapperInterface
         $uri = $this->createUri($path)
             ->withQuery($requestOptions->getBuiltQueryParameters())
             ->withScheme($this->config->getScheme())
-            ->withPort($this->config->getPort());
+            ->withPort($this->config->getPort())
+        ;
 
         $body = isset($data)
             ? array_merge($data, $requestOptions->getBody())
@@ -154,7 +155,16 @@ final class ApiWrapper implements ApiWrapperInterface
 
         $retry = 1;
         foreach ($hosts as $host) {
-            $uri = $uri->withHost($host);
+            if ($this->config->getHasFullHosts()) {
+                $host = explode(':', $host);
+                $uri = $uri->withHost(trim($host[1], '/'))
+                    ->withScheme($host[0])
+                    ->withPort($host[2])
+                ;
+            } else {
+                $uri = $uri->withHost($host);
+            }
+
             $request = null;
             $logParams['retryNumber'] = $retry;
             $logParams['host'] = (string) $uri;
