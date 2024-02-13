@@ -137,7 +137,7 @@ ctsCommand
   });
 
 ctsCommand
-  .command('testServer')
+  .command('server')
   .description('Start the test servers in standalone mode')
   .action(async () => {
     setVerbose(true);
