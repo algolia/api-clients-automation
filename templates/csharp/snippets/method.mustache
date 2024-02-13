@@ -20,12 +20,12 @@ public class Snippet{{client}}
 
     // Call the API
     var response = await client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-    {{#requestOptions.queryParameters.parametersWithDataType}}
-        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
-    {{/requestOptions.queryParameters.parametersWithDataType}}
-    {{#requestOptions.headers.parametersWithDataType}}
-        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
-    {{/requestOptions.headers.parametersWithDataType}}
+      {{#requestOptions.queryParameters}}
+        QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+      {{/requestOptions.queryParameters}}
+      {{#requestOptions.headers}}
+        Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+      {{/requestOptions.headers}}
       }{{/hasRequestOptions}});
   }
 

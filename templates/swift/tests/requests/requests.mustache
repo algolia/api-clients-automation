@@ -23,15 +23,12 @@ final class {{client}}RequestsTests: XCTestCase {
         let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
 
-      {{#hasRequestOptions}}
-        let requestOptions = RequestOptions({{#requestOptions.headers.parametersWithDataType}}{{#-first}}
-        headers: [{{/-first}}
-            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
-          ]{{/-last}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}},{{/requestOptions.queryParameters.parametersWithDataType}}{{/requestOptions.headers.parametersWithDataType}}{{#requestOptions.queryParameters.parametersWithDataType}}{{#-first}}
-          queryItems: APIHelper.mapValuesToQueryItems([{{/-first}}
-            "{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{#-last}}
-          ]){{/-last}}{{/requestOptions.queryParameters.parametersWithDataType}}
-        )
+        {{#hasRequestOptions}}
+          let requestOptions = RequestOptions({{#requestOptions.headers}}
+            headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.headers}}
+            {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
+            queryItems: APIHelper.mapValuesToQueryItems([{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]){{/requestOptions.queryParameters}}
+          )
         {{/hasRequestOptions}}
 
         let response = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}, {{/parametersWithDataType}}{{/hasParameters}}requestOptions: {{#hasRequestOptions}}requestOptions{{/hasRequestOptions}}{{^hasRequestOptions}}nil{{/hasRequestOptions}})
