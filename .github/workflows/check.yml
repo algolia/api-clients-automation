@@ -9,9 +9,9 @@ on:
   merge_group:
     types: [checks_requested]
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.ref }}
+#   cancel-in-progress: true
 
 # Uncomment the line below to enable artifacts debugging
 # env:
