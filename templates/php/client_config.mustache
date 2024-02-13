@@ -30,6 +30,8 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'connectTimeout' => $this->defaultConnectTimeout,
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
             'defaultMaxRetries' => $this->defaultMaxRetries,
+            'port' => $this->defaultPort,
+            'scheme' => $this->defaultScheme,
             'defaultHeaders' => [],
             'defaultForwardToReplicas' => null,
             'batchSize' => 1000,
