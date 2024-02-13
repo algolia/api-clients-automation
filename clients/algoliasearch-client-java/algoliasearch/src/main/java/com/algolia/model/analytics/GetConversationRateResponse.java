@@ -48,7 +48,7 @@ public class GetConversationRateResponse {
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
    * parameter is `true`.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getTrackedSearchCount() {
     return trackedSearchCount;
   }

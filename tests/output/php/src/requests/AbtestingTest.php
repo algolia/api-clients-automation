@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (isset($_ENV['DOCKER']) && 'true' === $_ENV['DOCKER']) {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+} else {
+    $_ENV = getenv();
+}
 
 /**
  * AbtestingTest.
@@ -609,10 +618,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->listABTests(
-            42,
+            0,
             21,
-            'foo',
-            'bar',
+            'cts_e2e ab',
+            't',
         );
 
         $this->assertRequests([
@@ -620,9 +629,21 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/2/abtests',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"offset":"42","limit":"21","indexPrefix":"foo","indexSuffix":"bar"}', true),
+                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t"}', true),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->listABTests(
+            0,
+            21,
+            'cts_e2e ab',
+            't',
+        );
+
+        $expected = json_decode('{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -643,6 +664,31 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'body' => json_decode(''),
             ],
         ]);
+    }
+
+    protected function union($expected, $received)
+    {
+        $res = [];
+
+        foreach ($expected as $k => $v) {
+            if (isset($received[$k])) {
+                if (is_array($v)) {
+                    $res[$k] = $this->union($v, $received[$k]);
+                } elseif (is_array($v)) {
+                    if (!isset($res[$k])) {
+                        $res[$k] = [];
+                    }
+
+                    foreach ($v as $iv => $v) {
+                        $res[$k][] = $this->union($v, $received[$k][$iv]);
+                    }
+                } else {
+                    $res[$k] = $received[$k];
+                }
+            }
+        }
+
+        return $res;
     }
 
     protected function assertRequests(array $requests)
@@ -684,6 +730,11 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
     }
 
     protected function getClient()
