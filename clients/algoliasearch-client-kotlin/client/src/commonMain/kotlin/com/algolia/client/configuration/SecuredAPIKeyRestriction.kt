@@ -18,9 +18,9 @@ import kotlinx.datetime.Instant
  * even if he shares his IP with another user.
  */
 public data class SecuredAPIKeyRestriction(
-    val query: SearchParamsObject? = null,
-    val restrictIndices: List<String>? = null,
-    val restrictSources: List<String>? = null,
-    val validUntil: Instant? = null,
-    val userToken: String? = null
+  val query: SearchParamsObject? = null,
+  val restrictIndices: List<String>? = null,
+  val restrictSources: List<String>? = null,
+  val validUntil: Instant? = null,
+  val userToken: String? = null
 )

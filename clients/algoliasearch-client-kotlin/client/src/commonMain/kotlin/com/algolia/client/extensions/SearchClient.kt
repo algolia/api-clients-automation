@@ -15,6 +15,62 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.jsonObject
 import kotlin.random.Random
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+
+/**
+ * Wait for an API key to be added, updated or deleted based on a given `operation`.
+ *
+ * @param operation The `operation` that was done on a `key`.
+ * @param key The `key` that has been added, deleted or updated.
+ * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
+ *     the response with it.
+ * @param maxRetries The maximum number of retries. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public suspend fun SearchClient.waitForApiKey(
+  operation: ApiKeyOperation,
+  key: String,
+  apiKey: ApiKey? = null,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
+) {
+  when (operation) {
+    ApiKeyOperation.Create -> waitKeyCreation(
+      key = key,
+      maxRetries = maxRetries,
+      timeout = timeout,
+      initialDelay = initialDelay,
+      maxDelay = maxDelay,
+      requestOptions = requestOptions,
+    )
+
+    ApiKeyOperation.Delete -> waitKeyDelete(
+      key = key,
+      maxRetries = maxRetries,
+      timeout = timeout,
+      initialDelay = initialDelay,
+      maxDelay = maxDelay,
+      requestOptions = requestOptions,
+    )
+
+    ApiKeyOperation.Update -> waitKeyUpdate(
+      key = key,
+      apiKey = requireNotNull(apiKey) { "apiKey is required for update api key operation" },
+      timeout = timeout,
+      maxRetries = maxRetries,
+      initialDelay = initialDelay,
+      maxDelay = maxDelay,
+      requestOptions = requestOptions,
+    )
+  }
+}
 
 /**
  * Wait for a [taskID] to complete before executing the next line of code, to synchronize index
@@ -32,18 +88,22 @@ import kotlin.time.Duration
  * @param requestOptions additional request configuration.
  */
 public suspend fun SearchClient.waitTask(
-    indexName: String,
-    taskID: Long,
-    timeout: Duration? = null,
-    maxRetries: Int? = null,
-    requestOptions: RequestOptions? = null,
+  indexName: String,
+  taskID: Long,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
 ): TaskStatus {
-    return retryUntil(
-        timeout = timeout,
-        maxRetries = maxRetries,
-        retry = { getTask(indexName, taskID, requestOptions).status },
-        until = { it == TaskStatus.Published },
-    )
+  return retryUntil(
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    retry = { getTask(indexName, taskID, requestOptions).status },
+    until = { it == TaskStatus.Published },
+  )
 }
 
 /**
@@ -59,30 +119,34 @@ public suspend fun SearchClient.waitTask(
  * @param requestOptions Additional request configuration.
  */
 public suspend fun SearchClient.waitKeyUpdate(
-    key: String,
-    apiKey: ApiKey,
-    timeout: Duration? = null,
-    maxRetries: Int? = null,
-    requestOptions: RequestOptions? = null,
+  key: String,
+  apiKey: ApiKey,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
 ): GetApiKeyResponse {
-    return retryUntil(
-        timeout = timeout,
-        maxRetries = maxRetries,
-        retry = { getApiKey(key, requestOptions) },
-        until = {
-            apiKey ==
-                    ApiKey(
-                        acl = it.acl,
-                        description = it.description,
-                        indexes = it.indexes,
-                        maxHitsPerQuery = it.maxHitsPerQuery,
-                        maxQueriesPerIPPerHour = it.maxQueriesPerIPPerHour,
-                        queryParameters = it.queryParameters,
-                        referers = it.referers,
-                        validity = it.validity,
-                    )
-        },
-    )
+  return retryUntil(
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    retry = { getApiKey(key, requestOptions) },
+    until = {
+      apiKey ==
+        ApiKey(
+          acl = it.acl,
+          description = it.description,
+          indexes = it.indexes,
+          maxHitsPerQuery = it.maxHitsPerQuery,
+          maxQueriesPerIPPerHour = it.maxQueriesPerIPPerHour,
+          queryParameters = it.queryParameters,
+          referers = it.referers,
+          validity = it.validity,
+        )
+    },
+  )
 }
 
 /**
@@ -95,25 +159,28 @@ public suspend fun SearchClient.waitKeyUpdate(
  * @param requestOptions Additional request configuration.
  */
 public suspend fun SearchClient.waitKeyCreation(
-    key: String,
-    maxRetries: Int? = null,
-    timeout: Duration? = null,
-    requestOptions: RequestOptions? = null,
+  key: String,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
 ): GetApiKeyResponse {
-    return retryUntil(
-        timeout = timeout,
-        maxRetries = maxRetries,
-        retry = {
-            try {
-                val response = getApiKey(key, requestOptions)
-                Result.success(response)
-            } catch (e: AlgoliaApiException) {
-                Result.failure(e)
-            }
-        },
-        until = { it.isSuccess },
-    )
-        .getOrThrow()
+  return retryUntil(
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    retry = {
+      try {
+        val response = getApiKey(key, requestOptions)
+        Result.success(response)
+      } catch (e: AlgoliaApiException) {
+        Result.failure(e)
+      }
+    },
+    until = { it.isSuccess },
+  ).getOrThrow()
 }
 
 /**
@@ -126,57 +193,60 @@ public suspend fun SearchClient.waitKeyCreation(
  * @param requestOptions Additional request configuration.
  */
 public suspend fun SearchClient.waitKeyDelete(
-    key: String,
-    maxRetries: Int? = null,
-    timeout: Duration? = null,
-    requestOptions: RequestOptions? = null,
-): Boolean {
-    retryUntil(
-        timeout = timeout,
-        maxRetries = maxRetries,
-        retry = {
-            try {
-                val response = getApiKey(key, requestOptions)
-                Result.success(response)
-            } catch (e: AlgoliaApiException) {
-                Result.failure(e)
-            }
-        },
-        until = { result ->
-            result.fold(
-                onSuccess = { false },
-                onFailure = { (it as AlgoliaApiException).httpErrorCode == 404 },
-            )
-        },
-    )
-    return true
+  key: String,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
+) {
+  retryUntil(
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    retry = {
+      try {
+        val response = getApiKey(key, requestOptions)
+        Result.success(response)
+      } catch (e: AlgoliaApiException) {
+        Result.failure(e)
+      }
+    },
+    until = { result ->
+      result.fold(
+        onSuccess = { false },
+        onFailure = { (it as AlgoliaApiException).httpErrorCode == 404 },
+      )
+    },
+  )
 }
 
 /**
  * Calls the `search` method but with certainty that we will only request Algolia records (hits).
  */
 public suspend fun SearchClient.searchForHits(
-    requests: List<SearchForHits>,
-    strategy: SearchStrategy? = null,
-    requestOptions: RequestOptions? = null,
+  requests: List<SearchForHits>,
+  strategy: SearchStrategy? = null,
+  requestOptions: RequestOptions? = null,
 ): List<SearchResponse> {
-    val request = SearchMethodParams(requests = requests, strategy = strategy)
-    return search(searchMethodParams = request, requestOptions = requestOptions).results.map { it as SearchResponse }
+  val request = SearchMethodParams(requests = requests, strategy = strategy)
+  return search(searchMethodParams = request, requestOptions = requestOptions).results.map { it as SearchResponse }
 }
 
 /**
  * Calls the `search` method but with certainty that we will only request Algolia facets.
  */
 public suspend fun SearchClient.searchForFacets(
-    requests: List<SearchForFacets>,
-    strategy: SearchStrategy? = null,
-    requestOptions: RequestOptions? = null,
+  requests: List<SearchForFacets>,
+  strategy: SearchStrategy? = null,
+  requestOptions: RequestOptions? = null,
 ): List<SearchForFacetValuesResponse> {
-    val request = SearchMethodParams(requests = requests, strategy = strategy)
-    return search(
-        searchMethodParams = request,
-        requestOptions = requestOptions,
-    ).results.map { it as SearchForFacetValuesResponse }
+  val request = SearchMethodParams(requests = requests, strategy = strategy)
+  return search(
+    searchMethodParams = request,
+    requestOptions = requestOptions,
+  ).results.map { it as SearchForFacetValuesResponse }
 }
 
 /**
@@ -190,53 +260,53 @@ public suspend fun SearchClient.searchForFacets(
  * @return intermediate operations (index name to task ID).
  */
 public suspend fun <T> SearchClient.replaceAllObjects(
-    indexName: String,
-    serializer: KSerializer<T>,
-    records: List<T>,
-    requestOptions: RequestOptions?,
+  indexName: String,
+  serializer: KSerializer<T>,
+  records: List<T>,
+  requestOptions: RequestOptions?,
 ): Map<String, Long> {
-    if (records.isEmpty()) return emptyMap()
+  if (records.isEmpty()) return emptyMap()
 
-    val requests = records.map { record ->
-        val body = options.json.encodeToJsonElement(serializer, record).jsonObject
-        BatchRequest(action = Action.AddObject, body = body)
-    }
-    val destinationIndex = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
+  val requests = records.map { record ->
+    val body = options.json.encodeToJsonElement(serializer, record).jsonObject
+    BatchRequest(action = Action.AddObject, body = body)
+  }
+  val destinationIndex = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
-    // 1. Copy index resources
-    val copy = operationIndex(
-        indexName = indexName,
-        operationIndexParams = OperationIndexParams(
-            operation = OperationType.Copy,
-            destination = destinationIndex,
-            scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)
-        ),
-        requestOptions = requestOptions
-    )
-    waitTask(indexName = indexName, taskID = copy.taskID)
+  // 1. Copy index resources
+  val copy = operationIndex(
+    indexName = indexName,
+    operationIndexParams = OperationIndexParams(
+      operation = OperationType.Copy,
+      destination = destinationIndex,
+      scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
+    ),
+    requestOptions = requestOptions,
+  )
+  waitTask(indexName = indexName, taskID = copy.taskID)
 
-    // 2. Save new objects
-    val batch = batch(
-        indexName = destinationIndex,
-        batchWriteParams = BatchWriteParams(requests),
-        requestOptions = requestOptions,
-    )
-    waitTask(indexName = destinationIndex, taskID = batch.taskID)
+  // 2. Save new objects
+  val batch = batch(
+    indexName = destinationIndex,
+    batchWriteParams = BatchWriteParams(requests),
+    requestOptions = requestOptions,
+  )
+  waitTask(indexName = destinationIndex, taskID = batch.taskID)
 
-    // 3.  Move temporary index to source index
-    val move = operationIndex(
-        indexName = destinationIndex,
-        operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-        requestOptions = requestOptions,
-    )
-    waitTask(indexName = destinationIndex, taskID = move.taskID)
+  // 3.  Move temporary index to source index
+  val move = operationIndex(
+    indexName = destinationIndex,
+    operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+    requestOptions = requestOptions,
+  )
+  waitTask(indexName = destinationIndex, taskID = move.taskID)
 
-    // 4. Return the list of operations
-    return mapOf(
-        indexName to copy.taskID,
-        destinationIndex to batch.taskID,
-        destinationIndex to move.taskID,
-    )
+  // 4. Return the list of operations
+  return mapOf(
+    indexName to copy.taskID,
+    destinationIndex to batch.taskID,
+    destinationIndex to move.taskID,
+  )
 }
 
 /**
@@ -247,9 +317,9 @@ public suspend fun <T> SearchClient.replaceAllObjects(
  * @throws Exception if an error occurs during the encoding
  */
 public fun SearchClient.generateSecuredApiKey(parentAPIKey: String, restriction: SecuredAPIKeyRestriction): String {
-    val restrictionString = buildRestrictionString(restriction)
-    val hash = encodeKeySHA256(parentAPIKey, restrictionString)
-    return "$hash$restrictionString".encodeBase64()
+  val restrictionString = buildRestrictionString(restriction)
+  val hash = encodeKeySHA256(parentAPIKey, restrictionString)
+  return "$hash$restrictionString".encodeBase64()
 }
 
 /**
@@ -260,9 +330,9 @@ public fun SearchClient.generateSecuredApiKey(parentAPIKey: String, restriction:
  * @throws IllegalArgumentException if [apiKey] doesn't have a [SecuredAPIKeyRestriction.validUntil].
  */
 public fun securedApiKeyRemainingValidity(apiKey: String): Duration {
-    val decoded = apiKey.decodeBase64String()
-    val pattern = Regex("validUntil=(\\d+)")
-    val match = requireNotNull(pattern.find(decoded)) { "The Secured API Key doesn't have a validUntil parameter." }
-    val validUntil = Instant.fromEpochMilliseconds(match.groupValues[1].toLong())
-    return validUntil - Clock.System.now()
+  val decoded = apiKey.decodeBase64String()
+  val pattern = Regex("validUntil=(\\d+)")
+  val match = requireNotNull(pattern.find(decoded)) { "The Secured API Key doesn't have a validUntil parameter." }
+  val validUntil = Instant.fromEpochMilliseconds(match.groupValues[1].toLong())
+  return validUntil - Clock.System.now()
 }

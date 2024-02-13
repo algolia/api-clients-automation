@@ -12,17 +12,17 @@ import kotlin.time.Duration.Companion.days
 
 class TestSecureApiKey {
 
-    @Test
-    fun securedApiKey() {
-        val parentAPIKey = "SearchOnlyApiKeyKeptPrivate"
-        val restriction = SecuredAPIKeyRestriction(
-            query = SearchParamsObject(filters = "_tags:user_42"),
-            validUntil = Clock.System.now() + 2.days
-        )
+  @Test
+  fun securedApiKey() {
+    val parentAPIKey = "SearchOnlyApiKeyKeptPrivate"
+    val restriction = SecuredAPIKeyRestriction(
+      query = SearchParamsObject(filters = "_tags:user_42"),
+      validUntil = Clock.System.now() + 2.days,
+    )
 
-        val client = SearchClient("appId", "apiKey")
-        val securedApiKey = client.generateSecuredApiKey(parentAPIKey, restriction)
-        val validity = securedApiKeyRemainingValidity(securedApiKey)
-        assertTrue { validity > 1.days }
-    }
+    val client = SearchClient("appId", "apiKey")
+    val securedApiKey = client.generateSecuredApiKey(parentAPIKey, restriction)
+    val validity = securedApiKeyRemainingValidity(securedApiKey)
+    assertTrue { validity > 1.days }
+  }
 }

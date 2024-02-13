@@ -12,19 +12,19 @@ import kotlinx.serialization.json.jsonPrimitive
  * Builds a restriction string based on provided [SecuredAPIKeyRestriction].
  */
 internal fun SearchClient.buildRestrictionString(restriction: SecuredAPIKeyRestriction): String {
-    return Parameters.build {
-        restriction.query?.let { query ->
-            val json = options.json.encodeToJsonElement(SearchParamsObject.serializer(), query).jsonObject
-            json.forEach { (key, element) ->
-                when (element) {
-                    is JsonArray -> appendAll(key, element.jsonPrimitive.content.map { it.toString() })
-                    else -> append(key, element.jsonPrimitive.content)
-                }
-            }
+  return Parameters.build {
+    restriction.query?.let { query ->
+      val json = options.json.encodeToJsonElement(SearchParamsObject.serializer(), query).jsonObject
+      json.forEach { (key, element) ->
+        when (element) {
+          is JsonArray -> appendAll(key, element.jsonPrimitive.content.map { it.toString() })
+          else -> append(key, element.jsonPrimitive.content)
         }
-        restriction.restrictIndices?.let { append("restrictIndices", it.joinToString(";")) }
-        restriction.restrictSources?.let { append("restrictSources", it.joinToString(";")) }
-        restriction.userToken?.let { append("userToken", it) }
-        restriction.validUntil?.let { append("validUntil", it.toEpochMilliseconds().toString()) }
-    }.formUrlEncode()
+      }
+    }
+    restriction.restrictIndices?.let { append("restrictIndices", it.joinToString(";")) }
+    restriction.restrictSources?.let { append("restrictSources", it.joinToString(";")) }
+    restriction.userToken?.let { append("userToken", it) }
+    restriction.validUntil?.let { append("validUntil", it.toEpochMilliseconds().toString()) }
+  }.formUrlEncode()
 }
