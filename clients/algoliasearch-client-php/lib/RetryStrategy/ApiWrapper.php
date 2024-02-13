@@ -34,6 +34,11 @@ final class ApiWrapper implements ApiWrapperInterface
     private $clusterHosts;
 
     /**
+     * @var Configuration
+     */
+    private $config;
+
+    /**
      * @var RequestOptionsFactory
      */
     private $requestOptionsFactory;
@@ -57,6 +62,7 @@ final class ApiWrapper implements ApiWrapperInterface
     ) {
         $this->http = $http;
         $this->clusterHosts = $clusterHosts;
+        $this->config = $config;
         $this->requestOptionsFactory =
             $RqstOptsFactory ?: new RequestOptionsFactory($config);
         $this->logger = $logger ?: Algolia::getLogger();
@@ -130,7 +136,10 @@ final class ApiWrapper implements ApiWrapperInterface
         $timeout,
         $data = []
     ) {
-        $uri = $this->createUri($path)->withQuery($requestOptions->getBuiltQueryParameters());
+        $uri = $this->createUri($path)
+            ->withQuery($requestOptions->getBuiltQueryParameters())
+            ->withScheme($this->config->getScheme())
+            ->withPort($this->config->getPort());
 
         $body = isset($data)
             ? array_merge($data, $requestOptions->getBody())
@@ -145,7 +154,7 @@ final class ApiWrapper implements ApiWrapperInterface
 
         $retry = 1;
         foreach ($hosts as $host) {
-            $uri = $uri->withHost($host)->withScheme($host.scheme);
+            $uri = $uri->withHost($host);
             $request = null;
             $logParams['retryNumber'] = $retry;
             $logParams['host'] = (string) $uri;
