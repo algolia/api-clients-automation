@@ -1,4 +1,4 @@
-package com.algolia.client.configuration
+package com.algolia.client.extensions
 
 import com.algolia.client.model.search.SearchParamsObject
 import kotlinx.datetime.Instant

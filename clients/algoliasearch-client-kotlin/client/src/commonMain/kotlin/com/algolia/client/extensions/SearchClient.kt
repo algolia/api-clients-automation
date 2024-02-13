@@ -1,7 +1,6 @@
 package com.algolia.client.extensions
 
 import com.algolia.client.api.SearchClient
-import com.algolia.client.configuration.SecuredAPIKeyRestriction
 import com.algolia.client.exception.AlgoliaApiException
 import com.algolia.client.extensions.internal.buildRestrictionString
 import com.algolia.client.extensions.internal.encodeKeySHA256
