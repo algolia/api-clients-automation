@@ -37,8 +37,7 @@
       "queryParameters": {
         "query": "parameters with space",
         "and an array": [
-          true,
-          7,
+          "array",
           "with spaces"
         ]
       },
@@ -51,7 +50,7 @@
       "method": "GET",
       "queryParameters": {
         "query": "parameters%20with%20space",
-        "and%20an%20array": "true%2C7%2Cwith%20spaces"
+        "and%20an%20array": "array%2Cwith%20spaces"
       },
       "headers": {
         "x-header-1": "spaces are left alone"
