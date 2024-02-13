@@ -6,7 +6,6 @@ package com.algolia.model.abtesting;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +29,7 @@ public class ABTest {
   private Double purchaseSignificance;
 
   @JsonProperty("revenueSignificance")
-  private Map<String, Double> revenueSignificance = new HashMap<>();
+  private Map<String, Double> revenueSignificance;
 
   @JsonProperty("updatedAt")
   private String updatedAt;
@@ -71,7 +70,7 @@ public class ABTest {
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on click data. A value of 0.95 or over is considered to be _significant_.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getClickSignificance() {
     return clickSignificance;
   }
@@ -86,7 +85,7 @@ public class ABTest {
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on conversion. A value of 0.95 or over is considered to be _significant_.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getConversionSignificance() {
     return conversionSignificance;
   }
@@ -101,7 +100,7 @@ public class ABTest {
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getAddToCartSignificance() {
     return addToCartSignificance;
   }
@@ -116,7 +115,7 @@ public class ABTest {
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on purchase data. A value of 0.95 or over is considered to be _significant_.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getPurchaseSignificance() {
     return purchaseSignificance;
   }
@@ -136,7 +135,7 @@ public class ABTest {
    * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
    * based on revenue data. A value of 0.95 or over is considered to be _significant_.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Map<String, Double> getRevenueSignificance() {
     return revenueSignificance;
   }
