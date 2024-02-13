@@ -65,7 +65,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt', { cwd, language });
       break;
     case 'swift':
-      if (cwd.includes('tests') || cwd.includes('snippets')) {
+      if (cwd.includes('tests')) {
         await run(`swiftformat Tests`, { cwd, language });
       } else {
         await run(`swiftformat Sources`, { cwd, language });
