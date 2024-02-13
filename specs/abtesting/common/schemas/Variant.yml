@@ -15,10 +15,12 @@ variant:
     addToCartRate:
       type: number
       format: double
+      nullable: true
       description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
       example: 0.0
     averageClickPosition:
       type: integer
+      nullable: true
       description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
       example: 0
     clickCount:
@@ -28,6 +30,7 @@ variant:
     clickThroughRate:
       type: number
       format: double
+      nullable: true
       description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
       example: 0.22219857724813036
     conversionCount:
@@ -37,18 +40,24 @@ variant:
     conversionRate:
       type: number
       format: double
+      nullable: true
       description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
       example: 0.14546725846658964
     currencies:
       $ref: '../parameters.yml#/currencies'
     description:
       $ref: '../parameters.yml#/description'
+    estimatedSampleSize:
+      type: integer
+      description: The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
+      example: 0
     filterEffects:
       $ref: '../parameters.yml#/filterEffects'
     index:
       $ref: '../parameters.yml#/index'
     noResultCount:
       type: integer
+      nullable: true
       description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
       example: 0
     purchaseCount:
@@ -58,10 +67,12 @@ variant:
     purchaseRate:
       type: number
       format: double
+      nullable: true
       description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
       example: 0.0
     searchCount:
       type: integer
+      nullable: true
       description: Number of searches carried out during the A/B test.
       example: 86269
     trackedSearchCount:
@@ -70,10 +81,12 @@ variant:
       $ref: '../parameters.yml#/trafficPercentage'
     userCount:
       type: integer
+      nullable: true
       description: Number of users during the A/B test.
       example: 55501
     trackedUserCount:
       type: integer
+      nullable: true
       description: Number of users that performed a tracked search during the A/B test.
       example: 55501
   required:
@@ -90,7 +103,6 @@ variant:
     - clickThroughRate
     - clickCount
     - averageClickPosition
-    - currencies
     - addToCartRate
     - addToCartCount
     - purchaseRate
