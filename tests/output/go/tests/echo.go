@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -24,7 +25,6 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 	e.Path = req.URL.EscapedPath()
 	e.Method = req.Method
 	e.Header = req.Header
-	e.Query = req.URL.Query()
 	e.Timeout = timeout
 	e.ConnectTimeout = connectTimeout
 	if req.Body != nil {
@@ -33,6 +33,15 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 		e.Body = &strBody
 	} else {
 		e.Body = nil
+	}
+
+	var queryValues = strings.Split(req.URL.RawQuery, "&")
+	e.Query = url.Values{}
+	for _, queryValue := range queryValues {
+		split := strings.Split(queryValue, "=")
+		if len(split) == 2 {
+			e.Query.Add(split[0], split[1])
+		}
 	}
 
 	return &http.Response{
