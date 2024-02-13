@@ -261,6 +261,7 @@
       "trackedSearchCount": {
         "type": "integer",
         "example": 2,
+        "nullable": true,
         "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
       },
       "clickCount": {
@@ -331,6 +332,7 @@
                 "trackedSearchCount": {
                   "type": "integer",
                   "example": 2,
+                  "nullable": true,
                   "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                 },
                 "clickCount": {
@@ -453,6 +455,7 @@
                     "trackedSearchCount": {
                       "type": "integer",
                       "example": 2,
+                      "nullable": true,
                       "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                     },
                     "clickCount": {
@@ -582,6 +585,7 @@
                 "trackedSearchCount": {
                   "type": "integer",
                   "example": 2,
+                  "nullable": true,
                   "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                 },
                 "clickCount": {
@@ -686,6 +690,7 @@
                     "trackedSearchCount": {
                       "type": "integer",
                       "example": 2,
+                      "nullable": true,
                       "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                     },
                     "clickCount": {
@@ -1797,6 +1802,7 @@
                               "trackedSearchCount": {
                                 "type": "integer",
                                 "example": 2,
+                                "nullable": true,
                                 "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                               },
                               "clickCount": {
@@ -3055,6 +3061,7 @@
                               "trackedSearchCount": {
                                 "type": "integer",
                                 "example": 2,
+                                "nullable": true,
                                 "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                               },
                               "clickCount": {
@@ -4600,6 +4607,7 @@
                     "trackedSearchCount": {
                       "type": "integer",
                       "example": 2,
+                      "nullable": true,
                       "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                     },
                     "dates": {
@@ -4632,6 +4640,7 @@
                           "trackedSearchCount": {
                             "type": "integer",
                             "example": 2,
+                            "nullable": true,
                             "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                           },
                           "date": {
@@ -4801,6 +4810,7 @@
                     "trackedSearchCount": {
                       "type": "integer",
                       "example": 2,
+                      "nullable": true,
                       "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                     },
                     "conversionCount": {
@@ -4833,6 +4843,7 @@
                           "trackedSearchCount": {
                             "type": "integer",
                             "example": 2,
+                            "nullable": true,
                             "description": "Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`."
                           },
                           "conversionCount": {

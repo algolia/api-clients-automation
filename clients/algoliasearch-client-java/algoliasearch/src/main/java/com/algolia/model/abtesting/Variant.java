@@ -34,10 +34,13 @@ public class Variant {
   private Double conversionRate;
 
   @JsonProperty("currencies")
-  private Map<String, CurrenciesValue> currencies = new HashMap<>();
+  private Map<String, CurrenciesValue> currencies;
 
   @JsonProperty("description")
   private String description;
+
+  @JsonProperty("estimatedSampleSize")
+  private Integer estimatedSampleSize;
 
   @JsonProperty("filterEffects")
   private FilterEffects filterEffects;
@@ -89,7 +92,7 @@ public class Variant {
    * Variant's [add-to-cart
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getAddToCartRate() {
     return addToCartRate;
   }
@@ -103,7 +106,7 @@ public class Variant {
    * Variant's [average click
    * position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getAverageClickPosition() {
     return averageClickPosition;
   }
@@ -128,7 +131,7 @@ public class Variant {
    * Variant's [click-through
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getClickThroughRate() {
     return clickThroughRate;
   }
@@ -153,7 +156,7 @@ public class Variant {
    * Variant's [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getConversionRate() {
     return conversionRate;
   }
@@ -164,12 +167,15 @@ public class Variant {
   }
 
   public Variant putCurrencies(String key, CurrenciesValue currenciesItem) {
+    if (this.currencies == null) {
+      this.currencies = new HashMap<>();
+    }
     this.currencies.put(key, currenciesItem);
     return this;
   }
 
   /** A/B test currencies. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Map<String, CurrenciesValue> getCurrencies() {
     return currencies;
   }
@@ -183,6 +189,21 @@ public class Variant {
   @javax.annotation.Nonnull
   public String getDescription() {
     return description;
+  }
+
+  public Variant setEstimatedSampleSize(Integer estimatedSampleSize) {
+    this.estimatedSampleSize = estimatedSampleSize;
+    return this;
+  }
+
+  /**
+   * The estimated number of searches that will need to be run to achieve the desired confidence
+   * level and statistical power. A `minimumDetectableEffect` must be set in the `configuration`
+   * object for this to be used.
+   */
+  @javax.annotation.Nullable
+  public Integer getEstimatedSampleSize() {
+    return estimatedSampleSize;
   }
 
   public Variant setFilterEffects(FilterEffects filterEffects) {
@@ -217,7 +238,7 @@ public class Variant {
    * results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
    * for that variant.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNoResultCount() {
     return noResultCount;
   }
@@ -242,7 +263,7 @@ public class Variant {
    * Variant's [purchase
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getPurchaseRate() {
     return purchaseRate;
   }
@@ -253,7 +274,7 @@ public class Variant {
   }
 
   /** Number of searches carried out during the A/B test. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getSearchCount() {
     return searchCount;
   }
@@ -267,7 +288,7 @@ public class Variant {
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
    * parameter is `true`.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getTrackedSearchCount() {
     return trackedSearchCount;
   }
@@ -289,7 +310,7 @@ public class Variant {
   }
 
   /** Number of users during the A/B test. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getUserCount() {
     return userCount;
   }
@@ -300,7 +321,7 @@ public class Variant {
   }
 
   /** Number of users that performed a tracked search during the A/B test. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getTrackedUserCount() {
     return trackedUserCount;
   }
@@ -324,6 +345,7 @@ public class Variant {
       Objects.equals(this.conversionRate, variant.conversionRate) &&
       Objects.equals(this.currencies, variant.currencies) &&
       Objects.equals(this.description, variant.description) &&
+      Objects.equals(this.estimatedSampleSize, variant.estimatedSampleSize) &&
       Objects.equals(this.filterEffects, variant.filterEffects) &&
       Objects.equals(this.index, variant.index) &&
       Objects.equals(this.noResultCount, variant.noResultCount) &&
@@ -349,6 +371,7 @@ public class Variant {
       conversionRate,
       currencies,
       description,
+      estimatedSampleSize,
       filterEffects,
       index,
       noResultCount,
@@ -375,6 +398,7 @@ public class Variant {
     sb.append("    conversionRate: ").append(toIndentedString(conversionRate)).append("\n");
     sb.append("    currencies: ").append(toIndentedString(currencies)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    estimatedSampleSize: ").append(toIndentedString(estimatedSampleSize)).append("\n");
     sb.append("    filterEffects: ").append(toIndentedString(filterEffects)).append("\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    noResultCount: ").append(toIndentedString(noResultCount)).append("\n");
