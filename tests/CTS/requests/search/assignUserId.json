@@ -16,5 +16,24 @@
         "x-algolia-user-id": "userID"
       }
     }
+  },
+  {
+    "testName": "it should not encode the userID",
+    "parameters": {
+      "xAlgoliaUserID": "user id with spaces",
+      "assignUserIdParams": {
+        "cluster": "cluster with spaces"
+      }
+    },
+    "request": {
+      "path": "/1/clusters/mapping",
+      "method": "POST",
+      "body": {
+        "cluster": "cluster with spaces"
+      },
+      "headers": {
+        "x-algolia-user-id": "user id with spaces"
+      }
+    }
   }
 ]
