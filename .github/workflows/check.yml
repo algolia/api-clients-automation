@@ -9,9 +9,9 @@ on:
   merge_group:
     types: [checks_requested]
 
-# concurrency:
-#   group: ${{ github.ref }}
-#   cancel-in-progress: true
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 # Uncomment the line below to enable artifacts debugging
 # env:
@@ -314,6 +314,7 @@ jobs:
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
+      fail-fast: false
       matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
     env:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
