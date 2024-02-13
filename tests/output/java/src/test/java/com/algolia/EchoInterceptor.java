@@ -68,10 +68,13 @@ public class EchoInterceptor implements Interceptor {
 
   private Map<String, Object> buildQueryParameters(Request request) {
     Map<String, Object> params = new HashMap<>();
-    HttpUrl url = request.url();
-    for (String name : url.queryParameterNames()) {
-      for (String value : url.queryParameterValues(name)) {
-        params.put(name, value);
+    String query = request.url().encodedQuery();
+    if (query != null) {
+      for (String param : query.split("&")) {
+        String[] pair = param.split("=");
+        String key = pair[0];
+        String value = pair.length > 1 ? pair[1] : null;
+        params.put(key, value);
       }
     }
     return params;

@@ -104,9 +104,9 @@ public final class HttpRequester implements Requester {
       .scheme("https")
       .host("algolia.com") // will be overridden by the retry strategy
       .encodedPath(request.getPath());
-    request.getQueryParameters().forEach(urlBuilder::addQueryParameter);
+    request.getQueryParameters().forEach(urlBuilder::addEncodedQueryParameter);
     if (requestOptions != null) {
-      requestOptions.getQueryParameters().forEach(urlBuilder::addQueryParameter);
+      requestOptions.getQueryParameters().forEach(urlBuilder::addEncodedQueryParameter);
     }
     return urlBuilder.build();
   }
