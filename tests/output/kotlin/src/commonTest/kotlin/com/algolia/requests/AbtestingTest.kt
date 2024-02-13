@@ -525,16 +525,16 @@ class AbtestingTest {
     client.runTest(
       call = {
         listABTests(
-          offset = 42,
+          offset = 0,
           limit = 21,
-          indexPrefix = "foo",
-          indexSuffix = "bar",
+          indexPrefix = "cts_e2e ab",
+          indexSuffix = "t",
         )
       },
       intercept = {
         assertEquals("/2/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"offset":"42","limit":"21","indexPrefix":"foo","indexSuffix":"bar"}""", it.url.encodedParameters)
+        assertQueryParams("""{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )

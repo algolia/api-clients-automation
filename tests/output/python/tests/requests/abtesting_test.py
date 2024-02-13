@@ -1,8 +1,14 @@
 from json import loads
+from os import environ
 
 from algoliasearch.abtesting.client import AbtestingClient
 from algoliasearch.abtesting.config import AbtestingConfig
 from algoliasearch.http.transporter import EchoTransporter
+from dotenv import load_dotenv
+
+from ..helpers import Helpers
+
+load_dotenv("../../.env")
 
 
 class TestAbtestingClient:
@@ -10,6 +16,17 @@ class TestAbtestingClient:
     _client = AbtestingClient.create_with_config(
         config=_config, transporter=EchoTransporter(_config)
     )
+
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
     async def test_add_ab_tests_0(self):
         """
@@ -443,10 +460,10 @@ class TestAbtestingClient:
         listABTests with parameters
         """
         _req = await self._client.list_ab_tests_with_http_info(
-            offset=42,
+            offset=0,
             limit=21,
-            index_prefix="foo",
-            index_suffix="bar",
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
         )
 
         assert _req.path == "/2/abtests"
@@ -454,14 +471,39 @@ class TestAbtestingClient:
         assert (
             _req.query_parameters.items()
             == {
-                "offset": "42",
+                "offset": "0",
                 "limit": "21",
-                "indexPrefix": "foo",
-                "indexSuffix": "bar",
+                "indexPrefix": "cts_e2e%20ab",
+                "indexSuffix": "t",
             }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        raw_resp = await AbtestingClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).list_ab_tests_with_http_info(
+            offset=0,
+            limit=21,
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await AbtestingClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).list_ab_tests(
+            offset=0,
+            limit=21,
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
+        )
+        _expected_body = loads(
+            """{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        )
 
     async def test_stop_ab_test_0(self):
         """

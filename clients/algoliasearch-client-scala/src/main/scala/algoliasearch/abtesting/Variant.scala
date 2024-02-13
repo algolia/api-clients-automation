@@ -31,6 +31,9 @@ package algoliasearch.abtesting
   *   A/B test currencies.
   * @param description
   *   A/B test description.
+  * @param estimatedSampleSize
+  *   The estimated number of searches that will need to be run to achieve the desired confidence level and statistical
+  *   power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
   * @param index
   *   A/B test index.
   * @param noResultCount
@@ -60,8 +63,9 @@ case class Variant(
     clickThroughRate: Double,
     conversionCount: Int,
     conversionRate: Double,
-    currencies: Map[String, CurrenciesValue],
+    currencies: Option[Map[String, CurrenciesValue]] = scala.None,
     description: String,
+    estimatedSampleSize: Option[Int] = scala.None,
     filterEffects: Option[FilterEffects] = scala.None,
     index: String,
     noResultCount: Int,
