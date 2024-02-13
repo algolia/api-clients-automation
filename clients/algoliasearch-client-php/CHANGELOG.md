@@ -1,3 +1,7 @@
+## [4.0.0-alpha.95](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.94...4.0.0-alpha.95)
+
+- [ca8bdebf0](https://github.com/algolia/api-clients-automation/commit/ca8bdebf0) feat(php): Add missing helpers ([#2679](https://github.com/algolia/api-clients-automation/pull/2679)) by [@damcou](https://github.com/damcou/)
+
 ## [4.0.0-alpha.94](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-alpha.93...4.0.0-alpha.94)
 
 - [b3d61128a](https://github.com/algolia/api-clients-automation/commit/b3d61128a) docs(clients): add ACL section to code doc ([#2576](https://github.com/algolia/api-clients-automation/pull/2576)) by [@millotp](https://github.com/millotp/)
