@@ -17,14 +17,14 @@ public final class Host {
   }
 
   public Host(String url, Set<CallType> callType, String scheme) {
-    if (url.contains(":")) {
-      String[] split = url.split(":");
-      this.url = split[0];
-      this.port = Integer.parseInt(split[1]);
-    } else {
-      this.url = url;
-      this.port = -1;
-    }
+    this.port = -1;
+    this.callTypes = callType;
+    this.scheme = scheme;
+  }
+
+  public Host(String url, Set<CallType> callType, String scheme, int port) {
+    this.url = url;
+    this.port = port;
     this.callTypes = callType;
     this.scheme = scheme;
   }

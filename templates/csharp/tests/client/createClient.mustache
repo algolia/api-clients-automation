@@ -2,14 +2,14 @@
 {{clientPrefix}}Config _config = new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}) {
   CustomHosts = new List<StatefulHost>
     {
-      {{#parametersWithDataTypeMap.customHosts.value}}new () {
+      {{#customHosts}}new () {
         Scheme = HttpScheme.Http,
-        Url = "{{value}}".Split(':')[0],
-        Port = int.Parse("{{value}}".Split(':')[1]),
+        Url = "{{host}}",
+        Port = {{port}},
         Up = true,
         LastUse = DateTime.UtcNow,
         Accept = CallType.Read | CallType.Write,
-      }{{^-last}},{{/-last}}{{/parametersWithDataTypeMap.customHosts.value}}
+      }{{^-last}},{{/-last}}{{/customHosts}}
   }
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);

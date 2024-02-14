@@ -6,7 +6,7 @@ val client = {{client}}(
         {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}, region = "{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
         clientOptions = ClientOptions
           .builder()
-          .withHosts(List({{#parametersWithDataTypeMap.customHosts.value}}Host("{{value}}".split(":")(0), Set(CallType.Read, CallType.Write), "http", Option("{{value}}".split(":")(1).toInt)){{^-last}},{{/-last}}{{/parametersWithDataTypeMap.customHosts.value}}))
+          .withHosts(List({{#customHosts}}Host("{{host}}", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
           .build()
       )
 {{/hasCustomHosts}}

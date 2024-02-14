@@ -68,7 +68,7 @@ module Algolia
       # @return [String]
       #
       def build_url(host)
-        host.protocol + host.url
+        host.protocol + host.url + (host.port.nil? ? '' : ":#{host.port}")
       end
 
       # Convert query_params to a full query string

@@ -9,4 +9,5 @@ public data class Host(
   public val url: String,
   public val callType: CallType? = null,
   public val protocol: String = "https",
+  public val port: Int? = null,
 )

@@ -17,6 +17,8 @@ internal data class RetryableHost(
     get() = host.url
   val protocol
     get() = host.protocol
+  val port
+    get() = host.port
   val callType
     get() = host.callType
 

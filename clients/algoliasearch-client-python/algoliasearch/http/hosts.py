@@ -8,12 +8,14 @@ class Host:
     def __init__(
         self,
         url: str,
-        scheme="https",
+        scheme: str = "https",
+        port: Optional[int] = None,
         priority: Optional[int] = 0,
         accept: Optional[int] = None,
     ) -> None:
         self.url = url
         self.scheme = scheme
+        self.port = port
         self.priority = cast(int, priority)
         self.accept = (CallType.WRITE | CallType.READ) if accept is None else accept
 

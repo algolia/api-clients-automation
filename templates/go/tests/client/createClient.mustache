@@ -6,7 +6,7 @@ cfg = {{clientPrefix}}.Configuration{
     Requester: echo,
     {{/useEchoRequester}}
     {{#hasCustomHosts}}
-    Hosts: []transport.StatefulHost{ {{#parametersWithDataTypeMap.customHosts.value}}transport.NewStatefulHost("http", "{{value}}", call.IsReadWrite),{{/parametersWithDataTypeMap.customHosts.value}} },
+    Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", "{{host}}:{{port}}", call.IsReadWrite),{{/customHosts}} },
     {{/hasCustomHosts}}
   },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
   Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}

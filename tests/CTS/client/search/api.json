@@ -61,8 +61,14 @@
           "appId": "test-app-id",
           "apiKey": "test-api-key",
           "customHosts": [
-            "localhost:6677",
-            "localhost:6678"
+            {
+              "host": "localhost",
+              "port": 6677
+            },
+            {
+              "host": "localhost",
+              "port": 6678
+            }
           ]
         },
         "expected": {}

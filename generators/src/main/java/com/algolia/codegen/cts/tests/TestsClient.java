@@ -73,15 +73,21 @@ public class TestsClient extends TestsGenerator {
 
               stepOut.put("useEchoRequester", !hasCustomHosts);
               stepOut.put("hasCustomHosts", hasCustomHosts);
-              if (hasCustomHosts && !language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
-                // hack for docker on mac, the `network=host` does not work so we need to use
-                // another local IP
-                step.parameters.put(
-                  "customHosts",
-                  ((List<String>) step.parameters.get("customHosts")).stream()
-                    .map(host -> host.replace("localhost", "host.docker.internal"))
-                    .toList()
-                );
+              if (hasCustomHosts) {
+                stepOut.put("customHosts", step.parameters.get("customHosts"));
+                if (!language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
+                  // hack for docker on mac, the `network=host` does not work so we need to use
+                  // another local IP
+                  stepOut.put(
+                    "customHosts",
+                    ((List<Map<String, Object>>) step.parameters.get("customHosts")).stream()
+                      .map(host -> {
+                        host.put("host", ((String) host.get("host")).replace("localhost", "host.docker.internal"));
+                        return host;
+                      })
+                      .toList()
+                  );
+                }
               }
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
