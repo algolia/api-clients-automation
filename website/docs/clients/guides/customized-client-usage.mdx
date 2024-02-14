@@ -401,6 +401,23 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Http;
+using Algolia.Search.Models.Search;
+
+var searchConfig = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+// This will append `; my user agent (optional version)` to the current value of `x-algolia-agent` for every requests
+searchConfig.UserAgent.AddSegment("my user agent", "optional version");
+var client = new SearchClient(searchConfig);
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Use your own HTTP requester
@@ -529,6 +546,20 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
   Compression:   0,
 })
 ```
+
+</TabItem>
+
+<TabItem value="csharp">
+
+  > Create your own requester by creating a class that implements `IHttpRequester`, and use it by passing it to the client constructor.
+
+```csharp
+using Algolia.Search.Clients;
+
+var config = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+var client = new SearchClient(config, new MyOwnRequester());
+  ```
 
 </TabItem>
 </TabsLanguage>

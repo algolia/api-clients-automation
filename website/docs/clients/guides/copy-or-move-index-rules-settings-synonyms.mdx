@@ -149,6 +149,20 @@ await client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
 // TBD
 </TabItem>
 
+<TabItem value="csharp">
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
+  new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>"));
+
+await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
+  ```
+</TabItem>
+
 </TabsLanguage>
 
 ## Rename/move an index
@@ -293,7 +307,7 @@ using Algolia.Search.Utils;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
-  new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>"));
+  new OperationIndexParams(OperationType.Move, "<DESTINATION_INDEX_NAME>"));
 
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
 ```
