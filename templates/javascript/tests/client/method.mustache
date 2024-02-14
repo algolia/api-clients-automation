@@ -1,1 +1,1 @@
-const result = await ({{object}}{{#path}}.{{.}}{{/path}}({{{parameters}}})) as unknown as EchoResponse;
+const result = await ({{object}}{{#path}}.{{.}}{{/path}}({{{parameters}}})){{#useEchoRequester}} as unknown as EchoResponse{{/useEchoRequester}};

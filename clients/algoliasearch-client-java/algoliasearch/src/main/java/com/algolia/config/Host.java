@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 public final class Host {
 
   private final String url;
+  private final int port;
 
   private final Set<CallType> callTypes;
 
@@ -16,7 +17,12 @@ public final class Host {
   }
 
   public Host(String url, Set<CallType> callType, String scheme) {
+    this(url, callType, scheme, -1);
+  }
+
+  public Host(String url, Set<CallType> callType, String scheme, int port) {
     this.url = url;
+    this.port = port;
     this.callTypes = callType;
     this.scheme = scheme;
   }
@@ -24,6 +30,10 @@ public final class Host {
   @Nonnull
   public String getUrl() {
     return url;
+  }
+
+  public int getPort() {
+    return port;
   }
 
   @Nonnull
@@ -44,6 +54,7 @@ public final class Host {
     Host host = (Host) o;
 
     if (!url.equals(host.url)) return false;
+    if (port != host.port) return false;
     if (!callTypes.equals(host.callTypes)) return false;
     return scheme.equals(host.scheme);
   }
@@ -51,6 +62,7 @@ public final class Host {
   @Override
   public int hashCode() {
     int result = url.hashCode();
+    result = 31 * result + port;
     result = 31 * result + callTypes.hashCode();
     result = 31 * result + scheme.hashCode();
     return result;

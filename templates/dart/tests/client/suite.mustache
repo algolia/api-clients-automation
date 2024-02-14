@@ -5,9 +5,9 @@ import 'package:test_api/hooks.dart';
 
 void main() {
   {{#blocksClient}}
-
   {{#tests}}
-  test('{{{testName}}}', () { 
+  test('{{{testName}}}', () async { 
+    final requester = RequestInterceptor();
     {{#autoCreateClient}}
     final client =  {{client}}(
       appId: 'appId', 
@@ -15,55 +15,38 @@ void main() {
       {{#hasRegionalHost}}
       region: '{{defaultRegion}}',
       {{/hasRegionalHost}}
+      options: ClientOptions(requester: requester),
     );
     {{/autoCreateClient}}    
     {{#steps}}    
     {{#isError}}
     expectError(
       '{{{expectedError}}}',
-      () {
+      () async {
         {{#dynamicTemplate}}{{/dynamicTemplate}}
       },
     );
     {{/isError}}
     {{^isError}}
-    {{#isCreateClient}}
-    {{> tests/client/createClient}}
-    {{/isCreateClient}}
-    {{#isMethod}}
-     runTest(
-        builder: (requester) => {{client}}(
-            appId: client.appId,
-            apiKey: client.apiKey,
-            {{#hasRegionalHost}}
-            region: client.region,
-            {{/hasRegionalHost}}
-            options: ClientOptions(requester: requester),
-        ),
-        call: (client) => client.{{path}}(
-              {{#parametersWithDataType}}
-              {{> tests/request_param}}
-              {{/parametersWithDataType}}
-        ),
-        intercept: (request) {  
-            {{#match}}
-            {{#testUserAgent}}
-                TestHandle.current.markSkipped('User agent added using an interceptor');
-            {{/testUserAgent}}
-            {{#testTimeouts}}
-                expect({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, request.timeout.inMilliseconds);
-            {{/testTimeouts}}
-            {{#testHost}}
-                expect(request.host.url, '{{{match}}}');
-            {{/testHost}}        
-            {{/match}}
-        },
-    );
-    {{/isMethod}}
+    {{#match}}
+    requester.setOnRequest((request) {
+      {{#testUserAgent}}
+          TestHandle.current.markSkipped('User agent added using an interceptor');
+      {{/testUserAgent}}
+      {{#testTimeouts}}
+          expect({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, request.timeout.inMilliseconds);
+      {{/testTimeouts}}
+      {{#testHost}}
+          expect(request.host.url, '{{{match}}}');
+      {{/testHost}}
+    });
+    {{/match}}
+    {{#dynamicTemplate}}{{/dynamicTemplate}}
     {{/isError}}
     {{/steps}}
     }
   );
+
   {{/tests}}
   {{/blocksClient}}
 }

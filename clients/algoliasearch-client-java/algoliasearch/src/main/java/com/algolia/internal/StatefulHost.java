@@ -21,6 +21,10 @@ public final class StatefulHost {
     return host.getUrl();
   }
 
+  public int getPort() {
+    return host.getPort();
+  }
+
   public String getScheme() {
     return this.host.getScheme();
   }

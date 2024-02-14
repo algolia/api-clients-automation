@@ -1,6 +1,8 @@
 import { run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
+import { getTimeoutCounter, startTestServer } from './testServer.js';
+
 async function runCtsOne(language: string): Promise<void> {
   const spinner = createSpinner(`running cts for '${language}'`);
   const cwd = `tests/output/${language}`;
@@ -62,7 +64,15 @@ async function runCtsOne(language: string): Promise<void> {
 }
 
 export async function runCts(languages: string[]): Promise<void> {
+  const close = await startTestServer();
+
   for (const lang of languages) {
     await runCtsOne(lang);
+  }
+
+  await close();
+
+  if (languages.length !== getTimeoutCounter()) {
+    throw new Error(`Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`);
   }
 }
