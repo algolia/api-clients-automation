@@ -93,12 +93,12 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                         $this->recordedRequest['responseTimeout']
                     );
                     {{/testTimeouts}}
-                    {{#testResult}}
+                    {{#testResponse}}
                     $this->assertEquals(
-                        '{{{match}}}',
-                        json_encode($result)
+                        '{{{match.parameters}}}',
+                        json_encode($res)
                     );
-                    {{/testResult}}
+                    {{/testResponse}}
                 {{/match}}
             {{/isError}}
         {{/steps}}

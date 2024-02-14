@@ -11,4 +11,4 @@ package algoliasearch.config
   * @param port
   *   Host port
   */
-case class Host(url: String, callTypes: Set[CallType], scheme: String = "https", port : Option[Int] = None)
+case class Host(url: String, callTypes: Set[CallType], scheme: String = "https", port: Option[Int] = None)
