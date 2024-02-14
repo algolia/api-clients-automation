@@ -54,7 +54,13 @@ public class TestsRequest extends TestsGenerator {
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
+      CodegenOperation ope = entry.getValue();
+      boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
       if (!cts.containsKey(operationId)) {
+        if (isHelper) {
+          continue;
+        }
+
         throw new CTSException(
           "operationId '" +
           operationId +
@@ -79,7 +85,6 @@ public class TestsRequest extends TestsGenerator {
         test.put("testIndex", i);
 
         try {
-          CodegenOperation ope = entry.getValue();
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
           if (Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
             test.put("isCustomRequest", true);
@@ -127,7 +132,7 @@ public class TestsRequest extends TestsGenerator {
           test.put("request", req.request);
           test.put("hasParameters", req.parameters.size() != 0);
           test.put("hasOperationParams", ope.hasParams);
-          test.put("isHelper", ope.vendorExtensions.getOrDefault("x-helper", false));
+          test.put("isHelper", isHelper);
 
           if (req.requestOptions != null) {
             test.put("hasRequestOptions", true);
