@@ -8,7 +8,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.MonitoringClient;
 import com.algolia.config.*;
 import com.algolia.model.monitoring.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,13 +21,23 @@ import org.junit.jupiter.api.TestInstance;
 class MonitoringClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  MonitoringClient createClient() {
-    return new MonitoringClient("appId", "apiKey", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  MonitoringClient createClient() {
+    return new MonitoringClient("appId", "apiKey", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
@@ -73,7 +87,7 @@ class MonitoringClientClientTests {
   @Test
   @DisplayName("use the correct host")
   void parametersTest0() {
-    MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", buildClientOptions());
+    MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());
     client.customDelete("/test");
     EchoResponse result = echo.getLastResponse();
 

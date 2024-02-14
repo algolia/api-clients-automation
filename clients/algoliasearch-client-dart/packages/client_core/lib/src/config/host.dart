@@ -13,14 +13,20 @@ final class Host {
   final CallType? callType;
 
   /// Constructs a [Host] instance with the provided parameters.
-  const Host({required this.url, this.port, this.scheme = 'https', this.callType});
+  const Host(
+      {required this.url, this.port, this.scheme = 'https', this.callType});
 
-  factory Host.create({required String url, String scheme = 'https', CallType? callType}) {
+  factory Host.create(
+      {required String url, String scheme = 'https', CallType? callType}) {
     if (url.contains(':')) {
       final parts = url.split(':');
-      return Host(url: parts[0], port: int.parse(parts[1]), scheme: scheme, callType: callType);
+      return Host(
+          url: parts[0],
+          port: int.parse(parts[1]),
+          scheme: scheme,
+          callType: callType);
     }
-    
+
     return Host(url: url, scheme: scheme, callType: callType);
   }
 
@@ -35,7 +41,8 @@ final class Host {
           callType == other.callType;
 
   @override
-  int get hashCode => url.hashCode ^ (port ?? 1) ^ scheme.hashCode ^ callType.hashCode;
+  int get hashCode =>
+      url.hashCode ^ (port ?? 1) ^ scheme.hashCode ^ callType.hashCode;
 
   @override
   String toString() {

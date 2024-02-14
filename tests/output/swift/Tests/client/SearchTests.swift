@@ -45,6 +45,24 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /**
+     tests the retry strategy
+     */
+    func testApiTest2() async throws {
+        let configuration: Search.Configuration = try Search.Configuration(appId: "test-app-id", apiKey: "test-api-key", hosts: [RetryableHost(url: URL(string: "http://localhost:6677")!), RetryableHost(url: URL(string: "http://localhost:6678")!)])
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGetWithHTTPInfo(
+            path: "/test"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+        let comparableData = "{\"message\":\"ok test server response\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+
+        XCTAssertEqual(comparableJSON, responseBodyJSON)
+    }
+
+    /**
      calls api with correct user agent
      */
     func testCommonApiTest0() async throws {

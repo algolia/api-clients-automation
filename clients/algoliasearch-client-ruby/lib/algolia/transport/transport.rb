@@ -59,7 +59,7 @@ module Algolia
           return response unless outcome == RETRY
         end
 
-        raise Algolia::AlgoliaUnreachableHostError.new('Unreachable hosts')
+        raise Algolia::AlgoliaUnreachableHostError, 'Unreachable hosts'
       end
 
       private

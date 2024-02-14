@@ -1,6 +1,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -8,6 +9,7 @@ import (
 
 	"gotests/tests"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
@@ -73,6 +75,32 @@ func TestSearchapi1(t *testing.T) {
 	))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
+}
+
+// tests the retry strategy
+func TestSearchapi2(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.Configuration
+	_ = client
+	_ = echo
+	cfg = search.Configuration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6677", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"/test",
+	))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok test server response"}`, string(rawBody))
 }
 
 // calls api with correct user agent

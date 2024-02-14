@@ -93,7 +93,11 @@ class Transporter:
             )
 
         for host in self._retry_strategy.valid_hosts(self._hosts):
-            url = "{}://{}{}".format(host.scheme, host.url + (":{}".format(host.port) if host.port else ""), path)
+            url = "{}://{}{}".format(
+                host.scheme,
+                host.url + (":{}".format(host.port) if host.port else ""),
+                path,
+            )
 
             proxy = None
             if url.startswith("https"):
