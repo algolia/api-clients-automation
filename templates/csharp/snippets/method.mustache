@@ -19,14 +19,15 @@ public class Snippet{{client}}
     var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));
 
     // Call the API
-    var response = await client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+    var response = await client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
     {{#requestOptions.queryParameters.parametersWithDataType}}
-        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
+        .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
     {{/requestOptions.queryParameters.parametersWithDataType}}
     {{#requestOptions.headers.parametersWithDataType}}
-        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
+        .AddExtraHeader("{{{key}}}", "{{{value}}}")
     {{/requestOptions.headers.parametersWithDataType}}
-      }{{/hasRequestOptions}});
+        .Build()
+      {{/hasRequestOptions}});
   }
 
   {{/snippet}}
