@@ -116,13 +116,6 @@ runs:
         php-version: ${{ steps.versions.outputs.PHP_VERSION }}
         tools: composer
 
-    - name: Run composer install
-      if: ${{ inputs.language == 'php' }}
-      shell: bash
-      run: |
-        composer install --working-dir=clients/algoliasearch-client-php
-        composer dump-autoload --working-dir=clients/algoliasearch-client-php
-
     # Golang
     - name: Install golang
       if: ${{ inputs.language == 'go' }}
