@@ -17,9 +17,7 @@ public final class Host {
   }
 
   public Host(String url, Set<CallType> callType, String scheme) {
-    this.port = -1;
-    this.callTypes = callType;
-    this.scheme = scheme;
+    this(url, callType, scheme, -1);
   }
 
   public Host(String url, Set<CallType> callType, String scheme, int port) {
