@@ -1,7 +1,5 @@
 package com.algolia.client.configuration
 
-import io.ktor.http.URLProtocol
-
 /**
  * @param url The url to target.
  * @param callType Whether this host should be used for [CallType.Read] or [CallType.Write]
