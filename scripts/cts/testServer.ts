@@ -101,6 +101,11 @@ async function okServer(): Promise<Server> {
             return;
           }
 
+          if (decompressedJSON.message !== 'this is a compressed body') {
+            res.json({ message: 'invalid decompressed body', body: decompressedJSON });
+            return;
+          }
+
           res.json({ message: 'ok compression test server response', body: decompressedJSON });
         });
       } catch (e) {

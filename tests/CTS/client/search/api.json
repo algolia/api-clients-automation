@@ -99,8 +99,12 @@
           "appId": "test-app-id",
           "apiKey": "test-api-key",
           "customHosts": [
-            "localhost:6678"
-          ]
+            {
+              "host": "localhost",
+              "port": 6678
+            }
+          ],
+          "gzip": true
         },
         "expected": {}
       },
@@ -110,19 +114,18 @@
         "path": "customPost",
         "parameters": {
           "path": "/test/gzip",
+          "parameters": {},
           "body": {
             "message": "this is a compressed body"
-          }
-        },
-        "requestOptions": {
-          "headers": {
-            "content-encoding": "gzip"
           }
         },
         "expected": {
           "type": "response",
           "match": {
-            "message": "ok compression test server response"
+            "message": "ok compression test server response",
+            "body": {
+              "message": "this is a compressed body"
+            }
           }
         }
       }

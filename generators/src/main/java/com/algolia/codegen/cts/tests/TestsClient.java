@@ -89,6 +89,9 @@ public class TestsClient extends TestsGenerator {
                   );
                 }
               }
+
+              boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
+              stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {

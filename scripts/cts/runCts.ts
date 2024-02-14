@@ -1,3 +1,5 @@
+import * as fsp from 'fs/promises';
+
 import { run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 
@@ -20,6 +22,8 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     case 'java':
+      // I guess this is a bug from gradle and can be removed once it's fixed, it doesn't affect the cache.
+      await fsp.rm('tests/output/java/.gradle', { recursive: true, force: true });
       await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
       break;
     case 'javascript':
