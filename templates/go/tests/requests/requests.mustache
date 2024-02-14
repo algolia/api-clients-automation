@@ -56,6 +56,7 @@ func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t
 {{#blocksRequests}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+    _ = echo
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
@@ -100,9 +101,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       {{/request}}
       {{#response}}
       clientE2E := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
-      res, err := clientE2E.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
+      res, err := clientE2E.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}{{^isHelper}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request({{/isHelper}}
         {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
-      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
+      {{^isHelper}}){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/isHelper}}{{#isHelper}}{{#parametersWithDataType}}{{^required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}{{/isHelper}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
       {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
       {{/requestOptions}})
       require.NoError(t, err)

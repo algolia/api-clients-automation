@@ -90,7 +90,7 @@ public class TestsRequest extends TestsGenerator {
             test.put("isCustomRequest", true);
           }
 
-          if (req.request != null) {
+          if (req.request != null && !isHelper) {
             // We check on the spec if body parameters should be present in the CTS
             // If so, we change the `null` default to an empty object, so we know if
             // tests are properly written
@@ -118,15 +118,6 @@ public class TestsRequest extends TestsGenerator {
           if (req.response != null) {
             bundle.put("hasE2E", true);
             test.put("response", req.response);
-
-            if (req.response.statusCode == 0) {
-              throw new CTSException(
-                "operationId '" +
-                operationId +
-                "' has a 'response' field in order to generate e2e tests but is missing the" +
-                " 'statusCode' parameter"
-              );
-            }
           }
 
           test.put("request", req.request);
