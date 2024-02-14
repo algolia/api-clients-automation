@@ -138,8 +138,7 @@ final class ApiWrapper implements ApiWrapperInterface
     ) {
         $uri = $this->createUri($path)
             ->withQuery($requestOptions->getBuiltQueryParameters())
-            ->withScheme($this->config->getScheme())
-            ->withPort($this->config->getPort())
+            ->withScheme('https')
         ;
 
         $body = isset($data)
