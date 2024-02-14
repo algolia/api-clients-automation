@@ -237,3 +237,6 @@ paths:
   # ###############
   /waitForApiKey:
     $ref: 'helpers/waitForApiKey.yml#/method'
+
+  /generateSecuredApiKey:
+    $ref: 'helpers/generateSecuredApiKey.yml#/method'
