@@ -6272,6 +6272,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crc@npm:4.3.2":
+  version: 4.3.2
+  resolution: "crc@npm:4.3.2"
+  peerDependencies:
+    buffer: ">=6.0.3"
+  peerDependenciesMeta:
+    buffer:
+      optional: true
+  checksum: daa5c340de4ccb0d248ad579d1ca1317efe89d2b3f68a124850a140e9afc17d595cdfc058bd14ea78325c0a706ac73ad94962c1efede6a2a1abf58a48ebbb9da
+  languageName: node
+  linkType: hard
+
 "create-jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "create-jest@npm:29.7.0"
@@ -12298,6 +12310,7 @@ __metadata:
     "@vercel/ncc": "npm:0.38.1"
     chalk: "npm:5.3.0"
     commander: "npm:12.0.0"
+    crc: "npm:4.3.2"
     dotenv: "npm:16.4.2"
     eslint: "npm:8.56.0"
     eslint-import-resolver-typescript: "npm:3.6.1"
@@ -12313,6 +12326,7 @@ __metadata:
     tsc-alias: "npm:1.8.8"
     typescript: "npm:5.3.3"
     vitest: "npm:1.2.2"
+    zlib: "npm:1.0.5"
   languageName: unknown
   linkType: soft
 
@@ -14274,6 +14288,13 @@ __metadata:
     compress-commons: "npm:^4.1.2"
     readable-stream: "npm:^3.6.0"
   checksum: 33bd5ee7017656c2ad728b5d4ba510e15bd65ce1ec180c5bbdc7a5f063256353ec482e6a2bc74de7515219d8494147924b9aae16e63fdaaf37cdf7d1ee8df125
+  languageName: node
+  linkType: hard
+
+"zlib@npm:1.0.5":
+  version: 1.0.5
+  resolution: "zlib@npm:1.0.5"
+  checksum: 3841e7719783001ef72654c0e3ab3aec259f8859e75692166410a7582aadb5c6a183328ff22cb6e0a3e26d9eb287dec6250e350acde3670c06cb69b400f5c356
   languageName: node
   linkType: hard
 

@@ -12,7 +12,7 @@ async function timeoutServer(): Promise<Server> {
   const spinner = createSpinner('starting tiemout test server');
   const app = express();
   const port = 6677;
-  app.get('/1/test', (req, res) => {
+  app.get('/1/test/retry', (req, res) => {
     // this is safe because js is single threaded
     timeoutCounter++;
     // wait for 7.5 seconds, the default read timeout is 5 seconds + 2s of connection timeout
@@ -39,30 +39,11 @@ async function okServer(): Promise<Server> {
   const spinner = createSpinner('starting ok test server');
   const app = express();
   const port = 6678;
-  app.get('/1/test', (req, res) => {
+  app.get('/1/test/retry', (req, res) => {
     res.json({ message: 'ok test server response' });
   });
 
-  const server = await new Promise<Server>((resolve) => {
-    const s = app.listen(port, () => {
-      spinner.text = `ok test server listening at http://localhost:${port}`;
-      resolve(s);
-    });
-  });
-
-  server.addListener('close', () => {
-    spinner.succeed('ok test server closed');
-  });
-
-  return server;
-}
-
-async function compressionServer(): Promise<Server> {
-  const spinner = createSpinner('starting compression test server');
-  const app = express();
-  const port = 6679;
-
-  app.post('/1/test', (req, res) => {
+  app.post('/1/test/gzip', (req, res) => {
     let rawBody = Buffer.from([]);
 
     req.on('data', (data) => {
@@ -130,13 +111,13 @@ async function compressionServer(): Promise<Server> {
 
   const server = await new Promise<Server>((resolve) => {
     const s = app.listen(port, () => {
-      spinner.text = `compression test server listening at http://localhost:${port}`;
+      spinner.text = `ok test server listening at http://localhost:${port}`;
       resolve(s);
     });
   });
 
   server.addListener('close', () => {
-    spinner.succeed('compression test server closed');
+    spinner.succeed('ok test server closed');
   });
 
   return server;
@@ -145,7 +126,6 @@ async function compressionServer(): Promise<Server> {
 export async function startTestServer(): Promise<() => Promise<void>> {
   const server1 = await timeoutServer();
   const server2 = await okServer();
-  const server3 = await compressionServer();
 
   return async () => {
     await Promise.all([
@@ -156,11 +136,6 @@ export async function startTestServer(): Promise<() => Promise<void>> {
       }),
       new Promise<void>((resolve) => {
         server2.close(() => {
-          resolve();
-        });
-      }),
-      new Promise<void>((resolve) => {
-        server3.close(() => {
           resolve();
         });
       }),

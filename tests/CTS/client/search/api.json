@@ -78,7 +78,7 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "/test"
+          "path": "/test/retry"
         },
         "expected": {
           "type": "response",
@@ -99,7 +99,7 @@
           "appId": "test-app-id",
           "apiKey": "test-api-key",
           "customHosts": [
-            "localhost:6679"
+            "localhost:6678"
           ]
         },
         "expected": {}
@@ -109,7 +109,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test",
+          "path": "/test/gzip",
           "body": {
             "message": "this is a compressed body"
           }
