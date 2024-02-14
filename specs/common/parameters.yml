@@ -134,6 +134,7 @@ page:
 trackedSearchCount:
   type: integer
   example: 2
+  nullable: true
   description: Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
 
 count:

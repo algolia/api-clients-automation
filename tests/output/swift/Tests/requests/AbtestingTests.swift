@@ -697,10 +697,10 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.listABTestsWithHTTPInfo(offset: 42,
+        let response = try await client.listABTestsWithHTTPInfo(offset: 0,
                                                                 limit: 21,
-                                                                indexPrefix: "foo",
-                                                                indexSuffix: "bar",
+                                                                indexPrefix: "cts_e2e ab",
+                                                                indexSuffix: "t",
                                                                 requestOptions: nil)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -710,7 +710,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/abtests")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"offset\":\"42\",\"limit\":\"21\",\"indexPrefix\":\"foo\",\"indexSuffix\":\"bar\"}".data(using: .utf8))
+        let comparableQueryItems = try XCTUnwrap("{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\"}".data(using: .utf8))
         let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
 
         XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)

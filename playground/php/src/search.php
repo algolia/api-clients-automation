@@ -13,12 +13,25 @@ $indexName = $env['SEARCH_INDEX'];
 
 $response = $client->saveObject(
     $indexName,
-    ['objectID' => "111", 'name' => $env['SEARCH_QUERY']],
+    ['objectID' => "1", 'name' => 'Michel'],
 );
 
-var_dump($response);
+$client->waitForTask($indexName, $response['taskID']);
+
+$response = $client->saveObject(
+    $indexName,
+    ['objectID' => "2", 'name' => 'Raymond'],
+);
 
 $client->waitForTask($indexName, $response['taskID']);
+
+$newGuys = [
+  ['objectID' => "3", 'name' => 'Hubert'],
+  ['objectID' => "4", 'name' => 'Bob'],
+  ['objectID' => "5", 'name' => $env['SEARCH_QUERY']],
+];
+
+$response = $client->replaceAllObjects($indexName, $newGuys);
 
 var_dump(
     $client->search([
@@ -28,29 +41,32 @@ var_dump(
     ])
 );
 
-// browse records
-$results = $client->browseObjects($indexName);
+// $apiKey = SearchClient::generateSecuredApiKey($env['ALGOLIA_APPLICATION_ID'], ['edit','browse','listIndices']);
+// var_dump($apiKey);
 
-$objects = [];
-foreach ($results as $object) {
-    $objects[] = $object;
-}
-var_dump($objects);
-
-// browse synonyms
-$results = $client->browseSynonyms($indexName);
-
-$synonyms = [];
-foreach ($results as $synonym) {
-    $synonyms[] = $synonym;
-}
-var_dump($synonyms);
-
-// browse rules
-$results = $client->browseRules($indexName);
-
-$rules = [];
-foreach ($results as $rule) {
-    $rules[] = $rule;
-}
-var_dump($rules);
+// // browse records
+// $results = $client->browseObjects($indexName);
+//
+// $objects = [];
+// foreach ($results as $object) {
+//     $objects[] = $object;
+// }
+// var_dump($objects);
+//
+// // browse synonyms
+// $results = $client->browseSynonyms($indexName);
+//
+// $synonyms = [];
+// foreach ($results as $synonym) {
+//     $synonyms[] = $synonym;
+// }
+// var_dump($synonyms);
+//
+// // browse rules
+// $results = $client->browseRules($indexName);
+//
+// $rules = [];
+// foreach ($results as $rule) {
+//     $rules[] = $rule;
+// }
+// var_dump($rules);

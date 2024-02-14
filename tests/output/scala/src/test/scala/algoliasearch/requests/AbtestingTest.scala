@@ -552,10 +552,10 @@ class AbtestingTest extends AnyFunSuite {
   test("listABTests with parameters") {
     val (client, echo) = testClient()
     val future = client.listABTests(
-      offset = Some(42),
+      offset = Some(0),
       limit = Some(21),
-      indexPrefix = Some("foo"),
-      indexSuffix = Some("bar")
+      indexPrefix = Some("cts_e2e ab"),
+      indexSuffix = Some("t")
     )
 
     Await.ready(future, Duration.Inf)
@@ -564,8 +564,10 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.path == "/2/abtests")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val expectedQuery =
-      parse("""{"offset":"42","limit":"21","indexPrefix":"foo","indexSuffix":"bar"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {

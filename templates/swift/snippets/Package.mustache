@@ -1,0 +1,34 @@
+// swift-tools-version: 5.9
+
+import PackageDescription
+
+let package = Package(
+  name: "AlgoliaSearchClientSnippets",
+  platforms: [
+    .iOS(.v13),
+    .macOS(.v10_15),
+    .tvOS(.v13),
+    .watchOS(.v6),
+  ],
+  products: [
+      .library(
+          name: "AlgoliaSearchClientSnippets",
+          targets: ["AlgoliaSearchClientSnippets"]),
+  ],
+  dependencies: [
+      .package(path: "../../clients/algoliasearch-client-swift"),
+      .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1"))
+  ],
+  targets: [
+    .target(
+      name: "AlgoliaSearchClientSnippets",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),{{#packageList}}
+        .product(
+          name: "{{{.}}}",
+          package: "algoliasearch-client-swift"
+        ),{{/packageList}}
+      ]
+    )
+  ]
+)
