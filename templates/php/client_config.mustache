@@ -3,9 +3,32 @@
 
 namespace {{invokerPackage}}\Configuration;
 
+use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
+
 class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegionalHost}}{{^hasRegionalHost}}Configuration{{/hasRegionalHost}}
 {
     protected $clientName = '{{clientName}}';
+
+    {{#hasRegionalHost}}
+    public static function create($appId, $apiKey, $region = null)
+    {
+
+      $allowedRegions = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}];
+
+      if (
+          {{^fallbackToAliasHost}}$region === null ||{{/fallbackToAliasHost}}
+          ($region !== null && !in_array($region, $allowedRegions, true))
+      ) {
+          throw new AlgoliaException(
+              '`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: ' .
+                  implode(', ', $allowedRegions)
+          );
+      }
+
+      return parent::create($appId, $apiKey, $region);
+    }
+    {{/hasRegionalHost}}
+
     {{#isSearchClient}}private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
     private $defaultMaxRetries = 50;
 

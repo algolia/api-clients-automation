@@ -191,7 +191,7 @@ describe('customPost', () => {
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const requestOptions: RequestOptions = {
-      queryParameters: { myParam: ['c', 'd'] },
+      queryParameters: { myParam: ['b and c', 'd'] },
     };
 
     const req = (await client.customPost(
@@ -208,7 +208,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c%2Cd',
+      myParam: 'b%20and%20c%2Cd',
     });
   });
 
