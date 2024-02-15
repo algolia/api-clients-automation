@@ -29,11 +29,7 @@ public struct EchoResponse: Codable {
 // MARK: - EchoRequestBuilder
 
 final class EchoRequestBuilder: RequestBuilder {
-    // MARK: Internal
-
     let statusCode: HTTPStatusСode
-
-    // MARK: Lifecycle
 
     public init() {
         self.statusCode = 200
@@ -91,8 +87,6 @@ final class EchoRequestBuilder: RequestBuilder {
 
         return Response(response: mockHTTPURLResponse, body: nil, bodyData: interceptedBody)
     }
-
-    // MARK: Fileprivate
 
     fileprivate func processQueryItems(from queryItems: [URLQueryItem]?)
     -> [String: String?]? {

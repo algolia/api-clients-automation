@@ -22,8 +22,6 @@ class AlgoliaRetryStrategy: RetryStrategy {
 
     let hostsExpirationDelay: TimeInterval
 
-    // MARK: Lifecycle
-
     init(hosts: [RetryableHost], hostsExpirationDelay: TimeInterval = .minutes(5)) {
         self.hosts = hosts
         self.hostsExpirationDelay = hostsExpirationDelay
