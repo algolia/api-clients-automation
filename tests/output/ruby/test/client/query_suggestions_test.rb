@@ -3,6 +3,7 @@ require 'test/unit'
 
 class TestClientQuerySuggestionsClient < Test::Unit::TestCase
   include Algolia::QuerySuggestions
+  # calls api with correct user agent
   def test_common_api0
     client = Algolia::QuerySuggestionsClient.create(
       'APP_ID',
@@ -14,6 +15,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; QuerySuggestions (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
+  # calls api with default read timeouts
   def test_common_api1
     client = Algolia::QuerySuggestionsClient.create(
       'APP_ID',
@@ -26,6 +28,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal(5000, req.timeout)
   end
 
+  # calls api with default write timeouts
   def test_common_api2
     client = Algolia::QuerySuggestionsClient.create(
       'APP_ID',
@@ -38,6 +41,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal(30_000, req.timeout)
   end
 
+  # throws when region is not given
   def test_parameters0
     Algolia::QuerySuggestionsClient.create(
       'my-app-id',
@@ -49,6 +53,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal('`region` is required and must be one of the following: eu, us', e.message)
   end
 
+  # throws when incorrect region is given
   def test_parameters1
     Algolia::QuerySuggestionsClient.create(
       'my-app-id',
@@ -60,6 +65,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal('`region` is required and must be one of the following: eu, us', e.message)
   end
 
+  # does not throw when region is given
   def test_parameters2
     client = Algolia::QuerySuggestionsClient.create(
       'my-app-id',

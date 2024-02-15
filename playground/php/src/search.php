@@ -3,11 +3,26 @@
 $env = require_once('../loadEnv.php');
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 
-$client = SearchClient::create(
+//$client = SearchClient::create(
+//    $env['ALGOLIA_APPLICATION_ID'],
+//    $env['ALGOLIA_ADMIN_KEY']
+//);
+
+$config = SearchConfig::create(
     $env['ALGOLIA_APPLICATION_ID'],
     $env['ALGOLIA_ADMIN_KEY']
 );
+
+//$config->setFullHosts(
+//    [
+//       'http://localhost:6677',
+//       'http://localhost:6678',
+//    ]
+//);
+
+$client = SearchClient::createWithConfig($config);
 $indexName = $env['SEARCH_INDEX'];
 
 
@@ -18,28 +33,28 @@ $response = $client->saveObject(
 
 $client->waitForTask($indexName, $response['taskID']);
 
-$response = $client->saveObject(
-    $indexName,
-    ['objectID' => "2", 'name' => 'Raymond'],
-);
+//$response = $client->saveObject(
+//    $indexName,
+//    ['objectID' => "2", 'name' => 'Raymond'],
+//);
+//
+//$client->waitForTask($indexName, $response['taskID']);
 
-$client->waitForTask($indexName, $response['taskID']);
-
-$newGuys = [
-  ['objectID' => "3", 'name' => 'Hubert'],
-  ['objectID' => "4", 'name' => 'Bob'],
-  ['objectID' => "5", 'name' => $env['SEARCH_QUERY']],
-];
-
-$response = $client->replaceAllObjects($indexName, $newGuys);
-
-var_dump(
-    $client->search([
-        'requests' => [
-            ['indexName' => $indexName, 'query' => $env['SEARCH_QUERY']],
-        ],
-    ])
-);
+//$newGuys = [
+//  ['objectID' => "3", 'name' => 'Hubert'],
+//  ['objectID' => "4", 'name' => 'Bob'],
+//  ['objectID' => "5", 'name' => $env['SEARCH_QUERY']],
+//];
+//
+//$response = $client->replaceAllObjects($indexName, $newGuys);
+//
+//var_dump(
+//    $client->search([
+//        'requests' => [
+//            ['indexName' => $indexName, 'query' => $env['SEARCH_QUERY']],
+//        ],
+//    ])
+//);
 
 // $apiKey = SearchClient::generateSecuredApiKey($env['ALGOLIA_APPLICATION_ID'], ['edit','browse','listIndices']);
 // var_dump($apiKey);

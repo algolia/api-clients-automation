@@ -9,7 +9,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.QuerySuggestionsClient;
 import com.algolia.config.*;
 import com.algolia.model.querysuggestions.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,13 +22,23 @@ import org.junit.jupiter.api.TestInstance;
 class QuerySuggestionsClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  QuerySuggestionsClient createClient() {
-    return new QuerySuggestionsClient("appId", "apiKey", "us", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  QuerySuggestionsClient createClient() {
+    return new QuerySuggestionsClient("appId", "apiKey", "us", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
@@ -78,7 +92,7 @@ class QuerySuggestionsClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", buildClientOptions());
+          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", withEchoRequester());
         }
       );
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
@@ -92,7 +106,7 @@ class QuerySuggestionsClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", buildClientOptions());
+          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
         }
       );
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
@@ -102,6 +116,6 @@ class QuerySuggestionsClientClientTests {
   @Test
   @DisplayName("does not throw when region is given")
   void parametersTest2() {
-    QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "us", buildClientOptions());
+    QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "us", withEchoRequester());
   }
 }

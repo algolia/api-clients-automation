@@ -8,5 +8,7 @@ package algoliasearch.config
   *   Whether this host should be used for read and/or write requests.
   * @param scheme
   *   Host protocol (i.e. `http`, `https`)
+  * @param port
+  *   Host port
   */
-case class Host(url: String, callTypes: Set[CallType], scheme: String = "https")
+case class Host(url: String, callTypes: Set[CallType], scheme: String = "https", port: Option[Int] = None)

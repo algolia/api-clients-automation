@@ -9,7 +9,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.IngestionClient;
 import com.algolia.config.*;
 import com.algolia.model.ingestion.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,13 +22,23 @@ import org.junit.jupiter.api.TestInstance;
 class IngestionClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  IngestionClient createClient() {
-    return new IngestionClient("appId", "apiKey", "us", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  IngestionClient createClient() {
+    return new IngestionClient("appId", "apiKey", "us", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
@@ -74,7 +88,7 @@ class IngestionClientClientTests {
   @Test
   @DisplayName("uses the correct region")
   void parametersTest0() {
-    IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", buildClientOptions());
+    IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
 
@@ -88,7 +102,7 @@ class IngestionClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", buildClientOptions());
+          IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
         }
       );
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());

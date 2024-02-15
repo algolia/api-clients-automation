@@ -7,6 +7,7 @@ import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
@@ -38,6 +39,22 @@ class SearchTest {
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
+      },
+    )
+  }
+
+  @Test
+  fun `tests the retry strategy`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "/test",
+        )
+      },
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"message\":\"ok test server response\"}", response)
       },
     )
   }

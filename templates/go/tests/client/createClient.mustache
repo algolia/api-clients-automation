@@ -2,7 +2,12 @@ cfg = {{clientPrefix}}.Configuration{
   Configuration: transport.Configuration{
     AppID:     "{{parametersWithDataTypeMap.appId.value}}",
     ApiKey:    "{{parametersWithDataTypeMap.apiKey.value}}",
+    {{#useEchoRequester}}
     Requester: echo,
+    {{/useEchoRequester}}
+    {{#hasCustomHosts}}
+    Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", "{{host}}:{{port}}", call.IsReadWrite),{{/customHosts}} },
+    {{/hasCustomHosts}}
   },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
   Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
 }

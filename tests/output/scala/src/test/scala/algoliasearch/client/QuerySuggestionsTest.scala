@@ -7,6 +7,8 @@ import algoliasearch.querysuggestions.*
 import algoliasearch.exception.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 import org.scalatest.funsuite.AnyFunSuite
 
 import scala.concurrent.duration.Duration

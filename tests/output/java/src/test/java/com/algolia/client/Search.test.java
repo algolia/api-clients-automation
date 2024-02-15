@@ -1,5 +1,6 @@
 package com.algolia.client;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,28 +10,44 @@ import com.algolia.EchoResponse;
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
 import com.algolia.model.search.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SearchClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  SearchClient createClient() {
-    return new SearchClient("appId", "apiKey", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  SearchClient createClient() {
+    return new SearchClient("appId", "apiKey", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
   @DisplayName("calls api with correct read host")
   void apiTest0() {
-    SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
+    SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -40,11 +57,31 @@ class SearchClientClientTests {
   @Test
   @DisplayName("calls api with correct write host")
   void apiTest1() {
-    SearchClient client = new SearchClient("test-app-id", "test-api-key", buildClientOptions());
+    SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
+  }
+
+  @Test
+  @DisplayName("tests the retry strategy")
+  void apiTest2() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6677),
+          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)
+        )
+      )
+    );
+    var res = client.customGet("/test");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
   }
 
   @Test
@@ -98,7 +135,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          SearchClient client = new SearchClient("", "", buildClientOptions());
+          SearchClient client = new SearchClient("", "", withEchoRequester());
         }
       );
       assertEquals("`appId` is missing.", exception.getMessage());
@@ -107,7 +144,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          SearchClient client = new SearchClient("", "my-api-key", buildClientOptions());
+          SearchClient client = new SearchClient("", "my-api-key", withEchoRequester());
         }
       );
       assertEquals("`appId` is missing.", exception.getMessage());
@@ -116,7 +153,7 @@ class SearchClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          SearchClient client = new SearchClient("my-app-id", "", buildClientOptions());
+          SearchClient client = new SearchClient("my-app-id", "", withEchoRequester());
         }
       );
       assertEquals("`apiKey` is missing.", exception.getMessage());
