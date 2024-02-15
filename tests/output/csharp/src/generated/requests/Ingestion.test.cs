@@ -332,10 +332,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
@@ -364,10 +361,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query2", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
@@ -396,10 +390,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
@@ -438,10 +429,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
@@ -480,10 +468,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "isItWorking", true } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -512,10 +497,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "myParam", 2 } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -544,16 +526,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { "c", "d" }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { "c", "d" })
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -582,16 +557,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { true, true, false }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -620,16 +588,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { 1, 2 }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
+        .Build()
     );
 
     var req = _echo.LastResponse;
