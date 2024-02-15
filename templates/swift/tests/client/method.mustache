@@ -2,4 +2,11 @@ let response = try await client{{#path}}.{{.}}WithHTTPInfo{{/path}}(
 {{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}},{{/-last}}
 {{/parametersWithDataType}})
 let responseBodyData = try XCTUnwrap(response.bodyData)
+{{#useEchoRequester}}
 let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+{{/useEchoRequester}}
+{{^useEchoRequester}}
+let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+let comparableData = "{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+{{/useEchoRequester}}

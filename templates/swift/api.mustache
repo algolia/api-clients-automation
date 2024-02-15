@@ -9,14 +9,16 @@ import AnyCodable
 typealias Client = {{classname}}
 
 {{#description}}
-/** {{{.}}} */{{/description}}
+/**
+{{{.}}}
+*/{{/description}}
 {{#objcCompatible}}@objcMembers {{/objcCompatible}}open class {{classname}}{{#objcCompatible}} : NSObject{{/objcCompatible}} {
 
     private var configuration: Configuration
     private var transporter: Transporter
 
-    var appId: String {
-        self.configuration.appId
+    var appID: String {
+        self.configuration.appID
     }
 
     public init(configuration: Configuration, transporter: Transporter) {
@@ -28,8 +30,8 @@ typealias Client = {{classname}}
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
-    public convenience init(appId: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
-        self.init(configuration: try Configuration(appId: appId, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
+    public convenience init(appID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
+        self.init(configuration: try Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 
 {{#operation}}
@@ -85,22 +87,11 @@ typealias Client = {{classname}}
      {{#notes}}{{{.}}}{{/notes}}
      {{#vendorExtensions}}
      {{#x-acl.0}}
-
      Required API Key ACLs:{{/x-acl.0}}
      {{#x-acl}}
        - {{.}}
      {{/x-acl}}
-     {{/vendorExtensions}}
-     {{#subresourceOperation}}
-     subresourceOperation: {{.}}{{/subresourceOperation}}{{#defaultResponse}}
-     defaultResponse: {{.}}{{/defaultResponse}}
-     {{#hasResponseHeaders}}
-     - responseHeaders: [{{#responseHeaders}}{{{baseName}}}({{{dataType}}}){{^-last}}, {{/-last}}{{/responseHeaders}}]
-     {{/hasResponseHeaders}}
-     {{#externalDocs}}
-     - externalDocs: {{.}}
-     {{/externalDocs}}
-     {{#allParams}}
+     {{/vendorExtensions}}{{#allParams}}
      - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
      {{/allParams}}
      - returns: RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{description}}
@@ -124,9 +115,9 @@ typealias Client = {{classname}}
 
         {{/required}}{{/isFreeFormObject}}{{/bodyParam}}
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{path}}}"{{#pathParams}}
-        let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"
-        let {{paramName}}PostEscape = {{paramName}}{{^x-is-custom-request}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""{{/x-is-custom-request}}
-        resourcePath = resourcePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}PostEscape, options: .literal, range: nil){{/pathParams}}
+        let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"{{^x-is-custom-request}}
+        let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""{{/x-is-custom-request}}
+        resourcePath = resourcePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{^x-is-custom-request}}{{paramName}}PostEscape{{/x-is-custom-request}}{{#x-is-custom-request}}{{paramName}}PreEscape{{/x-is-custom-request}}, options: .literal, range: nil){{/pathParams}}
         {{#bodyParam}}
         let body = {{paramName}}
         {{/bodyParam}}
@@ -134,14 +125,14 @@ typealias Client = {{classname}}
           let body: AnyCodable? = nil
         {{/bodyParam}}
         {{#hasQueryParams}}
-        let queryItems = APIHelper.mapValuesToQueryItems({{#x-is-custom-request}}parameters{{/x-is-custom-request}}{{^x-is-custom-request}}[{{^queryParams}}:{{/queryParams}}
+        let queryParameters = {{#x-is-custom-request}}parameters{{/x-is-custom-request}}{{^x-is-custom-request}}[{{^queryParams}}:{{/queryParams}}
             {{#queryParams}}
             {{> _param}},
             {{/queryParams}}
-        ]{{/x-is-custom-request}})
+        ]{{/x-is-custom-request}}
         {{/hasQueryParams}}
         {{^hasQueryParams}}
-          let queryItems: [URLQueryItem]? = nil
+          let queryParameters: [String: Any?]? = nil
         {{/hasQueryParams}}
 
         let nillableHeaders: [String: Any?]? = {{^headerParams}}nil{{/headerParams}}{{#headerParams}}{{#-first}}[{{/-first}}
@@ -154,7 +145,7 @@ typealias Client = {{classname}}
           method: "{{httpMethod}}",
           path: resourcePath,
           data: body{{#bodyParam}}{{^required}} ?? AnyCodable(){{/required}}{{/bodyParam}},
-          requestOptions: RequestOptions(headers: headers, queryItems: queryItems) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
+          requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
           useReadTransporter: true{{/vendorExtensions.x-use-read-transporter}}
         )
     }{{/vendorExtensions}}

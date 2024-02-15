@@ -5,6 +5,7 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
   include Algolia::{{{modelModule}}}
   {{#blocksClient}}
   {{#tests}}
+  # {{{testName}}}
   def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}{{testIndex}}
     {{#autoCreateClient}}
     client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
@@ -35,6 +36,9 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     {{#testHost}}
     assert_equal('{{{match}}}', req.host.url)
     {{/testHost}}
+    {{#testResponse}}
+    assert_equal({{{match.parameters}}}, req)
+    {{/testResponse}}
     {{/match}}
     {{/isError}}
     {{/steps}}

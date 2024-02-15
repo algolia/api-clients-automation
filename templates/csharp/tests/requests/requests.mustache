@@ -33,7 +33,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
       }
 
-      _e2eClient = new SearchClient(new SearchConfig(e2EAppId, e2EApiKey));
+      _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
     {{/hasE2E}}
   }
 
@@ -48,14 +48,15 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
       {{#requestOptions.queryParameters.parametersWithDataType}}
-        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
+          .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
       {{/requestOptions.queryParameters.parametersWithDataType}}
       {{#requestOptions.headers.parametersWithDataType}}
-        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
+          .AddExtraHeader("{{{key}}}", "{{{value}}}")
       {{/requestOptions.headers.parametersWithDataType}}
-    }{{/hasRequestOptions}});
+          .Build()
+    {{/hasRequestOptions}});
 
      var req = _echo.LastResponse;
     {{#request}}

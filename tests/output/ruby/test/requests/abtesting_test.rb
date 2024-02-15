@@ -14,6 +14,12 @@ class TestAbtestingClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::AbtestingClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'us'
+    )
   end
 
   # addABTests with minimal parameters
@@ -336,17 +342,27 @@ class TestAbtestingClient < Test::Unit::TestCase
 
   # listABTests with parameters
   def test_list_ab_tests1
-    req = @client.list_ab_tests_with_http_info(42, 21, "foo", "bar")
+    req = @client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t")
 
     assert_equal(:get, req.method)
     assert_equal('/2/abtests', req.path)
     assert_equal(
-      { 'offset': "42", 'limit': "21", 'indexPrefix': "foo", 'indexSuffix': "bar" }.to_a,
+      { 'offset': "0",
+        'limit': "21",
+        'indexPrefix': "cts_e2e%20ab",
+        'indexSuffix': "t" }.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t")
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.list_ab_tests(0, 21, "cts_e2e ab", "t")
+    expected_body = JSON.parse('{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # stopABTest

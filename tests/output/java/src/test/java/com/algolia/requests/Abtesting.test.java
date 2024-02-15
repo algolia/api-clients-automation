@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -24,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class AbtestingClientRequestsTests {
 
   private AbtestingClient client;
-
+  private AbtestingClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -34,6 +35,13 @@ class AbtestingClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new AbtestingClient("appId", "apiKey", "us", options);
+
+    if ("true".equals(System.getenv("CI"))) {
+      this.clientE2E = new AbtestingClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
+    } else {
+      var dotenv = Dotenv.configure().directory("../../").load();
+      this.clientE2E = new AbtestingClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
+    }
   }
 
   @AfterAll
@@ -566,7 +574,7 @@ class AbtestingClientRequestsTests {
   @DisplayName("listABTests with parameters")
   void listABTestsTest1() {
     assertDoesNotThrow(() -> {
-      client.listABTests(42, 21, "foo", "bar");
+      client.listABTests(0, 21, "cts_e2e ab", "t");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests", req.path);
@@ -575,7 +583,7 @@ class AbtestingClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"offset\":\"42\",\"limit\":\"21\",\"indexPrefix\":\"foo\",\"indexSuffix\":\"bar\"}",
+        "{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -587,6 +595,16 @@ class AbtestingClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+
+    var res = clientE2E.listABTests(0, 21, "cts_e2e ab", "t");
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"abtests\":[{\"abTestID\":84617,\"createdAt\":\"2024-02-06T10:04:30.209477Z\",\"endAt\":\"2024-05-06T09:04:26.469Z\",\"name\":\"cts_e2e_abtest\",\"status\":\"active\",\"variants\":[{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"\",\"index\":\"cts_e2e_search_facet\",\"purchaseCount\":0,\"trafficPercentage\":25},{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"\",\"index\":\"cts_e2e" +
+        " abtest\",\"purchaseCount\":0,\"trafficPercentage\":75}]}],\"count\":1,\"total\":1}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test

@@ -7,6 +7,11 @@ import algoliasearch.search.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.skyscreamer.jsonassert.JSONCompare.compareJSON
+import org.skyscreamer.jsonassert.JSONCompareMode
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -28,6 +33,21 @@ class SearchTest extends AnyFunSuite {
       ),
       echo
     )
+  }
+
+  def testE2EClient(): SearchClient = {
+    if (System.getenv("CI") == "true") {
+      SearchClient(
+        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        apiKey = System.getenv("ALGOLIA_ADMIN_KEY")
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      SearchClient(
+        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY")
+      )
+    }
   }
 
   test("addApiKey0") {
@@ -434,6 +454,17 @@ class SearchTest extends AnyFunSuite {
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.browse(
+      indexName = "cts_e2e_browse"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("browse with search parameters") {
@@ -1242,6 +1273,17 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/cts_e2e_settings/settings")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.getSettings(
+      indexName = "cts_e2e_settings"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("getSources0") {
@@ -1962,6 +2004,23 @@ class SearchTest extends AnyFunSuite {
     val expectedBody = parse("""{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_search_empty_index"
+          )
+        )
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("search for a single facet request with minimal parameters") {
@@ -1989,6 +2048,26 @@ class SearchTest extends AnyFunSuite {
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForFacets(
+            indexName = "cts_e2e_search_facet",
+            `type` = SearchTypeFacet.withName("facet"),
+            facet = "editor"
+          )
+        ),
+        strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("search for a single hits request with all parameters") {
@@ -2424,6 +2503,12 @@ class SearchTest extends AnyFunSuite {
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.searchSingleIndex(
+      indexName = "cts_e2e_space in index"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
   }
 
   test("search with searchParams") {
@@ -2470,6 +2555,24 @@ class SearchTest extends AnyFunSuite {
       parse("""{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.searchSingleIndex(
+      indexName = "cts_e2e_browse",
+      searchParams = Some(
+        SearchParamsObject(
+          query = Some("batman mask of the phantasm"),
+          attributesToRetrieve = Some(Seq("*")),
+          attributesToSnippet = Some(Seq("*:20"))
+        )
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("searchSynonyms with minimal parameters") {
@@ -2602,6 +2705,16 @@ class SearchTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.setSettings(
+      indexName = "cts_e2e_settings",
+      indexSettings = IndexSettings(
+        paginationLimitedTo = Some(10)
+      ),
+      forwardToReplicas = Some(true)
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
   }
 
   test("setSettings allow boolean `typoTolerance`") {

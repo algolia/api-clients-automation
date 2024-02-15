@@ -6,16 +6,18 @@ from algoliasearch.monitoring.config import MonitoringConfig
 
 
 class TestMonitoringClient:
-    _config: MonitoringConfig
     _client: MonitoringClient
 
     def create_client(self) -> MonitoringClient:
-        self._config = MonitoringConfig("appId", "apiKey")
+        _config = MonitoringConfig("appId", "apiKey")
         self._client = MonitoringClient.create_with_config(
-            config=self._config, transporter=EchoTransporter(self._config)
+            config=_config, transporter=EchoTransporter(_config)
         )
 
     async def test_common_api_0(self):
+        """
+        calls api with correct user agent
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
@@ -27,6 +29,9 @@ class TestMonitoringClient:
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_common_api_1(self):
+        """
+        calls api with default read timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_get_with_http_info(
@@ -36,6 +41,9 @@ class TestMonitoringClient:
         assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
+        """
+        calls api with default write timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
@@ -45,8 +53,13 @@ class TestMonitoringClient:
         assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
-        self._client = MonitoringClient(
-            transporter=EchoTransporter(MonitoringConfig("my-app-id", "my-api-key"))
+        """
+        use the correct host
+        """
+
+        _config = MonitoringConfig("my-app-id", "my-api-key")
+        self._client = MonitoringClient.create_with_config(
+            config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_delete_with_http_info(
             path="/test",

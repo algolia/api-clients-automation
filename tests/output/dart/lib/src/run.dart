@@ -24,9 +24,15 @@ Future<void> runTest<T extends ApiClient>({
 ///
 /// Uses provided function to intercept HTTP requests.
 class RequestInterceptor extends Requester {
-  final Function(HttpRequest) onRequest;
+  Function(HttpRequest) onRequest = (_) {};
 
-  RequestInterceptor({required this.onRequest});
+  RequestInterceptor({Function(HttpRequest)? onRequest}) {
+    this.onRequest = onRequest ?? (_) {};
+  }
+
+  void setOnRequest(Function(HttpRequest) onRequest) {
+    this.onRequest = onRequest;
+  }
 
   @override
   Future<HttpResponse> perform(HttpRequest request) {

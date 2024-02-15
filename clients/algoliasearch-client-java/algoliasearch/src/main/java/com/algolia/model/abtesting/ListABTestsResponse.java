@@ -5,7 +5,6 @@ package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +12,7 @@ import java.util.Objects;
 public class ListABTestsResponse {
 
   @JsonProperty("abtests")
-  private List<ABTest> abtests = new ArrayList<>();
+  private List<ABTest> abtests;
 
   @JsonProperty("count")
   private Integer count;
@@ -32,7 +31,7 @@ public class ListABTestsResponse {
   }
 
   /** A/B tests. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public List<ABTest> getAbtests() {
     return abtests;
   }

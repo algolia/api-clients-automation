@@ -8,6 +8,7 @@ import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
+import kotlinx.serialization.encodeToString
 import kotlin.test.*
 
 class {{clientPrefix}}Test {
@@ -38,8 +39,9 @@ class {{clientPrefix}}Test {
                     {{/parametersWithDataType}}
                 )
              },
+             {{#match}}
+             {{^testResponse}}
              intercept = {
-                {{#match}}
                 {{#testUserAgent}}
                     val regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}".toRegex()
                     val header = it.headers["User-Agent"].orEmpty()
@@ -52,8 +54,11 @@ class {{clientPrefix}}Test {
                 {{#testHost}}
                     assertEquals("{{{match}}}", it.url.host);
                 {{/testHost}}        
-                {{/match}}
-             }
+             }{{/testResponse}}{{#testResponse}}response = {
+                  val response = Json.encodeToString(it)
+                  assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
+              }{{/testResponse}}
+              {{/match}}
         )
         {{/isMethod}}
         {{/isError}}

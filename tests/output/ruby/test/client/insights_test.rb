@@ -3,6 +3,7 @@ require 'test/unit'
 
 class TestClientInsightsClient < Test::Unit::TestCase
   include Algolia::Insights
+  # calls api with correct user agent
   def test_common_api0
     client = Algolia::InsightsClient.create(
       'APP_ID',
@@ -14,6 +15,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
+  # calls api with default read timeouts
   def test_common_api1
     client = Algolia::InsightsClient.create(
       'APP_ID',
@@ -26,6 +28,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
     assert_equal(5000, req.timeout)
   end
 
+  # calls api with default write timeouts
   def test_common_api2
     client = Algolia::InsightsClient.create(
       'APP_ID',
@@ -38,6 +41,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
     assert_equal(30_000, req.timeout)
   end
 
+  # fallbacks to the alias when region is not given
   def test_parameters0
     client = Algolia::InsightsClient.create(
       'my-app-id',
@@ -64,6 +68,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
     assert_equal('insights.algolia.io', req.host.url)
   end
 
+  # uses the correct region
   def test_parameters1
     client = Algolia::InsightsClient.create(
       'my-app-id',
@@ -75,6 +80,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
     assert_equal('insights.us.algolia.io', req.host.url)
   end
 
+  # throws when incorrect region is given
   def test_parameters2
     Algolia::InsightsClient.create(
       'my-app-id',

@@ -3,6 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
+import com.google.common.collect.Iterables;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -73,6 +74,30 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   }
 
   @Override
+  public ModelsMap postProcessModels(ModelsMap objs) {
+    objs = super.postProcessModels(objs);
+
+    for (ModelMap modelMap : objs.getModels()) {
+      CodegenModel model = modelMap.getModel();
+      if (model.isEnum) {
+        continue;
+      }
+
+      for (CodegenProperty param : Iterables.concat(model.vars, model.allVars, model.requiredVars, model.optionalVars)) {
+        if (
+          !param.isNullable || !param.isPrimitiveType || param.isContainer || param.isFreeFormObject || (param.isAnyType && !param.isModel)
+        ) {
+          continue;
+        }
+
+        param.dataType = "utils." + param.dataType;
+      }
+    }
+
+    return objs;
+  }
+
+  @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOf.updateModelsOneOf(models, modelPackage);
@@ -96,8 +121,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
           prop.dataType = prop.dataType.replace("[]*[]", "[][]");
           prop.vendorExtensions.put("x-go-base-type", prop.dataType);
         }
-
-        prop.dataType = prop.dataType.replace("NullableBool", "utils.NullableBool");
       }
     }
     return models;

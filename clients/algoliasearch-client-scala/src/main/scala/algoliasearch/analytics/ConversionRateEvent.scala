@@ -23,7 +23,7 @@ package algoliasearch.analytics
   */
 case class ConversionRateEvent(
     rate: Double,
-    trackedSearchCount: Int,
+    trackedSearchCount: Option[Int] = scala.None,
     conversionCount: Int,
     date: String
 )

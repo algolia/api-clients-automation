@@ -32,4 +32,9 @@ public class SwiftCTSManager implements CTSManager {
         .collect(Collectors.toList())
     );
   }
+
+  @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("snippets/Package.mustache", "snippets/swift", "Package.swift"));
+  }
 }

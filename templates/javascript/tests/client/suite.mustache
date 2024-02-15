@@ -28,7 +28,7 @@ describe('{{testType}}', () => {
           expect((e as Error).message).toMatch("{{{expectedError}}}");
         }
       {{/isError}}
-      {{^isError}} 
+      {{^isError}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
 
         {{#testUserAgent}}
@@ -40,6 +40,9 @@ describe('{{testType}}', () => {
         {{#testHost}}
           expect(result.host).toEqual("{{{match}}}");
         {{/testHost}}
+        {{#testResponse}}
+        expect(result).toEqual({{{match.parameters}}});
+        {{/testResponse}}
       {{/isError}}
     {{/steps}}
   });

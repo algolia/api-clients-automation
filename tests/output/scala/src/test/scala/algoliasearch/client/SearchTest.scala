@@ -7,6 +7,8 @@ import algoliasearch.search.*
 import algoliasearch.exception.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 import org.scalatest.funsuite.AnyFunSuite
 
 import scala.concurrent.duration.Duration
@@ -55,6 +57,31 @@ class SearchTest extends AnyFunSuite {
       Duration.Inf
     )
     assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
+  }
+
+  test("tests the retry strategy") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6677)),
+            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[Any](
+        path = "/test"
+      ),
+      Duration.Inf
+    )
+    assert(write(res) == "{\"message\":\"ok test server response\"}")
   }
 
   test("calls api with correct user agent") {
