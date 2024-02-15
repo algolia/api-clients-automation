@@ -29,6 +29,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         {{#isError}}
         try:
             {{#dynamicTemplate}}{{/dynamicTemplate}}
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}}
         {{/isError}}
