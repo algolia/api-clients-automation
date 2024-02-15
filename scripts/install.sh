@@ -6,13 +6,16 @@
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
-export apic() {
+apic() {
   (cd scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
-export apicb() {
+apicb() {
   (cd scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
+
+export apic
+export apicb
 
 _list_languages() {
   cat $ROOT/config/clients.config.json | jq -r 'keys[]'

@@ -15,11 +15,11 @@ use Psr\Http\Message\RequestInterface;
 use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
-if (isset($_ENV['DOCKER']) && $_ENV['DOCKER'] === "true") {
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
     $dotenv = Dotenv::createImmutable('tests');
     $dotenv->load();
-} else {
-    $_ENV = getenv();
 }
 {{/hasE2E}}
 
@@ -114,14 +114,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {{#hasE2E}}
     protected function getE2EClient()
     {
-        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
+        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
     }
     {{/hasE2E}}
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, {{clientPrefix}}Config::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY'){{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}}), ClusterHosts::create('127.0.0.1'));
-        $config = {{clientPrefix}}Config::create('foo', 'bar'{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
+        $config = {{clientPrefix}}Config::create('appID', 'apiKey'{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new {{client}}($api, $config);
     }
