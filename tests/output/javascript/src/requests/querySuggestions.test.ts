@@ -92,6 +92,32 @@ describe('customGet', () => {
       query: 'parameters%20with%20space',
     });
   });
+
+  test('requestOptions should be escaped too', async () => {
+    const requestOptions: RequestOptions = {
+      queryParameters: {
+        query: 'parameters with space',
+        'and an array': ['array', 'with spaces'],
+      },
+      headers: { 'x-header-1': 'spaces are left alone' },
+    };
+
+    const req = (await client.customGet(
+      { path: '/test/all', parameters: { query: 'to be overriden' } },
+      requestOptions
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      query: 'parameters%20with%20space',
+      'and%20an%20array': 'array%2Cwith%20spaces',
+    });
+    expect(req.headers).toEqual(
+      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
+    );
+  });
 });
 
 describe('customPost', () => {
@@ -256,7 +282,7 @@ describe('customPost', () => {
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const requestOptions: RequestOptions = {
-      queryParameters: { myParam: ['c', 'd'] },
+      queryParameters: { myParam: ['b and c', 'd'] },
     };
 
     const req = (await client.customPost(
@@ -273,7 +299,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c%2Cd',
+      myParam: 'b%20and%20c%2Cd',
     });
   });
 

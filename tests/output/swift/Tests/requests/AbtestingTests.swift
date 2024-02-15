@@ -212,6 +212,65 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// requestOptions should be escaped too
+    func testCustomGetTest2() async throws {
+        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+            appID: AbtestingClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingClient(configuration: configuration, transporter: transporter)
+
+        let requestOptions = RequestOptions(
+            headers: [
+                "x-header-1": "spaces are left alone",
+            ],
+
+            queryParameters: [
+                "query": "parameters with space",
+                "and an array": ["array",
+                                 "with spaces",
+                ],
+            ]
+        )
+
+        let response = try await client.customGetWithHTTPInfo(
+            path: "/test/all",
+            parameters: [
+                "query": AnyCodable("to be overriden"),
+            ],
+            requestOptions: requestOptions
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters =
+            try XCTUnwrap(
+                "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+                    .data(using: .utf8)
+            )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+
+        let expectedHeaders = try XCTUnwrap("{\"x-header-1\":\"spaces are left alone\"}".data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
+
+        let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+        for header in expectedHeadersMap {
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
+        }
+    }
+
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
         let configuration: Abtesting.Configuration = try Abtesting.Configuration(
@@ -615,7 +674,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
         let requestOptions = RequestOptions(
             queryParameters: [
-                "myParam": ["c",
+                "myParam": ["b and c",
                             "d",
                 ],
             ]
@@ -646,7 +705,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}"
+            "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
                 .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(

@@ -89,6 +89,34 @@ class RecommendTest {
     )
   }
 
+  @Test
+  fun `requestOptions should be escaped too`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "/test/all",
+          parameters = mapOf("query" to "to be overriden"),
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "parameters with space")
+              put("and an array", listOf("array", "with spaces"))
+            },
+            headers = buildMap {
+              put("x-header-1", "spaces are left alone")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
+        assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // customPost
 
   @Test
@@ -322,7 +350,7 @@ class RecommendTest {
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
-              put("myParam", listOf("c", "d"))
+              put("myParam", listOf("b and c", "d"))
             },
           ),
         )
@@ -330,7 +358,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertQueryParams("""{"query":"parameters","myParam":"c%2Cd"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
