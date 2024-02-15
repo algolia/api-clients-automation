@@ -5,8 +5,6 @@
 import Analytics
 import Core
 
-// MARK: - AnalyticsClientSnippet
-
 final class AnalyticsClientSnippet {
     /// Snippet for the customDelete method.
     ///

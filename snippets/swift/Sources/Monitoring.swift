@@ -5,8 +5,6 @@
 import Core
 import Monitoring
 
-// MARK: - MonitoringClientSnippet
-
 final class MonitoringClientSnippet {
     /// Snippet for the customDelete method.
     ///

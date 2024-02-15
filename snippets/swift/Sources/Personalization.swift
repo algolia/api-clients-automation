@@ -5,8 +5,6 @@
 import Core
 import Personalization
 
-// MARK: - PersonalizationClientSnippet
-
 final class PersonalizationClientSnippet {
     /// Snippet for the customDelete method.
     ///

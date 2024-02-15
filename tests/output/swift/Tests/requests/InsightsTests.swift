@@ -8,8 +8,6 @@ import Utils
 @testable import Core
 @testable import Insights
 
-// MARK: - InsightsClientRequestsTests
-
 final class InsightsClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
     static let API_KEY = "my_api_key"
