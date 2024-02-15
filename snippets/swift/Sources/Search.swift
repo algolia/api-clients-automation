@@ -5,8 +5,6 @@
 import Core
 import Search
 
-// MARK: - SearchClientSnippet
-
 final class SearchClientSnippet {
     /// Snippet for the addApiKey method.
     ///

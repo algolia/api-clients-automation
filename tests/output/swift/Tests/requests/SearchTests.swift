@@ -9,8 +9,6 @@ import Utils
 @testable import Core
 @testable import Search
 
-// MARK: - SearchClientRequestsTests
-
 final class SearchClientRequestsTests: XCTestCase {
     static var APPLICATION_ID = "my_application_id"
     static var API_KEY = "my_api_key"

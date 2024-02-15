@@ -5,8 +5,6 @@
 import Core
 import Ingestion
 
-// MARK: - IngestionClientSnippet
-
 final class IngestionClientSnippet {
     /// Snippet for the createAuthentication method.
     ///

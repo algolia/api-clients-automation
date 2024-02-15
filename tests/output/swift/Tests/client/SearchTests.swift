@@ -8,8 +8,6 @@ import Utils
 @testable import Core
 @testable import Search
 
-// MARK: - SearchClientClientTests
-
 final class SearchClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
     let API_KEY = "my_api_key"

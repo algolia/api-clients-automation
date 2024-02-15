@@ -5,8 +5,6 @@
 import Abtesting
 import Core
 
-// MARK: - AbtestingClientSnippet
-
 final class AbtestingClientSnippet {
     /// Snippet for the addABTests method.
     ///

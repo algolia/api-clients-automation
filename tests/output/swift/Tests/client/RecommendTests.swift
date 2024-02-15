@@ -8,8 +8,6 @@ import Utils
 @testable import Core
 @testable import Recommend
 
-// MARK: - RecommendClientClientTests
-
 final class RecommendClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
     let API_KEY = "my_api_key"
