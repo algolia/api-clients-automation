@@ -5,8 +5,6 @@
 import Core
 import Recommend
 
-// MARK: - RecommendClientSnippet
-
 final class RecommendClientSnippet {
     /// Snippet for the customDelete method.
     ///

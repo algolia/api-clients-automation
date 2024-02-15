@@ -8,8 +8,6 @@ import Utils
 @testable import Abtesting
 @testable import Core
 
-// MARK: - AbtestingClientClientTests
-
 final class AbtestingClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
     let API_KEY = "my_api_key"

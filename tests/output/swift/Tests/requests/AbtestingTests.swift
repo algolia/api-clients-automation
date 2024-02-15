@@ -9,8 +9,6 @@ import Utils
 @testable import Abtesting
 @testable import Core
 
-// MARK: - AbtestingClientRequestsTests
-
 final class AbtestingClientRequestsTests: XCTestCase {
     static var APPLICATION_ID = "my_application_id"
     static var API_KEY = "my_api_key"

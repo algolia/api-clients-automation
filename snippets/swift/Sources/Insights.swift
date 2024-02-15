@@ -5,8 +5,6 @@
 import Core
 import Insights
 
-// MARK: - InsightsClientSnippet
-
 final class InsightsClientSnippet {
     /// Snippet for the customDelete method.
     ///

@@ -5,8 +5,6 @@
 import Core
 import QuerySuggestions
 
-// MARK: - QuerySuggestionsClientSnippet
-
 final class QuerySuggestionsClientSnippet {
     /// Snippet for the createConfig method.
     ///
