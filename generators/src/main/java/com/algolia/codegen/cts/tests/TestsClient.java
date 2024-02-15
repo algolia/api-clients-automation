@@ -53,7 +53,7 @@ public class TestsClient extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       List<Object> tests = new ArrayList<>();
       int testIndex = 0;
-      for (ClientTestData test : blockEntry.getValue()) {
+      skipTest:for (ClientTestData test : blockEntry.getValue()) {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Object> steps = new ArrayList<>();
@@ -91,9 +91,9 @@ public class TestsClient extends TestsGenerator {
               }
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
-              if ((gzipEncoding && language.equals("javascript")) || language.equals("dart")) {
+              if (gzipEncoding && (language.equals("javascript") || language.equals("dart"))) {
                 // not supported in javascript and dart
-                continue;
+                continue skipTest;
               }
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
