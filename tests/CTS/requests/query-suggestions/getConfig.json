@@ -1,11 +1,43 @@
 [
   {
+    "testName": "Retrieve QS config e2e",
     "parameters": {
-      "indexName": "theIndexName"
+      "indexName": "cts_e2e_browse_query_suggestions"
     },
     "request": {
-      "path": "/1/configs/theIndexName",
+      "path": "/1/configs/cts_e2e_browse_query_suggestions",
       "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "allowSpecialCharacters": true,
+        "enablePersonalization": false,
+        "exclude": [
+          "^cocaines$"
+        ],
+        "indexName": "cts_e2e_browse_query_suggestions",
+        "languages": [],
+        "sourceIndices": [
+          {
+            "facets": [
+              {
+                "amount": 1,
+                "attribute": "title"
+              }
+            ],
+            "generate": [
+              [
+                "year"
+              ]
+            ],
+            "indexName": "cts_e2e_browse",
+            "minHits": 5,
+            "minLetters": 4,
+            "replicas": false
+          }
+        ]
+      }
     }
   }
 ]
