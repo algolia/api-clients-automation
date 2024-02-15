@@ -290,6 +290,54 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("requestOptions should be escaped too")
+  void customGetTest2() {
+    assertDoesNotThrow(() -> {
+      client.customGet(
+        "/test/all",
+        Map.of("query", "to be overriden"),
+        new RequestOptions()
+          .addExtraQueryParameters("query", "parameters with space")
+          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraHeader("x-header-1", "spaces are left alone")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/test/all", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+
+    try {
+      Map<String, String> expectedHeaders = json.readValue(
+        "{\"x-header-1\":\"spaces are left alone\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, String> actualHeaders = req.headers;
+
+      for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse headers json");
+    }
+  }
+
+  @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
     assertDoesNotThrow(() -> {
@@ -547,7 +595,7 @@ class IngestionClientRequestsTests {
         "/test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -557,7 +605,7 @@ class IngestionClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}",
+        "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;

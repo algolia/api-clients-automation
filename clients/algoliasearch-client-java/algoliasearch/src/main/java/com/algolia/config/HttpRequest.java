@@ -161,7 +161,7 @@ public class HttpRequest {
 
     public Builder addHeader(String key, Object value) {
       if (value == null) return this;
-      this.headers.put(key.toLowerCase(), StringUtils.paramToString(value));
+      this.headers.put(key.toLowerCase(), String.valueOf(value));
       return this;
     }
 

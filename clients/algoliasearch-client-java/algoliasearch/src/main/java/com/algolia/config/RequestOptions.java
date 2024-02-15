@@ -18,7 +18,7 @@ public final class RequestOptions {
 
   public RequestOptions addExtraHeader(String key, Object value) {
     if (value == null) return this;
-    headers.put(key.toLowerCase(), StringUtils.paramToString(value));
+    headers.put(key.toLowerCase(), String.valueOf(value));
     return this;
   }
 

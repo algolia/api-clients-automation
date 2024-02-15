@@ -95,6 +95,31 @@ func TestAnalytics_CustomGet(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("requestOptions should be escaped too", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "to be overriden"}),
+			analytics.QueryParamOption("query", "parameters with space"), analytics.QueryParamOption("and an array",
+				[]string{"array", "with spaces"}), analytics.HeaderParamOption("x-header-1", "spaces are left alone"),
+		)
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-header-1":"spaces are left alone"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestAnalytics_CustomPost(t *testing.T) {
@@ -265,7 +290,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 			"/test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			analytics.QueryParamOption("myParam",
-				[]string{"c", "d"}),
+				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
 
@@ -275,7 +300,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c%2Cd"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
