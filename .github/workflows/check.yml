@@ -345,8 +345,12 @@ jobs:
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
+      - name: Update composer.lock
+        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language == 'php' && startsWith(env.head_ref, 'chore/renovateBaseBranch') }}
+        run: cd ${{ matrix.client.path }} && composer update
+
       - name: Build clients
-        if: ${{ steps.cache.outputs.cache-hit != 'true' && matrix.client.language != 'php' }}
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: ${{ matrix.client.buildCommand }}
 
       - name: Run Java 'algoliasearch' public API validation
