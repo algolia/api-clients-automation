@@ -57,23 +57,23 @@ package algoliasearch.abtesting
   */
 case class Variant(
     addToCartCount: Int,
-    addToCartRate: Double,
-    averageClickPosition: Int,
+    addToCartRate: Option[Double] = scala.None,
+    averageClickPosition: Option[Int] = scala.None,
     clickCount: Int,
-    clickThroughRate: Double,
+    clickThroughRate: Option[Double] = scala.None,
     conversionCount: Int,
-    conversionRate: Double,
+    conversionRate: Option[Double] = scala.None,
     currencies: Option[Map[String, CurrenciesValue]] = scala.None,
     description: String,
     estimatedSampleSize: Option[Int] = scala.None,
     filterEffects: Option[FilterEffects] = scala.None,
     index: String,
-    noResultCount: Int,
+    noResultCount: Option[Int] = scala.None,
     purchaseCount: Int,
-    purchaseRate: Double,
-    searchCount: Int,
-    trackedSearchCount: Int,
+    purchaseRate: Option[Double] = scala.None,
+    searchCount: Option[Int] = scala.None,
+    trackedSearchCount: Option[Int] = scala.None,
     trafficPercentage: Int,
-    userCount: Int,
-    trackedUserCount: Int
+    userCount: Option[Int] = scala.None,
+    trackedUserCount: Option[Int] = scala.None
 )

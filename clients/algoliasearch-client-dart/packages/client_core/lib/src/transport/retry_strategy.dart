@@ -111,7 +111,8 @@ final class RetryStrategy {
                 ? const <String, dynamic>{}
                 : null,
         queryParameters: {...?request.queryParams, ...?options?.urlParameters}
-            .map((key, value) => MapEntry(key, _encodeQueryParameter(value))));
+            .map((key, value) => MapEntry(
+                _encodeQueryParameter(key), _encodeQueryParameter(value))));
   }
 
   /// Determines the call type of a given [config].
