@@ -103,12 +103,12 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       // e2e
       try {
         var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-      {{#requestOptions.queryParameters.parametersWithDataType}}
-          QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
-      {{/requestOptions.queryParameters.parametersWithDataType}}
-      {{#requestOptions.headers.parametersWithDataType}}
-          Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
-      {{/requestOptions.headers.parametersWithDataType}}
+          {{#requestOptions.queryParameters}}
+            QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.queryParameters}}
+          {{#requestOptions.headers}}
+            Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.headers}}
         }{{/hasRequestOptions}});
       {{#statusCode}}
           // Check status code {{statusCode}}
