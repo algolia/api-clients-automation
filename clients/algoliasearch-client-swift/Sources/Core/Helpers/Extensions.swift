@@ -76,9 +76,9 @@ extension Set: JSONEncodable {
     }
 }
 
-extension Dictionary: JSONEncodable {
+extension Dictionary: JSONEncodable where Key == String {
     public func encodeToJSON() -> Any {
-        var dictionary = [AnyHashable: Any]()
+        var dictionary = [String: Any]()
         for (key, value) in self {
             dictionary[key] = encodeIfPossible(value)
         }
@@ -94,10 +94,10 @@ extension Data: JSONEncodable {
 
         let jsonData = "{\"data\":\(selfString)}".data(using: .utf8)
         guard let jsonData = jsonData, let json = try? CodableHelper.jsonDecoder.decode([String: String].self, from: jsonData) else {
-            fatalError("Could not decode from data holder: \(jsonData)")
+            fatalError("Could not decode from data holder: `{\"data\":\(selfString)}`")
         }
 
-        return json["data"]
+        return json["data"] as Any
     }
 }
 
@@ -258,8 +258,7 @@ extension HTTPURLResponse {
     }
 }
 
-extension URLRequest: Builder {}
-extension URLComponents: Builder {}
+// MARK: - URLRequest.FormatError
 
 public extension URLRequest {
     enum FormatError: LocalizedError {

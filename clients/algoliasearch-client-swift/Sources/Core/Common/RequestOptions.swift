@@ -9,20 +9,20 @@ import Foundation
 
 public class RequestOptions {
     private(set) var headers: [String: String]?
-    private(set) var queryItems: [URLQueryItem]?
+    private(set) var queryParameters: [String: Any?]?
     private(set) var readTimeout: TimeInterval?
     private(set) var writeTimeout: TimeInterval?
     private(set) var body: [String: Any?]?
 
     public init(
         headers: [String: String]? = nil,
-        queryItems: [URLQueryItem]? = nil,
+        queryParameters: [String: Any?]? = nil,
         readTimeout: TimeInterval? = nil,
         writeTimeout: TimeInterval? = nil,
         body: [String: Any?]? = nil
     ) {
         self.headers = headers
-        self.queryItems = queryItems
+        self.queryParameters = queryParameters
         self.readTimeout = readTimeout
         self.writeTimeout = writeTimeout
         self.body = body
@@ -34,7 +34,7 @@ public class RequestOptions {
         }
 
         var finalHeaders: [String: String]? = lhs.headers
-        var finalQueryItems: [URLQueryItem]? = lhs.queryItems
+        var finalQueryParameters: [String: Any?]? = lhs.queryParameters
         var finalBody: [String: Any?]? = lhs.body
         var finalReadTimeout: TimeInterval? = lhs.readTimeout
         var finalWriteTimeout: TimeInterval? = lhs.writeTimeout
@@ -43,9 +43,8 @@ public class RequestOptions {
             finalHeaders = (finalHeaders ?? [:]).merging(rhsHeaders) { _, new in new }
         }
 
-        if let rhsQueryItems = rhs.queryItems {
-            finalQueryItems = lhs.queryItems ?? []
-            rhsQueryItems.forEach { queryItem in finalQueryItems?.append(queryItem) }
+        if let rhsQueryParameters = rhs.queryParameters {
+            finalQueryParameters = (finalQueryParameters ?? [:]).merging(rhsQueryParameters) { _, new in new }
         }
 
         if let rhsBody = rhs.body {
@@ -62,7 +61,7 @@ public class RequestOptions {
 
         return RequestOptions(
             headers: finalHeaders,
-            queryItems: finalQueryItems,
+            queryParameters: finalQueryParameters,
             readTimeout: finalReadTimeout,
             writeTimeout: finalWriteTimeout,
             body: finalBody

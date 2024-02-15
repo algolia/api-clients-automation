@@ -20,7 +20,7 @@ public struct EchoResponse: Codable {
     let path: String
     let host: String
     let algoliaAgent: String
-    let queryItems: [String: String?]?
+    let queryParameters: [String: String?]?
     let headers: [String: String?]?
 }
 
@@ -61,13 +61,20 @@ final class EchoRequestBuilder: RequestBuilder {
                 GenericError(description: "Unable to mock HTTPURLResponse from EchoTransporter"))
         }
 
-        let queryItems = processQueryItems(from: url.query)
+        let urlComponents = URLComponents(string: url.absoluteString)
+        let queryParameters = self.processQueryItems(from: urlComponents?.percentEncodedQueryItems)
 
         let echoResponse = EchoResponse(
-            statusCode: statusCode, method: httpMethod, url: url.absoluteString, timeout: timeout,
-            originalBodyData: urlRequest.httpBody, path: url.path, host: url.host ?? "",
+            statusCode: statusCode,
+            method: httpMethod,
+            url: url.absoluteString,
+            timeout: timeout,
+            originalBodyData: urlRequest.httpBody,
+            path: urlComponents?.percentEncodedPath ?? "",
+            host: url.host ?? "",
             algoliaAgent: headers["X-Algolia-Agent"] ?? "",
-            queryItems: queryItems, headers: headers
+            queryParameters: queryParameters,
+            headers: headers
         )
 
         let interceptedBody = try CodableHelper.jsonEncoder.encode(echoResponse)
@@ -75,15 +82,14 @@ final class EchoRequestBuilder: RequestBuilder {
         return Response(response: mockHTTPURLResponse, body: nil, bodyData: interceptedBody)
     }
 
-    fileprivate func processQueryItems(from query: String?) -> [String: String?]? {
-        guard let query = query else {
-            return nil
-        }
+    fileprivate func processQueryItems(from queryItems: [URLQueryItem]?)
+        -> [String: String?]? {
+            guard let queryItems else {
+                return nil
+            }
 
-        let components = URLComponents(string: "?" + query)
-
-        return components?.queryItems?.reduce(into: [String: String?]()) { acc, cur in
-            acc.updateValue(cur.value, forKey: cur.name)
+            return queryItems.reduce(into: [String: String?]()) { acc, cur in
+                acc.updateValue(cur.value, forKey: cur.name)
+            }
         }
-    }
 }

@@ -6,6 +6,7 @@ let package = Package(
   name: "AlgoliaSearchClientTests",
   dependencies: [
     .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
+    .package(url: "https://github.com/swiftpackages/DotEnv.git", from: "3.0.0"),
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
   targets: [
@@ -31,6 +32,7 @@ let package = Package(
       name: "requests",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "DotEnv", package: "DotEnv"),
         .target(name: "Utils"),{{#packageList}}
         .product(
           name: "{{.}}",

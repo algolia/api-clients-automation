@@ -16,7 +16,7 @@ public struct Configuration: Core.Configuration, Credentials {
   ]
 {{/hasRegionalHost}}
 
-  public let appId: String
+  public let appID: String
   public let apiKey: String
   public var writeTimeout: TimeInterval
   public var readTimeout: TimeInterval
@@ -26,7 +26,7 @@ public struct Configuration: Core.Configuration, Credentials {
 
   public let batchSize: Int{{/isSearchClient}}
 
-  init(appId: String,
+  init(appID: String,
        apiKey: String,{{#hasRegionalHost}}
        region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
        writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
@@ -36,7 +36,7 @@ public struct Configuration: Core.Configuration, Credentials {
        hosts: [RetryableHost]? = nil{{#isSearchClient}},
        batchSize: Int = 1000{{/isSearchClient}}
   ) throws {
-    guard !appId.isEmpty else {
+    guard !appID.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
     }
 
@@ -44,13 +44,13 @@ public struct Configuration: Core.Configuration, Credentials {
       throw AlgoliaError.invalidCredentials("apiKey")
     }
 
-    self.appId = appId
+    self.appID = appID
     self.apiKey = apiKey
     self.writeTimeout = writeTimeout
     self.readTimeout = readTimeout
     self.logLevel = logLevel
     self.defaultHeaders = [
-      "X-Algolia-Application-Id": appId,
+      "X-Algolia-Application-Id": appID,
       "X-Algolia-API-Key": apiKey,
       "Content-Type": "application/json"
     ].merging(defaultHeaders ?? [:]) { (_, new) in new }{{#isSearchClient}}
@@ -63,7 +63,7 @@ public struct Configuration: Core.Configuration, Credentials {
       func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
         -> RetryableHost
       {
-        guard let url = URL(string: "https://\(appId)\(components.suffix)") else {
+        guard let url = URL(string: "https://\(appID)\(components.suffix)") else {
           throw AlgoliaError.runtimeError("Malformed URL")
         }
 
