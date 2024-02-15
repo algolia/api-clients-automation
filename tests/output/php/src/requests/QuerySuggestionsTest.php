@@ -167,6 +167,41 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for CustomGet
+     * requestOptions should be escaped too.
+     */
+    public function testCustomGet2()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query' => 'parameters with space',
+                'and an array' => ['array',  'with spaces',
+                ],
+            ],
+            'headers' => [
+                'x-header-1' => 'spaces are left alone',
+            ],
+        ];
+        $client->customGet(
+            '/test/all',
+            ['query' => 'to be overriden',
+            ],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
+                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
+            ],
+        ]);
+    }
+
+    /**
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
@@ -420,7 +455,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c',  'd',
+                'myParam' => ['b and c',  'd',
                 ],
             ],
             'headers' => [
@@ -440,7 +475,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"c%2Cd"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
             ],
         ]);
     }
