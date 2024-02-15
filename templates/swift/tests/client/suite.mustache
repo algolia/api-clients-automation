@@ -58,6 +58,9 @@ final class {{client}}ClientTests: XCTestCase {
             {{#testHost}}
               XCTAssertEqual("{{{match}}}", echoResponse.host);
             {{/testHost}}
+            {{#testResponse}}
+              XCTAssertEqual(comparableJSON, responseBodyJSON);
+            {{/testResponse}}
           {{/match}}
         {{/isError}}
       {{/steps}}

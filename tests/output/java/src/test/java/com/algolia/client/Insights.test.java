@@ -9,7 +9,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.InsightsClient;
 import com.algolia.config.*;
 import com.algolia.model.insights.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,13 +22,23 @@ import org.junit.jupiter.api.TestInstance;
 class InsightsClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  InsightsClient createClient() {
-    return new InsightsClient("appId", "apiKey", "us", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  InsightsClient createClient() {
+    return new InsightsClient("appId", "apiKey", "us", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
@@ -74,7 +88,7 @@ class InsightsClientClientTests {
   @Test
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
-    InsightsClient client = new InsightsClient("my-app-id", "my-api-key", buildClientOptions());
+    InsightsClient client = new InsightsClient("my-app-id", "my-api-key", withEchoRequester());
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
@@ -100,7 +114,7 @@ class InsightsClientClientTests {
   @Test
   @DisplayName("uses the correct region")
   void parametersTest1() {
-    InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", buildClientOptions());
+    InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.customDelete("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -114,7 +128,7 @@ class InsightsClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "not_a_region", buildClientOptions());
+          InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
         }
       );
       assertEquals("`region` must be one of the following: de, us", exception.getMessage());

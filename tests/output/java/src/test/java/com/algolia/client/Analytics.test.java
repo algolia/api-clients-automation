@@ -9,7 +9,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.AnalyticsClient;
 import com.algolia.config.*;
 import com.algolia.model.analytics.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,13 +22,23 @@ import org.junit.jupiter.api.TestInstance;
 class AnalyticsClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  AnalyticsClient createClient() {
-    return new AnalyticsClient("appId", "apiKey", "us", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  AnalyticsClient createClient() {
+    return new AnalyticsClient("appId", "apiKey", "us", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
@@ -74,7 +88,7 @@ class AnalyticsClientClientTests {
   @Test
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
-    AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", buildClientOptions());
+    AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", withEchoRequester());
     client.getAverageClickPosition("my-index");
     EchoResponse result = echo.getLastResponse();
 
@@ -84,7 +98,7 @@ class AnalyticsClientClientTests {
   @Test
   @DisplayName("uses the correct region")
   void parametersTest1() {
-    AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", buildClientOptions());
+    AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", withEchoRequester());
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -98,7 +112,7 @@ class AnalyticsClientClientTests {
       Exception exception = assertThrows(
         Exception.class,
         () -> {
-          AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "not_a_region", buildClientOptions());
+          AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
         }
       );
       assertEquals("`region` must be one of the following: de, us", exception.getMessage());

@@ -50,12 +50,16 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
       request: Request,
       host: StatefulHost
   ): Response = {
-    val newUrl = request
+    val urlBuilder = request
       .url()
       .newBuilder()
       .scheme(host.getScheme)
       .host(host.getHost)
-      .build()
+    if (host.getPort.isDefined) {
+      urlBuilder.port(host.getPort.get)
+    }
+    val newUrl = urlBuilder.build()
+
     val newRequest = request.newBuilder().url(newUrl).build()
     chain.withConnectTimeout(
       chain.connectTimeoutMillis() * (host.getRetryCount + 1),

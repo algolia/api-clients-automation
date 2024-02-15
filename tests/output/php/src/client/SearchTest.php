@@ -78,6 +78,22 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case : tests the retry strategy.
+     */
+    public function test2api()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6677', 'http://localhost:6678']));
+
+        $res = $client->customGet(
+            '/test',
+        );
+        $this->assertEquals(
+            '{"message":"ok test server response"}',
+            json_encode($res)
+        );
+    }
+
+    /**
      * Test case : calls api with correct user agent.
      */
     public function test0commonApi()

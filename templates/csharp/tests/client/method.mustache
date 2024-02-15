@@ -1,4 +1,4 @@
-await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+{{^useEchoRequester}}var res = {{/useEchoRequester}}await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
 {{#requestOptions.queryParameters.parametersWithDataType}}
         QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
 {{/requestOptions.queryParameters.parametersWithDataType}}
@@ -6,4 +6,4 @@ await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}
         Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
 {{/requestOptions.headers.parametersWithDataType}}
     }{{/hasRequestOptions}});
-EchoResponse result = _echo.LastResponse;
+{{#useEchoRequester}}EchoResponse result = _echo.LastResponse;{{/useEchoRequester}}
