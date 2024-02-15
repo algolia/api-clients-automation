@@ -8,11 +8,7 @@
 import Foundation
 
 public class RequestOptions {
-    private(set) var headers: [String: String]?
-    private(set) var queryParameters: [String: Any?]?
-    private(set) var readTimeout: TimeInterval?
-    private(set) var writeTimeout: TimeInterval?
-    private(set) var body: [String: Any?]?
+    // MARK: Lifecycle
 
     public init(
         headers: [String: String]? = nil,
@@ -28,8 +24,10 @@ public class RequestOptions {
         self.body = body
     }
 
-    public static func + (lhs: RequestOptions, rhs: RequestOptions?) -> RequestOptions {
-        guard let rhs = rhs else {
+    // MARK: Public
+
+    public static func +(lhs: RequestOptions, rhs: RequestOptions?) -> RequestOptions {
+        guard let rhs else {
             return lhs
         }
 
@@ -71,20 +69,28 @@ public class RequestOptions {
     public func timeout(for callType: CallType) -> TimeInterval? {
         switch callType {
         case .read:
-            return readTimeout
+            self.readTimeout
         case .write:
-            return writeTimeout
+            self.writeTimeout
         }
     }
 
     public func addHeaders(_ aHeaders: [String: String]) {
-        headers?.merge(aHeaders) { _, new in new }
+        self.headers?.merge(aHeaders) { _, new in new }
     }
 
     public func addHeader(name: String, value: String) -> Self {
         if !value.isEmpty {
-            headers?[name] = value
+            self.headers?[name] = value
         }
         return self
     }
+
+    // MARK: Internal
+
+    private(set) var headers: [String: String]?
+    private(set) var queryParameters: [String: Any?]?
+    private(set) var readTimeout: TimeInterval?
+    private(set) var writeTimeout: TimeInterval?
+    private(set) var body: [String: Any?]?
 }

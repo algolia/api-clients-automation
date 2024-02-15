@@ -20,7 +20,7 @@ public enum APIHelper {
     }
 
     public static func rejectNilHeaders(_ source: [String: Any?]?) -> [String: String]? {
-        guard let source = source else {
+        guard let source else {
             return nil
         }
 
@@ -28,16 +28,16 @@ public enum APIHelper {
             if let collection = item.value as? [Any?] {
                 result[item.key] =
                     collection
-                        .compactMap { value in convertAnyToString(value) }
+                        .compactMap { value in self.convertAnyToString(value) }
                         .joined(separator: ",")
             } else if let value: Any = item.value {
-                result[item.key] = convertAnyToString(value)
+                result[item.key] = self.convertAnyToString(value)
             }
         }
     }
 
     public static func convertBoolToString(_ source: [String: Any]?) -> [String: Any]? {
-        guard let source = source else {
+        guard let source else {
             return nil
         }
 
@@ -52,7 +52,7 @@ public enum APIHelper {
     }
 
     public static func convertAnyToString(_ value: Any?) -> String? {
-        guard let value = value else { return nil }
+        guard let value else { return nil }
         if let value = value as? any RawRepresentable {
             return "\(value.rawValue)"
         } else {
@@ -64,7 +64,7 @@ public enum APIHelper {
         if let collection = source as? [Any?] {
             return
                 collection
-                    .compactMap { value in convertAnyToString(value) }
+                    .compactMap { value in self.convertAnyToString(value) }
                     .joined(separator: ",")
         }
 
@@ -78,7 +78,7 @@ public enum APIHelper {
     ///
     /// collection values are always exploded
     public static func mapValuesToQueryItems(_ source: [String: Any?]?) -> [URLQueryItem]? {
-        guard let source = source else {
+        guard let source else {
             return nil
         }
 

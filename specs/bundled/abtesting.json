@@ -980,6 +980,7 @@
         ]
       },
       "ABTests": {
+        "nullable": true,
         "type": "array",
         "description": "A/B tests.",
         "items": {
@@ -2361,6 +2362,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "abtests": {
+                      "nullable": true,
                       "type": "array",
                       "description": "A/B tests.",
                       "items": {

@@ -392,6 +392,7 @@ components:
         - abTestID
         - variants
     ABTests:
+      nullable: true
       type: array
       description: A/B tests.
       items:
