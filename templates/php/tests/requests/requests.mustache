@@ -120,15 +120,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, {{clientPrefix}}Config::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = {{clientPrefix}}Config::create('foo', 'bar');
+        $api = new ApiWrapper($this, {{clientPrefix}}Config::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY'){{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}}), ClusterHosts::create('127.0.0.1'));
+        $config = {{clientPrefix}}Config::create('foo', 'bar'{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
 
         return new {{client}}($api, $config);
     }
 
     {{#blocksRequests}}
     {{#tests}}
-
     /**
     * Test case for {{#lambda.titlecase}}{{{method}}}{{/lambda.titlecase}}
     * {{{testName}}}
