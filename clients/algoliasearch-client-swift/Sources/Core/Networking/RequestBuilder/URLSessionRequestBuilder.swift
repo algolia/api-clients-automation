@@ -14,6 +14,10 @@ import Foundation
 // MARK: - URLSessionRequestBuilder
 
 open class URLSessionRequestBuilder: RequestBuilder {
+    // MARK: Internal
+
+    private(set) var sessionManager: URLSession
+
     // MARK: Lifecycle
 
     public required init() {
@@ -50,10 +54,6 @@ open class URLSessionRequestBuilder: RequestBuilder {
             urlRequest: urlRequest, data: responseData, response: httpResponse
         )
     }
-
-    // MARK: Internal
-
-    private(set) var sessionManager: URLSession
 
     // MARK: Fileprivate
 

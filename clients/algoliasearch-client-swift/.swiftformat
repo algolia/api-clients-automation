@@ -88,7 +88,6 @@
 --enable noExplicitOwnership
 --enable numberFormatting
 --enable opaqueGenericParameters
---enable organizeDeclarations
 --enable preferKeyPath
 --enable redundantClosure
 --enable redundantExtensionACL
@@ -144,6 +143,7 @@
 --disable applicationMain
 --disable blankLinesBetweenImports
 --disable fileHeader
+--disable organizeDeclarations
 --disable preferForLoop
 --disable redundantBackticks
 --disable redundantBreak
