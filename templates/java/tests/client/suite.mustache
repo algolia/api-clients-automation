@@ -77,7 +77,7 @@ class {{client}}ClientTests {
             assertEquals("{{{match}}}", result.host);
           {{/testHost}}
           {{#testResponse}}
-          assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+            assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.STRICT));
           {{/testResponse}}
         {{/match}}
       {{/isError}}
