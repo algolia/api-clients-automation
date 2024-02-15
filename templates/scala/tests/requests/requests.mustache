@@ -42,20 +42,21 @@ class {{clientPrefix}}Test extends AnyFunSuite {
 
   {{#hasE2E}}
   def testE2EClient(): {{client}} = {
+    {{#hasRegionalHost}}
+    val region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}
+    {{/hasRegionalHost}}
     if (System.getenv("CI") == "true") {
       {{client}}(
         appId = System.getenv("ALGOLIA_APPLICATION_ID"),
         apiKey = System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}},
-        region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}
-        {{/hasRegionalHost}}
+        region = region{{/hasRegionalHost}}
       )
     } else {
       val dotenv = Dotenv.configure.directory("../../").load
       {{client}}(
         appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
         apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}},
-        region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}
-        {{/hasRegionalHost}}
+        region = region{{/hasRegionalHost}}
       )
     }
   }
