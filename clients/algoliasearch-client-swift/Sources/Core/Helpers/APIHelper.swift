@@ -76,64 +76,49 @@ public enum APIHelper {
 
     /// maps all values from source to query parameters
     ///
-    /// explode attribute is respected: collection values might be either joined or split up into separate key value pairs
-    public static func mapValuesToQueryItems(
-        _ source: [String: (wrappedValue: Any?, isExplode: Bool)]
-    ) -> [URLQueryItem]? {
-        let destination = source.filter { $0.value.wrappedValue != nil }.reduce(into: [URLQueryItem]()) { result, item in
-            if let collection = item.value.wrappedValue as? [Any?] {
-                let collectionValues: [String] = collection.compactMap { value in convertAnyToString(value)
-                }
-
-                if !item.value.isExplode {
-                    result.append(
-                        URLQueryItem(name: item.key, value: collectionValues.joined(separator: ",")))
-                } else {
-                    for value in collectionValues {
-                        result.append(URLQueryItem(name: item.key, value: value))
-                    }
-                }
-
-            } else if let value = item.value.wrappedValue {
-                result.append(URLQueryItem(name: item.key, value: convertAnyToString(value)))
-            }
-        }
-
-        if destination.isEmpty {
-            return nil
-        }
-        return destination
-    }
-
-    /// maps all values from source to query parameters
-    ///
     /// collection values are always exploded
     public static func mapValuesToQueryItems(_ source: [String: Any?]?) -> [URLQueryItem]? {
         guard let source = source else {
             return nil
         }
 
-        let destination = source.filter { $0.value != nil }.reduce(into: [URLQueryItem]()) {
-            result, item in
-            if let collection = item.value as? [Any?] {
-                let collectionValues: [String] = collection.compactMap { value in
-                    convertAnyToString(value)
+        let destination = source.filter { $0.value != nil }
+            .reduce(into: [URLQueryItem]()) {
+                result, item in
+                if let collection = item.value as? [Any?] {
+                    let collectionValues: [String] = collection
+                        .compactMap { value in
+                            self.convertAnyToString(value)
+                        }
+                    if let encodedKey = item.key.addingPercentEncoding(
+                        withAllowedCharacters: .urlPathAlgoliaAllowed
+                    ) {
+                        result.append(
+                            URLQueryItem(
+                                name: encodedKey,
+                                value: collectionValues.joined(separator: ",")
+                                    .addingPercentEncoding(
+                                        withAllowedCharacters: .urlPathAlgoliaAllowed
+                                    )
+                            )
+                        )
+                    }
+                } else if let value = item.value {
+                    if let encodedKey = item.key.addingPercentEncoding(
+                        withAllowedCharacters: .urlPathAlgoliaAllowed
+                    ) {
+                        result.append(
+                            URLQueryItem(
+                                name: encodedKey,
+                                value: self.convertAnyToString(value)?
+                                    .addingPercentEncoding(
+                                        withAllowedCharacters: .urlPathAlgoliaAllowed
+                                    )
+                            )
+                        )
+                    }
                 }
-                result.append(
-                    URLQueryItem(
-                        name: item.key,
-                        value: collectionValues.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed)
-                    )
-                )
-            } else if let value = item.value {
-                result.append(
-                    URLQueryItem(
-                        name: item.key,
-                        value: convertAnyToString(value)?.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed)
-                    )
-                )
             }
-        }
 
         if destination.isEmpty {
             return nil

@@ -67,8 +67,11 @@ open class Transporter {
             body = "{}".data(using: .utf8)
         }
 
-        urlComponents = urlComponents.set(\.path, to: path)
-        urlComponents = urlComponents.setIfNotNil(\.queryItems, to: requestOptions?.queryItems)
+        urlComponents.percentEncodedPath = path
+
+        if let percentEncodedQueryItems = APIHelper.mapValuesToQueryItems(requestOptions?.queryParameters) {
+            urlComponents.percentEncodedQueryItems = percentEncodedQueryItems
+        }
 
         while let host = hostIterator.next() {
             let rawTimeout =
@@ -81,8 +84,8 @@ open class Transporter {
 
             var request = URLRequest(url: url)
 
-            request = request.set(\.httpMethod, to: httpMethod.rawValue)
-            request = request.set(\.timeoutInterval, to: timeout)
+            request.httpMethod = httpMethod.rawValue
+            request.timeoutInterval = timeout
 
             for (key, value) in configuration.defaultHeaders ?? [:] {
                 request.setValue(value, forHTTPHeaderField: key.capitalized)
@@ -103,7 +106,7 @@ open class Transporter {
                 }
             }
 
-            request = request.set(\.httpBody, to: body)
+            request.httpBody = body
 
             do {
                 let response: Response<T> = try await requestBuilder.execute(
