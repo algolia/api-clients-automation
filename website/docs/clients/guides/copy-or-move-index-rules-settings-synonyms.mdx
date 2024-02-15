@@ -150,6 +150,7 @@ await client.waitTask('<SOURCE_INDEX_NAME>', response.taskID);
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
@@ -160,7 +161,8 @@ var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
   new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>"));
 
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
-  ```
+```
+
 </TabItem>
 
 </TabsLanguage>
@@ -300,6 +302,7 @@ if err != nil {
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
@@ -311,6 +314,7 @@ var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
 
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
 ```
+
 </TabItem>
 </TabsLanguage>
 
@@ -459,6 +463,7 @@ if err != nil {
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
@@ -468,15 +473,16 @@ var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
   new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>")
   {
-    Scope = new List<ScopeType>()
-    {
+    Scope =
+    [
       ScopeType.Synonyms,
       ScopeType.Rules
-    }
+    ]
   });
 
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
 ```
+
 </TabItem>
 
 </TabsLanguage>

@@ -127,17 +127,16 @@ taskResponse, err := searchClient.WaitForTask(
 </TabItem>
 
 <TabItem value="csharp">
-
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-await client.SetSettingsAsync("YOUR_INDEX_NAME", new IndexSettings {
-  AttributesForFaceting = new List<string> { "actor", "filterOnly(category)", "searchable(publisher)" }
-    });
+await client.SetSettingsAsync("YOUR_INDEX_NAME", new IndexSettings
+{
+  AttributesForFaceting = ["actor", "filterOnly(category)", "searchable(publisher)"]
+});
 ```
-
 </TabItem>
 </TabsLanguage>
 

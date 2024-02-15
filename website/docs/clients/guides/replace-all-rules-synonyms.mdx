@@ -109,8 +109,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+using Algolia.Search.Clients;
 
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 await client.SaveRulesAsync("<YOUR_INDEX_NAME>", rules, forwardToReplicas: false, clearExistingRules: true);
 ```
 
@@ -224,8 +225,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+using Algolia.Search.Clients;
 
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 await client.SaveSynonymsAsync("<YOUR_INDEX_NAME>", synonyms, forwardToReplicas: false, replaceExistingSynonyms: true);
 ```
 

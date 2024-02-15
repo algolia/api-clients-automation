@@ -76,6 +76,7 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Microsoft.Extensions.Logging;
@@ -88,6 +89,7 @@ var loggerFactory = LoggerFactory.Create(builder =>
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>", loggerFactory);
 ```
+
 </TabItem>
 
 </TabsLanguage>
@@ -406,8 +408,6 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 
 ```csharp
 using Algolia.Search.Clients;
-using Algolia.Search.Http;
-using Algolia.Search.Models.Search;
 
 var searchConfig = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
@@ -557,9 +557,8 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 using Algolia.Search.Clients;
 
 var config = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-
 var client = new SearchClient(config, new MyOwnRequester());
-  ```
+```
 
 </TabItem>
 </TabsLanguage>

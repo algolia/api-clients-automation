@@ -147,6 +147,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 var objectIDs = new List<string> { "1", "2", "3", "4", "5" };
@@ -154,7 +157,7 @@ var objectIDs = new List<string> { "1", "2", "3", "4", "5" };
 var requests = objectIDs
   .Select(objectId => new BatchRequest
   {
-    Action = Action.Delete,
+    Action = Algolia.Search.Models.Search.Action.Delete,
     Body = new { objectID = objectId }
   }).ToList();
 

@@ -183,6 +183,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
@@ -203,6 +206,7 @@ await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
     }
   });
 ```
+
 </TabItem>
 </TabsLanguage>
 
@@ -379,6 +383,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
@@ -399,6 +406,7 @@ await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
     }
   });
 ```
+
 </TabItem>
 </TabsLanguage>
 
@@ -515,6 +523,9 @@ if err != nil {
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
@@ -524,6 +535,7 @@ await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
     Requests = { } // We don't push any new entries to it
   });
 ```
+
 </TabItem>
 
 </TabsLanguage>
@@ -670,7 +682,11 @@ if err != nil {
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
@@ -687,6 +703,7 @@ await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
     }
   });
 ```
+
 </TabItem>
 </TabsLanguage>
 
