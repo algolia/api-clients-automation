@@ -32,7 +32,7 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
 */
 case class {{classname}}(
   {{#vars}}
-  {{{name}}}: {{^required}}Option[{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}},
+  {{{name}}}: {{^required}}Option[{{/required}}{{#required}}{{#isNullable}}Option[{{/isNullable}}{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}}{{#required}}{{#isNullable}}] = scala.None{{/isNullable}}{{/required}},
   {{/vars}}
   {{#additionalProperties}}
   additionalProperties: Option[List[JField]] = None

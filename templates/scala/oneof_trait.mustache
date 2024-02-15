@@ -65,7 +65,7 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       json match {
         {{#composedSchemas.oneOf}}
         {{#isModel}}
-        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.contains("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/isModel}}
         {{#isMap}}
         case value: JObject => {{classname}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
