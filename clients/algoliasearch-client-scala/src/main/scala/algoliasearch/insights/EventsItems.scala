@@ -28,37 +28,40 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[EventsItems] =>
       json match {
         case value: JObject
-            if value.obj.contains("positions") && value.obj.contains("queryID") && value.obj.contains("eventType") =>
+            if value.obj.exists(_._1 == "positions") && value.obj
+              .exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
           Extraction.extract[ClickedObjectIDsAfterSearch](value)
         case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("queryID") && value.obj.contains("objectIDs") =>
+            if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "eventSubtype") && value.obj.exists(
+              _._1 == "queryID"
+            ) && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[AddedToCartObjectIDsAfterSearch](value)
         case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("objectIDs") && value.obj.contains("objectData") =>
+            if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "eventSubtype") && value.obj.exists(
+              _._1 == "objectIDs"
+            ) && value.obj.exists(_._1 == "objectData") =>
           Extraction.extract[PurchasedObjectIDsAfterSearch](value)
-        case value: JObject if value.obj.contains("queryID") && value.obj.contains("eventType") =>
+        case value: JObject if value.obj.exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
           Extraction.extract[ConvertedObjectIDsAfterSearch](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("objectIDs") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[ClickedObjectIDs](value)
         case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
+            if value.obj.exists(_._1 == "eventType") && value.obj
+              .exists(_._1 == "eventSubtype") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[PurchasedObjectIDs](value)
         case value: JObject
-            if value.obj.contains("eventType") && value.obj
-              .contains("eventSubtype") && value.obj.contains("objectIDs") =>
+            if value.obj.exists(_._1 == "eventType") && value.obj
+              .exists(_._1 == "eventSubtype") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[AddedToCartObjectIDs](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("objectIDs") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[ConvertedObjectIDs](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("filters") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "filters") =>
           Extraction.extract[ClickedFilters](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("filters") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "filters") =>
           Extraction.extract[ConvertedFilters](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("objectIDs") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[ViewedObjectIDs](value)
-        case value: JObject if value.obj.contains("eventType") && value.obj.contains("filters") =>
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "filters") =>
           Extraction.extract[ViewedFilters](value)
         case _ => throw new MappingException("Can't convert " + json + " to EventsItems")
       }

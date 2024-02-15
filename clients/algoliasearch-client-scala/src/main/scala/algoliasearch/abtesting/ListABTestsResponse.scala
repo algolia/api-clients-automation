@@ -17,7 +17,7 @@ package algoliasearch.abtesting
   *   Number of retrievable A/B tests.
   */
 case class ListABTestsResponse(
-    abtests: Seq[ABTest],
+    abtests: Option[Seq[ABTest]] = scala.None,
     count: Int,
     total: Int
 )

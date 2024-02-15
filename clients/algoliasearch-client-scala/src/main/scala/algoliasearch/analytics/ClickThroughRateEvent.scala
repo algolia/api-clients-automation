@@ -24,6 +24,6 @@ package algoliasearch.analytics
 case class ClickThroughRateEvent(
     rate: Double,
     clickCount: Int,
-    trackedSearchCount: Int,
+    trackedSearchCount: Option[Int] = scala.None,
     date: String
 )
