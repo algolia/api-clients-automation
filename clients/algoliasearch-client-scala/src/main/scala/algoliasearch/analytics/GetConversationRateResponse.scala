@@ -23,7 +23,7 @@ package algoliasearch.analytics
   */
 case class GetConversationRateResponse(
     rate: Double,
-    trackedSearchCount: Int,
+    trackedSearchCount: Option[Int] = scala.None,
     conversionCount: Int,
     dates: Seq[ConversionRateEvent]
 )

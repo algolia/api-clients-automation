@@ -8,55 +8,87 @@ import Utils
 @testable import Core
 @testable import QuerySuggestions
 
-final class QuerySuggestionsClientRequestsTests: XCTestCase {
-    let APPLICATION_ID = "my_application_id"
-    let API_KEY = "my_api_key"
+// MARK: - QuerySuggestionsClientRequestsTests
 
-    /**
-     createConfig0
-     */
+final class QuerySuggestionsClientRequestsTests: XCTestCase {
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
+
+    /// createConfig0
     func testCreateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createConfigWithHTTPInfo(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(indexName: "theIndexName",
-                                                                                                                                                sourceIndices: [SourceIndex(indexName: "testIndex",
-                                                                                                                                                                            facets: [Facet(attribute: "test"
-                                                                                                                                                                            )],
-                                                                                                                                                                            generate: [["facetA",
-                                                                                                                                                                                        "facetB"],
-                                                                                                                                                                                       ["facetC"]])],
-                                                                                                                                                languages: Languages.arrayOfString(["french"]
-                                                                                                                                                ), exclude: ["test"]),
-                                                                 requestOptions: nil)
+        let response = try await client
+            .createConfigWithHTTPInfo(
+                querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
+                    indexName: "theIndexName",
+                    sourceIndices: [
+                        SourceIndex(
+                            indexName: "testIndex",
+                            facets: [
+                                Facet(
+                                    attribute: "test"
+                                ),
+                            ],
+                            generate: [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ]
+                        ),
+                    ],
+                    languages: Languages.arrayOfString(
+                        [
+                            "french",
+                        ]
+                    ),
+                    exclude: [
+                        "test",
+                    ]
+                )
+            )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"indexName\":\"theIndexName\",\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attribute\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData =
+            "{\"indexName\":\"theIndexName\",\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attribute\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/configs")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     allow del method for a custom path with minimal parameters
-     */
+    /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal",
-                                                                 requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(
+            path: "/test/minimal"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -65,20 +97,25 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     allow del method for a custom path with all parameters
-     */
+    /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/all",
-                                                                 parameters: ["query": AnyCodable("parameters")],
-                                                                 requestOptions: nil)
+        let response = try await client.customDeleteWithHTTPInfo(
+            path: "/test/all",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ]
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -87,22 +124,28 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     allow get method for a custom path with minimal parameters
-     */
+    /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal",
-                                                              requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(
+            path: "/test/minimal"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -111,20 +154,25 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     allow get method for a custom path with all parameters
-     */
+    /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/all",
-                                                              parameters: ["query": AnyCodable("parameters with space")],
-                                                              requestOptions: nil)
+        let response = try await client.customGetWithHTTPInfo(
+            path: "/test/all",
+            parameters: [
+                "query": AnyCodable("parameters with space"),
+            ]
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -133,154 +181,195 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     allow post method for a custom path with minimal parameters
-     */
+    /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal",
-                                                               requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/minimal"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     allow post method for a custom path with all parameters
-     */
+    /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/all",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["body": "parameters"],
-                                                               requestOptions: nil)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/all",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "body": "parameters",
+            ]
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions can override default query parameters
-     */
+    /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "query": "myQueryParameter",
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"myQueryParameter\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"myQueryParameter\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions merges query parameters with default ones
-     */
+    /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "query2": "myQueryParameter",
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions can override default headers
-     */
+    /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
@@ -290,43 +379,54 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let comparableHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
-        let comparableHeadersMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableHeaders)
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
-        for header in comparableHeadersMap {
+        for header in expectedHeadersMap {
             XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
-    /**
-     requestOptions merges headers with default ones
-     */
+    /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
@@ -336,309 +436,399 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
             ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let comparableHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
-        let comparableHeadersMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableHeaders)
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
-        for header in comparableHeadersMap {
+        for header in expectedHeadersMap {
             XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
         }
     }
 
-    /**
-     requestOptions queryParameters accepts booleans
-     */
+    /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "isItWorking": true,
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions queryParameters accepts integers
-     */
+    /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "myParam": 2,
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"2\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"2\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions queryParameters accepts list of string
-     */
+    /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "myParam": ["c",
                             "d",
                 ],
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions queryParameters accepts list of booleans
-     */
+    /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "myParam": [true,
                             true,
                             false,
                 ],
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     requestOptions queryParameters accepts list of integers
-     */
+    /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryItems: APIHelper.mapValuesToQueryItems([
+            queryParameters: [
                 "myParam": [1,
                             2,
                 ],
-
-            ])
+            ]
         )
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/requestOptions",
-                                                               parameters: ["query": AnyCodable("parameters")],
-                                                               body: ["facet": "filters"],
-                                                               requestOptions: requestOptions)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/requestOptions",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "facet": "filters",
+            ],
+            requestOptions: requestOptions
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"facet\":\"filters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"facet\":\"filters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     allow put method for a custom path with minimal parameters
-     */
+    /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal",
-                                                              requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(
+            path: "/test/minimal"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     allow put method for a custom path with all parameters
-     */
+    /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/all",
-                                                              parameters: ["query": AnyCodable("parameters")],
-                                                              body: ["body": "parameters"],
-                                                              requestOptions: nil)
+        let response = try await client.customPutWithHTTPInfo(
+            path: "/test/all",
+            parameters: [
+                "query": AnyCodable("parameters"),
+            ],
+            body: [
+                "body": "parameters",
+            ]
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"body\":\"parameters\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData = "{\"body\":\"parameters\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
-        let comparableQueryItems = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
-        let comparableQueryItemsMap = try CodableHelper.jsonDecoder.decode(StringMapObject.self, from: comparableQueryItems)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
 
-        XCTAssertEqual(echoResponse.queryItems, comparableQueryItemsMap)
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /**
-     deleteConfig0
-     */
+    /// deleteConfig0
     func testDeleteConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteConfigWithHTTPInfo(indexName: "theIndexName",
-                                                                 requestOptions: nil)
+        let response = try await client.deleteConfigWithHTTPInfo(
+            indexName: "theIndexName"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -647,18 +837,20 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/configs/theIndexName")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     getAllConfigs0
-     */
+    /// getAllConfigs0
     func testGetAllConfigsTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getAllConfigsWithHTTPInfo(requestOptions: nil)
+        let response = try await client.getAllConfigsWithHTTPInfo()
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -667,19 +859,22 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/configs")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     getConfig0
-     */
+    /// getConfig0
     func testGetConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConfigWithHTTPInfo(indexName: "theIndexName",
-                                                              requestOptions: nil)
+        let response = try await client.getConfigWithHTTPInfo(
+            indexName: "theIndexName"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -688,19 +883,22 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/configs/theIndexName")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     getConfigStatus0
-     */
+    /// getConfigStatus0
     func testGetConfigStatusTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConfigStatusWithHTTPInfo(indexName: "theIndexName",
-                                                                    requestOptions: nil)
+        let response = try await client.getConfigStatusWithHTTPInfo(
+            indexName: "theIndexName"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -709,19 +907,22 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/configs/theIndexName/status")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     getLogFile0
-     */
+    /// getLogFile0
     func testGetLogFileTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getLogFileWithHTTPInfo(indexName: "theIndexName",
-                                                               requestOptions: nil)
+        let response = try await client.getLogFileWithHTTPInfo(
+            indexName: "theIndexName"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -730,41 +931,67 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/logs/theIndexName")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /**
-     updateConfig0
-     */
+    /// updateConfig0
     func testUpdateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(appId: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+            appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
+            apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.updateConfigWithHTTPInfo(indexName: "theIndexName",
-                                                                 querySuggestionsConfiguration: QuerySuggestionsConfiguration(sourceIndices: [SourceIndex(indexName: "testIndex",
-                                                                                                                                                          facets: [Facet(attribute: "test"
-                                                                                                                                                          )],
-                                                                                                                                                          generate: [["facetA",
-                                                                                                                                                                      "facetB"],
-                                                                                                                                                                     ["facetC"]])],
-                                                                                                                              languages: Languages.arrayOfString(["french"]
-                                                                                                                              ), exclude: ["test"]),
-                                                                 requestOptions: nil)
+        let response = try await client.updateConfigWithHTTPInfo(
+            indexName: "theIndexName",
+            querySuggestionsConfiguration: QuerySuggestionsConfiguration(
+                sourceIndices: [
+                    SourceIndex(
+                        indexName: "testIndex",
+                        facets: [
+                            Facet(
+                                attribute: "test"
+                            ),
+                        ],
+                        generate: [
+                            [
+                                "facetA",
+                                "facetB",
+                            ],
+                            [
+                                "facetC",
+                            ],
+                        ]
+                    ),
+                ],
+                languages: Languages.arrayOfString(
+                    [
+                        "french",
+                    ]
+                ),
+                exclude: [
+                    "test",
+                ]
+            )
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let comparableData = "{\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attribute\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        let expectedBodyData =
+            "{\"sourceIndices\":[{\"indexName\":\"testIndex\",\"facets\":[{\"attribute\":\"test\"}],\"generate\":[[\"facetA\",\"facetB\"],[\"facetC\"]]}],\"languages\":[\"french\"],\"exclude\":[\"test\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
-        XCTAssertEqual(echoResponseBodyJSON, comparableJSON)
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/configs/theIndexName")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
-        XCTAssertNil(echoResponse.queryItems)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 }
