@@ -15,7 +15,6 @@
     {{#-first}}
     {{#isString}}
     {{^useGenericHost}}
-    [JsonConverter(typeof(StringEnumConverter))]
     {{/useGenericHost}}
     {{/isString}}
     {{/-first}}
@@ -30,8 +29,7 @@
         /// </summary>
         {{#isString}}
         {{^useGenericHost}}
-        {{! EnumMember not currently supported in System.Text.Json, use a converter instead }}
-        [EnumMember(Value = "{{{value}}}")]
+        [JsonPropertyName("{{{value}}}")]
         {{/useGenericHost}}
         {{/isString}}
         {{name}}{{^isString}} = {{{value}}}{{/isString}}{{#isString}}{{^vendorExtensions.x-zero-based-enum}} = {{-index}}{{/vendorExtensions.x-zero-based-enum}}{{/isString}}{{^-last}},{{/-last}}

@@ -40,7 +40,7 @@
         /// <value>{{{.}}}</value>
         {{/description}}
         {{^conditionalSerialization}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -59,7 +59,7 @@
         {{/conditionalSerialization}}
         {{#conditionalSerialization}}
         {{#isReadOnly}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -77,7 +77,7 @@
         {{/isReadOnly}}
 
         {{^isReadOnly}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -176,7 +176,7 @@
         /// </summary>{{#description}}
         /// <value>{{{.}}}</value>{{/description}}
         {{^conditionalSerialization}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
@@ -198,7 +198,7 @@
         {{/conditionalSerialization}}
         {{#conditionalSerialization}}
         {{#isReadOnly}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
@@ -220,7 +220,7 @@
         {{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]
         {{/isDate}}
-        [DataMember(Name = "{{baseName}}")]
+        [JsonPropertyName("{{baseName}}")]
         {{#deprecated}}
         [Obsolete]
         {{/deprecated}}
@@ -284,7 +284,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public {{#parent}}{{^isArray}}{{^isMap}}override {{/isMap}}{{/isArray}}{{/parent}}{{^parent}}virtual {{/parent}}string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+          return JsonSerializer.Serialize(this, JsonConfig.Options);
         }
         {{#equatable}}
 
