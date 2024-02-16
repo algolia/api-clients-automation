@@ -104,7 +104,7 @@ function getSpecsForNavBar() {
       ({
         prism: {
           // scala is required to make java work
-          additionalLanguages: ['php', 'java', 'scala', 'dart', 'go', 'groovy']
+          additionalLanguages: ['php', 'java', 'scala', 'dart', 'go', 'groovy', 'csharp']
         },
         navbar: {
           title: 'Algolia API',

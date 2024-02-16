@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * QuerySuggestionsTest.
@@ -162,6 +171,41 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for CustomGet
+     * requestOptions should be escaped too.
+     */
+    public function testCustomGet2()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query' => 'parameters with space',
+                'and an array' => ['array',  'with spaces',
+                ],
+            ],
+            'headers' => [
+                'x-header-1' => 'spaces are left alone',
+            ],
+        ];
+        $client->customGet(
+            '/test/all',
+            ['query' => 'to be overriden',
+            ],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
+                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
         ]);
     }
@@ -420,7 +464,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c',  'd',
+                'myParam' => ['b and c',  'd',
                 ],
             ],
             'headers' => [
@@ -440,7 +484,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"c%2Cd"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
             ],
         ]);
     }
@@ -598,22 +642,31 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetConfig
-     * getConfig0.
+     * Retrieve QS config e2e.
      */
     public function testGetConfig0()
     {
         $client = $this->getClient();
         $client->getConfig(
-            'theIndexName',
+            'cts_e2e_browse_query_suggestions',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/configs/theIndexName',
+                'path' => '/1/configs/cts_e2e_browse_query_suggestions',
                 'method' => 'GET',
                 'body' => null,
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getConfig(
+            'cts_e2e_browse_query_suggestions',
+        );
+
+        $expected = json_decode('{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -702,6 +755,21 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
+    }
+
     protected function assertRequests(array $requests)
     {
         $this->assertGreaterThan(0, count($requests));
@@ -743,10 +811,15 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
         }
     }
 
+    protected function getE2EClient()
+    {
+        return QuerySuggestionsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
+    }
+
     protected function getClient()
     {
-        $api = new ApiWrapper($this, QuerySuggestionsConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = QuerySuggestionsConfig::create('foo', 'bar');
+        $config = QuerySuggestionsConfig::create('appID', 'apiKey', 'us');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new QuerySuggestionsClient($api, $config);
     }

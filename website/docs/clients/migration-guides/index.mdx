@@ -102,6 +102,25 @@ client.search(
 ```
 
 </TabItem>
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+client.Search<Hit>(new SearchMethodParams([
+  new SearchQuery(new SearchForHits("<YOUR_INDEX_NAME>")
+  {
+    Query = "<YOUR_QUERY>",
+    AttributesToRetrieve = ["firstname", "lastname"],
+    HitsPerPage = 50
+  })
+]));
+```
+
+</TabItem>
 </TabsLanguage>
 
 ### A/B testing client
@@ -171,6 +190,16 @@ import com.algolia.model.abtesting.*;
 
 AbtestingClient client = new AbtestingClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 ABTest abTest = client.getABTest(42);
+```
+
+</TabItem>
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+
+var client = new AbtestingClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+client.GetABTest(42);
 ```
 
 </TabItem>
@@ -250,6 +279,21 @@ SaveObjectResponse response = client.saveObject(
 
 // Poll the task status with defaults values
 client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());
+```
+
+</TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+var response = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
+  new { objectID = "123", firstName = "john", lastname = "doe" });
+
+await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", response.TaskID);
 ```
 
 </TabItem>
@@ -345,6 +389,23 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
+  new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>"));
+
+await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ### `saveObjects`
@@ -452,6 +513,43 @@ for (Actor record : records) {
 
 client.batch("<YOUR_INDEX_NAME>", new BatchWriteParams().setRequests(batch));
 
+```
+</TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Action = Algolia.Search.Models.Search.Action;
+
+public class Actor : Hit
+{
+  public string Name;
+
+  public Actor(string name)
+  {
+    Name = name;
+  }
+}
+
+// The records retrieved by any of your data sources
+List<Actor> actors = new()
+{
+  new Actor("Tom Cruise"),
+  new Actor("Scarlett Johansson")
+};
+
+// Here we construct the request to be sent to Algolia with the `Batch` method.
+var requests = actors.Select(x => new BatchRequest(Action.AddObject, x)).ToList();
+
+// You can add other type of action, like update or delete an existing object.
+requests.Add(new BatchRequest(Action.UpdateObject, new Actor("Morgan Freeman") { ObjectID = "42" }));
+requests.Add(new BatchRequest(Action.DeleteObject, new Actor("John Doe") { ObjectID = "1" }));
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+await client.BatchAsync("<YOUR_INDEX_INDEX>", new BatchWriteParams(requests));
 ```
 
 </TabItem>
@@ -615,6 +713,46 @@ for (SynonymHit synonym : synonyms) {
 ```
 
 </TabItem>
+
+<TabItem value="csharp" >
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+var browseObjects = await client.BrowseObjectsAsync<Actor>("<YOUR_INDEX_NAME>",
+  // all base `browse` options are forwarded to the `browse` method
+  new BrowseParamsObject());
+
+foreach (var actor in browseObjects)
+{
+  Console.WriteLine(actor.Name);
+}
+
+var browseRules = await client.BrowseRulesAsync("<YOUR_INDEX_NAME>",
+  // all base `searchRules` options are forwarded to the `searchRules` method (optional)
+  new SearchRulesParams());
+
+foreach (var rule in browseRules)
+{
+  Console.WriteLine(rule);
+}
+
+var browseSynonyms = await client.BrowseSynonymsAsync("<YOUR_INDEX_NAME>",
+  // all base `searchSynonyms` options are forwarded to the `searchSynonyms` method (optional)
+  new SearchSynonymsParams());
+
+foreach (var synonym in browseSynonyms)
+{
+  Console.WriteLine(synonym);
+}
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Client's specific breaking changes
@@ -627,3 +765,4 @@ You can find specific client breaking changes in their own section:
 - [Kotlin migration guide](/docs/clients/migration-guides/kotlin)
 - [PHP migration guide](/docs/clients/migration-guides/php)
 - [Python migration guide](/docs/clients/migration-guides/python)
+- [C# migration guide](/docs/clients/migration-guides/csharp)

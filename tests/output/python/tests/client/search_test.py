@@ -109,6 +109,7 @@ class TestSearchClient:
             self._client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
@@ -116,6 +117,7 @@ class TestSearchClient:
             self._client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == "`app_id` is missing."
         try:
@@ -123,6 +125,7 @@ class TestSearchClient:
             self._client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == "`api_key` is missing."
 
@@ -136,6 +139,7 @@ class TestSearchClient:
             await self._client.add_api_key_with_http_info(
                 api_key=None,
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e) == "Parameter `api_key` is required when calling `add_api_key`."
@@ -153,6 +157,7 @@ class TestSearchClient:
                 object_id="my-object-id",
                 body={},
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)
@@ -164,6 +169,7 @@ class TestSearchClient:
                 object_id=None,
                 body={},
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)
@@ -175,6 +181,7 @@ class TestSearchClient:
                 object_id="my-object-id",
                 body=None,
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)

@@ -109,6 +109,26 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `it should not encode the userID`() = runTest {
+    client.runTest(
+      call = {
+        assignUserId(
+          xAlgoliaUserID = "user id with spaces",
+          assignUserIdParams = AssignUserIdParams(
+            cluster = "cluster with spaces",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertContainsAll("""{"x-algolia-user-id":"user id with spaces"}""", it.headers)
+        assertJsonBody("""{"cluster":"cluster with spaces"}""", it.body)
+      },
+    )
+  }
+
   // batch
 
   @Test
@@ -629,6 +649,34 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `requestOptions should be escaped too`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "/test/all",
+          parameters = mapOf("query" to "to be overriden"),
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "parameters with space")
+              put("and an array", listOf("array", "with spaces"))
+            },
+            headers = buildMap {
+              put("x-header-1", "spaces are left alone")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
+        assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // customPost
 
   @Test
@@ -862,7 +910,7 @@ class SearchTest {
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
-              put("myParam", listOf("c", "d"))
+              put("myParam", listOf("b and c", "d"))
             },
           ),
         )
@@ -870,7 +918,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertQueryParams("""{"query":"parameters","myParam":"c%2Cd"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )

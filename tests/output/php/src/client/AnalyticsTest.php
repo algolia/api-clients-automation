@@ -145,6 +145,8 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
                 'my-api-key',
                 'not_a_region'
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
         }
@@ -161,6 +163,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             $client->getClickPositions(
                 null,
             );
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Parameter `index` is required when calling `getClickPositions`.');
         }

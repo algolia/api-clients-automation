@@ -19,6 +19,7 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     {{#isError}}
     begin
       {{#dynamicTemplate}}{{/dynamicTemplate}}
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal({{#lambda.codeSnakeCase}}'{{{expectedError}}}'{{/lambda.codeSnakeCase}}, e.message)
     end

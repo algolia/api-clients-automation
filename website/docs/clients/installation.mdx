@@ -131,6 +131,26 @@ go get github.com/algolia/algoliasearch-client-go/v4
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+  To get started, add the <Link href={`https://www.nuget.org/packages/Algolia.Search/${versions.csharp}`}>Algolia.Search</Link> Nugget dependency to your project:
+
+  With dotnet CLI:
+
+  <CodeBlock language="bash">
+    {`dotnet add package Algolia.Search --version ${versions.csharp}`}
+  </CodeBlock>
+
+  Or directly in your `.csproj` file:
+
+  <CodeBlock language="xml">
+  {`<ItemGroup>
+    <PackageReference Include="Algolia.Search" Version=${versions.csharp} />
+</ItemGroup>`}
+  </CodeBlock>
+</TabItem>
+
+
 </TabsLanguage>
 
 ## Using the client
@@ -409,6 +429,32 @@ func main() {
     fmt.Printf("Result: %v", result.SearchResponse)
   }
 }
+```
+
+</TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+// Instantiate the client
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+// Add a new record to your Algolia index
+var saveResponse = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
+  new { objectID = "123", firstName = "john", lastname = "doe" });
+
+// Wait for the task to be processed on the Algolia side (optional)
+await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", saveResponse.TaskID);
+
+// Fetch search results
+var request = new SearchQuery(new SearchForHits("<YOUR_INDEX_NAME>") { Query = "john" });
+var response = await client.SearchAsync<Hit>(new SearchMethodParams(new List<SearchQuery> { request }));
+
+Console.WriteLine(response);
 ```
 
 </TabItem>

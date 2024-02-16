@@ -12,9 +12,6 @@ import java.util.Objects;
 /** QuerySuggestionsConfigurationResponse */
 public class QuerySuggestionsConfigurationResponse {
 
-  @JsonProperty("appId")
-  private String appId;
-
   @JsonProperty("sourceIndicesAPIKey")
   private String sourceIndicesAPIKey;
 
@@ -41,17 +38,6 @@ public class QuerySuggestionsConfigurationResponse {
 
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
-
-  public QuerySuggestionsConfigurationResponse setAppId(String appId) {
-    this.appId = appId;
-    return this;
-  }
-
-  /** Your Algolia application ID. */
-  @javax.annotation.Nullable
-  public String getAppId() {
-    return appId;
-  }
 
   public QuerySuggestionsConfigurationResponse setSourceIndicesAPIKey(String sourceIndicesAPIKey) {
     this.sourceIndicesAPIKey = sourceIndicesAPIKey;
@@ -175,7 +161,6 @@ public class QuerySuggestionsConfigurationResponse {
     }
     QuerySuggestionsConfigurationResponse querySuggestionsConfigurationResponse = (QuerySuggestionsConfigurationResponse) o;
     return (
-      Objects.equals(this.appId, querySuggestionsConfigurationResponse.appId) &&
       Objects.equals(this.sourceIndicesAPIKey, querySuggestionsConfigurationResponse.sourceIndicesAPIKey) &&
       Objects.equals(this.suggestionsIndicesAPIKey, querySuggestionsConfigurationResponse.suggestionsIndicesAPIKey) &&
       Objects.equals(this.externalIndicesAPIKey, querySuggestionsConfigurationResponse.externalIndicesAPIKey) &&
@@ -191,7 +176,6 @@ public class QuerySuggestionsConfigurationResponse {
   @Override
   public int hashCode() {
     return Objects.hash(
-      appId,
       sourceIndicesAPIKey,
       suggestionsIndicesAPIKey,
       externalIndicesAPIKey,
@@ -208,7 +192,6 @@ public class QuerySuggestionsConfigurationResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QuerySuggestionsConfigurationResponse {\n");
-    sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    sourceIndicesAPIKey: ").append(toIndentedString(sourceIndicesAPIKey)).append("\n");
     sb.append("    suggestionsIndicesAPIKey: ").append(toIndentedString(suggestionsIndicesAPIKey)).append("\n");
     sb.append("    externalIndicesAPIKey: ").append(toIndentedString(externalIndicesAPIKey)).append("\n");

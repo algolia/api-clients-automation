@@ -7,52 +7,7 @@ import Foundation
     import AnyCodable
 #endif
 
-// MARK: - QuerySuggestionsConfigurationResponse
-
 public struct QuerySuggestionsConfigurationResponse: Codable, JSONEncodable, Hashable {
-    // MARK: Lifecycle
-
-    public init(
-        appId: String? = nil,
-        sourceIndicesAPIKey: String? = nil,
-        suggestionsIndicesAPIKey: String? = nil,
-        externalIndicesAPIKey: String? = nil,
-        indexName: String,
-        sourceIndices: [SourceIndex],
-        languages: Languages? = nil,
-        exclude: [String]? = nil,
-        enablePersonalization: Bool? = nil,
-        allowSpecialCharacters: Bool? = nil
-    ) {
-        self.appId = appId
-        self.sourceIndicesAPIKey = sourceIndicesAPIKey
-        self.suggestionsIndicesAPIKey = suggestionsIndicesAPIKey
-        self.externalIndicesAPIKey = externalIndicesAPIKey
-        self.indexName = indexName
-        self.sourceIndices = sourceIndices
-        self.languages = languages
-        self.exclude = exclude
-        self.enablePersonalization = enablePersonalization
-        self.allowSpecialCharacters = allowSpecialCharacters
-    }
-
-    // MARK: Public
-
-    public enum CodingKeys: String, CodingKey, CaseIterable {
-        case appId
-        case sourceIndicesAPIKey
-        case suggestionsIndicesAPIKey
-        case externalIndicesAPIKey
-        case indexName
-        case sourceIndices
-        case languages
-        case exclude
-        case enablePersonalization
-        case allowSpecialCharacters
-    }
-
-    /// Your Algolia application ID.
-    public var appId: String?
     /// API key used to read from your source index.
     public var sourceIndicesAPIKey: String?
     /// API key used to write and configure your Query Suggestions index.
@@ -71,11 +26,44 @@ public struct QuerySuggestionsConfigurationResponse: Codable, JSONEncodable, Has
     /// Allow suggestions with special characters.
     public var allowSpecialCharacters: Bool?
 
+    public init(
+        sourceIndicesAPIKey: String? = nil,
+        suggestionsIndicesAPIKey: String? = nil,
+        externalIndicesAPIKey: String? = nil,
+        indexName: String,
+        sourceIndices: [SourceIndex],
+        languages: Languages? = nil,
+        exclude: [String]? = nil,
+        enablePersonalization: Bool? = nil,
+        allowSpecialCharacters: Bool? = nil
+    ) {
+        self.sourceIndicesAPIKey = sourceIndicesAPIKey
+        self.suggestionsIndicesAPIKey = suggestionsIndicesAPIKey
+        self.externalIndicesAPIKey = externalIndicesAPIKey
+        self.indexName = indexName
+        self.sourceIndices = sourceIndices
+        self.languages = languages
+        self.exclude = exclude
+        self.enablePersonalization = enablePersonalization
+        self.allowSpecialCharacters = allowSpecialCharacters
+    }
+
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case sourceIndicesAPIKey
+        case suggestionsIndicesAPIKey
+        case externalIndicesAPIKey
+        case indexName
+        case sourceIndices
+        case languages
+        case exclude
+        case enablePersonalization
+        case allowSpecialCharacters
+    }
+
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.appId, forKey: .appId)
         try container.encodeIfPresent(self.sourceIndicesAPIKey, forKey: .sourceIndicesAPIKey)
         try container.encodeIfPresent(self.suggestionsIndicesAPIKey, forKey: .suggestionsIndicesAPIKey)
         try container.encodeIfPresent(self.externalIndicesAPIKey, forKey: .externalIndicesAPIKey)

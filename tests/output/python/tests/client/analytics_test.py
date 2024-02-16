@@ -90,6 +90,7 @@ class TestAnalyticsClient:
             self._client = AnalyticsClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == "`region` must be one of the following: de, us"
 
@@ -103,6 +104,7 @@ class TestAnalyticsClient:
             await self._client.get_click_positions_with_http_info(
                 index=None,
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)

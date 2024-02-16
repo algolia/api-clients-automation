@@ -191,7 +191,7 @@ async def snippet_for_get_config():
     """
     Snippet for the getConfig method.
 
-    getConfig0
+    Retrieve QS config e2e
     """
     # Initialize the client
     _client = QuerySuggestionsClient(
@@ -200,7 +200,7 @@ async def snippet_for_get_config():
 
     # Call the API
     resp = await _client.get_config(
-        index_name="theIndexName",
+        index_name="cts_e2e_browse_query_suggestions",
     )
 
     # use the class directly
