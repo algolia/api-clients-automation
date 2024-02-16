@@ -1,34 +1,25 @@
-export function union(
-  expected: Record<string, any>,
-  received: Record<string, any>
-): Record<string, any> {
-  const res = {};
+export function union(expected: any, received: any): any {
+  if (Array.isArray(expected)) {
+    if (Array.isArray(received)) {
+      const res = new Array(expected.length);
+      for (const [i, v] of expected.entries()) {
+        res[i] = union(v, received[i]);
+      }
 
-  if (!expected) {
-    return expected;
+      return res;
+    }
+    return received;
   }
-
-  if (typeof expected !== 'object' && !Array.isArray(expected)) {
-    return expected;
-  }
-
-  for (const [key, value] of Object.entries(expected)) {
-    if (key in received) {
-      if (Array.isArray(value)) {
-        if (res[key] === undefined) {
-          res[key] = [];
-        }
-
-        for (const [i, v] of value.entries()) {
-          res[key].push(union(v, received[key][i]));
-        }
-      } else if (typeof value === 'object') {
+  if (typeof expected === 'object' && expected !== null) {
+    const res = {};
+    for (const [key, value] of Object.entries(expected)) {
+      if (key in received) {
         res[key] = union(value, received[key]);
-      } else {
-        res[key] = received[key];
       }
     }
+
+    return res;
   }
 
-  return res;
+  return received;
 }
