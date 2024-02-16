@@ -210,4 +210,30 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+var response = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
+  new { firstName = "john", lastname = "doe" });
+
+// Poll the task status with defaults values
+await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
+
+// Poll the task status with your options
+await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID,
+  // Number of maximum retries to do
+  maxRetries: 100,
+  // The time to wait between retries
+  retryCount => Math.Min(retryCount * 50, 4000));
+```
+
+</TabItem>
+
 </TabsLanguage>

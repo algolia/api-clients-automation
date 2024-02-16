@@ -34,8 +34,8 @@ php
 
 ```java
 client.saveRulesAsync(
-  indexName, 
-  rules, 
+  indexName,
+  rules,
   false, // forwardToReplicas (defaults to false)
   true // clearExistingRules
 );
@@ -105,6 +105,19 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+await client.SaveRulesAsync("<YOUR_INDEX_NAME>", rules, forwardToReplicas: false, clearExistingRules: true);
+```
+
+</TabItem>
+
+
 </TabsLanguage>
 
 The rules parameter should contain the array of rules you want to save.
@@ -137,8 +150,8 @@ php
 
 ```java
 client.saveSynonymsAsync(
-  indexName, 
-  synonymHits, 
+  indexName,
+  synonymHits,
   false, // forwardToReplicas (defaults to false)
   true // replaceExistingSynonyms
 );
@@ -208,6 +221,18 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+await client.SaveSynonymsAsync("<YOUR_INDEX_NAME>", synonyms, forwardToReplicas: false, replaceExistingSynonyms: true);
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 The `synonymHit`parameter should contain the synonyms you want to save.
