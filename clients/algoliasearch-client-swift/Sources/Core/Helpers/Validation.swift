@@ -6,24 +6,18 @@
 import Foundation
 
 public struct StringRule {
-    public var minLength: Int?
-    public var maxLength: Int?
-    public var pattern: String?
-
     public init(minLength: Int? = nil, maxLength: Int? = nil, pattern: String? = nil) {
         self.minLength = minLength
         self.maxLength = maxLength
         self.pattern = pattern
     }
+
+    public var minLength: Int?
+    public var maxLength: Int?
+    public var pattern: String?
 }
 
 public struct NumericRule<T: Comparable & Numeric> {
-    public var minimum: T?
-    public var exclusiveMinimum = false
-    public var maximum: T?
-    public var exclusiveMaximum = false
-    public var multipleOf: T?
-
     public init(
         minimum: T? = nil, exclusiveMinimum: Bool = false, maximum: T? = nil,
         exclusiveMaximum: Bool = false, multipleOf: T? = nil
@@ -34,14 +28,24 @@ public struct NumericRule<T: Comparable & Numeric> {
         self.exclusiveMaximum = exclusiveMaximum
         self.multipleOf = multipleOf
     }
+
+    public var minimum: T?
+    public var exclusiveMinimum = false
+    public var maximum: T?
+    public var exclusiveMaximum = false
+    public var multipleOf: T?
 }
 
 public enum StringValidationErrorKind: Error {
-    case minLength, maxLength, pattern
+    case minLength
+    case maxLength
+    case pattern
 }
 
 public enum NumericValidationErrorKind: Error {
-    case minimum, maximum, multipleOf
+    case minimum
+    case maximum
+    case multipleOf
 }
 
 public struct ValidationError<T: Error & Hashable>: Error {

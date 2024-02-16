@@ -268,7 +268,7 @@ void main() {
         requestOptions: RequestOptions(
           urlParameters: {
             'myParam': [
-              "c",
+              "b and c",
               "d",
             ],
           },
@@ -278,7 +278,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"c%2Cd"}""");
+            """{"query":"parameters","myParam":"b%20and%20c%2Cd"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),

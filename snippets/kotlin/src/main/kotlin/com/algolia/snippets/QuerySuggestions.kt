@@ -130,7 +130,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getConfig(
-      indexName = "theIndexName",
+      indexName = "cts_e2e_browse_query_suggestions",
     )
 
     // Use the response

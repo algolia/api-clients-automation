@@ -161,6 +161,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 null,
                 null
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`appId` is missing.');
         }
@@ -171,6 +173,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'my-api-key',
                 null
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`appId` is missing.');
         }
@@ -181,6 +185,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                 null,
                 null
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
         }
@@ -197,6 +203,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             $client->addApiKey(
                 null,
             );
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
         }
@@ -215,6 +222,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'my-object-id',
                 [],
             );
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
         }
@@ -225,6 +233,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 null,
                 [],
             );
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
         }
@@ -235,6 +244,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'my-object-id',
                 null,
             );
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
         }

@@ -105,6 +105,8 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'my-api-key',
                 ''
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`region` is required and must be one of the following: eu, us');
         }
@@ -121,6 +123,8 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
                 'my-api-key',
                 'not_a_region'
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`region` is required and must be one of the following: eu, us');
         }

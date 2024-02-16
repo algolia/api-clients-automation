@@ -196,7 +196,7 @@ func SnippetForGetConfigOfSuggestions() {
 	/*
 	   Snippet for the getConfig method.
 
-	   getConfig0
+	   Retrieve QS config e2e
 	*/
 
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
@@ -208,7 +208,7 @@ func SnippetForGetConfigOfSuggestions() {
 
 	// Call the API
 	resp, err := client.GetConfig(client.NewApiGetConfigRequest(
-		"theIndexName",
+		"cts_e2e_browse_query_suggestions",
 	))
 	if err != nil {
 		// handle the eventual error

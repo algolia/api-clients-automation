@@ -122,6 +122,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     );
 
     reservedWords.add("LogLevel");
+    nameMapping.put("appId", "appID");
 
     setProjectName(getClientName(CLIENT));
     setUseSPMFileStructure(true);

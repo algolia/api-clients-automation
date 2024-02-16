@@ -105,6 +105,31 @@ void main() {
     ),
   );
 
+  // assignUserId
+  test(
+    'it should not encode the userID',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.assignUserId(
+        xAlgoliaUserID: "user id with spaces",
+        assignUserIdParams: AssignUserIdParams(
+          cluster: "cluster with spaces",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/clusters/mapping');
+        expect(request.method, 'post');
+        expectHeaders(
+            request.headers, """{"x-algolia-user-id":"user id with spaces"}""");
+        expectBody(request.body, """{"cluster":"cluster with spaces"}""");
+      },
+    ),
+  );
+
   // batch
   test(
     'allows batch method with `addObject` action',
@@ -702,6 +727,45 @@ void main() {
     ),
   );
 
+  // customGet
+  test(
+    'requestOptions should be escaped too',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customGet(
+        path: "/test/all",
+        parameters: {
+          'query': "to be overriden",
+        },
+        requestOptions: RequestOptions(
+          headers: {
+            'x-header-1': 'spaces are left alone',
+          },
+          urlParameters: {
+            'query': "parameters with space",
+            'and an array': [
+              "array",
+              "with spaces",
+            ],
+          },
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/test/all');
+        expect(request.method, 'get');
+        expectHeaders(
+            request.headers, """{"x-header-1":"spaces are left alone"}""");
+        expectParams(request.queryParameters,
+            """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // customPost
   test(
     'allow post method for a custom path with minimal parameters',
@@ -967,7 +1031,7 @@ void main() {
         requestOptions: RequestOptions(
           urlParameters: {
             'myParam': [
-              "c",
+              "b and c",
               "d",
             ],
           },
@@ -977,7 +1041,7 @@ void main() {
         expectPath(request.path, '/1/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"query":"parameters","myParam":"c%2Cd"}""");
+            """{"query":"parameters","myParam":"b%20and%20c%2Cd"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
     ),
