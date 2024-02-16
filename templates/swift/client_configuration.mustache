@@ -22,19 +22,18 @@ public struct Configuration: Core.Configuration, Credentials {
   public var readTimeout: TimeInterval
   public var logLevel: LogLevel
   public var defaultHeaders: [String: String]?
-  public var hosts: [RetryableHost]{{#isSearchClient}}
-
-  public let batchSize: Int{{/isSearchClient}}
+  public var hosts: [RetryableHost]
+  public let compression: CompressionAlgorithm
 
   init(appID: String,
-       apiKey: String,{{#hasRegionalHost}}
-       region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
-       writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
-       readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
-       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
-       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
-       hosts: [RetryableHost]? = nil{{#isSearchClient}},
-       batchSize: Int = 1000{{/isSearchClient}}
+      apiKey: String,{{#hasRegionalHost}}
+      region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
+      writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,
+      readTimeout: TimeInterval = DefaultConfiguration.default.readTimeout,
+      logLevel: LogLevel = DefaultConfiguration.default.logLevel,
+      defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
+      hosts: [RetryableHost]? = nil{{#isSearchClient}},
+      compression: CompressionAlgorithm = .none{{/isSearchClient}}
   ) throws {
     guard !appID.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
@@ -53,8 +52,8 @@ public struct Configuration: Core.Configuration, Credentials {
       "X-Algolia-Application-Id": appID,
       "X-Algolia-API-Key": apiKey,
       "Content-Type": "application/json"
-    ].merging(defaultHeaders ?? [:]) { (_, new) in new }{{#isSearchClient}}
-    self.batchSize = batchSize{{/isSearchClient}}
+    ].merging(defaultHeaders ?? [:]) { (_, new) in new }
+    self.compression = {{#isSearchClient}}compression{{/isSearchClient}}{{^isSearchClient}}.none{{/isSearchClient}}
 
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
 
