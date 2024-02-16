@@ -16,7 +16,7 @@ namespace Algolia.Search.Tests;
 public class ClientExtensionsTests
 {
   private DefaultJsonSerializer serializer = new(new NullLoggerFactory());
-  
+
   [Fact]
   public async Task ShouldWaitForTask()
   {
@@ -40,9 +40,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new GetTaskResponse { Status = TaskStatus.NotPublished }
-                )
+                serializer.Serialize(new GetTaskResponse { Status = TaskStatus.NotPublished })
               )
             )
           }

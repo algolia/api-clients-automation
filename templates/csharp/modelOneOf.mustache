@@ -207,7 +207,7 @@
           typeof({{classname}}JsonConverter<>).MakeGenericType(innerType),
           BindingFlags.Instance | BindingFlags.Public,
           binder: null,
-          args: new object[] { options },
+          args: [],
           culture: null)!;
 
         return converter;
@@ -222,18 +222,11 @@
     public class {{classname}}JsonConverter{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : JsonConverter<{{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>
     {
       {{#vendorExtensions.x-has-child-generic}}
-      private readonly JsonConverter<T> _valueConverter;
-      private readonly Type _keyType;
-      private readonly Type _valueType;
-
-      public {{classname}}JsonConverter(JsonSerializerOptions options)
+      /// <summary>
+      /// The value converter
+      /// </summary>
+      public {{classname}}JsonConverter()
       {
-        // For performance, use the existing converter.
-        _valueConverter = (JsonConverter<T>)options
-        .GetConverter(typeof(T));
-
-        // Cache the key and value types.
-        _keyType = typeof(T);
       }
       {{/vendorExtensions.x-has-child-generic}}
 
@@ -257,20 +250,21 @@
       public override {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
       {
         {{#vendorExtensions}}
-            var jsonDocument = JsonDocument.ParseValue(ref reader);
+        var jsonDocument = JsonDocument.ParseValue(ref reader);
+        var root = jsonDocument.RootElement;
         {{#composedSchemas.oneOf}}
-              if (jsonDocument.RootElement.ValueKind == JsonValueKind.{{#isModel}}Object{{#vendorExtensions.x-discriminator-fields}} && jsonDocument.RootElement.TryGetProperty("{{{.}}}", out _){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}String{{/isEnumRef}}{{#isArray}}Array{{/isArray}}{{#isInteger}}Number{{/isInteger}}{{#isLong}}Number{{/isLong}}{{#isDouble}}Number{{/isDouble}}{{#isBoolean}}True || jsonDocument.RootElement.ValueKind == JsonValueKind.False{{/isBoolean}}{{#isString}}String{{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}Object{{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}})
-              {
-                try
-                {
-                  return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(jsonDocument.Deserialize<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(JsonConfig.Options));
-                }
-                catch (Exception exception)
-                {
-                  // deserialization failed, try the next one
-                  System.Diagnostics.Debug.WriteLine($"Failed to deserialize into {{{datatypeWithEnum}}}: {exception}");
-                }
-              }
+        if (root.ValueKind == JsonValueKind.{{#isModel}}Object{{#vendorExtensions.x-discriminator-fields}} && root.TryGetProperty("{{{.}}}", out _){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}String{{/isEnumRef}}{{#isArray}}Array{{/isArray}}{{#isInteger}}Number{{/isInteger}}{{#isLong}}Number{{/isLong}}{{#isDouble}}Number{{/isDouble}}{{#isBoolean}}True || root.ValueKind == JsonValueKind.False{{/isBoolean}}{{#isString}}String{{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}Object{{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}})
+        {
+          try
+          {
+            return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(jsonDocument.Deserialize<{{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>(JsonConfig.Options));
+          }
+          catch (Exception exception)
+          {
+            // deserialization failed, try the next one
+            System.Diagnostics.Debug.WriteLine($"Failed to deserialize into {{{datatypeWithEnum}}}: {exception}");
+          }
+        }
         {{/composedSchemas.oneOf}}
         {{/vendorExtensions}}
         throw new InvalidDataException($"The JSON string cannot be deserialized into any schema defined.");

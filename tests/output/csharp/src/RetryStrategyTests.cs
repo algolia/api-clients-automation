@@ -161,7 +161,8 @@ public class RetryStrategyTests
                     Hits = new List<object>(),
                     Query = "",
                     VarParams = ""
-                  }, JsonConfig.Options
+                  },
+                  JsonConfig.Options
                 )
               )
             )

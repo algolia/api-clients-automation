@@ -6,27 +6,48 @@ using System.Text.Json.Serialization;
 
 namespace Algolia.Search.Serializer;
 
+/// <summary>
+///  Factory to create a JsonConverter for enums
+/// </summary>
 public class JsonStringEnumConverterFactory : JsonConverterFactory
 {
+  /// <summary>
+  /// Check if the type is an enum
+  /// </summary>
+  /// <param name="typeToConvert"></param>
+  /// <returns></returns>
   public override bool CanConvert(Type typeToConvert)
   {
     return typeToConvert.IsEnum;
   }
 
-  public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+  /// <summary>
+  /// Create a new converter
+  /// </summary>
+  /// <param name="typeToConvert"></param>
+  /// <param name="options"></param>
+  /// <returns></returns>
+  public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
   {
-    var type = typeof(JsonStringEnumConverter2<>).MakeGenericType(typeToConvert);
+    var type = typeof(JsonStringEnumConverter<>).MakeGenericType(typeToConvert);
     return (JsonConverter)Activator.CreateInstance(type)!;
   }
 }
 
-public class JsonStringEnumConverter2<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
+/// <summary>
+/// Custom JsonConverter to convert enum to string, using the JsonPropertyNameAttribute if present
+/// </summary>
+/// <typeparam name="TEnum"></typeparam>
+public class JsonStringEnumConverter<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
 {
   private readonly Dictionary<TEnum, string> _enumToString = new();
   private readonly Dictionary<string, TEnum> _stringToEnum = new();
   private readonly Dictionary<int, TEnum> _numberToEnum = new();
 
-  public JsonStringEnumConverter2()
+  /// <summary>
+  /// Constructor to create the converter
+  /// </summary>
+  public JsonStringEnumConverter()
   {
     var type = typeof(TEnum);
     foreach (var value in Enum.GetValues(type))
@@ -53,6 +74,13 @@ public class JsonStringEnumConverter2<TEnum> : JsonConverter<TEnum> where TEnum 
   }
 
 
+  /// <summary>
+  /// Read the enum from the json
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="typeToConvert"></param>
+  /// <param name="options"></param>
+  /// <returns></returns>
   public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
   {
     var type = reader.TokenType;
@@ -75,6 +103,12 @@ public class JsonStringEnumConverter2<TEnum> : JsonConverter<TEnum> where TEnum 
     return default;
   }
 
+  /// <summary>
+  /// Write the enum to the json
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <param name="value"></param>
+  /// <param name="options"></param>
   public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
   {
     var success = _enumToString.TryGetValue(value, out var stringValue);

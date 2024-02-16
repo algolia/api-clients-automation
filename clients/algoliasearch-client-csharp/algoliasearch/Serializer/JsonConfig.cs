@@ -20,7 +20,6 @@ internal static class JsonConfig
     Converters =
     {
       new JsonStringEnumConverterFactory(),
-      new JsonStringEnumConverter(),
       new SearchResultConverterFactory()
     }
   };
