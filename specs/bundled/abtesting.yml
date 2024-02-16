@@ -171,6 +171,7 @@ components:
     trackedSearchCount:
       type: integer
       example: 2
+      nullable: true
       description: >-
         Number of tracked searches. This is the number of search requests where
         the `clickAnalytics` parameter is `true`.
@@ -189,12 +190,14 @@ components:
         addToCartRate:
           type: number
           format: double
+          nullable: true
           description: >-
             Variant's [add-to-cart
             rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
           example: 0
         averageClickPosition:
           type: integer
+          nullable: true
           description: >-
             Variant's [average click
             position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
@@ -206,6 +209,7 @@ components:
         clickThroughRate:
           type: number
           format: double
+          nullable: true
           description: >-
             Variant's [click-through
             rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
@@ -217,6 +221,7 @@ components:
         conversionRate:
           type: number
           format: double
+          nullable: true
           description: >-
             Variant's [conversion
             rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
@@ -225,12 +230,21 @@ components:
           $ref: '#/components/schemas/currencies'
         description:
           $ref: '#/components/schemas/description'
+        estimatedSampleSize:
+          type: integer
+          description: >-
+            The estimated number of searches that will need to be run to achieve
+            the desired confidence level and statistical power. A
+            `minimumDetectableEffect` must be set in the `configuration` object
+            for this to be used.
+          example: 0
         filterEffects:
           $ref: '#/components/schemas/filterEffects'
         index:
           $ref: '#/components/schemas/index'
         noResultCount:
           type: integer
+          nullable: true
           description: >-
             Number of [searches without
             results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
@@ -243,12 +257,14 @@ components:
         purchaseRate:
           type: number
           format: double
+          nullable: true
           description: >-
             Variant's [purchase
             rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
           example: 0
         searchCount:
           type: integer
+          nullable: true
           description: Number of searches carried out during the A/B test.
           example: 86269
         trackedSearchCount:
@@ -257,10 +273,12 @@ components:
           $ref: '#/components/schemas/trafficPercentage'
         userCount:
           type: integer
+          nullable: true
           description: Number of users during the A/B test.
           example: 55501
         trackedUserCount:
           type: integer
+          nullable: true
           description: Number of users that performed a tracked search during the A/B test.
           example: 55501
       required:
@@ -277,7 +295,6 @@ components:
         - clickThroughRate
         - clickCount
         - averageClickPosition
-        - currencies
         - addToCartRate
         - addToCartCount
         - purchaseRate
@@ -296,6 +313,7 @@ components:
         clickSignificance:
           type: number
           format: double
+          nullable: true
           description: >
             [A/B test
             significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -305,6 +323,7 @@ components:
         conversionSignificance:
           type: number
           format: double
+          nullable: true
           description: >
             [A/B test
             significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -314,6 +333,7 @@ components:
         addToCartSignificance:
           type: number
           format: double
+          nullable: true
           description: >
             [A/B test
             significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -323,6 +343,7 @@ components:
         purchaseSignificance:
           type: number
           format: double
+          nullable: true
           description: >
             [A/B test
             significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -334,6 +355,7 @@ components:
           additionalProperties:
             type: number
             format: double
+          nullable: true
           description: >
             [A/B test
             significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -370,6 +392,7 @@ components:
         - abTestID
         - variants
     ABTests:
+      nullable: true
       type: array
       description: A/B tests.
       items:

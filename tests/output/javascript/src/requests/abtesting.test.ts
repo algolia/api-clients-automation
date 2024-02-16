@@ -1,6 +1,11 @@
 import { abtestingClient } from '@algolia/client-abtesting';
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -8,6 +13,24 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = abtestingClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error(
+    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = abtestingClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY,
+  'us'
+);
 
 describe('addABTests', () => {
   test('addABTests with minimal parameters', async () => {
@@ -83,6 +106,32 @@ describe('customGet', () => {
     expect(req.searchParams).toStrictEqual({
       query: 'parameters%20with%20space',
     });
+  });
+
+  test('requestOptions should be escaped too', async () => {
+    const requestOptions: RequestOptions = {
+      queryParameters: {
+        query: 'parameters with space',
+        'and an array': ['array', 'with spaces'],
+      },
+      headers: { 'x-header-1': 'spaces are left alone' },
+    };
+
+    const req = (await client.customGet(
+      { path: '/test/all', parameters: { query: 'to be overriden' } },
+      requestOptions
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      query: 'parameters%20with%20space',
+      'and%20an%20array': 'array%2Cwith%20spaces',
+    });
+    expect(req.headers).toEqual(
+      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
+    );
   });
 });
 
@@ -248,7 +297,7 @@ describe('customPost', () => {
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const requestOptions: RequestOptions = {
-      queryParameters: { myParam: ['c', 'd'] },
+      queryParameters: { myParam: ['b and c', 'd'] },
     };
 
     const req = (await client.customPost(
@@ -265,7 +314,7 @@ describe('customPost', () => {
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
       query: 'parameters',
-      myParam: 'c%2Cd',
+      myParam: 'b%20and%20c%2Cd',
     });
   });
 
@@ -378,21 +427,64 @@ describe('listABTests', () => {
 
   test('listABTests with parameters', async () => {
     const req = (await client.listABTests({
-      offset: 42,
+      offset: 0,
       limit: 21,
-      indexPrefix: 'foo',
-      indexSuffix: 'bar',
+      indexPrefix: 'cts_e2e ab',
+      indexSuffix: 't',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/2/abtests');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
-      offset: '42',
+      offset: '0',
       limit: '21',
-      indexPrefix: 'foo',
-      indexSuffix: 'bar',
+      indexPrefix: 'cts_e2e%20ab',
+      indexSuffix: 't',
     });
+
+    const resp = await e2eClient.listABTests({
+      offset: 0,
+      limit: 21,
+      indexPrefix: 'cts_e2e ab',
+      indexSuffix: 't',
+    });
+
+    const expectedBody = {
+      abtests: [
+        {
+          abTestID: 84617,
+          createdAt: '2024-02-06T10:04:30.209477Z',
+          endAt: '2024-05-06T09:04:26.469Z',
+          name: 'cts_e2e_abtest',
+          status: 'active',
+          variants: [
+            {
+              addToCartCount: 0,
+              clickCount: 0,
+              conversionCount: 0,
+              description: '',
+              index: 'cts_e2e_search_facet',
+              purchaseCount: 0,
+              trafficPercentage: 25,
+            },
+            {
+              addToCartCount: 0,
+              clickCount: 0,
+              conversionCount: 0,
+              description: '',
+              index: 'cts_e2e abtest',
+              purchaseCount: 0,
+              trafficPercentage: 75,
+            },
+          ],
+        },
+      ],
+      count: 1,
+      total: 1,
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 

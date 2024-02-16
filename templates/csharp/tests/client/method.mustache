@@ -1,9 +1,9 @@
-await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-{{#requestOptions.queryParameters.parametersWithDataType}}
-        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
-{{/requestOptions.queryParameters.parametersWithDataType}}
-{{#requestOptions.headers.parametersWithDataType}}
-        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
-{{/requestOptions.headers.parametersWithDataType}}
+{{^useEchoRequester}}var res = {{/useEchoRequester}}await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+{{#requestOptions.queryParameters}}
+  QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+{{/requestOptions.queryParameters}}
+{{#requestOptions.headers}}
+  Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+{{/requestOptions.headers}}
     }{{/hasRequestOptions}});
-EchoResponse result = _echo.LastResponse;
+{{#useEchoRequester}}EchoResponse result = _echo.LastResponse;{{/useEchoRequester}}

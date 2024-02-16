@@ -145,6 +145,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'my-api-key',
                 'not_a_region'
             );
+
+            $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
         }

@@ -6,18 +6,22 @@ from algoliasearch.recommend.config import RecommendConfig
 
 
 class TestRecommendClient:
-    _config: RecommendConfig
     _client: RecommendClient
 
     def create_client(self) -> RecommendClient:
-        self._config = RecommendConfig("appId", "apiKey")
+        _config = RecommendConfig("appId", "apiKey")
         self._client = RecommendClient.create_with_config(
-            config=self._config, transporter=EchoTransporter(self._config)
+            config=_config, transporter=EchoTransporter(_config)
         )
 
     async def test_api_0(self):
-        self._client = RecommendClient(
-            transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
+        """
+        calls api with correct read host
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        self._client = RecommendClient.create_with_config(
+            config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_get_with_http_info(
             path="/test",
@@ -25,8 +29,13 @@ class TestRecommendClient:
         assert _req.host == "test-app-id-dsn.algolia.net"
 
     async def test_api_1(self):
-        self._client = RecommendClient(
-            transporter=EchoTransporter(RecommendConfig("test-app-id", "test-api-key"))
+        """
+        calls api with correct write host
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        self._client = RecommendClient.create_with_config(
+            config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_post_with_http_info(
             path="/test",
@@ -34,6 +43,9 @@ class TestRecommendClient:
         assert _req.host == "test-app-id.algolia.net"
 
     async def test_common_api_0(self):
+        """
+        calls api with correct user agent
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
@@ -45,6 +57,9 @@ class TestRecommendClient:
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_common_api_1(self):
+        """
+        calls api with default read timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_get_with_http_info(
@@ -54,6 +69,9 @@ class TestRecommendClient:
         assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
+        """
+        calls api with default write timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(

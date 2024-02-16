@@ -2,10 +2,13 @@ package requests
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -29,6 +32,22 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 	require.NoError(t, err)
 
 	return client, echo
+}
+
+func createE2ESuggestionsClient(t *testing.T) *suggestions.APIClient {
+	t.Helper()
+
+	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+	if appID == "" && os.Getenv("CI") != "true" {
+		err := godotenv.Load("../../../../.env")
+		require.NoError(t, err)
+		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+	}
+	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+	client, err := suggestions.NewClient(appID, apiKey, suggestions.US)
+	require.NoError(t, err)
+
+	return client
 }
 
 func TestSuggestions_CreateConfig(t *testing.T) {
@@ -82,6 +101,7 @@ func TestSuggestions_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -114,6 +134,32 @@ func TestSuggestions_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("requestOptions should be escaped too", func(t *testing.T) {
+		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+			"/test/all",
+		).WithParameters(map[string]any{"query": "to be overriden"}),
+			suggestions.QueryParamOption("query", "parameters with space"), suggestions.QueryParamOption("and an array",
+				[]string{"array", "with spaces"}), suggestions.HeaderParamOption("x-header-1", "spaces are left alone"),
+		)
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-header-1":"spaces are left alone"}`), &headers))
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -148,6 +194,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -167,6 +214,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -186,6 +234,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -210,6 +259,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -234,6 +284,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		}
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -253,6 +304,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -272,6 +324,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -281,7 +334,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 			"/test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			suggestions.QueryParamOption("myParam",
-				[]string{"c", "d"}),
+				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
 
@@ -291,7 +344,8 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"c%2Cd"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -312,6 +366,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -332,6 +387,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -366,6 +422,7 @@ func TestSuggestions_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -405,16 +462,41 @@ func TestSuggestions_GetAllConfigs(t *testing.T) {
 func TestSuggestions_GetConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 
-	t.Run("getConfig0", func(t *testing.T) {
+	t.Run("Retrieve QS config e2e", func(t *testing.T) {
 		_, err := client.GetConfig(client.NewApiGetConfigRequest(
-			"theIndexName",
+			"cts_e2e_browse_query_suggestions",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/configs/theIndexName", echo.Path)
+		require.Equal(t, "/1/configs/cts_e2e_browse_query_suggestions", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+		clientE2E := createE2ESuggestionsClient(t)
+		res, err := clientE2E.GetConfig(client.NewApiGetConfigRequest(
+			"cts_e2e_browse_query_suggestions",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 

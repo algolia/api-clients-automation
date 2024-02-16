@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * AbtestingTest.
@@ -147,6 +156,41 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for CustomGet
+     * requestOptions should be escaped too.
+     */
+    public function testCustomGet2()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query' => 'parameters with space',
+                'and an array' => ['array',  'with spaces',
+                ],
+            ],
+            'headers' => [
+                'x-header-1' => 'spaces are left alone',
+            ],
+        ];
+        $client->customGet(
+            '/test/all',
+            ['query' => 'to be overriden',
+            ],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
+                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
         ]);
     }
@@ -405,7 +449,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c',  'd',
+                'myParam' => ['b and c',  'd',
                 ],
             ],
             'headers' => [
@@ -425,7 +469,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"c%2Cd"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
             ],
         ]);
     }
@@ -609,10 +653,10 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->listABTests(
-            42,
+            0,
             21,
-            'foo',
-            'bar',
+            'cts_e2e ab',
+            't',
         );
 
         $this->assertRequests([
@@ -620,9 +664,21 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/2/abtests',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"offset":"42","limit":"21","indexPrefix":"foo","indexSuffix":"bar"}', true),
+                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t"}', true),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->listABTests(
+            0,
+            21,
+            'cts_e2e ab',
+            't',
+        );
+
+        $expected = json_decode('{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -643,6 +699,21 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'body' => json_decode(''),
             ],
         ]);
+    }
+
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
     }
 
     protected function assertRequests(array $requests)
@@ -686,10 +757,15 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         }
     }
 
+    protected function getE2EClient()
+    {
+        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
+    }
+
     protected function getClient()
     {
-        $api = new ApiWrapper($this, AbtestingConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = AbtestingConfig::create('foo', 'bar');
+        $config = AbtestingConfig::create('appID', 'apiKey', 'us');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new AbtestingClient($api, $config);
     }

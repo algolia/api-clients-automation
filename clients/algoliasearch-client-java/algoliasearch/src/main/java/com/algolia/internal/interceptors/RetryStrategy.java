@@ -63,7 +63,11 @@ public final class RetryStrategy implements Interceptor {
   /** Processes the request for a given host. */
   @Nonnull
   private Response processRequest(@Nonnull Chain chain, @Nonnull Request request, StatefulHost host) throws IOException {
-    HttpUrl newUrl = request.url().newBuilder().scheme(host.getScheme()).host(host.getHost()).build();
+    HttpUrl.Builder urlBuilder = request.url().newBuilder().scheme(host.getScheme()).host(host.getHost());
+    if (host.getPort() != -1) {
+      urlBuilder.port(host.getPort());
+    }
+    HttpUrl newUrl = urlBuilder.build();
     Request newRequest = request.newBuilder().url(newUrl).build();
     chain.withConnectTimeout(chain.connectTimeoutMillis() * (host.getRetryCount() + 1), TimeUnit.MILLISECONDS);
     Response response = chain.proceed(newRequest);

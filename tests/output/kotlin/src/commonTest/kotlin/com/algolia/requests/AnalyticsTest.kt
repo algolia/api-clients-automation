@@ -48,7 +48,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -84,7 +84,35 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions should be escaped too`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "/test/all",
+          parameters = mapOf("query" to "to be overriden"),
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "parameters with space")
+              put("and an array", listOf("array", "with spaces"))
+            },
+            headers = buildMap {
+              put("x-header-1", "spaces are left alone")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
+        assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -126,7 +154,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
@@ -155,7 +183,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -184,7 +212,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -214,7 +242,7 @@ class AnalyticsTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -244,7 +272,7 @@ class AnalyticsTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -273,7 +301,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -302,7 +330,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -323,7 +351,7 @@ class AnalyticsTest {
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
-              put("myParam", listOf("c", "d"))
+              put("myParam", listOf("b and c", "d"))
             },
           ),
         )
@@ -331,7 +359,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"c%2Cd"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -360,7 +388,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -389,7 +417,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -431,7 +459,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
@@ -450,7 +478,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/averageClickPosition".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -470,7 +498,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/averageClickPosition".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -489,7 +517,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/positions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -509,7 +537,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/positions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -528,7 +556,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/clickThroughRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -548,7 +576,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/clicks/clickThroughRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -567,7 +595,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/conversions/conversionRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -587,7 +615,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/conversions/conversionRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -606,7 +634,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noClickRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -626,7 +654,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noClickRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -645,7 +673,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -665,7 +693,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -684,7 +712,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/count".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -704,7 +732,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/count".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -723,7 +751,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noClicks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -745,7 +773,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noClicks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -764,7 +792,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noResults".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -786,7 +814,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches/noResults".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -805,7 +833,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/status".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -824,7 +852,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/countries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -846,7 +874,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/countries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -865,7 +893,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -888,7 +916,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -908,7 +936,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/myAttribute".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -926,7 +954,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/myAttribute1%2CmyAttribute2".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -950,7 +978,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/myAttribute".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -974,7 +1002,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/myAttribute1%2CmyAttribute2".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -993,7 +1021,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/noResults".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1016,7 +1044,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/filters/noResults".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1035,7 +1063,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1059,7 +1087,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1078,7 +1106,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1103,7 +1131,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1122,7 +1150,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/users/count".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1142,7 +1170,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/users/count".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )

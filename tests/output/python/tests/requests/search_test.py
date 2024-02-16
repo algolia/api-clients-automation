@@ -47,7 +47,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}"""
@@ -67,7 +67,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/uniqueID"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"key":"value"}""")
 
@@ -84,7 +84,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/security/sources/append"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"source":"theSource","description":"theDescription"}"""
@@ -103,9 +103,28 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {"x-algolia-user-id": "userID"}.items()
         assert loads(_req.data) == loads("""{"cluster":"theCluster"}""")
+
+    async def test_assign_user_id_1(self):
+        """
+        it should not encode the userID
+        """
+        _req = await self._client.assign_user_id_with_http_info(
+            x_algolia_user_id="user id with spaces",
+            assign_user_id_params={
+                "cluster": "cluster with spaces",
+            },
+        )
+
+        assert _req.path == "/1/clusters/mapping"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert (
+            _req.headers.items() >= {"x-algolia-user-id": "user id with spaces"}.items()
+        )
+        assert loads(_req.data) == loads("""{"cluster":"cluster with spaces"}""")
 
     async def test_batch_0(self):
         """
@@ -127,7 +146,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"addObject","body":{"key":"value"}}]}"""
@@ -153,7 +172,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"clear","body":{"key":"value"}}]}"""
@@ -179,7 +198,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"delete","body":{"key":"value"}}]}"""
@@ -205,7 +224,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}"""
@@ -231,7 +250,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}"""
@@ -257,7 +276,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}"""
@@ -283,7 +302,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"updateObject","body":{"key":"value"}}]}"""
@@ -306,7 +325,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {"x-algolia-user-id": "userID"}.items()
         assert loads(_req.data) == loads(
             """{"cluster":"theCluster","users":["user1","user2"]}"""
@@ -340,7 +359,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/compounds/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}"""
@@ -395,7 +414,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/compounds/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}"""
@@ -423,7 +442,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/compounds/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}"""
@@ -439,7 +458,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/cts_e2e_browse/browse"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -476,7 +495,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/browse"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"myQuery","facetFilters":["tags:algolia"]}"""
@@ -495,7 +514,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/browse"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"cursor":"test"}""")
 
@@ -509,7 +528,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/clear"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
     async def test_clear_rules_0(self):
@@ -522,7 +541,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/clear"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
     async def test_clear_synonyms_0(self):
@@ -535,7 +554,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/clear"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
     async def test_custom_delete_0(self):
@@ -548,7 +567,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -565,7 +584,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -579,7 +598,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -598,9 +617,38 @@ class TestSearchClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="/test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
     async def test_custom_post_0(self):
@@ -613,7 +661,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -633,7 +681,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -656,7 +704,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -681,7 +729,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -705,7 +753,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -728,7 +776,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -753,7 +801,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -779,7 +827,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -797,7 +845,7 @@ class TestSearchClient:
                 "facet": "filters",
             },
             request_options={
-                "query_parameters": loads("""{"myParam":["c","d"]}"""),
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
             },
         )
 
@@ -805,7 +853,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -831,7 +879,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -857,7 +905,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -872,7 +920,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -892,7 +940,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -906,7 +954,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys/myTestApiKey"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -923,7 +971,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/deleteByQuery"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"filters":"brand:brandName"}""")
 
@@ -937,7 +985,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -952,7 +1000,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/uniqueID"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -967,7 +1015,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/id1"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -982,7 +1030,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/test%2Fwith%2Fslash"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -996,7 +1044,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/security/sources/theSource"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1011,7 +1059,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/id1"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1025,7 +1073,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys/myTestApiKey"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1037,7 +1085,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/*/languages"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1049,7 +1097,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/*/settings"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1061,7 +1109,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/logs"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1080,7 +1128,7 @@ class TestSearchClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "offset": "5",
                 "length": "10",
                 "indexName": "theIndexName",
@@ -1107,7 +1155,7 @@ class TestSearchClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"attributesToRetrieve": "attr1%2Cattr2"}.items()
+            == {"attributesToRetrieve": "attr1%2Cattr2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -1133,7 +1181,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/objects"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}"""
@@ -1150,7 +1198,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/id1"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1164,7 +1212,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1193,7 +1241,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/security/sources"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1208,7 +1256,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/id1"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1223,7 +1271,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/task/123"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1235,7 +1283,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/top"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1249,7 +1297,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/uniqueID"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1261,7 +1309,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/pending"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1275,7 +1323,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/pending"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"getClusters": "true"}.items()
+        assert _req.query_parameters.items() == {"getClusters": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1287,7 +1335,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1299,7 +1347,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1311,7 +1359,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1327,7 +1375,7 @@ class TestSearchClient:
         assert _req.path == "/1/indexes"
         assert _req.verb == "GET"
         assert (
-            _req.query_parameters.items() >= {"page": "8", "hitsPerPage": "3"}.items()
+            _req.query_parameters.items() == {"page": "8", "hitsPerPage": "3"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -1340,7 +1388,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1356,7 +1404,7 @@ class TestSearchClient:
         assert _req.path == "/1/clusters/mapping"
         assert _req.verb == "GET"
         assert (
-            _req.query_parameters.items() >= {"page": "8", "hitsPerPage": "100"}.items()
+            _req.query_parameters.items() == {"page": "8", "hitsPerPage": "100"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -1381,7 +1429,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}"""
@@ -1405,7 +1453,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/operation"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"operation":"copy","destination":"dest","scope":["rules","settings"]}"""
@@ -1430,7 +1478,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"createIfNotExists": "true"}.items()
+        assert _req.query_parameters.items() == {"createIfNotExists": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}"""
@@ -1446,7 +1494,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/uniqueID"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1465,7 +1513,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/security/sources"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"source":"theSource","description":"theDescription"}]"""
@@ -1481,7 +1529,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys/myApiKey/restore"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
     async def test_save_object_0(self):
@@ -1498,7 +1546,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"objectID":"id","test":"val"}""")
 
@@ -1522,7 +1570,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/id1"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}"""
@@ -1601,7 +1649,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/id1"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}"""
@@ -1637,7 +1685,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
@@ -1720,7 +1768,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"forwardToReplicas": "true", "clearExistingRules": "true"}.items()
+            == {"forwardToReplicas": "true", "clearExistingRules": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
@@ -1748,7 +1796,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/id1"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}"""
@@ -1789,7 +1837,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"forwardToReplicas": "true", "replaceExistingSynonyms": "false"}.items()
+            == {"forwardToReplicas": "true", "replaceExistingSynonyms": "false"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
@@ -1812,7 +1860,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}"""
@@ -1866,7 +1914,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
@@ -1926,7 +1974,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}"""
@@ -1954,7 +2002,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}"""
@@ -1986,7 +2034,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}"""
@@ -2020,7 +2068,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}"""
@@ -2080,7 +2128,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
@@ -2274,7 +2322,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/*/queries"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
@@ -2293,7 +2341,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/compounds/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"foo"}""")
 
@@ -2313,7 +2361,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/compounds/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"foo","page":4,"hitsPerPage":2,"language":"fr"}"""
@@ -2330,7 +2378,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/facets/facetName/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -2350,7 +2398,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/facets/facetName/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
@@ -2369,7 +2417,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/rules/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"something"}""")
 
@@ -2383,7 +2431,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -2397,7 +2445,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/cts_e2e_space%20in%20index/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -2424,7 +2472,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"myQuery","facetFilters":["tags:algolia"]}"""
@@ -2449,7 +2497,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/cts_e2e_browse/query"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}"""
@@ -2502,7 +2550,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -2522,7 +2570,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/indexName/synonyms/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}"""
@@ -2543,7 +2591,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/clusters/mapping/search"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}"""
@@ -2567,7 +2615,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/*/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}"""
@@ -2597,7 +2645,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/dictionaries/*/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
@@ -2617,7 +2665,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
 
@@ -2646,7 +2694,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":true}""")
 
@@ -2664,7 +2712,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
 
@@ -2682,7 +2730,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
 
@@ -2702,7 +2750,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"ignorePlurals":["algolia"]}""")
 
@@ -2720,7 +2768,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeStopWords":true}""")
 
@@ -2740,7 +2788,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeStopWords":["algolia"]}""")
 
@@ -2758,7 +2806,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"distinct":true}""")
 
@@ -2776,7 +2824,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"distinct":1}""")
 
@@ -2926,7 +2974,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
@@ -2951,7 +2999,7 @@ class TestSearchClient:
 
         assert _req.path == "/1/keys/myApiKey"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}"""

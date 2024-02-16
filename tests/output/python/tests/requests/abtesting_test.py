@@ -1,8 +1,14 @@
 from json import loads
+from os import environ
 
 from algoliasearch.abtesting.client import AbtestingClient
 from algoliasearch.abtesting.config import AbtestingConfig
 from algoliasearch.http.transporter import EchoTransporter
+from dotenv import load_dotenv
+
+from ..helpers import Helpers
+
+load_dotenv("../../.env")
 
 
 class TestAbtestingClient:
@@ -10,6 +16,17 @@ class TestAbtestingClient:
     _client = AbtestingClient.create_with_config(
         config=_config, transporter=EchoTransporter(_config)
     )
+
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
     async def test_add_ab_tests_0(self):
         """
@@ -34,7 +51,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
@@ -50,7 +67,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -67,7 +84,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -81,7 +98,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -100,9 +117,38 @@ class TestAbtestingClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="/test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
     async def test_custom_post_0(self):
@@ -115,7 +161,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -135,7 +181,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -158,7 +204,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -183,7 +229,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -207,7 +253,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -230,7 +276,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -255,7 +301,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -281,7 +327,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -299,7 +345,7 @@ class TestAbtestingClient:
                 "facet": "filters",
             },
             request_options={
-                "query_parameters": loads("""{"myParam":["c","d"]}"""),
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
             },
         )
 
@@ -307,7 +353,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -333,7 +379,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -359,7 +405,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -374,7 +420,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -394,7 +440,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -408,7 +454,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -422,7 +468,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -434,7 +480,7 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -443,25 +489,50 @@ class TestAbtestingClient:
         listABTests with parameters
         """
         _req = await self._client.list_ab_tests_with_http_info(
-            offset=42,
+            offset=0,
             limit=21,
-            index_prefix="foo",
-            index_suffix="bar",
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
         )
 
         assert _req.path == "/2/abtests"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
-                "offset": "42",
+            == {
+                "offset": "0",
                 "limit": "21",
-                "indexPrefix": "foo",
-                "indexSuffix": "bar",
+                "indexPrefix": "cts_e2e%20ab",
+                "indexSuffix": "t",
             }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        raw_resp = await AbtestingClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).list_ab_tests_with_http_info(
+            offset=0,
+            limit=21,
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await AbtestingClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).list_ab_tests(
+            offset=0,
+            limit=21,
+            index_prefix="cts_e2e ab",
+            index_suffix="t",
+        )
+        _expected_body = loads(
+            """{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        )
 
     async def test_stop_ab_test_0(self):
         """
@@ -473,5 +544,5 @@ class TestAbtestingClient:
 
         assert _req.path == "/2/abtests/42/stop"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()

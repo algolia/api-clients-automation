@@ -25,14 +25,16 @@ public static class ClientExtensions
   /// <param name="indexName">The `indexName` where the operation was performed.</param>
   /// <param name="taskId">The `taskID` returned in the method response.</param>
   /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
   public static async Task<GetTaskResponse> WaitForTaskAsync(this SearchClient client, string indexName, long taskId,
-    int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null, CancellationToken ct = default)
+    int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null, RequestOptions requestOptions = null,
+    CancellationToken ct = default)
   {
     return await RetryUntil(
       async () => await client.GetTaskAsync(indexName, taskId, requestOptions, ct),
-      resp => resp.Status == Models.Search.TaskStatus.Published, maxRetries, ct).ConfigureAwait(false);
+      resp => resp.Status == Models.Search.TaskStatus.Published, maxRetries, timeout, ct).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -42,11 +44,14 @@ public static class ClientExtensions
   /// <param name="indexName">The `indexName` where the operation was performed.</param>
   /// <param name="taskId">The `taskID` returned in the method response.</param>
   /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
   public static GetTaskResponse WaitForTask(this SearchClient client, string indexName, long taskId,
-    int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null, CancellationToken ct = default) =>
-    AsyncHelper.RunSync(() => client.WaitForTaskAsync(indexName, taskId, maxRetries, requestOptions, ct));
+    int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null, RequestOptions requestOptions = null,
+    CancellationToken ct = default) =>
+    AsyncHelper.RunSync(() =>
+      client.WaitForTaskAsync(indexName, taskId, maxRetries, timeout, requestOptions, ct));
 
   /// <summary>
   /// Helper method that waits for an API key task to be processed.
@@ -56,11 +61,13 @@ public static class ClientExtensions
   /// <param name="key">The key that has been added, deleted or updated.</param>
   /// <param name="apiKey">Necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)</param>
   /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
   public static async Task<GetApiKeyResponse> WaitForApiKeyAsync(this SearchClient client,
     ApiKeyOperation operation, string key,
-    ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null,
+    ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null,
+    RequestOptions requestOptions = null,
     CancellationToken ct = default)
   {
     if (operation == ApiKeyOperation.Update)
@@ -85,7 +92,7 @@ public static class ClientExtensions
             MaxQueriesPerIPPerHour = resp.MaxQueriesPerIPPerHour
           };
           return apiKeyResponse.Equals(apiKey);
-        }, maxRetries: maxRetries, ct: ct).ConfigureAwait(false);
+        }, maxRetries, timeout, ct).ConfigureAwait(false);
     }
 
     var addedKey = new GetApiKeyResponse();
@@ -116,8 +123,7 @@ public static class ClientExtensions
           _ => false
         };
       },
-      maxRetries, ct
-    );
+      maxRetries, timeout, ct);
     return addedKey;
   }
 
@@ -129,13 +135,14 @@ public static class ClientExtensions
   /// <param name="key">The key that has been added, deleted or updated.</param>
   /// <param name="apiKey">Necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)</param>
   /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
   public static GetApiKeyResponse WaitForApiKey(this SearchClient client,
     ApiKeyOperation operation, string key,
-    ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, RequestOptions requestOptions = null,
+    ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null, RequestOptions requestOptions = null,
     CancellationToken ct = default) =>
-    AsyncHelper.RunSync(() => client.WaitForApiKeyAsync(operation, key, apiKey, maxRetries, requestOptions, ct));
+    AsyncHelper.RunSync(() => client.WaitForApiKeyAsync(operation, key, apiKey, maxRetries, timeout, requestOptions, ct));
 
 
   /// <summary>
@@ -254,9 +261,92 @@ public static class ClientExtensions
     return HmacShaHelper.Base64Encode($"{hash}{queryParams}");
   }
 
-  private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
-    int maxRetries = DefaultMaxRetries, CancellationToken ct = default)
+  /// <summary>
+  /// Executes a synchronous search for the provided search requests, with certainty that we will only request Algolia records (hits). Results will be received in the same order as the queries.
+  /// </summary>
+  /// <param name="client">Search client</param>
+  /// <param name="requests">A list of search requests to be executed.</param>
+  /// <param name="searchStrategy">The search strategy to be employed during the search. (optional)</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of List{SearchResponse{T}}</returns>
+  public static async Task<List<SearchResponse<T>>> SearchForHitsAsync<T>(this SearchClient client,
+    IEnumerable<SearchForHits> requests, SearchStrategy? searchStrategy = null, RequestOptions options = null,
+    CancellationToken cancellationToken = default)
   {
+    var queries = requests.Select(t => new SearchQuery(t)).ToList();
+    var searchMethod = new SearchMethodParams(queries) { Strategy = searchStrategy };
+    var searchResponses = await client.SearchAsync<T>(searchMethod, options, cancellationToken);
+    return searchResponses.Results.Where(x => x.IsSearchResponse()).Select(x => x.AsSearchResponse()).ToList();
+  }
+
+  /// <summary>
+  /// Executes a synchronous search for the provided search requests, with certainty that we will only request Algolia records (hits). Results will be received in the same order as the queries. (Synchronous version)
+  /// </summary>
+  /// <param name="client">Search client</param>
+  /// <param name="requests">A list of search requests to be executed.</param>
+  /// <param name="searchStrategy">The search strategy to be employed during the search. (optional)</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of List{SearchResponse{T}}</returns>
+  public static List<SearchResponse<T>> SearchForHits<T>(this SearchClient client,
+    IEnumerable<SearchForHits> requests, SearchStrategy? searchStrategy = null, RequestOptions options = null,
+    CancellationToken cancellationToken = default) =>
+    AsyncHelper.RunSync(() =>
+      client.SearchForHitsAsync<T>(requests, searchStrategy, options, cancellationToken));
+
+
+  /// <summary>
+  /// Executes a synchronous search for the provided search requests, with certainty that we will only request Algolia facets. Results will be received in the same order as the queries.
+  /// </summary>
+  /// <param name="client">Search client</param>
+  /// <param name="requests">A list of search requests to be executed.</param>
+  /// <param name="searchStrategy">The search strategy to be employed during the search. (optional)</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of List{SearchResponse{T}}</returns>
+  public static async Task<List<SearchForFacetValuesResponse>> SearchForFacetsAsync(this SearchClient client,
+    IEnumerable<SearchForFacets> requests, SearchStrategy? searchStrategy, RequestOptions options = null,
+    CancellationToken cancellationToken = default)
+  {
+    var queries = requests.Select(t => new SearchQuery(t)).ToList();
+    var searchMethod = new SearchMethodParams(queries) { Strategy = searchStrategy };
+    var searchResponses = await client.SearchAsync<object>(searchMethod, options, cancellationToken);
+    return searchResponses.Results.Where(x => x.IsSearchForFacetValuesResponse())
+      .Select(x => x.AsSearchForFacetValuesResponse()).ToList();
+  }
+
+  /// <summary>
+  /// Executes a synchronous search for the provided search requests, with certainty that we will only request Algolia facets. Results will be received in the same order as the queries.
+  /// </summary>
+  /// <param name="client">Search client</param>
+  /// <param name="requests">A list of search requests to be executed.</param>
+  /// <param name="searchStrategy">The search strategy to be employed during the search. (optional)</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of List{SearchResponse{T}}</returns>
+  public static List<SearchForFacetValuesResponse> SearchForFacets(this SearchClient client,
+    IEnumerable<SearchForFacets> requests, SearchStrategy? searchStrategy, RequestOptions options = null,
+    CancellationToken cancellationToken = default) =>
+    AsyncHelper.RunSync(() => client.SearchForFacetsAsync(requests, searchStrategy, options, cancellationToken));
+
+  private static async Task<T> RetryUntil<T>(Func<Task<T>> func, Func<T, bool> validate,
+    int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null, CancellationToken ct = default)
+  {
+    timeout ??= NextDelay;
+
     var retryCount = 0;
     while (retryCount < maxRetries)
     {
@@ -266,13 +356,14 @@ public static class ClientExtensions
         return resp;
       }
 
-      await Task.Delay(NextDelay(retryCount), ct).ConfigureAwait(false);
+      await Task.Delay(timeout(retryCount), ct).ConfigureAwait(false);
       retryCount++;
     }
 
     throw new AlgoliaException(
       "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
   }
+
   private static int NextDelay(int retryCount)
   {
     return Math.Min(retryCount * 200, 5000);

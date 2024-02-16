@@ -21,7 +21,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -38,7 +38,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "DELETE"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -52,7 +52,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -71,9 +71,38 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters%20with%20space"}.items()
+            == {"query": "parameters%20with%20space"}.items()
         )
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="/test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
     async def test_custom_post_0(self):
@@ -86,7 +115,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -106,7 +135,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -129,7 +158,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "myQueryParameter"}.items()
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -154,7 +183,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "query2": "myQueryParameter"}.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -178,7 +207,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -201,7 +230,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/requestOptions"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
@@ -226,7 +255,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "isItWorking": "true"}.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -252,7 +281,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "2"}.items()
+            == {"query": "parameters", "myParam": "2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -270,7 +299,7 @@ class TestAnalyticsClient:
                 "facet": "filters",
             },
             request_options={
-                "query_parameters": loads("""{"myParam":["c","d"]}"""),
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
             },
         )
 
@@ -278,7 +307,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -304,7 +333,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -330,7 +359,7 @@ class TestAnalyticsClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            >= {"query": "parameters", "myParam": "1%2C2"}.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
@@ -345,7 +374,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/minimal"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
@@ -365,7 +394,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/1/test/all"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() >= {"query": "parameters"}.items()
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
@@ -379,7 +408,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/clicks/averageClickPosition"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -398,7 +427,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -418,7 +447,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/clicks/positions"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -437,7 +466,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -457,7 +486,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/clicks/clickThroughRate"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -476,7 +505,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -496,7 +525,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/conversions/conversionRate"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -515,7 +544,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -535,7 +564,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches/noClickRate"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -554,7 +583,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -574,7 +603,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches/noResultRate"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -593,7 +622,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -613,7 +642,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches/count"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -632,7 +661,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -652,7 +681,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches/noClicks"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -673,7 +702,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -695,7 +724,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches/noResults"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -716,7 +745,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -738,7 +767,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/status"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -752,7 +781,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/countries"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -773,7 +802,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
@@ -795,7 +824,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/filters"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -817,7 +846,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "search": "mySearch",
                 "startDate": "1999-09-19",
@@ -841,7 +870,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/filters/myAttribute"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -856,7 +885,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/filters/myAttribute1%2CmyAttribute2"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -879,7 +908,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "search": "mySearch",
                 "startDate": "1999-09-19",
@@ -911,7 +940,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "search": "mySearch",
                 "startDate": "1999-09-19",
@@ -934,7 +963,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/filters/noResults"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -956,7 +985,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "search": "mySearch",
                 "startDate": "1999-09-19",
@@ -979,7 +1008,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/hits"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1002,7 +1031,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "search": "mySearch",
                 "clickAnalytics": "true",
@@ -1026,7 +1055,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/searches"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1050,7 +1079,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "clickAnalytics": "true",
                 "startDate": "1999-09-19",
@@ -1075,7 +1104,7 @@ class TestAnalyticsClient:
 
         assert _req.path == "/2/users/count"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() >= {"index": "index"}.items()
+        assert _req.query_parameters.items() == {"index": "index"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1094,7 +1123,7 @@ class TestAnalyticsClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            >= {
+            == {
                 "index": "index",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",

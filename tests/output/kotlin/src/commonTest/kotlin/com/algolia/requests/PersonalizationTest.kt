@@ -48,7 +48,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -84,7 +84,35 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertContainsAll("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions should be escaped too`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "/test/all",
+          parameters = mapOf("query" to "to be overriden"),
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "parameters with space")
+              put("and an array", listOf("array", "with spaces"))
+            },
+            headers = buildMap {
+              put("x-header-1", "spaces are left alone")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
+        assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -126,7 +154,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )
@@ -155,7 +183,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -184,7 +212,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -214,7 +242,7 @@ class PersonalizationTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -244,7 +272,7 @@ class PersonalizationTest {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -273,7 +301,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -302,7 +330,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -323,7 +351,7 @@ class PersonalizationTest {
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
-              put("myParam", listOf("c", "d"))
+              put("myParam", listOf("b and c", "d"))
             },
           ),
         )
@@ -331,7 +359,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"c%2Cd"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -360,7 +388,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -389,7 +417,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
     )
@@ -431,7 +459,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertContainsAll("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
       },
     )

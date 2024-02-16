@@ -6,16 +6,18 @@ from algoliasearch.ingestion.config import IngestionConfig
 
 
 class TestIngestionClient:
-    _config: IngestionConfig
     _client: IngestionClient
 
     def create_client(self) -> IngestionClient:
-        self._config = IngestionConfig("appId", "apiKey", "us")
+        _config = IngestionConfig("appId", "apiKey", "us")
         self._client = IngestionClient.create_with_config(
-            config=self._config, transporter=EchoTransporter(self._config)
+            config=_config, transporter=EchoTransporter(_config)
         )
 
     async def test_common_api_0(self):
+        """
+        calls api with correct user agent
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
@@ -27,6 +29,9 @@ class TestIngestionClient:
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_common_api_1(self):
+        """
+        calls api with default read timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_get_with_http_info(
@@ -36,6 +41,9 @@ class TestIngestionClient:
         assert _req.timeouts.get("response") == 5000
 
     async def test_common_api_2(self):
+        """
+        calls api with default write timeouts
+        """
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
@@ -45,10 +53,13 @@ class TestIngestionClient:
         assert _req.timeouts.get("response") == 30000
 
     async def test_parameters_0(self):
-        self._client = IngestionClient(
-            transporter=EchoTransporter(
-                IngestionConfig("my-app-id", "my-api-key", "us")
-            )
+        """
+        uses the correct region
+        """
+
+        _config = IngestionConfig("my-app-id", "my-api-key", "us")
+        self._client = IngestionClient.create_with_config(
+            config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.get_source_with_http_info(
             source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -56,12 +67,16 @@ class TestIngestionClient:
         assert _req.host == "data.us.algolia.com"
 
     async def test_parameters_1(self):
+        """
+        throws when incorrect region is given
+        """
+
         try:
-            self._client = IngestionClient(
-                transporter=EchoTransporter(
-                    IngestionConfig("my-app-id", "my-api-key", "not_a_region")
-                )
+            _config = IngestionConfig("my-app-id", "my-api-key", "not_a_region")
+            self._client = IngestionClient.create_with_config(
+                config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)

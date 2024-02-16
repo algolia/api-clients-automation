@@ -1,9 +1,9 @@
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Analytics;
 using Algolia.Search.Serializer;
 using dotenv.net;
-using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
@@ -45,7 +45,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -83,7 +83,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters%20with%20space\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -95,6 +95,48 @@ public class AnalyticsClientRequestTests
     {
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "requestOptions should be escaped too")]
+  public async Task CustomGetTest2()
+  {
+    await _client.CustomGetAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "to be overriden" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "parameters with space")
+        .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
+        .AddExtraHeader("x-header-1", "spaces are left alone")
+        .Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"x-header-1\":\"spaces are left alone\"}"
+    );
+    var actualHeaders = req.Headers;
+    foreach (var expectedHeader in expectedHeaders)
+    {
+      string actualHeaderValue;
+      actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+      Assert.Equal(expectedHeader.Value, actualHeaderValue);
     }
   }
 
@@ -126,7 +168,7 @@ public class AnalyticsClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -148,17 +190,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -180,17 +219,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query2", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -212,17 +248,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -235,7 +268,7 @@ public class AnalyticsClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -254,17 +287,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -277,7 +307,7 @@ public class AnalyticsClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -296,17 +326,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "isItWorking", true } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -328,17 +355,14 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "myParam", 2 } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -360,24 +384,17 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { "c", "d" }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
+        .Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}"
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -398,23 +415,16 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { true, true, false }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
+        .Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -436,23 +446,16 @@ public class AnalyticsClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { 1, 2 }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
+        .Build()
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -495,7 +498,7 @@ public class AnalyticsClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -519,7 +522,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/averageClickPosition", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -543,7 +546,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/averageClickPosition", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -567,7 +570,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/positions", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -591,7 +594,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/positions", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -615,7 +618,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/clickThroughRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -639,7 +642,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/clicks/clickThroughRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -663,7 +666,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/conversions/conversionRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -687,7 +690,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/conversions/conversionRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -711,7 +714,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noClickRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -735,7 +738,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noClickRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -759,7 +762,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noResultRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -783,7 +786,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noResultRate", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -807,7 +810,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/count", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -831,7 +834,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/count", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -855,7 +858,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noClicks", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -879,7 +882,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noClicks", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -903,7 +906,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noResults", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -927,7 +930,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches/noResults", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -951,7 +954,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/status", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -975,7 +978,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/countries", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -999,7 +1002,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/countries", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1023,7 +1026,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1055,7 +1058,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1079,7 +1082,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/myAttribute", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1105,7 +1108,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/myAttribute1%2CmyAttribute2", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1138,7 +1141,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/myAttribute", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1171,7 +1174,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/myAttribute1%2CmyAttribute2", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1195,7 +1198,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/noResults", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1227,7 +1230,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/filters/noResults", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1251,7 +1254,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/hits", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1284,7 +1287,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/hits", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1308,7 +1311,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1342,7 +1345,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/searches", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1366,7 +1369,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/users/count", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1390,7 +1393,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("/2/users/count", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);

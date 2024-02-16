@@ -7,6 +7,7 @@ namespace Algolia\AlgoliaSearch\Configuration;
 class SearchConfig extends Configuration
 {
     protected $clientName = 'Search';
+
     private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
     private $defaultMaxRetries = 50;
 
@@ -26,6 +27,7 @@ class SearchConfig extends Configuration
             'appId' => '',
             'apiKey' => '',
             'hosts' => null,
+            'hasFullHosts' => false,
             'readTimeout' => $this->defaultReadTimeout,
             'writeTimeout' => $this->defaultWriteTimeout,
             'connectTimeout' => $this->defaultConnectTimeout,

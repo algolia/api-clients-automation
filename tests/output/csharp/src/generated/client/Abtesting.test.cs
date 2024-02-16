@@ -1,7 +1,11 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Abtesting;
+using Algolia.Search.Serializer;
+using Algolia.Search.Transport;
+using Quibble.Xunit;
 using Xunit;
 
 public class AbtestingClientTests

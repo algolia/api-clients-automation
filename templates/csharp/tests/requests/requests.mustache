@@ -3,7 +3,7 @@ using Algolia.Search.Clients;
 using Algolia.Search.Models.{{clientPrefix}};
 using Algolia.Search.Serializer;
 using Xunit;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Quibble.Xunit;
 using dotenv.net;
 using Action = Algolia.Search.Models.Search.Action;
@@ -33,7 +33,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
       }
 
-      _e2eClient = new SearchClient(new SearchConfig(e2EAppId, e2EApiKey));
+      _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
     {{/hasE2E}}
   }
 
@@ -48,14 +48,15 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
       {{#requestOptions.queryParameters.parametersWithDataType}}
-        QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
+          .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
       {{/requestOptions.queryParameters.parametersWithDataType}}
       {{#requestOptions.headers.parametersWithDataType}}
-        Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
+          .AddExtraHeader("{{{key}}}", "{{{value}}}")
       {{/requestOptions.headers.parametersWithDataType}}
-    }{{/hasRequestOptions}});
+          .Build()
+    {{/hasRequestOptions}});
 
      var req = _echo.LastResponse;
     {{#request}}
@@ -73,7 +74,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/assertNullBody}}
     {{/body}}
       {{#queryParameters}}
-        var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
+        var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
         Assert.NotNull(expectedQuery);
 
         var actualQuery = req.QueryParameters;
@@ -86,7 +87,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         }
     {{/queryParameters}}
     {{#headers}}
-        var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}");
+        var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}");
         var actualHeaders = req.Headers;
         foreach (var expectedHeader in expectedHeaders)
         {
@@ -102,12 +103,12 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       // e2e
       try {
         var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-      {{#requestOptions.queryParameters.parametersWithDataType}}
-          QueryParameters = new Dictionary<string, object>(){ {"{{{key}}}", {{> tests/requests/requestOptionsParams}} }},
-      {{/requestOptions.queryParameters.parametersWithDataType}}
-      {{#requestOptions.headers.parametersWithDataType}}
-          Headers = new Dictionary<string, string>(){ {"{{{key}}}", "{{{value}}}" }},
-      {{/requestOptions.headers.parametersWithDataType}}
+          {{#requestOptions.queryParameters}}
+            QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.queryParameters}}
+          {{#requestOptions.headers}}
+            Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.headers}}
         }{{/hasRequestOptions}});
       {{#statusCode}}
           // Check status code {{statusCode}}
@@ -115,7 +116,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/statusCode}}
 
       {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings), new JsonDiffConfig(true));
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
       {{/body}}
       } catch (Exception e)
       {

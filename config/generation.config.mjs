@@ -141,6 +141,9 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
 
   // Swift
+  '!snippets/swift/**',
+  'snippets/swift/Package.swift',
+  'snippets/swift/Sources/**',
   'clients/algoliasearch-client-swift/**',
   '!clients/algoliasearch-client-swift/*',
   'clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec',

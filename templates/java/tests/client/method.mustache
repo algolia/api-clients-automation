@@ -1,2 +1,2 @@
-client{{#path}}.{{.}}{{/path}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
-EchoResponse result = echo.getLastResponse();
+{{^useEchoRequester}}var res = {{/useEchoRequester}}client{{#path}}.{{.}}{{/path}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
+{{#useEchoRequester}}EchoResponse result = echo.getLastResponse();{{/useEchoRequester}}

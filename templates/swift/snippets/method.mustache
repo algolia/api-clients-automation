@@ -1,0 +1,31 @@
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
+
+import Core
+import {{import}}
+
+final class {{client}}Snippet {
+  {{#blocksRequests}}
+  {{#snippet}}
+  // Snippet for the {{method}} method.
+  //
+  // {{{description}}}
+  func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() async throws {
+    // Initialize the client
+    let client = try {{client}}(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+
+  {{#hasRequestOptions}}
+    let requestOptions = RequestOptions({{#requestOptions.headers}}
+      headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.headers}}
+      {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
+      queryItems: APIHelper.mapValuesToQueryItems([{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]){{/requestOptions.queryParameters}}
+    )
+  {{/hasRequestOptions}}
+
+    // Call the API
+    let _ = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+  }
+  {{/snippet}}
+  {{/blocksRequests}}
+}

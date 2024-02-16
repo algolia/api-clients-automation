@@ -1,7 +1,11 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
+using Algolia.Search.Transport;
+using Quibble.Xunit;
 using Xunit;
 
 public class SearchClientTests
@@ -35,6 +39,44 @@ public class SearchClientTests
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id.algolia.net", result.Host);
+  }
+
+  [Fact(DisplayName = "tests the retry strategy")]
+  public async Task ApiTest2()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6677,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6678,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("/test");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok test server response\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "calls api with correct user agent")]

@@ -13,7 +13,7 @@
     ],
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
-    "packageVersion": "7.0.0-alpha.7",
+    "packageVersion": "7.0.0-alpha.8",
     "modelFolder": "algoliasearch/Models",
     "apiFolder": "algoliasearch/Clients",
     "dockerImage": "apic_base",
@@ -187,7 +187,7 @@
     ],
     "folder": "clients/algoliasearch-client-kotlin",
     "gitRepoId": "algoliasearch-client-kotlin",
-    "packageVersion": "3.0.0-beta.14",
+    "packageVersion": "3.0.0-beta.15",
     "modelFolder": "client/src/commonMain/kotlin/com/algolia/client/model",
     "apiFolder": "client/src/commonMain/kotlin/com/algolia/client/api",
     "dockerImage": "apic_base",
@@ -214,7 +214,7 @@
     ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
-    "packageVersion": "4.0.0-alpha.94",
+    "packageVersion": "4.0.0-alpha.95",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
     "dockerImage": "apic_base",
@@ -241,7 +241,7 @@
     ],
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.0.0b3",
+    "packageVersion": "4.0.0b4",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "dockerImage": "apic_base",
@@ -268,7 +268,7 @@
     ],
     "folder": "clients/algoliasearch-client-ruby",
     "gitRepoId": "algoliasearch-client-ruby",
-    "packageVersion": "3.0.0.alpha.6",
+    "packageVersion": "3.0.0.alpha.7",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
     "dockerImage": "apic_ruby",
@@ -322,13 +322,17 @@
     ],
     "folder": "clients/algoliasearch-client-swift",
     "gitRepoId": "algoliasearch-client-swift",
-    "packageVersion": "9.0.0-alpha.4",
+    "packageVersion": "9.0.0-alpha.5",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
     "dockerImage": "apic_swift",
     "tests": {
       "extension": "Tests.swift",
       "outputFolder": "Tests"
+    },
+    "snippets": {
+      "extension": ".swift",
+      "outputFolder": "Sources"
     }
   }
 }
