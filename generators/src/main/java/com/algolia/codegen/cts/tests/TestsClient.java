@@ -91,8 +91,11 @@ public class TestsClient extends TestsGenerator {
               }
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
-              if (gzipEncoding && (language.equals("javascript") || language.equals("dart"))) {
-                // not supported in javascript and dart
+              // many languages don't support gzip yet
+              if (
+                gzipEncoding &&
+                (language.equals("javascript") || language.equals("dart") || language.equals("python") || language.equals("php"))
+              ) {
                 continue skipTest;
               }
               stepOut.put("gzipEncoding", gzipEncoding);
