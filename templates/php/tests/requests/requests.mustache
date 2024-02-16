@@ -39,27 +39,17 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {{#hasE2E}}
     protected function union($expected, $received)
     {
-        $res = [];
-
-        foreach ($expected as $k => $v) {
-            if (isset($received[$k])) {
-                if (is_array($v)) {
-                    $res[$k] = $this->union($v, $received[$k]);
-                } elseif (is_array($v)) {
-                    if (!isset($res[$k])) {
-                        $res[$k] = [];
-                    }
-
-                    foreach ($v as $iv => $v) {
-                        $res[$k][] = $this->union($v, $received[$k][$iv]);
-                    }
-                } else {
-                    $res[$k] = $received[$k];
-                }
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
             }
-        }
 
-        return $res;
+            return $res;
+        }
+        
+        return $received;
     }
     {{/hasE2E}}
 
