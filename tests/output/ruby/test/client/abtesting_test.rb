@@ -72,6 +72,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       'not_a_region',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+    assert(false, 'An error should have been raised')
   rescue => e
     assert_equal('`region` must be one of the following: de, us', e.message)
   end

@@ -34,7 +34,7 @@ object SearchQuerySerializer extends Serializer[SearchQuery] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SearchQuery] =>
       json match {
-        case value: JObject if value.obj.contains("facet") && value.obj.contains("type") =>
+        case value: JObject if value.obj.exists(_._1 == "facet") && value.obj.exists(_._1 == "type") =>
           Extraction.extract[SearchForFacets](value)
         case value: JObject => Extraction.extract[SearchForHits](value)
         case _              => throw new MappingException("Can't convert " + json + " to SearchQuery")

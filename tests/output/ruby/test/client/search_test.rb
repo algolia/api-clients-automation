@@ -95,6 +95,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         '',
         { requester: Algolia::Transport::EchoRequester.new }
       )
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('`app_id` is missing.', e.message)
     end
@@ -104,6 +105,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         'my-api-key',
         { requester: Algolia::Transport::EchoRequester.new }
       )
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('`app_id` is missing.', e.message)
     end
@@ -113,6 +115,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         '',
         { requester: Algolia::Transport::EchoRequester.new }
       )
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('`api_key` is missing.', e.message)
     end
@@ -127,6 +130,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     begin
       client.add_api_key_with_http_info(nil)
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('Parameter `api_key` is required when calling `add_api_key`.', e.message)
     end
@@ -141,6 +145,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     begin
       client.add_or_update_object_with_http_info(nil, "my-object-id", {})
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal(
         'Parameter `index_name` is required when calling `add_or_update_object`.',
@@ -149,6 +154,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     end
     begin
       client.add_or_update_object_with_http_info("my-index-name", nil, {})
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal(
         'Parameter `object_id` is required when calling `add_or_update_object`.',
@@ -157,6 +163,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     end
     begin
       client.add_or_update_object_with_http_info("my-index-name", "my-object-id", nil)
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('Parameter `body` is required when calling `add_or_update_object`.', e.message)
     end

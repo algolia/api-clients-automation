@@ -14,11 +14,11 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 // we only read .env file if we run locally
-if (isset($_ENV['DOCKER']) && 'true' === $_ENV['DOCKER']) {
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
     $dotenv = Dotenv::createImmutable('tests');
     $dotenv->load();
-} else {
-    $_ENV = getenv();
 }
 
 /**
@@ -156,6 +156,41 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for CustomGet
+     * requestOptions should be escaped too.
+     */
+    public function testCustomGet2()
+    {
+        $client = $this->getClient();
+        $requestOptions = [
+            'queryParameters' => [
+                'query' => 'parameters with space',
+                'and an array' => ['array',  'with spaces',
+                ],
+            ],
+            'headers' => [
+                'x-header-1' => 'spaces are left alone',
+            ],
+        ];
+        $client->customGet(
+            '/test/all',
+            ['query' => 'to be overriden',
+            ],
+            $requestOptions
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
+                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
         ]);
     }
@@ -414,7 +449,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $requestOptions = [
             'queryParameters' => [
-                'myParam' => ['c',  'd',
+                'myParam' => ['b and c',  'd',
                 ],
             ],
             'headers' => [
@@ -434,7 +469,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'path' => '/1/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"c%2Cd"}', true),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
             ],
         ]);
     }
@@ -668,27 +703,17 @@ class AbtestingTest extends TestCase implements HttpClientInterface
 
     protected function union($expected, $received)
     {
-        $res = [];
-
-        foreach ($expected as $k => $v) {
-            if (isset($received[$k])) {
-                if (is_array($v)) {
-                    $res[$k] = $this->union($v, $received[$k]);
-                } elseif (is_array($v)) {
-                    if (!isset($res[$k])) {
-                        $res[$k] = [];
-                    }
-
-                    foreach ($v as $iv => $v) {
-                        $res[$k][] = $this->union($v, $received[$k][$iv]);
-                    }
-                } else {
-                    $res[$k] = $received[$k];
-                }
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
             }
+
+            return $res;
         }
 
-        return $res;
+        return $received;
     }
 
     protected function assertRequests(array $requests)
@@ -734,13 +759,13 @@ class AbtestingTest extends TestCase implements HttpClientInterface
 
     protected function getE2EClient()
     {
-        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
+        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, AbtestingConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = AbtestingConfig::create('foo', 'bar');
+        $config = AbtestingConfig::create('appID', 'apiKey', 'us');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new AbtestingClient($api, $config);
     }

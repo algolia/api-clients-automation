@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -24,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class QuerySuggestionsClientRequestsTests {
 
   private QuerySuggestionsClient client;
-
+  private QuerySuggestionsClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -34,6 +35,13 @@ class QuerySuggestionsClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new QuerySuggestionsClient("appId", "apiKey", "us", options);
+
+    if ("true".equals(System.getenv("CI"))) {
+      this.clientE2E = new QuerySuggestionsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
+    } else {
+      var dotenv = Dotenv.configure().directory("../../").load();
+      this.clientE2E = new QuerySuggestionsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
+    }
   }
 
   @AfterAll
@@ -144,6 +152,54 @@ class QuerySuggestionsClientRequestsTests {
       }
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("requestOptions should be escaped too")
+  void customGetTest2() {
+    assertDoesNotThrow(() -> {
+      client.customGet(
+        "/test/all",
+        Map.of("query", "to be overriden"),
+        new RequestOptions()
+          .addExtraQueryParameters("query", "parameters with space")
+          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraHeader("x-header-1", "spaces are left alone")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/test/all", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+
+    try {
+      Map<String, String> expectedHeaders = json.readValue(
+        "{\"x-header-1\":\"spaces are left alone\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, String> actualHeaders = req.headers;
+
+      for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse headers json");
     }
   }
 
@@ -405,7 +461,7 @@ class QuerySuggestionsClientRequestsTests {
         "/test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("c", "d"))
+        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -415,7 +471,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}",
+        "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -554,15 +610,24 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getConfig0")
+  @DisplayName("Retrieve QS config e2e")
   void getConfigTest0() {
     assertDoesNotThrow(() -> {
-      client.getConfig("theIndexName");
+      client.getConfig("cts_e2e_browse_query_suggestions");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/configs/theIndexName", req.path);
+    assertEquals("/1/configs/cts_e2e_browse_query_suggestions", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+
+    var res = clientE2E.getConfig("cts_e2e_browse_query_suggestions");
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test

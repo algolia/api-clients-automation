@@ -38,7 +38,7 @@ case class TopSearchWithAnalytics(
     clickThroughRate: Double,
     averageClickPosition: Int,
     conversionRate: Double,
-    trackedSearchCount: Int,
+    trackedSearchCount: Option[Int] = scala.None,
     clickCount: Int,
     conversionCount: Int,
     nbHits: Int

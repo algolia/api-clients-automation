@@ -107,6 +107,25 @@ class TestSearchClient:
         assert _req.headers.items() >= {"x-algolia-user-id": "userID"}.items()
         assert loads(_req.data) == loads("""{"cluster":"theCluster"}""")
 
+    async def test_assign_user_id_1(self):
+        """
+        it should not encode the userID
+        """
+        _req = await self._client.assign_user_id_with_http_info(
+            x_algolia_user_id="user id with spaces",
+            assign_user_id_params={
+                "cluster": "cluster with spaces",
+            },
+        )
+
+        assert _req.path == "/1/clusters/mapping"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert (
+            _req.headers.items() >= {"x-algolia-user-id": "user id with spaces"}.items()
+        )
+        assert loads(_req.data) == loads("""{"cluster":"cluster with spaces"}""")
+
     async def test_batch_0(self):
         """
         allows batch method with `addObject` action
@@ -603,6 +622,35 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="/test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
+        assert _req.data is None
+
     async def test_custom_post_0(self):
         """
         allow post method for a custom path with minimal parameters
@@ -797,7 +845,7 @@ class TestSearchClient:
                 "facet": "filters",
             },
             request_options={
-                "query_parameters": loads("""{"myParam":["c","d"]}"""),
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
             },
         )
 
@@ -805,7 +853,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            == {"query": "parameters", "myParam": "c%2Cd"}.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")

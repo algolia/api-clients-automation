@@ -67,10 +67,6 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "appId": {
-            "type": "string",
-            "description": "Your Algolia application ID."
-          },
           "sourceIndicesAPIKey": {
             "type": "string",
             "description": "API key used to read from your source index."
@@ -661,10 +657,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "appId": {
-                "type": "string",
-                "description": "Your Algolia application ID."
-              },
               "sourceIndicesAPIKey": {
                 "type": "string",
                 "description": "API key used to read from your source index."
@@ -1701,10 +1693,6 @@
                         "type": "object",
                         "additionalProperties": false,
                         "properties": {
-                          "appId": {
-                            "type": "string",
-                            "description": "Your Algolia application ID."
-                          },
                           "sourceIndicesAPIKey": {
                             "type": "string",
                             "description": "API key used to read from your source index."
@@ -2358,10 +2346,6 @@
                       "type": "object",
                       "additionalProperties": false,
                       "properties": {
-                        "appId": {
-                          "type": "string",
-                          "description": "Your Algolia application ID."
-                        },
                         "sourceIndicesAPIKey": {
                           "type": "string",
                           "description": "API key used to read from your source index."

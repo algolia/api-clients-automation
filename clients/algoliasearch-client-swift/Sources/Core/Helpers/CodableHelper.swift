@@ -7,6 +7,30 @@
 import Foundation
 
 open class CodableHelper {
+    open class func decode<T>(_ type: T.Type, from data: Data) -> Swift.Result<T, Error>
+    where T: Decodable {
+        Swift.Result { try self.jsonDecoder.decode(type, from: data) }
+    }
+
+    open class func encode(_ value: some Encodable) -> Swift.Result<Data, Error> {
+        Swift.Result { try self.jsonEncoder.encode(value) }
+    }
+
+    public static var dateFormatter: DateFormatter {
+        get { customDateFormatter ?? defaultDateFormatter }
+        set { customDateFormatter = newValue }
+    }
+
+    public static var jsonDecoder: JSONDecoder {
+        get { customJSONDecoder ?? defaultJSONDecoder }
+        set { customJSONDecoder = newValue }
+    }
+
+    public static var jsonEncoder: JSONEncoder {
+        get { customJSONEncoder ?? defaultJSONEncoder }
+        set { customJSONEncoder = newValue }
+    }
+
     private static var customDateFormatter: DateFormatter?
     private static var defaultDateFormatter: DateFormatter = OpenISO8601DateFormatter()
 
@@ -24,29 +48,4 @@ open class CodableHelper {
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }()
-
-    public static var dateFormatter: DateFormatter {
-        get { customDateFormatter ?? defaultDateFormatter }
-        set { customDateFormatter = newValue }
-    }
-
-    public static var jsonDecoder: JSONDecoder {
-        get { customJSONDecoder ?? defaultJSONDecoder }
-        set { customJSONDecoder = newValue }
-    }
-
-    public static var jsonEncoder: JSONEncoder {
-        get { customJSONEncoder ?? defaultJSONEncoder }
-        set { customJSONEncoder = newValue }
-    }
-
-    open class func decode<T>(_ type: T.Type, from data: Data) -> Swift.Result<T, Error>
-        where T: Decodable
-    {
-        Swift.Result { try jsonDecoder.decode(type, from: data) }
-    }
-
-    open class func encode<T>(_ value: T) -> Swift.Result<Data, Error> where T: Encodable {
-        Swift.Result { try jsonEncoder.encode(value) }
-    }
 }

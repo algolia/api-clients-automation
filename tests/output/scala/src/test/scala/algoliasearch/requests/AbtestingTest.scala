@@ -7,6 +7,11 @@ import algoliasearch.abtesting.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.skyscreamer.jsonassert.JSONCompare.compareJSON
+import org.skyscreamer.jsonassert.JSONCompareMode
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -29,6 +34,24 @@ class AbtestingTest extends AnyFunSuite {
       ),
       echo
     )
+  }
+
+  def testE2EClient(): AbtestingClient = {
+    val region = Some("us")
+    if (System.getenv("CI") == "true") {
+      AbtestingClient(
+        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      AbtestingClient(
+        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    }
   }
 
   test("addABTests with minimal parameters") {
@@ -131,6 +154,45 @@ class AbtestingTest extends AnyFunSuite {
     for ((k, v) <- actualQuery) {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions should be escaped too") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "to be overriden")),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query", "parameters with space")
+          .withQueryParameter("and an array", Seq("array", "with spaces"))
+          .withHeader("x-header-1", "spaces are left alone")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-header-1":"spaces are left alone"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
     }
   }
 
@@ -382,7 +444,7 @@ class AbtestingTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withQueryParameter("myParam", Seq("c", "d"))
+          .withQueryParameter("myParam", Seq("b and c", "d"))
           .build()
       )
     )
@@ -395,7 +457,7 @@ class AbtestingTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"c%2Cd"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -574,6 +636,20 @@ class AbtestingTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.listABTests(
+      offset = Some(0),
+      limit = Some(21),
+      indexPrefix = Some("cts_e2e ab"),
+      indexSuffix = Some("t")
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"abtests":[{"abTestID":84617,"createdAt":"2024-02-06T10:04:30.209477Z","endAt":"2024-05-06T09:04:26.469Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("stopABTest") {

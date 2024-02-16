@@ -18,16 +18,16 @@ void snippetFor{{method}}() async {
     requestOptions : RequestOptions(
         {{#requestOptions.headers}}
         headers: {
-        {{#requestOptions.headers.parametersWithDataType}}
+        {{#parametersWithDataType}}
             '{{{key}}}' : '{{value}}',
-        {{/requestOptions.headers.parametersWithDataType}}
+        {{/parametersWithDataType}}
         },
         {{/requestOptions.headers}}
         {{#requestOptions.queryParameters}}
         urlParameters: {
-            {{#requestOptions.queryParameters.parametersWithDataType}}
+            {{#parametersWithDataType}}
             '{{{key}}}' : {{> tests/param_value}},
-            {{/requestOptions.queryParameters.parametersWithDataType}}
+            {{/parametersWithDataType}}
         },
         {{/requestOptions.queryParameters}}
     ),

@@ -97,13 +97,13 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the getConfig method.
   //
-  // getConfig0
+  // Retrieve QS config e2e
   void snippetForGetConfig() {
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConfig("theIndexName");
+    client.getConfig("cts_e2e_browse_query_suggestions");
   }
 
   // Snippet for the getConfigStatus method.

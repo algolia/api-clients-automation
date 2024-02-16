@@ -90,5 +90,6 @@ class TestAbtestingClient:
             self._client = AbtestingClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert str(e) == "`region` must be one of the following: de, us"
