@@ -218,8 +218,10 @@ using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Utils;
 
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
 var response = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
-new { firstName = "john", lastname = "doe" });
+  new { firstName = "john", lastname = "doe" });
 
 // Poll the task status with defaults values
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);

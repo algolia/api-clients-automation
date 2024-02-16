@@ -127,6 +127,7 @@ taskResponse, err := searchClient.WaitForTask(
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
@@ -137,6 +138,7 @@ await client.SetSettingsAsync("YOUR_INDEX_NAME", new IndexSettings
   AttributesForFaceting = ["actor", "filterOnly(category)", "searchable(publisher)"]
 });
 ```
+
 </TabItem>
 </TabsLanguage>
 
@@ -430,21 +432,21 @@ using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-await client.SearchSingleIndex<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
 {
   Query = "<YOUR_QUERY>",
   // Only "Scarlett Johansson" actor
   Filters = "actor:Scarlett Johansson"
 }));
 
-await client.SearchSingleIndex<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
 {
   Query = "<YOUR_QUERY>",
   // Only "Tom Cruise" or "Scarlett Johansson" actor
   Filters = "actor:Tom Cruise OR actor:Scarlett Johansson"
 }));
 
-await client.SearchSingleIndex<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
 {
   Query = "<YOUR_QUERY>",
   // Everything but "Nicolas Cage" actor
@@ -673,19 +675,19 @@ using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-await client.SearchSingleIndex<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
-  {
-    Query = "<YOUR_QUERY>",
-    // Only "Scarlett Johansson" actor
-    FacetFilters = new FacetFilters("actor:Scarlett Johansson"),
-  }));
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+{
+  Query = "<YOUR_QUERY>",
+  // Only "Scarlett Johansson" actor
+  FacetFilters = new FacetFilters("actor:Scarlett Johansson"),
+}));
 
-await client.SearchSingleIndex<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
-  {
-    Query = "<YOUR_QUERY>",
-    // Only "Tom Cruise" or "Scarlett Johansson" actor
-    FacetFilters = new FacetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"),
-  }));
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+{
+  Query = "<YOUR_QUERY>",
+  // Only "Tom Cruise" or "Scarlett Johansson" actor
+  FacetFilters = new FacetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"),
+}));
 ```
 
 </TabItem>

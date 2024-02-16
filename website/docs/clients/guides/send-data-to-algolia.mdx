@@ -82,12 +82,11 @@ searchClient, _ := search.NewClient("<APPLICATION_ID>", "<API_KEY>")
 
 <TabItem value="csharp">
 
-  ```csharp
+```csharp
 using Algolia.Search.Clients;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-
-  ```
+```
 
 </TabItem>
 
@@ -311,15 +310,14 @@ if err != nil {
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
-using System.Runtime.Serialization;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class Actor : Hit
 {
-  [DataMember(Name = "name")]
   public string Name;
 
   public Actor(string name)
@@ -342,6 +340,7 @@ var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchAsync("<YOUR_INDEX_INDEX>", new BatchWriteParams(requests));
 ```
+
 </TabItem>
 
 </TabsLanguage>

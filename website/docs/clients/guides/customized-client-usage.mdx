@@ -261,6 +261,10 @@ searchClient.Search(
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Http;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 client.SearchSingleIndex<Hit>("<YOUR_INDEX_NAME>",

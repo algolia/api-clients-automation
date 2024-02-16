@@ -11,7 +11,7 @@ You can get the last version of the client from [NuGet](https://www.nuget.org/pa
 If you are using the .NET CLI, you can install the package using the following command:
 
 ```bash
-dotnet add package Algolia.Search --version [The version you want to install]
+dotnet add package Algolia.Search --version <The version you want to install>
 ```
 
 You can continue this guide on [our installation page](/docs/clients/installation).

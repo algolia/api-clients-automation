@@ -105,18 +105,20 @@ client.search(
 <TabItem value="csharp">
 
 ```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
-client.Search<Hit>(new SearchMethodParams(new List<SearchQuery>
-  {
-    new(new SearchForHits("<YOUR_INDEX_NAME>")
+client.Search<Hit>(new SearchMethodParams([
+  new SearchQuery(new SearchForHits("<YOUR_INDEX_NAME>")
   {
     Query = "<YOUR_QUERY>",
-    AttributesToRetrieve = new List<string> { "firstname", "lastname" },
+    AttributesToRetrieve = ["firstname", "lastname"],
     HitsPerPage = 50
   })
-  }));
-  ```
+]));
+```
 
 </TabItem>
 </TabsLanguage>
@@ -193,12 +195,12 @@ ABTest abTest = client.getABTest(42);
 </TabItem>
 <TabItem value="csharp">
 
-  ```csharp
+```csharp
 using Algolia.Search.Clients;
 
 var client = new AbtestingClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 client.GetABTest(42);
-  ```
+```
 
 </TabItem>
 </TabsLanguage>
@@ -389,6 +391,7 @@ client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
@@ -400,6 +403,7 @@ var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
 
 await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
 ```
+
 </TabItem>
 
 </TabsLanguage>
@@ -513,15 +517,14 @@ client.batch("<YOUR_INDEX_NAME>", new BatchWriteParams().setRequests(batch));
 </TabItem>
 
 <TabItem value="csharp">
+
 ```csharp
-using System.Runtime.Serialization;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 using Action = Algolia.Search.Models.Search.Action;
 
 public class Actor : Hit
 {
-  [DataMember(Name = "name")]
   public string Name;
 
   public Actor(string name)
@@ -548,6 +551,7 @@ var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 await client.BatchAsync("<YOUR_INDEX_INDEX>", new BatchWriteParams(requests));
 ```
+
 </TabItem>
 </TabsLanguage>
 
@@ -712,7 +716,11 @@ for (SynonymHit synonym : synonyms) {
 
 <TabItem value="csharp" >
 
-  ```csharp
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
 var browseObjects = await client.BrowseObjectsAsync<Actor>("<YOUR_INDEX_NAME>",
