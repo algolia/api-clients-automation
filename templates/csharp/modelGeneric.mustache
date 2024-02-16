@@ -152,10 +152,10 @@
             {
                 throw new ArgumentNullException(nameof({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}));
             }
-            this._{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            _{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{#vendorExtensions.x-csharp-value-type}}
-            this._{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            _{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{/conditionalSerialization}}
             {{/required}}
@@ -285,4 +285,74 @@
         {
           return JsonSerializer.Serialize(this, JsonConfig.Options);
         }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is not {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} input)
+            {
+            return false;
+            }
+
+            return {{#vars}}{{#parent}}base.Equals(input) && {{/parent}}{{^isContainer}}
+                (
+                    {{name}} == input.{{name}} ||
+                    {{^vendorExtensions.x-is-value-type}}
+                    ({{name}} != null &&
+                    {{name}}.Equals(input.{{name}}))
+                    {{/vendorExtensions.x-is-value-type}}
+                    {{#vendorExtensions.x-is-value-type}}
+                    {{name}}.Equals(input.{{name}})
+                    {{/vendorExtensions.x-is-value-type}}
+                ){{^-last}} && {{/-last}}{{/isContainer}}{{#isContainer}}
+                (
+                    {{name}} == input.{{name}} ||
+                    {{^vendorExtensions.x-is-value-type}}{{name}} != null &&
+                    input.{{name}} != null &&
+                    {{/vendorExtensions.x-is-value-type}}{{name}}.SequenceEqual(input.{{name}})
+                ){{^-last}} && {{/-last}}{{/isContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(input){{/parent}}{{^parent}}false{{/parent}}{{/vars}}{{^isAdditionalPropertiesTrue}};{{/isAdditionalPropertiesTrue}}
+                {{#isAdditionalPropertiesTrue}}
+                && (AdditionalProperties.Count == input.AdditionalProperties.Count && !AdditionalProperties.Except(input.AdditionalProperties).Any());
+                {{/isAdditionalPropertiesTrue}}
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                {{#parent}}
+                int hashCode = base.GetHashCode();
+                {{/parent}}
+                {{^parent}}
+                int hashCode = 41;
+                {{/parent}}
+                {{#vars}}
+                {{^vendorExtensions.x-is-value-type}}
+                if ({{name}} != null)
+                {
+                    hashCode = (hashCode * 59) + {{name}}.GetHashCode();
+                }
+                {{/vendorExtensions.x-is-value-type}}
+                {{#vendorExtensions.x-is-value-type}}
+                hashCode = (hashCode * 59) + {{name}}.GetHashCode();
+                {{/vendorExtensions.x-is-value-type}}
+                {{/vars}}
+                {{#isAdditionalPropertiesTrue}}
+                if (AdditionalProperties != null)
+                {
+                    hashCode = (hashCode * 59) + AdditionalProperties.GetHashCode();
+                }
+                {{/isAdditionalPropertiesTrue}}
+                return hashCode;
+            }
+        }
+
     }

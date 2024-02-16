@@ -117,38 +117,19 @@
           return JsonSerializer.Serialize(ActualInstance, JsonConfig.Options);
         }
 
-        {{#equatable}}
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            {{#useCompareNetObjects}}
-            return OpenAPIClientUtils.compareLogic.Compare(this, input as {{classname}}).AreEqual;
-            {{/useCompareNetObjects}}
-            {{^useCompareNetObjects}}
-            return this.Equals(input as {{classname}});
-            {{/useCompareNetObjects}}
-        }
-
-        /// <summary>
-        /// Returns true if {{classname}} instances are equal
-        /// </summary>
-        /// <param name="input">Instance of {{classname}} to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals({{classname}} input)
-        {
-            {{#useCompareNetObjects}}
-            return OpenAPIClientUtils.compareLogic.Compare(this, input).AreEqual;
-            {{/useCompareNetObjects}}
-            {{^useCompareNetObjects}}
-            if (input == null)
-                return false;
+            if (obj is not {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} input)
+            {
+              return false;
+            }
 
             return ActualInstance.Equals(input.ActualInstance);
-            {{/useCompareNetObjects}}
         }
 
         /// <summary>
@@ -165,19 +146,6 @@
                 return hashCode;
             }
         }
-        {{/equatable}}
-        {{#validatable}}
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
-        {{/validatable}}
     }
 
 
