@@ -299,22 +299,8 @@
             }
 
             return {{#vars}}{{#parent}}base.Equals(input) && {{/parent}}{{^isContainer}}
-                (
-                    {{name}} == input.{{name}} ||
-                    {{^vendorExtensions.x-is-value-type}}
-                    ({{name}} != null &&
-                    {{name}}.Equals(input.{{name}}))
-                    {{/vendorExtensions.x-is-value-type}}
-                    {{#vendorExtensions.x-is-value-type}}
-                    {{name}}.Equals(input.{{name}})
-                    {{/vendorExtensions.x-is-value-type}}
-                ){{^-last}} && {{/-last}}{{/isContainer}}{{#isContainer}}
-                (
-                    {{name}} == input.{{name}} ||
-                    {{^vendorExtensions.x-is-value-type}}{{name}} != null &&
-                    input.{{name}} != null &&
-                    {{/vendorExtensions.x-is-value-type}}{{name}}.SequenceEqual(input.{{name}})
-                ){{^-last}} && {{/-last}}{{/isContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(input){{/parent}}{{^parent}}false{{/parent}}{{/vars}}{{^isAdditionalPropertiesTrue}};{{/isAdditionalPropertiesTrue}}
+                ({{name}} == input.{{name}} || {{^vendorExtensions.x-is-value-type}}({{name}} != null && {{name}}.Equals(input.{{name}})){{/vendorExtensions.x-is-value-type}}{{#vendorExtensions.x-is-value-type}}{{name}}.Equals(input.{{name}}){{/vendorExtensions.x-is-value-type}}){{^-last}} && {{/-last}}{{/isContainer}}{{#isContainer}}
+                ({{name}} == input.{{name}} || {{^vendorExtensions.x-is-value-type}}{{name}} != null && input.{{name}} != null && {{/vendorExtensions.x-is-value-type}}{{name}}.SequenceEqual(input.{{name}})){{^-last}} && {{/-last}}{{/isContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(input){{/parent}}{{^parent}}false{{/parent}}{{/vars}}{{^isAdditionalPropertiesTrue}};{{/isAdditionalPropertiesTrue}}
                 {{#isAdditionalPropertiesTrue}}
                 && (AdditionalProperties.Count == input.AdditionalProperties.Count && !AdditionalProperties.Except(input.AdditionalProperties).Any());
                 {{/isAdditionalPropertiesTrue}}
