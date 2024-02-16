@@ -199,10 +199,11 @@ package object extension {
               case e: AlgoliaApiException if e.httpErrorCode == 404 => Some(true) // The key does not exist, done!
               case _                                                => None // Any other error, still return None
             },
-        until = {
-          case Some(true) => true // Stop retrying when we get Some(true), indicating the key is deleted
-          case _          => false // Continue retrying otherwise
-        },
+        until = (result: Option[Boolean]) =>
+          result match {
+            case Some(true) => true // Stop retrying when we get Some(true), indicating the key is deleted
+            case _          => false // Continue retrying otherwise
+          },
         maxRetries = maxRetries,
         timeout = timeout,
         initialDelay = initialDelay,
