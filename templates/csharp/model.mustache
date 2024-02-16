@@ -4,46 +4,19 @@
 {{#models}}
 {{#model}}
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
-{{#vendorExtensions.x-com-visible}}
-using System.Runtime.InteropServices;
-{{/vendorExtensions.x-com-visible}}
-using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-{{#discriminator}}
-using JsonSubTypes;
-{{/discriminator}}
-{{/model}}
-{{/models}}
-{{#validatable}}
-using System.ComponentModel.DataAnnotations;
-{{/validatable}}
-{{#useCompareNetObjects}}
-using OpenAPIClientUtils = Algolia.Search.{{apiPackageName}}.Client.ClientUtils;
-{{/useCompareNetObjects}}
-{{#models}}
-{{#model}}
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using Algolia.Search.Serializer;
+using System.Text.Json;
 {{#oneOf}}
 {{#-first}}
+using System.IO;
 using System.Reflection;
+using Algolia.Search.Models.Common;
 {{/-first}}
 {{/oneOf}}
-{{#anyOf}}
-{{#-first}}
-using System.Reflection;
-{{/-first}}
-{{/anyOf}}
-using Algolia.Search.Models;
-using Algolia.Search.Models.Common;
-using Algolia.Search.Serializer;
 
 namespace Algolia.Search.Models.{{apiPackageName}};
 
