@@ -183,19 +183,28 @@
 
 
     {{#vendorExtensions.x-has-child-generic}}
+    /// <summary>
+    /// Custom JSON converter factory for {{classname}}
+    /// </summary>
     public class {{classname}}ConverterFactory : JsonConverterFactory
     {
+      /// <summary>
+      /// Check if the type is a {{classname}}
+      /// </summary>
       public override bool CanConvert(Type typeToConvert)
       {
         return typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition() == typeof({{classname}}<>);
       }
 
+      /// <summary>
+      /// Create a new converter
+      /// </summary>
       public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
       {
-        Type keyType = typeToConvert.GetGenericArguments()[0];
+        var innerType = typeToConvert.GetGenericArguments()[0];
 
         JsonConverter converter = (JsonConverter)Activator.CreateInstance(
-          typeof({{classname}}JsonConverter<>).MakeGenericType(keyType),
+          typeof({{classname}}JsonConverter<>).MakeGenericType(innerType),
           BindingFlags.Instance | BindingFlags.Public,
           binder: null,
           args: new object[] { options },
