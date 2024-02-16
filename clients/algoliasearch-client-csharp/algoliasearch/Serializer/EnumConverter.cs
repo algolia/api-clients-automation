@@ -77,6 +77,14 @@ public class JsonStringEnumConverter2<TEnum> : JsonConverter<TEnum> where TEnum 
 
   public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
   {
-    writer.WriteStringValue(_enumToString[value]);
+    var success = _enumToString.TryGetValue(value, out var stringValue);
+    if (success)
+    {
+      writer.WriteStringValue(stringValue);
+    }
+    else
+    {
+      writer.WriteNullValue();
+    }
   }
 }

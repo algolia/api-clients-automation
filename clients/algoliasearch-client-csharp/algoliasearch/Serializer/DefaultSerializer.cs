@@ -1,10 +1,12 @@
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Models.Common;
 using Microsoft.Extensions.Logging;
+
 
 namespace Algolia.Search.Serializer;
 

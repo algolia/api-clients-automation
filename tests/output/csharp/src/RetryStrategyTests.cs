@@ -1,13 +1,12 @@
-using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
 using Algolia.Search.Transport;
-using Microsoft.Extensions.Logging;
 using Moq;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Algolia.Search.Tests;
@@ -151,7 +150,7 @@ public class RetryStrategyTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                JsonSerializer.Serialize(
                   new SearchResponse<object>()
                   {
                     HitsPerPage = 10,
@@ -162,7 +161,7 @@ public class RetryStrategyTests
                     Hits = new List<object>(),
                     Query = "",
                     VarParams = ""
-                  }
+                  }, JsonConfig.Options
                 )
               )
             )

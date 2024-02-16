@@ -1,13 +1,13 @@
 using System.Text;
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
 using Algolia.Search.Utils;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Newtonsoft.Json;
 using Xunit;
 using TaskStatus = Algolia.Search.Models.Search.TaskStatus;
 
@@ -15,6 +15,8 @@ namespace Algolia.Search.Tests;
 
 public class ClientExtensionsTests
 {
+  private DefaultJsonSerializer serializer = new(new NullLoggerFactory());
+  
   [Fact]
   public async Task ShouldWaitForTask()
   {
@@ -38,7 +40,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new GetTaskResponse { Status = TaskStatus.NotPublished }
                 )
               )
@@ -54,7 +56,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(new GetTaskResponse { Status = TaskStatus.Published })
+                serializer.Serialize(new GetTaskResponse { Status = TaskStatus.Published })
               )
             )
           }
@@ -104,7 +106,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new GetApiKeyResponse() { CreatedAt = 12, Acl = new List<Acl>() }
                 )
               )
@@ -151,7 +153,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new(), new() },
@@ -178,7 +180,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new(), new() },
@@ -205,7 +207,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new() },
@@ -270,7 +272,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse()
                   {
                     Hits = new List<SynonymHit>()
@@ -294,7 +296,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse()
                   {
                     Hits = new List<SynonymHit>()
@@ -318,7 +320,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse
                   {
                     Hits = new List<SynonymHit>
@@ -380,7 +382,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -406,7 +408,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -432,7 +434,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -491,7 +493,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchResponses<object>(
                     [
                       new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
@@ -539,10 +541,10 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchResponses<object>(
                     [
-                      new(new SearchForFacetValuesResponse() { FacetHits = [] }),
+                      new(new SearchForFacetValuesResponse { FacetHits = [] }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
                     ]
