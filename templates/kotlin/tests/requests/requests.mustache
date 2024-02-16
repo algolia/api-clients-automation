@@ -37,16 +37,16 @@ class {{clientPrefix}}Test {
                     requestOptions = RequestOptions(
                         {{#requestOptions.queryParameters}}
                         urlParameters = buildMap {
-                            {{#requestOptions.queryParameters.parametersWithDataType}}
+                            {{#parametersWithDataType}}
                             put("{{{key}}}", {{> tests/param_value}})
-                            {{/requestOptions.queryParameters.parametersWithDataType}}
+                            {{/parametersWithDataType}}
                         },
                         {{/requestOptions.queryParameters}}
                         {{#requestOptions.headers}}
                         headers = buildMap { 
-                        {{#requestOptions.headers.parametersWithDataType}}
+                        {{#parametersWithDataType}}
                             put("{{{key}}}", {{> tests/param_value}})    
-                        {{/requestOptions.headers.parametersWithDataType}}
+                        {{/parametersWithDataType}}
                         },
                         {{/requestOptions.headers}}
                     )

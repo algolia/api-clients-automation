@@ -15,13 +15,15 @@ import io.ktor.client.request.*
  * @param call A lambda function that will be executed with the [T] as its receiver.
  * @param intercept A lambda function that will be called with the intercepted [HttpRequestBuilder].
  */
-suspend fun <T : ApiClient> T.runTest(
-  call: suspend T.() -> Unit,
-  intercept: (HttpRequestBuilder) -> Unit
+suspend fun <T : ApiClient, TRes> T.runTest(
+  call: suspend T.() -> TRes,
+  intercept: ((HttpRequestBuilder) -> Unit)? = null,
+  response: ((TRes) -> Unit)? = null,
 ) {
-  intercept(intercept)
+  if (intercept != null) intercept(intercept)
   try {
-    call()
+    var res = call()
+    if (response != null) response(res)
   } catch (e: AlgoliaClientException) {
     when (val cause = e.cause) {
       is AssertionError -> throw cause

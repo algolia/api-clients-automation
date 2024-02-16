@@ -33,8 +33,8 @@ object SearchParamsSerializer extends Serializer[SearchParams] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SearchParams] =>
       json match {
-        case value: JObject if value.obj.contains("params") => Extraction.extract[SearchParamsString](value)
-        case value: JObject                                 => Extraction.extract[SearchParamsObject](value)
+        case value: JObject if value.obj.exists(_._1 == "params") => Extraction.extract[SearchParamsString](value)
+        case value: JObject                                       => Extraction.extract[SearchParamsObject](value)
         case _ => throw new MappingException("Can't convert " + json + " to SearchParams")
       }
   }

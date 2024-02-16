@@ -103,6 +103,45 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
+  test("requestOptions should be escaped too") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "/test/all",
+      parameters = Some(Map("query" -> "to be overriden")),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query", "parameters with space")
+          .withQueryParameter("and an array", Seq("array", "with spaces"))
+          .withHeader("x-header-1", "spaces are left alone")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/test/all")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-header-1":"spaces are left alone"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
   test("allow post method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
@@ -351,7 +390,7 @@ class InsightsTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withQueryParameter("myParam", Seq("c", "d"))
+          .withQueryParameter("myParam", Seq("b and c", "d"))
           .build()
       )
     )
@@ -364,7 +403,7 @@ class InsightsTest extends AnyFunSuite {
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"query":"parameters","myParam":"c%2Cd"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {

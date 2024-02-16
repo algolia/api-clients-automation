@@ -1,5 +1,14 @@
-return client.{{path}}(
-    {{#parametersWithDataType}}
-    {{> tests/request_param}}
-    {{/parametersWithDataType}}
-);
+try {
+  final res = await client.{{path}}(
+      {{#parametersWithDataType}}
+      {{> tests/request_param}}
+      {{/parametersWithDataType}}
+  );
+  {{#match}}
+  {{#testResponse}}
+  expectBody(res, """{{{match.parameters}}}""");
+  {{/testResponse}}
+  {{/match}}
+} on InterceptionException catch (_) {
+  // Ignore InterceptionException
+}

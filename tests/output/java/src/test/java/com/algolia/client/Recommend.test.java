@@ -8,7 +8,11 @@ import com.algolia.EchoResponse;
 import com.algolia.api.RecommendClient;
 import com.algolia.config.*;
 import com.algolia.model.recommend.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,19 +21,29 @@ import org.junit.jupiter.api.TestInstance;
 class RecommendClientClientTests {
 
   private EchoInterceptor echo = new EchoInterceptor();
+  private ObjectMapper json;
 
-  RecommendClient createClient() {
-    return new RecommendClient("appId", "apiKey", buildClientOptions());
+  @BeforeAll
+  void init() {
+    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
   }
 
-  private ClientOptions buildClientOptions() {
+  RecommendClient createClient() {
+    return new RecommendClient("appId", "apiKey", withEchoRequester());
+  }
+
+  private ClientOptions withEchoRequester() {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  }
+
+  private ClientOptions withCustomHosts(List<Host> hosts) {
+    return ClientOptions.builder().setHosts(hosts).build();
   }
 
   @Test
   @DisplayName("calls api with correct read host")
   void apiTest0() {
-    RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
+    RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
     client.customGet("/test");
     EchoResponse result = echo.getLastResponse();
 
@@ -39,7 +53,7 @@ class RecommendClientClientTests {
   @Test
   @DisplayName("calls api with correct write host")
   void apiTest1() {
-    RecommendClient client = new RecommendClient("test-app-id", "test-api-key", buildClientOptions());
+    RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("/test");
     EchoResponse result = echo.getLastResponse();
 

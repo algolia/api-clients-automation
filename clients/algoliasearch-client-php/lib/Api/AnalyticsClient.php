@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class AnalyticsClient
 {
-    public const VERSION = '4.0.0-alpha.94';
+    public const VERSION = '4.0.0-alpha.95';
 
     /**
      * @var ApiWrapperInterface
@@ -45,17 +45,6 @@ class AnalyticsClient
      */
     public static function create($appId = null, $apiKey = null, $region = null)
     {
-        $allowedRegions = ['de', 'us'];
-
-        if (
-            null !== $region && !in_array($region, $allowedRegions, true)
-        ) {
-            throw new AlgoliaException(
-                '`region` must be one of the following: '.
-                    implode(', ', $allowedRegions)
-            );
-        }
-
         $config = AnalyticsConfig::create($appId, $apiKey, $region);
 
         return static::createWithConfig($config);

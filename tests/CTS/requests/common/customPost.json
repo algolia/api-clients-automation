@@ -216,7 +216,7 @@
     "requestOptions": {
       "queryParameters": {
         "myParam": [
-          "c",
+          "b and c",
           "d"
         ]
       }
@@ -229,7 +229,7 @@
       },
       "queryParameters": {
         "query": "parameters",
-        "myParam": "c%2Cd"
+        "myParam": "b%20and%20c%2Cd"
       }
     }
   },
