@@ -46,11 +46,11 @@ package algoliasearch.abtesting
   */
 case class ABTest(
     abTestID: Int,
-    clickSignificance: Double,
-    conversionSignificance: Double,
-    addToCartSignificance: Double,
-    purchaseSignificance: Double,
-    revenueSignificance: Map[String, Double],
+    clickSignificance: Option[Double] = scala.None,
+    conversionSignificance: Option[Double] = scala.None,
+    addToCartSignificance: Option[Double] = scala.None,
+    purchaseSignificance: Option[Double] = scala.None,
+    revenueSignificance: Option[Map[String, Double]] = scala.None,
     updatedAt: String,
     createdAt: String,
     endAt: String,

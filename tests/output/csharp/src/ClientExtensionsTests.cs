@@ -483,7 +483,8 @@ public class ClientExtensionsTests
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
         )
-      ).Returns(
+      )
+      .Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
           {
@@ -491,11 +492,13 @@ public class ClientExtensionsTests
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
                 JsonConvert.SerializeObject(
-                  new SearchResponses<object>([
-                    new(new SearchForFacetValuesResponse(){ FacetHits = new List<FacetHits>()}),
-                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
-                  ])
+                  new SearchResponses<object>(
+                    [
+                      new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                    ]
+                  )
                 )
               )
             )
@@ -508,16 +511,14 @@ public class ClientExtensionsTests
     var hits = await client.SearchForHitsAsync<Hit>(
       new List<SearchForHits>
       {
-        new()
-        {
-          IndexName = "my-test-index",
-          Query = " "
-        }
-      }, SearchStrategy.None);
-    
+        new() { IndexName = "my-test-index", Query = " " }
+      },
+      SearchStrategy.None
+    );
+
     Assert.Equal(2, hits.Count);
   }
-  
+
   [Fact]
   public async Task ShouldSearchForFacets()
   {
@@ -530,7 +531,8 @@ public class ClientExtensionsTests
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
         )
-      ).Returns(
+      )
+      .Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
           {
@@ -538,11 +540,13 @@ public class ClientExtensionsTests
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
                 JsonConvert.SerializeObject(
-                  new SearchResponses<object>([
-                    new(new SearchForFacetValuesResponse(){ FacetHits = [] }),
-                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
-                  ])
+                  new SearchResponses<object>(
+                    [
+                      new(new SearchForFacetValuesResponse() { FacetHits = [] }),
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                    ]
+                  )
                 )
               )
             )
@@ -555,13 +559,11 @@ public class ClientExtensionsTests
     var hits = await client.SearchForFacetsAsync(
       new List<SearchForFacets>
       {
-        new()
-        {
-          IndexName = "my-test-index",
-          Query = " "
-        }
-      }, SearchStrategy.None);
-    
-    Assert.Equal(1, hits.Count);
+        new() { IndexName = "my-test-index", Query = " " }
+      },
+      SearchStrategy.None
+    );
+
+    Assert.Single(hits);
   }
 }

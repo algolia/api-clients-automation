@@ -15,6 +15,6 @@ open class HostIterator: IteratorProtocol {
     }
 
     public func next() -> RetryableHost? {
-        getHost()
+        self.getHost()
     }
 }

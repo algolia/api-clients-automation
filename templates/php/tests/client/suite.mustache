@@ -61,6 +61,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
             {{#isError}}
               try {
                   {{#dynamicTemplate}}{{/dynamicTemplate}}
+                  $this->fail('Expected exception to be thrown');
               } catch (\Exception $e) {
                   $this->assertEquals($e->getMessage(), '{{{expectedError}}}');
               }
@@ -93,8 +94,12 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                         $this->recordedRequest['responseTimeout']
                     );
                     {{/testTimeouts}}
-                    {{#testResult}}
-                    {{/testResult}}
+                    {{#testResponse}}
+                    $this->assertEquals(
+                        '{{{match.parameters}}}',
+                        json_encode($res)
+                    );
+                    {{/testResponse}}
                 {{/match}}
             {{/isError}}
         {{/steps}}

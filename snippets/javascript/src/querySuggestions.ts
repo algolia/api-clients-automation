@@ -141,7 +141,7 @@ export async function snippetForgetAllConfigs(): Promise<void> {
 
 // Snippet for the getConfig method.
 //
-// getConfig0
+// Retrieve QS config e2e
 export async function snippetForgetConfig(): Promise<void> {
   // Initialize the client
   const client = querySuggestionsClient(
@@ -151,7 +151,9 @@ export async function snippetForgetConfig(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.getConfig({ indexName: 'theIndexName' });
+  const response = await client.getConfig({
+    indexName: 'cts_e2e_browse_query_suggestions',
+  });
 
   // Use typed response
   console.log(response);

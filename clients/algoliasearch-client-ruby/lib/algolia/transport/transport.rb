@@ -54,12 +54,12 @@ module Algolia
           outcome = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
           if outcome == FAILURE
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
-            raise AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
+            raise Algolia::AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
           end
           return response unless outcome == RETRY
         end
 
-        raise Algolia::AlgoliaUnreachableHostError('Unreachable hosts')
+        raise Algolia::AlgoliaUnreachableHostError, 'Unreachable hosts'
       end
 
       private
@@ -117,7 +117,7 @@ module Algolia
       def stringify_query_params(query_params)
         query_params.to_h do |key, value|
           value = value.join(',') if value.is_a?(Array)
-          [key, Algolia::Transport.encode_uri(value.to_s)]
+          [Algolia::Transport.encode_uri(key.to_s).to_sym, Algolia::Transport.encode_uri(value.to_s)]
         end
       end
     end

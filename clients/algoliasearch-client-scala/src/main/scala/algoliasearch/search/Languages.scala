@@ -14,7 +14,7 @@ package algoliasearch.search
 /** Dictionary language.
   */
 case class Languages(
-    plurals: DictionaryLanguage,
-    stopwords: DictionaryLanguage,
-    compounds: DictionaryLanguage
+    plurals: Option[DictionaryLanguage] = scala.None,
+    stopwords: Option[DictionaryLanguage] = scala.None,
+    compounds: Option[DictionaryLanguage] = scala.None
 )

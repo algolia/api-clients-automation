@@ -227,3 +227,23 @@ extension HTTPURLResponse {
         return Configuration.successfulStatusCodeRange.contains(statusCode)
     }
 }
+
+extension Data: JSONEncodable {
+  public func encodeToJSON() -> Any {
+      guard let selfString = String(data: self, encoding: .utf8) else {
+          fatalError("Could not decode data string: \(self)")
+      }
+
+      let jsonData = "{\"data\":\(selfString)}".data(using: .utf8)
+      guard let jsonData, let json = try? CodableHelper.jsonDecoder.decode(
+          [String: String].self,
+          from: jsonData
+      ) else {
+          fatalError(
+              "Could not decode from data holder: \(String(describing: jsonData))"
+          )
+      }
+
+      return json["data"] as Any
+  }
+}

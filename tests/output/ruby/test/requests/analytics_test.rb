@@ -67,6 +67,36 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
+  # requestOptions should be escaped too
+  def test_custom_get2
+    req = @client.custom_get_with_http_info(
+      "/test/all",
+      { query: "to be overriden" },
+      {
+        :header_params => JSON.parse(
+          '{"x-header-1":"spaces are left alone"}',
+          :symbolize_names => true
+        ),
+        :query_params => JSON.parse(
+          '{"query":"parameters with space","and an array":["array","with spaces"]}', :symbolize_names => true
+        )
+      }
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/test/all', req.path)
+    assert_equal(
+      { 'query': "parameters%20with%20space",
+        'and%20an%20array': "array%2Cwith%20spaces" }.to_a,
+      req.query_params.to_a
+    )
+    assert(
+      ({ 'x-header-1': "spaces are left alone" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
+    )
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # allow post method for a custom path with minimal parameters
   def test_custom_post0
     req = @client.custom_post_with_http_info("/test/minimal")
@@ -202,12 +232,15 @@ class TestAnalyticsClient < Test::Unit::TestCase
       "/test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
-      { :query_params => JSON.parse('{"myParam":["c","d"]}', :symbolize_names => true) }
+      { :query_params => JSON.parse('{"myParam":["b and c","d"]}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
     assert_equal('/1/test/requestOptions', req.path)
-    assert_equal({ 'query': "parameters", 'myParam': "c%2Cd" }.to_a, req.query_params.to_a)
+    assert_equal(
+      { 'query': "parameters", 'myParam': "b%20and%20c%2Cd" }.to_a,
+      req.query_params.to_a
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
   end

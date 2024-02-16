@@ -32,7 +32,7 @@ case class TopHitWithAnalytics(
     count: Int,
     clickThroughRate: Double,
     conversionRate: Double,
-    trackedSearchCount: Int,
+    trackedSearchCount: Option[Int] = scala.None,
     clickCount: Int,
     conversionCount: Int
 )

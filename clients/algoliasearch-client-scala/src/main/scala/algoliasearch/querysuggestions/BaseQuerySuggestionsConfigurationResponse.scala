@@ -13,8 +13,6 @@ package algoliasearch.querysuggestions
 
 /** BaseQuerySuggestionsConfigurationResponse
   *
-  * @param appId
-  *   Your Algolia application ID.
   * @param sourceIndicesAPIKey
   *   API key used to read from your source index.
   * @param suggestionsIndicesAPIKey
@@ -23,7 +21,6 @@ package algoliasearch.querysuggestions
   *   API key used to read from external Algolia indices.
   */
 case class BaseQuerySuggestionsConfigurationResponse(
-    appId: Option[String] = scala.None,
     sourceIndicesAPIKey: Option[String] = scala.None,
     suggestionsIndicesAPIKey: Option[String] = scala.None,
     externalIndicesAPIKey: Option[String] = scala.None

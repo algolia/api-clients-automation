@@ -282,6 +282,48 @@ public class IngestionClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "requestOptions should be escaped too")]
+  public async Task CustomGetTest2()
+  {
+    await _client.CustomGetAsync(
+      "/test/all",
+      new Dictionary<string, object> { { "query", "to be overriden" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "parameters with space")
+        .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
+        .AddExtraHeader("x-header-1", "spaces are left alone")
+        .Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+      "{\"x-header-1\":\"spaces are left alone\"}"
+    );
+    var actualHeaders = req.Headers;
+    foreach (var expectedHeader in expectedHeaders)
+    {
+      string actualHeaderValue;
+      actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+      Assert.Equal(expectedHeader.Value, actualHeaderValue);
+    }
+  }
+
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest0()
   {
@@ -332,10 +374,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
@@ -364,10 +403,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "query2", "myQueryParameter" } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
@@ -396,10 +432,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
@@ -438,10 +471,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        Headers = new Dictionary<string, string>() { { "x-algolia-api-key", "myApiKey" } },
-      }
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
@@ -480,10 +510,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "isItWorking", true } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -512,10 +539,7 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>() { { "myParam", 2 } },
-      }
+      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -544,16 +568,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { "c", "d" }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -561,7 +578,7 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-      "{\"query\":\"parameters\",\"myParam\":\"c%2Cd\"}"
+      "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -582,16 +599,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { true, true, false }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -620,16 +630,9 @@ public class IngestionClientRequestTests
       "/test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptions()
-      {
-        QueryParameters = new Dictionary<string, object>()
-        {
-          {
-            "myParam",
-            new List<object> { 1, 2 }
-          }
-        },
-      }
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
+        .Build()
     );
 
     var req = _echo.LastResponse;

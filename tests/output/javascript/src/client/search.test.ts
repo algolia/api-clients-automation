@@ -36,6 +36,19 @@ describe('api', () => {
 
     expect(result.host).toEqual('test-app-id.algolia.net');
   });
+
+  test('tests the retry strategy', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6677, accept: 'readWrite', protocol: 'http' },
+        { url: 'localhost', port: 6678, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.customGet({ path: '/test' });
+
+    expect(result).toEqual({ message: 'ok test server response' });
+  });
 });
 
 describe('commonApi', () => {
