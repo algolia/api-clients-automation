@@ -1,6 +1,11 @@
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -8,6 +13,24 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = querySuggestionsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error(
+    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = querySuggestionsClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY,
+  'us'
+);
 
 describe('createConfig', () => {
   test('createConfig0', async () => {
@@ -401,15 +424,39 @@ describe('getAllConfigs', () => {
 });
 
 describe('getConfig', () => {
-  test('getConfig0', async () => {
+  test('Retrieve QS config e2e', async () => {
     const req = (await client.getConfig({
-      indexName: 'theIndexName',
+      indexName: 'cts_e2e_browse_query_suggestions',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/configs/theIndexName');
+    expect(req.path).toEqual('/1/configs/cts_e2e_browse_query_suggestions');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.getConfig({
+      indexName: 'cts_e2e_browse_query_suggestions',
+    });
+
+    const expectedBody = {
+      allowSpecialCharacters: true,
+      enablePersonalization: false,
+      exclude: ['^cocaines$'],
+      indexName: 'cts_e2e_browse_query_suggestions',
+      languages: [],
+      sourceIndices: [
+        {
+          facets: [{ amount: 1, attribute: 'title' }],
+          generate: [['year']],
+          indexName: 'cts_e2e_browse',
+          minHits: 5,
+          minLetters: 4,
+          replicas: false,
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 

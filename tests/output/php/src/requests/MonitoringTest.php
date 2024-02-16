@@ -765,8 +765,8 @@ class MonitoringTest extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, MonitoringConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = MonitoringConfig::create('foo', 'bar');
+        $config = MonitoringConfig::create('appID', 'apiKey');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new MonitoringClient($api, $config);
     }

@@ -13,8 +13,6 @@ package algoliasearch.querysuggestions
 
 /** QuerySuggestionsConfigurationResponse
   *
-  * @param appId
-  *   Your Algolia application ID.
   * @param sourceIndicesAPIKey
   *   API key used to read from your source index.
   * @param suggestionsIndicesAPIKey
@@ -33,7 +31,6 @@ package algoliasearch.querysuggestions
   *   Allow suggestions with special characters.
   */
 case class QuerySuggestionsConfigurationResponse(
-    appId: Option[String] = scala.None,
     sourceIndicesAPIKey: Option[String] = scala.None,
     suggestionsIndicesAPIKey: Option[String] = scala.None,
     externalIndicesAPIKey: Option[String] = scala.None,

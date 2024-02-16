@@ -126,14 +126,14 @@ final class QuerySuggestionsClientSnippet {
 
     /// Snippet for the getConfig method.
     ///
-    /// getConfig0
+    /// Retrieve QS config e2e
     func snippetForGetConfig() async throws {
         // Initialize the client
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getConfig(
-            indexName: "theIndexName"
+            indexName: "cts_e2e_browse_query_suggestions"
         )
     }
 

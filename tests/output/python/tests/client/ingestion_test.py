@@ -76,6 +76,7 @@ class TestIngestionClient:
             self._client = IngestionClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
+            assert False
         except (ValueError, Exception) as e:
             assert (
                 str(e)

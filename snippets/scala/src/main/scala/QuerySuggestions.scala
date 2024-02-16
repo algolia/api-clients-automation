@@ -150,7 +150,7 @@ class SnippetQuerySuggestionsClient {
 
   /** Snippet for the getConfig method.
     *
-    * getConfig0
+    * Retrieve QS config e2e
     */
   def snippetForQuerySuggestionsClientGetConfig(): Unit = {
     // Initialize the client
@@ -158,7 +158,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val res = client.getConfig(
-      indexName = "theIndexName"
+      indexName = "cts_e2e_browse_query_suggestions"
     )
 
     // Use the response

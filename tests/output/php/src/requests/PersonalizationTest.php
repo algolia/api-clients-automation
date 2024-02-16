@@ -680,8 +680,8 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, PersonalizationConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = PersonalizationConfig::create('foo', 'bar');
+        $config = PersonalizationConfig::create('appID', 'apiKey', 'us');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new PersonalizationClient($api, $config);
     }

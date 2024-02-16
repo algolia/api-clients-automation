@@ -1405,8 +1405,8 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
     protected function getClient()
     {
-        $api = new ApiWrapper($this, IngestionConfig::create(getenv('ALGOLIA_APP_ID'), getenv('ALGOLIA_API_KEY')), ClusterHosts::create('127.0.0.1'));
-        $config = IngestionConfig::create('foo', 'bar');
+        $config = IngestionConfig::create('appID', 'apiKey', 'us');
+        $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new IngestionClient($api, $config);
     }

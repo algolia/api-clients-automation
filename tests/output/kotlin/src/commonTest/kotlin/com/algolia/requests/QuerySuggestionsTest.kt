@@ -535,15 +535,15 @@ class QuerySuggestionsTest {
   // getConfig
 
   @Test
-  fun `getConfig0`() = runTest {
+  fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
       call = {
         getConfig(
-          indexName = "theIndexName",
+          indexName = "cts_e2e_browse_query_suggestions",
         )
       },
       intercept = {
-        assertEquals("/1/configs/theIndexName".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/configs/cts_e2e_browse_query_suggestions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
