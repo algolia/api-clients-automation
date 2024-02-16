@@ -140,7 +140,7 @@ public class SnippetQuerySuggestionsClient
   /// <summary>
   /// Snippet for the GetConfig method.
   ///
-  /// getConfig0
+  /// Retrieve QS config e2e
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientGetConfig()
   {
@@ -150,7 +150,7 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetConfigAsync("theIndexName");
+    var response = await client.GetConfigAsync("cts_e2e_browse_query_suggestions");
   }
 
   /// <summary>

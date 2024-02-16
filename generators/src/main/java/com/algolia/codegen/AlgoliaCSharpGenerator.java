@@ -120,6 +120,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
       file.getTemplateFile().equals("AbstractOpenAPISchema.mustache") ||
       file.getTemplateFile().equals("ApiResponse.mustache") ||
       file.getTemplateFile().equals("Multimap.mustache") ||
+      file.getTemplateFile().equals("modelInnerEnum.mustache") ||
       file.getTemplateFile().equals("ApiException.mustache") ||
       file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
       file.getTemplateFile().equals("IReadableConfiguration.mustache") ||

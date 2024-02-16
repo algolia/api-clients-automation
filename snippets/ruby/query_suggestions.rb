@@ -160,7 +160,7 @@ end
 
 # Snippet for the getConfig method.
 #
-# getConfig0
+# Retrieve QS config e2e
 def snippet_for_get_config
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
@@ -170,7 +170,7 @@ def snippet_for_get_config
   )
 
   # Call the API
-  resp = client.get_config("theIndexName")
+  resp = client.get_config("cts_e2e_browse_query_suggestions")
 
   # use the class directly
   puts resp

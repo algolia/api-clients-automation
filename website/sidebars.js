@@ -76,6 +76,7 @@ const sidebars = {
             'clients/migration-guides/kotlin',
             'clients/migration-guides/php',
             'clients/migration-guides/python',
+            'clients/migration-guides/csharp',
           ],
         },
       ],

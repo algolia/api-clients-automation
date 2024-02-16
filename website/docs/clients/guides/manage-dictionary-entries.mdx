@@ -178,6 +178,36 @@ if err != nil {
 ```
 
 </TabItem>
+
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
+  new BatchDictionaryEntriesParams
+  {
+    ClearExistingDictionaryEntries = false, // here we want to append data, so we don't clear existing entries
+    Requests =
+    {
+      new BatchDictionaryEntriesRequest(DictionaryAction.AddEntry, new DictionaryEntry
+      {
+        ObjectID = "1",
+        Language = "en",
+        Word = "fancy",
+        Words = { "believe", "algolia" },
+        Decomposition = { "trust", "algolia" },
+        State = DictionaryEntryState.Enabled
+      })
+    }
+  });
+```
+
+</TabItem>
 </TabsLanguage>
 
 ## Replace dictionary entries
@@ -349,6 +379,35 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
+  new BatchDictionaryEntriesParams
+  {
+    ClearExistingDictionaryEntries = true, // Since we replace, we will create a new dictionary from those entries
+    Requests =
+    {
+      new BatchDictionaryEntriesRequest(DictionaryAction.AddEntry, new DictionaryEntry
+      {
+        ObjectID = "1",
+        Language = "en",
+        Word = "fancy",
+        Words = { "believe", "algolia" },
+        Decomposition = { "trust", "algolia" },
+        State = DictionaryEntryState.Enabled
+      })
+    }
+  });
+```
+
+</TabItem>
 </TabsLanguage>
 
 ## Clear dictionary
@@ -460,6 +519,25 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
+  new BatchDictionaryEntriesParams
+  {
+    ClearExistingDictionaryEntries = true,
+    Requests = { } // We don't push any new entries to it
+  });
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Delete entries in the dictionary
@@ -599,6 +677,31 @@ taskResponse, err := searchClient.WaitForTask(
 if err != nil {
   panic(err)
 }
+```
+
+</TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+await client.BatchDictionaryEntriesAsync(DictionaryType.Plurals,
+  new BatchDictionaryEntriesParams
+  {
+    ClearExistingDictionaryEntries = false, // we don't want to impact other entries.
+    Requests =
+    {
+      new BatchDictionaryEntriesRequest
+      {
+        Action = DictionaryAction.DeleteEntry,
+        Body = new DictionaryEntry { ObjectID = "1" }
+      }
+    }
+  });
 ```
 
 </TabItem>

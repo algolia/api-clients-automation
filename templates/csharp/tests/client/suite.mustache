@@ -3,8 +3,9 @@ using Algolia.Search.Models.{{clientPrefix}};
 using Algolia.Search.Models.Common;
 using Algolia.Search.Http;
 using Algolia.Search.Transport;
+using Algolia.Search.Serializer;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Xunit;
 using Quibble.Xunit;
 
@@ -53,7 +54,7 @@ public void Dispose()
               Assert.Equal("{{{match}}}", result.Host);
           {{/testHost}}
           {{#testResponse}}
-              JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(res), new JsonDiffConfig(false));
+              JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
           {{/testResponse}}
         {{/match}}
       {{/isError}}

@@ -72,6 +72,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
       'not_a_region',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+    assert(false, 'An error should have been raised')
   rescue => e
     assert_equal('`region` must be one of the following: de, us', e.message)
   end
@@ -86,6 +87,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
     )
     begin
       client.get_click_positions_with_http_info(nil)
+      assert(false, 'An error should have been raised')
     rescue => e
       assert_equal('Parameter `index` is required when calling `get_click_positions`.', e.message)
     end

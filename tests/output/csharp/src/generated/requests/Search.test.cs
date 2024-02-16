@@ -1,9 +1,9 @@
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Serializer;
 using dotenv.net;
-using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
@@ -115,7 +115,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-user-id\":\"userID\"}"
     );
     var actualHeaders = req.Headers;
@@ -143,7 +143,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-user-id\":\"user id with spaces\"}"
     );
     var actualHeaders = req.Headers;
@@ -371,7 +371,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-user-id\":\"userID\"}"
     );
     var actualHeaders = req.Headers;
@@ -518,7 +518,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
-        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
     }
@@ -624,7 +624,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -662,7 +662,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters%20with%20space\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -694,7 +694,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -707,7 +707,7 @@ public class SearchClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-header-1\":\"spaces are left alone\"}"
     );
     var actualHeaders = req.Headers;
@@ -747,7 +747,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -776,7 +776,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -805,7 +805,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -834,7 +834,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -847,7 +847,7 @@ public class SearchClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -873,7 +873,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -886,7 +886,7 @@ public class SearchClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -912,7 +912,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -941,7 +941,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -972,7 +972,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1003,7 +1003,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1034,7 +1034,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1077,7 +1077,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1240,7 +1240,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/logs", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1264,7 +1264,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/uniqueID", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"attributesToRetrieve\":\"attr1%2Cattr2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1337,7 +1337,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":20,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
-        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
     }
@@ -1422,7 +1422,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/clusters/mapping/pending", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"getClusters\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1479,7 +1479,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"page\":\"8\",\"hitsPerPage\":\"3\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1514,7 +1514,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/clusters/mapping", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"page\":\"8\",\"hitsPerPage\":\"100\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1615,7 +1615,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"createIfNotExists\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1795,7 +1795,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1928,7 +1928,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -1966,7 +1966,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2014,7 +2014,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2068,7 +2068,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}",
-        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
     }
@@ -2133,7 +2133,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
-        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
     }
@@ -2705,7 +2705,7 @@ public class SearchClientRequestTests
 
       JsonAssert.EqualOverrideDefault(
         "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}",
-        JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings),
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
     }
@@ -2848,7 +2848,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2896,7 +2896,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2931,7 +2931,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2963,7 +2963,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -2995,7 +2995,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -3027,7 +3027,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -3059,7 +3059,7 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -3087,7 +3087,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"distinct\":true}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -3115,7 +3115,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"distinct\":1}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"forwardToReplicas\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);

@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
 using Algolia.Search.Transport;
-using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
 
@@ -73,7 +74,7 @@ public class SearchClientTests
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",
-      JsonConvert.SerializeObject(res),
+      JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
   }

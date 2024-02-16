@@ -14,6 +14,12 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::QuerySuggestionsClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'us'
+    )
   end
 
   # createConfig0
@@ -354,16 +360,23 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getConfig0
+  # Retrieve QS config e2e
   def test_get_config0
-    req = @client.get_config_with_http_info("theIndexName")
+    req = @client.get_config_with_http_info("cts_e2e_browse_query_suggestions")
 
     assert_equal(:get, req.method)
-    assert_equal('/1/configs/theIndexName', req.path)
+    assert_equal('/1/configs/cts_e2e_browse_query_suggestions', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_config_with_http_info("cts_e2e_browse_query_suggestions")
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_config("cts_e2e_browse_query_suggestions")
+    expected_body = JSON.parse('{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getConfigStatus0

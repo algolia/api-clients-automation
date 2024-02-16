@@ -164,7 +164,7 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the GetConfig method.
      *
-     * getConfig0
+     * Retrieve QS config e2e
      */
     public function snippetForGetConfig()
     {
@@ -173,7 +173,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getConfig(
-            'theIndexName',
+            'cts_e2e_browse_query_suggestions',
         );
 
         // play with the response
