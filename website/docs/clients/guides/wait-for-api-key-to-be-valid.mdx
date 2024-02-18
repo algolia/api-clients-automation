@@ -270,4 +270,42 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+var addApiKeyResponse = await client.AddApiKeyAsync(new ApiKey()
+{
+  Acl = new List<Acl> { Acl.Browse, Acl.Search }, Description = "A test key",
+  Indexes = new List<string> { "<YOUR_INDEX_NAME>" }
+});
+
+// Poll the task status with defaults values
+var createdApiKey = await client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key);
+
+// The fields to update on your API key
+var modifiedApiKey = createdApiKey.ToApiKey();
+modifiedApiKey.Description = "Updated description";
+
+// Call for update
+var updateApiKey = await client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
+
+// Wait for update to be done
+await client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey);
+
+// Call for delete
+await client.DeleteApiKeyAsync(addApiKeyResponse.Key);
+
+// Wait for delete to be done
+await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key);
+```
+
+</TabItem>
+
 </TabsLanguage>

@@ -225,4 +225,33 @@ if err != nil {
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+{
+  Facets = ["author", "genre"]
+}));
+```
+
+To extract all facet information, you can use a wildcard (`*`).
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+await client.SearchSingleIndexAsync<Actor>("YOUR_INDEX_NAME", new SearchParams(new SearchParamsObject
+{
+  Facets = ["*"]
+}));
+```
+
+</TabItem>
+
 </TabsLanguage>
