@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Serializer;
 using Algolia.Search.Transport;
@@ -70,10 +71,44 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.CustomGetAsync("/test");
+    var res = await client.CustomGetAsync("/test/retry");
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "test the compression strategy")]
+  public async Task ApiTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6678,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      },
+      Compression = CompressionType.Gzip
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomPostAsync(
+      "/test/gzip",
+      new Dictionary<string, object> { },
+      new Dictionary<string, string> { { "message", "this is a compressed body" } }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );

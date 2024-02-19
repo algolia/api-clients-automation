@@ -57,7 +57,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.custom_get(
-            path="/test",
+            path="/test/retry",
         )
         assert _req == """{"message":"ok test server response"}"""
 

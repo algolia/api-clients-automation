@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Analytics;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Serializer;
 using Algolia.Search.Transport;
 using Quibble.Xunit;

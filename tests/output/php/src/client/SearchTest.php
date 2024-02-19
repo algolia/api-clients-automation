@@ -85,7 +85,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6677', 'http://localhost:6678']));
 
         $res = $client->customGet(
-            '/test',
+            '/test/retry',
         );
         $this->assertEquals(
             '{"message":"ok test server response"}',
