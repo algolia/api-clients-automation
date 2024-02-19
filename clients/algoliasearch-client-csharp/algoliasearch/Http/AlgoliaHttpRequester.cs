@@ -11,7 +11,7 @@ namespace Algolia.Search.Http;
 
 /// <summary>
 /// Algolia's HTTP requester
-/// You can inject your own by the SearchClient or Analytics Client
+/// You can inject your own by implementing IHttpRequester
 /// </summary>
 internal class AlgoliaHttpRequester : IHttpRequester
 {
@@ -61,10 +61,10 @@ internal class AlgoliaHttpRequester : IHttpRequester
       Content = request.Body != null ? new StreamContent(request.Body) : null
     };
 
-    if (request.Body != null)
+    if (request.Body != null && httpRequestMessage.Content != null)
     {
-      httpRequestMessage.Content.Headers.Clear();
-      httpRequestMessage.Content.Headers.Fill(request);
+        httpRequestMessage.Content.Headers.Clear();
+        httpRequestMessage.Content.Headers.Fill(request);
     }
 
     httpRequestMessage.Headers.Fill(request.Headers);

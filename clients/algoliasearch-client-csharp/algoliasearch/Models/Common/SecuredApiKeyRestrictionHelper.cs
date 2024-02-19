@@ -46,7 +46,7 @@ public partial class SecuredApiKeyRestriction
       .Select(p => new
       {
         propsName = p.GetCustomAttribute<JsonPropertyNameAttribute>().Name,
-        value = ClientUtils.ParameterToString(p.GetValue(value, null))
+        value = QueryStringHelper.ParameterToString(p.GetValue(value, null))
       }).ToDictionary(p => p.propsName, p => p.value);
 
     return properties.ToQueryString();

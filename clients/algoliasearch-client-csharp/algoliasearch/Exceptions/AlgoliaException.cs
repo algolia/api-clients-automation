@@ -3,7 +3,7 @@ using System;
 namespace Algolia.Search.Exceptions;
 
 /// <summary>
-/// Algolia exception.
+/// Exception thrown when an error occurs in the Algolia client.
 /// </summary>
 public class AlgoliaException : Exception
 {

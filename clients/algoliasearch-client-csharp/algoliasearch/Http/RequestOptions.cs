@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Algolia.Search.Utils;
 
 namespace Algolia.Search.Http;
 
@@ -44,13 +45,13 @@ internal class InternalRequestOptions
     QueryParameters = new Dictionary<string, string>();
     foreach (var t in options?.QueryParameters ?? new Dictionary<string, object>())
     {
-      QueryParameters.Add(t.Key, ClientUtils.ParameterToString(t.Value));
+      QueryParameters.Add(t.Key, QueryStringHelper.ParameterToString(t.Value));
     }
 
     HeaderParameters = new Dictionary<string, string>();
     foreach (var t in options?.Headers ?? new Dictionary<string, string>())
     {
-      HeaderParameters.Add(t.Key.ToLowerInvariant(), ClientUtils.ParameterToString(t.Value));
+      HeaderParameters.Add(t.Key.ToLowerInvariant(), QueryStringHelper.ParameterToString(t.Value));
     }
 
     CustomPathParameters = new Dictionary<string, string>();
@@ -64,7 +65,7 @@ internal class InternalRequestOptions
 
     if (!QueryParameters.ContainsKey(key))
     {
-      QueryParameters.Add(key, ClientUtils.ParameterToString(value));
+      QueryParameters.Add(key, QueryStringHelper.ParameterToString(value));
     }
   }
 
