@@ -40,5 +40,29 @@
         "tags": "tag"
       }
     }
+  },
+  {
+    "testName": "e2e with complex query params",
+    "parameters": {
+      "index": "cts_e2e_space in index"
+    },
+    "request": {
+      "path": "/2/searches",
+      "method": "GET",
+      "queryParameters": {
+        "index": "cts_e2e_space%20in%20index"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "searches": [
+          {
+            "search": "",
+            "nbHits": 0
+          }
+        ]
+      }
+    }
   }
 ]
