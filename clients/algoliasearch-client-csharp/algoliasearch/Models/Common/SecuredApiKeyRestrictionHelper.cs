@@ -31,7 +31,7 @@ public partial class SecuredApiKeyRestriction
   }
 
   /// <summary>
-  /// Transform a poco (only class of primitive objects) to a query string
+  /// Transform a poco to a query string
   /// </summary>
   /// <param name="value"></param>
   /// <param name="ignoreList"></param>
