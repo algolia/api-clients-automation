@@ -46,7 +46,7 @@ internal static class SecuredApiKeyRestrictionHelper
         if (underlyingType is { IsEnum: true })
         {
           var attr = GetEnumValue(value, p, underlyingType);
-            return p.GetCustomAttribute<JsonPropertyNameAttribute>().Name + "=" + (attr?.Name != null ? attr.Name : value.ToString());
+          return p.GetCustomAttribute<JsonPropertyNameAttribute>().Name + "=" + (attr?.Name != null ? attr.Name : value.ToString());
         }
 
         var encodedValue = underlyingType == typeof(bool)
@@ -66,7 +66,7 @@ internal static class SecuredApiKeyRestrictionHelper
       {
         var innerType = p.PropertyType.GetGenericArguments()[0];
         var parameterList = ((IEnumerable)p.GetValue(value, null)).Cast<object>();
-        
+
         if (innerType is { IsEnum: true })
         {
           parameterList = parameterList.Select(x =>

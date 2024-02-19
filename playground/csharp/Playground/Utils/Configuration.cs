@@ -11,6 +11,7 @@ public static class Config
     {
       AppId = GetEnvVariable("ALGOLIA_APPLICATION_ID"),
       AdminApiKey = GetEnvVariable("ALGOLIA_ADMIN_KEY"),
+      SearchApiKey = GetEnvVariable("ALGOLIA_SEARCH_KEY"),
       MetisAppId = GetEnvVariable("ALGOLIA_METIS_APPLICATION_ID"),
       MetisApiKey = GetEnvVariable("ALGOLIA_METIS_API_KEY"),
       MonitoringApiKey = GetEnvVariable("ALGOLIA_MONITORING_API_KEY"),
