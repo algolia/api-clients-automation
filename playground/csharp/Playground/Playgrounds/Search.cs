@@ -147,7 +147,8 @@ public static class SearchPlayground
     Console.WriteLine("--- Add new api key `AddApiKeyAsync` ---");
     var addApiKeyResponse = await client.AddApiKeyAsync(new ApiKey()
     {
-      Acl = [Acl.Browse, Acl.Search], Description = "A test key",
+      Acl = [Acl.Browse, Acl.Search],
+      Description = "A test key",
       Indexes = [defaultIndex]
     });
     var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key", async () =>
@@ -172,19 +173,22 @@ public static class SearchPlayground
     [
       new SynonymHit
       {
-        Type = SynonymType.Onewaysynonym, ObjectID = "tshirt",
+        Type = SynonymType.Onewaysynonym,
+        ObjectID = "tshirt",
         Synonyms = ["tshirt", "shirt", "slipover"],
         Input = "tshirt"
       },
       new SynonymHit
       {
-        Type = SynonymType.Onewaysynonym, ObjectID = "trousers",
+        Type = SynonymType.Onewaysynonym,
+        ObjectID = "trousers",
         Synonyms = ["trousers", "jeans", "pantaloons"],
         Input = "trousers"
       },
       new SynonymHit
       {
-        Type = SynonymType.Onewaysynonym, ObjectID = "shoes",
+        Type = SynonymType.Onewaysynonym,
+        ObjectID = "shoes",
         Synonyms = ["shoes", "boots", "sandals"],
         Input = "shoes"
       }

@@ -6,7 +6,7 @@ public static class Config
 {
   public static Configuration Load()
   {
-    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv:true, envFilePaths: new[] { "../.env", "./Playground/.env"}));
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, envFilePaths: new[] { "../.env", "./Playground/.env" }));
     return new Configuration
     {
       AppId = GetEnvVariable("ALGOLIA_APPLICATION_ID"),
@@ -14,7 +14,7 @@ public static class Config
       SearchApiKey = GetEnvVariable("ALGOLIA_SEARCH_KEY"),
       MetisAppId = GetEnvVariable("ALGOLIA_METIS_APPLICATION_ID"),
       MetisApiKey = GetEnvVariable("ALGOLIA_METIS_API_KEY"),
-      MonitoringApiKey = GetEnvVariable("ALGOLIA_MONITORING_API_KEY"),
+      MonitoringApiKey = GetEnvVariable("MONITORING_KEY"),
     };
   }
 

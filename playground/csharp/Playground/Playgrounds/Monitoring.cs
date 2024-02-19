@@ -18,11 +18,11 @@ public static class Monitoring
 
     Console.WriteLine("--- Get incidents list `GetIncidentsAsync` ---");
     var incidentsResponse = await client.GetIncidentsAsync();
-    
+
     foreach (var incident in incidentsResponse.Incidents)
     {
       Console.WriteLine(
-        $"{incident.Key}: {Environment.NewLine}- {string.Join($"{Environment.NewLine} -", incident.Value.Select(inner =>  $" { DateTimeOffset.FromUnixTimeMilliseconds(inner.T.Value).ToString(CultureInfo.InvariantCulture)} - {inner.V.Title}"))} {Environment.NewLine}");
+        $"{incident.Key}: {Environment.NewLine}- {string.Join($"{Environment.NewLine} -", incident.Value.Select(inner => $" {DateTimeOffset.FromUnixTimeMilliseconds(inner.T.Value).ToString(CultureInfo.InvariantCulture)} - {inner.V.Title}"))} {Environment.NewLine}");
     }
   }
 }
