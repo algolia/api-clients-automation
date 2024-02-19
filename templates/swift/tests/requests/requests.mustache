@@ -136,7 +136,7 @@ final class {{client}}RequestsTests: XCTestCase {
 
             let e2eExpectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
 
-            try XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+            XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
           {{/body}}
 
           {{#statusCode}}

@@ -10,7 +10,7 @@
         LastUse = DateTime.UtcNow,
         Accept = CallType.Read | CallType.Write,
       }{{^-last}},{{/-last}}{{/customHosts}}
-  }
+  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
 {{/hasCustomHosts}}

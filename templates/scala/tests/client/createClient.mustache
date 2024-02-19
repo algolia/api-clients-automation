@@ -7,6 +7,7 @@ val client = {{client}}(
         clientOptions = ClientOptions
           .builder()
           .withHosts(List({{#customHosts}}Host("{{host}}", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
+          {{#gzipEncoding}}.withCompressionType(CompressionType.Gzip){{/gzipEncoding}}
           .build()
       )
 {{/hasCustomHosts}}
