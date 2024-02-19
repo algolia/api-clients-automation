@@ -146,7 +146,7 @@ SourceBigCommerce:
       items:
         $ref: '#/BigCommerceMetafield'
   required:
-    - store_hash
+    - storeHash
 
 BigCommerceMetafield:
   type: object

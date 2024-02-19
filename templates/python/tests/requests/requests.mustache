@@ -1,5 +1,5 @@
 from os import environ
-from json import loads
+import json
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
@@ -32,7 +32,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         """
         {{{testName}}}
         """
-        _req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":json.loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":json.loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
         {{#request}}
         assert _req.path == "{{{path}}}"
@@ -40,7 +40,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         assert _req.query_parameters.items() == {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
         assert _req.headers.items() >= {{#headers}}{{{.}}}{{/headers}}{{^headers}}{}{{/headers}}.items()
         {{#body}}
-        assert loads(_req.data) == loads("""{{{.}}}""")
+        assert json.loads(_req.data) == json.loads("""{{{.}}}""")
         {{/body}}
         {{^body}}
         {{#assertNullBody}}
@@ -50,15 +50,15 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{/request}}
 
         {{#response}}
-        raw_resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        raw_resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":json.loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":json.loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
         {{#statusCode}}
         assert raw_resp.status_code == {{statusCode}}
         {{/statusCode}}
 
         {{#body}}
-        resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-        _expected_body = loads("""{{{.}}}""")
-        assert self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":json.loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":json.loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _expected_body = json.loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, resp) == _expected_body
         {{/body}}
         {{/response}}
 
