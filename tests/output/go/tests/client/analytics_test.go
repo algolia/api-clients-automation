@@ -35,7 +35,8 @@ func TestAnalyticscommonApi0(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -47,7 +48,8 @@ func TestAnalyticscommonApi1(t *testing.T) {
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
@@ -60,7 +62,8 @@ func TestAnalyticscommonApi2(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
@@ -85,7 +88,8 @@ func TestAnalyticsparameters0(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
 		"my-index",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
@@ -110,7 +114,8 @@ func TestAnalyticsparameters1(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, "analytics.de.algolia.com", echo.Host)
 }
@@ -142,6 +147,7 @@ func TestAnalyticsparameters3(t *testing.T) {
 	_ = echo
 	_, err = client.GetClickPositions(client.NewApiGetClickPositionsRequest(
 		tests.ZeroValue[string](),
-	))
+	),
+	)
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")
 }

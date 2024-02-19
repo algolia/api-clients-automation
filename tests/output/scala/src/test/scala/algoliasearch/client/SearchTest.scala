@@ -77,11 +77,38 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customGet[Any](
-        path = "/test"
+        path = "/test/retry"
       ),
       Duration.Inf
     )
     assert(write(res) == "{\"message\":\"ok test server response\"}")
+  }
+
+  test("test the compression strategy") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))))
+        .withCompressionType(CompressionType.Gzip)
+        .build()
+    )
+
+    var res = Await.result(
+      client.customPost[Any](
+        path = "/test/gzip",
+        parameters = Some(Map()),
+        body = Some(JObject(List(JField("message", JString("this is a compressed body")))))
+      ),
+      Duration.Inf
+    )
+    assert(
+      write(
+        res
+      ) == "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+    )
   }
 
   test("calls api with correct user agent") {

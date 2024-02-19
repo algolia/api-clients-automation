@@ -10,6 +10,7 @@ import (
 	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
@@ -48,7 +49,8 @@ func TestSearchapi0(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
@@ -72,7 +74,8 @@ func TestSearchapi1(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
@@ -95,12 +98,41 @@ func TestSearchapi2(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
-	))
+		"/test/retry",
+	),
+	)
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
 	require.JSONEq(t, `{"message":"ok test server response"}`, string(rawBody))
+}
+
+// test the compression strategy
+func TestSearchapi3(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.Configuration
+	_ = client
+	_ = echo
+	cfg = search.Configuration{
+		Configuration: transport.Configuration{
+			AppID:       "test-app-id",
+			ApiKey:      "test-api-key",
+			Hosts:       []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
+			Compression: compression.GZIP,
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"/test/gzip",
+	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}),
+	)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
 }
 
 // calls api with correct user agent
@@ -110,7 +142,8 @@ func TestSearchcommonApi0(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -122,7 +155,8 @@ func TestSearchcommonApi1(t *testing.T) {
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
@@ -135,7 +169,8 @@ func TestSearchcommonApi2(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"/test",
-	))
+	),
+	)
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
@@ -185,7 +220,8 @@ func TestSearchparameters1(t *testing.T) {
 	_ = echo
 	_, err = client.AddApiKey(client.NewApiAddApiKeyRequest(
 		tests.ZeroValue[*search.ApiKey](),
-	))
+	),
+	)
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
 }
 
@@ -196,14 +232,17 @@ func TestSearchparameters2(t *testing.T) {
 	_ = echo
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		tests.ZeroValue[string](), "my-object-id", map[string]any{},
-	))
+	),
+	)
 	require.EqualError(t, err, "Parameter `indexName` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", tests.ZeroValue[string](), map[string]any{},
-	))
+	),
+	)
 	require.EqualError(t, err, "Parameter `objectID` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", "my-object-id", tests.ZeroValue[map[string]any](),
-	))
+	),
+	)
 	require.EqualError(t, err, "Parameter `body` is required when calling `AddOrUpdateObject`.")
 }

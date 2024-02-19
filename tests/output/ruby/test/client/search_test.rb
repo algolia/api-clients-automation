@@ -48,8 +48,36 @@ class TestClientSearchClient < Test::Unit::TestCase
         'searchClient'
       )
     )
-    req = client.custom_get("/test")
+    req = client.custom_get("/test/retry")
     assert_equal({ 'message': "ok test server response" }, req)
+  end
+
+  # test the compression strategy
+  def test_api3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6678,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient',
+        compression_type: 'gzip'
+      )
+    )
+    req = client.custom_post(
+      "/test/gzip",
+      {},
+      { message: "this is a compressed body" }
+    )
+    assert_equal(
+      { 'message': "ok compression test server response",
+        'body': { 'message': "this is a compressed body" }},
+      req
+    )
   end
 
   # calls api with correct user agent
