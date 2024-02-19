@@ -35,57 +35,66 @@ public extension Data {
     }
 }
 
-public func XCTLenientAssertEqual(received: Data?, expected: Data?, path: String = "$") throws {
-    guard
-        let expected,
-        let received,
-        let receivedFragment = try? JSONSerialization.jsonObject(with: received, options: [.fragmentsAllowed]),
-        let expectedFragment = try? JSONSerialization.jsonObject(with: expected, options: [.fragmentsAllowed])
-    else {
-        XCTAssertEqual(expected?.jsonString, received?.jsonString, "Key: `\(path)`; Message: expected values to be equal")
-        return
-    }
-    
-    if let expectedDict = expectedFragment as? [String: Any?] {
-        guard let receivedDict = receivedFragment as? [String: Any?] else {
-            XCTFail("Key: `\(path)`; Message: expected a dictionary and received something else")
-            return
-        }
-        
-        for (key, value) in expectedDict {
-            guard let receivedValue = receivedDict[key] else {
-                XCTFail("Key: `\(path)`; Message: expected to have key `\(key)` but couldn't find it in received dictionary")
-                return
-            }
-            
-            if let expectedValue = value {
-                guard let receivedValue else {
-                    XCTFail("Key: `\(path)`; Message: expected to have some value at `\(key)` but received dictionary value was `nil`")
-                    return
-                }
-                 
-                try? XCTLenientAssertEqual(
-                    received: JSONSerialization.data(withJSONObject: receivedValue, options: .fragmentsAllowed),
-                    expected: JSONSerialization.data(withJSONObject: expectedValue, options: .fragmentsAllowed),
-                    path: path + ".\(key)"
-                )
-            }
-        }
-    } else if let expectedArray = expectedFragment as? [Any] {
-        guard let receivedArray = receivedFragment as? [Any] else {
-            XCTFail("Key: `\(path)`; Message: expected an array and received something else")
-            return
-        }
+struct TestError: Error {
+    let message: String
+}
 
-        for (index, (nestedReceived, nestedExpected)) in zip(receivedArray, expectedArray).enumerated() {
-            try? XCTLenientAssertEqual(
-                received: JSONSerialization.data(withJSONObject: nestedReceived, options: .fragmentsAllowed),
-                expected: JSONSerialization.data(withJSONObject: nestedExpected, options: .fragmentsAllowed),
-                path: path + ".\(index)"
-            )
-        }
-    } else {
-        XCTAssertEqual(expected.jsonString, received.jsonString, "Key: `\(path)`; Message: expected values to be equal")
+public func XCTLenientAssertEqual(received: Data, expected: Data) {
+    guard let unionizedObject = try? union(
+        expected: JSONSerialization.jsonObject(with: expected, options: [.fragmentsAllowed]),
+        received: JSONSerialization.jsonObject(with: received, options: [.fragmentsAllowed])
+    ) else {
+        XCTFail("Unable to unionize received and expected objects")
         return
     }
+
+    guard let unionizedData = try? JSONSerialization.data(withJSONObject: unionizedObject, options: .fragmentsAllowed),
+          let unionizedJSON = unionizedData.jsonString?.data(using: .utf8),
+          let expectedJSON = expected.jsonString?.data(using: .utf8),
+          let unionizedString = String(data: unionizedJSON, encoding: .utf8),
+          let expectedString = String(data: expectedJSON, encoding: .utf8)
+    else {
+        XCTFail("Unable to serialize JSON strings")
+        return
+    }
+
+    XCTAssertEqual(
+        unionizedString,
+        expectedString
+    )
+}
+
+public func union(expected: Any?, received: Any?) -> Any? {
+    guard let expected else {
+        return received
+    }
+
+    guard let received else {
+        return received
+    }
+
+    if let expectedArray = expected as? [Any?] {
+        if let receivedArray = received as? [Any?] {
+            var res = [Any?]()
+            for (index, element) in expectedArray.enumerated() {
+                res.append(union(expected: element, received: receivedArray[index]))
+            }
+            return res as Any?
+        }
+        return received
+    }
+
+    if let expectedDict = expected as? [String: Any?] {
+        if let receivedDict = received as? [String: Any?] {
+            var res = [String: Any?]()
+            for (key, value) in expectedDict {
+                if let receivedValue = receivedDict[key] {
+                    res[key] = union(expected: value, received: receivedValue)
+                }
+            }
+            return res
+        }
+    }
+
+    return received
 }

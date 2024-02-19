@@ -78,12 +78,54 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "/test"
+          "path": "/test/retry"
         },
         "expected": {
           "type": "response",
           "match": {
             "message": "ok test server response"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "test the compression strategy",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "localhost",
+              "port": 6678
+            }
+          ],
+          "gzip": true
+        },
+        "expected": {}
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "customPost",
+        "parameters": {
+          "path": "/test/gzip",
+          "parameters": {},
+          "body": {
+            "message": "this is a compressed body"
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok compression test server response",
+            "body": {
+              "message": "this is a compressed body"
+            }
           }
         }
       }

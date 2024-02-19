@@ -47,9 +47,12 @@ _apic_lang_client_complete() {
 
 _apic_cts_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
-    COMPREPLY=($(compgen -W "generate run" -- "$cur"))
+    COMPREPLY=($(compgen -W "generate run server" -- "$cur"))
   else
-    _apic_lang_client_complete 3
+    second="${COMP_WORDS[2]}"
+    if [[ $second == "generate" || $second == "run" ]]; then
+      _apic_lang_client_complete 3
+    fi
   fi
 }
 

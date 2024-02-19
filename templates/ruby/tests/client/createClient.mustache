@@ -3,7 +3,8 @@ client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.creat
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
   [{{#customHosts}}Algolia::Transport::StatefulHost.new('{{host}}', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE),{{/customHosts}}],
-  '{{client}}'
+  '{{client}}'{{#gzipEncoding}},
+  compression_type: 'gzip'{{/gzipEncoding}}
 )){{/hasCustomHosts}}{{^hasCustomHosts}}
 {{^isError}}client = {{/isError}}Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
   '{{parametersWithDataTypeMap.appId.value}}',

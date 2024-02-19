@@ -10,13 +10,37 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public class AnalyticsClientRequestTests
 {
-  private readonly AnalyticsClient _client;
+  private readonly AnalyticsClient _client,
+    _e2eClient;
   private readonly EchoHttpRequester _echo;
 
   public AnalyticsClientRequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
+
+    DotEnv.Load(
+      options: new DotEnvOptions(
+        ignoreExceptions: true,
+        probeForEnv: true,
+        probeLevelsToSearch: 8,
+        envFilePaths: new[] { ".env" }
+      )
+    );
+
+    var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    if (e2EAppId == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
+    if (e2EApiKey == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+    }
+
+    _e2eClient = new AnalyticsClient(new AnalyticsConfig(e2EAppId, e2EApiKey, "us"));
   }
 
   [Fact]
@@ -1357,6 +1381,48 @@ public class AnalyticsClientRequestTests
     {
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "e2e with complex query params")]
+  public async Task GetTopSearchesTest2()
+  {
+    await _client.GetTopSearchesAsync("cts_e2e_space in index");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/searches", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"cts_e2e_space%20in%20index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.GetTopSearchesAsync("cts_e2e_space in index");
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
     }
   }
 

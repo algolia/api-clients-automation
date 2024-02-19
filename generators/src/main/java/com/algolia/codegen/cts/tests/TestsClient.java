@@ -53,7 +53,7 @@ public class TestsClient extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       List<Object> tests = new ArrayList<>();
       int testIndex = 0;
-      for (ClientTestData test : blockEntry.getValue()) {
+      skipTest:for (ClientTestData test : blockEntry.getValue()) {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Object> steps = new ArrayList<>();
@@ -89,6 +89,16 @@ public class TestsClient extends TestsGenerator {
                   );
                 }
               }
+
+              boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
+              // many languages don't support gzip yet
+              if (
+                gzipEncoding &&
+                (language.equals("javascript") || language.equals("dart") || language.equals("python") || language.equals("php"))
+              ) {
+                continue skipTest;
+              }
+              stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
               ope = operations.get(step.path);
               if (ope == null) {
@@ -100,6 +110,11 @@ public class TestsClient extends TestsGenerator {
 
             stepOut.put("object", step.object);
             stepOut.put("path", step.path);
+
+            Map<String, Object> requestOptions = new HashMap<>();
+            paramsType.enhanceParameters(step.requestOptions, requestOptions);
+            stepOut.put("requestOptions", requestOptions);
+
             if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
               stepOut.put("isCustom", true);
             }

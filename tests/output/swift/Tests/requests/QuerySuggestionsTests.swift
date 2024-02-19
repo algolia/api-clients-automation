@@ -997,7 +997,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
                     .data(using: .utf8)
             )
 
-        try XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
 
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
