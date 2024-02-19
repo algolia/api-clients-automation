@@ -37,8 +37,8 @@ class AbtestingClientClientTests {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
   }
 
-  private ClientOptions withCustomHosts(List<Host> hosts) {
-    return ClientOptions.builder().setHosts(hosts).build();
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
+    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
   }
 
   @Test

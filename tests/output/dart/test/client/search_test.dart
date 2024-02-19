@@ -52,7 +52,7 @@ void main() {
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
-        path: "/test",
+        path: "/test/retry",
       );
       expectBody(res, """{"message":"ok test server response"}""");
     } on InterceptionException catch (_) {

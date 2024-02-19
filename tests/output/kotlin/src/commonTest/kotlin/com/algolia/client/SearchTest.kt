@@ -49,12 +49,35 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "/test/retry",
         )
       },
       response = {
         val response = Json.encodeToString(it)
         assertEquals("{\"message\":\"ok test server response\"}", response)
+      },
+    )
+  }
+
+  @Test
+  fun `test the compression strategy`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6678)), compressionType = CompressionType.GZIP))
+    client.runTest(
+      call = {
+        customPost(
+          path = "/test/gzip",
+          parameters = mapOf(),
+          body = buildJsonObject {
+            put(
+              "message",
+              JsonPrimitive("this is a compressed body"),
+            )
+          },
+        )
+      },
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}", response)
       },
     )
   }
