@@ -100,9 +100,9 @@ internal class AlgoliaHttpRequester : IHttpRequester
     }
     catch (TimeoutException ex)
     {
-      if (_logger.IsEnabled(LogLevel.Debug))
+      if (_logger.IsEnabled(LogLevel.Warning))
       {
-        _logger.LogDebug(ex, "Timeout while sending request");
+        _logger.LogWarning(ex, "Timeout while sending request");
       }
 
       return new AlgoliaHttpResponse { IsTimedOut = true, Error = ex.ToString() };
@@ -111,9 +111,9 @@ internal class AlgoliaHttpRequester : IHttpRequester
     {
       // HttpRequestException is thrown when an underlying issue happened such as
       // network connectivity, DNS failure, server certificate validation.
-      if (_logger.IsEnabled(LogLevel.Debug))
+      if (_logger.IsEnabled(LogLevel.Error))
       {
-        _logger.LogDebug(ex, "Error while sending request");
+        _logger.LogError(ex, "Error while sending request {Request}", request);
       }
 
       return new AlgoliaHttpResponse { IsNetworkError = true, Error = ex.Message };

@@ -14,4 +14,14 @@ public class AlgoliaException : Exception
   public AlgoliaException(string message) : base(message)
   {
   }
+  
+  /// <summary>
+  /// Create a new Algolia exception, with an inner exception.
+  /// </summary>
+  /// <param name="message"></param>
+  /// <param name="inner"></param>
+  public AlgoliaException(string message, Exception inner)
+    : base(message, inner)
+  {
+  }
 }
