@@ -1,8 +1,6 @@
 import XCTest
 
-#if canImport(AnyCodable)
-    import AnyCodable
-#endif
+import AnyCodable
 import DotEnv
 import Utils
 
