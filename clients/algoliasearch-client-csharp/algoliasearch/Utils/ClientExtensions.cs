@@ -253,10 +253,17 @@ public static class ClientExtensions
     SearchSynonymsParams synonymsParams,
     RequestOptions requestOptions = null) =>
     AsyncHelper.RunSync(() => client.BrowseSynonymsAsync(indexName, synonymsParams, requestOptions));
-  
+
+  /// <summary>
+  /// Generate a virtual API Key without any call to the server.
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="parentApiKey">Parent API Key</param>
+  /// <param name="restriction">Restriction to add the key</param>
+  /// <returns></returns>
   public static string GenerateSecuredApiKeys(this SearchClient client, string parentApiKey, SecuredApiKeyRestriction restriction)
   {
-    string queryParams = QueryStringHelper.BuildRestrictionQueryString(restriction);
+    var queryParams = restriction.ToQueryString();
     var hash = HmacShaHelper.GetHash(parentApiKey, queryParams);
     return HmacShaHelper.Base64Encode($"{hash}{queryParams}");
   }
