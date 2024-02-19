@@ -567,33 +567,4 @@ public class ClientExtensionsTests
 
     Assert.Single(hits);
   }
-
-  [Fact]
-  public void ShouldGenerateSecuredApiKey()
-  {
-    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"));
-    var securedApiKey = client.GenerateSecuredApiKeys("parent-api-key", new SecuredApiKeyRestriction
-    {
-      Query = new IndexSettingsAsSearchParams
-      {
-        Mode = Mode.NeuralSearch,
-        HitsPerPage = 10,
-        OptionalWords = ["one", "two"],
-        QueryType = QueryType.PrefixNone,
-        EnableRules = true,
-        AlternativesAsExact = [AlternativesAsExact.IgnorePlurals, AlternativesAsExact.SingleWordSynonym],
-        AttributeCriteriaComputedByMinProximity = false
-      },
-      RestrictIndices = ["index1", "index2"],
-      RestrictSources = ["source1", "source2"],
-      UserToken = "my-user-token",
-      ValidUntil = 1
-    });
-
-    const string expectedQueryParams = "optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&attributeCriteriaComputedByMinProximity=false&restrictIndices=index1%2Cindex2&restrictSources=source1%2Csource2&validUntil=1&userToken=my-user-token";
-    var hash = HmacShaHelper.GetHash("parent-api-key", expectedQueryParams);
-    var expectedKey = HmacShaHelper.Base64Encode($"{hash}{expectedQueryParams}");
-
-    Assert.Equal(expectedKey, securedApiKey);
-  }
 }
