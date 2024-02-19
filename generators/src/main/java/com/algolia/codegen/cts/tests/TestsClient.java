@@ -66,7 +66,7 @@ public class TestsClient extends TestsGenerator {
             stepOut.put("useEchoRequester", true);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
-              stepOut.put("stepTemplate", "tests/client/createClient.mustache");
+              stepOut.put("stepTemplate", "tests/client/createClient");
               stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
@@ -94,7 +94,7 @@ public class TestsClient extends TestsGenerator {
               if (ope == null) {
                 throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
-              stepOut.put("stepTemplate", "tests/client/method.mustache");
+              stepOut.put("stepTemplate", "tests/client/method");
               stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
             }
 

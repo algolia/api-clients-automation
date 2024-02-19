@@ -4,7 +4,6 @@ import yaml from 'js-yaml';
 
 import { Cache } from './cache.js';
 import { exists, run, toAbsolutePath } from './common.js';
-import type { Spinner } from './spinners.js';
 import { createSpinner } from './spinners.js';
 import type { Spec } from './types.js';
 
@@ -21,13 +20,11 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 async function transformBundle({
   bundledPath,
   withDoc,
-  withHelpers,
   clientName,
   alias,
 }: {
   bundledPath: string;
   withDoc: boolean;
-  withHelpers: boolean;
   clientName: string;
   alias?: string;
 }): Promise<void> {
@@ -48,12 +45,6 @@ async function transformBundle({
       // In the main bundle we need to have only the clientName
       // because open-api-generator will use this to determine the name of the client
       specMethod.tags = [clientName];
-
-      if (!withHelpers && specMethod['x-helper']) {
-        delete bundledSpec.paths[pathKey];
-        delete bundledDocSpec?.paths[pathKey];
-        break;
-      }
 
       // Doc special cases
       if (!withDoc || !bundledDocSpec) {
@@ -159,49 +150,8 @@ async function buildLiteSpec({
     clientName: spec,
     // Lite does not need documentation because it's just a subset
     withDoc: false,
-    withHelpers: false,
   });
 }
-
-/* eslint-disable no-param-reassign */
-async function buildSpecWithHelpers(useCache: boolean, spinner: Spinner): Promise<void> {
-  const cache = new Cache({
-    folder: toAbsolutePath('specs/'),
-    generatedFiles: ['bundled/search.helpers.yml'],
-    filesToCache: ['search', 'common'],
-    cacheFile: toAbsolutePath('specs/dist/search.helpers.cache'),
-  });
-
-  if (useCache) {
-    spinner.text = `checking cache for 'search with helpers'`;
-
-    if (await cache.isValid()) {
-      spinner.succeed(`job skipped, cache found for 'search with helpers'`);
-      return;
-    }
-
-    spinner.text = `cache not found for 'search with helpers'`;
-  }
-
-  const bundledPath = `specs/bundled/search.helpers.yml`;
-  await run(`yarn openapi bundle specs/search/spec.yml -o ${bundledPath} --ext yml`);
-
-  await transformBundle({
-    bundledPath: toAbsolutePath(bundledPath),
-    clientName: 'search',
-    withDoc: false,
-    withHelpers: true,
-  });
-
-  spinner.text = `linting 'search with helpers' bundled spec`;
-  await run('yarn specs:fix bundled/search.helpers.yml');
-
-  if (useCache) {
-    spinner.text = `storing 'seach with helpers' spec cache`;
-    await cache.store();
-  }
-}
-/* eslint-enable no-param-reassign */
 
 /**
  * Build spec file.
@@ -249,7 +199,6 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
       bundledPath: toAbsolutePath(bundledPath),
       clientName: spec,
       withDoc: true,
-      withHelpers: false,
     });
   } else {
     await buildLiteSpec({
@@ -275,10 +224,6 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
   if (useCache) {
     spinner.text = `storing '${spec}' spec cache`;
     await cache.store();
-  }
-
-  if (spec === 'search') {
-    await buildSpecWithHelpers(useCache, spinner);
   }
 
   spinner.succeed(`building complete for '${spec}' spec`);
