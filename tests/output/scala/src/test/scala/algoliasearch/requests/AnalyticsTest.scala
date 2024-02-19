@@ -7,6 +7,11 @@ import algoliasearch.analytics.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.skyscreamer.jsonassert.JSONCompare.compareJSON
+import org.skyscreamer.jsonassert.JSONCompareMode
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -29,6 +34,24 @@ class AnalyticsTest extends AnyFunSuite {
       ),
       echo
     )
+  }
+
+  def testE2EClient(): AnalyticsClient = {
+    val region = Some("us")
+    if (System.getenv("CI") == "true") {
+      AnalyticsClient(
+        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      AnalyticsClient(
+        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    }
   }
 
   test("allow del method for a custom path with minimal parameters") {
@@ -1325,6 +1348,34 @@ class AnalyticsTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("e2e with complex query params") {
+    val (client, echo) = testClient()
+    val future = client.getTopSearches(
+      index = "cts_e2e_space in index"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/searches")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"cts_e2e_space%20in%20index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.getTopSearches(
+      index = "cts_e2e_space in index"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON("""{"searches":[{"search":"","nbHits":0}]}""", write(response), JSONCompareMode.LENIENT)
   }
 
   test("get getUsersCount with minimal parameters") {

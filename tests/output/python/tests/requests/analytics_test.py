@@ -1,8 +1,14 @@
 from json import loads
+from os import environ
 
 from algoliasearch.analytics.client import AnalyticsClient
 from algoliasearch.analytics.config import AnalyticsConfig
 from algoliasearch.http.transporter import EchoTransporter
+from dotenv import load_dotenv
+
+from ..helpers import Helpers
+
+load_dotenv("../../.env")
 
 
 class TestAnalyticsClient:
@@ -10,6 +16,17 @@ class TestAnalyticsClient:
     _client = AnalyticsClient.create_with_config(
         config=_config, transporter=EchoTransporter(_config)
     )
+
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
     async def test_custom_delete_0(self):
         """
@@ -1093,6 +1110,40 @@ class TestAnalyticsClient:
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    async def test_get_top_searches_2(self):
+        """
+        e2e with complex query params
+        """
+        _req = await self._client.get_top_searches_with_http_info(
+            index="cts_e2e_space in index",
+        )
+
+        assert _req.path == "/2/searches"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"index": "cts_e2e_space%20in%20index"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+        raw_resp = await AnalyticsClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_top_searches_with_http_info(
+            index="cts_e2e_space in index",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await AnalyticsClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_top_searches(
+            index="cts_e2e_space in index",
+        )
+        _expected_body = loads("""{"searches":[{"search":"","nbHits":0}]}""")
+        assert (
+            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        )
 
     async def test_get_users_count_0(self):
         """
