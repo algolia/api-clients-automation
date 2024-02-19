@@ -16,7 +16,7 @@ Destination:
     updatedAt:
       $ref: './common.yml#/updatedAt'
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
   required:
     - destinationID
     - type
@@ -70,7 +70,7 @@ DestinationUpdate:
     input:
       $ref: '#/DestinationInput'
     authenticationID:
-      type: string
+      $ref: './common.yml#/authenticationID'
 
 DestinationUpdateResponse:
   type: object
