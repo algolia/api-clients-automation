@@ -41,7 +41,7 @@ public class SecuredApiKeysTests
     );
 
     const string expectedQueryParams =
-      "optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&attributeCriteriaComputedByMinProximity=false&restrictIndices=index1%2Cindex2&restrictSources=source1%2Csource2&validUntil=1&userToken=my-user-token";
+      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=source1%2Csource2&userToken=my-user-token";
     var hash = HmacShaHelper.GetHash("parent-api-key", expectedQueryParams);
     var expectedKey = HmacShaHelper.Base64Encode($"{hash}{expectedQueryParams}");
 
