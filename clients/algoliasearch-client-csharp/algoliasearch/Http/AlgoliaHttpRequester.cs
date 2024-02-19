@@ -63,8 +63,8 @@ internal class AlgoliaHttpRequester : IHttpRequester
 
     if (request.Body != null && httpRequestMessage.Content != null)
     {
-        httpRequestMessage.Content.Headers.Clear();
-        httpRequestMessage.Content.Headers.Fill(request);
+      httpRequestMessage.Content.Headers.Clear();
+      httpRequestMessage.Content.Headers.Fill(request);
     }
 
     httpRequestMessage.Headers.Fill(request.Headers);
