@@ -14,7 +14,7 @@ public static class Ingestion
 
     // Get existing JSON source
     Console.WriteLine("--- Get existing JSON source `GetSourcesAsync` ---");
-    var jsonSources = await client.GetSourcesAsync(type:new List<SourceType> { SourceType.Json }).ConfigureAwait(false);
+    var jsonSources = await client.GetSourcesAsync(type: new List<SourceType> { SourceType.Json }).ConfigureAwait(false);
     Console.WriteLine(jsonSources.Sources.Count == 0 ? "There is no JSON Source !" : $"There is {jsonSources.Sources.Count} JSON source(s)");
 
     // Deleting existing JSON source
