@@ -151,7 +151,6 @@ export const patterns = [
   'clients/algoliasearch-client-swift/**/Sources/**',
   '!clients/algoliasearch-client-swift/Sources/Core/**',
   'clients/algoliasearch-client-swift/Sources/Core/Helpers/Version.swift',
-  '!clients/algoliasearch-client-swift/Sources/zlib/**',
 
   'tests/output/swift/Package.swift',
   '!tests/output/swift/Utils/**',

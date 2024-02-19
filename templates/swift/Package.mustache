@@ -10,7 +10,7 @@ var products: [Product] = []
 
 #if os(Linux)
   extraPackageDependencies.append(
-    .package(url: "https://github.com/apple/swift-crypto.git", from: "3.1.0")
+    .package(url: "https://github.com/apple/swift-crypto.git", from: "3.2.0")
   )
   extraTargetDependencies.append(
     .product(name: "Crypto", package: "swift-crypto")
@@ -63,9 +63,9 @@ let package = Package(
   ],
   products: products,
   dependencies: [
-    .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
-    .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
-    .package(url: "https://github.com/1024jp/GzipSwift", from: "6.0.0"),
+    .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
+    .package(url: "https://github.com/apple/swift-log.git", from: "1.5.4"),
+    .package(url: "https://github.com/1024jp/GzipSwift", from: "6.0.1"),
   ] + extraPackageDependencies,
   targets: targets
 )
