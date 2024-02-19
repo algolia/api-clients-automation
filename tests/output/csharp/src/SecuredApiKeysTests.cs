@@ -15,7 +15,7 @@ public class SecuredApiKeysTests
   public void ShouldGenerateSecuredApiKey()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"));
-    var securedApiKey = client.GenerateSecuredApiKeys(
+    var securedApiKey = client.GenerateSecuredApiKey(
       "parent-api-key",
       new SecuredApiKeyRestriction
       {
@@ -63,7 +63,7 @@ public class SecuredApiKeysTests
       Mock.Of<IHttpRequester>()
     );
 
-    var expiredKey = client.GenerateSecuredApiKeys("key", restriction);
+    var expiredKey = client.GenerateSecuredApiKey("key", restriction);
     var remainingValidity = client.GetSecuredApiKeyRemainingValidity(expiredKey);
 
     Assert.True(remainingValidity.TotalSeconds < 0);
@@ -84,7 +84,7 @@ public class SecuredApiKeysTests
       Mock.Of<IHttpRequester>()
     );
 
-    var expiredKey = client.GenerateSecuredApiKeys("key", restriction);
+    var expiredKey = client.GenerateSecuredApiKey("key", restriction);
     var remainingValidity = client.GetSecuredApiKeyRemainingValidity(expiredKey);
 
     Assert.True(remainingValidity.TotalSeconds > 0);
@@ -101,7 +101,7 @@ public class SecuredApiKeysTests
       Mock.Of<IHttpRequester>()
     );
 
-    var key = client.GenerateSecuredApiKeys("key", restriction);
+    var key = client.GenerateSecuredApiKey("key", restriction);
 
     Assert.Throws<AlgoliaException>(() => client.GetSecuredApiKeyRemainingValidity(key));
   }

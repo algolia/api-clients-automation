@@ -266,7 +266,7 @@ public static class ClientExtensions
   /// <param name="parentApiKey">Parent API Key</param>
   /// <param name="restriction">Restriction to add the key</param>
   /// <returns></returns>
-  public static string GenerateSecuredApiKeys(this SearchClient client, string parentApiKey,
+  public static string GenerateSecuredApiKey(this SearchClient client, string parentApiKey,
     SecuredApiKeyRestriction restriction)
   {
     var queryParams = restriction.ToQueryString();
