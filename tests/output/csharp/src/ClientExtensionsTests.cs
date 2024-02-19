@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
@@ -566,5 +567,115 @@ public class ClientExtensionsTests
     );
 
     Assert.Single(hits);
+  }
+
+
+  [Fact]
+  public async Task ShouldReplaceAllObjects()
+  {
+    var httpMock = new Mock<IHttpRequester>();
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), httpMock.Object);
+
+    // We mock the following calls 
+    // 1 - Copy operation, from the source index to the temporary index
+    // 2 - Write operation, to the temporary index
+    // 3 - Move operation, from the temporary index to the destination index
+    // 4 - 3 times the wait for task operation
+    httpMock
+      .SetupSequence(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/operation") ||
+                              Regex.IsMatch(r.Uri.AbsolutePath, "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/operation")),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(
+                  new UpdatedAtResponse(1, "2021-01-01T00:00:00Z")
+                )
+              )
+            )
+          }
+        )
+      ).Returns(Task.FromResult(
+        new AlgoliaHttpResponse
+        {
+          HttpStatusCode = 200,
+          Body = new MemoryStream(
+            Encoding.UTF8.GetBytes(
+              serializer.Serialize(
+                new UpdatedAtResponse(3, "2021-01-01T00:00:00Z")
+              )
+            )
+          )
+        }
+      ));
+
+
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r =>
+            r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/task/1") ||
+            Regex.IsMatch(r.Uri.AbsolutePath, "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/2") ||
+            r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/task/3")),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(() =>
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(
+                  new GetTaskResponse { Status = TaskStatus.Published }
+                )
+              )
+            )
+          }
+        )
+      );
+
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r => Regex.IsMatch(r.Uri.AbsolutePath, "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/batch")),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(
+                  new BatchResponse(2, []))
+              )
+            )
+          }
+        )
+      );
+
+    var results = await client.ReplaceAllObjectsAsync("my-test-index", new List<object> { });
+
+    httpMock.VerifyAll();
+    
+    Assert.Equivalent(results, new List<long> { 1, 2, 3 });
   }
 }

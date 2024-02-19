@@ -10,6 +10,7 @@ using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
+using Action = Algolia.Search.Models.Search.Action;
 
 namespace Algolia.Search.Utils;
 
@@ -304,10 +305,10 @@ public static class ClientExtensions
 
     // Extracting and converting the timestamp
     var timeStamp = Convert.ToInt64(validUntilMatch.Replace("validUntil=", string.Empty));
-    
+
     var sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     var unixTime = (long)(DateTime.UtcNow - sTime).TotalSeconds;
-    
+
     return TimeSpan.FromSeconds(timeStamp - unixTime);
   }
 
@@ -413,6 +414,68 @@ public static class ClientExtensions
 
     throw new AlgoliaException(
       "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
+  }
+
+
+  /// <summary>
+  ///  Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
+  /// Replace all objects in an index without any downtime. Internally, this method copies the existing index settings, synonyms and query rules and indexes all passed objects.
+  /// Finally, the temporary one replaces the existing index. (Synchronous version)
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="data">The list of records to replace.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  public static List<long> ReplaceAllObjects<T>(this SearchClient client, string indexName,
+    IEnumerable<T> data, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class
+    => AsyncHelper.RunSync(() => client.ReplaceAllObjectsAsync(indexName, data, options, cancellationToken));
+
+  /// <summary>
+  ///  Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
+  /// Replace all objects in an index without any downtime. Internally, this method copies the existing index settings, synonyms and query rules and indexes all passed objects.
+  /// Finally, the temporary one replaces the existing index.
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="data">The list of records to replace.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  public static async Task<List<long>> ReplaceAllObjectsAsync<T>(this SearchClient client, string indexName,
+    IEnumerable<T> data, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class
+  {
+    if (data == null)
+    {
+      throw new ArgumentNullException(nameof(data));
+    }
+
+    var rnd = new Random();
+    var tmpIndexName = $"{indexName}_tmp_{rnd.Next(100)}";
+
+    // Copy settings, synonyms and query rules into the temporary index
+    var copyResponse = await client.OperationIndexAsync(indexName,
+        new OperationIndexParams(OperationType.Copy, tmpIndexName)
+          { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+      .ConfigureAwait(false);
+
+    await client.WaitForTaskAsync(indexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken).ConfigureAwait(false);
+
+    // Add objects to the temporary index
+    var batchResponse = await client.BatchAsync(tmpIndexName,
+      new BatchWriteParams(data.Select(x => new BatchRequest(Action.AddObject, x)).ToList()),
+      options, cancellationToken).ConfigureAwait(false);
+
+    await client.WaitForTaskAsync(tmpIndexName, batchResponse.TaskID, requestOptions: options, ct: cancellationToken).ConfigureAwait(false);
+
+    // Move the temporary index to the main one
+    var moveResponse = await client.OperationIndexAsync(tmpIndexName,
+        new OperationIndexParams(OperationType.Move, indexName)
+          { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+      .ConfigureAwait(false);
+
+    await client.WaitForTaskAsync(indexName, moveResponse.TaskID, requestOptions: options, ct: cancellationToken).ConfigureAwait(false);
+
+    return [copyResponse.TaskID, batchResponse.TaskID, moveResponse.TaskID];
   }
 
   private static int NextDelay(int retryCount)
