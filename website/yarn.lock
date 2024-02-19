@@ -2545,7 +2545,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/react@npm:3.0.0, @mdx-js/react@npm:^3.0.0":
+"@mdx-js/react@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@mdx-js/react@npm:3.0.1"
+  dependencies:
+    "@types/mdx": "npm:^2.0.0"
+  peerDependencies:
+    "@types/react": ">=16"
+    react: ">=16"
+  checksum: d566407af11e76f498f8133fbfa8a9d8a2ad80dc7a66ca109d29fcb92e953a2d2d7aaedc0c28571d126f1967faeb126dd2e4ab4ea474c994bf5c76fa204c5997
+  languageName: node
+  linkType: hard
+
+"@mdx-js/react@npm:^3.0.0":
   version: 3.0.0
   resolution: "@mdx-js/react@npm:3.0.0"
   dependencies:
@@ -5311,9 +5323,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-theme-redoc@npm:2.0.0":
-  version: 2.0.0
-  resolution: "docusaurus-theme-redoc@npm:2.0.0"
+"docusaurus-theme-redoc@npm:2.0.1":
+  version: 2.0.1
+  resolution: "docusaurus-theme-redoc@npm:2.0.1"
   dependencies:
     "@redocly/openapi-core": "npm:1.4.0"
     clsx: "npm:^1.2.1"
@@ -5324,7 +5336,8 @@ __metadata:
     styled-components: "npm:^6.1.0"
   peerDependencies:
     "@docusaurus/theme-common": ^3.0.0
-  checksum: 79253ab256d2c15ca9f5717eeec04da43de45774b6843b4e17c4a571a0f788abe0bb701754ce779bf7244a0474e6b500a7d3b22ca655af5c02bfdf4964d7a0f1
+    webpack: ^5.0.0
+  checksum: 4eabbce077e1f6d4aa52324d827ba83c0b1649a00cccb5dbf07c1b697f789740e732ed7d1eb2c1c27d1d04e641e92d6f81d719c370aa53cf139176547a2e9e0c
   languageName: node
   linkType: hard
 
@@ -10638,16 +10651,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redocusaurus@npm:2.0.0":
-  version: 2.0.0
-  resolution: "redocusaurus@npm:2.0.0"
+"redocusaurus@npm:2.0.1":
+  version: 2.0.1
+  resolution: "redocusaurus@npm:2.0.1"
   dependencies:
     docusaurus-plugin-redoc: "npm:2.0.0"
-    docusaurus-theme-redoc: "npm:2.0.0"
+    docusaurus-theme-redoc: "npm:2.0.1"
   peerDependencies:
     "@docusaurus/theme-common": ^3.0.0
     "@docusaurus/utils": ^3.0.0
-  checksum: 33db102e5e3027ce841d997d022c325b283c6dff9fb256df1763cdddd227c33854ce765b80cb065f489328a8d3ffae92e7fb42163a4e09742972a9fa947d9743
+  checksum: a4646cb8cf1c5b92e1921efd543adba814124d796973b53d7b045d5062d49e849e7851975b2276c99a3f2a90e4660ea2940968f0701ae19519c3740484a280dc
   languageName: node
   linkType: hard
 
@@ -12630,11 +12643,11 @@ __metadata:
     "@docusaurus/core": "npm:3.1.1"
     "@docusaurus/preset-classic": "npm:3.1.1"
     "@docusaurus/types": "npm:3.1.1"
-    "@mdx-js/react": "npm:3.0.0"
+    "@mdx-js/react": "npm:3.0.1"
     clsx: "npm:2.1.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    redocusaurus: "npm:2.0.0"
+    redocusaurus: "npm:2.0.1"
   languageName: unknown
   linkType: soft
 
