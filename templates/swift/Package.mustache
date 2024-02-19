@@ -22,26 +22,15 @@ extraTargetDependencies.append(contentsOf: [
   .product(name: "Logging", package: "swift-log")
 ])
 
-#if os(Linux)
-  targets.append(contentsOf: [
-    .systemLibrary(name: "zlib", pkgConfig: "zlib", providers: [.apt(["zlib1g-dev"])]),
-    .target(
-      name: "Core",
-      dependencies: [
-        "zlib",
-      ] + extraTargetDependencies,
-      path: "Sources/Core"
-    )
-  ])
-#else
-  targets.append(
-    .target(
-      name: "Core",
-      dependencies: extraTargetDependencies,
-      path: "Sources/Core"
-    )
+targets.append(contentsOf: [
+  .target(
+    name: "Core",
+    dependencies: [
+      .product(name: "Gzip", package: "GzipSwift")
+    ] + extraTargetDependencies,
+    path: "Sources/Core"
   )
-#endif
+])
 
 [{{#packageList}}
   "{{#lambda.client-to-name}}{{.}}{{/lambda.client-to-name}}"{{^-last}},{{/-last}}{{/packageList}}
@@ -76,6 +65,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
     .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
+    .package(url: "https://github.com/1024jp/GzipSwift", from: "6.0.0"),
   ] + extraPackageDependencies,
   targets: targets
 )

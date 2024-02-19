@@ -2,7 +2,7 @@
 //  CompressionAlgorithm.swift
 //
 //
-//  Created by Algolia on 16/02/2024.
+//  Created by  on 19/02/2024.
 //
 
 import Foundation
