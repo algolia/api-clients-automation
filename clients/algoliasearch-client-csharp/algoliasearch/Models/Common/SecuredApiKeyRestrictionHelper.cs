@@ -11,7 +11,7 @@ namespace Algolia.Search.Models.Common;
 /// </summary>
 public partial class SecuredApiKeyRestriction
 {
-  
+
   /// <summary>
   /// Transforms the restriction into a query string
   /// </summary>
