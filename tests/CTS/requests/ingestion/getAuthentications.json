@@ -46,11 +46,7 @@
             "authenticationID": "b57a7ea5-8592-493b-b75b-6c66d77aee7f",
             "type": "algolia",
             "name": "Auto-generated Authentication for T8JK9S7I7X - 1704732447751",
-            "platform": null,
-            "input": {
-              "clientEmail": null,
-              "privateKey": null
-            },
+            "input": {},
             "createdAt": "2024-01-08T16:47:31Z",
             "updatedAt": "2024-01-08T16:47:31Z"
           },
