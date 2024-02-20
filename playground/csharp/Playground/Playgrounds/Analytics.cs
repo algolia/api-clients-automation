@@ -1,19 +1,36 @@
 using Algolia.Search.Clients;
+using Algolia.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace Algolia.Playgrounds;
 
-public static class Analytics
+public class AnalyticsPlayground : IPlayground
 {
-  public static async Task Run(Configuration configuration)
-  {
-    Console.WriteLine("------------------------------------");
-    Console.WriteLine("Starting Analytics API playground");
-    Console.WriteLine("------------------------------------");
-    var client = new AnalyticsClient(new AnalyticsConfig(configuration.AppId, configuration.AdminApiKey));
+  private readonly AnalyticsClient _client;
+  private readonly Configuration _configuration;
 
-    var shortDateString = DateTime.UtcNow.AddDays(-1).ToString("YYYY-MM-DD");
-    Console.WriteLine(shortDateString);
-    var getSearchesCountResponse = await client.GetSearchesCountAsync("test-index", shortDateString);
-    Console.WriteLine(getSearchesCountResponse.Count);
+  public AnalyticsPlayground(Configuration configuration)
+  {
+    var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
+      .AddConsole());
+    var config = new AnalyticsConfig(configuration.AppId, configuration.AdminApiKey);
+    _client = new AnalyticsClient(config, loggerFactory);
+    _configuration = configuration;
+  }
+
+  public async Task Run()
+  {
+    PlaygroundHelper.Hello("Starting Analytics API playground");
+    try
+    {
+      var shortDateString = DateTime.UtcNow.AddDays(-1).ToString("YYYY-MM-DD");
+      Console.WriteLine(shortDateString);
+      var getSearchesCountResponse = await _client.GetSearchesCountAsync("test-index", shortDateString);
+      Console.WriteLine(getSearchesCountResponse.Count);
+    }
+    catch (Exception)
+    {
+      // ignored
+    }
   }
 }
