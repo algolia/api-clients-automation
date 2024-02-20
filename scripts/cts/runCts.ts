@@ -73,7 +73,7 @@ async function runCtsOne(language: string): Promise<void> {
 
 // the clients option is only used to determine if we need to start the test server, it will run the tests for all clients anyway.
 export async function runCts(languages: Language[], clients: string[]): Promise<void> {
-  const useTestServer = clients.includes('search');
+  const useTestServer = clients.includes('search') || clients.includes('all');
   let close: () => Promise<void> = async () => {};
   if (useTestServer) {
     close = await startTestServer();
