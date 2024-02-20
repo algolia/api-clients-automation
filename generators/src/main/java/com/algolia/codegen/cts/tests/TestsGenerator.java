@@ -70,8 +70,19 @@ public abstract class TestsGenerator {
   }
 
   private String injectVariables(String json) {
-    return json
-      .replace("${{languageCased}}", languageCased())
-      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)));
+    json =
+      json
+        .replace("${{languageCased}}", languageCased())
+        .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
+        .replace("\"${{NOW}}\"", String.valueOf(System.currentTimeMillis()));
+
+    if (!language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
+      // hack for docker on mac, the `network=host` does not work so we need to use
+      // another local IP
+      json = json.replace("${{localhost}}", "host.docker.internal");
+    } else {
+      json = json.replace("${{localhost}}", "localhost");
+    }
+    return json;
   }
 }
