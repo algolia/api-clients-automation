@@ -3,6 +3,7 @@ using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Recommend;
 using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
 using dotenv.net;
 using Quibble.Xunit;
 using Xunit;

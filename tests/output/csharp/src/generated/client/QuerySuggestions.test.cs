@@ -5,6 +5,7 @@ using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
 using Algolia.Search.Models.QuerySuggestions;
 using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
 using Algolia.Search.Transport;
 using Quibble.Xunit;
 using Xunit;
