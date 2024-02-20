@@ -158,3 +158,44 @@
             validate=lambda _resp: _resp.nb_hits < search_synonyms_params.hits_per_page,
             aggregator=aggregator,
         )
+
+    def generate_secured_api_key(
+        self,
+        parent_api_key: str,
+        restrictions: Optional[SecuredApiKeyRestrictions] = None,
+    ) -> str:
+        """
+        Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+        """
+        query_parameters = dumps(
+            QueryParametersSerializer(
+                restrictions.to_dict()
+                if isinstance(restrictions, SecuredApiKeyRestrictions)
+                else restrictions
+            ).query_parameters
+        )
+
+        secured_key = hmac.new(
+            parent_api_key.encode(encoding="utf-8"),
+            query_parameters.encode(encoding="utf-8"),
+            hashlib.sha256,
+        ).hexdigest()
+
+        base64encoded = base64.b64encode(
+            ("{}{}".format(secured_key, query_parameters)).encode(encoding="utf-8")
+        )
+
+        return str(base64encoded.decode("utf-8"))
+
+    def get_secured_api_key_remaining_validity(self, secured_api_key: str) -> int:
+        """
+        Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `ValidUntil` parameter must have been provided.
+        """
+        validity = search(
+            r'"valid_until": "(\d+)"', str(base64.b64decode(secured_api_key))
+        )
+
+        if validity is None:
+            raise ValidUntilNotFoundException("valid_until not found in api key.")
+
+        return int(validity.group(1)) - int(round(time()))

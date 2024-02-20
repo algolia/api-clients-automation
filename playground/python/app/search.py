@@ -2,9 +2,7 @@ from asyncio import run
 from os import environ
 
 from algoliasearch.search.client import SearchClient
-from algoliasearch.search.models.search_method_params import SearchMethodParams
-from algoliasearch.search.models.search_for_hits import SearchForHits
-from algoliasearch.search.models.search_query import SearchQuery
+from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.search import __version__
 from dotenv import load_dotenv
 
@@ -18,16 +16,27 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.search(
-            search_method_params=SearchMethodParams(
-                requests=[
-                    SearchQuery(SearchForHits(index_name="cts_e2e_search_facet")),
-                ],
-            ),
-        )
+        # resp = client.generate_secured_api_key(parent_api_key="foo", restrictions={
+        #     "search_params": {"query": "foo"},
+        #     "valid_until": 100,
+        #     "restrict_indices": ["bar"],
+        #     "restrict_sources": "baz",
+        #     "user_token": "foobarbaz",
+        # })
 
-        print("client response")
-        print(response.to_json())
+        resp = client.generate_secured_api_key(parent_api_key="foo", restrictions=SecuredApiKeyRestrictions(
+              search_params={"query": "foo"},
+              valid_until=100,
+              restrict_indices=["bar"],
+              restrict_sources="baz",
+              user_token="foobarbaz",
+          ))
+
+        print(resp)
+
+        validity = client.get_secured_api_key_remaining_validity(resp)
+
+        print(validity)
     finally:
         await client.close()
 
