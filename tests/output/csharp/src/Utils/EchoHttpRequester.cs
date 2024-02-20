@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+using Algolia.Search.Http;
 
-namespace Algolia.Search.Http;
+namespace Algolia.Search.Tests.Utils;
 
 /// <summary>
 /// Http Custom requester, used for testing
@@ -38,7 +31,9 @@ public class EchoHttpRequester : IHttpRequester
     if (query[0] == '?')
       query = query.Substring(1);
 
-    return query.Split('&').Select(part => part.Split('='))
+    return query
+      .Split('&')
+      .Select(part => part.Split('='))
       .ToDictionary(split => split[0], split => split[1]);
   }
 
@@ -50,8 +45,12 @@ public class EchoHttpRequester : IHttpRequester
   /// <param name="connectTimeout"></param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public Task<AlgoliaHttpResponse> SendRequestAsync(Request request, TimeSpan requestTimeout,
-    TimeSpan connectTimeout, CancellationToken ct = default)
+  public Task<AlgoliaHttpResponse> SendRequestAsync(
+    Request request,
+    TimeSpan requestTimeout,
+    TimeSpan connectTimeout,
+    CancellationToken ct = default
+  )
   {
     string body = null;
     if (!_bodyAsStream && request.Body != null)
@@ -75,10 +74,8 @@ public class EchoHttpRequester : IHttpRequester
 
     LastResponse = echo;
 
-    return Task.FromResult(new AlgoliaHttpResponse
-    {
-      Body = new MemoryStream(),
-      HttpStatusCode = 200
-    });
+    return Task.FromResult(
+      new AlgoliaHttpResponse { Body = new MemoryStream(), HttpStatusCode = 200 }
+    );
   }
 }

@@ -14,7 +14,7 @@ public static class ABTesting
     var client = new AbtestingClient(new AbtestingConfig(configuration.AppId, configuration.AdminApiKey));
 
     var newABTest = await client.AddABTestsAsync(new AddABTestsRequest("A simple A/B Test",
-      new List<AddABTestsVariant> { new(new AbTestsVariant("test-index", 50)),  new(new AbTestsVariant("test-index2", 50)) },
+      new List<AddABTestsVariant> { new(new AbTestsVariant("test-index", 50)), new(new AbTestsVariant("test-index2", 50)) },
       DateTime.UtcNow.AddDays(1d).ToString("o", CultureInfo.InvariantCulture)));
 
     Console.WriteLine(newABTest.AbTestID);

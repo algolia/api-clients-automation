@@ -19,8 +19,6 @@
         /// </summary>
         public {{classname}}()
         {
-            this.IsNullable = true;
-            this.SchemaType= "oneOf";
         }
 
         {{/isNullable}}
@@ -35,8 +33,6 @@
         /// <param name="actualInstance">An instance of {{dataType}}.</param>
         public {{classname}}({{{dataType}}} actualInstance)
         {
-            IsNullable = {{#model.isNullable}}true{{/model.isNullable}}{{^model.isNullable}}false{{/model.isNullable}};
-            SchemaType= "oneOf";
             ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
         }
         {{/isNull}}
@@ -51,8 +47,6 @@
           /// <param name="actualInstance">An instance of {{dataType}}.</param>
           public {{classname}}(object actualInstance)
           {
-              IsNullable = {{#model.isNullable}}true{{/model.isNullable}}{{^model.isNullable}}false{{/model.isNullable}};
-              SchemaType= "oneOf";
               ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
           }
         {{/vendorExtensions.x-has-child-generic}}
