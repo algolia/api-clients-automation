@@ -36,6 +36,6 @@ public enum Platform implements PlatformWithNone {
         return b;
       }
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    return null;
   }
 }

@@ -21,6 +21,15 @@ public interface SourceUpdateInput {
     @Override
     public SourceUpdateInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize SourceBigQuery
+      if (tree.isObject() && tree.has("projectID")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceBigQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
+        }
+      }
       // deserialize SourceUpdateCommercetools
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -48,15 +57,6 @@ public interface SourceUpdateInput {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SourceCSV (error: " + e.getMessage() + ") (type: SourceCSV)");
-        }
-      }
-      // deserialize SourceBigQuery
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceBigQuery.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
         }
       }
       // deserialize SourceUpdateDocker

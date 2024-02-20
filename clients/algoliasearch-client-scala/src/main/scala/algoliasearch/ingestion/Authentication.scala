@@ -10,7 +10,7 @@ package algoliasearch.ingestion
 import algoliasearch.ingestion.AuthenticationType._
 import algoliasearch.ingestion.Platform._
 
-/** An authentication is used to login into a Source or a Destination.
+/** An authentication is used to login into a Source or a Destination, with obfuscated input.
   *
   * @param authenticationID
   *   The authentication UUID.
@@ -26,7 +26,7 @@ case class Authentication(
     `type`: AuthenticationType,
     name: String,
     platform: Option[Platform] = scala.None,
-    input: AuthInput,
+    input: AuthInputPartial,
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
