@@ -9,50 +9,48 @@ using Action = Algolia.Search.Models.Search.Action;
 
 namespace Algolia.Playgrounds;
 
-public static class SearchPlayground
+public class SearchPlayground : IPlayground
 {
-  public static async Task Run(Configuration configuration)
+  const string DefaultIndex = "test-csharp-new-client";
+  private readonly SearchClient _client;
+  private readonly Configuration _configuration;
+
+  public SearchPlayground(Configuration configuration)
   {
-    const string defaultIndex = "test-csharp-new-client";
-
-    Console.WriteLine("------------------------------------");
-    Console.WriteLine("Starting Search API playground");
-    Console.WriteLine("------------------------------------");
-
-    var searchConfig = new SearchConfig(configuration.AppId, configuration.AdminApiKey)
-    {
-      Compression = CompressionType.None
-    };
-
+    var searchConfig = new SearchConfig(configuration.AppId, configuration.AdminApiKey);
     var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
       .AddConsole());
 
-    var client = new SearchClient(searchConfig, loggerFactory);
+    _client = new SearchClient(searchConfig, loggerFactory);
+    _configuration = configuration;
+  }
 
-    var metisClient = new SearchClient(new SearchConfig(configuration.MetisAppId, configuration.MetisApiKey)
+  public async Task Run()
+  {
+    PlaygroundHelper.Hello("Starting Search API playground");
+    try
     {
-      Compression = CompressionType.None
-    });
+      await Search();
+      await Index();
+      await ApiKey();
+      await Synonym();
+      await Rule();
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+    }
+  }
 
+  private async Task Search()
+  {
     // Save a single object
     Console.WriteLine("--- Save a single object `SaveObjectAsync` ---");
-    var saved = await client.SaveObjectAsync(defaultIndex,
+    var saved = await _client.SaveObjectAsync(DefaultIndex,
       new { ObjectID = "test2", value = "test", otherValue = "otherValue" });
 
     await PlaygroundHelper.Start($"Saving record ObjectID=`{saved.ObjectID}` - Async TaskID: `{saved.TaskID}`",
-      () => client.WaitForTaskAsync(defaultIndex, saved.TaskID), $"Record ObjectID=`{saved.ObjectID}` saved !");
-
-    // Set settings on index
-    Console.WriteLine("--- Set setting on index `SetSettingsAsync` ---");
-    var updatedAtResponse = await client.SetSettingsAsync(defaultIndex, new IndexSettings()
-    {
-      AttributesForFaceting = ["searchable(value)", "searchable(otherValue)"],
-      SearchableAttributes = ["value", "otherValue"]
-    });
-
-    await PlaygroundHelper.Start(
-      $"Saving new settings on index `{defaultIndex}` - Async TaskID: `{updatedAtResponse.TaskID}`",
-      () => client.WaitForTaskAsync(defaultIndex, updatedAtResponse.TaskID), "New settings applied !");
+      () => _client.WaitForTaskAsync(DefaultIndex, saved.TaskID), $"Record ObjectID=`{saved.ObjectID}` saved !");
 
     // Save multiple objects
     Console.WriteLine("--- Save a multiple objects `BatchAsync` ---");
@@ -62,23 +60,22 @@ public static class SearchPlayground
       new(Action.AddObject, new { ObjectID = "test4", value = "batch2", otherValue = "otherValue2" }),
       new(Action.AddObject, new { ObjectID = "test5", value = "batch3", otherValue = "otherValue3" }),
     };
-    var batch = await client.BatchAsync(defaultIndex, new BatchWriteParams(requests));
+    var batch = await _client.BatchAsync(DefaultIndex, new BatchWriteParams(requests));
 
     await PlaygroundHelper.Start(
       $"Saving new records - Async TaskID: `{batch.TaskID}`",
-      () => client.WaitForTaskAsync(defaultIndex, batch.TaskID), "Records saved !");
+      () => _client.WaitForTaskAsync(DefaultIndex, batch.TaskID), "Records saved !");
 
     // Browse all objects
     Console.WriteLine("--- Browse all objects, one page `BrowseAsync` ---");
-    var r = await client.BrowseAsync<TestObject>(defaultIndex,
+    var r = await _client.BrowseAsync<TestObject>(DefaultIndex,
       new BrowseParams(new BrowseParamsObject { HitsPerPage = 100 }));
     r.Hits.ForEach(h =>
       Console.WriteLine($"  - Record ObjectID: {h.ObjectID}, {h.Value} {h.OtherValue} {h.AdditionalProperties.Count}"));
 
-
     // Browse Helper, to fetch all pages
     Console.WriteLine("--- Browse all objects, all pages `BrowseObjectsAsync` ---");
-    var results = await client.BrowseObjectsAsync<TestObject>(defaultIndex, new BrowseParamsObject
+    var results = await _client.BrowseObjectsAsync<TestObject>(DefaultIndex, new BrowseParamsObject
     {
       HitsPerPage = 1
     });
@@ -89,33 +86,33 @@ public static class SearchPlayground
     Console.WriteLine("--- Get Objects, with specific attributes `GetObjectsAsync` ---");
     var getObjRequests = new List<GetObjectsRequest>
     {
-      new("test2", defaultIndex)
+      new("test2", DefaultIndex)
       {
         AttributesToRetrieve = ["otherValue"]
       },
-      new("test3", defaultIndex)
+      new("test3", DefaultIndex)
       {
         AttributesToRetrieve = ["otherValue"]
       },
     };
 
-    var getObjResults = await client.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
+    var getObjResults = await _client.GetObjectsAsync<TestObject>(new GetObjectsParams(getObjRequests));
     getObjResults.Results.ForEach(t =>
       Console.WriteLine($"  - Record ObjectID: {t.ObjectID} - Property `otherValue`: {t.OtherValue}"));
 
     // Search single index
     Console.WriteLine("--- Search single index `SearchSingleIndexAsync` ---");
-    var t = await client.SearchSingleIndexAsync<TestObject>(defaultIndex);
+    var t = await _client.SearchSingleIndexAsync<TestObject>(DefaultIndex);
     t.Hits.ForEach(h => Console.WriteLine($"  - Record ObjectID: {h.ObjectID}"));
 
     Console.WriteLine("--- Search multiple indices `SearchAsync` ---");
     var searchQueries = new List<SearchQuery>
     {
-      new(new SearchForHits(defaultIndex)),
-      new(new SearchForHits(defaultIndex)),
-      new(new SearchForFacets("otherValue", defaultIndex, SearchTypeFacet.Facet)),
+      new(new SearchForHits(DefaultIndex)),
+      new(new SearchForHits(DefaultIndex)),
+      new(new SearchForFacets("otherValue", DefaultIndex, SearchTypeFacet.Facet)),
     };
-    var search = await client.SearchAsync<TestObject>(new SearchMethodParams(searchQueries));
+    var search = await _client.SearchAsync<TestObject>(new SearchMethodParams(searchQueries));
     search.Results.ForEach(result =>
     {
       if (result.IsSearchResponse())
@@ -134,42 +131,105 @@ public static class SearchPlayground
       }
     });
 
-    // Search with Metis Additional properties
-    Console.WriteLine("--- Search single index `SearchSingleIndexAsync`, with additional properties ---");
-    var tMetis = await metisClient.SearchSingleIndexAsync<object>("008_jobs_v2_nosplit__contents__default");
-    foreach (var tMetisAdditionalProperty in tMetis.AdditionalProperties)
+    Console.WriteLine("--- Error Handling ---");
+    try
     {
-      Console.WriteLine(
-        $" - Additional property found {tMetisAdditionalProperty.Key} : {tMetisAdditionalProperty.Value}");
+      await _client.SaveRulesAsync(DefaultIndex,
+      [
+        new Rule
+        {
+          ObjectID = "TestRule1",
+          Description = "Test",
+          Consequence = new Consequence { Promote = [new Promote(new PromoteObjectID("test3", 1))] },
+          Conditions = [new Condition { Anchoring = Anchoring.Contains, Context = "shoes" }]
+        }
+      ]).ConfigureAwait(false);
+    }
+    catch (AlgoliaApiException e)
+    {
+      Console.WriteLine($"Message: {e.Message} - Status {e.HttpErrorCode}");
     }
 
+    Console.WriteLine("--- Replace all objects `` ---");
+    var replaceAllResponse = await _client.ReplaceAllObjectsAsync(DefaultIndex,
+      new List<TestObject> { new TestObject { Value = "hello2", OtherValue = "world" } });
+    Console.WriteLine($"Replace all objects - Async TaskID: `{string.Join(",", replaceAllResponse)}`");
+
+    Console.WriteLine("Search API playground has ended");
+  }
+
+  private async Task Index()
+  {
+    // Set settings on index
+    Console.WriteLine("--- Set setting on index `SetSettingsAsync` ---");
+    var updatedAtResponse = await _client.SetSettingsAsync(DefaultIndex, new IndexSettings()
+    {
+      AttributesForFaceting = ["searchable(value)", "searchable(otherValue)"],
+      SearchableAttributes = ["value", "otherValue"]
+    });
+
+    await PlaygroundHelper.Start(
+      $"Saving new settings on index `{DefaultIndex}` - Async TaskID: `{updatedAtResponse.TaskID}`",
+      () => _client.WaitForTaskAsync(DefaultIndex, updatedAtResponse.TaskID), "New settings applied !");
+  }
+
+  private async Task ApiKey()
+  {
     // API Key
     Console.WriteLine("--- Add new api key `AddApiKeyAsync` ---");
-    var addApiKeyResponse = await client.AddApiKeyAsync(new ApiKey()
+    var addApiKeyResponse = await _client.AddApiKeyAsync(new ApiKey()
     {
       Acl = [Acl.Browse, Acl.Search],
       Description = "A test key",
-      Indexes = [defaultIndex]
+      Indexes = [DefaultIndex]
     });
     var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key", async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key), "New key has been created !");
+      await _client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key), "New key has been created !");
 
     Console.WriteLine("--- Update api key `UpdateApiKeyAsync` ---");
     var modifiedApiKey = createdApiKey.ToApiKey();
     modifiedApiKey.Description = "Updated description";
 
-    var updateApiKey = await client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
+    var updateApiKey = await _client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
     await PlaygroundHelper.Start("Updating API Key`", async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey), "Key updated !");
+      await _client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey), "Key updated !");
 
     Console.WriteLine("--- Delete api key `UpdateApiKeyAsync` ---");
-    await client.DeleteApiKeyAsync(addApiKeyResponse.Key);
+    await _client.DeleteApiKeyAsync(addApiKeyResponse.Key);
     await PlaygroundHelper.Start("Deleting API Key", async () =>
-      await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key), "Key deleted !");
+      await _client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key), "Key deleted !");
 
+    Console.WriteLine("--- Generate Secured API Keys `GenerateSecuredApiKeys` ---");
+    var generateSecuredApiKeys = _client.GenerateSecuredApiKey(_configuration.SearchApiKey,
+      new SecuredApiKeyRestriction
+      {
+        RestrictIndices = [DefaultIndex],
+      });
+
+    Console.WriteLine("Calling SearchSingleIndexAsync with generated secured API keys");
+
+    var searchClient = new SearchClient(_configuration.AppId, generateSecuredApiKeys);
+    await searchClient.SearchSingleIndexAsync<object>(DefaultIndex);
+
+    Console.WriteLine("Success, this index is authorized");
+
+    Console.WriteLine("Calling SearchSingleIndexAsync with not authorized index");
+
+    try
+    {
+      await searchClient.SearchSingleIndexAsync<object>("not_authorized_index");
+    }
+    catch (AlgoliaApiException e)
+    {
+      Console.WriteLine($"Error received (It's expected !) - {e.HttpErrorCode} {e.Message}");
+    }
+  }
+
+  private async Task Synonym()
+  {
     // Add Synonyms
     Console.WriteLine("--- Add Synonyms `SaveSynonymsAsync` ---");
-    var synonymsResponse = await client.SaveSynonymsAsync(defaultIndex,
+    var synonymsResponse = await _client.SaveSynonymsAsync(DefaultIndex,
     [
       new SynonymHit
       {
@@ -195,12 +255,12 @@ public static class SearchPlayground
     ]).ConfigureAwait(false);
 
     await PlaygroundHelper.Start($"Creating new Synonyms - Async TaskID: `{synonymsResponse.TaskID}`", async () =>
-      await client.WaitForTaskAsync(defaultIndex, synonymsResponse.TaskID), "New Synonyms has been created !");
+      await _client.WaitForTaskAsync(DefaultIndex, synonymsResponse.TaskID), "New Synonyms has been created !");
 
     // Search Synonyms
     Console.WriteLine("--- Search Synonyms `SearchSynonymsAsync` ---");
-    var searchSynonymsAsync = await client
-      .SearchSynonymsAsync(defaultIndex,
+    var searchSynonymsAsync = await _client
+      .SearchSynonymsAsync(DefaultIndex,
         new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym, HitsPerPage = 1 })
       .ConfigureAwait(false);
 
@@ -208,15 +268,17 @@ public static class SearchPlayground
 
     // Browse Synonyms
     Console.WriteLine("--- Browse Synonyms `BrowseSynonymsAsync` ---");
-    var configuredTaskAwaitable = await client
+    var configuredTaskAwaitable = await _client
       .BrowseSynonymsAsync("test-csharp-new-client",
         new SearchSynonymsParams { Query = "", Type = SynonymType.Onewaysynonym })
       .ConfigureAwait(false);
     configuredTaskAwaitable.ToList().ForEach(s => Console.WriteLine("Found :" + string.Join(',', s.Synonyms)));
+  }
 
-    // Add Rule
+  private async Task Rule()
+  {
     Console.WriteLine("--- Create new Rule `SaveRulesAsync` ---");
-    var saveRulesAsync = await client.SaveRulesAsync(defaultIndex,
+    var saveRulesAsync = await _client.SaveRulesAsync(DefaultIndex,
     [
       new Rule
       {
@@ -242,57 +304,11 @@ public static class SearchPlayground
     ]).ConfigureAwait(false);
 
     await PlaygroundHelper.Start($"Saving new Rule - Async TaskID: `{saveRulesAsync.TaskID}`",
-      async () => await client.WaitForTaskAsync(defaultIndex, saveRulesAsync.TaskID), "New Rule has been created !");
-
-    Console.WriteLine("--- Error Handling ---");
-    try
-    {
-      await client.SaveRulesAsync(defaultIndex,
-      [
-        new Rule
-        {
-          ObjectID = "TestRule1",
-          Description = "Test",
-          Consequence = new Consequence { Promote = [new Promote(new PromoteObjectID("test3", 1))] },
-          Conditions = [new Condition { Anchoring = Anchoring.Contains, Context = "shoes" }]
-        }
-      ]).ConfigureAwait(false);
-    }
-    catch (AlgoliaApiException e)
-    {
-      Console.WriteLine($"Message: {e.Message} - Status {e.HttpErrorCode}");
-    }
-
-    Console.WriteLine("--- Generate Secured API Keys `GenerateSecuredApiKeys` ---");
-    var generateSecuredApiKeys = client.GenerateSecuredApiKey(configuration.SearchApiKey,
-      new SecuredApiKeyRestriction
-      {
-        RestrictIndices = [defaultIndex],
-      });
-
-    Console.WriteLine("Calling SearchSingleIndexAsync with generated secured API keys");
-
-    var searchClient = new SearchClient(configuration.AppId, generateSecuredApiKeys);
-    await searchClient.SearchSingleIndexAsync<object>(defaultIndex);
-
-    Console.WriteLine("Success, this index is authorized");
-
-    Console.WriteLine("Calling SearchSingleIndexAsync with not authorized index");
-
-    try
-    {
-      await searchClient.SearchSingleIndexAsync<object>("not_authorized_index");
-    }
-    catch (AlgoliaApiException e)
-    {
-      Console.WriteLine($"Error received (It's expected !) - {e.HttpErrorCode} {e.Message}");
-    }
-
-    Console.WriteLine("--- Replace all objects `` ---");
-    var replaceAllResponse = await client.ReplaceAllObjectsAsync(defaultIndex,
-      new List<TestObject>() { new TestObject() { Value = "hello2", OtherValue = "world" } });
-    Console.WriteLine($"Replace all objects - Async TaskID: `{string.Join(",", replaceAllResponse)}`");
-
-    Console.WriteLine("Search API playground has ended");
+      async () => await _client.WaitForTaskAsync(DefaultIndex, saveRulesAsync.TaskID), "New Rule has been created !");
   }
+}
+
+public interface IPlayground
+{
+  Task Run();
 }
