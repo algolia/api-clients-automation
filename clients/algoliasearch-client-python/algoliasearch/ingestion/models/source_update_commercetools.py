@@ -10,6 +10,10 @@ from typing import Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel, Field, StrictStr
 
+from algoliasearch.ingestion.models.commercetools_custom_fields import (
+    CommercetoolsCustomFields,
+)
+
 
 class SourceUpdateCommercetools(BaseModel):
     """
@@ -24,6 +28,9 @@ class SourceUpdateCommercetools(BaseModel):
     locales: Optional[List[StrictStr]] = Field(
         default=None,
         description='Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"]. ',
+    )
+    custom_fields: Optional[CommercetoolsCustomFields] = Field(
+        default=None, alias="customFields"
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
@@ -51,6 +58,10 @@ class SourceUpdateCommercetools(BaseModel):
             exclude={},
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of
+        # custom_fields
+        if self.custom_fields:
+            _dict["customFields"] = self.custom_fields.to_dict()
         return _dict
 
     @classmethod
@@ -63,6 +74,14 @@ class SourceUpdateCommercetools(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"storeKeys": obj.get("storeKeys"), "locales": obj.get("locales")}
+            {
+                "storeKeys": obj.get("storeKeys"),
+                "locales": obj.get("locales"),
+                "customFields": CommercetoolsCustomFields.from_dict(
+                    obj.get("customFields")
+                )
+                if obj.get("customFields") is not None
+                else None,
+            }
         )
         return _obj

@@ -28,13 +28,13 @@ object SourceInputSerializer extends Serializer[SourceInput] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SourceInput] =>
       json match {
-        case value: JObject => Extraction.extract[SourceCommercetools](value)
-        case value: JObject => Extraction.extract[SourceBigCommerce](value)
-        case value: JObject => Extraction.extract[SourceJSON](value)
-        case value: JObject => Extraction.extract[SourceCSV](value)
-        case value: JObject => Extraction.extract[SourceBigQuery](value)
-        case value: JObject => Extraction.extract[SourceDocker](value)
-        case _              => throw new MappingException("Can't convert " + json + " to SourceInput")
+        case value: JObject if value.obj.exists(_._1 == "projectKey") => Extraction.extract[SourceCommercetools](value)
+        case value: JObject if value.obj.exists(_._1 == "storeHash")  => Extraction.extract[SourceBigCommerce](value)
+        case value: JObject if value.obj.exists(_._1 == "projectID")  => Extraction.extract[SourceBigQuery](value)
+        case value: JObject                                           => Extraction.extract[SourceJSON](value)
+        case value: JObject                                           => Extraction.extract[SourceCSV](value)
+        case value: JObject                                           => Extraction.extract[SourceDocker](value)
+        case _ => throw new MappingException("Can't convert " + json + " to SourceInput")
       }
   }
 
@@ -42,9 +42,9 @@ object SourceInputSerializer extends Serializer[SourceInput] {
     value match {
       case value: SourceCommercetools => Extraction.decompose(value)(format - this)
       case value: SourceBigCommerce   => Extraction.decompose(value)(format - this)
+      case value: SourceBigQuery      => Extraction.decompose(value)(format - this)
       case value: SourceJSON          => Extraction.decompose(value)(format - this)
       case value: SourceCSV           => Extraction.decompose(value)(format - this)
-      case value: SourceBigQuery      => Extraction.decompose(value)(format - this)
       case value: SourceDocker        => Extraction.decompose(value)(format - this)
     }
   }

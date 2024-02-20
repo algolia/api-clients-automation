@@ -1141,9 +1141,7 @@ class TestAnalyticsClient:
             index="cts_e2e_space in index",
         )
         _expected_body = loads("""{"searches":[{"search":"","nbHits":0}]}""")
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_users_count_0(self):
         """

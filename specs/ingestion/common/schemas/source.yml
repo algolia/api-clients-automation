@@ -120,9 +120,34 @@ SourceCommercetools:
       default: true
       description: >
         Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+    customFields:
+      $ref: '#/CommercetoolsCustomFields'
   required:
     - url
     - projectKey
+  x-discriminator-fields:
+    - projectKey
+
+CommercetoolsCustomFields:
+  type: object
+  additionalProperties: false
+  description: Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
+  properties:
+    inventory:
+      type: array
+      items:
+        type: string
+      description: Inventory custom fields.
+    price:
+      type: array
+      items:
+        type: string
+      description: Price custom fields.
+    category:
+      type: array
+      items:
+        type: string
+      description: Category custom fields.
 
 SourceBigCommerce:
   type: object
@@ -146,7 +171,9 @@ SourceBigCommerce:
       items:
         $ref: '#/BigCommerceMetafield'
   required:
-    - store_hash
+    - storeHash
+  x-discriminator-fields:
+    - storeHash
 
 BigCommerceMetafield:
   type: object
@@ -257,6 +284,8 @@ SourceBigQuery:
   required:
     - projectID
     - datasetID
+  x-discriminator-fields:
+    - projectID
 
 BigQueryDataType:
   type: string
@@ -341,6 +370,8 @@ SourceUpdateCommercetools:
         Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
       items:
         type: string
+    customFields:
+      $ref: '#/CommercetoolsCustomFields'
 
 SourceUpdateInput:
   oneOf:

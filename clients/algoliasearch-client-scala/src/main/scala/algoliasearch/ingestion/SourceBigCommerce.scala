@@ -13,7 +13,7 @@ package algoliasearch.ingestion
   *   The store hash identifying the store the shopper is signing in to.
   */
 case class SourceBigCommerce(
-    storeHash: Option[String] = scala.None,
+    storeHash: String,
     channel: Option[BigCommerceChannel] = scala.None,
     customFields: Option[Seq[String]] = scala.None,
     productMetafields: Option[Seq[BigCommerceMetafield]] = scala.None,

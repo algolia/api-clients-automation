@@ -19,6 +19,7 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     protected static $modelTypes = [
         'storeKeys' => 'string[]',
         'locales' => 'string[]',
+        'customFields' => '\Algolia\AlgoliaSearch\Model\Ingestion\CommercetoolsCustomFields',
     ];
 
     /**
@@ -29,6 +30,7 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     protected static $modelFormats = [
         'storeKeys' => null,
         'locales' => null,
+        'customFields' => null,
     ];
 
     /**
@@ -40,6 +42,7 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     protected static $attributeMap = [
         'storeKeys' => 'storeKeys',
         'locales' => 'locales',
+        'customFields' => 'customFields',
     ];
 
     /**
@@ -50,6 +53,7 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     protected static $setters = [
         'storeKeys' => 'setStoreKeys',
         'locales' => 'setLocales',
+        'customFields' => 'setCustomFields',
     ];
 
     /**
@@ -60,6 +64,7 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     protected static $getters = [
         'storeKeys' => 'getStoreKeys',
         'locales' => 'getLocales',
+        'customFields' => 'getCustomFields',
     ];
 
     /**
@@ -81,6 +86,9 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
         }
         if (isset($data['locales'])) {
             $this->container['locales'] = $data['locales'];
+        }
+        if (isset($data['customFields'])) {
+            $this->container['customFields'] = $data['customFields'];
         }
     }
 
@@ -200,6 +208,30 @@ class SourceUpdateCommercetools extends \Algolia\AlgoliaSearch\Model\AbstractMod
     public function setLocales($locales)
     {
         $this->container['locales'] = $locales;
+
+        return $this;
+    }
+
+    /**
+     * Gets customFields.
+     *
+     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\CommercetoolsCustomFields
+     */
+    public function getCustomFields()
+    {
+        return $this->container['customFields'] ?? null;
+    }
+
+    /**
+     * Sets customFields.
+     *
+     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\CommercetoolsCustomFields $customFields customFields
+     *
+     * @return self
+     */
+    public function setCustomFields($customFields)
+    {
+        $this->container['customFields'] = $customFields;
 
         return $this;
     }

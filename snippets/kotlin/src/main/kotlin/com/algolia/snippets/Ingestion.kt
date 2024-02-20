@@ -239,7 +239,7 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.enableTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
     // Use the response
@@ -384,7 +384,7 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.getSource(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
     )
 
     // Use the response
@@ -507,7 +507,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.searchTasks(
       taskSearch = TaskSearch(
-        taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"),
+        taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
       ),
     )
 

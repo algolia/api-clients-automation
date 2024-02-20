@@ -286,7 +286,7 @@ jobs:
           key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run CTS
-        run: yarn cli cts run javascript
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -372,7 +372,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Run CTS
-        run: yarn cli cts run ${{ matrix.client.language }}
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}

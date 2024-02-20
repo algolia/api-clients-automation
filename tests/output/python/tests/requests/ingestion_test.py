@@ -1,8 +1,14 @@
 from json import loads
+from os import environ
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.ingestion.client import IngestionClient
 from algoliasearch.ingestion.config import IngestionConfig
+from dotenv import load_dotenv
+
+from ..helpers import Helpers
+
+load_dotenv("../../.env")
 
 
 class TestIngestionClient:
@@ -10,6 +16,17 @@ class TestIngestionClient:
     _client = IngestionClient.create_with_config(
         config=_config, transporter=EchoTransporter(_config)
     )
+
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
     async def test_create_authentication_0(self):
         """
@@ -639,16 +656,31 @@ class TestIngestionClient:
 
     async def test_enable_task_0(self):
         """
-        enableTask
+        enable task e2e
         """
         _req = await self._client.enable_task_with_http_info(
-            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
 
-        assert _req.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable"
+        assert _req.path == "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+
+        raw_resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).enable_task_with_http_info(
+            task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).enable_task(
+            task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
+        _expected_body = loads("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_authentication_0(self):
         """
@@ -682,7 +714,7 @@ class TestIngestionClient:
         """
         _req = await self._client.get_authentications_with_http_info(
             items_per_page=10,
-            page=5,
+            page=1,
             type=[
                 "basic",
                 "algolia",
@@ -700,7 +732,7 @@ class TestIngestionClient:
             _req.query_parameters.items()
             == {
                 "itemsPerPage": "10",
-                "page": "5",
+                "page": "1",
                 "type": "basic%2Calgolia",
                 "platform": "none",
                 "sort": "createdAt",
@@ -709,6 +741,43 @@ class TestIngestionClient:
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        raw_resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_authentications_with_http_info(
+            items_per_page=10,
+            page=1,
+            type=[
+                "basic",
+                "algolia",
+            ],
+            platform=[
+                "none",
+            ],
+            sort="createdAt",
+            order="desc",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_authentications(
+            items_per_page=10,
+            page=1,
+            type=[
+                "basic",
+                "algolia",
+            ],
+            platform=[
+                "none",
+            ],
+            sort="createdAt",
+            order="desc",
+        )
+        _expected_body = loads(
+            """{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_destination_0(self):
         """
@@ -813,14 +882,31 @@ class TestIngestionClient:
         getSource
         """
         _req = await self._client.get_source_with_http_info(
-            source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
         )
 
-        assert _req.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        raw_resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_source_with_http_info(
+            source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_source(
+            source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        )
+        _expected_body = loads(
+            """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_sources_0(self):
         """
@@ -945,6 +1031,7 @@ class TestIngestionClient:
                 "taskIDs": [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
                 ],
             },
         )
@@ -954,8 +1041,37 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}"""
+            """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
         )
+
+        raw_resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).search_tasks_with_http_info(
+            task_search={
+                "taskIDs": [
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await IngestionClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).search_tasks(
+            task_search={
+                "taskIDs": [
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+            },
+        )
+        _expected_body = loads(
+            """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_trigger_docker_source_discover_0(self):
         """

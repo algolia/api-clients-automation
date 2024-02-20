@@ -475,9 +475,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_browse_1(self):
         """
@@ -1229,9 +1227,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_sources_0(self):
         """
@@ -1891,9 +1887,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_1(self):
         """
@@ -1951,9 +1945,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_2(self):
         """
@@ -2536,9 +2528,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_synonyms_0(self):
         """

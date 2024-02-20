@@ -1,12 +1,18 @@
 [
   {
-    "testName": "enableTask",
+    "testName": "enable task e2e",
     "parameters": {
-      "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     },
     "request": {
-      "path": "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable",
+      "path": "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable",
       "method": "PUT"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+      }
     }
   }
 ]

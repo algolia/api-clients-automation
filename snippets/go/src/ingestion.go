@@ -356,7 +356,7 @@ func SnippetForEnableTaskOfIngestion() {
 	/*
 	   Snippet for the enableTask method.
 
-	   enableTask
+	   enable task e2e
 	*/
 
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
@@ -368,7 +368,7 @@ func SnippetForEnableTaskOfIngestion() {
 
 	// Call the API
 	resp, err := client.EnableTask(client.NewApiEnableTaskRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -622,7 +622,7 @@ func SnippetForGetSourceOfIngestion() {
 
 	// Call the API
 	resp, err := client.GetSource(client.NewApiGetSourceRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -834,7 +834,7 @@ func SnippetForSearchTasksOfIngestion() {
 	resp, err := client.SearchTasks(client.NewApiSearchTasksRequest(
 
 		ingestion.NewEmptyTaskSearch().SetTaskIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
 	))
 	if err != nil {
 		// handle the eventual error

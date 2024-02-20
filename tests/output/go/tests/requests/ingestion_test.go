@@ -2,10 +2,13 @@ package requests
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -29,6 +32,22 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	require.NoError(t, err)
 
 	return client, echo
+}
+
+func createE2EIngestionClient(t *testing.T) *ingestion.APIClient {
+	t.Helper()
+
+	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+	if appID == "" && os.Getenv("CI") != "true" {
+		err := godotenv.Load("../../../../.env")
+		require.NoError(t, err)
+		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+	}
+	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+	client, err := ingestion.NewClient(appID, apiKey, ingestion.US)
+	require.NoError(t, err)
+
+	return client
 }
 
 func TestIngestion_CreateAuthentication(t *testing.T) {
@@ -588,16 +607,41 @@ func TestIngestion_DisableTask(t *testing.T) {
 func TestIngestion_EnableTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
 
-	t.Run("enableTask", func(t *testing.T) {
+	t.Run("enable task e2e", func(t *testing.T) {
 		_, err := client.EnableTask(client.NewApiEnableTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable", echo.Path)
+		require.Equal(t, "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		require.Empty(t, echo.Body)
+		clientE2E := createE2EIngestionClient(t)
+		res, err := clientE2E.EnableTask(client.NewApiEnableTaskRequest(
+			"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 
@@ -630,7 +674,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("getAuthentications with query params", func(t *testing.T) {
-		_, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(10).WithPage(5).WithType(
+		_, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(10).WithPage(1).WithType(
 			[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
 			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("desc")))
 		require.NoError(t, err)
@@ -640,11 +684,36 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+		clientE2E := createE2EIngestionClient(t)
+		res, err := clientE2E.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(10).WithPage(1).WithType(
+			[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
+			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("desc")))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 
@@ -761,14 +830,39 @@ func TestIngestion_GetSource(t *testing.T) {
 
 	t.Run("getSource", func(t *testing.T) {
 		_, err := client.GetSource(client.NewApiGetSourceRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
+		require.Equal(t, "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+		clientE2E := createE2EIngestionClient(t)
+		res, err := clientE2E.GetSource(client.NewApiGetSourceRequest(
+			"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 
@@ -896,7 +990,7 @@ func TestIngestion_SearchTasks(t *testing.T) {
 		_, err := client.SearchTasks(client.NewApiSearchTasksRequest(
 
 			ingestion.NewEmptyTaskSearch().SetTaskIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
 		))
 		require.NoError(t, err)
 
@@ -904,7 +998,34 @@ func TestIngestion_SearchTasks(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		ja.Assertf(*echo.Body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		clientE2E := createE2EIngestionClient(t)
+		res, err := clientE2E.SearchTasks(client.NewApiSearchTasksRequest(
+
+			ingestion.NewEmptyTaskSearch().SetTaskIDs(
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 

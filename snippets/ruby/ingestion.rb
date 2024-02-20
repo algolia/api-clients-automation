@@ -255,13 +255,13 @@ end
 
 # Snippet for the enableTask method.
 #
-# enableTask
+# enable task e2e
 def snippet_for_enable_task
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.enable_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  resp = client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
   # use the class directly
   puts resp
@@ -434,7 +434,7 @@ def snippet_for_get_source
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.get_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  resp = client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
   # use the class directly
   puts resp
@@ -591,7 +591,7 @@ def snippet_for_search_tasks
   resp = client.search_tasks(
     TaskSearch.new(
       task_ids: [
-        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
       ]
     )
   )
