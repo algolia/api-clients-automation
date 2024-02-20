@@ -129,6 +129,7 @@ SourceCommercetools:
 CommercetoolsCustomFields:
   type: object
   additionalProperties: false
+  description: Custom fields from Commercetools to index in the records.
   properties:
     inventory:
       type: array
