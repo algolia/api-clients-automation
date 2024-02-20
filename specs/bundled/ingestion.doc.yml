@@ -150,7 +150,9 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/authenticationID'
-        example: 10000000-0a75-4000-a000-000000000001,none
+        example:
+          - 10000000-0a75-4000-a000-000000000001
+          - none
     sourceParameters_sort:
       name: sort
       in: query
@@ -313,6 +315,7 @@ components:
         - algolia
     Platform:
       type: string
+      nullable: true
       description: Describe which platform the Authentication is used for.
       enum:
         - bigcommerce
@@ -348,6 +351,117 @@ components:
     name:
       type: string
       description: An human readable name describing the object.
+    AuthGoogleServiceAccountPartial:
+      type: object
+      description: Authentication input to connect to a Google service (e.g. BigQuery).
+      additionalProperties: false
+      properties:
+        clientEmail:
+          type: string
+          description: Email address of the Service Account.
+          example: service-account-name@project-id.iam.gserviceaccount.com
+        privateKey:
+          type: string
+          description: Private key of the Service Account.
+    AuthBasicPartial:
+      type: object
+      description: Authentication input for Basic login with username and password.
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AuthAPIKeyPartial:
+      type: object
+      description: Authentication input used for token credentials.
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+    AuthOAuthPartial:
+      type: object
+      description: Authentication input for OAuth login.
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The OAuth endpoint URL.
+        client_id:
+          type: string
+          description: The clientID.
+        client_secret:
+          type: string
+          description: The secret.
+    AuthAlgoliaPartial:
+      type: object
+      additionalProperties: false
+      properties:
+        appID:
+          type: string
+          description: Algolia Application ID.
+        apiKey:
+          type: string
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
+    AuthInputPartial:
+      oneOf:
+        - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
+        - $ref: '#/components/schemas/AuthBasicPartial'
+        - $ref: '#/components/schemas/AuthAPIKeyPartial'
+        - $ref: '#/components/schemas/AuthOAuthPartial'
+        - $ref: '#/components/schemas/AuthAlgoliaPartial'
+    createdAt:
+      type: string
+      description: Date of creation (RFC3339 format).
+    updatedAt:
+      type: string
+      description: Date of last update (RFC3339 format).
+    Authentication:
+      type: object
+      description: >-
+        An authentication is used to login into a Source or a Destination, with
+        obfuscated input.
+      additionalProperties: false
+      properties:
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
+        name:
+          $ref: '#/components/schemas/name'
+        platform:
+          $ref: '#/components/schemas/Platform'
+        input:
+          $ref: '#/components/schemas/AuthInputPartial'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - authenticationID
+        - type
+        - name
+        - input
+        - createdAt
+    Pagination:
+      type: object
+      additionalProperties: false
+      properties:
+        nbPages:
+          type: integer
+        page:
+          type: integer
+        nbItems:
+          type: integer
+        itemsPerPage:
+          type: integer
+      required:
+        - nbPages
+        - page
+        - nbItems
+        - itemsPerPage
     AuthGoogleServiceAccount:
       type: object
       description: Authentication input to connect to a Google service (e.g. BigQuery).
@@ -424,54 +538,6 @@ components:
         - $ref: '#/components/schemas/AuthAPIKey'
         - $ref: '#/components/schemas/AuthOAuth'
         - $ref: '#/components/schemas/AuthAlgolia'
-    createdAt:
-      type: string
-      description: Date of creation (RFC3339 format).
-    updatedAt:
-      type: string
-      description: Date of last update (RFC3339 format).
-    Authentication:
-      type: object
-      description: An authentication is used to login into a Source or a Destination.
-      additionalProperties: false
-      properties:
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
-        input:
-          $ref: '#/components/schemas/AuthInput'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - authenticationID
-        - type
-        - name
-        - input
-        - createdAt
-    Pagination:
-      type: object
-      additionalProperties: false
-      properties:
-        nbPages:
-          type: integer
-        page:
-          type: integer
-        nbItems:
-          type: integer
-        itemsPerPage:
-          type: integer
-      required:
-        - nbPages
-        - page
-        - nbItems
-        - itemsPerPage
     AuthenticationCreate:
       type: object
       description: The payload when creating an authentication.
@@ -525,67 +591,6 @@ components:
           description: Date of deletion (RFC3339 format).
       required:
         - deletedAt
-    AuthGoogleServiceAccountPartial:
-      type: object
-      description: Authentication input to connect to a Google service (e.g. BigQuery).
-      additionalProperties: false
-      properties:
-        clientEmail:
-          type: string
-          description: Email address of the Service Account.
-          example: service-account-name@project-id.iam.gserviceaccount.com
-        privateKey:
-          type: string
-          description: Private key of the Service Account.
-    AuthBasicPartial:
-      type: object
-      description: Authentication input for Basic login with username and password.
-      additionalProperties: false
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-    AuthAPIKeyPartial:
-      type: object
-      description: Authentication input used for token credentials.
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-    AuthOAuthPartial:
-      type: object
-      description: Authentication input for OAuth login.
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-          description: The OAuth endpoint URL.
-        client_id:
-          type: string
-          description: The clientID.
-        client_secret:
-          type: string
-          description: The secret.
-    AuthAlgoliaPartial:
-      type: object
-      additionalProperties: false
-      properties:
-        appID:
-          type: string
-          description: Algolia Application ID.
-        apiKey:
-          type: string
-          description: >-
-            Algolia API Key, with the correct rights to push to an index and
-            change settings.
-    AuthInputPartial:
-      oneOf:
-        - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
-        - $ref: '#/components/schemas/AuthBasicPartial'
-        - $ref: '#/components/schemas/AuthAPIKeyPartial'
-        - $ref: '#/components/schemas/AuthOAuthPartial'
-        - $ref: '#/components/schemas/AuthAlgoliaPartial'
     AuthenticationUpdate:
       type: object
       description: Payload to partially update an Authentication.
@@ -698,7 +703,7 @@ components:
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
       required:
         - destinationID
         - type
@@ -762,7 +767,7 @@ components:
         input:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
-          type: string
+          $ref: '#/components/schemas/authenticationID'
     DestinationUpdateResponse:
       type: object
       additionalProperties: false
@@ -828,6 +833,8 @@ components:
       required:
         - url
         - projectKey
+      x-discriminator-fields:
+        - projectKey
     BigCommerceChannel:
       type: object
       additionalProperties: false
@@ -883,7 +890,9 @@ components:
           items:
             $ref: '#/components/schemas/BigCommerceMetafield'
       required:
-        - store_hash
+        - storeHash
+      x-discriminator-fields:
+        - storeHash
     UniqueIDColumn:
       type: string
       description: >-
@@ -974,6 +983,8 @@ components:
       required:
         - projectID
         - datasetID
+      x-discriminator-fields:
+        - projectID
     DockerImageType:
       type: string
       enum:

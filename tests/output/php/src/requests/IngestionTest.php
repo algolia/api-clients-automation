@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * IngestionTest.
@@ -833,22 +842,31 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for EnableTask
-     * enableTask.
+     * enable task e2e.
      */
     public function testEnableTask0()
     {
         $client = $this->getClient();
         $client->enableTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable',
+                'path' => '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
                 'method' => 'PUT',
                 'body' => json_decode(''),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->enableTask(
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+        );
+
+        $expected = json_decode('{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -898,7 +916,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->getAuthentications(
             10,
-            5,
+            1,
             [
                 'basic',
 
@@ -916,9 +934,29 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/authentications',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}', true),
+                'queryParameters' => json_decode('{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}', true),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getAuthentications(
+            10,
+            1,
+            [
+                'basic',
+
+                'algolia',
+            ],
+            [
+                'none',
+            ],
+            'createdAt',
+            'desc',
+        );
+
+        $expected = json_decode('{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -1066,16 +1104,25 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->getSource(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'path' => '/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac',
                 'method' => 'GET',
                 'body' => null,
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getSource(
+            '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
+        );
+
+        $expected = json_decode('{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -1241,6 +1288,8 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
             ],
             ],
         );
@@ -1249,9 +1298,25 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/search',
                 'method' => 'POST',
-                'body' => json_decode('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'),
+                'body' => json_decode('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->searchTasks(
+            ['taskIDs' => [
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+
+                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+            ],
+            ],
+        );
+
+        $expected = json_decode('[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -1362,6 +1427,21 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
+    }
+
     protected function assertRequests(array $requests)
     {
         $this->assertGreaterThan(0, count($requests));
@@ -1401,6 +1481,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return IngestionClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }
 
     protected function getClient()

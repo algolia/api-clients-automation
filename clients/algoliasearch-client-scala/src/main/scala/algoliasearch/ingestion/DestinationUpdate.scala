@@ -13,6 +13,8 @@ import algoliasearch.ingestion.DestinationType._
   *
   * @param name
   *   An human readable name describing the object.
+  * @param authenticationID
+  *   The authentication UUID.
   */
 case class DestinationUpdate(
     `type`: Option[DestinationType] = scala.None,

@@ -19,6 +19,8 @@ import algoliasearch.ingestion.DestinationType._
   *   Date of creation (RFC3339 format).
   * @param updatedAt
   *   Date of last update (RFC3339 format).
+  * @param authenticationID
+  *   The authentication UUID.
   */
 case class Destination(
     destinationID: String,

@@ -732,15 +732,15 @@ class IngestionTest {
   // enableTask
 
   @Test
-  fun `enableTask`() = runTest {
+  fun `enable task e2e`() = runTest {
     client.runTest(
       call = {
         enableTask(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
       },
       intercept = {
-        assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertEmptyBody(it.body)
       },
@@ -787,7 +787,7 @@ class IngestionTest {
       call = {
         getAuthentications(
           itemsPerPage = 10,
-          page = 5,
+          page = 1,
           type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
           platform = listOf(PlatformNone.entries.first { it.value == "none" }),
           sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
@@ -797,7 +797,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}""", it.url.encodedParameters)
+        assertQueryParams("""{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -933,11 +933,11 @@ class IngestionTest {
     client.runTest(
       call = {
         getSource(
-          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
         )
       },
       intercept = {
-        assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -1080,14 +1080,14 @@ class IngestionTest {
       call = {
         searchTasks(
           taskSearch = TaskSearch(
-            taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"),
+            taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
           ),
         )
       },
       intercept = {
         assertEquals("/1/tasks/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}""", it.body)
+        assertJsonBody("""{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}""", it.body)
       },
     )
   }
