@@ -44,10 +44,10 @@ class {{client}}RequestsTests {
 
         {{#hasE2E}}
         if ("true".equals(System.getenv("CI"))) {
-          this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+          this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
           } else {
           var dotenv = Dotenv.configure().directory("../../").load();
-          this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+          this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
         }{{/hasE2E}}
     }
 
