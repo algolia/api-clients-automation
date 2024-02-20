@@ -1881,21 +1881,24 @@
             "items": {
               "type": "string"
             },
-            "description": "Inventory custom fields."
+            "description": "Inventory custom fields.",
+            "nullable": true
           },
           "price": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Price custom fields."
+            "description": "Price custom fields.",
+            "nullable": true
           },
           "category": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Category custom fields."
+            "description": "Category custom fields.",
+            "nullable": true
           }
         }
       },
@@ -1938,21 +1941,24 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "Inventory custom fields."
+                "description": "Inventory custom fields.",
+                "nullable": true
               },
               "price": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "description": "Price custom fields."
+                "description": "Price custom fields.",
+                "nullable": true
               },
               "category": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "description": "Category custom fields."
+                "description": "Category custom fields.",
+                "nullable": true
               }
             }
           }
@@ -2339,21 +2345,24 @@
                     "items": {
                       "type": "string"
                     },
-                    "description": "Inventory custom fields."
+                    "description": "Inventory custom fields.",
+                    "nullable": true
                   },
                   "price": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Price custom fields."
+                    "description": "Price custom fields.",
+                    "nullable": true
                   },
                   "category": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Category custom fields."
+                    "description": "Category custom fields.",
+                    "nullable": true
                   }
                 }
               }
@@ -2677,21 +2686,24 @@
                         "items": {
                           "type": "string"
                         },
-                        "description": "Inventory custom fields."
+                        "description": "Inventory custom fields.",
+                        "nullable": true
                       },
                       "price": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Price custom fields."
+                        "description": "Price custom fields.",
+                        "nullable": true
                       },
                       "category": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Category custom fields."
+                        "description": "Category custom fields.",
+                        "nullable": true
                       }
                     }
                   }
@@ -3032,21 +3044,24 @@
                         "items": {
                           "type": "string"
                         },
-                        "description": "Inventory custom fields."
+                        "description": "Inventory custom fields.",
+                        "nullable": true
                       },
                       "price": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Price custom fields."
+                        "description": "Price custom fields.",
+                        "nullable": true
                       },
                       "category": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Category custom fields."
+                        "description": "Category custom fields.",
+                        "nullable": true
                       }
                     }
                   }
@@ -3384,21 +3399,24 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "Inventory custom fields."
+                "description": "Inventory custom fields.",
+                "nullable": true
               },
               "price": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "description": "Price custom fields."
+                "description": "Price custom fields.",
+                "nullable": true
               },
               "category": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "description": "Category custom fields."
+                "description": "Category custom fields.",
+                "nullable": true
               }
             }
           }
@@ -3465,21 +3483,24 @@
                     "items": {
                       "type": "string"
                     },
-                    "description": "Inventory custom fields."
+                    "description": "Inventory custom fields.",
+                    "nullable": true
                   },
                   "price": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Price custom fields."
+                    "description": "Price custom fields.",
+                    "nullable": true
                   },
                   "category": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Category custom fields."
+                    "description": "Category custom fields.",
+                    "nullable": true
                   }
                 }
               }
@@ -3668,21 +3689,24 @@
                         "items": {
                           "type": "string"
                         },
-                        "description": "Inventory custom fields."
+                        "description": "Inventory custom fields.",
+                        "nullable": true
                       },
                       "price": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Price custom fields."
+                        "description": "Price custom fields.",
+                        "nullable": true
                       },
                       "category": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Category custom fields."
+                        "description": "Category custom fields.",
+                        "nullable": true
                       }
                     }
                   }
@@ -8030,21 +8054,24 @@
                                         "items": {
                                           "type": "string"
                                         },
-                                        "description": "Inventory custom fields."
+                                        "description": "Inventory custom fields.",
+                                        "nullable": true
                                       },
                                       "price": {
                                         "type": "array",
                                         "items": {
                                           "type": "string"
                                         },
-                                        "description": "Price custom fields."
+                                        "description": "Price custom fields.",
+                                        "nullable": true
                                       },
                                       "category": {
                                         "type": "array",
                                         "items": {
                                           "type": "string"
                                         },
-                                        "description": "Category custom fields."
+                                        "description": "Category custom fields.",
+                                        "nullable": true
                                       }
                                     }
                                   }
@@ -8455,21 +8482,24 @@
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Inventory custom fields."
+                                "description": "Inventory custom fields.",
+                                "nullable": true
                               },
                               "price": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Price custom fields."
+                                "description": "Price custom fields.",
+                                "nullable": true
                               },
                               "category": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Category custom fields."
+                                "description": "Category custom fields.",
+                                "nullable": true
                               }
                             }
                           }
@@ -8904,21 +8934,24 @@
                                     "items": {
                                       "type": "string"
                                     },
-                                    "description": "Inventory custom fields."
+                                    "description": "Inventory custom fields.",
+                                    "nullable": true
                                   },
                                   "price": {
                                     "type": "array",
                                     "items": {
                                       "type": "string"
                                     },
-                                    "description": "Price custom fields."
+                                    "description": "Price custom fields.",
+                                    "nullable": true
                                   },
                                   "category": {
                                     "type": "array",
                                     "items": {
                                       "type": "string"
                                     },
-                                    "description": "Category custom fields."
+                                    "description": "Category custom fields.",
+                                    "nullable": true
                                   }
                                 }
                               }
@@ -9320,21 +9353,24 @@
                                   "items": {
                                     "type": "string"
                                   },
-                                  "description": "Inventory custom fields."
+                                  "description": "Inventory custom fields.",
+                                  "nullable": true
                                 },
                                 "price": {
                                   "type": "array",
                                   "items": {
                                     "type": "string"
                                   },
-                                  "description": "Price custom fields."
+                                  "description": "Price custom fields.",
+                                  "nullable": true
                                 },
                                 "category": {
                                   "type": "array",
                                   "items": {
                                     "type": "string"
                                   },
-                                  "description": "Category custom fields."
+                                  "description": "Category custom fields.",
+                                  "nullable": true
                                 }
                               }
                             }
@@ -9704,21 +9740,24 @@
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Inventory custom fields."
+                                "description": "Inventory custom fields.",
+                                "nullable": true
                               },
                               "price": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Price custom fields."
+                                "description": "Price custom fields.",
+                                "nullable": true
                               },
                               "category": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "Category custom fields."
+                                "description": "Category custom fields.",
+                                "nullable": true
                               }
                             }
                           }
