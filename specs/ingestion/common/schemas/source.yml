@@ -365,7 +365,7 @@ SourceUpdateCommercetools:
       items:
         type: string
     customFields:
-      type: '#/CommercetoolsCustomFields'
+      $ref: '#/CommercetoolsCustomFields'
 
 SourceUpdateInput:
   oneOf:
