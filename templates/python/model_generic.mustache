@@ -130,7 +130,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#isArray}}
         {{#items.isArray}}
         {{^items.items.isPrimitiveType}}
-        # override the default output from pydantic by calling `to_dict()` of each item in {{{name}}} (list of list)
         _items = []
         if self.{{{name}}}:
             for _item in self.{{{name}}}:
@@ -144,7 +143,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{^items.isArray}}
         {{^items.isPrimitiveType}}
         {{^items.isEnumOrRef}}
-        # override the default output from pydantic by calling `to_dict()` of each item in {{{name}}} (list)
         _items = []
         if self.{{{name}}}:
             for _item in self.{{{name}}}:
@@ -158,7 +156,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#isMap}}
         {{#items.isArray}}
         {{^items.items.isPrimitiveType}}
-        # override the default output from pydantic by calling `to_dict()` of each value in {{{name}}} (dict of array)
         _field_dict_of_array = {}
         if self.{{{name}}}:
             for _key in self.{{{name}}}:
@@ -172,7 +169,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{^items.isArray}}
         {{^items.isPrimitiveType}}
         {{^items.isEnumOrRef}}
-        # override the default output from pydantic by calling `to_dict()` of each value in {{{name}}} (dict)
         _field_dict = {}
         if self.{{{name}}}:
             for _key in self.{{{name}}}:
@@ -187,7 +183,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{^isContainer}}
         {{^isPrimitiveType}}
         {{^isEnumOrRef}}
-        # override the default output from pydantic by calling `to_dict()` of {{{name}}}
         if self.{{{name}}}:
             _dict['{{{baseName}}}'] = self.{{{name}}}.to_dict()
         {{/isEnumOrRef}}
@@ -330,12 +325,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             {{/isEnumOrRef}}
             {{/isPrimitiveType}}
             {{#isPrimitiveType}}
-            {{#defaultValue}}
-            "{{{baseName}}}": obj.get("{{{baseName}}}") if obj.get("{{{baseName}}}") is not None else {{{defaultValue}}}{{^-last}},{{/-last}}
-            {{/defaultValue}}
-            {{^defaultValue}}
             "{{{baseName}}}": obj.get("{{{baseName}}}"){{^-last}},{{/-last}}
-            {{/defaultValue}}
             {{/isPrimitiveType}}
             {{/isContainer}}
             {{/allVars}}
