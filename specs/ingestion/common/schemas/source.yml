@@ -123,6 +123,8 @@ SourceCommercetools:
   required:
     - url
     - projectKey
+  x-discriminator-fields:
+    - projectKey
 
 SourceBigCommerce:
   type: object
@@ -146,7 +148,9 @@ SourceBigCommerce:
       items:
         $ref: '#/BigCommerceMetafield'
   required:
-    - store_hash
+    - storeHash
+  x-discriminator-fields:
+    - storeHash
 
 BigCommerceMetafield:
   type: object
@@ -257,6 +261,8 @@ SourceBigQuery:
   required:
     - projectID
     - datasetID
+  x-discriminator-fields:
+    - projectID
 
 BigQueryDataType:
   type: string
