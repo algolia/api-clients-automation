@@ -127,14 +127,14 @@ ctsCommand
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
-    const { language, clientList } = transformSelection({
+    const { language, client } = transformSelection({
       langArg,
       clientArg,
     });
 
     setVerbose(Boolean(verbose));
 
-    await runCts(language === ALL ? LANGUAGES : [language], clientList);
+    await runCts(language === ALL ? LANGUAGES : [language], client);
   });
 
 ctsCommand
