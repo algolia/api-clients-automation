@@ -1,8 +1,3 @@
-## [7.0.0-alpha.10](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-alpha.9...7.0.0-alpha.10)
-
-- [4f6e2d0b3](https://github.com/algolia/api-clients-automation/commit/4f6e2d0b3) fix(specs): allow custom fields to be nullable ([#2746](https://github.com/algolia/api-clients-automation/pull/2746)) by [@shortcuts](https://github.com/shortcuts/)
-- [68551ff65](https://github.com/algolia/api-clients-automation/commit/68551ff65) refactor(csharp): Playground ([#2744](https://github.com/algolia/api-clients-automation/pull/2744)) by [@morganleroi](https://github.com/morganleroi/)
-
 ## [7.0.0-alpha.9](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-alpha.8...7.0.0-alpha.9)
 
 - [6624759e1](https://github.com/algolia/api-clients-automation/commit/6624759e1) feat(specs): add CustomFields to CT Source Input ([#2742](https://github.com/algolia/api-clients-automation/pull/2742)) by [@damcou](https://github.com/damcou/)
