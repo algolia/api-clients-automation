@@ -363,6 +363,8 @@ SourceUpdateCommercetools:
         Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
       items:
         type: string
+    customFields:
+      type: '#/CommercetoolsCustomFields'
 
 SourceUpdateInput:
   oneOf:
