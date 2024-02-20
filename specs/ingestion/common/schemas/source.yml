@@ -120,9 +120,31 @@ SourceCommercetools:
       default: true
       description: >
         Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+    customFields:
+      type: '#/CommercetoolsCustomFields'
   required:
     - url
     - projectKey
+
+CommercetoolsCustomFields:
+  type: object
+  additionalProperties: false
+  properties:
+    inventory:
+      type: array
+      items:
+        string
+      description: Inventory custom fields.
+    price:
+      type: array
+      items:
+        string
+      description: Price custom fields.
+    category:
+      type: array
+      items:
+        string
+      description: Category custom fields.
 
 SourceBigCommerce:
   type: object
