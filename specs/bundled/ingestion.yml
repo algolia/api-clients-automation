@@ -804,6 +804,28 @@ components:
       type: string
       description: The source UUID.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    CommercetoolsCustomFields:
+      type: object
+      additionalProperties: false
+      description: >-
+        Custom fields from Commercetools to index in the records (see
+        https://docs.commercetools.com/tutorials/custom-types).
+      properties:
+        inventory:
+          type: array
+          items:
+            type: string
+          description: Inventory custom fields.
+        price:
+          type: array
+          items:
+            type: string
+          description: Price custom fields.
+        category:
+          type: array
+          items:
+            type: string
+          description: Category custom fields.
     SourceCommercetools:
       type: object
       additionalProperties: false
@@ -830,6 +852,8 @@ components:
           description: >
             Determines the value that will be stored in the Algolia record if
             there's no inventory information on the product.
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
         - url
         - projectKey
@@ -1110,6 +1134,8 @@ components:
             ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
           items:
             type: string
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
       type: object
       additionalProperties: false

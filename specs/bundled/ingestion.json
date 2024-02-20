@@ -1871,6 +1871,34 @@
         "description": "The source UUID.",
         "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       },
+      "CommercetoolsCustomFields": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+        "properties": {
+          "inventory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Inventory custom fields."
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Price custom fields."
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Category custom fields."
+          }
+        }
+      },
       "SourceCommercetools": {
         "type": "object",
         "additionalProperties": false,
@@ -1899,6 +1927,34 @@
             "type": "boolean",
             "default": true,
             "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+          },
+          "customFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+            "properties": {
+              "inventory": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Inventory custom fields."
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Price custom fields."
+              },
+              "category": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Category custom fields."
+              }
+            }
           }
         },
         "required": [
@@ -2272,6 +2328,34 @@
                 "type": "boolean",
                 "default": true,
                 "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+              },
+              "customFields": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                "properties": {
+                  "inventory": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Inventory custom fields."
+                  },
+                  "price": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Price custom fields."
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Category custom fields."
+                  }
+                }
               }
             },
             "required": [
@@ -2582,6 +2666,34 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields."
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields."
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields."
+                      }
+                    }
                   }
                 },
                 "required": [
@@ -2909,6 +3021,34 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields."
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields."
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields."
+                      }
+                    }
                   }
                 },
                 "required": [
@@ -3233,6 +3373,34 @@
             "items": {
               "type": "string"
             }
+          },
+          "customFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+            "properties": {
+              "inventory": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Inventory custom fields."
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Price custom fields."
+              },
+              "category": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Category custom fields."
+              }
+            }
           }
         }
       },
@@ -3285,6 +3453,34 @@
                 "description": "Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].\n",
                 "items": {
                   "type": "string"
+                }
+              },
+              "customFields": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                "properties": {
+                  "inventory": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Inventory custom fields."
+                  },
+                  "price": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Price custom fields."
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Category custom fields."
+                  }
                 }
               }
             }
@@ -3460,6 +3656,34 @@
                     "description": "Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].\n",
                     "items": {
                       "type": "string"
+                    }
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields."
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields."
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields."
+                      }
                     }
                   }
                 }
@@ -7795,6 +8019,34 @@
                                     "type": "boolean",
                                     "default": true,
                                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                                  },
+                                  "customFields": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                                    "properties": {
+                                      "inventory": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Inventory custom fields."
+                                      },
+                                      "price": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Price custom fields."
+                                      },
+                                      "category": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Category custom fields."
+                                      }
+                                    }
                                   }
                                 },
                                 "required": [
@@ -8192,6 +8444,34 @@
                             "type": "boolean",
                             "default": true,
                             "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                          },
+                          "customFields": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                            "properties": {
+                              "inventory": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Inventory custom fields."
+                              },
+                              "price": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Price custom fields."
+                              },
+                              "category": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Category custom fields."
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -8613,6 +8893,34 @@
                                 "type": "boolean",
                                 "default": true,
                                 "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                              },
+                              "customFields": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                                "properties": {
+                                  "inventory": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Inventory custom fields."
+                                  },
+                                  "price": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Price custom fields."
+                                  },
+                                  "category": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Category custom fields."
+                                  }
+                                }
                               }
                             },
                             "required": [
@@ -9001,6 +9309,34 @@
                               "type": "boolean",
                               "default": true,
                               "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                            },
+                            "customFields": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                              "properties": {
+                                "inventory": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Inventory custom fields."
+                                },
+                                "price": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Price custom fields."
+                                },
+                                "category": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Category custom fields."
+                                }
+                              }
                             }
                           },
                           "required": [
@@ -9356,6 +9692,34 @@
                             "description": "Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].\n",
                             "items": {
                               "type": "string"
+                            }
+                          },
+                          "customFields": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                            "properties": {
+                              "inventory": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Inventory custom fields."
+                              },
+                              "price": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Price custom fields."
+                              },
+                              "category": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Category custom fields."
+                              }
                             }
                           }
                         }

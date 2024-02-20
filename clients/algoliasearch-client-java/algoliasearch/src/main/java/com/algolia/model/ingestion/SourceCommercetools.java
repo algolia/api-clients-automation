@@ -28,6 +28,9 @@ public class SourceCommercetools implements SourceInput {
   @JsonProperty("fallbackIsInStockValue")
   private Boolean fallbackIsInStockValue;
 
+  @JsonProperty("customFields")
+  private CommercetoolsCustomFields customFields;
+
   public SourceCommercetools setStoreKeys(List<String> storeKeys) {
     this.storeKeys = storeKeys;
     return this;
@@ -105,6 +108,17 @@ public class SourceCommercetools implements SourceInput {
     return fallbackIsInStockValue;
   }
 
+  public SourceCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
+    this.customFields = customFields;
+    return this;
+  }
+
+  /** Get customFields */
+  @javax.annotation.Nullable
+  public CommercetoolsCustomFields getCustomFields() {
+    return customFields;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -119,13 +133,14 @@ public class SourceCommercetools implements SourceInput {
       Objects.equals(this.locales, sourceCommercetools.locales) &&
       Objects.equals(this.url, sourceCommercetools.url) &&
       Objects.equals(this.projectKey, sourceCommercetools.projectKey) &&
-      Objects.equals(this.fallbackIsInStockValue, sourceCommercetools.fallbackIsInStockValue)
+      Objects.equals(this.fallbackIsInStockValue, sourceCommercetools.fallbackIsInStockValue) &&
+      Objects.equals(this.customFields, sourceCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales, url, projectKey, fallbackIsInStockValue);
+    return Objects.hash(storeKeys, locales, url, projectKey, fallbackIsInStockValue, customFields);
   }
 
   @Override
@@ -137,6 +152,7 @@ public class SourceCommercetools implements SourceInput {
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    projectKey: ").append(toIndentedString(projectKey)).append("\n");
     sb.append("    fallbackIsInStockValue: ").append(toIndentedString(fallbackIsInStockValue)).append("\n");
+    sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();
   }

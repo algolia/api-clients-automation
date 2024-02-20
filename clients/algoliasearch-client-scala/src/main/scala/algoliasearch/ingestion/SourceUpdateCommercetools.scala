@@ -16,5 +16,6 @@ package algoliasearch.ingestion
   */
 case class SourceUpdateCommercetools(
     storeKeys: Option[Seq[String]] = scala.None,
-    locales: Option[Seq[String]] = scala.None
+    locales: Option[Seq[String]] = scala.None,
+    customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceUpdateInputTrait
