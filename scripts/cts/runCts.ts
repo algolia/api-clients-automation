@@ -2,6 +2,7 @@ import * as fsp from 'fs/promises';
 
 import { run, runComposerInstall, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
+import type { Language } from '../types.js';
 
 import { getTimeoutCounter, startTestServer } from './testServer.js';
 
@@ -70,16 +71,24 @@ async function runCtsOne(language: string): Promise<void> {
   spinner.succeed();
 }
 
-export async function runCts(languages: string[]): Promise<void> {
-  const close = await startTestServer();
-
+// the clients option is only used to determine if we need to start the test server, it will run the tests for all clients anyway.
+export async function runCts(languages: Language[], clients: string[]): Promise<void> {
+  const useTestServer = clients.includes('search');
+  let close: () => Promise<void> = async () => {};
+  if (useTestServer) {
+    close = await startTestServer();
+  }
   for (const lang of languages) {
     await runCtsOne(lang);
   }
 
-  await close();
+  if (useTestServer) {
+    await close();
 
-  if (languages.length !== getTimeoutCounter()) {
-    throw new Error(`Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`);
+    if (languages.length !== getTimeoutCounter()) {
+      throw new Error(
+        `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`
+      );
+    }
   }
 }
