@@ -1,6 +1,6 @@
 Authentication:
   type: object
-  description: An authentication is used to login into a Source or a Destination.
+  description: An authentication is used to login into a Source or a Destination, with obfuscated input.
   additionalProperties: false
   properties:
     authenticationID:
@@ -12,7 +12,7 @@ Authentication:
     platform:
       $ref: '#/Platform'
     input:
-      $ref: '#/AuthInput'
+      $ref: '#/AuthInputPartial'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -107,6 +107,7 @@ AuthenticationType:
 
 Platform:
   type: string
+  nullable: true
   description: Describe which platform the Authentication is used for.
   enum: ['bigcommerce', 'commercetools']
 
