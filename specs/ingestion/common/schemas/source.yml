@@ -121,7 +121,7 @@ SourceCommercetools:
       description: >
         Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
     customFields:
-      type: '#/CommercetoolsCustomFields'
+      $ref: '#/CommercetoolsCustomFields'
   required:
     - url
     - projectKey
@@ -129,7 +129,7 @@ SourceCommercetools:
 CommercetoolsCustomFields:
   type: object
   additionalProperties: false
-  description: Custom fields from Commercetools to index in the records.
+  description: Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
   properties:
     inventory:
       type: array
