@@ -257,7 +257,7 @@ class WaiterTests: XCTestCase {
             )
         ])
         
-        let response = try await client.deleteApiKey(key: apiKey)
+        _ = try await client.deleteApiKey(key: apiKey)
         
         let result = try await client.waitForApiKey(
             with: apiKey,
@@ -308,7 +308,7 @@ class WaiterTests: XCTestCase {
             )
         ])
         
-        let response = try await client.deleteApiKey(key: apiKey)
+        _ = try await client.deleteApiKey(key: apiKey)
         
         do {
             _ = try await client.waitForApiKey(
