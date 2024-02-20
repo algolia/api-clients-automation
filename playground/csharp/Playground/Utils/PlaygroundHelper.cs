@@ -15,4 +15,15 @@ public class PlaygroundHelper
     Console.WriteLine(endMessage);
     return waitResult;
   }
+  
+  public static void Hello(string startMessage)
+  {
+    var currentForegroundColor = Console.ForegroundColor;
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("------------------------------------");
+    Console.WriteLine($"| {startMessage} |");
+    Console.WriteLine("------------------------------------");
+    Console.ForegroundColor = currentForegroundColor;
+  }
+  
 }

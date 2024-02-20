@@ -1045,7 +1045,7 @@ describe('getSettings', () => {
     const expectedBody = {
       minWordSizefor1Typo: 4,
       minWordSizefor2Typos: 8,
-      hitsPerPage: 20,
+      hitsPerPage: 100,
       maxValuesPerFacet: 100,
       paginationLimitedTo: 10,
       exactOnSingleWordQuery: 'attribute',
