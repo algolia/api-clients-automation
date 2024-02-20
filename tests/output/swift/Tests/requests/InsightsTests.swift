@@ -1,14 +1,52 @@
 import XCTest
 
 import AnyCodable
+import DotEnv
 import Utils
 
 @testable import Core
 @testable import Insights
 
 final class InsightsClientRequestsTests: XCTestCase {
-    static let APPLICATION_ID = "my_application_id"
-    static let API_KEY = "my_api_key"
+    static var APPLICATION_ID = "my_application_id"
+    static var API_KEY = "my_api_key"
+    static var e2eClient: InsightsClient?
+
+    override class func setUp() {
+        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
+            do {
+                let currentFileURL = try XCTUnwrap(URL(string: #file))
+
+                let packageDirectoryURL = currentFileURL
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+
+                let dotEnvURL = packageDirectoryURL
+                    .appendingPathComponent(".env")
+                dump(dotEnvURL.absoluteString)
+                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
+            } catch {
+                XCTFail("Unable to load .env file")
+            }
+        }
+
+        do {
+            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
+        } catch {
+            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+        }
+
+        do {
+            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
+        } catch {
+            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+        }
+
+        self.e2eClient = try? InsightsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
+    }
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
@@ -914,7 +952,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_641_290_601_962)
+                            timestamp: Int64(1_708_387_200_000)
                         )
                     ),
                     EventsItems.viewedObjectIDs(
@@ -928,7 +966,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             ],
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_641_290_601_962)
+                            timestamp: Int64(1_708_387_200_000)
                         )
                     ),
                 ]
@@ -941,7 +979,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1708387200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1708387200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -951,6 +989,55 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
+
+        guard let e2eClient = InsightsClientRequestsTests.e2eClient else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let e2eResponse = try await e2eClient.pushEventsWithHTTPInfo(
+            insightsEvents: InsightsEvents(
+                events: [
+                    EventsItems.convertedObjectIDsAfterSearch(
+                        ConvertedObjectIDsAfterSearch(
+                            eventName: "Product Purchased",
+                            eventType: ConversionEvent.conversion,
+                            index: "products",
+                            objectIDs: [
+                                "9780545139700",
+                                "9780439784542",
+                            ],
+                            queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                            userToken: "user-123456",
+                            authenticatedUserToken: "user-123456",
+                            timestamp: Int64(1_708_387_200_000)
+                        )
+                    ),
+                    EventsItems.viewedObjectIDs(
+                        ViewedObjectIDs(
+                            eventName: "Product Detail Page Viewed",
+                            eventType: ViewEvent.view,
+                            index: "products",
+                            objectIDs: [
+                                "9780545139700",
+                                "9780439784542",
+                            ],
+                            userToken: "user-123456",
+                            authenticatedUserToken: "user-123456",
+                            timestamp: Int64(1_708_387_200_000)
+                        )
+                    ),
+                ]
+            )
+        )
+        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
+        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+
+        let e2eExpectedBodyData = try XCTUnwrap("{\"message\":\"OK\",\"status\":200}".data(using: .utf8))
+
+        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+
+        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// ConvertedObjectIDsAfterSearch
