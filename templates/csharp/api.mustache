@@ -165,18 +165,18 @@ namespace Algolia.Search.Clients;
           var requestOptions = new InternalRequestOptions(options);
           {{#vendorExtensions.x-is-custom-request}}
           {{#pathParams}}
-          requestOptions.CustomPathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+          requestOptions.CustomPathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
           {{/pathParams}}
           {{/vendorExtensions.x-is-custom-request}}
           {{#vendorExtensions}}{{^x-is-custom-request}}
           {{#pathParams}}
           {{#required}}
-          requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+          requestOptions.PathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
           {{/required}}
           {{^required}}
           if ({{paramName}} != null)
           {
-              requestOptions.PathParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}}));
+              requestOptions.PathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
           }
           {{/required}}
           {{/pathParams}}
@@ -193,23 +193,23 @@ namespace Algolia.Search.Clients;
           {{/vendorExtensions.x-is-custom-request}}
           {{#headerParams}}
           {{#required}}
-          requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
+          requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), QueryStringHelper.ParameterToString({{paramName}})); // header parameter
           {{/required}}
           {{^required}}
           if ({{paramName}} != null)
           {
-              requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), ClientUtils.ParameterToString({{paramName}})); // header parameter
+              requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), QueryStringHelper.ParameterToString({{paramName}})); // header parameter
           }
           {{/required}}
           {{/headerParams}}
           {{#formParams}}
           {{#required}}
-          requestOptions.FormParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // form parameter
+          requestOptions.FormParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}})); // form parameter
           {{/required}}
           {{^required}}
           if ({{paramName}} != null)
           {
-              requestOptions.FormParameters.Add("{{baseName}}", ClientUtils.ParameterToString({{paramName}})); // form parameter
+              requestOptions.FormParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}})); // form parameter
           }
           {{/required}}
           {{/formParams}}
