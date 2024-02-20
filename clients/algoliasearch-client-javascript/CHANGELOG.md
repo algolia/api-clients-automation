@@ -1,3 +1,7 @@
+## [5.0.0-alpha.103](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.102...5.0.0-alpha.103)
+
+- [ef37e65b7](https://github.com/algolia/api-clients-automation/commit/ef37e65b7) fix(clients): add e2e tests for analytics API ([#2737](https://github.com/algolia/api-clients-automation/pull/2737)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-alpha.102](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.101...5.0.0-alpha.102)
 
 - [b3d61128a](https://github.com/algolia/api-clients-automation/commit/b3d61128a) docs(clients): add ACL section to code doc ([#2576](https://github.com/algolia/api-clients-automation/pull/2576)) by [@millotp](https://github.com/millotp/)
