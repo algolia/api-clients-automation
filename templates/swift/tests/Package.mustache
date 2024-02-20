@@ -2,6 +2,13 @@
 
 import PackageDescription
 
+let libraries: [Target.Dependency] = [{{#packageList}}
+  .product(
+  name: "{{.}}",
+  package: "algoliasearch-client-swift"
+  ),{{/packageList}}
+]
+
 let package = Package(
   name: "AlgoliaSearchClientTests",
   dependencies: [
@@ -21,24 +28,24 @@ let package = Package(
       name: "client",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
-        .target(name: "Utils"),{{#packageList}}
-        .product(
-          name: "{{.}}",
-          package: "algoliasearch-client-swift"
-        ),{{/packageList}}
-      ]
+        .target(name: "Utils"),
+      ] + libraries
     ),
     .testTarget(
       name: "requests",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
         .product(name: "DotEnv", package: "DotEnv"),
-        .target(name: "Utils"),{{#packageList}}
-        .product(
-          name: "{{.}}",
-          package: "algoliasearch-client-swift"
-        ),{{/packageList}}
-      ]
+        .target(name: "Utils"),
+      ] + libraries
+    ),
+    .testTarget(
+      name: "handmade",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "DotEnv", package: "DotEnv"),
+        .target(name: "Utils"),
+      ] + libraries
     )
   ]
 )

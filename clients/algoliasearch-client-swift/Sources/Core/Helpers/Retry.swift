@@ -1,5 +1,5 @@
 //
-//  Waiters.swift
+//  Retry.swift
 //
 //
 //  Created by Algolia on 19/02/2024.
