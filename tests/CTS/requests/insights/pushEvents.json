@@ -57,7 +57,7 @@
           "index": "products",
           "userToken": "user-123456",
           "authenticatedUserToken": "user-123456",
-          "timestamp": "${{NOW}}",
+          "timestamp": "${{nowRounded}}",
           "objectIDs": [
             "9780545139700",
             "9780439784542"
@@ -70,7 +70,7 @@
           "index": "products",
           "userToken": "user-123456",
           "authenticatedUserToken": "user-123456",
-          "timestamp": "${{NOW}}",
+          "timestamp": "${{nowRounded}}",
           "objectIDs": [
             "9780545139700",
             "9780439784542"
@@ -89,7 +89,7 @@
             "index": "products",
             "userToken": "user-123456",
             "authenticatedUserToken": "user-123456",
-            "timestamp": "${{NOW}}",
+            "timestamp": "${{nowRounded}}",
             "objectIDs": [
               "9780545139700",
               "9780439784542"
@@ -102,7 +102,7 @@
             "index": "products",
             "userToken": "user-123456",
             "authenticatedUserToken": "user-123456",
-            "timestamp": "${{NOW}}",
+            "timestamp": "${{nowRounded}}",
             "objectIDs": [
               "9780545139700",
               "9780439784542"
