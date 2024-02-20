@@ -1,6 +1,9 @@
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
 {{> model_description}}
 
+{{#composedSchemas.oneOf}}
+    {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}
+{{/composedSchemas.oneOf}}
     actual_instance: Optional[Union[{{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]] = None
 
     def __init__(self, *args, **kwargs) -> None:
