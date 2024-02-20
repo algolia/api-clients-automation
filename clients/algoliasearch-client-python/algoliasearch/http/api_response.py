@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from re import match
 from typing import Any, Dict, Generic, Optional, TypeVar
-import json
 
 from algoliasearch.http.verb import Verb
 
@@ -63,26 +63,20 @@ class ApiResponse(Generic[T]):
             data = self.raw_data
         if data is None:
             return None
-        
+
         if hasattr(klass, "__origin__") and klass.__origin__ is list:
             sub_kls = klass.__args__[0]
             arr = json.loads(data)
-            return [
-                self.deserialize(sub_kls, sub_data) for sub_data in arr
-            ]
+            return [self.deserialize(sub_kls, sub_data) for sub_data in arr]
 
         if isinstance(klass, str):
             if klass.startswith("List["):
                 sub_kls = match(r"List\[(.*)]", klass).group(1)
-                return [
-                    self.deserialize(sub_kls, sub_data) for sub_data in data
-                ]
+                return [self.deserialize(sub_kls, sub_data) for sub_data in data]
 
             if klass.startswith("Dict["):
                 sub_kls = match(r"Dict\[([^,]*), (.*)]", klass).group(2)
-                return {
-                    k: self.deserialize(sub_kls, v) for k, v in data.items()
-                }
+                return {k: self.deserialize(sub_kls, v) for k, v in data.items()}
 
         if klass in self.PRIMITIVE_TYPES:
             try:
@@ -93,8 +87,8 @@ class ApiResponse(Generic[T]):
                 return data
         if klass == object:
             return data
-        
+
         if isinstance(data, str):
             return klass.from_json(data)
-        
+
         return klass.from_dict(data)
