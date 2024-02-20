@@ -134,17 +134,17 @@ CommercetoolsCustomFields:
     inventory:
       type: array
       items:
-        string
+        type: string
       description: Inventory custom fields.
     price:
       type: array
       items:
-        string
+        type: string
       description: Price custom fields.
     category:
       type: array
       items:
-        string
+        type: string
       description: Category custom fields.
 
 SourceBigCommerce:
