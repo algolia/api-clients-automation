@@ -13,70 +13,58 @@ Console.WriteLine("------------------------------------");
 
 var config = Config.Load();
 
-switch (client)
+await StartPlayground(client, config);
+
+async Task StartPlayground(string s, Configuration configuration)
 {
-  case "abtesting":
-    var abTesting = new ABTestingPlayground(config);
-    await abTesting.Run();
-    break;
-  case "analytics":
-    var analytics = new AnalyticsPlayground(config);
-    await analytics.Run();
-    break;
-  case "insights":
-    var insights = new InsightsPlayground(config);
-    await insights.Run();
-    break;
-  case "monitoring":
-    var monitoring = new MonitoringPlayground(config);
-    await monitoring.Run();
-    break;
-  case "personalization":
-    var personalization = new PersonalizationPlayground(config);
-    await personalization.Run();
-    break;
-  case "query-suggestions":
-    var querySuggestions = new QuerySuggestionsPlayground(config);
-    await querySuggestions.Run();
-    break;
-  case "recommend":
-    var recommend = new RecommendPlayground(config);
-    await recommend.Run();
-    break;
-  case "search":
-    var searchPlayground = new SearchPlayground(config);
-    await searchPlayground.Run();
-    break;
-  case "ingestion":
-    var ingestion = new IngestionPlayground(config);
-    await ingestion.Run();
-    break;
-  case "all":
-    var abTestingAll = new ABTestingPlayground(config);
-    await abTestingAll.Run();
-
-    var analyticsAll = new AnalyticsPlayground(config);
-    await analyticsAll.Run();
-
-    var insightsAll = new InsightsPlayground(config);
-    await insightsAll.Run();
-
-    var monitoringAll = new MonitoringPlayground(config);
-    await monitoringAll.Run();
- 
-    var personalizationAll = new PersonalizationPlayground(config);
-    await personalizationAll.Run();
-
-    var querySuggestionsAll = new QuerySuggestionsPlayground(config);
-    await querySuggestionsAll.Run();
-  
-    var recommendAll = new RecommendPlayground(config);
-    await recommendAll.Run();
-
-    var searchPlaygroundAll = new SearchPlayground(config);
-    await searchPlaygroundAll.Run();
- 
-    var ingestionAll = new IngestionPlayground(config);
-    await ingestionAll.Run();
-    break;
+  switch (s)
+  {
+    case "abtesting":
+      var abTesting = new ABTestingPlayground(configuration);
+      await abTesting.Run();
+      break;
+    case "analytics":
+      var analytics = new AnalyticsPlayground(configuration);
+      await analytics.Run();
+      break;
+    case "insights":
+      var insights = new InsightsPlayground(configuration);
+      await insights.Run();
+      break;
+    case "monitoring":
+      var monitoring = new MonitoringPlayground(configuration);
+      await monitoring.Run();
+      break;
+    case "personalization":
+      var personalization = new PersonalizationPlayground(configuration);
+      await personalization.Run();
+      break;
+    case "query-suggestions":
+      var querySuggestions = new QuerySuggestionsPlayground(configuration);
+      await querySuggestions.Run();
+      break;
+    case "recommend":
+      var recommend = new RecommendPlayground(configuration);
+      await recommend.Run();
+      break;
+    case "search":
+      var searchPlayground = new SearchPlayground(configuration);
+      await searchPlayground.Run();
+      break;
+    case "ingestion":
+      var ingestion = new IngestionPlayground(configuration);
+      await ingestion.Run();
+      break;
+    case "all":
+      await StartPlayground("abtesting", configuration);
+      await StartPlayground("analytics", configuration);
+      await StartPlayground("insights", configuration);
+      await StartPlayground("monitoring", configuration);
+      await StartPlayground("personalization", configuration);
+      await StartPlayground("query-suggestions", configuration);
+      await StartPlayground("recommend", configuration);
+      await StartPlayground("search", configuration);
+      await StartPlayground("ingestion", configuration);
+      break;
+  }
 }
