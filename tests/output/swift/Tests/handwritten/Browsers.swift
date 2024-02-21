@@ -92,4 +92,44 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
         }
     }
+    
+    func testBrowseRulesSuccess() async throws {
+        let indexName = "yourIndexName"
+        let hits: [Rule] = [
+            .init(objectID: "1000001"),
+            .init(objectID: "1000002"),
+            .init(objectID: "1000003"),
+            .init(objectID: "1000004"),
+            .init(objectID: "1000005"),
+            .init(objectID: "1000006"),
+            .init(objectID: "1000007"),
+        ]
+        
+        let client = try MockSearchClient<SearchRulesResponse>(appID: "test-app-id", apiKey: "test-api-key")
+        
+        client.setResponses([
+            SearchRulesResponse(hits: Array(hits[0..<2]), nbHits: 2, page: 0, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[2..<4]), nbHits: 2, page: 1, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[4..<6]), nbHits: 2, page: 2, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[6...]), nbHits: 1, page: 3, nbPages: 4)
+        ])
+
+        var aggregatedResult: [Rule] = []
+
+        try await client.browseRules(
+            indexName: indexName,
+            searchRulesParams: SearchRulesParams(hitsPerPage: 2),
+            aggregator: { response in
+                aggregatedResult.append(contentsOf: response.hits)
+            }
+        )
+
+        XCTAssertEqual(hits.count, aggregatedResult.count)
+        for (index, element) in hits.enumerated() {
+            let originalElementData = try CodableHelper.jsonEncoder.encode(element)
+            let aggregatedElementData = try CodableHelper.jsonEncoder.encode(aggregatedResult[index])
+
+            XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
+        }
+    }
 }
