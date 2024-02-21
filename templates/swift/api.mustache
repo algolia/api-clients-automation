@@ -444,6 +444,36 @@ typealias Client = {{classname}}
             aggregator: aggregator
         )
     }
+
+    /// Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
+    /// Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
+    open func searchForHits(
+        searchMethodParams: SearchMethodParams,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [SearchResponse] {
+        try await self.search(searchMethodParams: searchMethodParams, requestOptions: requestOptions).results
+            .reduce(into: [SearchResponse]()) { acc, cur in
+                let candidate = cur as? SearchResponse
+                if let candidate {
+                    acc.append(candidate)
+                }
+            }
+    }
+
+    /// Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
+    /// Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
+    open func searchForFacets(
+        searchMethodParams: SearchMethodParams,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [SearchForFacetValuesResponse] {
+        try await self.search(searchMethodParams: searchMethodParams, requestOptions: requestOptions).results
+            .reduce(into: [SearchForFacetValuesResponse]()) { acc, cur in
+                let candidate = cur as? SearchForFacetValuesResponse
+                if let candidate {
+                    acc.append(candidate)
+                }
+            }
+    }
 {{/isSearchClient}}
 }
 {{/operations}}
