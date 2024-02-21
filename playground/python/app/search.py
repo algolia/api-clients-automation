@@ -24,13 +24,13 @@ async def main():
         #     "user_token": "foobarbaz",
         # })
 
-        resp = client.generate_secured_api_key(parent_api_key="foo", restrictions=SecuredApiKeyRestrictions(
-              search_params={"query": "foo"},
-              valid_until=100,
-              restrict_indices=["bar"],
-              restrict_sources="baz",
-              user_token="foobarbaz",
-          ))
+        resp = client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredApiKeyRestrictions(
+                search_params={"query": "bar", "page": 3},
+                valid_until=42,
+                restrict_indices=["baz"],
+                restrict_sources="foo",
+                user_token="bazbarfoo",
+            ))
 
         print(resp)
 

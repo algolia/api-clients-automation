@@ -49,6 +49,10 @@ public class TestsRequest extends TestsGenerator {
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, Request[]> cts = loadRequestCTS();
 
+    if (this.client.equals("search")) {
+      bundle.put("isSearchClient", true);
+    }
+
     List<Object> blocks = new ArrayList<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language);
 

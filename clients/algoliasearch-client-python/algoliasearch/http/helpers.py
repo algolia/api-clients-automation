@@ -64,8 +64,8 @@ class SecuredApiKeyRestrictions(BaseModel):
     SecuredApiKeyRestrictions
     """
 
-    search_params: SearchParamsObject
-    valid_until: Optional[int] = None
+    search_params: SearchParamsObject = SearchParamsObject()
+    valid_until: Optional[int] = 0
     restrict_indices: Optional[Union[List[str], str]] = None
     restrict_sources: Optional[str] = None
     user_token: Optional[str] = None
