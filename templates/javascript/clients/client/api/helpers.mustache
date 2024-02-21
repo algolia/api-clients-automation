@@ -214,7 +214,7 @@ browseSynonyms(
   };
 
   return createIterablePromise<SearchSynonymsResponse>({
-    func: (previousResponse) => {
+    func: (_) => {
       const resp = this.searchSynonyms(
         {
           indexName,
@@ -226,6 +226,7 @@ browseSynonyms(
         requestOptions
       );
       params.page += 1;
+      return resp;
     },
     validate: (response) => response.nbHits < params.hitsPerPage,
     ...browseSynonymsOptions,

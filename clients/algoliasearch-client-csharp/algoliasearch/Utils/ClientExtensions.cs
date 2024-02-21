@@ -236,7 +236,7 @@ public static class ClientExtensions
     RequestOptions requestOptions = null)
   {
     const int hitsPerPage = 1000;
-    var int page = synonymsParams.Page ?? 0;
+    var page = synonymsParams.Page ?? 0;
     synonymsParams.HitsPerPage = hitsPerPage;
     var all = await CreateIterable<Tuple<SearchSynonymsResponse, int>>(async (prevResp) =>
     {
