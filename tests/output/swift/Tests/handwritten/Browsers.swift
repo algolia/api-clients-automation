@@ -22,20 +22,20 @@ class BrowserTests: XCTestCase {
             .init(from: [
                 "objectID": "100001",
                 "title": "Batman Begins",
-                "description": "First movie of the Nolan trilogy"
+                "description": "First movie of the Nolan trilogy",
             ]),
             .init(from: [
                 "objectID": "100002",
                 "title": "The Dark Knight",
-                "description": "Second movie of the Nolan trilogy"
+                "description": "Second movie of the Nolan trilogy",
             ]),
             .init(from: [
                 "objectID": "100003",
                 "title": "The Dark Knight Rises",
-                "description": "Third and final movie of the Nolan trilogy"
-            ])
+                "description": "Third and final movie of the Nolan trilogy",
+            ]),
         ]
-        
+
         let client = try MockSearchClient<BrowseResponse>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
@@ -71,9 +71,9 @@ class BrowserTests: XCTestCase {
                 query: "batman",
                 params: "query=batman",
                 cursor: nil
-            )
+            ),
         ])
-        
+
         var aggregatedResult: [Hit] = []
 
         try await client.browseObjects(
@@ -83,7 +83,7 @@ class BrowserTests: XCTestCase {
                 aggregatedResult.append(contentsOf: response.hits)
             }
         )
-        
+
         XCTAssertEqual(hits.count, aggregatedResult.count)
         for (index, element) in hits.enumerated() {
             let originalElementData = try CodableHelper.jsonEncoder.encode(element)
@@ -92,7 +92,7 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
         }
     }
-    
+
     func testBrowseRulesSuccess() async throws {
         let indexName = "yourIndexName"
         let hits: [Rule] = [
@@ -104,14 +104,14 @@ class BrowserTests: XCTestCase {
             .init(objectID: "1000006"),
             .init(objectID: "1000007"),
         ]
-        
+
         let client = try MockSearchClient<SearchRulesResponse>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
-            SearchRulesResponse(hits: Array(hits[0..<2]), nbHits: 2, page: 0, nbPages: 4),
-            SearchRulesResponse(hits: Array(hits[2..<4]), nbHits: 2, page: 1, nbPages: 4),
-            SearchRulesResponse(hits: Array(hits[4..<6]), nbHits: 2, page: 2, nbPages: 4),
-            SearchRulesResponse(hits: Array(hits[6...]), nbHits: 1, page: 3, nbPages: 4)
+            SearchRulesResponse(hits: Array(hits[0 ..< 2]), nbHits: 2, page: 0, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[2 ..< 4]), nbHits: 2, page: 1, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[4 ..< 6]), nbHits: 2, page: 2, nbPages: 4),
+            SearchRulesResponse(hits: Array(hits[6...]), nbHits: 1, page: 3, nbPages: 4),
         ])
 
         var aggregatedResult: [Rule] = []
@@ -132,7 +132,7 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
         }
     }
-    
+
     func testBrowseSynonymsSuccess() async throws {
         let indexName = "yourIndexName"
         let hits: [SynonymHit] = [
@@ -142,13 +142,13 @@ class BrowserTests: XCTestCase {
             .init(objectID: "1000004", type: .altcorrection1),
             .init(objectID: "1000005", type: .synonym),
         ]
-        
+
         let client = try MockSearchClient<SearchSynonymsResponse>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
-            SearchSynonymsResponse(hits: Array(hits[0..<2]), nbHits: 2),
-            SearchSynonymsResponse(hits: Array(hits[2..<4]), nbHits: 2),
-            SearchSynonymsResponse(hits: Array(hits[4...]), nbHits: 1)
+            SearchSynonymsResponse(hits: Array(hits[0 ..< 2]), nbHits: 2),
+            SearchSynonymsResponse(hits: Array(hits[2 ..< 4]), nbHits: 2),
+            SearchSynonymsResponse(hits: Array(hits[4...]), nbHits: 1),
         ])
 
         var aggregatedResult: [SynonymHit] = []

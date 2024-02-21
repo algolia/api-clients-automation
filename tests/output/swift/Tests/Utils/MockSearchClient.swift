@@ -20,7 +20,7 @@ public class MockSearchClient<T>: SearchClient {
         self.responses = elements
     }
 
-    public override func setSettings(
+    override public func setSettings(
         indexName _: String,
         indexSettings _: IndexSettings,
         forwardToReplicas _: Bool? = nil,
@@ -32,7 +32,7 @@ public class MockSearchClient<T>: SearchClient {
         )
     }
 
-    public override func addApiKey(
+    override public func addApiKey(
         apiKey _: ApiKey,
         requestOptions _: RequestOptions? = nil
     ) async throws -> AddApiKeyResponse {
@@ -42,22 +42,22 @@ public class MockSearchClient<T>: SearchClient {
         )
     }
 
-    public override func deleteApiKey(
+    override public func deleteApiKey(
         key _: String,
         requestOptions _: RequestOptions? = nil
     ) async throws -> DeleteApiKeyResponse {
         DeleteApiKeyResponse(deletedAt: "2024-02-20T10:10:00Z")
     }
 
-    public override func updateApiKey(
+    override public func updateApiKey(
         key: String,
         apiKey _: ApiKey,
         requestOptions _: RequestOptions? = nil
     ) async throws -> UpdateApiKeyResponse {
         UpdateApiKeyResponse(key: key, updatedAt: "2024-02-20T10:10:00Z")
     }
-    
-    public override func getTask(
+
+    override public func getTask(
         indexName _: String,
         taskID _: Int64,
         requestOptions _: RequestOptions? = nil
@@ -68,7 +68,7 @@ public class MockSearchClient<T>: SearchClient {
         return self.responses[self.loop] as! GetTaskResponse
     }
 
-    public override func getApiKeyWithHTTPInfo(
+    override public func getApiKeyWithHTTPInfo(
         key _: String,
         requestOptions _: RequestOptions? = nil
     ) async throws -> Response<GetApiKeyResponse> {
@@ -77,8 +77,8 @@ public class MockSearchClient<T>: SearchClient {
         }
         return self.responses[self.loop] as! Response<GetApiKeyResponse>
     }
-    
-    public override func browse(
+
+    override public func browse(
         indexName _: String,
         browseParams _: BrowseParams? = nil,
         requestOptions _: RequestOptions? = nil
@@ -88,8 +88,8 @@ public class MockSearchClient<T>: SearchClient {
         }
         return self.responses[self.loop] as! BrowseResponse
     }
-    
-    public override func searchRules(
+
+    override public func searchRules(
         indexName _: String,
         searchRulesParams _: SearchRulesParams? = nil,
         requestOptions _: RequestOptions? = nil
@@ -99,8 +99,8 @@ public class MockSearchClient<T>: SearchClient {
         }
         return self.responses[self.loop] as! SearchRulesResponse
     }
-    
-    public override func searchSynonyms(
+
+    override public func searchSynonyms(
         indexName _: String,
         searchSynonymsParams _: SearchSynonymsParams? = nil,
         requestOptions _: RequestOptions? = nil
