@@ -42,9 +42,9 @@ final class {{client}}RequestsTests: XCTestCase {
       }
 
       do {
-          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
+          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["{{e2eApiKey}}"])
       } catch {
-          XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+          XCTFail("Please provide an `{{e2eApiKey}}` env var for e2e tests")
       }
 
       e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})

@@ -1,8 +1,14 @@
 from json import loads
+from os import environ
 
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.monitoring.client import MonitoringClient
 from algoliasearch.monitoring.config import MonitoringConfig
+from dotenv import load_dotenv
+
+from ..helpers import Helpers
+
+load_dotenv("../../.env")
 
 
 class TestMonitoringClient:
@@ -10,6 +16,17 @@ class TestMonitoringClient:
     _client = MonitoringClient.create_with_config(
         config=_config, transporter=EchoTransporter(_config)
     )
+
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("MONITORING_API_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `MONITORING_API_KEY` env var for e2e tests")
 
     async def test_custom_delete_0(self):
         """
@@ -464,6 +481,19 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+        raw_resp = await MonitoringClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_inventory_with_http_info()
+        assert raw_resp.status_code == 200
+
+        resp = await MonitoringClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_inventory()
+        _expected_body = loads(
+            """{"inventory":[{"name":"c30-use-3","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-2","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-1","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
     async def test_get_latency_0(self):
         """
         getLatency
@@ -518,3 +548,12 @@ class TestMonitoringClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+        raw_resp = await MonitoringClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_status_with_http_info()
+        assert raw_resp.status_code == 200
+
+        resp = await MonitoringClient(self._e2e_app_id, self._e2e_api_key).get_status()
+        _expected_body = loads("""{"status":{"c30-use":"operational"}}""")
+        assert self._helpers.union(_expected_body, resp) == _expected_body

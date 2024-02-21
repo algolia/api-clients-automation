@@ -13,6 +13,11 @@ class TestMonitoringClient < Test::Unit::TestCase
       'API_KEY',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::MonitoringClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('MONITORING_API_KEY', nil)
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -363,6 +368,13 @@ class TestMonitoringClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_inventory_with_http_info
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_inventory
+    expected_body = JSON.parse('{"inventory":[{"name":"c30-use-3","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-2","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-1","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getLatency
@@ -411,5 +423,12 @@ class TestMonitoringClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_status_with_http_info
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_status
+    expected_body = JSON.parse('{"status":{"c30-use":"operational"}}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 end

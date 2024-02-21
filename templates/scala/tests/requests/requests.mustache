@@ -48,14 +48,14 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     if (System.getenv("CI") == "true") {
       {{client}}(
         appId = System.getenv("ALGOLIA_APPLICATION_ID"),
-        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}},
+        apiKey = System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}},
         region = region{{/hasRegionalHost}}
       )
     } else {
       val dotenv = Dotenv.configure.directory("../../").load
       {{client}}(
         appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
-        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"){{#hasRegionalHost}},
+        apiKey = dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}},
         region = region{{/hasRegionalHost}}
       )
     }

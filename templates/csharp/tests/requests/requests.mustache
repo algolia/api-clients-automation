@@ -28,10 +28,10 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
       }
 
-      var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
+      var e2EApiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");
       if (e2EApiKey == null)
       {
-        throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+        throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
       }
 
       _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
