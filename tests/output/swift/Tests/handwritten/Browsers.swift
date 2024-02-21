@@ -132,4 +132,41 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
         }
     }
+    
+    func testBrowseSynonymsSuccess() async throws {
+        let indexName = "yourIndexName"
+        let hits: [SynonymHit] = [
+            .init(objectID: "1000001", type: .synonym),
+            .init(objectID: "1000002", type: .altcorrection2),
+            .init(objectID: "1000003", type: .onewaysynonym),
+            .init(objectID: "1000004", type: .altcorrection1),
+            .init(objectID: "1000005", type: .synonym),
+        ]
+        
+        let client = try MockSearchClient<SearchSynonymsResponse>(appID: "test-app-id", apiKey: "test-api-key")
+        
+        client.setResponses([
+            SearchSynonymsResponse(hits: Array(hits[0..<2]), nbHits: 2),
+            SearchSynonymsResponse(hits: Array(hits[2..<4]), nbHits: 2),
+            SearchSynonymsResponse(hits: Array(hits[4...]), nbHits: 1)
+        ])
+
+        var aggregatedResult: [SynonymHit] = []
+
+        try await client.browseSynonyms(
+            indexName: indexName,
+            searchSynonymsParams: SearchSynonymsParams(hitsPerPage: 2),
+            aggregator: { response in
+                aggregatedResult.append(contentsOf: response.hits)
+            }
+        )
+
+        XCTAssertEqual(hits.count, aggregatedResult.count)
+        for (index, element) in hits.enumerated() {
+            let originalElementData = try CodableHelper.jsonEncoder.encode(element)
+            let aggregatedElementData = try CodableHelper.jsonEncoder.encode(aggregatedResult[index])
+
+            XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
+        }
+    }
 }

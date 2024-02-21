@@ -401,6 +401,49 @@ typealias Client = {{classname}}
             aggregator: aggregator
         )
     }
+
+    /// Allows to aggregate all the synonyms returned by the API calls
+    /// - parameter indexName: The name of the index to browse
+    /// - parameter searchSynonymsParams: The search synonyms request parameters
+    /// - parameter validate: A closure that validates the response
+    /// - parameter aggregator: A closure that aggregates the response
+    /// - parameter requestOptions: The request options
+    /// - returns: SearchSynonymsResponse
+    @discardableResult
+    open func browseSynonyms(
+        indexName: String,
+        searchSynonymsParams: SearchSynonymsParams,
+        validate: ((SearchSynonymsResponse) -> Bool)? = nil,
+        aggregator: @escaping (SearchSynonymsResponse) -> Void,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SearchSynonymsResponse {
+        let hitsPerPage = searchSynonymsParams.hitsPerPage ?? 1000
+
+        var updatedSearchSynonymsParams = searchSynonymsParams
+        if updatedSearchSynonymsParams.page == nil {
+            updatedSearchSynonymsParams.page = 0
+        }
+
+        return try await createIterable(
+            execute: { previousResponse in
+                updatedSearchSynonymsParams.hitsPerPage = hitsPerPage
+
+                defer {
+                    updatedSearchSynonymsParams.page! += 1
+                }
+
+                return try await self.searchSynonyms(
+                    indexName: indexName,
+                    searchSynonymsParams: updatedSearchSynonymsParams,
+                    requestOptions: requestOptions
+                )
+            },
+            validate: validate ?? { response in
+                response.nbHits < hitsPerPage
+            },
+            aggregator: aggregator
+        )
+    }
 {{/isSearchClient}}
 }
 {{/operations}}
