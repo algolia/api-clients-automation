@@ -149,141 +149,180 @@ typealias Client = {{classname}}
     }{{/vendorExtensions}}
 {{/operation}}{{#isSearchClient}}
 
-  public enum ApiKeyOperation: String {
-      case add
-      case update
-      case delete
-  }
+    public enum ApiKeyOperation: String {
+        case add
+        case update
+        case delete
+    }
 
-  /// Wait for a task to complete
-  /// - parameter taskID: The id of the task to wait for
-  /// - parameter indexName: The name of the index to wait for
-  /// - parameter maxRetries: The maximum number of retries
-  /// - parameter initialDelay: The initial delay between retries
-  /// - parameter maxDelay: The maximum delay between retries
-  /// - returns: Void
-  open func waitForTask(
-      with taskID: Int64,
-      for indexName: String,
-      maxRetries: Int? = 50,
-      initialDelay: TimeInterval? = 0.2,
-      maxDelay: TimeInterval? = 5.0
-  ) async throws -> GetTaskResponse {
-      try await retryUntil(
-          retry: {
-              try await self.getTask(indexName: indexName, taskID: taskID)
-          },
-          until: { response in
-              response.status == TaskStatus.published
-          },
-          maxRetries: maxRetries,
-          initialDelay: initialDelay,
-          maxDelay: maxDelay
-      )
-  }
+    /// Wait for a task to complete
+    /// - parameter taskID: The id of the task to wait for
+    /// - parameter indexName: The name of the index to wait for
+    /// - parameter maxRetries: The maximum number of retries
+    /// - parameter initialDelay: The initial delay between retries
+    /// - parameter maxDelay: The maximum delay between retries
+    /// - returns: GetTaskResponse
+    open func waitForTask(
+        with taskID: Int64,
+        for indexName: String,
+        maxRetries: Int = 50,
+        timeout: (Int) -> TimeInterval = { count in
+            min(TimeInterval(count) * 0.2, 5)
+        },
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetTaskResponse {
+        var retryCount = 0
 
-  /// Wait for an API key to be available
-  /// - parameter key: The key to wait for
-  /// - parameter operation: The type of operation
-  /// - parameter apiKey: The original API key
-  /// - parameter maxRetries: The maximum number of retries
-  /// - parameter initialDelay: The initial delay between retries
-  /// - parameter maxDelay: The maximum delay between retries
-  /// - parameter requestOptions: The request options
-  /// - returns: Void
-  open func waitForApiKey(
-    with key: String,
-    operation: ApiKeyOperation,
-    apiKey: ApiKey? = nil,
-    maxRetries: Int? = 50,
-    initialDelay: TimeInterval? = 0.2,
-    maxDelay: TimeInterval? = 5.0,
-    requestOptions: RequestOptions? = nil
-  ) async throws -> GetApiKeyResponse? {
-      if operation == .update {
-          guard let apiKey else {
-              throw AlgoliaError.runtimeError("Missing API key optimistic value")
-          }
+        return try await createIterable(
+            execute: { _ in
+                try await self.getTask(indexName: indexName, taskID: taskID, requestOptions: requestOptions)
+            },
+            validate: { response in
+                response.status == TaskStatus.published
+            },
+            aggregator: { _ in
+                retryCount += 1
+            },
+            timeout: {
+                timeout(retryCount)
+            },
+            error: IterableError(
+                validate: { _ in
+                    retryCount >= maxRetries
+                },
+                message: { _ in
+                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                }
+            )
+        )
+    }
 
-          return try await retryUntil(
-              retry: {
-                  try await self.getApiKey(key: key, requestOptions: requestOptions)
-              },
-              until: { response in
-                  if apiKey.description != response.description {
-                      return false
-                  }
+    /// Wait for an API key to be available
+    /// - parameter key: The key to wait for
+    /// - parameter operation: The type of operation
+    /// - parameter apiKey: The original API key
+    /// - parameter maxRetries: The maximum number of retries
+    /// - parameter timeout: A closure that computes the timeout in seconds for the next retry
+    /// - parameter requestOptions: The request options
+    /// - returns: GetApiKeyResponse?
+    open func waitForApiKey(
+        with key: String,
+        operation: ApiKeyOperation,
+        apiKey: ApiKey? = nil,
+        maxRetries: Int = 50,
+        timeout: (Int) -> TimeInterval = { retryCount in
+            min(TimeInterval(retryCount) * 0.2, 5)
+        },
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetApiKeyResponse? {
+        var retryCount = 0
 
-                  if apiKey.queryParameters != response.queryParameters {
-                      return false
-                  }
+        if operation == .update {
+            guard let apiKey else {
+                throw AlgoliaError.runtimeError("Missing API key optimistic value")
+            }
 
-                  if apiKey.maxHitsPerQuery != response.maxHitsPerQuery {
-                      return false
-                  }
+            return try await createIterable(
+                execute: { _ in
+                    try await self.getApiKey(key: key, requestOptions: requestOptions)
+                },
+                validate: { response in
+                    if apiKey.description != response.description {
+                        return false
+                    }
 
-                  if apiKey.maxQueriesPerIPPerHour != response.maxQueriesPerIPPerHour {
-                      return false
-                  }
+                    if apiKey.queryParameters != response.queryParameters {
+                        return false
+                    }
 
-                  if apiKey.validity != response.validity {
-                      return false
-                  }
+                    if apiKey.maxHitsPerQuery != response.maxHitsPerQuery {
+                        return false
+                    }
 
-                  let expectedACLs = apiKey.acl.sorted { $0.rawValue > $1.rawValue }
-                  let responseACLs = response.acl.sorted { $0.rawValue > $1.rawValue }
-                  if expectedACLs != responseACLs {
-                      return false
-                  }
+                    if apiKey.maxQueriesPerIPPerHour != response.maxQueriesPerIPPerHour {
+                        return false
+                    }
 
-                  let expectedIndexes = apiKey.indexes?.sorted { $0 > $1 }
-                  let responseIndexes = response.indexes?.sorted { $0 > $1 }
-                  if expectedIndexes != responseIndexes {
-                      return false
-                  }
+                    if apiKey.validity != response.validity {
+                        return false
+                    }
 
-                  let expectedReferers = apiKey.referers?.sorted { $0 > $1 }
-                  let responseReferers = response.referers?.sorted { $0 > $1 }
-                  if apiKey.referers != response.referers {
-                      return false
-                  }
+                    let expectedACLs = apiKey.acl.sorted { $0.rawValue > $1.rawValue }
+                    let responseACLs = response.acl.sorted { $0.rawValue > $1.rawValue }
+                    if expectedACLs != responseACLs {
+                        return false
+                    }
 
-                  return true
-              },
-              maxRetries: maxRetries,
-              initialDelay: initialDelay,
-              maxDelay: maxDelay
-          )
-      }
+                    let expectedIndexes = apiKey.indexes?.sorted { $0 > $1 }
+                    let responseIndexes = response.indexes?.sorted { $0 > $1 }
+                    if expectedIndexes != responseIndexes {
+                        return false
+                    }
 
-      return try await retryUntil(
-          retry: {
-              let response = try await self.getApiKeyWithHTTPInfo(key: key, requestOptions: requestOptions)
-              if response.statusCode == 404 {
-                  return nil
-              }
+                    let expectedReferers = apiKey.referers?.sorted { $0 > $1 }
+                    let responseReferers = response.referers?.sorted { $0 > $1 }
+                    if expectedReferers != responseReferers {
+                        return false
+                    }
 
-              return response.body
-          },
-          until: { response in
-              switch operation {
-              case .add:
-                  guard let response else {
-                      return false
-                  }
+                    return true
+                },
+                aggregator: { _ in
+                    retryCount += 1
+                },
+                timeout: {
+                    timeout(retryCount)
+                },
+                error: IterableError(
+                    validate: { _ in
+                        retryCount >= maxRetries
+                    },
+                    message: { _ in
+                        "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                    }
+                )
+            )
+        }
 
-                  return response.createdAt > 0
-              case .delete:
-                  return response == nil
-              default:
-                  return false
-              }
-          },
-          maxRetries: maxRetries,
-          initialDelay: initialDelay,
-          maxDelay: maxDelay
-      )
-  }
+        return try await createIterable(
+            execute: { _ in
+                let response = try await self.getApiKeyWithHTTPInfo(key: key, requestOptions: requestOptions)
+                if response.statusCode == 404 {
+                    return nil
+                }
+
+                return response.body
+            },
+            validate: { response in
+                switch operation {
+                case .add:
+                    guard let response else {
+                        return false
+                    }
+
+                    return response.createdAt > 0
+                case .delete:
+                    return response == nil
+                default:
+                    return false
+                }
+            },
+            aggregator: { _ in
+                retryCount += 1
+            },
+            timeout: {
+                timeout(retryCount)
+            },
+            error: IterableError(
+                validate: { _ in
+                    retryCount >= maxRetries
+                },
+                message: { _ in
+                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                }
+            )
+        )
+    }
 {{/isSearchClient}}
 }
 {{/operations}}

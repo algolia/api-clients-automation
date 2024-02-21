@@ -15,47 +15,69 @@ import XCTest
 @testable import Search
 
 class MockSearchClient<T>: SearchClient {
-    var loop: Int = 0
+    var loop = 0
     var responses: [T] = []
-    
+
     func setResponses(_ elements: [T]) {
-        responses = elements
+        self.responses = elements
     }
 
-    override func setSettings(indexName: String, indexSettings: IndexSettings, forwardToReplicas: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdatedAtResponse {
+    override func setSettings(
+        indexName _: String,
+        indexSettings _: IndexSettings,
+        forwardToReplicas _: Bool? = nil,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> UpdatedAtResponse {
         UpdatedAtResponse(
             taskID: 12345,
             updatedAt: "2024-02-20T10:10:00Z"
         )
     }
-    
-    override func getTask(indexName: String, taskID: Int64, requestOptions: RequestOptions? = nil) async throws -> GetTaskResponse {
+
+    override func getTask(
+        indexName _: String,
+        taskID _: Int64,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> GetTaskResponse {
         defer {
             loop += 1
         }
-        return responses[loop] as! GetTaskResponse
+        return self.responses[self.loop] as! GetTaskResponse
     }
-    
-    override func addApiKey(apiKey: ApiKey, requestOptions: RequestOptions? = nil) async throws -> AddApiKeyResponse {
+
+    override func addApiKey(
+        apiKey _: ApiKey,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> AddApiKeyResponse {
         AddApiKeyResponse(
             key: "created-api-key",
             createdAt: "2024-02-20T10:10:00Z"
         )
     }
-    
-    override func deleteApiKey(key: String, requestOptions: RequestOptions? = nil) async throws -> DeleteApiKeyResponse {
+
+    override func deleteApiKey(
+        key _: String,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> DeleteApiKeyResponse {
         DeleteApiKeyResponse(deletedAt: "2024-02-20T10:10:00Z")
     }
-    
-    override func updateApiKey(key: String, apiKey: ApiKey, requestOptions: RequestOptions? = nil) async throws -> UpdateApiKeyResponse {
+
+    override func updateApiKey(
+        key: String,
+        apiKey _: ApiKey,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> UpdateApiKeyResponse {
         UpdateApiKeyResponse(key: key, updatedAt: "2024-02-20T10:10:00Z")
     }
-    
-    override func getApiKeyWithHTTPInfo(key: String, requestOptions: RequestOptions? = nil) async throws -> Response<GetApiKeyResponse> {
+
+    override func getApiKeyWithHTTPInfo(
+        key _: String,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> Response<GetApiKeyResponse> {
         defer {
             loop += 1
         }
-        return responses[loop] as! Response<GetApiKeyResponse>
+        return self.responses[self.loop] as! Response<GetApiKeyResponse>
     }
 }
 
@@ -64,13 +86,13 @@ class WaiterTests: XCTestCase {
         let indexName = "yourIndexName"
 
         let client = try MockSearchClient<GetTaskResponse>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             GetTaskResponse(status: .notPublished),
             GetTaskResponse(status: .notPublished),
-            GetTaskResponse(status: .published)
+            GetTaskResponse(status: .published),
         ])
-        
+
         let response = try await client.setSettings(indexName: indexName, indexSettings: IndexSettings())
 
         let result = try await client.waitForTask(
@@ -88,15 +110,15 @@ class WaiterTests: XCTestCase {
         let indexName = "yourIndexName"
 
         let client = try MockSearchClient<GetTaskResponse>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             GetTaskResponse(status: .notPublished),
             GetTaskResponse(status: .notPublished),
             GetTaskResponse(status: .notPublished),
             GetTaskResponse(status: .notPublished),
-            GetTaskResponse(status: .published)
+            GetTaskResponse(status: .published),
         ])
-        
+
         let response = try await client.setSettings(indexName: indexName, indexSettings: IndexSettings())
 
         do {
@@ -114,12 +136,12 @@ class WaiterTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
         }
     }
-    
+
     func testWaitForApiKeyAddSuccess() async throws {
         let apiKeyACLs: [Acl] = [.search]
-        
+
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -138,15 +160,15 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
-            )
+            ),
         ])
-        
+
         let response = try await client.addApiKey(
             apiKey: ApiKey(acl: apiKeyACLs)
         )
-        
+
         let result = try await client.waitForApiKey(
             with: response.key,
             operation: .add,
@@ -154,18 +176,18 @@ class WaiterTests: XCTestCase {
             initialDelay: 0.1,
             maxDelay: 1.0
         )
-        
+
         XCTAssertNotNil(result)
 
         let apiKey = try XCTUnwrap(result)
         XCTAssertEqual(apiKey.acl, apiKeyACLs)
     }
-    
+
     func testWaitForApiKeyAddFailure() async throws {
         let apiKeyACLs: [Acl] = [.search]
-        
+
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -184,15 +206,15 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
-            )
+            ),
         ])
-        
+
         let response = try await client.addApiKey(
             apiKey: ApiKey(acl: apiKeyACLs)
         )
-        
+
         do {
             _ = try await client.waitForApiKey(
                 with: response.key,
@@ -201,19 +223,19 @@ class WaiterTests: XCTestCase {
                 initialDelay: 0.1,
                 maxDelay: 1.0
             )
-            
+
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
             XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
         }
     }
-    
+
     func testWaitForApiKeyDeleteSuccess() async throws {
         let apiKey = "api-key-to-delete"
 
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -222,7 +244,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -232,7 +254,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -242,7 +264,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -254,11 +276,11 @@ class WaiterTests: XCTestCase {
                 )!,
                 body: nil,
                 bodyData: nil
-            )
+            ),
         ])
-        
+
         _ = try await client.deleteApiKey(key: apiKey)
-        
+
         let result = try await client.waitForApiKey(
             with: apiKey,
             operation: .delete,
@@ -266,15 +288,15 @@ class WaiterTests: XCTestCase {
             initialDelay: 0.1,
             maxDelay: 1.0
         )
-        
+
         XCTAssertNil(result)
     }
-    
+
     func testWaitForApiKeyDeleteFailure() async throws {
         let apiKey = "api-key-to-delete"
 
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -283,7 +305,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -293,7 +315,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -305,11 +327,11 @@ class WaiterTests: XCTestCase {
                 )!,
                 body: nil,
                 bodyData: nil
-            )
+            ),
         ])
-        
+
         _ = try await client.deleteApiKey(key: apiKey)
-        
+
         do {
             _ = try await client.waitForApiKey(
                 with: apiKey,
@@ -318,20 +340,20 @@ class WaiterTests: XCTestCase {
                 initialDelay: 0.1,
                 maxDelay: 1.0
             )
-            
+
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
             XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
         }
     }
-    
+
     func testWaitForApiKeyUpdateSuccess() async throws {
         let apiKey = "api-key-to-update"
         let newACLs: [Acl] = [.addObject, .search]
         let apiKeyBody = ApiKey(acl: newACLs)
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -340,7 +362,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -350,7 +372,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -360,13 +382,13 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search, .addObject]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search, .addObject]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\",\"addObject\"]}".data(using: .utf8)
-            )
+            ),
         ])
-        
+
         let response = try await client.updateApiKey(key: apiKey, apiKey: apiKeyBody)
-        
+
         let result = try await client.waitForApiKey(
             with: response.key,
             operation: .update,
@@ -375,19 +397,22 @@ class WaiterTests: XCTestCase {
             initialDelay: 0.1,
             maxDelay: 1.0
         )
-        
+
         XCTAssertNotNil(result)
 
         let receivedAPIKey = try XCTUnwrap(result)
-        XCTAssertEqual(receivedAPIKey.acl.sorted { $0.rawValue > $1.rawValue }, newACLs.sorted { $0.rawValue > $1.rawValue })
+        XCTAssertEqual(
+            receivedAPIKey.acl.sorted { $0.rawValue > $1.rawValue },
+            newACLs.sorted { $0.rawValue > $1.rawValue }
+        )
     }
-    
+
     func testWaitForApiKeyUpdateFailureWait() async throws {
         let apiKey = "api-key-to-update"
         let newACLs: [Acl] = [.addObject, .search]
         let apiKeyBody = ApiKey(acl: newACLs)
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             Response(
                 response: HTTPURLResponse(
@@ -396,7 +421,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -406,7 +431,7 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\"]}".data(using: .utf8)
             ),
             Response(
@@ -416,13 +441,13 @@ class WaiterTests: XCTestCase {
                     httpVersion: nil,
                     headerFields: nil
                 )!,
-                body: GetApiKeyResponse(createdAt: 1708423800, acl: [.search, .addObject]),
+                body: GetApiKeyResponse(createdAt: 1_708_423_800, acl: [.search, .addObject]),
                 bodyData: "{\"createdAt\":1708423800,\"acl\":[\"search\",\"addObject\"]}".data(using: .utf8)
-            )
+            ),
         ])
-        
+
         let response = try await client.updateApiKey(key: apiKey, apiKey: apiKeyBody)
-        
+
         do {
             _ = try await client.waitForApiKey(
                 with: response.key,
@@ -432,17 +457,17 @@ class WaiterTests: XCTestCase {
                 initialDelay: 0.1,
                 maxDelay: 1.0
             )
-            
+
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
             XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
         }
     }
-    
+
     func testWaitForApiKeyUpdateFailureNilKey() async throws {
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         do {
             _ = try await client.waitForApiKey(
                 with: "api-key-to-update",
@@ -451,11 +476,14 @@ class WaiterTests: XCTestCase {
                 initialDelay: 0.1,
                 maxDelay: 1.0
             )
-            
+
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
-            XCTAssertEqual(error.localizedDescription, AlgoliaError.runtimeError("Missing API key optimistic value").localizedDescription)
+            XCTAssertEqual(
+                error.localizedDescription,
+                AlgoliaError.runtimeError("Missing API key optimistic value").localizedDescription
+            )
         }
     }
 }

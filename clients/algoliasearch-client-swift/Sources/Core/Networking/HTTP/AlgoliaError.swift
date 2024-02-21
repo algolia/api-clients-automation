@@ -16,7 +16,7 @@ public enum AlgoliaError: Error, LocalizedError {
     case runtimeError(String)
     case invalidCredentials(String)
     case invalidArgument(String, String)
-    case wait
+    case wait(String)
 
     public var errorDescription: String? {
         switch self {
@@ -36,8 +36,8 @@ public enum AlgoliaError: Error, LocalizedError {
             "`\(credential)` is missing."
         case let .invalidArgument(argument, operationId):
             "Parameter `\(argument)` is required when calling `\(operationId)`."
-        case .wait:
-            "Unable to get a response while waiting for task to succeed"
+        case let .wait(error):
+            "\(error)"
         }
     }
 }

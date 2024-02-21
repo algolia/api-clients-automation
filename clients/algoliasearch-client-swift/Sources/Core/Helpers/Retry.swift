@@ -7,37 +7,48 @@
 
 import Foundation
 
-public func retryUntil<T>(
-    retry: () async throws -> T,
-    until: (T) -> Bool,
-    maxRetries: Int? = 50,
-    initialDelay: TimeInterval? = 0.2,
-    maxDelay: TimeInterval? = 5.0
+public struct IterableError<T> {
+    let validate: (T) -> Bool
+    let message: ((T) -> String)?
+
+    public init(validate: @escaping (T) -> Bool, message: ((T) -> String)? = nil) {
+        self.validate = validate
+        self.message = message
+    }
+}
+
+public func createIterable<T>(
+    execute: (T?) async throws -> T,
+    validate: (T) -> Bool,
+    aggregator: ((T) -> Void)? = nil,
+    timeout: () -> TimeInterval = {
+        0
+    },
+    error: IterableError<T>? = nil
 ) async throws -> T {
-    var currentRetries = 0
-    var currentDelay = initialDelay ?? 0.2
+    func executor(previousResponse: T? = nil) async throws -> T {
+        let response = try await execute(previousResponse)
 
-    let maxRetriesValue = maxRetries ?? 50
-    let maxDelayValue = maxDelay ?? 5.0
+        if let aggregator {
+            aggregator(response)
+        }
 
-    while currentRetries < maxRetriesValue {
-        do {
-            let result = try await retry()
+        if validate(response) {
+            return response
+        }
 
-            if until(result) {
-                return result
+        if let error, error.validate(response) {
+            guard let errorMessage = error.message else {
+                throw AlgoliaError.wait("An error occured")
             }
 
-            try await Task.sleep(nanoseconds: UInt64(currentDelay) * 1_000_000_000)
-
-            currentDelay *= 2
-            currentDelay = min(currentDelay, maxDelayValue)
-
-            currentRetries += 1
-        } catch {
-            throw error
+            throw AlgoliaError.wait(errorMessage(response))
         }
+
+        try await Task.sleep(nanoseconds: UInt64(timeout()) * 1_000_000_000)
+
+        return try await executor(previousResponse: response)
     }
 
-    throw AlgoliaError.wait
+    return try await executor()
 }
