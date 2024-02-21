@@ -1,5 +1,5 @@
 //
-//  Retry.swift
+//  Iterable.swift
 //
 //
 //  Created by Algolia on 19/02/2024.

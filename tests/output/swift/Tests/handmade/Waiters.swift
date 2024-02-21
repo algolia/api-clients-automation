@@ -98,15 +98,14 @@ class WaiterTests: XCTestCase {
         let result = try await client.waitForTask(
             with: response.taskID,
             for: indexName,
-            maxRetries: 3,
-            initialDelay: 0.1,
-            maxDelay: 1.0
+            maxRetries: 3
         )
 
         XCTAssertEqual(result.status, .published)
     }
 
     func testWaitForTaskFailure() async throws {
+        let maxRetries = 4
         let indexName = "yourIndexName"
 
         let client = try MockSearchClient<GetTaskResponse>(appID: "test-app-id", apiKey: "test-api-key")
@@ -125,15 +124,16 @@ class WaiterTests: XCTestCase {
             _ = try await client.waitForTask(
                 with: response.taskID,
                 for: indexName,
-                maxRetries: 4,
-                initialDelay: 0.1,
-                maxDelay: 1.0
+                maxRetries: maxRetries
             )
 
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
-            XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
+            XCTAssertEqual(
+                error.localizedDescription,
+                "The maximum number of retries exceeded. (\(maxRetries)/\(maxRetries))"
+            )
         }
     }
 
@@ -172,9 +172,7 @@ class WaiterTests: XCTestCase {
         let result = try await client.waitForApiKey(
             with: response.key,
             operation: .add,
-            maxRetries: 3,
-            initialDelay: 0.1,
-            maxDelay: 1.0
+            maxRetries: 3
         )
 
         XCTAssertNotNil(result)
@@ -184,6 +182,7 @@ class WaiterTests: XCTestCase {
     }
 
     func testWaitForApiKeyAddFailure() async throws {
+        let maxRetries = 1
         let apiKeyACLs: [Acl] = [.search]
 
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
@@ -219,15 +218,16 @@ class WaiterTests: XCTestCase {
             _ = try await client.waitForApiKey(
                 with: response.key,
                 operation: .add,
-                maxRetries: 1,
-                initialDelay: 0.1,
-                maxDelay: 1.0
+                maxRetries: maxRetries
             )
 
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
-            XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
+            XCTAssertEqual(
+                error.localizedDescription,
+                "The maximum number of retries exceeded. (\(maxRetries)/\(maxRetries))"
+            )
         }
     }
 
@@ -284,15 +284,14 @@ class WaiterTests: XCTestCase {
         let result = try await client.waitForApiKey(
             with: apiKey,
             operation: .delete,
-            maxRetries: 4,
-            initialDelay: 0.1,
-            maxDelay: 1.0
+            maxRetries: 4
         )
 
         XCTAssertNil(result)
     }
 
     func testWaitForApiKeyDeleteFailure() async throws {
+        let maxRetries = 2
         let apiKey = "api-key-to-delete"
 
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
@@ -336,15 +335,16 @@ class WaiterTests: XCTestCase {
             _ = try await client.waitForApiKey(
                 with: apiKey,
                 operation: .delete,
-                maxRetries: 2,
-                initialDelay: 0.1,
-                maxDelay: 1.0
+                maxRetries: maxRetries
             )
 
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
-            XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
+            XCTAssertEqual(
+                error.localizedDescription,
+                "The maximum number of retries exceeded. (\(maxRetries)/\(maxRetries))"
+            )
         }
     }
 
@@ -352,6 +352,7 @@ class WaiterTests: XCTestCase {
         let apiKey = "api-key-to-update"
         let newACLs: [Acl] = [.addObject, .search]
         let apiKeyBody = ApiKey(acl: newACLs)
+
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
@@ -393,9 +394,7 @@ class WaiterTests: XCTestCase {
             with: response.key,
             operation: .update,
             apiKey: apiKeyBody,
-            maxRetries: 3,
-            initialDelay: 0.1,
-            maxDelay: 1.0
+            maxRetries: 3
         )
 
         XCTAssertNotNil(result)
@@ -408,9 +407,11 @@ class WaiterTests: XCTestCase {
     }
 
     func testWaitForApiKeyUpdateFailureWait() async throws {
+        let maxRetries = 2
         let apiKey = "api-key-to-update"
         let newACLs: [Acl] = [.addObject, .search]
         let apiKeyBody = ApiKey(acl: newACLs)
+
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
@@ -453,15 +454,16 @@ class WaiterTests: XCTestCase {
                 with: response.key,
                 operation: .update,
                 apiKey: apiKeyBody,
-                maxRetries: 2,
-                initialDelay: 0.1,
-                maxDelay: 1.0
+                maxRetries: maxRetries
             )
 
             XCTFail("Expected an error but didn't receive one.")
         } catch {
             XCTAssertTrue(error is AlgoliaError)
-            XCTAssertEqual(error.localizedDescription, AlgoliaError.wait.localizedDescription)
+            XCTAssertEqual(
+                error.localizedDescription,
+                "The maximum number of retries exceeded. (\(maxRetries)/\(maxRetries))"
+            )
         }
     }
 
@@ -472,9 +474,7 @@ class WaiterTests: XCTestCase {
             _ = try await client.waitForApiKey(
                 with: "api-key-to-update",
                 operation: .update,
-                maxRetries: 3,
-                initialDelay: 0.1,
-                maxDelay: 1.0
+                maxRetries: 3
             )
 
             XCTFail("Expected an error but didn't receive one.")
