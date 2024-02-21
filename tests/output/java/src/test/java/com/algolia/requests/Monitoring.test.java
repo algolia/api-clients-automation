@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -24,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class MonitoringClientRequestsTests {
 
   private MonitoringClient client;
-
+  private MonitoringClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -34,6 +35,13 @@ class MonitoringClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new MonitoringClient("appId", "apiKey", options);
+
+    if ("true".equals(System.getenv("CI"))) {
+      this.clientE2E = new MonitoringClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("MONITORING_API_KEY"));
+    } else {
+      var dotenv = Dotenv.configure().directory("../../").load();
+      this.clientE2E = new MonitoringClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("MONITORING_API_KEY"));
+    }
   }
 
   @AfterAll
@@ -604,6 +612,15 @@ class MonitoringClientRequestsTests {
     assertEquals("/1/inventory/servers", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+
+    var res = clientE2E.getInventory();
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"inventory\":[{\"name\":\"c30-use-3\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-2\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-1\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
   }
 
   @Test
@@ -652,5 +669,10 @@ class MonitoringClientRequestsTests {
     assertEquals("/1/status", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+
+    var res = clientE2E.getStatus();
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"status\":{\"c30-use\":\"operational\"}}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
+    );
   }
 }

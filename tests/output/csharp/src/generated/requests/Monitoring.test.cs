@@ -11,13 +11,37 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public class MonitoringClientRequestTests
 {
-  private readonly MonitoringClient _client;
+  private readonly MonitoringClient _client,
+    _e2eClient;
   private readonly EchoHttpRequester _echo;
 
   public MonitoringClientRequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
+
+    DotEnv.Load(
+      options: new DotEnvOptions(
+        ignoreExceptions: true,
+        probeForEnv: true,
+        probeLevelsToSearch: 8,
+        envFilePaths: new[] { ".env" }
+      )
+    );
+
+    var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    if (e2EAppId == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var e2EApiKey = Environment.GetEnvironmentVariable("MONITORING_API_KEY");
+    if (e2EApiKey == null)
+    {
+      throw new Exception("please provide an `MONITORING_API_KEY` env var for e2e tests");
+    }
+
+    _e2eClient = new MonitoringClient(new MonitoringConfig(e2EAppId, e2EApiKey));
   }
 
   [Fact]
@@ -567,6 +591,24 @@ public class MonitoringClientRequestTests
     Assert.Equal("/1/inventory/servers", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.GetInventoryAsync();
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"inventory\":[{\"name\":\"c30-use-3\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-2\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-1\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 
   [Fact(DisplayName = "getLatency")]
@@ -611,5 +653,23 @@ public class MonitoringClientRequestTests
     Assert.Equal("/1/status", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.GetStatusAsync();
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"status\":{\"c30-use\":\"operational\"}}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
   }
 }

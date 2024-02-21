@@ -104,7 +104,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {{#hasE2E}}
     protected function getE2EClient()
     {
-        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
+        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
     }
     {{/hasE2E}}
 

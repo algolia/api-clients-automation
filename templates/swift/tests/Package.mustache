@@ -2,10 +2,17 @@
 
 import PackageDescription
 
+let libraries: [Target.Dependency] = [{{#packageList}}
+  .product(
+  name: "{{.}}",
+  package: "algoliasearch-client-swift"
+  ),{{/packageList}}
+]
+
 let package = Package(
   name: "AlgoliaSearchClientTests",
   dependencies: [
-    .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.1")),
+    .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
     .package(url: "https://github.com/swiftpackages/DotEnv.git", from: "3.0.0"),
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
@@ -21,24 +28,24 @@ let package = Package(
       name: "client",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
-        .target(name: "Utils"),{{#packageList}}
-        .product(
-          name: "{{.}}",
-          package: "algoliasearch-client-swift"
-        ),{{/packageList}}
-      ]
+        .target(name: "Utils"),
+      ] + libraries
     ),
     .testTarget(
       name: "requests",
       dependencies: [
         .product(name: "AnyCodable", package: "AnyCodable"),
         .product(name: "DotEnv", package: "DotEnv"),
-        .target(name: "Utils"),{{#packageList}}
-        .product(
-          name: "{{.}}",
-          package: "algoliasearch-client-swift"
-        ),{{/packageList}}
-      ]
+        .target(name: "Utils"),
+      ] + libraries
+    ),
+    .testTarget(
+      name: "handwritten",
+      dependencies: [
+        .product(name: "AnyCodable", package: "AnyCodable"),
+        .product(name: "DotEnv", package: "DotEnv"),
+        .target(name: "Utils"),
+      ] + libraries
     )
   ]
 )

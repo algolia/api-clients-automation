@@ -23,9 +23,9 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
     if _e2e_app_id is None:
         raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
 
-    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    _e2e_api_key = environ.get("{{e2eApiKey}}")
     if _e2e_api_key is None:
-        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+        raise Exception("please provide an `{{e2eApiKey}}` env var for e2e tests")
     {{/hasE2E}}
 
     {{#blocksRequests}}

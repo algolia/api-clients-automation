@@ -75,19 +75,6 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
-                if (!language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
-                  // hack for docker on mac, the `network=host` does not work so we need to use
-                  // another local IP
-                  stepOut.put(
-                    "customHosts",
-                    ((List<Map<String, Object>>) step.parameters.get("customHosts")).stream()
-                      .map(host -> {
-                        host.put("host", ((String) host.get("host")).replace("localhost", "host.docker.internal"));
-                        return host;
-                      })
-                      .toList()
-                  );
-                }
               }
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);

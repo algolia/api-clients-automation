@@ -1,6 +1,11 @@
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { insightsClient } from '@algolia/client-insights';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -8,6 +13,24 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = insightsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error(
+    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = insightsClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY,
+  'us'
+);
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
@@ -403,7 +426,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1641290601962,
+          timestamp: 1708387200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -413,7 +436,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1641290601962,
+          timestamp: 1708387200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -429,7 +452,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1641290601962,
+          timestamp: 1708387200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -439,12 +462,40 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1641290601962,
+          timestamp: 1708387200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.pushEvents({
+      events: [
+        {
+          eventType: 'conversion',
+          eventName: 'Product Purchased',
+          index: 'products',
+          userToken: 'user-123456',
+          authenticatedUserToken: 'user-123456',
+          timestamp: 1708387200000,
+          objectIDs: ['9780545139700', '9780439784542'],
+          queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+        },
+        {
+          eventType: 'view',
+          eventName: 'Product Detail Page Viewed',
+          index: 'products',
+          userToken: 'user-123456',
+          authenticatedUserToken: 'user-123456',
+          timestamp: 1708387200000,
+          objectIDs: ['9780545139700', '9780439784542'],
+        },
+      ],
+    });
+
+    const expectedBody = { message: 'OK', status: 200 };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('ConvertedObjectIDsAfterSearch', async () => {
