@@ -3,6 +3,8 @@ from __future__ import annotations
 import base64
 import hashlib
 import hmac
+from random import choice
+from string import ascii_letters
 from time import time
 from urllib.parse import quote
 from re import match, search
@@ -25,15 +27,16 @@ from pydantic import (
 from typing import (
   Annotated,
   Any,
+  Callable,
   ClassVar,
   Dict,
+  Iterator,
   List,
+  Literal,
   Optional,
+  Self,
   Tuple,
   Union,
-  Literal,
-  Self,
-  Callable
 )
 
 from algoliasearch.http.helpers import create_iterable, RetryTimeout, SecuredApiKeyRestrictions
