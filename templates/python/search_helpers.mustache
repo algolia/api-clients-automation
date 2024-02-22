@@ -246,10 +246,10 @@
 
         move_resp = await self.operation_index(
                 index_name=tmp_index_name,
-                operation_index_params={
-                    "operation": "move",
-                    "destination": index_name,
-                },
+                operation_index_params=OperationIndexParams(
+                    operation="move",
+                    destination=index_name,
+                ),
                 request_options=request_options,
             )
 
