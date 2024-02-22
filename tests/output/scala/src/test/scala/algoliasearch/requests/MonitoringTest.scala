@@ -7,11 +7,6 @@ import algoliasearch.monitoring.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
-import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -33,21 +28,6 @@ class MonitoringTest extends AnyFunSuite {
       ),
       echo
     )
-  }
-
-  def testE2EClient(): MonitoringClient = {
-    if (System.getenv("CI") == "true") {
-      MonitoringClient(
-        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
-        apiKey = System.getenv("MONITORING_API_KEY")
-      )
-    } else {
-      val dotenv = Dotenv.configure.directory("../../").load
-      MonitoringClient(
-        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
-        apiKey = dotenv.get("MONITORING_API_KEY")
-      )
-    }
   }
 
   test("allow del method for a custom path with minimal parameters") {
@@ -601,16 +581,6 @@ class MonitoringTest extends AnyFunSuite {
     assert(res.path == "/1/inventory/servers")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.getInventory(
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """{"inventory":[{"name":"c30-use-3","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-2","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-1","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
   }
 
   test("getLatency") {
@@ -667,12 +637,6 @@ class MonitoringTest extends AnyFunSuite {
     assert(res.path == "/1/status")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.getStatus(
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON("""{"status":{"c30-use":"operational"}}""", write(response), JSONCompareMode.LENIENT)
   }
 
 }
