@@ -43,6 +43,9 @@ let libraries: [Target.Dependency] = [
 
 let package = Package(
     name: "AlgoliaSearchClientTests",
+    platforms: [
+        .macOS(.v10_15),
+    ],
     dependencies: [
         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
         .package(url: "https://github.com/swiftpackages/DotEnv.git", from: "3.0.0"),
@@ -53,6 +56,8 @@ let package = Package(
             name: "Utils",
             dependencies: [
                 .product(name: "AnyCodable", package: "AnyCodable"),
+                .product(name: "Core", package: "algoliasearch-client-swift"),
+                .product(name: "Search", package: "algoliasearch-client-swift"),
             ],
             path: "Tests/Utils"
         ),
@@ -77,7 +82,9 @@ let package = Package(
                 .product(name: "AnyCodable", package: "AnyCodable"),
                 .product(name: "DotEnv", package: "DotEnv"),
                 .target(name: "Utils"),
-            ] + libraries
+                .product(name: "Core", package: "algoliasearch-client-swift"),
+                .product(name: "Search", package: "algoliasearch-client-swift"),
+            ]
         ),
     ]
 )
