@@ -22,7 +22,7 @@ extraTargetDependencies.append(contentsOf: [
   .product(name: "Logging", package: "swift-log")
 ])
 
-targets.append(contentsOf: [
+targets.append(
   .target(
     name: "Core",
     dependencies: [
@@ -30,7 +30,14 @@ targets.append(contentsOf: [
     ] + extraTargetDependencies,
     path: "Sources/Core"
   )
-])
+)
+
+products.append(
+  .library(
+    name: "Core",
+    targets: ["Core"]
+  )
+)
 
 [{{#packageList}}
   "{{#lambda.client-to-name}}{{.}}{{/lambda.client-to-name}}"{{^-last}},{{/-last}}{{/packageList}}
