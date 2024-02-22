@@ -207,7 +207,7 @@
         """
         return "{}_tmp_{}".format(index_name, "".join(choice(ascii_letters) for i in range(10)))
 
-    async def replace_all_objects(self, index_name: str, objects: Union[List[Dict[str, Any]], Iterator[Dict[str, Any]]], safe: Optional[bool] = False, request_options: Optional[Union[dict, RequestOptions]] = None) -> List[ApiResponse[str]]:
+    async def replace_all_objects(self, index_name: str, objects: Union[List[Dict[str, Any]], Iterator[Dict[str, Any]]], request_options: Optional[Union[dict, RequestOptions]] = None) -> List[ApiResponse[str]]:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
         """
@@ -225,8 +225,7 @@
 
         responses.append(copy_resp)
 
-        if safe:
-            await self.wait_for_task(index_name=tmp_index_name, task_id=copy_resp.task_id)
+        await self.wait_for_task(index_name=tmp_index_name, task_id=copy_resp.task_id)
 
         requests: List[BatchRequest] = []
 
@@ -241,8 +240,7 @@
 
         responses.append(save_resp)
 
-        if safe:
-            await self.wait_for_task(index_name=tmp_index_name, task_id=save_resp.task_id)
+        await self.wait_for_task(index_name=tmp_index_name, task_id=save_resp.task_id)
 
         move_resp = await self.operation_index(
                 index_name=tmp_index_name,
@@ -255,7 +253,6 @@
 
         responses.append(move_resp)
 
-        if safe:
-            await self.wait_for_task(index_name=index_name, task_id=move_resp.task_id)
+        await self.wait_for_task(index_name=index_name, task_id=move_resp.task_id)
 
         return responses
