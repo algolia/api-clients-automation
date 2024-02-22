@@ -256,7 +256,7 @@
 
         responses.append(copy_resp)
 
-        await self.wait_for_task(index_name=tmp_index_name, task_id=copy_resp.task_id)
+        await self.wait_for_task(index_name=index_name, task_id=copy_resp.task_id)
 
         save_resp = await self.chunked_batch(
                 index_name=tmp_index_name,
@@ -265,7 +265,7 @@
                 request_options=request_options,
         )
 
-        responses.append(*save_resp)
+        responses += save_resp
 
         move_resp = await self.operation_index(
                 index_name=tmp_index_name,
@@ -278,6 +278,6 @@
 
         responses.append(move_resp)
 
-        await self.wait_for_task(index_name=index_name, task_id=move_resp.task_id)
+        await self.wait_for_task(index_name=tmp_index_name, task_id=move_resp.task_id)
 
         return responses
