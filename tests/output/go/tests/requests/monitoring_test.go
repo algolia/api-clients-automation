@@ -2,13 +2,10 @@ package requests
 
 import (
 	"encoding/json"
-	"os"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -31,22 +28,6 @@ func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoReq
 	require.NoError(t, err)
 
 	return client, echo
-}
-
-func createE2EMonitoringClient(t *testing.T) *monitoring.APIClient {
-	t.Helper()
-
-	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
-	if appID == "" && os.Getenv("CI") != "true" {
-		err := godotenv.Load("../../../../.env")
-		require.NoError(t, err)
-		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
-	}
-	apiKey := os.Getenv("MONITORING_API_KEY")
-	client, err := monitoring.NewClient(appID, apiKey)
-	require.NoError(t, err)
-
-	return client
 }
 
 func TestMonitoring_CustomDelete(t *testing.T) {
@@ -476,29 +457,6 @@ func TestMonitoring_GetInventory(t *testing.T) {
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
-		clientE2E := createE2EMonitoringClient(t)
-		res, err := clientE2E.GetInventory()
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"inventory":[{"name":"c30-use-3","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-2","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-1","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"}]}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }
 
@@ -561,28 +519,5 @@ func TestMonitoring_GetStatus(t *testing.T) {
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
-		clientE2E := createE2EMonitoringClient(t)
-		res, err := clientE2E.GetStatus()
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"status":{"c30-use":"operational"}}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 }

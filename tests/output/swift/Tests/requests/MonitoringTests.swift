@@ -1,52 +1,14 @@
 import XCTest
 
 import AnyCodable
-import DotEnv
 import Utils
 
 @testable import Core
 @testable import Monitoring
 
 final class MonitoringClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: MonitoringClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["MONITORING_API_KEY"])
-        } catch {
-            XCTFail("Please provide an `MONITORING_API_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? MonitoringClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
@@ -938,25 +900,6 @@ final class MonitoringClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = MonitoringClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getInventoryWithHTTPInfo()
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"inventory\":[{\"name\":\"c30-use-3\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-2\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"},{\"name\":\"c30-use-1\",\"region\":\"use\",\"is_replica\":false,\"cluster\":\"c30-use\",\"status\":\"PRODUCTION\",\"type\":\"cluster\"}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// getLatency
@@ -1048,20 +991,5 @@ final class MonitoringClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = MonitoringClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getStatusWithHTTPInfo()
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData = try XCTUnwrap("{\"status\":{\"c30-use\":\"operational\"}}".data(using: .utf8))
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 }
