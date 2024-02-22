@@ -5,37 +5,6 @@
     "request": {
       "path": "/1/inventory/servers",
       "method": "GET"
-    },
-    "response": {
-      "statusCode": 200,
-      "body": {
-        "inventory": [
-          {
-            "name": "c30-use-3",
-            "region": "use",
-            "is_replica": false,
-            "cluster": "c30-use",
-            "status": "PRODUCTION",
-            "type": "cluster"
-          },
-          {
-            "name": "c30-use-2",
-            "region": "use",
-            "is_replica": false,
-            "cluster": "c30-use",
-            "status": "PRODUCTION",
-            "type": "cluster"
-          },
-          {
-            "name": "c30-use-1",
-            "region": "use",
-            "is_replica": false,
-            "cluster": "c30-use",
-            "status": "PRODUCTION",
-            "type": "cluster"
-          }
-        ]
-      }
     }
   }
 ]
