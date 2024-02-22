@@ -164,7 +164,7 @@ typealias Client = {{classname}}
     /// - returns: GetTaskResponse
     open func waitForTask(
         with taskID: Int64,
-        for indexName: String,
+        in indexName: String,
         maxRetries: Int = 50,
         timeout: (Int) -> TimeInterval = { count in
             min(TimeInterval(count) * 0.2, 5)
@@ -333,7 +333,7 @@ typealias Client = {{classname}}
     /// - returns: BrowseResponse
     @discardableResult
     open func browseObjects(
-        indexName: String,
+        in indexName: String,
         browseParams: BrowseParamsObject,
         validate: (BrowseResponse) -> Bool = { response in
             response.cursor == nil
@@ -368,7 +368,7 @@ typealias Client = {{classname}}
     /// - returns: SearchRulesResponse
     @discardableResult
     open func browseRules(
-        indexName: String,
+        in indexName: String,
         searchRulesParams: SearchRulesParams,
         validate: ((SearchRulesResponse) -> Bool)? = nil,
         aggregator: @escaping (SearchRulesResponse) -> Void,
@@ -411,7 +411,7 @@ typealias Client = {{classname}}
     /// - returns: SearchSynonymsResponse
     @discardableResult
     open func browseSynonyms(
-        indexName: String,
+        in indexName: String,
         searchSynonymsParams: SearchSynonymsParams,
         validate: ((SearchSynonymsResponse) -> Bool)? = nil,
         aggregator: @escaping (SearchSynonymsResponse) -> Void,
@@ -481,6 +481,155 @@ typealias Client = {{classname}}
                     acc.append(searchForFacet)
                 }
             }
+    }
+
+    public struct ReplaceAllObjectsResponse {
+        let copyOperationResponse: UpdatedAtResponse
+        let batchResponse: BatchResponse
+        let moveOperationResponse: UpdatedAtResponse
+    }
+
+    /// Replace all objects in an index
+    /// - parameter objects: The new objects
+    /// - parameter indexName: The name of the index where to replace the objects
+    /// - parameter requestOptions: The request options
+    /// - returns: ReplaceAllObjectsResponse
+    open func replaceAllObjects<T: Encodable>(
+        with objects: [T],
+        in indexName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReplaceAllObjectsResponse {
+        let tmpIndexName = try "\(indexName)_tmp_\(randomString())"
+
+        // Copy all index resources from production index
+        let copyOperationResponse = try await operationIndex(
+            indexName: indexName,
+            operationIndexParams: OperationIndexParams(
+                operation: .copy,
+                destination: tmpIndexName,
+                scope: [.rules, .settings, .synonyms]
+            ),
+            requestOptions: requestOptions
+        )
+
+        try await self.waitForTask(with: copyOperationResponse.taskID, for: indexName)
+
+        // Send records to the tmp index (batched)
+        let batchResponse = try await self.batch(
+            indexName: tmpIndexName,
+            batchWriteParams: BatchWriteParams(
+                requests: objects.map { element in
+                        .init(action: .addObject, body: AnyCodable(element))
+                }
+            ),
+            requestOptions: requestOptions
+        )
+
+        try await self.waitForTask(with: batchResponse.taskID, for: tmpIndexName)
+
+        // Move the temporary index to replace the main one
+        let moveOperationResponse = try await self.operationIndex(
+            indexName: tmpIndexName,
+            operationIndexParams: OperationIndexParams(
+                operation: .move,
+                destination: indexName
+            ),
+            requestOptions: requestOptions
+        )
+
+        try await self.waitForTask(with: moveOperationResponse.taskID, for: tmpIndexName)
+
+        return ReplaceAllObjectsResponse(
+            copyOperationResponse: copyOperationResponse,
+            batchResponse: batchResponse,
+            moveOperationResponse: moveOperationResponse
+        )
+    }
+
+    public struct SecuredAPIKeyRestriction {
+        let searchParams: SearchParamsObject
+        let validUntil: TimeInterval?
+        let restrictIndices: [String]?
+        let restrictSources: [String]?
+        let userToken: String?
+
+        func toURLEncodedString() throws -> String {
+            var queryDictionary: [String: Any] = [:]
+
+            let searchParamsData = try CodableHelper.jsonEncoder.encode(self.searchParams)
+            guard let searchParamsDictionary = try JSONSerialization.jsonObject(
+                with: searchParamsData,
+                options: .fragmentsAllowed
+            ) as? [String: Any] else {
+                throw AlgoliaError.runtimeError("Unable to encode Secured API Key Restrictions search parameters")
+            }
+
+            if let validUntil {
+                queryDictionary["validUntil"] = validUntil
+            }
+            if let restrictIndices {
+                queryDictionary["restrictIndices"] = restrictIndices
+            }
+            if let restrictSources {
+                queryDictionary["restrictSources"] = restrictSources
+            }
+            if let userToken {
+                queryDictionary["userToken"] = userToken
+            }
+
+            let queryItems = APIHelper.mapValuesToQueryItems(queryDictionary)
+            guard let queryItems else {
+                throw AlgoliaError.runtimeError("Unable to encode Secured API Key Restrictions query items")
+            }
+
+            var urlEncodedString = ""
+            for item in queryItems {
+                urlEncodedString.append("\(item.name)=\(item.value)")
+                if item != queryItems.last {
+                    urlEncodedString.append("&")
+                }
+            }
+
+            return urlEncodedString
+        }
+    }
+
+    /// Generate a secured API key
+    /// - parameter parentApiKey: The parent API key
+    /// - parameter restriction: The restrictions
+    /// - returns: String?
+    open func generateSecuredApiKey(
+        parentApiKey: String,
+        with restriction: SecuredAPIKeyRestriction
+    ) throws -> String? {
+        let queryParams = try restriction.toURLEncodedString()
+        let hash = queryParams.hmac256(withKey: parentApiKey)
+        return "\(hash)\(queryParams)".data(using: .utf8)?.base64EncodedString()
+    }
+
+    /// Get the remaining validity of a secured API key
+    /// - parameter securedAPIKey: The secured API key
+    /// - returns: TimeInterval?
+    open func getSecuredApiKeyRemainingValidity(for securedAPIKey: String) -> TimeInterval? {
+        guard let rawDecodedAPIKey = String(data: Data(base64Encoded: securedAPIKey) ?? Data(), encoding: .utf8),
+              !rawDecodedAPIKey.isEmpty else {
+            return nil
+        }
+
+        let prefix = "validUntil="
+
+        guard let range = rawDecodedAPIKey.range(of: "\(prefix)\\d+", options: .regularExpression) else {
+            return nil
+        }
+
+        let validitySubstring = String(rawDecodedAPIKey[range].dropFirst(prefix.count))
+
+        guard let timestamp = TimeInterval(String(validitySubstring)) else {
+            return nil
+        }
+        let timestampDate = Date(timeIntervalSince1970: timestamp)
+
+        return timestampDate.timeIntervalSince1970 - Date().timeIntervalSince1970
     }
 {{/isSearchClient}}
 }
