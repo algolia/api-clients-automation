@@ -7,44 +7,42 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 
 private[algoliasearch] object RetryUntil {
 
+  val DEFAULT_DELAY: Long => Long = (retries: Long) => Math.min(retries * 200, 5000)
+
+
   /** Retry a function until a condition is met.
     */
   def retryUntil[T](
       retry: () => Future[T],
       until: T => Boolean,
       maxRetries: Int,
-      timeout: Option[Duration],
-      initialDelay: Duration,
-      maxDelay: Duration
+      delay: Long => Long = DEFAULT_DELAY,
   )(implicit ec: ExecutionContext): Future[T] = {
 
-    val startTime = System.currentTimeMillis()
-
-    def attempt(retryCount: Int, currentDelay: Duration): Future[T] = {
+    def attempt(retryCount: Int, currentDelay: Long): Future[T] = {
       if (retryCount >= maxRetries) {
         Future.failed(AlgoliaWaitException("The maximum number of retries exceeded."))
       } else {
         retry().flatMap { result =>
           if (until(result)) {
             Future.successful(result)
-          } else if (timeout.exists(System.currentTimeMillis() - startTime > _.toMillis)) {
-            Future.failed(AlgoliaWaitException("Timeout exceeded."))
           } else {
-            val nextDelay = (currentDelay * 2).min(maxDelay)
+            val nextDelay = delay(currentDelay)
             after(nextDelay)(attempt(retryCount + 1, nextDelay))
           }
         }
       }
     }
 
+    val initialDelay = delay(0)
     attempt(0, initialDelay)
   }
 
-  private def after[T](delay: Duration)(block: => Future[T])(implicit ec: ExecutionContext): Future[T] = {
+  private def after[T](delay: Long)(block: => Future[T])(implicit ec: ExecutionContext): Future[T] = {
     val promise = Promise[T]()
     ec.execute(() => {
       try {
-        Thread.sleep(delay.toMillis)
+        Thread.sleep(delay)
         block.onComplete(promise.complete)
       } catch {
         case e: InterruptedException => promise.failure(e)

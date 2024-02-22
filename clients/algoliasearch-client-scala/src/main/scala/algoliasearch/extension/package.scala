@@ -3,10 +3,9 @@ package algoliasearch
 import algoliasearch.api.SearchClient
 import algoliasearch.config.RequestOptions
 import algoliasearch.exception.AlgoliaApiException
-import algoliasearch.extension.internal.RetryUntil.retryUntil
+import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
 import algoliasearch.search._
 
-import scala.concurrent.duration.{Duration, DurationInt}
 import scala.concurrent.{ExecutionContext, Future}
 
 package object extension {
@@ -23,8 +22,6 @@ package object extension {
       *   Required for `update` operation, to compare the response with the given key.
       * @param maxRetries
       *   The maximum number of retries. 50 by default. (optional)
-      * @param timeout
-      *   If specified, the method will throw an exception after the timeout value is elapsed.
       * @param requestOptions
       *   Additional request configuration.
       */
@@ -33,18 +30,16 @@ package object extension {
         key: String,
         apiKey: Option[ApiKey] = None,
         maxRetries: Int = 50,
-        timeout: Option[Duration] = None,
-        initialDelay: Duration = 200.milliseconds,
-        maxDelay: Duration = 5.seconds,
+        delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Any] = {
       operation match {
         case ApiKeyOperation.Create =>
-          client.waitKeyCreation(key, timeout, maxRetries, initialDelay, maxDelay, requestOptions)
+          client.waitKeyCreation(key, maxRetries, delay, requestOptions)
         case ApiKeyOperation.Update =>
-          client.waitKeyUpdate(key, apiKey.get, timeout, maxRetries, initialDelay, maxDelay, requestOptions)
+          client.waitKeyUpdate(key, apiKey.get, maxRetries, delay, requestOptions)
         case ApiKeyOperation.Delete =>
-          client.waitKeyDelete(key, timeout, maxRetries, initialDelay, maxDelay, requestOptions)
+          client.waitKeyDelete(key, maxRetries, delay, requestOptions)
       }
     }
 
@@ -58,8 +53,6 @@ package object extension {
       *   The index in which to perform the request.
       * @param taskID
       *   The ID of the task to wait for.
-      * @param timeout
-      *   If specified, the method will throw an exception after the timeout value is elapsed.
       * @param maxRetries
       *   maximum number of retry attempts.
       * @param requestOptions
@@ -68,19 +61,15 @@ package object extension {
     def waitTask(
         indexName: String,
         taskID: Long,
-        timeout: Option[Duration] = None,
+        delay: Long => Long = DEFAULT_DELAY,
         maxRetries: Int = 50,
-        initialDelay: Duration = 200.milliseconds,
-        maxDelay: Duration = 5.seconds,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[TaskStatus] = {
       retryUntil(
         retry = () => client.getTask(indexName, taskID, requestOptions).map(_.status),
         until = (status: TaskStatus) => status == TaskStatus.Published,
         maxRetries = maxRetries,
-        timeout = timeout,
-        initialDelay = initialDelay,
-        maxDelay = maxDelay
+        delay = delay
       )
     }
 
@@ -90,24 +79,16 @@ package object extension {
       *   The key that has been updated.
       * @param apiKey
       *   Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-      * @param timeout
-      *   If specified, the method will throw an exception after the timeout value is elapsed.
       * @param maxRetries
       *   Maximum number of retry attempts.
-      * @param initialDelay
-      *   Initial delay before the first retry.
-      * @param maxDelay
-      *   Maximum delay between retries.
       * @param requestOptions
       *   Additional request configuration.
       */
     def waitKeyUpdate(
         key: String,
         apiKey: ApiKey,
-        timeout: Option[Duration] = None,
         maxRetries: Int = 50,
-        initialDelay: Duration = 200.milliseconds,
-        maxDelay: Duration = 5.seconds,
+        delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetApiKeyResponse] = {
       retryUntil(
@@ -124,9 +105,7 @@ package object extension {
             validity = res.validity
           ),
         maxRetries = maxRetries,
-        timeout = timeout,
-        initialDelay = initialDelay,
-        maxDelay = maxDelay
+        delay = delay
       )
     }
 
@@ -134,23 +113,15 @@ package object extension {
       *
       * @param key
       *   The key that has been created.
-      * @param timeout
-      *   If specified, the method will throw an exception after the timeout value is elapsed.
       * @param maxRetries
       *   Maximum number of retry attempts.
-      * @param initialDelay
-      *   Initial delay before the first retry.
-      * @param maxDelay
-      *   Maximum delay between retries.
       * @param requestOptions
       *   Additional request configuration.
       */
     def waitKeyCreation(
         key: String,
-        timeout: Option[Duration] = None,
         maxRetries: Int = 50,
-        initialDelay: Duration = 200.milliseconds,
-        maxDelay: Duration = 5.seconds,
+        delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetApiKeyResponse] = {
       retryUntil(
@@ -161,9 +132,7 @@ package object extension {
             .recover { case _ => None },
         until = (res: Option[GetApiKeyResponse]) => res.isDefined,
         maxRetries = maxRetries,
-        timeout = timeout,
-        initialDelay = initialDelay,
-        maxDelay = maxDelay
+        delay = delay
       ).map(_.get)
     }
 
@@ -171,23 +140,15 @@ package object extension {
       *
       * @param key
       *   The key that has been deleted.
-      * @param timeout
-      *   If specified, the method will throw an exception after the timeout value is elapsed.
       * @param maxRetries
       *   Maximum number of retry attempts.
-      * @param initialDelay
-      *   Initial delay before the first retry.
-      * @param maxDelay
-      *   Maximum delay between retries.
       * @param requestOptions
       *   Additional request configuration.
       */
     def waitKeyDelete(
         key: String,
-        timeout: Option[Duration] = None,
         maxRetries: Int = 50,
-        initialDelay: Duration = 200.milliseconds,
-        maxDelay: Duration = 5.seconds,
+        delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Boolean] = {
       retryUntil(
@@ -205,9 +166,7 @@ package object extension {
             case _          => false // Continue retrying otherwise
           },
         maxRetries = maxRetries,
-        timeout = timeout,
-        initialDelay = initialDelay,
-        maxDelay = maxDelay
+        delay = delay
       )
       Future.successful(true)
     }
