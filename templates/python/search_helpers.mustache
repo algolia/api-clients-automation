@@ -230,7 +230,7 @@
         requests: List[BatchRequest] = []
 
         for obj in objects:
-            requests.append({"action": "addObject", "body": obj})
+            requests.append(BatchRequest(action="addObject",body=obj))
 
         save_resp = await self.batch(
                 index_name=tmp_index_name,

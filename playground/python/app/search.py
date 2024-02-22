@@ -292,7 +292,6 @@ async def main():
                 ],
                 "objectID": "fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2"
               }],
-            safe=True,
         )
 
         print(resp)
