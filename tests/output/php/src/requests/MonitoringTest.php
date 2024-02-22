@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * MonitoringTest.
@@ -641,6 +650,13 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 'body' => null,
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getInventory();
+
+        $expected = json_decode('{"inventory":[{"name":"c30-use-3","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-2","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"},{"name":"c30-use-1","region":"use","is_replica":false,"cluster":"c30-use","status":"PRODUCTION","type":"cluster"}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -720,6 +736,28 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 'body' => null,
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getStatus();
+
+        $expected = json_decode('{"status":{"c30-use":"operational"}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
     }
 
     protected function assertRequests(array $requests)
@@ -761,6 +799,11 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return MonitoringClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['MONITORING_API_KEY']);
     }
 
     protected function getClient()

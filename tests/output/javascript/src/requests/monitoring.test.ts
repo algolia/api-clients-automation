@@ -1,11 +1,33 @@
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { monitoringClient } from '@algolia/monitoring';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = monitoringClient(appId, apiKey, { requester: echoRequester() });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.MONITORING_API_KEY) {
+  throw new Error(
+    'please provide an `MONITORING_API_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = monitoringClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.MONITORING_API_KEY
+);
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
@@ -399,6 +421,39 @@ describe('getInventory', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.getInventory();
+
+    const expectedBody = {
+      inventory: [
+        {
+          name: 'c30-use-3',
+          region: 'use',
+          is_replica: false,
+          cluster: 'c30-use',
+          status: 'PRODUCTION',
+          type: 'cluster',
+        },
+        {
+          name: 'c30-use-2',
+          region: 'use',
+          is_replica: false,
+          cluster: 'c30-use',
+          status: 'PRODUCTION',
+          type: 'cluster',
+        },
+        {
+          name: 'c30-use-1',
+          region: 'use',
+          is_replica: false,
+          cluster: 'c30-use',
+          status: 'PRODUCTION',
+          type: 'cluster',
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 
@@ -450,5 +505,11 @@ describe('getStatus', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.getStatus();
+
+    const expectedBody = { status: { 'c30-use': 'operational' } };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
