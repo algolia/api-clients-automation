@@ -169,7 +169,7 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, aggregatedElementData.jsonString)
         }
     }
-    
+
     func testSearchForHitsSuccess() async throws {
         let indexName = "yourIndexName"
         let expected: [SearchResponse] = try [
@@ -205,30 +205,30 @@ class BrowserTests: XCTestCase {
                         "objectID": "100003",
                         "title": "The Dark Knight Rises",
                         "description": "Third and final movie of the Nolan trilogy",
-                    ])
+                    ]),
                 ],
                 query: "batman",
                 params: "query=batman"
-            )
+            ),
         ]
-        
+
         let client = try MockSearchClient<SearchResponses>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             .init(results: [
                 .searchResponse(expected[0]),
                 .searchResponse(expected[1]),
-            ])
+            ]),
         ])
-        
+
         let responses = try await client.searchForHits(
             searchMethodParams: SearchMethodParams(requests: [
                 .searchForHits(SearchForHits(
                     indexName: indexName
-                ))
+                )),
             ])
         )
-        
+
         XCTAssertEqual(expected.count, responses.count)
         for (index, element) in expected.enumerated() {
             let originalElementData = try CodableHelper.jsonEncoder.encode(element)
@@ -237,7 +237,7 @@ class BrowserTests: XCTestCase {
             XCTAssertEqual(originalElementData.jsonString, responseElementData.jsonString)
         }
     }
-    
+
     func testSearchForFacetsSuccess() async throws {
         let indexName = "yourIndexName"
         let expected: [SearchForFacetValuesResponse] = [
@@ -257,16 +257,16 @@ class BrowserTests: XCTestCase {
                 exhaustiveFacetsCount: false
             ),
         ]
-        
+
         let client = try MockSearchClient<SearchResponses>(appID: "test-app-id", apiKey: "test-api-key")
-        
+
         client.setResponses([
             .init(results: [
                 .searchForFacetValuesResponse(expected[0]),
                 .searchForFacetValuesResponse(expected[1]),
-            ])
+            ]),
         ])
-        
+
         let responses = try await client.searchForFacets(
             searchMethodParams: SearchMethodParams(requests: [
                 .searchForFacets(SearchForFacets(
@@ -274,10 +274,10 @@ class BrowserTests: XCTestCase {
                     facet: "genre",
                     indexName: indexName,
                     type: .facet
-                ))
+                )),
             ])
         )
-        
+
         XCTAssertEqual(expected.count, responses.count)
         for (index, element) in expected.enumerated() {
             let originalElementData = try CodableHelper.jsonEncoder.encode(element)

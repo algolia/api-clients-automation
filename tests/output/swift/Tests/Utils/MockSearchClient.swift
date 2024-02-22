@@ -110,8 +110,11 @@ public class MockSearchClient<T>: SearchClient {
         }
         return self.responses[self.loop] as! SearchSynonymsResponse
     }
-    
-    override public func search(searchMethodParams: SearchMethodParams, requestOptions: RequestOptions? = nil) async throws -> SearchResponses {
+
+    override public func search(
+        searchMethodParams _: SearchMethodParams,
+        requestOptions _: RequestOptions? = nil
+    ) async throws -> SearchResponses {
         defer {
             loop += 1
         }
