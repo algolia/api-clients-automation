@@ -387,3 +387,7 @@ SourceUpdateInput:
 DockerSourceStream:
   type: object
   description: A stream definition (see the Singer specification for details).
+
+SourceSample:
+  type: object
+  description: A source sample is a sample of the data that can be fetched from a source.

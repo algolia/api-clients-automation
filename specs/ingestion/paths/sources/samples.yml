@@ -1,0 +1,32 @@
+get:
+  tags:
+    - sources
+  summary: Get a list of source samples.
+  description: Get a list of source samples for the given sourceID and query parameters.
+  operationId: getSourceSamples
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathSourceID'
+    - $ref: '../../common/sourceSamplesParameters.yml#/filter'
+    - $ref: '../../common/sourceSamplesParameters.yml#/limit'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: listSourceSamplesResponse
+            type: object
+            additionalProperties: false
+            properties:
+              samples:
+                type: array
+                items:
+                  $ref: '../../common/schemas/source.yml#/SourceSample'
+            required:
+              - samples
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
