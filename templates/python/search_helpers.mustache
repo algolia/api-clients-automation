@@ -212,26 +212,26 @@
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
         """
         tmp_index_name = self.create_temporary_name(index_name)
-        responses = List[ApiResponse[str]]()
+        responses: List[ApiResponse[str]] = []
         copy_resp = await self.operation_index(
-                index_name=tmp_index_name,
-                operation_index_params={
-                    "operation": "copy",
-                    "destination": tmp_index_name,
-                    "scope": ["settings", "synonyms", "rules"],
-                },
+                index_name=index_name,
+                operation_index_params=OperationIndexParams(
+                    operation="copy",
+                    destination=tmp_index_name,
+                    scope=[ScopeType("settings"), ScopeType("synonyms"), ScopeType("rules")]
+                ),
                 request_options=request_options,
             )
 
-        responses.push(copy_resp)
+        responses.append(copy_resp)
 
         if safe:
             await self.wait_for_task(index_name=tmp_index_name, task_id=copy_resp.task_id)
 
-        requests = List[BatchRequest]()
+        requests: List[BatchRequest] = []
 
         for obj in objects:
-            requests.push({"action": "addObject", "body": obj})
+            requests.append({"action": "addObject", "body": obj})
 
         save_resp = await self.batch(
                 index_name=tmp_index_name,
@@ -239,7 +239,7 @@
                 request_options=request_options,
         )
 
-        responses.push(save_resp)
+        responses.append(save_resp)
 
         if safe:
             await self.wait_for_task(index_name=tmp_index_name, task_id=save_resp.task_id)
@@ -253,7 +253,7 @@
                 request_options=request_options,
             )
 
-        responses.push(move_resp)
+        responses.append(move_resp)
 
         if safe:
             await self.wait_for_task(index_name=index_name, task_id=move_resp.task_id)
