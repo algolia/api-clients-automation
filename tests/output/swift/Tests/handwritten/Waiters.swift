@@ -13,73 +13,7 @@ import Foundation
 import XCTest
 @testable import Core
 @testable import Search
-
-class MockSearchClient<T>: SearchClient {
-    var loop = 0
-    var responses: [T] = []
-
-    func setResponses(_ elements: [T]) {
-        self.responses = elements
-    }
-
-    override func setSettings(
-        indexName _: String,
-        indexSettings _: IndexSettings,
-        forwardToReplicas _: Bool? = nil,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> UpdatedAtResponse {
-        UpdatedAtResponse(
-            taskID: 12345,
-            updatedAt: "2024-02-20T10:10:00Z"
-        )
-    }
-
-    override func getTask(
-        indexName _: String,
-        taskID _: Int64,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> GetTaskResponse {
-        defer {
-            loop += 1
-        }
-        return self.responses[self.loop] as! GetTaskResponse
-    }
-
-    override func addApiKey(
-        apiKey _: ApiKey,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> AddApiKeyResponse {
-        AddApiKeyResponse(
-            key: "created-api-key",
-            createdAt: "2024-02-20T10:10:00Z"
-        )
-    }
-
-    override func deleteApiKey(
-        key _: String,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> DeleteApiKeyResponse {
-        DeleteApiKeyResponse(deletedAt: "2024-02-20T10:10:00Z")
-    }
-
-    override func updateApiKey(
-        key: String,
-        apiKey _: ApiKey,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> UpdateApiKeyResponse {
-        UpdateApiKeyResponse(key: key, updatedAt: "2024-02-20T10:10:00Z")
-    }
-
-    override func getApiKeyWithHTTPInfo(
-        key _: String,
-        requestOptions _: RequestOptions? = nil
-    ) async throws -> Response<GetApiKeyResponse> {
-        defer {
-            loop += 1
-        }
-        return self.responses[self.loop] as! Response<GetApiKeyResponse>
-    }
-}
+@testable import Utils
 
 class WaiterTests: XCTestCase {
     func testWaitForTaskSuccess() async throws {
