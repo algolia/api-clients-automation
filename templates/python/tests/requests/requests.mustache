@@ -1,6 +1,8 @@
+from time import time
 from os import environ
 from json import loads
 from algoliasearch.http.transporter import EchoTransporter
+from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
 {{#hasE2E}}
@@ -64,3 +66,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
 
     {{/tests}}
     {{/blocksRequests}}
+
+    {{#isSearchClient}}
+    {{> tests/requests/helpers}}
+    {{/isSearchClient}}
