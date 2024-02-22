@@ -216,7 +216,7 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
-        Helper: Chunks the given `objects` list in multiple ones in order to make them fit in a `batch` requests.
+        Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
         """
         requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
