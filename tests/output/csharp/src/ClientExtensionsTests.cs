@@ -631,7 +631,10 @@ public class ClientExtensionsTests
               r.Uri.AbsolutePath,
               "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/2"
             )
-            || r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/task/3")
+            || Regex.IsMatch(
+              r.Uri.AbsolutePath,
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/3"
+            )
           ),
           It.IsAny<TimeSpan>(),
           It.IsAny<TimeSpan>(),
