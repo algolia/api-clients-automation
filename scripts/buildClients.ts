@@ -35,7 +35,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
       break;
     case 'swift':
-      await run(`swift build`, { cwd, language });
+      await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
       break;
     default:
   }
