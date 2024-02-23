@@ -1,9 +1,12 @@
+import {createHmac} from 'crypto';
+
 import {
   createAuth,
   createTransporter,
   getAlgoliaAgent,
   shuffle,
   {{#isSearchClient}}
+  serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
 } from '{{{npmNamespace}}}/client-common';
@@ -11,9 +14,9 @@ import type {
   CreateClientOptions,
   Headers,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
-  QueryParameters,
   {{#isSearchClient}}
   ApiError,
   IterableOptions,
@@ -28,8 +31,10 @@ import { {{classname}} } from '{{filename}}';
 import type {
   {{#isSearchClient}}
     BrowseOptions,
-    WaitForTaskOptions,
+    GenerateSecuredApiKeyOptions,
+    GetSecuredApiKeyRemainingValidityOptions,
     WaitForApiKeyOptions,
+    WaitForTaskOptions,
   {{/isSearchClient}}
   {{#operation}}
     {{#vendorExtensions}}
@@ -45,9 +50,9 @@ import type {
 {{/operations}}
 
 {{#isIngestionClient}}
-  import type { Trigger } from '../model/trigger';
   import type { OnDemandTrigger } from '../model/onDemandTrigger';
   import type { ScheduleTrigger } from '../model/scheduleTrigger';
   import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
   import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
+  import type { Trigger } from '../model/trigger';
 {{/isIngestionClient}}
