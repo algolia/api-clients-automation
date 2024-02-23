@@ -10,7 +10,11 @@ import { {{classname}} } from '{{filename}}';
 {{#operations}}{{#operation}}{{#vendorExtensions.x-legacy-signature}}{{> client/api/operation/legacySearchCompatible/imports}}{{/vendorExtensions.x-legacy-signature}}{{/operation}}{{/operations}}
 
 {{! Imports for the helpers method of the search client }}
-{{#isSearchClient}}import type { CreateIterablePromise } from '{{{npmNamespace}}}/client-common';{{/isSearchClient}}
+{{#isSearchClient}}
+import type { CreateIterablePromise } from '{{{npmNamespace}}}/client-common';
+import type { Action } from './action';
+import type { UpdatedAtResponse } from './updatedAtResponse';
+{{/isSearchClient}}
 
 {{#operations}}
 {{#operation}}
@@ -138,6 +142,47 @@ export type SecuredApiKeyRestrictions = {
 
   searchParams?: SearchParamsObject;
 };
+
+export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
+  /**
+   * The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+   */
+  action?: Action;
+
+  /**
+   * Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   */
+  waitForTasks?: boolean;
+}
+
+export type ReplaceAllObjectsOptions = {
+  /**
+   * The `indexName` to replace `objects` in.
+   */
+  indexName: string;
+
+  /**
+   * The array of `objects` to store in the given Algolia `indexName`.
+   */
+  objects: Array<Record<string, any>>;
+}
+
+export type ReplaceAllObjectsResponse = {
+  /**
+   * The response of the `operationIndex` request for the `copy` operation.
+   */
+  copyOperationResponse: UpdatedAtResponse;
+
+  /**
+   * The response of the `batch` request(s).
+   */
+  batchResponses: BatchResponse[];
+
+  /**
+   * The response of the `operationIndex` request for the `move` operation.
+   */
+  moveOperationResponse: UpdatedAtResponse;
+}
 {{/isSearchClient}}
 
 {{/apiInfo.apis.0}}

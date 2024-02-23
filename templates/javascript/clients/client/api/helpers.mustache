@@ -286,7 +286,7 @@ generateSecuredApiKey({
 /**
  * Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `ValidUntil` parameter must have been provided.
  *
- * @summary Helper: Generates a secured API key based on the given `parentApiKey` and given `restrictions`.
+ * @summary Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `ValidUntil` parameter must have been provided.
  * @param getSecuredApiKeyRemainingValidity - The `getSecuredApiKeyRemainingValidity` object.
  * @param getSecuredApiKeyRemainingValidity.securedApiKey - The secured API key generated with the `generateSecuredApiKey` method.
  */
@@ -304,4 +304,88 @@ getSecuredApiKeyRemainingValidity({
   }
 
   return parseInt(match[1], 10) - Math.round(new Date().getTime() / 1000);
+},
+
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests. * @param getSecuredApiKeyRemainingValidity - The `getSecuredApiKeyRemainingValidity` object.
+ * @param chunkedBatch - The `chunkedBatch` object.
+ * @param chunkedBatch.indexName - The `indexName` to replace `objects` in.
+ * @param chunkedBatch.objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param chunkedBatch.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+ * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+ */
+async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks }: ChunkedBatchOptions, requestOptions?: RequestOptions): Promise<Array<BatchResponse>> {
+  let requests: Array<BatchRequest> = [];
+  const responses: Array<BatchResponse> = [];
+
+  for (const [i, obj] of objects.entries()) {
+    requests.push({action, body: obj});
+    if (i % 1000 === 0) {
+      responses.push(await this.batch({indexName, batchWriteParams: {requests}}, requestOptions));
+      requests = [];
+    }
+  }
+
+  if (waitForTasks) {
+    for (const resp of responses) {
+      await this.waitForTask({indexName, taskID: resp.taskID});
+    }
+  }
+
+  return responses;
+},
+
+/**
+ * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+ *
+ * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+ * @param replaceAllObjects - The `replaceAllObjects` object.
+ * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
+ * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+ */
+async replaceAllObjects(
+  { indexName, objects }: ReplaceAllObjectsOptions,
+  requestOptions?: RequestOptions
+): Promise<ReplaceAllObjectsResponse> {
+  const randomSuffix = Math.random().toString(36).substring(7);
+  const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
+
+  const copyOperationResponse = await this.operationIndex(
+    {
+      indexName,
+      operationIndexParams: {
+        operation: 'copy',
+        destination: tmpIndexName,
+        scope: ['settings', 'rules', 'synonyms'],
+      },
+    },
+    requestOptions
+  );
+  await this.waitForTask({
+    indexName,
+    taskID: copyOperationResponse.taskID,
+  });
+
+  const batchResponses = await this.chunkedBatch(
+    { indexName: tmpIndexName, objects, waitForTasks: true },
+    requestOptions
+  );
+
+  const moveOperationResponse = await this.operationIndex(
+    {
+      indexName: tmpIndexName,
+      operationIndexParams: { operation: 'move', destination: indexName },
+    },
+    requestOptions
+  );
+  await this.waitForTask({
+    indexName,
+    taskID: moveOperationResponse.taskID,
+  });
+
+  return { copyOperationResponse, batchResponses, moveOperationResponse };
 },
