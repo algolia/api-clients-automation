@@ -66,7 +66,7 @@ class E2ESearchTests: XCTestCase {
         }
 
         let batchSize = 1000
-        let indexName = "swift_e2e_test_replace_all_objects"
+        let indexName = "cts_e2e_swift_replace_all_objects"
         let now = Int64(Date().timeIntervalSince1970)
         var records: [Company] = []
 
