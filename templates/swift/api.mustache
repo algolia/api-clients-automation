@@ -12,7 +12,7 @@ typealias Client = {{classname}}
 */{{/description}}
 {{#objcCompatible}}@objcMembers {{/objcCompatible}}open class {{classname}}{{#objcCompatible}} : NSObject{{/objcCompatible}} {
 
-    internal var configuration: Configuration
+    private var configuration: Configuration
     private var transporter: Transporter
 
     var appID: String {

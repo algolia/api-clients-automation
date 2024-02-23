@@ -65,6 +65,7 @@ class E2ESearchTests: XCTestCase {
             return
         }
 
+        let batchSize = 1000
         let indexName = "swift_e2e_test_replace_all_objects"
         let now = Int64(Date().timeIntervalSince1970)
         var records: [Company] = []
@@ -82,8 +83,8 @@ class E2ESearchTests: XCTestCase {
 
         let response = try await e2eClient.replaceAllObjects(with: records, in: indexName)
 
-        let expectedBatches = stride(from: 0, to: records.count, by: e2eClient.configuration.batchSize).map {
-            Array(records[$0 ..< min($0 + e2eClient.configuration.batchSize, records.count)])
+        let expectedBatches = stride(from: 0, to: records.count, by: batchSize).map {
+            Array(records[$0 ..< min($0 + batchSize, records.count)])
         }
 
         XCTAssertEqual(response.batchResponses.count, expectedBatches.count)

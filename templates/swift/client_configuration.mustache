@@ -21,9 +21,7 @@ public struct Configuration: Core.Configuration, Credentials {
   public var logLevel: LogLevel
   public var defaultHeaders: [String: String]?
   public var hosts: [RetryableHost]
-  public let compression: CompressionAlgorithm{{#isSearchClient}}
-  public var batchSize: Int
-  {{/isSearchClient}}
+  public let compression: CompressionAlgorithm
 
   init(appID: String,
       apiKey: String,{{#hasRegionalHost}}
@@ -33,8 +31,7 @@ public struct Configuration: Core.Configuration, Credentials {
       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
       hosts: [RetryableHost]? = nil{{#isSearchClient}},
-      compression: CompressionAlgorithm = .none,
-      batchSize: Int = 1000{{/isSearchClient}}
+      compression: CompressionAlgorithm = .none{{/isSearchClient}}
   ) throws {
     guard !appID.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
@@ -54,9 +51,7 @@ public struct Configuration: Core.Configuration, Credentials {
       "X-Algolia-API-Key": apiKey,
       "Content-Type": "application/json"
     ].merging(defaultHeaders ?? [:]) { (_, new) in new }
-    self.compression = {{#isSearchClient}}compression{{/isSearchClient}}{{^isSearchClient}}.none{{/isSearchClient}}{{#isSearchClient}}
-    self.batchSize = batchSize
-    {{/isSearchClient}}
+    self.compression = {{#isSearchClient}}compression{{/isSearchClient}}{{^isSearchClient}}.none{{/isSearchClient}}
 
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
 

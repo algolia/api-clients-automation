@@ -335,11 +335,12 @@ public extension SearchClient {
           }
   }
 
-  /// Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+  /// Chunks the given `objects` list in subset of `batchSize` elements max in order to make it fit in `batch` requests.
   /// - parameter indexName: The name of the index where to replace the objects
   /// - parameter objects: The new objects
   /// - parameter action: The type of action to apply of each object
   /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
+  /// - parameter batchSize: The maximum number of objects to include in a batch
   /// - parameter requestOptions: The request options
   /// - returns: [BatchResponse]
   func chunkedBatch(
@@ -347,10 +348,11 @@ public extension SearchClient {
       objects: [some Encodable],
       action: Action = .addObject,
       waitForTasks: Bool = false,
+      batchSize: Int = 1000,
       requestOptions: RequestOptions? = nil
   ) async throws -> [BatchResponse] {
-      let batches = stride(from: 0, to: objects.count, by: self.configuration.batchSize).map {
-          Array(objects[$0 ..< min($0 + self.configuration.batchSize, objects.count)])
+      let batches = stride(from: 0, to: objects.count, by: batchSize).map {
+          Array(objects[$0 ..< min($0 + batchSize, objects.count)])
       }
 
       var responses: [BatchResponse] = []
@@ -359,7 +361,7 @@ public extension SearchClient {
               indexName: indexName,
               batchWriteParams: BatchWriteParams(
                   requests: batch.map {
-                      .init(action: .addObject, body: AnyCodable($0))
+                      .init(action: action, body: AnyCodable($0))
                   }
               ),
               requestOptions: requestOptions
@@ -384,6 +386,7 @@ public extension SearchClient {
   func replaceAllObjects(
       with objects: [some Encodable],
       in indexName: String,
+      batchSize: Int = 1000,
       requestOptions: RequestOptions? = nil
   ) async throws -> ReplaceAllObjectsResponse {
       let tmpIndexName = try "\(indexName)_tmp_\(randomString())"
@@ -405,6 +408,7 @@ public extension SearchClient {
       let batchResponses = try await self.chunkedBatch(
           indexName: tmpIndexName,
           objects: objects,
+          batchSize: batchSize,
           requestOptions: requestOptions
       )
 
