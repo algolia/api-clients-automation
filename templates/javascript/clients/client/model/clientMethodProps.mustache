@@ -115,7 +115,7 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
   securedApiKey: string;
 }
 
-export type SecuredApiKeyRestrictions = SearchParamsObject & {
+export type SecuredApiKeyRestrictions = {
   /**
    * A Unix timestamp used to define the expiration date of the API key.
    */
@@ -135,6 +135,8 @@ export type SecuredApiKeyRestrictions = SearchParamsObject & {
    * Specify a user identifier. This is often used with rate limits.
    */
   userToken?: string;
+
+  searchParams?: SearchParamsObject;
 };
 {{/isSearchClient}}
 
