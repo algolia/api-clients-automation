@@ -512,7 +512,7 @@ typealias Client = {{classname}}
             requestOptions: requestOptions
         )
 
-        try await self.waitForTask(with: copyOperationResponse.taskID, for: indexName)
+        try await self.waitForTask(with: copyOperationResponse.taskID, in: indexName)
 
         // Send records to the tmp index (batched)
         let batchResponse = try await self.batch(
@@ -525,7 +525,7 @@ typealias Client = {{classname}}
             requestOptions: requestOptions
         )
 
-        try await self.waitForTask(with: batchResponse.taskID, for: tmpIndexName)
+        try await self.waitForTask(with: batchResponse.taskID, in: tmpIndexName)
 
         // Move the temporary index to replace the main one
         let moveOperationResponse = try await self.operationIndex(
@@ -537,7 +537,7 @@ typealias Client = {{classname}}
             requestOptions: requestOptions
         )
 
-        try await self.waitForTask(with: moveOperationResponse.taskID, for: tmpIndexName)
+        try await self.waitForTask(with: moveOperationResponse.taskID, in: tmpIndexName)
 
         return ReplaceAllObjectsResponse(
             copyOperationResponse: copyOperationResponse,

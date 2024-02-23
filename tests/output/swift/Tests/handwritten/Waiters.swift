@@ -31,7 +31,7 @@ class WaiterTests: XCTestCase {
 
         let result = try await client.waitForTask(
             with: response.taskID,
-            for: indexName,
+            in: indexName,
             maxRetries: 3
         )
 
@@ -57,7 +57,7 @@ class WaiterTests: XCTestCase {
         do {
             _ = try await client.waitForTask(
                 with: response.taskID,
-                for: indexName,
+                in: indexName,
                 maxRetries: maxRetries
             )
 
