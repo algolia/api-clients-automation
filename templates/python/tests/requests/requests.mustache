@@ -1,6 +1,8 @@
+from time import time
 from os import environ
 from json import loads
 from algoliasearch.http.transporter import EchoTransporter
+from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
 {{#hasE2E}}
@@ -21,9 +23,9 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
     if _e2e_app_id is None:
         raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
 
-    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    _e2e_api_key = environ.get("{{e2eApiKey}}")
     if _e2e_api_key is None:
-        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+        raise Exception("please provide an `{{e2eApiKey}}` env var for e2e tests")
     {{/hasE2E}}
 
     {{#blocksRequests}}
@@ -58,9 +60,13 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isE2E}}E2E{
         {{#body}}
         resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
         _expected_body = loads("""{{{.}}}""")
-        assert self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
+        assert self._helpers.union(_expected_body, resp) == _expected_body
         {{/body}}
         {{/response}}
 
     {{/tests}}
     {{/blocksRequests}}
+
+    {{#isSearchClient}}
+    {{> tests/requests/helpers}}
+    {{/isSearchClient}}

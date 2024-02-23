@@ -1,9 +1,10 @@
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Recommend;
 using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
@@ -45,7 +46,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -83,7 +84,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters%20with%20space\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -115,7 +116,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -128,7 +129,7 @@ public class RecommendClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-header-1\":\"spaces are left alone\"}"
     );
     var actualHeaders = req.Headers;
@@ -168,7 +169,7 @@ public class RecommendClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -197,7 +198,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -226,7 +227,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -255,7 +256,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -268,7 +269,7 @@ public class RecommendClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -294,7 +295,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -307,7 +308,7 @@ public class RecommendClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"x-algolia-api-key\":\"myApiKey\"}"
     );
     var actualHeaders = req.Headers;
@@ -333,7 +334,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -362,7 +363,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -393,7 +394,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -424,7 +425,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -455,7 +456,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
     );
     Assert.NotNull(expectedQuery);
@@ -498,7 +499,7 @@ public class RecommendClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"query\":\"parameters\"}"
     );
     Assert.NotNull(expectedQuery);

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 using Algolia.Search.Transport;
-using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
@@ -40,7 +40,7 @@ server
   .RespondWith(
     Response.Create()
       .WithStatusCode(200)
-      .WithBody(JsonConvert.SerializeObject(new BatchResponse(1, new List<string>())))
+      .WithBody(JsonSerializer.Serialize(new BatchResponse(1, [])))
   );
 
 
@@ -53,7 +53,8 @@ Console.WriteLine("----------------");
 const int iterations = 10000;
 Stopwatch stopwatch = new();
 
-Console.WriteLine($"Calling SearchAsync {iterations} times, with a response payload of {searchResults.Length / 1024} ko");
+Console.WriteLine(
+  $"Calling SearchAsync {iterations} times, with a response payload of {searchResults.Length / 1024} ko");
 
 stopwatch.Start();
 for (var i = 0; i < iterations; i++)
@@ -75,7 +76,8 @@ Console.WriteLine("-----------------------------------");
 
 const int iterationsBatch = 100;
 const int iterationsRecords = 1000;
-Console.WriteLine($"Saving {iterationsBatch*iterationsRecords} records by calling BatchAsync {iterationsBatch} times, with request payload containing {iterationsRecords} record of {JsonConvert.SerializeObject(CreateBody(0)).Length / 1024} ko.");
+Console.WriteLine(
+  $"Saving {iterationsBatch * iterationsRecords} records by calling BatchAsync {iterationsBatch} times, with request payload containing {iterationsRecords} record of {JsonSerializer.Serialize(CreateBody(0)).Length / 1024} ko.");
 
 stopwatch.Restart();
 for (var i = 0; i < iterationsBatch; i++)

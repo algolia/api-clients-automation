@@ -45,7 +45,7 @@ describe('api', () => {
       ],
     });
 
-    const result = await $client.customGet({ path: '/test' });
+    const result = await $client.customGet({ path: '/test/retry' });
 
     expect(result).toEqual({ message: 'ok test server response' });
   });

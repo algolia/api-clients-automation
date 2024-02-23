@@ -211,6 +211,7 @@ jobs:
     env:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -286,7 +287,7 @@ jobs:
           key: node-modules-tests-${{ env.CACHE_VERSION }}-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run CTS
-        run: yarn cli cts run javascript
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -319,6 +320,7 @@ jobs:
     env:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -372,7 +374,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Run CTS
-        run: yarn cli cts run ${{ matrix.client.language }}
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}

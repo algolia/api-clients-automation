@@ -118,7 +118,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-alpha.100';
+export const apiClientVersion = '5.0.0-alpha.102';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -435,19 +435,19 @@ export function createSearchClient({
       };
 
       return createIterablePromise<SearchSynonymsResponse>({
-        func: (previousResponse) => {
-          return this.searchSynonyms(
+        func: (_) => {
+          const resp = this.searchSynonyms(
             {
               indexName,
               searchSynonymsParams: {
                 ...params,
-                page: previousResponse
-                  ? previousResponse.page + 1
-                  : params.page,
+                page: params.page,
               },
             },
             requestOptions
           );
+          params.page += 1;
+          return resp;
         },
         validate: (response) => response.nbHits < params.hitsPerPage,
         ...browseSynonymsOptions,

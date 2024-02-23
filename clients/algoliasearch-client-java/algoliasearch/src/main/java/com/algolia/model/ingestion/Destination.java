@@ -102,7 +102,7 @@ public class Destination {
     return this;
   }
 
-  /** Get authenticationID */
+  /** The authentication UUID. */
   @javax.annotation.Nullable
   public String getAuthenticationID() {
     return authenticationID;

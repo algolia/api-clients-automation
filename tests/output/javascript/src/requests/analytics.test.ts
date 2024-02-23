@@ -1,6 +1,11 @@
 import { analyticsClient } from '@algolia/client-analytics';
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -8,6 +13,24 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = analyticsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error(
+    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = analyticsClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY,
+  'us'
+);
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
@@ -921,6 +944,27 @@ describe('getTopSearches', () => {
       offset: '42',
       tags: 'tag',
     });
+  });
+
+  test('e2e with complex query params', async () => {
+    const req = (await client.getTopSearches({
+      index: 'cts_e2e_space in index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/searches');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      index: 'cts_e2e_space%20in%20index',
+    });
+
+    const resp = await e2eClient.getTopSearches({
+      index: 'cts_e2e_space in index',
+    });
+
+    const expectedBody = { searches: [{ search: '', nbHits: 0 }] };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 

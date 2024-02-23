@@ -1,13 +1,15 @@
 using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
+using Algolia.Search.Models.Common;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Serializer;
 using Algolia.Search.Utils;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Newtonsoft.Json;
 using Xunit;
 using TaskStatus = Algolia.Search.Models.Search.TaskStatus;
 
@@ -15,6 +17,8 @@ namespace Algolia.Search.Tests;
 
 public class ClientExtensionsTests
 {
+  private DefaultJsonSerializer serializer = new(new NullLoggerFactory());
+
   [Fact]
   public async Task ShouldWaitForTask()
   {
@@ -38,9 +42,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
-                  new GetTaskResponse { Status = TaskStatus.NotPublished }
-                )
+                serializer.Serialize(new GetTaskResponse { Status = TaskStatus.NotPublished })
               )
             )
           }
@@ -54,7 +56,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(new GetTaskResponse { Status = TaskStatus.Published })
+                serializer.Serialize(new GetTaskResponse { Status = TaskStatus.Published })
               )
             )
           }
@@ -104,7 +106,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new GetApiKeyResponse() { CreatedAt = 12, Acl = new List<Acl>() }
                 )
               )
@@ -151,7 +153,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new(), new() },
@@ -178,7 +180,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new(), new() },
@@ -205,7 +207,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new BrowseResponse<object>()
                   {
                     Hits = new List<object> { new() },
@@ -270,7 +272,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse()
                   {
                     Hits = new List<SynonymHit>()
@@ -294,7 +296,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse()
                   {
                     Hits = new List<SynonymHit>()
@@ -318,7 +320,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchSynonymsResponse
                   {
                     Hits = new List<SynonymHit>
@@ -380,7 +382,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -406,7 +408,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -432,7 +434,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchRulesResponse
                   {
                     Page = 0,
@@ -491,7 +493,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchResponses<object>(
                     [
                       new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
@@ -539,10 +541,10 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(
+                serializer.Serialize(
                   new SearchResponses<object>(
                     [
-                      new(new SearchForFacetValuesResponse() { FacetHits = [] }),
+                      new(new SearchForFacetValuesResponse { FacetHits = [] }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
                     ]
@@ -565,5 +567,122 @@ public class ClientExtensionsTests
     );
 
     Assert.Single(hits);
+  }
+
+  [Fact]
+  public async Task ShouldReplaceAllObjects()
+  {
+    var httpMock = new Mock<IHttpRequester>();
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), httpMock.Object);
+
+    // We mock the following calls
+    // 1 - Copy operation, from the source index to the temporary index
+    // 2 - Write operation, to the temporary index
+    // 3 - Move operation, from the temporary index to the destination index
+    // 4 - 3 times the wait for task operation
+    httpMock
+      .SetupSequence(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r =>
+            r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/operation")
+            || Regex.IsMatch(
+              r.Uri.AbsolutePath,
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/operation"
+            )
+          ),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(new UpdatedAtResponse(1, "2021-01-01T00:00:00Z"))
+              )
+            )
+          }
+        )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(new UpdatedAtResponse(3, "2021-01-01T00:00:00Z"))
+              )
+            )
+          }
+        )
+      );
+
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r =>
+            r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/task/1")
+            || Regex.IsMatch(
+              r.Uri.AbsolutePath,
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/2"
+            )
+            || Regex.IsMatch(
+              r.Uri.AbsolutePath,
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/3"
+            )
+          ),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(
+        () =>
+          Task.FromResult(
+            new AlgoliaHttpResponse
+            {
+              HttpStatusCode = 200,
+              Body = new MemoryStream(
+                Encoding.UTF8.GetBytes(
+                  serializer.Serialize(new GetTaskResponse { Status = TaskStatus.Published })
+                )
+              )
+            }
+          )
+      );
+
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.Is<Request>(r =>
+            Regex.IsMatch(r.Uri.AbsolutePath, "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/batch")
+          ),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(serializer.Serialize(new BatchResponse(2, [])))
+            )
+          }
+        )
+      );
+
+    var results = await client.ReplaceAllObjectsAsync("my-test-index", new List<object> { });
+
+    httpMock.VerifyAll();
+
+    Assert.Equivalent(results, new List<long> { 1, 2, 3 });
   }
 }

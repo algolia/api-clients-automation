@@ -2,8 +2,9 @@ using Algolia.Search.Http;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.{{clientPrefix}};
 using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
 using Xunit;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Quibble.Xunit;
 using dotenv.net;
 using Action = Algolia.Search.Models.Search.Action;
@@ -27,10 +28,10 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
       }
 
-      var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
+      var e2EApiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");
       if (e2EApiKey == null)
       {
-        throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+        throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
       }
 
       _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
@@ -74,7 +75,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/assertNullBody}}
     {{/body}}
       {{#queryParameters}}
-        var expectedQuery = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
+        var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{queryParameters}}}{{/lambda.escapeQuotes}}");
         Assert.NotNull(expectedQuery);
 
         var actualQuery = req.QueryParameters;
@@ -87,7 +88,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         }
     {{/queryParameters}}
     {{#headers}}
-        var expectedHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}");
+        var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>("{{#lambda.escapeQuotes}}{{{headers}}}{{/lambda.escapeQuotes}}");
         var actualHeaders = req.Headers;
         foreach (var expectedHeader in expectedHeaders)
         {
@@ -116,7 +117,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
       {{/statusCode}}
 
       {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonConvert.SerializeObject(resp, settings: JsonConfig.AlgoliaJsonSerializerSettings), new JsonDiffConfig(true));
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
       {{/body}}
       } catch (Exception e)
       {

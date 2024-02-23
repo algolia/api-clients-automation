@@ -40,8 +40,8 @@ class SearchClientClientTests {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
   }
 
-  private ClientOptions withCustomHosts(List<Host> hosts) {
-    return ClientOptions.builder().setHosts(hosts).build();
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
+    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
   }
 
   @Test
@@ -74,13 +74,33 @@ class SearchClientClientTests {
         Arrays.asList(
           new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6677),
           new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)
-        )
+        ),
+        false
       )
     );
-    var res = client.customGet("/test");
+    var res = client.customGet("/test/retry");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("test the compression strategy")
+  void apiTest3() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)), true)
+    );
+    var res = client.customPost("/test/gzip", Map.of(), Map.of("message", "this is a compressed body"));
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this" + " is a compressed body\"}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
     );
   }
 

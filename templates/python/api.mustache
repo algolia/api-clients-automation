@@ -1,6 +1,11 @@
 {{> partial_header}}
 {{> imports}}
 
+{{#isSearchClient}}
+from algoliasearch.search.models.batch_request import BatchRequest
+from algoliasearch.search.models.scope_type import ScopeType
+{{/isSearchClient}}
+
 {{#operations}}{{#operation}}{{#imports}}
 from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}

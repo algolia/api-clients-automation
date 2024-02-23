@@ -14,6 +14,12 @@ class TestAnalyticsClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::AnalyticsClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'us'
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -930,6 +936,25 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+  end
+
+  # e2e with complex query params
+  def test_get_top_searches2
+    req = @client.get_top_searches_with_http_info("cts_e2e_space in index")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/searches', req.path)
+    assert_equal({ 'index': "cts_e2e_space%20in%20index" }.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_top_searches_with_http_info("cts_e2e_space in index")
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_top_searches("cts_e2e_space in index")
+    expected_body = JSON.parse('{"searches":[{"search":"","nbHits":0}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # get getUsersCount with minimal parameters

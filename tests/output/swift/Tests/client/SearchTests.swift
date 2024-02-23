@@ -1,8 +1,6 @@
 import XCTest
 
-#if canImport(AnyCodable)
-    import AnyCodable
-#endif
+import AnyCodable
 import Utils
 
 @testable import Core
@@ -59,11 +57,40 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test"
+            path: "/test/retry"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
         let comparableData = "{\"message\":\"ok test server response\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+
+        XCTAssertEqual(comparableJSON, responseBodyJSON)
+    }
+
+    /// test the compression strategy
+    func testApiTest3() async throws {
+        let configuration: Search.Configuration = try Search.Configuration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6678")!)],
+            compression: .gzip
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customPostWithHTTPInfo(
+            path: "/test/gzip",
+
+            parameters: [:],
+
+            body: [
+                "message": "this is a compressed body",
+            ]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+        let comparableData =
+            "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+                .data(using: .utf8)
         let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
 
         XCTAssertEqual(comparableJSON, responseBodyJSON)

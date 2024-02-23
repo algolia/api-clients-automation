@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * AnalyticsTest.
@@ -1320,6 +1329,36 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for GetTopSearches
+     * e2e with complex query params.
+     */
+    public function testGetTopSearches2()
+    {
+        $client = $this->getClient();
+        $client->getTopSearches(
+            'cts_e2e_space in index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/searches',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"cts_e2e_space%20in%20index"}', true),
+            ],
+        ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->getTopSearches(
+            'cts_e2e_space in index',
+        );
+
+        $expected = json_decode('{"searches":[{"search":"","nbHits":0}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
+    /**
      * Test case for GetUsersCount
      * get getUsersCount with minimal parameters.
      */
@@ -1364,6 +1403,21 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
+    }
+
     protected function assertRequests(array $requests)
     {
         $this->assertGreaterThan(0, count($requests));
@@ -1403,6 +1457,11 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return AnalyticsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }
 
     protected function getClient()

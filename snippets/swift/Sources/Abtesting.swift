@@ -1,6 +1,4 @@
-#if canImport(AnyCodable)
-    import AnyCodable
-#endif
+import AnyCodable
 
 import Abtesting
 import Core

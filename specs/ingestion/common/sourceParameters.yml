@@ -24,7 +24,7 @@ authenticationID:
     type: array
     items:
       $ref: './schemas/common.yml#/authenticationID'
-    example: 10000000-0a75-4000-a000-000000000001,none
+    example: [10000000-0a75-4000-a000-000000000001, none]
 
 sort:
   name: sort

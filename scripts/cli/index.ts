@@ -5,6 +5,7 @@ import { buildSpecs } from '../buildSpecs.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
+import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
@@ -123,16 +124,25 @@ ctsCommand
   .command('run')
   .description('Run the tests for the CTS')
   .addArgument(args.language)
+  .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, { verbose }) => {
-    const { language } = transformSelection({
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client } = transformSelection({
       langArg,
-      clientArg: [ALL],
+      clientArg,
     });
 
     setVerbose(Boolean(verbose));
 
-    await runCts(language === ALL ? LANGUAGES : [language]);
+    await runCts(language === ALL ? LANGUAGES : [language], client);
+  });
+
+ctsCommand
+  .command('server')
+  .description('Start the test servers in standalone mode')
+  .action(async () => {
+    setVerbose(true);
+    await startTestServer();
   });
 
 program

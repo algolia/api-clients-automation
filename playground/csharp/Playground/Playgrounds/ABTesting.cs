@@ -1,22 +1,44 @@
 using System.Globalization;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Abtesting;
+using Algolia.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace Algolia.Playgrounds;
 
-public static class ABTesting
+public class ABTestingPlayground : IPlayground
 {
-  public static async Task Run(Configuration configuration)
+  const string DefaultIndex = "test-csharp-new-client";
+  private readonly AbtestingClient _client;
+  private readonly Configuration _configuration;
+
+  public ABTestingPlayground(Configuration configuration)
   {
-    Console.WriteLine("------------------------------------");
-    Console.WriteLine("Starting ABTesting API playground");
-    Console.WriteLine("------------------------------------");
-    var client = new AbtestingClient(new AbtestingConfig(configuration.AppId, configuration.AdminApiKey));
+    var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
+      .AddConsole());
+    var config = new AbtestingConfig(configuration.AppId, configuration.AdminApiKey);
+    _client = new AbtestingClient(config, loggerFactory);
+    _configuration = configuration;
+  }
 
-    var newABTest = await client.AddABTestsAsync(new AddABTestsRequest("A simple A/B Test",
-      new List<AddABTestsVariant> { new(new AbTestsVariant("test-index", 50)),  new(new AbTestsVariant("test-index2", 50)) },
-      DateTime.UtcNow.AddDays(1d).ToString("o", CultureInfo.InvariantCulture)));
+  public async Task Run()
+  {
+    PlaygroundHelper.Hello("Starting ABTesting API playground");
 
-    Console.WriteLine(newABTest.AbTestID);
+    try
+    {
+      var newABTest = await _client.AddABTestsAsync(new AddABTestsRequest("A simple A/B Test",
+        [
+          new AddABTestsVariant(new AbTestsVariant("test-index", 50)),
+          new AddABTestsVariant(new AbTestsVariant("test-index2", 50))
+        ],
+        DateTime.UtcNow.AddDays(1d).ToString("o", CultureInfo.InvariantCulture)));
+
+      Console.WriteLine(newABTest.AbTestID);
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+    }
   }
 }

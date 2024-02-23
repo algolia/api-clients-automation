@@ -22,7 +22,7 @@ public interface SourceInput {
     public SourceInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize SourceCommercetools
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("projectKey")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(SourceCommercetools.class);
         } catch (Exception e) {
@@ -31,12 +31,21 @@ public interface SourceInput {
         }
       }
       // deserialize SourceBigCommerce
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("storeHash")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(SourceBigCommerce.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SourceBigCommerce (error: " + e.getMessage() + ") (type: SourceBigCommerce)");
+        }
+      }
+      // deserialize SourceBigQuery
+      if (tree.isObject() && tree.has("projectID")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceBigQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
         }
       }
       // deserialize SourceJSON
@@ -55,15 +64,6 @@ public interface SourceInput {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SourceCSV (error: " + e.getMessage() + ") (type: SourceCSV)");
-        }
-      }
-      // deserialize SourceBigQuery
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceBigQuery.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
         }
       }
       // deserialize SourceDocker

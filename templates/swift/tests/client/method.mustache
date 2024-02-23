@@ -1,6 +1,8 @@
 let response = try await client{{#path}}.{{.}}WithHTTPInfo{{/path}}(
 {{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}},{{/-last}}
-{{/parametersWithDataType}})
+{{/parametersWithDataType}}{{#requestOptions.parametersWithDataType}}{{#-first}}, requestOptions: RequestOptions({{/-first}}
+{{> tests/generateParams }}{{^-last}},{{/-last}}
+){{/requestOptions.parametersWithDataType}})
 let responseBodyData = try XCTUnwrap(response.bodyData)
 {{#useEchoRequester}}
 let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

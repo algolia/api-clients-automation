@@ -19,6 +19,9 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
   @JsonProperty("locales")
   private List<String> locales;
 
+  @JsonProperty("customFields")
+  private CommercetoolsCustomFields customFields;
+
   public SourceUpdateCommercetools setStoreKeys(List<String> storeKeys) {
     this.storeKeys = storeKeys;
     return this;
@@ -60,6 +63,17 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     return locales;
   }
 
+  public SourceUpdateCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
+    this.customFields = customFields;
+    return this;
+  }
+
+  /** Get customFields */
+  @javax.annotation.Nullable
+  public CommercetoolsCustomFields getCustomFields() {
+    return customFields;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -70,13 +84,15 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     }
     SourceUpdateCommercetools sourceUpdateCommercetools = (SourceUpdateCommercetools) o;
     return (
-      Objects.equals(this.storeKeys, sourceUpdateCommercetools.storeKeys) && Objects.equals(this.locales, sourceUpdateCommercetools.locales)
+      Objects.equals(this.storeKeys, sourceUpdateCommercetools.storeKeys) &&
+      Objects.equals(this.locales, sourceUpdateCommercetools.locales) &&
+      Objects.equals(this.customFields, sourceUpdateCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales);
+    return Objects.hash(storeKeys, locales, customFields);
   }
 
   @Override
@@ -85,6 +101,7 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     sb.append("class SourceUpdateCommercetools {\n");
     sb.append("    storeKeys: ").append(toIndentedString(storeKeys)).append("\n");
     sb.append("    locales: ").append(toIndentedString(locales)).append("\n");
+    sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();
   }
