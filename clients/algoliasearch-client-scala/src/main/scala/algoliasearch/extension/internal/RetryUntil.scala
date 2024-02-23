@@ -9,14 +9,13 @@ private[algoliasearch] object RetryUntil {
 
   val DEFAULT_DELAY: Long => Long = (retries: Long) => Math.min(retries * 200, 5000)
 
-
   /** Retry a function until a condition is met.
     */
   def retryUntil[T](
       retry: () => Future[T],
       until: T => Boolean,
       maxRetries: Int,
-      delay: Long => Long = DEFAULT_DELAY,
+      delay: Long => Long = DEFAULT_DELAY
   )(implicit ec: ExecutionContext): Future[T] = {
 
     def attempt(retryCount: Int, currentDelay: Long): Future[T] = {

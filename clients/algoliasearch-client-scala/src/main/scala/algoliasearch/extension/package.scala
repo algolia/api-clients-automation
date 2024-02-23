@@ -101,7 +101,7 @@ package object extension {
             maxHitsPerQuery = res.maxHitsPerQuery,
             maxQueriesPerIPPerHour = res.maxQueriesPerIPPerHour,
             queryParameters = res.queryParameters,
-            referers = res.referers,
+            referers = res.referers
           ),
         maxRetries = maxRetries,
         delay = delay
