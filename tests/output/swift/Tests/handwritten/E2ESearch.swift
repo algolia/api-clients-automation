@@ -2,7 +2,7 @@
 //  E2ESearch.swift
 //
 //
-//  Created by Thomas Raffray on 23/02/2024.
+//  Created by Algolia on 23/02/2024.
 //
 
 import DotEnv
