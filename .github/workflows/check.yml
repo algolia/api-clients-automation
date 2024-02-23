@@ -374,7 +374,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Run CTS
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} -v
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
