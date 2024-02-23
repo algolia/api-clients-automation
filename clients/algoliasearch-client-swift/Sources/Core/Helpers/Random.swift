@@ -8,7 +8,7 @@
 import Foundation
 
 public func randomString(length: Int = 10) throws -> String {
-    let characterSet = String(describing: CharacterSet.alphanumerics)
+    let characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-    return try String(describing: (0 ..< length).map { _ in characterSet.randomElement() })
+    return String((0 ..< length).compactMap { _ in characterSet.randomElement() })
 }
