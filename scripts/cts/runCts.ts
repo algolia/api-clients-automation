@@ -59,10 +59,13 @@ async function runCtsOne(language: string): Promise<void> {
       await run('sbt test', { cwd, language });
       break;
     case 'swift':
-      await run('rm -rf .build && swift test -Xswiftc -suppress-warnings', {
-        cwd,
-        language,
-      });
+      await run(
+        'rm -rf .build && swift test --parallel --filter client -Xswiftc -suppress-warnings',
+        {
+          cwd,
+          language,
+        }
+      );
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
