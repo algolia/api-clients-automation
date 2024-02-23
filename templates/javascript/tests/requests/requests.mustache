@@ -63,3 +63,7 @@ describe('{{operationId}}', () => {
 })
 
 {{/blocksRequests}}
+
+{{#isSearchClient}}
+{{> tests/requests/helpers}}
+{{/isSearchClient}}
