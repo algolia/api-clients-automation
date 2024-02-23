@@ -60,7 +60,7 @@ async function runCtsOne(language: string): Promise<void> {
       break;
     case 'swift':
       await run(
-        'rm -rf .build && swift test --parallel --filter client -Xswiftc -suppress-warnings',
+        'rm -rf .build && swift test --parallel --filter handwritten -Xswiftc -suppress-warnings',
         {
           cwd,
           language,
