@@ -9671,9 +9671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.0.1":
-  version: 5.0.1
-  resolution: "knip@npm:5.0.1"
+"knip@npm:5.0.2":
+  version: 5.0.2
+  resolution: "knip@npm:5.0.2"
   dependencies:
     "@ericcornelissen/bash-parser": "npm:0.5.2"
     "@nodelib/fs.walk": "npm:2.0.0"
@@ -9697,13 +9697,13 @@ __metadata:
     strip-json-comments: "npm:5.0.1"
     summary: "npm:2.1.0"
     zod: "npm:3.22.4"
-    zod-validation-error: "npm:3.0.0"
+    zod-validation-error: "npm:3.0.2"
   peerDependencies:
     "@types/node": ">=18"
     typescript: ">=5.0.4"
   bin:
     knip: bin/knip.js
-  checksum: b28888972075616321f4031a81b9b43fa36fdc74ac4f1321e1d13fad1b7b7e0499a9dc7ce666ace3344d44f4ac5b1e22361a14868a55d21ae181509bb9127b53
+  checksum: 97127d807facf3cdf9188fdbca3699e29f47c951c270f90fc9f55c14683332aefcfe6abe4524dce6af8cf57ccb34bfc09941b4e2e6c8a649a52c378dd165b9d2
   languageName: node
   linkType: hard
 
@@ -12349,7 +12349,7 @@ __metadata:
     folder-hash: "npm:4.0.4"
     fs-extra: "npm:11.2.0"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.0.1"
+    knip: "npm:5.0.2"
     micromatch: "npm:4.0.5"
     semver: "npm:7.6.0"
     spinnies: "npm:0.5.1"
@@ -14316,12 +14316,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod-validation-error@npm:3.0.0":
-  version: 3.0.0
-  resolution: "zod-validation-error@npm:3.0.0"
+"zod-validation-error@npm:3.0.2":
+  version: 3.0.2
+  resolution: "zod-validation-error@npm:3.0.2"
   peerDependencies:
     zod: ^3.18.0
-  checksum: ab836df3ba95db92c603bb09b856a77d1ec6815c17ffaf5802966727763e117cd87048656d2285f780cabbd491687cf388f1f1d0b875aa3d9dfdb4e93e68e2d4
+  checksum: 0ab8c634ed58296f3fee8a5fc3f8bd06c4615569e625d9ab6b9b8020c75c90ed7a0b98b683ad6ef08ec93c252be4c3469000fbf2f51f4cf666afdf9539a76e56
   languageName: node
   linkType: hard
 
