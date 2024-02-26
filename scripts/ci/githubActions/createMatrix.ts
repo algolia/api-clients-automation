@@ -18,7 +18,8 @@ const EMPTY_MATRIX = { client: ['no-run'] };
 
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
-  const commonDependenciesChanged = await isBaseChanged(baseBranch, COMMON_DEPENDENCIES);
+  const commonDependenciesChanged =
+    baseBranch === 'main' || (await isBaseChanged(baseBranch, COMMON_DEPENDENCIES));
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
