@@ -114,6 +114,7 @@ public class {{classname}} extends ApiClient {
     {{/uniqueHost}}
 
     {{#operation}}
+    {{^vendorExtensions.x-helper}}
     /**
      * {{{notes}}}{{#allParams}}
      * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
@@ -121,13 +122,8 @@ public class {{classname}} extends ApiClient {
      * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
     {{> api_javadoc}}
     public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}{{#hasParams}}, {{/hasParams}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
-        {{#vendorExtensions.x-helper}}
-        {{#lambda.helperBody}}{{/lambda.helperBody}}
-        {{/vendorExtensions.x-helper}}
-        {{^vendorExtensions.x-helper}}
         {{#returnType}}return {{/returnType}}LaunderThrowable.await({{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions));
         {{^returnType}}return ;{{/returnType}}
-        {{/vendorExtensions.x-helper}}
     }
 
   {{! This case only sets `requestOptions` as optional }}
@@ -165,7 +161,6 @@ public class {{classname}} extends ApiClient {
   }
   {{/optionalParams.0}}
 
-  {{^vendorExtensions.x-helper}}
   /**
   * (asynchronously)
   * {{{notes}}}{{#allParams}}

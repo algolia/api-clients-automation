@@ -1,6 +1,5 @@
 package com.algolia.codegen;
 
-import com.algolia.codegen.cts.lambda.DynamicTemplateLambda;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
@@ -126,7 +125,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   protected Builder<String, Lambda> addMustacheLambdas() {
     Builder<String, Lambda> lambdas = super.addMustacheLambdas();
 
-    lambdas.put("helperBody", new DynamicTemplateLambda(this, "operationId"));
     lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     return lambdas;
