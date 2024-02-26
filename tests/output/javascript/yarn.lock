@@ -919,12 +919,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.11.19":
+"@types/node@npm:*":
   version: 20.11.19
   resolution: "@types/node@npm:20.11.19"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: c7f4705d6c84aa21679ad180c33c13ca9567f650e66e14bcee77c7c43d14619c7cd3b4d7b2458947143030b7b1930180efa6d12d999b45366abff9fed7a17472
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.11.20":
+  version: 20.11.20
+  resolution: "@types/node@npm:20.11.20"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: ff449bdc94810dadb54e0f77dd587c6505ef79ffa5a208c16eb29b223365b188f4c935a3abaf0906a01d05257c3da1f72465594a841d35bcf7b6deac7a6938fb
   languageName: node
   linkType: hard
 
@@ -1446,10 +1455,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:16.4.4":
-  version: 16.4.4
-  resolution: "dotenv@npm:16.4.4"
-  checksum: ddf43ede209d5f54c9da688e93326162eb0fc367ad1869909568cb15571ab8c87a0fab4e1d4af9860be0571c707a8b4aefa060a4f1b0bb14298a81e0ccf0017d
+"dotenv@npm:16.4.5":
+  version: 16.4.5
+  resolution: "dotenv@npm:16.4.5"
+  checksum: 55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
   languageName: node
   linkType: hard
 
@@ -2047,9 +2056,9 @@ __metadata:
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     "@types/jest": "npm:29.5.12"
-    "@types/node": "npm:20.11.19"
+    "@types/node": "npm:20.11.20"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    dotenv: "npm:16.4.4"
+    dotenv: "npm:16.4.5"
     jest: "npm:29.7.0"
     typescript: "npm:5.3.3"
   languageName: unknown

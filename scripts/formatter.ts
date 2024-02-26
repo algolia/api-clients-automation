@@ -39,7 +39,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
         -jar /tmp/java-formatter.jar -r \
         && yarn prettier --no-error-on-unmatched-pattern --write **/*.java`,
-        { cwd, language }
+        { cwd, language },
       );
       break;
     case 'kotlin':
@@ -49,13 +49,13 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await runComposerInstall();
       await run(
         `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
-        { language }
+        { language },
       );
       break;
     case 'python':
       await run(
         'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .',
-        { cwd, language }
+        { cwd, language },
       );
       break;
     case 'ruby':

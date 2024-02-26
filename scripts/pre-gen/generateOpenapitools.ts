@@ -43,7 +43,7 @@ export async function generateOpenapitools(gens: Generator[]): Promise<void> {
         },
       },
       null,
-      2
-    ).concat('\n')
+      2,
+    ).concat('\n'),
   );
 }

@@ -87,7 +87,7 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
 
     if (languages.length !== getTimeoutCounter()) {
       throw new Error(
-        `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`
+        `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`,
       );
     }
   }

@@ -25,18 +25,18 @@ export async function playground({
       await run(
         `./gradle/gradlew -p playground/java -PmainClass=com.algolia.playground.${createClientName(
           client,
-          'java'
+          'java',
         )} run`,
-        { language }
+        { language },
       );
       break;
     case 'kotlin':
       await run(
         `./gradle/gradlew -p playground/kotlin -PmainClass=com.algolia.playground.${createClientName(
           client,
-          'kotlin'
+          'kotlin',
         )}Kt run`,
-        { language }
+        { language },
       );
       break;
     case 'php':

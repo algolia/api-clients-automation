@@ -21,7 +21,7 @@ export default {
     header: '### ✗ The generated branch has been deleted.',
     body: (
       generatedCommit: string,
-      branch: string
+      branch: string,
     ): string => `If the PR has been merged, you can check the generated code on the [\`${MAIN_BRANCH}\` branch](${REPO_URL}/tree/${MAIN_BRANCH}).
 You can still access the code generated on \`${branch}\` via [this commit](${REPO_URL}/commit/${generatedCommit}).`,
   },
@@ -31,7 +31,7 @@ You can still access the code generated on \`${branch}\` via [this commit](${REP
       generatedCommit: string,
       branch: string,
       commit: string,
-      eventNumber: number
+      eventNumber: number,
     ): string => `
 |  Name | Link |
 |---------------------------------|------------------------|

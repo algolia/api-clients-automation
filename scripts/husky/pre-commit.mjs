@@ -46,7 +46,7 @@ async function preCommit(log) {
 
   if (log) {
     toUnstage.forEach((file) =>
-      console.log(chalk.black.bgYellow('[INFO]'), `Generated file found, unstaging: ${file}`)
+      console.log(chalk.black.bgYellow('[INFO]'), `Generated file found, unstaging: ${file}`),
     );
   }
   await run(`git restore --staged ${toUnstage.join(' ')}`);

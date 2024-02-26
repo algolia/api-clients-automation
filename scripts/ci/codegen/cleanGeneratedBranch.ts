@@ -7,7 +7,7 @@ import { gitBranchExists, run } from '../../common.js';
 export async function cleanGeneratedBranch(headRef: string): Promise<void> {
   if (!headRef) {
     throw new Error(
-      'The base branch should be passed as a cli parameter of the `cleanGeneratedBranch` script.'
+      'The base branch should be passed as a cli parameter of the `cleanGeneratedBranch` script.',
     );
   }
 
