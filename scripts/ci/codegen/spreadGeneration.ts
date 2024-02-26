@@ -117,7 +117,7 @@ async function spreadGeneration(): Promise<void> {
         const tagVersion = lang === 'go' ? `v${version}` : version;
 
         console.log(
-          `Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`
+          `Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`,
         );
 
         // we always want to delete the tag in case it exists

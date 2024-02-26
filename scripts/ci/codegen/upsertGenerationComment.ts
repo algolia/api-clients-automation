@@ -36,7 +36,7 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
   const octokit = getOctokit();
   if (!trigger || allowedTriggers.includes(trigger) === false) {
     throw new Error(
-      `'upsertGenerationComment' requires a 'trigger' parameter (${allowedTriggers.join(' | ')}).`
+      `'upsertGenerationComment' requires a 'trigger' parameter (${allowedTriggers.join(' | ')}).`,
     );
   }
 
@@ -64,8 +64,8 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
               comment.user?.login === BOT_NAME &&
               (comment.body?.startsWith(commentText.codegen.header) ||
                 comment.body?.startsWith(commentText.noGen.header) ||
-                comment.body?.startsWith(commentText.notification.header))
-          )[0]
+                comment.body?.startsWith(commentText.notification.header)),
+          )[0],
       );
 
     if (previousComment?.id) {

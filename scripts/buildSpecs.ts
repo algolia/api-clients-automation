@@ -68,7 +68,7 @@ async function transformBundle({
         const tagExists = tagsDefinitions ? tagsDefinitions.find((t) => t.name === tag) : null;
         if (!tagExists) {
           throw new Error(
-            `Tag "${tag}" in "client[${clientName}] -> operation[${specMethod.operationId}]" is not defined`
+            `Tag "${tag}" in "client[${clientName}] -> operation[${specMethod.operationId}]" is not defined`,
           );
         }
       }
@@ -79,7 +79,7 @@ async function transformBundle({
     bundledPath,
     yaml.dump(bundledSpec, {
       noRefs: true,
-    })
+    }),
   );
 
   if (withDoc) {
@@ -140,7 +140,7 @@ async function buildLiteSpec({
 
       return acc;
     },
-    {} as Spec['paths']
+    {} as Spec['paths'],
   );
 
   const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
@@ -191,7 +191,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
   // Then bundle the file
   const bundledPath = `specs/bundled/${spec}.${outputFormat}`;
   await run(
-    `yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`
+    `yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`,
   );
 
   // Add the correct tags to be able to generate the proper client
@@ -219,7 +219,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     spinner.text = `linting '${spec}' doc spec`;
     await run(`yarn specs:fix bundled/${spec}.doc.yml`);
     await run(
-      `yarn openapi bundle specs/bundled/${spec}.doc.yml --output specs/bundled/${spec}.json --format json --ext json --dereferenced`
+      `yarn openapi bundle specs/bundled/${spec}.doc.yml --output specs/bundled/${spec}.json --format json --ext json --dereferenced`,
     );
   }
 
@@ -234,7 +234,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
 export async function buildSpecs(
   clients: string[],
   outputFormat: 'json' | 'yml',
-  useCache: boolean
+  useCache: boolean,
 ): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
