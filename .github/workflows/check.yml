@@ -408,7 +408,7 @@ jobs:
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Download all artifacts
-        if: ${{ needs.setup.outputs.RUN_GEN == 'true' }}
+        if: ${{ needs.setup.outputs.RUN_GEN == 'true' || needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
