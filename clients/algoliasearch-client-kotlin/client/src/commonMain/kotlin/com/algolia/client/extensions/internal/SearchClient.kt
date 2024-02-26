@@ -1,7 +1,7 @@
 package com.algolia.client.extensions.internal
 
 import com.algolia.client.api.SearchClient
-import com.algolia.client.extensions.SecuredAPIKeyRestriction
+import com.algolia.client.model.search.SecuredAPIKeyRestriction
 import com.algolia.client.model.search.SearchParamsObject
 import io.ktor.http.*
 import kotlinx.serialization.json.JsonArray
