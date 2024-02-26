@@ -31,7 +31,7 @@ class WaiterTests: XCTestCase {
 
         let result = try await client.waitForTask(
             with: response.taskID,
-            for: indexName,
+            in: indexName,
             maxRetries: 3
         )
 
@@ -55,9 +55,9 @@ class WaiterTests: XCTestCase {
         let response = try await client.setSettings(indexName: indexName, indexSettings: IndexSettings())
 
         do {
-            _ = try await client.waitForTask(
+            try await client.waitForTask(
                 with: response.taskID,
-                for: indexName,
+                in: indexName,
                 maxRetries: maxRetries
             )
 
@@ -149,7 +149,7 @@ class WaiterTests: XCTestCase {
         )
 
         do {
-            _ = try await client.waitForApiKey(
+            try await client.waitForApiKey(
                 with: response.key,
                 operation: .add,
                 maxRetries: maxRetries
@@ -266,7 +266,7 @@ class WaiterTests: XCTestCase {
         _ = try await client.deleteApiKey(key: apiKey)
 
         do {
-            _ = try await client.waitForApiKey(
+            try await client.waitForApiKey(
                 with: apiKey,
                 operation: .delete,
                 maxRetries: maxRetries
@@ -384,7 +384,7 @@ class WaiterTests: XCTestCase {
         let response = try await client.updateApiKey(key: apiKey, apiKey: apiKeyBody)
 
         do {
-            _ = try await client.waitForApiKey(
+            try await client.waitForApiKey(
                 with: response.key,
                 operation: .update,
                 apiKey: apiKeyBody,
@@ -405,7 +405,7 @@ class WaiterTests: XCTestCase {
         let client = try MockSearchClient<Response<GetApiKeyResponse>>(appID: "test-app-id", apiKey: "test-api-key")
 
         do {
-            _ = try await client.waitForApiKey(
+            try await client.waitForApiKey(
                 with: "api-key-to-update",
                 operation: .update,
                 maxRetries: 3
