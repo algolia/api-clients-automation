@@ -40,7 +40,7 @@ async function updateChangelog(
   changelog: string,
   current: string,
   next: string,
-  changelogPath: string
+  changelogPath: string,
 ): Promise<void> {
   let content = '';
   const changelogHeader = `## [${next}](${getGitHubUrl(lang)}/compare/${current}...${next})`;
@@ -63,7 +63,7 @@ export function getVersionsToRelease(versions: Versions): VersionsToRelease {
 
       if (!releaseType || !['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
         throw new Error(
-          `\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`
+          `\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`,
         );
       }
 
@@ -72,7 +72,7 @@ export function getVersionsToRelease(versions: Versions): VersionsToRelease {
         releaseType,
         next,
       };
-    }
+    },
   );
 
   return versionsToRelease;
@@ -108,7 +108,7 @@ export async function updateAPIVersions(versions: Versions, changelog: Changelog
       changelog[lang],
       current,
       next,
-      toAbsolutePath(`${getLanguageFolder(lang as Language)}/CHANGELOG.md`)
+      toAbsolutePath(`${getLanguageFolder(lang as Language)}/CHANGELOG.md`),
     );
   }
 }
@@ -138,7 +138,7 @@ async function updateDartPackages(changelog: string, nextVersion: string): Promi
       changelog,
       currentVersion,
       nextVersion,
-      toAbsolutePath(`${gen.output}/CHANGELOG.md`)
+      toAbsolutePath(`${gen.output}/CHANGELOG.md`),
     );
   }
 
@@ -163,7 +163,7 @@ async function updateDartPackages(changelog: string, nextVersion: string): Promi
     changelog,
     currentCoreVersion,
     nextVersion,
-    toAbsolutePath(`${corePackagePath}/CHANGELOG.md`)
+    toAbsolutePath(`${corePackagePath}/CHANGELOG.md`),
   );
 
   // we've bumped generated clients but still need to do the manual ones.

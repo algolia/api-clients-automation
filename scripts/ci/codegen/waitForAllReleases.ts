@@ -35,7 +35,7 @@ function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined
       }
 
       return ciRun.data.workflow_runs[0];
-    })
+    }),
   );
 }
 
@@ -49,7 +49,7 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
   }
 
   console.log(
-    `Waiting for all releases CI to finish for the following languages: ${languages.join(', ')}`
+    `Waiting for all releases CI to finish for the following languages: ${languages.join(', ')}`,
   );
 
   const workflowIDs = await Promise.all(
@@ -67,13 +67,13 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
 
       return workflows.data.workflows.find(
         (workflow) =>
-          workflow.path === '.github/workflows/release.yml' && workflow.state === 'active'
+          workflow.path === '.github/workflows/release.yml' && workflow.state === 'active',
       )?.id;
-    })
+    }),
   );
 
   console.log(
-    `Found the following workflows: ${languages.map((l, i) => `${l} => ${workflowIDs[i]}`).join(', ')}`
+    `Found the following workflows: ${languages.map((l, i) => `${l} => ${workflowIDs[i]}`).join(', ')}`,
   );
 
   const failures: Language[] = [];
@@ -91,7 +91,7 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
       if (runs[i]?.status === 'completed') {
         const success = runs[i]?.conclusion === 'success';
         console.log(
-          `${success ? '✅' : '❌'} ${languages[i]} CI finished with conclusion: ${runs[i]?.conclusion}`
+          `${success ? '✅' : '❌'} ${languages[i]} CI finished with conclusion: ${runs[i]?.conclusion}`,
         );
         if (!success) {
           failures.push(languages[i]);
