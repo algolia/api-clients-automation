@@ -443,3 +443,16 @@ jobs:
         run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+  check_green:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    needs:
+      - codegen
+    if: always()
+    steps:
+      - run: |
+          if [[ "${{ needs.codegen.success }}" != "true" ]]; then
+            echo "codegen step didn't succeed"
+            exit 1
+          fi
