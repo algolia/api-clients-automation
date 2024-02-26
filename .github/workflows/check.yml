@@ -400,6 +400,8 @@ jobs:
       always() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    outputs:
+      success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -408,7 +410,7 @@ jobs:
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Download all artifacts
-        if: ${{ needs.setup.outputs.RUN_GEN == 'true' }}
+        if: ${{ needs.setup.outputs.RUN_GEN == 'true' || needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
@@ -443,3 +445,20 @@ jobs:
         run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Set output
+        id: setoutput
+        run: echo "success=true" >> "$GITHUB_OUTPUT"
+
+  check_green:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    needs:
+      - codegen
+    if: always()
+    steps:
+      - run: |
+          if [[ "${{ needs.codegen.outputs.success }}" != "true" ]]; then
+            echo "codegen step didn't succeed"
+            exit 1
+          fi
