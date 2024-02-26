@@ -1,7 +1,5 @@
 package com.algolia.codegen.cts.lambda;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import java.io.IOException;
@@ -20,10 +18,8 @@ public class DynamicTemplateLambda implements Mustache.Lambda {
 
   private final TemplatingExecutor executor;
   private final TemplatingEngineAdapter adaptor;
-  private final String templateProperty;
-  private final ObjectMapper mapper;
 
-  public DynamicTemplateLambda(DefaultCodegen generator, String templateProperty) {
+  public DynamicTemplateLambda(DefaultCodegen generator) {
     // we can't access the default template manager, so we have to create our own
     TemplateManager templateManager = new TemplateManager(
       new TemplateManagerOptions(generator.isEnableMinimalUpdate(), generator.isSkipOverwrite()),
@@ -33,23 +29,20 @@ public class DynamicTemplateLambda implements Mustache.Lambda {
 
     this.executor = templateManager;
     this.adaptor = generator.getTemplatingEngine();
-    this.templateProperty = templateProperty;
-    this.mapper = new ObjectMapper();
   }
 
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException {
-    Map<String, Object> context = this.mapper.convertValue(fragment.context(), new TypeReference<Map<String, Object>>() {});
-
+    Map<String, Object> context = (Map<String, Object>) fragment.context();
     for (int contextIndex = 1;; contextIndex++) {
       try {
-        Map<String, Object> parent = this.mapper.convertValue(fragment.context(contextIndex), new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> parent = (Map<String, Object>) fragment.context(contextIndex);
         parent.forEach((key, value) -> context.putIfAbsent(key, value));
       } catch (Exception exception) {
         break;
       }
     }
 
-    writer.write(adaptor.compileTemplate(executor, context, context.get(this.templateProperty).toString() + ".mustache"));
+    writer.write(adaptor.compileTemplate(executor, context, context.get("stepTemplate").toString()));
   }
 }

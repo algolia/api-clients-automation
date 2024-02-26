@@ -170,7 +170,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       }
 
       // special lambda for dynamic templates
-      bundle.put("dynamicTemplate", new DynamicTemplateLambda(this, "stepTemplate"));
+      bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
 
       return bundle;
     } catch (CTSException e) {
