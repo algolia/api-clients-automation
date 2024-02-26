@@ -31,8 +31,11 @@ import { {{classname}} } from '{{filename}}';
 import type {
   {{#isSearchClient}}
     BrowseOptions,
+    ChunkedBatchOptions,
     GenerateSecuredApiKeyOptions,
     GetSecuredApiKeyRemainingValidityOptions,
+    ReplaceAllObjectsOptions,
+    ReplaceAllObjectsResponse,
     WaitForApiKeyOptions,
     WaitForTaskOptions,
   {{/isSearchClient}}
@@ -48,6 +51,10 @@ import type {
   {{/operation}}
 } from '../model/clientMethodProps';
 {{/operations}}
+
+{{#isSearchClient}}
+  import type { BatchRequest } from '../model/batchRequest';
+{{/isSearchClient}}
 
 {{#isIngestionClient}}
   import type { OnDemandTrigger } from '../model/onDemandTrigger';
