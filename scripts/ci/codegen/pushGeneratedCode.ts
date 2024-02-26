@@ -22,7 +22,7 @@ export async function pushGeneratedCode(): Promise<void> {
   const baseBranch = await run('git branch --show-current');
   const isMainBranch = baseBranch === MAIN_BRANCH;
   const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(
-    commitStartPrepareRelease
+    commitStartPrepareRelease,
   );
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
@@ -55,20 +55,20 @@ export async function pushGeneratedCode(): Promise<void> {
 
   if (!(await isUpToDate(baseBranch))) {
     console.log(
-      `The branch '${baseBranch}' is not up to date with origin, stopping this task and letting the new job push generated code.`
+      `The branch '${baseBranch}' is not up to date with origin, stopping this task and letting the new job push generated code.`,
     );
     return;
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
   let message = await run(
-    `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`
+    `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`,
   );
   const authors = await run(
     `git show -s ${baseBranch} --format="
 
 Co-authored-by: %an <%ae>
-%(trailers:key=Co-authored-by)"`
+%(trailers:key=Co-authored-by)"`,
   );
 
   if (IS_RELEASE_COMMIT && isMainBranch) {

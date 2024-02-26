@@ -1,7 +1,9 @@
 {
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "singleQuote": true,
-  "plugins":["prettier-plugin-java"],
+  "plugins": [
+    "prettier-plugin-java"
+  ],
   "overrides": [
     {
       "files": "*.java",
