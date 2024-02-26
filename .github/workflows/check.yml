@@ -458,7 +458,7 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ "${{ needs.codegen.success }}" != "true" ]]; then
+          if [[ "${{ needs.codegen.outputs.success }}" != "true" ]]; then
             echo "codegen step didn't succeed"
             exit 1
           fi
