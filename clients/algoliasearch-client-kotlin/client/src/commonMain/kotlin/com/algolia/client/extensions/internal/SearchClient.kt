@@ -1,7 +1,7 @@
 package com.algolia.client.extensions.internal
 
 import com.algolia.client.api.SearchClient
-import com.algolia.client.model.search.SecuredAPIKeyRestriction
+import com.algolia.client.model.search.SecuredApiKeyRestriction
 import com.algolia.client.model.search.SearchParamsObject
 import io.ktor.http.*
 import kotlinx.serialization.json.JsonArray
@@ -9,9 +9,9 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 /**
- * Builds a restriction string based on provided [SecuredAPIKeyRestriction].
+ * Builds a restriction string based on provided [SecuredApiKeyRestriction].
  */
-internal fun SearchClient.buildRestrictionString(restriction: SecuredAPIKeyRestriction): String {
+internal fun SearchClient.buildRestrictionString(restriction: SecuredApiKeyRestriction): String {
   return Parameters.build {
     restriction.query?.let { query ->
       val json = options.json.encodeToJsonElement(SearchParamsObject.serializer(), query).jsonObject
