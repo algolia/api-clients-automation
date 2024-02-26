@@ -8,8 +8,7 @@
     {
       "files": "*.java",
       "options": {
-        "printWidth": 140,
-        "trailingComma": "none"
+        "printWidth": 140
       }
     }
   ]
