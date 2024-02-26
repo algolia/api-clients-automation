@@ -373,11 +373,13 @@ public extension SearchClient {
                 requestOptions: requestOptions
             )
 
-            if waitForTasks {
+            responses.append(batchResponse)
+        }
+
+        if waitForTasks {
+            for batchResponse in responses {
                 try await self.waitForTask(with: batchResponse.taskID, in: indexName)
             }
-
-            responses.append(batchResponse)
         }
 
         return responses
