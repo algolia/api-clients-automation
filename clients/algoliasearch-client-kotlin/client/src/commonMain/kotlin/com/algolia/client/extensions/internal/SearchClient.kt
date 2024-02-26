@@ -23,7 +23,7 @@ internal fun SearchClient.buildRestrictionString(restriction: SecuredApiKeyRestr
       }
     }
     restriction.restrictIndices?.let { append("restrictIndices", it.joinToString(";")) }
-    restriction.restrictSources?.let { append("restrictSources", it.joinToString(";")) }
+    restriction.restrictSources?.let { append("restrictSources", it) }
     restriction.userToken?.let { append("userToken", it) }
     restriction.validUntil?.let { append("validUntil", it.toEpochMilliseconds().toString()) }
   }.formUrlEncode()

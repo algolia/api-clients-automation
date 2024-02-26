@@ -12,9 +12,9 @@ describe('generateSecuredApiKey', () => {
       restrictions: {
         validUntil: 100,
         restrictIndices: ['bar'],
-        restrictSources: 'baz',
+        restrictSources: '192,168.1.0/24',
         userToken: 'foobarbaz',
-        searchParams: {
+        query: {
           query: 'foo',
         },
       },
