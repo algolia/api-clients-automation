@@ -2,6 +2,7 @@ using System.IO.Compression;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
+using Algolia.Search.Tests.Utils;
 using Xunit;
 
 namespace Algolia.Search.Tests;

@@ -7,6 +7,11 @@ import algoliasearch.ingestion.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.skyscreamer.jsonassert.JSONCompare.compareJSON
+import org.skyscreamer.jsonassert.JSONCompareMode
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -29,6 +34,24 @@ class IngestionTest extends AnyFunSuite {
       ),
       echo
     )
+  }
+
+  def testE2EClient(): IngestionClient = {
+    val region = "us"
+    if (System.getenv("CI") == "true") {
+      IngestionClient(
+        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      IngestionClient(
+        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
+        region = region
+      )
+    }
   }
 
   test("createAuthenticationOAuth") {
@@ -765,18 +788,25 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("enableTask") {
+  test("enable task e2e") {
     val (client, echo) = testClient()
     val future = client.enableTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable")
+    assert(res.path == "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
     assert(res.method == "PUT")
     assert(res.body.contains("{}"))
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.enableTask(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
   }
 
   test("getAuthentication") {
@@ -810,7 +840,7 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.getAuthentications(
       itemsPerPage = Some(10),
-      page = Some(5),
+      page = Some(1),
       `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
       platform = Some(Seq(PlatformNone.withName("none"))),
       sort = Some(AuthenticationSortKeys.withName("createdAt")),
@@ -824,7 +854,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"itemsPerPage":"10","page":"5","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}"""
+      """{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
@@ -832,6 +862,22 @@ class IngestionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.getAuthentications(
+      itemsPerPage = Some(10),
+      page = Some(1),
+      `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
+      platform = Some(Seq(PlatformNone.withName("none"))),
+      sort = Some(AuthenticationSortKeys.withName("createdAt")),
+      order = Some(OrderKeys.withName("desc"))
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("getDestination") {
@@ -934,15 +980,26 @@ class IngestionTest extends AnyFunSuite {
   test("getSource") {
     val (client, echo) = testClient()
     val future = client.getSource(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.getSource(
+      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("getSources") {
@@ -1060,7 +1117,11 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.searchTasks(
       taskSearch = TaskSearch(
-        taskIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+        taskIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
       )
     )
 
@@ -1069,10 +1130,28 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/tasks/search")
     assert(res.method == "POST")
-    val expectedBody =
-      parse("""{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}""")
+    val expectedBody = parse(
+      """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.searchTasks(
+      taskSearch = TaskSearch(
+        taskIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("triggerDockerSourceDiscover") {

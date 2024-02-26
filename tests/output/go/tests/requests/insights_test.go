@@ -2,10 +2,13 @@ package requests
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -29,6 +32,22 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 	require.NoError(t, err)
 
 	return client, echo
+}
+
+func createE2EInsightsClient(t *testing.T) *insights.APIClient {
+	t.Helper()
+
+	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+	if appID == "" && os.Getenv("CI") != "true" {
+		err := godotenv.Load("../../../../.env")
+		require.NoError(t, err)
+		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+	}
+	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+	client, err := insights.NewClient(appID, apiKey, insights.US)
+	require.NoError(t, err)
+
+	return client
 }
 
 func TestInsights_CustomDelete(t *testing.T) {
@@ -426,9 +445,9 @@ func TestInsights_PushEvents(t *testing.T) {
 
 			insights.NewEmptyInsightsEvents().SetEvents(
 				[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
+					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1708646400000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
+					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1708646400000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}))}),
 		))
 		require.NoError(t, err)
@@ -437,7 +456,38 @@ func TestInsights_PushEvents(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"]}]}`)
+		ja.Assertf(*echo.Body, `{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"]}]}`)
+		clientE2E := createE2EInsightsClient(t)
+		res, err := clientE2E.PushEvents(client.NewApiPushEventsRequest(
+
+			insights.NewEmptyInsightsEvents().SetEvents(
+				[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
+					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1708646400000).SetObjectIDs(
+						[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
+					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1708646400000).SetObjectIDs(
+						[]string{"9780545139700", "9780439784542"}))}),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"message":"OK","status":200}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 	t.Run("ConvertedObjectIDsAfterSearch", func(t *testing.T) {
 		_, err := client.PushEvents(client.NewApiPushEventsRequest(

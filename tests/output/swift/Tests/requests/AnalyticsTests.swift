@@ -1,16 +1,52 @@
 import XCTest
 
-#if canImport(AnyCodable)
-    import AnyCodable
-#endif
+import AnyCodable
+import DotEnv
 import Utils
 
 @testable import Analytics
 @testable import Core
 
 final class AnalyticsClientRequestsTests: XCTestCase {
-    static let APPLICATION_ID = "my_application_id"
-    static let API_KEY = "my_api_key"
+    static var APPLICATION_ID = "my_application_id"
+    static var API_KEY = "my_api_key"
+    static var e2eClient: AnalyticsClient?
+
+    override class func setUp() {
+        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
+            do {
+                let currentFileURL = try XCTUnwrap(URL(string: #file))
+
+                let packageDirectoryURL = currentFileURL
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+                    .deletingLastPathComponent()
+
+                let dotEnvURL = packageDirectoryURL
+                    .appendingPathComponent(".env")
+                dump(dotEnvURL.absoluteString)
+                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
+            } catch {
+                XCTFail("Unable to load .env file")
+            }
+        }
+
+        do {
+            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
+        } catch {
+            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+        }
+
+        do {
+            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
+        } catch {
+            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+        }
+
+        self.e2eClient = try? AnalyticsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
+    }
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
@@ -1942,6 +1978,56 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// e2e with complex query params
+    func testGetTopSearchesTest2() async throws {
+        let configuration: Analytics.Configuration = try Analytics.Configuration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getTopSearchesWithHTTPInfo(
+            index: "cts_e2e_space in index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/searches")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"cts_e2e_space%20in%20index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+
+        guard let e2eClient = AnalyticsClientRequestsTests.e2eClient else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let e2eResponse = try await e2eClient.getTopSearchesWithHTTPInfo(
+            index: "cts_e2e_space in index"
+        )
+        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
+        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+
+        let e2eExpectedBodyData = try XCTUnwrap(
+            "{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}"
+                .data(using: .utf8)
+        )
+
+        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+
+        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// get getUsersCount with minimal parameters

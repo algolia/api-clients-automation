@@ -74,6 +74,24 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 })
 ```
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Microsoft.Extensions.Logging;
+
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+  // Log everything from Algolia in the console, including debug logs
+  builder.AddFilter("Algolia", LogLevel.Debug).AddConsole();
+});
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>", loggerFactory);
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Send additional information in your request with `requestOptions`
@@ -239,6 +257,39 @@ searchClient.Search(
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+using Algolia.Search.Http;
+using Algolia.Search.Models.Search;
+
+var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+client.SearchSingleIndex<Hit>("<YOUR_INDEX_NAME>",
+  new SearchParams(new SearchParamsObject { Query = "<YOUR_QUERY>", HitsPerPage = 50 }),
+  // You can use the fluent builder to add extra headers, query parameters, and set the timeout.
+  new RequestOptionBuilder()
+    // This header is added to the request
+    .AddExtraHeader("additional-header", "hello")
+    .AddExtraHeader("another-header", "hello again")
+    // As we re-define `hitsPerPage`, it will override the value defined in the method's parameters.
+    .AddExtraQueryParameters("hitsPerPage", 100)
+    .SetTimeout(TimeSpan.FromMinutes(1)).Build());
+
+client.SearchSingleIndex<Hit>("<YOUR_INDEX_NAME>",
+  new SearchParams(new SearchParamsObject { Query = "<YOUR_QUERY>", HitsPerPage = 50 }),
+  // You can also directly instantiate the RequestOptions object
+  new RequestOptions
+  {
+    Headers = new Dictionary<string, string> { { "additional-header", "hello" } },
+    QueryParameters = new Dictionary<string, object> { { "hitsPerPage", 100 } }
+  });
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Provide your own user-agent
@@ -356,6 +407,21 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
 ```
 
 </TabItem>
+
+<TabItem value="csharp">
+
+```csharp
+using Algolia.Search.Clients;
+
+var searchConfig = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+
+// This will append `; my user agent (optional version)` to the current value of `x-algolia-agent` for every requests
+searchConfig.UserAgent.AddSegment("my user agent", "optional version");
+var client = new SearchClient(searchConfig);
+```
+
+</TabItem>
+
 </TabsLanguage>
 
 ## Use your own HTTP requester
@@ -483,6 +549,19 @@ searchClient, _ := search.NewClientWithConfig(search.Configuration{
   WriteTimeout:  0,
   Compression:   0,
 })
+```
+
+</TabItem>
+
+<TabItem value="csharp">
+
+> Create your own requester by creating a class that implements `IHttpRequester`, and use it by passing it to the client constructor.
+
+```csharp
+using Algolia.Search.Clients;
+
+var config = new SearchConfig("<YOUR_APP_ID>", "<YOUR_API_KEY>");
+var client = new SearchClient(config, new MyOwnRequester());
 ```
 
 </TabItem>

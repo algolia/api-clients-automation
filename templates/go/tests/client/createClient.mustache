@@ -8,6 +8,9 @@ cfg = {{clientPrefix}}.Configuration{
     {{#hasCustomHosts}}
     Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", "{{host}}:{{port}}", call.IsReadWrite),{{/customHosts}} },
     {{/hasCustomHosts}}
+    {{#gzipEncoding}}
+    Compression: compression.GZIP,
+    {{/gzipEncoding}}
   },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
   Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
 }

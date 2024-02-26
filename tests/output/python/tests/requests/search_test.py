@@ -1,6 +1,8 @@
 from json import loads
 from os import environ
+from time import time
 
+from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.config import SearchConfig
@@ -475,9 +477,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_browse_1(self):
         """
@@ -1227,11 +1227,9 @@ class TestSearchClient:
             index_name="cts_e2e_settings",
         )
         _expected_body = loads(
-            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":20,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_get_sources_0(self):
         """
@@ -1891,9 +1889,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_1(self):
         """
@@ -1951,9 +1947,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_2(self):
         """
@@ -2536,9 +2530,7 @@ class TestSearchClient:
         _expected_body = loads(
             """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}"""
         )
-        assert (
-            self._helpers.union(_expected_body, loads(resp.to_json())) == _expected_body
-        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
 
     async def test_search_synonyms_0(self):
         """
@@ -3004,3 +2996,80 @@ class TestSearchClient:
         assert loads(_req.data) == loads(
             """{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}"""
         )
+
+    def test_generate_secured_api_key_0(self):
+        """
+        allow generating a secured api key without restrictions
+        """
+        _resp = self._client.generate_secured_api_key(parent_api_key="foo")
+        assert (
+            _resp
+            == "Y2M1MGVkOGY0Yjg2YzE4MDJjYTMwOGU2YTMzNjg1MTA4Y2UwNjkwZmNjODMzYzhjN2FhNGE3M2FhZTdiMjhiZnsic2VhcmNoX3BhcmFtcyI6ICJ7XCJxdWVyeVwiOiBcIlwiLCBcInNpbWlsYXJRdWVyeVwiOiBcIlwiLCBcImZpbHRlcnNcIjogXCJcIiwgXCJzdW1PckZpbHRlcnNTY29yZXNcIjogZmFsc2UsIFwiZmFjZXRpbmdBZnRlckRpc3RpbmN0XCI6IGZhbHNlLCBcInBhZ2VcIjogMCwgXCJhcm91bmRMYXRMbmdcIjogXCJcIiwgXCJhcm91bmRMYXRMbmdWaWFJUFwiOiBmYWxzZSwgXCJwZXJzb25hbGl6YXRpb25JbXBhY3RcIjogMTAwLCBcImdldFJhbmtpbmdJbmZvXCI6IGZhbHNlLCBcInN5bm9ueW1zXCI6IHRydWUsIFwiY2xpY2tBbmFseXRpY3NcIjogZmFsc2UsIFwiYW5hbHl0aWNzXCI6IHRydWUsIFwicGVyY2VudGlsZUNvbXB1dGF0aW9uXCI6IHRydWUsIFwiZW5hYmxlQUJUZXN0XCI6IHRydWUsIFwicmVsZXZhbmN5U3RyaWN0bmVzc1wiOiAxMDAsIFwiaGlnaGxpZ2h0UHJlVGFnXCI6IFwiPGVtPlwiLCBcImhpZ2hsaWdodFBvc3RUYWdcIjogXCI8L2VtPlwiLCBcInNuaXBwZXRFbGxpcHNpc1RleHRcIjogXCJcXHUyMDI2XCIsIFwicmVzdHJpY3RIaWdobGlnaHRBbmRTbmlwcGV0QXJyYXlzXCI6IGZhbHNlLCBcImhpdHNQZXJQYWdlXCI6IDIwLCBcIm1pbldvcmRTaXplZm9yMVR5cG9cIjogNCwgXCJtaW5Xb3JkU2l6ZWZvcjJUeXBvc1wiOiA4LCBcImFsbG93VHlwb3NPbk51bWVyaWNUb2tlbnNcIjogdHJ1ZSwgXCJrZWVwRGlhY3JpdGljc09uQ2hhcmFjdGVyc1wiOiBcIlwiLCBcImRlY29tcG91bmRRdWVyeVwiOiB0cnVlLCBcImVuYWJsZVJ1bGVzXCI6IHRydWUsIFwiZW5hYmxlUGVyc29uYWxpemF0aW9uXCI6IGZhbHNlLCBcImFkdmFuY2VkU3ludGF4XCI6IGZhbHNlLCBcInJlcGxhY2VTeW5vbnltc0luSGlnaGxpZ2h0XCI6IGZhbHNlLCBcIm1pblByb3hpbWl0eVwiOiAxLCBcIm1heEZhY2V0SGl0c1wiOiAxMCwgXCJtYXhWYWx1ZXNQZXJGYWNldFwiOiAxMDAsIFwic29ydEZhY2V0VmFsdWVzQnlcIjogXCJjb3VudFwiLCBcImF0dHJpYnV0ZUNyaXRlcmlhQ29tcHV0ZWRCeU1pblByb3hpbWl0eVwiOiBmYWxzZSwgXCJlbmFibGVSZVJhbmtpbmdcIjogdHJ1ZX0iLCAidmFsaWRfdW50aWwiOiAiMCJ9"
+        )
+
+    def test_generate_secured_api_key_1(self):
+        """
+        allow generating a secured api key with a dict of restrictions
+        """
+        _resp = self._client.generate_secured_api_key(
+            parent_api_key="foo",
+            restrictions={
+                "search_params": {"query": "foo"},
+                "valid_until": 100,
+                "restrict_indices": ["bar"],
+                "restrict_sources": "baz",
+                "user_token": "foobarbaz",
+            },
+        )
+        assert (
+            _resp
+            == "OGM3YTUyNjI5MTExNjEwNWQ5ZTJhYzBlMWFmY2VjNTg3MmRlZTM4MjZmNzk2MjVmOTJkZGUyNjFhZTQzNDJlNXsic2VhcmNoX3BhcmFtcyI6ICJ7XCJxdWVyeVwiOiBcImZvb1wifSIsICJ2YWxpZF91bnRpbCI6ICIxMDAiLCAicmVzdHJpY3RfaW5kaWNlcyI6ICJiYXIiLCAicmVzdHJpY3Rfc291cmNlcyI6ICJiYXoiLCAidXNlcl90b2tlbiI6ICJmb29iYXJiYXoifQ=="
+        )
+
+    def test_generate_secured_api_key_2(self):
+        """
+        allow generating a secured api key with from the model
+        """
+        _resp = self._client.generate_secured_api_key(
+            parent_api_key="bar",
+            restrictions=SecuredApiKeyRestrictions(
+                search_params={"query": "bar", "page": 3},
+                valid_until=42,
+                restrict_indices=["baz"],
+                restrict_sources="foo",
+                user_token="bazbarfoo",
+            ),
+        )
+        assert (
+            _resp
+            == "NmY4NDZkZWM2OWI0YjRkYzdhNjgzOWY3NmQ3ZGRhNjNkYzBjZWRjNTYxY2NkOWEyOGQxNmEyOGNjMWIyYzJkYnsic2VhcmNoX3BhcmFtcyI6ICJ7XCJxdWVyeVwiOiBcImJhclwiLCBcInNpbWlsYXJRdWVyeVwiOiBcIlwiLCBcImZpbHRlcnNcIjogXCJcIiwgXCJzdW1PckZpbHRlcnNTY29yZXNcIjogZmFsc2UsIFwiZmFjZXRpbmdBZnRlckRpc3RpbmN0XCI6IGZhbHNlLCBcInBhZ2VcIjogMywgXCJhcm91bmRMYXRMbmdcIjogXCJcIiwgXCJhcm91bmRMYXRMbmdWaWFJUFwiOiBmYWxzZSwgXCJwZXJzb25hbGl6YXRpb25JbXBhY3RcIjogMTAwLCBcImdldFJhbmtpbmdJbmZvXCI6IGZhbHNlLCBcInN5bm9ueW1zXCI6IHRydWUsIFwiY2xpY2tBbmFseXRpY3NcIjogZmFsc2UsIFwiYW5hbHl0aWNzXCI6IHRydWUsIFwicGVyY2VudGlsZUNvbXB1dGF0aW9uXCI6IHRydWUsIFwiZW5hYmxlQUJUZXN0XCI6IHRydWUsIFwicmVsZXZhbmN5U3RyaWN0bmVzc1wiOiAxMDAsIFwiaGlnaGxpZ2h0UHJlVGFnXCI6IFwiPGVtPlwiLCBcImhpZ2hsaWdodFBvc3RUYWdcIjogXCI8L2VtPlwiLCBcInNuaXBwZXRFbGxpcHNpc1RleHRcIjogXCJcXHUyMDI2XCIsIFwicmVzdHJpY3RIaWdobGlnaHRBbmRTbmlwcGV0QXJyYXlzXCI6IGZhbHNlLCBcImhpdHNQZXJQYWdlXCI6IDIwLCBcIm1pbldvcmRTaXplZm9yMVR5cG9cIjogNCwgXCJtaW5Xb3JkU2l6ZWZvcjJUeXBvc1wiOiA4LCBcImFsbG93VHlwb3NPbk51bWVyaWNUb2tlbnNcIjogdHJ1ZSwgXCJrZWVwRGlhY3JpdGljc09uQ2hhcmFjdGVyc1wiOiBcIlwiLCBcImRlY29tcG91bmRRdWVyeVwiOiB0cnVlLCBcImVuYWJsZVJ1bGVzXCI6IHRydWUsIFwiZW5hYmxlUGVyc29uYWxpemF0aW9uXCI6IGZhbHNlLCBcImFkdmFuY2VkU3ludGF4XCI6IGZhbHNlLCBcInJlcGxhY2VTeW5vbnltc0luSGlnaGxpZ2h0XCI6IGZhbHNlLCBcIm1pblByb3hpbWl0eVwiOiAxLCBcIm1heEZhY2V0SGl0c1wiOiAxMCwgXCJtYXhWYWx1ZXNQZXJGYWNldFwiOiAxMDAsIFwic29ydEZhY2V0VmFsdWVzQnlcIjogXCJjb3VudFwiLCBcImF0dHJpYnV0ZUNyaXRlcmlhQ29tcHV0ZWRCeU1pblByb3hpbWl0eVwiOiBmYWxzZSwgXCJlbmFibGVSZVJhbmtpbmdcIjogdHJ1ZX0iLCAidmFsaWRfdW50aWwiOiAiNDIiLCAicmVzdHJpY3RfaW5kaWNlcyI6ICJiYXoiLCAicmVzdHJpY3Rfc291cmNlcyI6ICJmb28iLCAidXNlcl90b2tlbiI6ICJiYXpiYXJmb28ifQ=="
+        )
+
+    def test_generate_secured_api_key_and_validity_0(self):
+        """
+        is able to check the remaining validity of a key
+        """
+        _resp = self._client.generate_secured_api_key(parent_api_key="foo")
+        _validity = self._client.get_secured_api_key_remaining_validity(_resp)
+        assert abs(_validity) == int(round(time()))
+
+    def test_generate_secured_api_key_and_validity_1(self):
+        """
+        throws when the validity field is not found
+        """
+        try:
+            _resp = self._client.generate_secured_api_key("foo", {"valid_until": None})
+            self._client.get_secured_api_key_remaining_validity(_resp)
+            assert False
+        except Exception as e:
+            assert str(e) == "valid_until not found in api key."
+
+    def test_generate_secured_api_key_and_validity_2(self):
+        """
+        throws when the invalid key
+        """
+        try:
+            self._client.get_secured_api_key_remaining_validity("foo")
+            assert False
+        except Exception as e:
+            assert str(e) == "Incorrect padding"

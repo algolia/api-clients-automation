@@ -1,7 +1,13 @@
 from __future__ import annotations
 
+import base64
+import hashlib
+import hmac
+from random import choice
+from string import ascii_letters
+from time import time
 from urllib.parse import quote
-from re import match
+from re import match, search
 from enum import Enum
 from json import (
   loads,
@@ -21,23 +27,24 @@ from pydantic import (
 from typing import (
   Annotated,
   Any,
+  Callable,
   ClassVar,
   Dict,
+  Iterator,
   List,
+  Literal,
   Optional,
+  Self,
   Tuple,
   Union,
-  Literal,
-  Self,
-  Callable
 )
 
-from algoliasearch.http.helpers import create_iterable, RetryTimeout
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.helpers import create_iterable, RetryTimeout, SecuredApiKeyRestrictions
+from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.verb import Verb
-from algoliasearch.http.exceptions import RequestException
+from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
 
 from algoliasearch.{{packageName}}.config import {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}

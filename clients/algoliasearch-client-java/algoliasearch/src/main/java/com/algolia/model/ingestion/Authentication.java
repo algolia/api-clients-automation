@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** An authentication is used to login into a Source or a Destination. */
+/** An authentication is used to login into a Source or a Destination, with obfuscated input. */
 public class Authentication {
 
   @JsonProperty("authenticationID")
@@ -23,7 +23,7 @@ public class Authentication {
   private Platform platform;
 
   @JsonProperty("input")
-  private AuthInput input;
+  private AuthInputPartial input;
 
   @JsonProperty("createdAt")
   private String createdAt;
@@ -75,14 +75,14 @@ public class Authentication {
     return platform;
   }
 
-  public Authentication setInput(AuthInput input) {
+  public Authentication setInput(AuthInputPartial input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nonnull
-  public AuthInput getInput() {
+  public AuthInputPartial getInput() {
     return input;
   }
 

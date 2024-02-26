@@ -20,11 +20,11 @@ if (!process.env.ALGOLIA_APPLICATION_ID) {
   throw new Error("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
 }
 
-if (!process.env.ALGOLIA_ADMIN_KEY) {
-  throw new Error("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
+if (!process.env.{{e2eApiKey}}) {
+  throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
-const e2eClient = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
+const e2eClient = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
 {{/hasE2E}}
 
 {{#blocksRequests}}
@@ -63,3 +63,7 @@ describe('{{operationId}}', () => {
 })
 
 {{/blocksRequests}}
+
+{{#isSearchClient}}
+{{> tests/requests/helpers}}
+{{/isSearchClient}}

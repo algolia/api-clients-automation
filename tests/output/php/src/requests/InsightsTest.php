@@ -8,9 +8,18 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Dotenv\Dotenv;
 use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+// we only read .env file if we run locally
+if (getenv('ALGOLIA_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
 
 /**
  * InsightsTest.
@@ -621,7 +630,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1641290601962,
+                    'timestamp' => 1708646400000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -635,7 +644,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1641290601962,
+                    'timestamp' => 1708646400000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -650,9 +659,46 @@ class InsightsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/events',
                 'method' => 'POST',
-                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"]}]}'),
+                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"]}]}'),
             ],
         ]);
+
+        $e2eClient = $this->getE2EClient();
+        $resp = $e2eClient->pushEvents(
+            ['events' => [
+                ['eventType' => 'conversion',
+                    'eventName' => 'Product Purchased',
+                    'index' => 'products',
+                    'userToken' => 'user-123456',
+                    'authenticatedUserToken' => 'user-123456',
+                    'timestamp' => 1708646400000,
+                    'objectIDs' => [
+                        '9780545139700',
+
+                        '9780439784542',
+                    ],
+                    'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
+                ],
+
+                ['eventType' => 'view',
+                    'eventName' => 'Product Detail Page Viewed',
+                    'index' => 'products',
+                    'userToken' => 'user-123456',
+                    'authenticatedUserToken' => 'user-123456',
+                    'timestamp' => 1708646400000,
+                    'objectIDs' => [
+                        '9780545139700',
+
+                        '9780439784542',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $expected = json_decode('{"message":"OK","status":200}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     /**
@@ -772,6 +818,21 @@ class InsightsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    protected function union($expected, $received)
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+
+        return $received;
+    }
+
     protected function assertRequests(array $requests)
     {
         $this->assertGreaterThan(0, count($requests));
@@ -811,6 +872,11 @@ class InsightsTest extends TestCase implements HttpClientInterface
                 }
             }
         }
+    }
+
+    protected function getE2EClient()
+    {
+        return InsightsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }
 
     protected function getClient()

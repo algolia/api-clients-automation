@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class IngestionClient
 {
-    public const VERSION = '4.0.0-alpha.95';
+    public const VERSION = '4.0.0-alpha.96';
 
     /**
      * @var ApiWrapperInterface
@@ -1592,7 +1592,7 @@ class IngestionClient
      *                                  - $destinationUpdate['type'] => (array)
      *                                  - $destinationUpdate['name'] => (string) An human readable name describing the object.
      *                                  - $destinationUpdate['input'] => (array)
-     *                                  - $destinationUpdate['authenticationID'] => (string)
+     *                                  - $destinationUpdate['authenticationID'] => (string) The authentication UUID.
      *
      * @see \Algolia\AlgoliaSearch\Model\Ingestion\DestinationUpdate
      *

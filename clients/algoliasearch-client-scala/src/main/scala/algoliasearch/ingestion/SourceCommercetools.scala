@@ -19,5 +19,6 @@ case class SourceCommercetools(
     locales: Option[Seq[String]] = scala.None,
     url: String,
     projectKey: String,
-    fallbackIsInStockValue: Option[Boolean] = scala.None
+    fallbackIsInStockValue: Option[Boolean] = scala.None,
+    customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceInputTrait

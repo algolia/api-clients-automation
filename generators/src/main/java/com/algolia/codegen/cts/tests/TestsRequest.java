@@ -49,8 +49,14 @@ public class TestsRequest extends TestsGenerator {
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, Request[]> cts = loadRequestCTS();
 
+    if (this.client.equals("search")) {
+      bundle.put("isSearchClient", true);
+    }
+
     List<Object> blocks = new ArrayList<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language);
+
+    bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();

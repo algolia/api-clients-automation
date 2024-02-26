@@ -2,9 +2,7 @@ from asyncio import run
 from os import environ
 
 from algoliasearch.search.client import SearchClient
-from algoliasearch.search.models.search_method_params import SearchMethodParams
-from algoliasearch.search.models.search_for_hits import SearchForHits
-from algoliasearch.search.models.search_query import SearchQuery
+from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.search import __version__
 from dotenv import load_dotenv
 
@@ -18,16 +16,12 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.search(
-            search_method_params=SearchMethodParams(
-                requests=[
-                    SearchQuery(SearchForHits(index_name="cts_e2e_search_facet")),
-                ],
-            ),
+        resp = await client.replace_all_objects(
+            index_name="test-flag",
+            objects=[{"name": f"John Doe{i}", "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}" } for i in range(1001)],
         )
 
-        print("client response")
-        print(response.to_json())
+        print(resp)
     finally:
         await client.close()
 

@@ -19,8 +19,7 @@ class SourceBigCommerce(BaseModel):
     SourceBigCommerce
     """
 
-    store_hash: Optional[StrictStr] = Field(
-        default=None,
+    store_hash: StrictStr = Field(
         description="The store hash identifying the store the shopper is signing in to.",
         alias="storeHash",
     )
@@ -58,20 +57,14 @@ class SourceBigCommerce(BaseModel):
             exclude={},
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of
-        # channel
         if self.channel:
             _dict["channel"] = self.channel.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of
-        # each item in product_metafields (list)
         _items = []
         if self.product_metafields:
             for _item in self.product_metafields:
                 if _item:
                     _items.append(_item.to_dict())
             _dict["productMetafields"] = _items
-        # override the default output from pydantic by calling `to_dict()` of
-        # each item in variant_metafields (list)
         _items = []
         if self.variant_metafields:
             for _item in self.variant_metafields:

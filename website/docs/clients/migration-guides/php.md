@@ -56,23 +56,3 @@ $searchResults2 = $client->search([
     ],
 ]);
 ```
-
-### Generate a secured Api Key 
-
-The `SearchClient::generateSecuredApiKey()` from the previous client was removed, but you can still create them:
-
-```php
-use Algolia\AlgoliaSearch\Support\Helpers;
-
-// Key will be valid for 25 hours.
-$validUntil = time() + (3600 * 25);
-
-$urlEncodedRestrictions = Helpers::buildQuery([
-    'restrictIndices' => '<YOUR_INDEX_NAME>',
-    'validUntil' => $validUntil,
-]);
-
-$content = hash_hmac('sha256', $urlEncodedRestrictions, '<YOUR_SEARCH_KEY>').$urlEncodedRestrictions;
-$securedSearchKey =  base64_encode($content);
-
-```

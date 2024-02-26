@@ -1,6 +1,11 @@
 import type { EchoResponse, RequestOptions } from '@algolia/client-common';
 import { ingestionClient } from '@algolia/ingestion';
 import { echoRequester } from '@algolia/requester-node-http';
+import * as dotenv from 'dotenv';
+
+import { union } from '../helpers';
+
+dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -8,6 +13,24 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = ingestionClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error(
+    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
+  );
+}
+
+if (!process.env.ALGOLIA_ADMIN_KEY) {
+  throw new Error(
+    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
+  );
+}
+
+const e2eClient = ingestionClient(
+  process.env.ALGOLIA_APPLICATION_ID,
+  process.env.ALGOLIA_ADMIN_KEY,
+  'us'
+);
 
 describe('createAuthentication', () => {
   test('createAuthenticationOAuth', async () => {
@@ -570,17 +593,25 @@ describe('disableTask', () => {
 });
 
 describe('enableTask', () => {
-  test('enableTask', async () => {
+  test('enable task e2e', async () => {
     const req = (await client.enableTask({
-      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual(
-      '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable'
+      '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable'
     );
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.enableTask({
+      taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+    });
+
+    const expectedBody = { taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 
@@ -612,7 +643,7 @@ describe('getAuthentications', () => {
   test('getAuthentications with query params', async () => {
     const req = (await client.getAuthentications({
       itemsPerPage: 10,
-      page: 5,
+      page: 1,
       type: ['basic', 'algolia'],
       platform: ['none'],
       sort: 'createdAt',
@@ -624,12 +655,44 @@ describe('getAuthentications', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
       itemsPerPage: '10',
-      page: '5',
+      page: '1',
       type: 'basic%2Calgolia',
       platform: 'none',
       sort: 'createdAt',
       order: 'desc',
     });
+
+    const resp = await e2eClient.getAuthentications({
+      itemsPerPage: 10,
+      page: 1,
+      type: ['basic', 'algolia'],
+      platform: ['none'],
+      sort: 'createdAt',
+      order: 'desc',
+    });
+
+    const expectedBody = {
+      pagination: { page: 1, itemsPerPage: 10 },
+      authentications: [
+        {
+          authenticationID: 'b57a7ea5-8592-493b-b75b-6c66d77aee7f',
+          type: 'algolia',
+          name: 'Auto-generated Authentication for T8JK9S7I7X - 1704732447751',
+          input: {},
+          createdAt: '2024-01-08T16:47:31Z',
+          updatedAt: '2024-01-08T16:47:31Z',
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 
@@ -732,13 +795,28 @@ describe('getRuns', () => {
 describe('getSource', () => {
   test('getSource', async () => {
     const req = (await client.getSource({
-      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.path).toEqual('/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.getSource({
+      sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
+    });
+
+    const expectedBody = {
+      sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
+      name: 'cts_e2e_browse',
+      type: 'json',
+      input: {
+        url: 'https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json',
+      },
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 
@@ -861,6 +939,7 @@ describe('searchTasks', () => {
       taskIDs: [
         '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
       ],
     })) as unknown as EchoResponse;
 
@@ -870,9 +949,33 @@ describe('searchTasks', () => {
       taskIDs: [
         '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.searchTasks({
+      taskIDs: [
+        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+      ],
+    });
+
+    const expectedBody = [
+      {
+        taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+        sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
+        destinationID: '506d79fa-e29d-4bcf-907c-6b6a41172153',
+        trigger: { type: 'onDemand' },
+        enabled: true,
+        failureThreshold: 0,
+        action: 'replace',
+        createdAt: '2024-01-08T16:47:41Z',
+      },
+    ];
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 });
 

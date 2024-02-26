@@ -276,7 +276,7 @@ export async function snippetFordisableTask(): Promise<void> {
 
 // Snippet for the enableTask method.
 //
-// enableTask
+// enable task e2e
 export async function snippetForenableTask(): Promise<void> {
   // Initialize the client
   const client = ingestionClient(
@@ -287,7 +287,7 @@ export async function snippetForenableTask(): Promise<void> {
 
   // Call the API
   const response = await client.enableTask({
-    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
   });
 
   // Use typed response
@@ -482,7 +482,7 @@ export async function snippetForgetSource(): Promise<void> {
 
   // Call the API
   const response = await client.getSource({
-    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
   });
 
   // Use typed response
@@ -650,6 +650,7 @@ export async function snippetForsearchTasks(): Promise<void> {
     taskIDs: [
       '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+      '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
     ],
   });
 

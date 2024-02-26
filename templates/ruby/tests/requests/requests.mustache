@@ -18,7 +18,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
     {{#hasE2E}}
     @e2e_client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
       ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
-      ENV.fetch('ALGOLIA_ADMIN_KEY', nil){{#hasRegionalHost}},
+      ENV.fetch('{{e2eApiKey}}', nil){{#hasRegionalHost}},
       '{{{defaultRegion}}}'{{/hasRegionalHost}}
     )
     {{/hasE2E}}

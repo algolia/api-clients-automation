@@ -10,6 +10,10 @@ from typing import Any, Dict, List, Optional, Self
 
 from pydantic import BaseModel, Field, StrictBool, StrictStr
 
+from algoliasearch.ingestion.models.commercetools_custom_fields import (
+    CommercetoolsCustomFields,
+)
+
 
 class SourceCommercetools(BaseModel):
     """
@@ -27,6 +31,9 @@ class SourceCommercetools(BaseModel):
         default=True,
         description="Determines the value that will be stored in the Algolia record if there's no inventory information on the product. ",
         alias="fallbackIsInStockValue",
+    )
+    custom_fields: Optional[CommercetoolsCustomFields] = Field(
+        default=None, alias="customFields"
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
@@ -54,6 +61,8 @@ class SourceCommercetools(BaseModel):
             exclude={},
             exclude_none=True,
         )
+        if self.custom_fields:
+            _dict["customFields"] = self.custom_fields.to_dict()
         return _dict
 
     @classmethod
@@ -71,9 +80,12 @@ class SourceCommercetools(BaseModel):
                 "locales": obj.get("locales"),
                 "url": obj.get("url"),
                 "projectKey": obj.get("projectKey"),
-                "fallbackIsInStockValue": obj.get("fallbackIsInStockValue")
-                if obj.get("fallbackIsInStockValue") is not None
-                else True,
+                "fallbackIsInStockValue": obj.get("fallbackIsInStockValue"),
+                "customFields": CommercetoolsCustomFields.from_dict(
+                    obj.get("customFields")
+                )
+                if obj.get("customFields") is not None
+                else None,
             }
         )
         return _obj

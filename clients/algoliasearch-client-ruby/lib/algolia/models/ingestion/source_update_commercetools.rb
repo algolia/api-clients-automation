@@ -12,11 +12,14 @@ module Algolia
       # Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
       attr_accessor :locales
 
+      attr_accessor :custom_fields
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :store_keys => :storeKeys,
-          :locales => :locales
+          :locales => :locales,
+          :custom_fields => :customFields
         }
       end
 
@@ -29,7 +32,8 @@ module Algolia
       def self.types_mapping
         {
           :store_keys => :'Array<String>',
-          :locales => :'Array<String>'
+          :locales => :'Array<String>',
+          :custom_fields => :CommercetoolsCustomFields
         }
       end
 
@@ -66,6 +70,10 @@ module Algolia
             self.locales = value
           end
         end
+
+        if attributes.key?(:custom_fields)
+          self.custom_fields = attributes[:custom_fields]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -75,7 +83,8 @@ module Algolia
 
         self.class == other.class &&
           store_keys == other.store_keys &&
-          locales == other.locales
+          locales == other.locales &&
+          custom_fields == other.custom_fields
       end
 
       # @see the `==` method
@@ -87,7 +96,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales].hash
+        [store_keys, locales, custom_fields].hash
       end
 
       # Builds the object from hash

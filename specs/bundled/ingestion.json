@@ -92,6 +92,7 @@
             "oneOf": [
               {
                 "type": "string",
+                "nullable": true,
                 "description": "Describe which platform the Authentication is used for.",
                 "enum": [
                   "bigcommerce",
@@ -253,7 +254,10 @@
             "description": "The authentication UUID.",
             "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
           },
-          "example": "10000000-0a75-4000-a000-000000000001,none"
+          "example": [
+            "10000000-0a75-4000-a000-000000000001",
+            "none"
+          ]
         }
       },
       "sourceParameters_sort": {
@@ -537,6 +541,7 @@
       },
       "Platform": {
         "type": "string",
+        "nullable": true,
         "description": "Describe which platform the Authentication is used for.",
         "enum": [
           "bigcommerce",
@@ -554,6 +559,7 @@
         "oneOf": [
           {
             "type": "string",
+            "nullable": true,
             "description": "Describe which platform the Authentication is used for.",
             "enum": [
               "bigcommerce",
@@ -596,6 +602,313 @@
       "name": {
         "type": "string",
         "description": "An human readable name describing the object."
+      },
+      "AuthGoogleServiceAccountPartial": {
+        "type": "object",
+        "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
+        "additionalProperties": false,
+        "properties": {
+          "clientEmail": {
+            "type": "string",
+            "description": "Email address of the Service Account.",
+            "example": "service-account-name@project-id.iam.gserviceaccount.com"
+          },
+          "privateKey": {
+            "type": "string",
+            "description": "Private key of the Service Account."
+          }
+        }
+      },
+      "AuthBasicPartial": {
+        "type": "object",
+        "description": "Authentication input for Basic login with username and password.",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthAPIKeyPartial": {
+        "type": "object",
+        "description": "Authentication input used for token credentials.",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthOAuthPartial": {
+        "type": "object",
+        "description": "Authentication input for OAuth login.",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The OAuth endpoint URL."
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The clientID."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "The secret."
+          }
+        }
+      },
+      "AuthAlgoliaPartial": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "appID": {
+            "type": "string",
+            "description": "Algolia Application ID."
+          },
+          "apiKey": {
+            "type": "string",
+            "description": "Algolia API Key, with the correct rights to push to an index and change settings."
+          }
+        }
+      },
+      "AuthInputPartial": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
+            "additionalProperties": false,
+            "properties": {
+              "clientEmail": {
+                "type": "string",
+                "description": "Email address of the Service Account.",
+                "example": "service-account-name@project-id.iam.gserviceaccount.com"
+              },
+              "privateKey": {
+                "type": "string",
+                "description": "Private key of the Service Account."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "Authentication input for Basic login with username and password.",
+            "additionalProperties": false,
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "Authentication input used for token credentials.",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "Authentication input for OAuth login.",
+            "additionalProperties": false,
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The OAuth endpoint URL."
+              },
+              "client_id": {
+                "type": "string",
+                "description": "The clientID."
+              },
+              "client_secret": {
+                "type": "string",
+                "description": "The secret."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "appID": {
+                "type": "string",
+                "description": "Algolia Application ID."
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Algolia API Key, with the correct rights to push to an index and change settings."
+              }
+            }
+          }
+        ]
+      },
+      "createdAt": {
+        "type": "string",
+        "description": "Date of creation (RFC3339 format)."
+      },
+      "updatedAt": {
+        "type": "string",
+        "description": "Date of last update (RFC3339 format)."
+      },
+      "Authentication": {
+        "type": "object",
+        "description": "An authentication is used to login into a Source or a Destination, with obfuscated input.",
+        "additionalProperties": false,
+        "properties": {
+          "authenticationID": {
+            "type": "string",
+            "description": "The authentication UUID.",
+            "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the Authentication, defines what kind of object is stored in the input.",
+            "enum": [
+              "googleServiceAccount",
+              "basic",
+              "apiKey",
+              "oauth",
+              "algolia"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "An human readable name describing the object."
+          },
+          "platform": {
+            "type": "string",
+            "nullable": true,
+            "description": "Describe which platform the Authentication is used for.",
+            "enum": [
+              "bigcommerce",
+              "commercetools"
+            ]
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
+                "additionalProperties": false,
+                "properties": {
+                  "clientEmail": {
+                    "type": "string",
+                    "description": "Email address of the Service Account.",
+                    "example": "service-account-name@project-id.iam.gserviceaccount.com"
+                  },
+                  "privateKey": {
+                    "type": "string",
+                    "description": "Private key of the Service Account."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "description": "Authentication input for Basic login with username and password.",
+                "additionalProperties": false,
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "description": "Authentication input used for token credentials.",
+                "additionalProperties": false,
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "description": "Authentication input for OAuth login.",
+                "additionalProperties": false,
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The OAuth endpoint URL."
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "The clientID."
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "The secret."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "appID": {
+                    "type": "string",
+                    "description": "Algolia Application ID."
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "description": "Algolia API Key, with the correct rights to push to an index and change settings."
+                  }
+                }
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of creation (RFC3339 format)."
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date of last update (RFC3339 format)."
+          }
+        },
+        "required": [
+          "authenticationID",
+          "type",
+          "name",
+          "input",
+          "createdAt"
+        ]
+      },
+      "Pagination": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nbPages": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "nbItems": {
+            "type": "integer"
+          },
+          "itemsPerPage": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "nbPages",
+          "page",
+          "nbItems",
+          "itemsPerPage"
+        ]
       },
       "AuthGoogleServiceAccount": {
         "type": "object",
@@ -785,184 +1098,6 @@
           }
         ]
       },
-      "createdAt": {
-        "type": "string",
-        "description": "Date of creation (RFC3339 format)."
-      },
-      "updatedAt": {
-        "type": "string",
-        "description": "Date of last update (RFC3339 format)."
-      },
-      "Authentication": {
-        "type": "object",
-        "description": "An authentication is used to login into a Source or a Destination.",
-        "additionalProperties": false,
-        "properties": {
-          "authenticationID": {
-            "type": "string",
-            "description": "The authentication UUID.",
-            "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-          },
-          "type": {
-            "type": "string",
-            "description": "Type of the Authentication, defines what kind of object is stored in the input.",
-            "enum": [
-              "googleServiceAccount",
-              "basic",
-              "apiKey",
-              "oauth",
-              "algolia"
-            ]
-          },
-          "name": {
-            "type": "string",
-            "description": "An human readable name describing the object."
-          },
-          "platform": {
-            "type": "string",
-            "description": "Describe which platform the Authentication is used for.",
-            "enum": [
-              "bigcommerce",
-              "commercetools"
-            ]
-          },
-          "input": {
-            "oneOf": [
-              {
-                "type": "object",
-                "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
-                "additionalProperties": false,
-                "properties": {
-                  "clientEmail": {
-                    "type": "string",
-                    "description": "Email address of the Service Account.",
-                    "example": "service-account-name@project-id.iam.gserviceaccount.com"
-                  },
-                  "privateKey": {
-                    "type": "string",
-                    "description": "Private key of the Service Account."
-                  }
-                },
-                "required": [
-                  "clientEmail",
-                  "privateKey"
-                ]
-              },
-              {
-                "type": "object",
-                "description": "Authentication input for Basic login with username and password.",
-                "additionalProperties": false,
-                "properties": {
-                  "username": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "username",
-                  "password"
-                ]
-              },
-              {
-                "type": "object",
-                "description": "Authentication input used for token credentials.",
-                "additionalProperties": false,
-                "properties": {
-                  "key": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "key"
-                ]
-              },
-              {
-                "type": "object",
-                "description": "Authentication input for OAuth login.",
-                "additionalProperties": false,
-                "properties": {
-                  "url": {
-                    "type": "string",
-                    "description": "The OAuth endpoint URL."
-                  },
-                  "client_id": {
-                    "type": "string",
-                    "description": "The clientID."
-                  },
-                  "client_secret": {
-                    "type": "string",
-                    "description": "The secret."
-                  }
-                },
-                "required": [
-                  "url",
-                  "client_id",
-                  "client_secret"
-                ]
-              },
-              {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "appID": {
-                    "type": "string",
-                    "description": "Algolia Application ID."
-                  },
-                  "apiKey": {
-                    "type": "string",
-                    "description": "Algolia API Key, with the correct rights to push to an index and change settings."
-                  }
-                },
-                "required": [
-                  "appID",
-                  "apiKey"
-                ]
-              }
-            ]
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Date of creation (RFC3339 format)."
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Date of last update (RFC3339 format)."
-          }
-        },
-        "required": [
-          "authenticationID",
-          "type",
-          "name",
-          "input",
-          "createdAt"
-        ]
-      },
-      "Pagination": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "nbPages": {
-            "type": "integer"
-          },
-          "page": {
-            "type": "integer"
-          },
-          "nbItems": {
-            "type": "integer"
-          },
-          "itemsPerPage": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "nbPages",
-          "page",
-          "nbItems",
-          "itemsPerPage"
-        ]
-      },
       "AuthenticationCreate": {
         "type": "object",
         "description": "The payload when creating an authentication.",
@@ -985,6 +1120,7 @@
           },
           "platform": {
             "type": "string",
+            "nullable": true,
             "description": "Describe which platform the Authentication is used for.",
             "enum": [
               "bigcommerce",
@@ -1149,154 +1285,6 @@
           "deletedAt"
         ]
       },
-      "AuthGoogleServiceAccountPartial": {
-        "type": "object",
-        "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
-        "additionalProperties": false,
-        "properties": {
-          "clientEmail": {
-            "type": "string",
-            "description": "Email address of the Service Account.",
-            "example": "service-account-name@project-id.iam.gserviceaccount.com"
-          },
-          "privateKey": {
-            "type": "string",
-            "description": "Private key of the Service Account."
-          }
-        }
-      },
-      "AuthBasicPartial": {
-        "type": "object",
-        "description": "Authentication input for Basic login with username and password.",
-        "additionalProperties": false,
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "AuthAPIKeyPartial": {
-        "type": "object",
-        "description": "Authentication input used for token credentials.",
-        "additionalProperties": false,
-        "properties": {
-          "key": {
-            "type": "string"
-          }
-        }
-      },
-      "AuthOAuthPartial": {
-        "type": "object",
-        "description": "Authentication input for OAuth login.",
-        "additionalProperties": false,
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "The OAuth endpoint URL."
-          },
-          "client_id": {
-            "type": "string",
-            "description": "The clientID."
-          },
-          "client_secret": {
-            "type": "string",
-            "description": "The secret."
-          }
-        }
-      },
-      "AuthAlgoliaPartial": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "appID": {
-            "type": "string",
-            "description": "Algolia Application ID."
-          },
-          "apiKey": {
-            "type": "string",
-            "description": "Algolia API Key, with the correct rights to push to an index and change settings."
-          }
-        }
-      },
-      "AuthInputPartial": {
-        "oneOf": [
-          {
-            "type": "object",
-            "description": "Authentication input to connect to a Google service (e.g. BigQuery).",
-            "additionalProperties": false,
-            "properties": {
-              "clientEmail": {
-                "type": "string",
-                "description": "Email address of the Service Account.",
-                "example": "service-account-name@project-id.iam.gserviceaccount.com"
-              },
-              "privateKey": {
-                "type": "string",
-                "description": "Private key of the Service Account."
-              }
-            }
-          },
-          {
-            "type": "object",
-            "description": "Authentication input for Basic login with username and password.",
-            "additionalProperties": false,
-            "properties": {
-              "username": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "description": "Authentication input used for token credentials.",
-            "additionalProperties": false,
-            "properties": {
-              "key": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "description": "Authentication input for OAuth login.",
-            "additionalProperties": false,
-            "properties": {
-              "url": {
-                "type": "string",
-                "description": "The OAuth endpoint URL."
-              },
-              "client_id": {
-                "type": "string",
-                "description": "The clientID."
-              },
-              "client_secret": {
-                "type": "string",
-                "description": "The secret."
-              }
-            }
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "appID": {
-                "type": "string",
-                "description": "Algolia Application ID."
-              },
-              "apiKey": {
-                "type": "string",
-                "description": "Algolia API Key, with the correct rights to push to an index and change settings."
-              }
-            }
-          }
-        ]
-      },
       "AuthenticationUpdate": {
         "type": "object",
         "description": "Payload to partially update an Authentication.",
@@ -1319,6 +1307,7 @@
           },
           "platform": {
             "type": "string",
+            "nullable": true,
             "description": "Describe which platform the Authentication is used for.",
             "enum": [
               "bigcommerce",
@@ -1630,7 +1619,9 @@
             "description": "Date of last update (RFC3339 format)."
           },
           "authenticationID": {
-            "type": "string"
+            "type": "string",
+            "description": "The authentication UUID.",
+            "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
           }
         },
         "required": [
@@ -1823,7 +1814,9 @@
             ]
           },
           "authenticationID": {
-            "type": "string"
+            "type": "string",
+            "description": "The authentication UUID.",
+            "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
           }
         }
       },
@@ -1878,6 +1871,37 @@
         "description": "The source UUID.",
         "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       },
+      "CommercetoolsCustomFields": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+        "properties": {
+          "inventory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Inventory custom fields.",
+            "nullable": true
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Price custom fields.",
+            "nullable": true
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Category custom fields.",
+            "nullable": true
+          }
+        }
+      },
       "SourceCommercetools": {
         "type": "object",
         "additionalProperties": false,
@@ -1906,10 +1930,44 @@
             "type": "boolean",
             "default": true,
             "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+          },
+          "customFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+            "properties": {
+              "inventory": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Inventory custom fields.",
+                "nullable": true
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Price custom fields.",
+                "nullable": true
+              },
+              "category": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Category custom fields.",
+                "nullable": true
+              }
+            }
           }
         },
         "required": [
           "url",
+          "projectKey"
+        ],
+        "x-discriminator-fields": [
           "projectKey"
         ]
       },
@@ -2039,7 +2097,10 @@
           }
         },
         "required": [
-          "store_hash"
+          "storeHash"
+        ],
+        "x-discriminator-fields": [
+          "storeHash"
         ]
       },
       "UniqueIDColumn": {
@@ -2178,6 +2239,9 @@
         "required": [
           "projectID",
           "datasetID"
+        ],
+        "x-discriminator-fields": [
+          "projectID"
         ]
       },
       "DockerImageType": {
@@ -2270,10 +2334,44 @@
                 "type": "boolean",
                 "default": true,
                 "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+              },
+              "customFields": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                "properties": {
+                  "inventory": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Inventory custom fields.",
+                    "nullable": true
+                  },
+                  "price": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Price custom fields.",
+                    "nullable": true
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Category custom fields.",
+                    "nullable": true
+                  }
+                }
               }
             },
             "required": [
               "url",
+              "projectKey"
+            ],
+            "x-discriminator-fields": [
               "projectKey"
             ]
           },
@@ -2360,7 +2458,10 @@
               }
             },
             "required": [
-              "store_hash"
+              "storeHash"
+            ],
+            "x-discriminator-fields": [
+              "storeHash"
             ]
           },
           {
@@ -2471,6 +2572,9 @@
             "required": [
               "projectID",
               "datasetID"
+            ],
+            "x-discriminator-fields": [
+              "projectID"
             ]
           },
           {
@@ -2571,10 +2675,44 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields.",
+                        "nullable": true
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields.",
+                        "nullable": true
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields.",
+                        "nullable": true
+                      }
+                    }
                   }
                 },
                 "required": [
                   "url",
+                  "projectKey"
+                ],
+                "x-discriminator-fields": [
                   "projectKey"
                 ]
               },
@@ -2661,7 +2799,10 @@
                   }
                 },
                 "required": [
-                  "store_hash"
+                  "storeHash"
+                ],
+                "x-discriminator-fields": [
+                  "storeHash"
                 ]
               },
               {
@@ -2772,6 +2913,9 @@
                 "required": [
                   "projectID",
                   "datasetID"
+                ],
+                "x-discriminator-fields": [
+                  "projectID"
                 ]
               },
               {
@@ -2889,10 +3033,44 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields.",
+                        "nullable": true
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields.",
+                        "nullable": true
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields.",
+                        "nullable": true
+                      }
+                    }
                   }
                 },
                 "required": [
                   "url",
+                  "projectKey"
+                ],
+                "x-discriminator-fields": [
                   "projectKey"
                 ]
               },
@@ -2979,7 +3157,10 @@
                   }
                 },
                 "required": [
-                  "store_hash"
+                  "storeHash"
+                ],
+                "x-discriminator-fields": [
+                  "storeHash"
                 ]
               },
               {
@@ -3090,6 +3271,9 @@
                 "required": [
                   "projectID",
                   "datasetID"
+                ],
+                "x-discriminator-fields": [
+                  "projectID"
                 ]
               },
               {
@@ -3204,6 +3388,37 @@
             "items": {
               "type": "string"
             }
+          },
+          "customFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+            "properties": {
+              "inventory": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Inventory custom fields.",
+                "nullable": true
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Price custom fields.",
+                "nullable": true
+              },
+              "category": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Category custom fields.",
+                "nullable": true
+              }
+            }
           }
         }
       },
@@ -3256,6 +3471,37 @@
                 "description": "Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].\n",
                 "items": {
                   "type": "string"
+                }
+              },
+              "customFields": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                "properties": {
+                  "inventory": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Inventory custom fields.",
+                    "nullable": true
+                  },
+                  "price": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Price custom fields.",
+                    "nullable": true
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Category custom fields.",
+                    "nullable": true
+                  }
                 }
               }
             }
@@ -3368,6 +3614,9 @@
             "required": [
               "projectID",
               "datasetID"
+            ],
+            "x-discriminator-fields": [
+              "projectID"
             ]
           },
           {
@@ -3428,6 +3677,37 @@
                     "description": "Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].\n",
                     "items": {
                       "type": "string"
+                    }
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                    "properties": {
+                      "inventory": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Inventory custom fields.",
+                        "nullable": true
+                      },
+                      "price": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Price custom fields.",
+                        "nullable": true
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Category custom fields.",
+                        "nullable": true
+                      }
                     }
                   }
                 }
@@ -3540,6 +3820,9 @@
                 "required": [
                   "projectID",
                   "datasetID"
+                ],
+                "x-discriminator-fields": [
+                  "projectID"
                 ]
               },
               {
@@ -5571,6 +5854,7 @@
                 "oneOf": [
                   {
                     "type": "string",
+                    "nullable": true,
                     "description": "Describe which platform the Authentication is used for.",
                     "enum": [
                       "bigcommerce",
@@ -5635,7 +5919,7 @@
                       "type": "array",
                       "items": {
                         "type": "object",
-                        "description": "An authentication is used to login into a Source or a Destination.",
+                        "description": "An authentication is used to login into a Source or a Destination, with obfuscated input.",
                         "additionalProperties": false,
                         "properties": {
                           "authenticationID": {
@@ -5660,6 +5944,7 @@
                           },
                           "platform": {
                             "type": "string",
+                            "nullable": true,
                             "description": "Describe which platform the Authentication is used for.",
                             "enum": [
                               "bigcommerce",
@@ -5682,11 +5967,7 @@
                                     "type": "string",
                                     "description": "Private key of the Service Account."
                                   }
-                                },
-                                "required": [
-                                  "clientEmail",
-                                  "privateKey"
-                                ]
+                                }
                               },
                               {
                                 "type": "object",
@@ -5699,11 +5980,7 @@
                                   "password": {
                                     "type": "string"
                                   }
-                                },
-                                "required": [
-                                  "username",
-                                  "password"
-                                ]
+                                }
                               },
                               {
                                 "type": "object",
@@ -5713,10 +5990,7 @@
                                   "key": {
                                     "type": "string"
                                   }
-                                },
-                                "required": [
-                                  "key"
-                                ]
+                                }
                               },
                               {
                                 "type": "object",
@@ -5735,12 +6009,7 @@
                                     "type": "string",
                                     "description": "The secret."
                                   }
-                                },
-                                "required": [
-                                  "url",
-                                  "client_id",
-                                  "client_secret"
-                                ]
+                                }
                               },
                               {
                                 "type": "object",
@@ -5754,11 +6023,7 @@
                                     "type": "string",
                                     "description": "Algolia API Key, with the correct rights to push to an index and change settings."
                                   }
-                                },
-                                "required": [
-                                  "appID",
-                                  "apiKey"
-                                ]
+                                }
                               }
                             ]
                           },
@@ -5871,6 +6136,7 @@
                   },
                   "platform": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Describe which platform the Authentication is used for.",
                     "enum": [
                       "bigcommerce",
@@ -6086,7 +6352,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "description": "An authentication is used to login into a Source or a Destination.",
+                    "description": "An authentication is used to login into a Source or a Destination, with obfuscated input.",
                     "additionalProperties": false,
                     "properties": {
                       "authenticationID": {
@@ -6111,6 +6377,7 @@
                       },
                       "platform": {
                         "type": "string",
+                        "nullable": true,
                         "description": "Describe which platform the Authentication is used for.",
                         "enum": [
                           "bigcommerce",
@@ -6133,11 +6400,7 @@
                                 "type": "string",
                                 "description": "Private key of the Service Account."
                               }
-                            },
-                            "required": [
-                              "clientEmail",
-                              "privateKey"
-                            ]
+                            }
                           },
                           {
                             "type": "object",
@@ -6150,11 +6413,7 @@
                               "password": {
                                 "type": "string"
                               }
-                            },
-                            "required": [
-                              "username",
-                              "password"
-                            ]
+                            }
                           },
                           {
                             "type": "object",
@@ -6164,10 +6423,7 @@
                               "key": {
                                 "type": "string"
                               }
-                            },
-                            "required": [
-                              "key"
-                            ]
+                            }
                           },
                           {
                             "type": "object",
@@ -6186,12 +6442,7 @@
                                 "type": "string",
                                 "description": "The secret."
                               }
-                            },
-                            "required": [
-                              "url",
-                              "client_id",
-                              "client_secret"
-                            ]
+                            }
                           },
                           {
                             "type": "object",
@@ -6205,11 +6456,7 @@
                                 "type": "string",
                                 "description": "Algolia API Key, with the correct rights to push to an index and change settings."
                               }
-                            },
-                            "required": [
-                              "appID",
-                              "apiKey"
-                            ]
+                            }
                           }
                         ]
                       },
@@ -6288,7 +6535,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "description": "An authentication is used to login into a Source or a Destination.",
+                  "description": "An authentication is used to login into a Source or a Destination, with obfuscated input.",
                   "additionalProperties": false,
                   "properties": {
                     "authenticationID": {
@@ -6313,6 +6560,7 @@
                     },
                     "platform": {
                       "type": "string",
+                      "nullable": true,
                       "description": "Describe which platform the Authentication is used for.",
                       "enum": [
                         "bigcommerce",
@@ -6335,11 +6583,7 @@
                               "type": "string",
                               "description": "Private key of the Service Account."
                             }
-                          },
-                          "required": [
-                            "clientEmail",
-                            "privateKey"
-                          ]
+                          }
                         },
                         {
                           "type": "object",
@@ -6352,11 +6596,7 @@
                             "password": {
                               "type": "string"
                             }
-                          },
-                          "required": [
-                            "username",
-                            "password"
-                          ]
+                          }
                         },
                         {
                           "type": "object",
@@ -6366,10 +6606,7 @@
                             "key": {
                               "type": "string"
                             }
-                          },
-                          "required": [
-                            "key"
-                          ]
+                          }
                         },
                         {
                           "type": "object",
@@ -6388,12 +6625,7 @@
                               "type": "string",
                               "description": "The secret."
                             }
-                          },
-                          "required": [
-                            "url",
-                            "client_id",
-                            "client_secret"
-                          ]
+                          }
                         },
                         {
                           "type": "object",
@@ -6407,11 +6639,7 @@
                               "type": "string",
                               "description": "Algolia API Key, with the correct rights to push to an index and change settings."
                             }
-                          },
-                          "required": [
-                            "appID",
-                            "apiKey"
-                          ]
+                          }
                         }
                       ]
                     },
@@ -6505,6 +6733,7 @@
                   },
                   "platform": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Describe which platform the Authentication is used for.",
                     "enum": [
                       "bigcommerce",
@@ -6901,7 +7130,9 @@
                             "description": "Date of last update (RFC3339 format)."
                           },
                           "authenticationID": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "The authentication UUID.",
+                            "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
                           }
                         },
                         "required": [
@@ -7238,7 +7469,9 @@
                         "description": "Date of last update (RFC3339 format)."
                       },
                       "authenticationID": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The authentication UUID.",
+                        "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
                       }
                     },
                     "required": [
@@ -7382,7 +7615,9 @@
                       "description": "Date of last update (RFC3339 format)."
                     },
                     "authenticationID": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The authentication UUID.",
+                      "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
                     }
                   },
                   "required": [
@@ -7508,7 +7743,9 @@
                     ]
                   },
                   "authenticationID": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The authentication UUID.",
+                    "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
                   }
                 }
               }
@@ -7704,7 +7941,10 @@
                 "description": "The authentication UUID.",
                 "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
               },
-              "example": "10000000-0a75-4000-a000-000000000001,none"
+              "example": [
+                "10000000-0a75-4000-a000-000000000001",
+                "none"
+              ]
             }
           },
           {
@@ -7803,10 +8043,44 @@
                                     "type": "boolean",
                                     "default": true,
                                     "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                                  },
+                                  "customFields": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                                    "properties": {
+                                      "inventory": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Inventory custom fields.",
+                                        "nullable": true
+                                      },
+                                      "price": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Price custom fields.",
+                                        "nullable": true
+                                      },
+                                      "category": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "description": "Category custom fields.",
+                                        "nullable": true
+                                      }
+                                    }
                                   }
                                 },
                                 "required": [
                                   "url",
+                                  "projectKey"
+                                ],
+                                "x-discriminator-fields": [
                                   "projectKey"
                                 ]
                               },
@@ -7893,7 +8167,10 @@
                                   }
                                 },
                                 "required": [
-                                  "store_hash"
+                                  "storeHash"
+                                ],
+                                "x-discriminator-fields": [
+                                  "storeHash"
                                 ]
                               },
                               {
@@ -8004,6 +8281,9 @@
                                 "required": [
                                   "projectID",
                                   "datasetID"
+                                ],
+                                "x-discriminator-fields": [
+                                  "projectID"
                                 ]
                               },
                               {
@@ -8191,10 +8471,44 @@
                             "type": "boolean",
                             "default": true,
                             "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                          },
+                          "customFields": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                            "properties": {
+                              "inventory": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Inventory custom fields.",
+                                "nullable": true
+                              },
+                              "price": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Price custom fields.",
+                                "nullable": true
+                              },
+                              "category": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Category custom fields.",
+                                "nullable": true
+                              }
+                            }
                           }
                         },
                         "required": [
                           "url",
+                          "projectKey"
+                        ],
+                        "x-discriminator-fields": [
                           "projectKey"
                         ]
                       },
@@ -8281,7 +8595,10 @@
                           }
                         },
                         "required": [
-                          "store_hash"
+                          "storeHash"
+                        ],
+                        "x-discriminator-fields": [
+                          "storeHash"
                         ]
                       },
                       {
@@ -8392,6 +8709,9 @@
                         "required": [
                           "projectID",
                           "datasetID"
+                        ],
+                        "x-discriminator-fields": [
+                          "projectID"
                         ]
                       },
                       {
@@ -8603,10 +8923,44 @@
                                 "type": "boolean",
                                 "default": true,
                                 "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                              },
+                              "customFields": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                                "properties": {
+                                  "inventory": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Inventory custom fields.",
+                                    "nullable": true
+                                  },
+                                  "price": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Price custom fields.",
+                                    "nullable": true
+                                  },
+                                  "category": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Category custom fields.",
+                                    "nullable": true
+                                  }
+                                }
                               }
                             },
                             "required": [
                               "url",
+                              "projectKey"
+                            ],
+                            "x-discriminator-fields": [
                               "projectKey"
                             ]
                           },
@@ -8693,7 +9047,10 @@
                               }
                             },
                             "required": [
-                              "store_hash"
+                              "storeHash"
+                            ],
+                            "x-discriminator-fields": [
+                              "storeHash"
                             ]
                           },
                           {
@@ -8804,6 +9161,9 @@
                             "required": [
                               "projectID",
                               "datasetID"
+                            ],
+                            "x-discriminator-fields": [
+                              "projectID"
                             ]
                           },
                           {
@@ -8982,10 +9342,44 @@
                               "type": "boolean",
                               "default": true,
                               "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+                            },
+                            "customFields": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                              "properties": {
+                                "inventory": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Inventory custom fields.",
+                                  "nullable": true
+                                },
+                                "price": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Price custom fields.",
+                                  "nullable": true
+                                },
+                                "category": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Category custom fields.",
+                                  "nullable": true
+                                }
+                              }
                             }
                           },
                           "required": [
                             "url",
+                            "projectKey"
+                          ],
+                          "x-discriminator-fields": [
                             "projectKey"
                           ]
                         },
@@ -9072,7 +9466,10 @@
                             }
                           },
                           "required": [
-                            "store_hash"
+                            "storeHash"
+                          ],
+                          "x-discriminator-fields": [
+                            "storeHash"
                           ]
                         },
                         {
@@ -9183,6 +9580,9 @@
                           "required": [
                             "projectID",
                             "datasetID"
+                          ],
+                          "x-discriminator-fields": [
+                            "projectID"
                           ]
                         },
                         {
@@ -9329,6 +9729,37 @@
                             "items": {
                               "type": "string"
                             }
+                          },
+                          "customFields": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "description": "Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).",
+                            "properties": {
+                              "inventory": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Inventory custom fields.",
+                                "nullable": true
+                              },
+                              "price": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Price custom fields.",
+                                "nullable": true
+                              },
+                              "category": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Category custom fields.",
+                                "nullable": true
+                              }
+                            }
                           }
                         }
                       },
@@ -9440,6 +9871,9 @@
                         "required": [
                           "projectID",
                           "datasetID"
+                        ],
+                        "x-discriminator-fields": [
+                          "projectID"
                         ]
                       },
                       {

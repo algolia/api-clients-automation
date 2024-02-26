@@ -1,8 +1,6 @@
 import XCTest
 
-#if canImport(AnyCodable)
-  import AnyCodable
-#endif
+import AnyCodable
 import Utils{{#hasE2E}}
 import DotEnv{{/hasE2E}}
 
@@ -44,9 +42,9 @@ final class {{client}}RequestsTests: XCTestCase {
       }
 
       do {
-          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
+          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["{{e2eApiKey}}"])
       } catch {
-          XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+          XCTFail("Please provide an `{{e2eApiKey}}` env var for e2e tests")
       }
 
       e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
@@ -136,7 +134,7 @@ final class {{client}}RequestsTests: XCTestCase {
 
             let e2eExpectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
 
-            try XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+            XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
           {{/body}}
 
           {{#statusCode}}

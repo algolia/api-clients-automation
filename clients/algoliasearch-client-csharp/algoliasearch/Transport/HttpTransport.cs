@@ -129,6 +129,11 @@ internal class HttpTransport
       if (_logger.IsEnabled(LogLevel.Trace))
       {
         _logger.LogTrace("Sending request to {Method} {Uri}", request.Method, request.Uri);
+        _logger.LogTrace("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
+        foreach (var header in request.Headers)
+        {
+          _logger.LogTrace("Header: {HeaderName} : {HeaderValue}", header.Key, header.Value);
+        }
       }
 
       var response = await _httpClient
@@ -154,7 +159,7 @@ internal class HttpTransport
             response.Body.Seek(0, SeekOrigin.Begin);
           }
 
-          var deserialized = await _serializer.Deserialize<TResult>(response.Body);
+          var deserialized = await _serializer.Deserialize<TResult>(response.Body).ConfigureAwait(false);
 
           if (_logger.IsEnabled(LogLevel.Trace))
           {
@@ -172,10 +177,10 @@ internal class HttpTransport
 
           continue;
         case RetryOutcomeType.Failure:
-          if (_logger.IsEnabled(LogLevel.Debug))
+          if (_logger.IsEnabled(LogLevel.Error))
           {
-            _logger.LogDebug(
-              "Retry strategy with failure outcome. Response HTTP{HttpCode} : {Error}", response.HttpStatusCode,
+            _logger.LogError(
+              "Retry strategy with failure outcome. Response HTTP {HttpCode} : {Error}", response.HttpStatusCode,
               response.Error);
           }
 
@@ -185,9 +190,9 @@ internal class HttpTransport
       }
     }
 
-    if (_logger.IsEnabled(LogLevel.Debug))
+    if (_logger.IsEnabled(LogLevel.Error))
     {
-      _logger.LogDebug("Retry strategy failed: {ErrorMessage}", _errorMessage);
+      _logger.LogError("Retry strategy failed: {ErrorMessage}", _errorMessage);
     }
 
     throw new AlgoliaUnreachableHostException("RetryStrategy failed to connect to Algolia. Reason: " + _errorMessage);

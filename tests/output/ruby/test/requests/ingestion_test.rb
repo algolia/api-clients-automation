@@ -14,6 +14,12 @@ class TestIngestionClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::IngestionClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'us'
+    )
   end
 
   # createAuthenticationOAuth
@@ -507,14 +513,21 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # enableTask
+  # enable task e2e
   def test_enable_task0
-    req = @client.enable_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    req = @client.enable_task_with_http_info("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
     assert_equal(:put, req.method)
-    assert_equal('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable', req.path)
+    assert_equal('/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    res = @e2e_client.enable_task_with_http_info("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+    expected_body = JSON.parse('{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getAuthentication
@@ -545,7 +558,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_get_authentications1
     req = @client.get_authentications_with_http_info(
       10,
-      5,
+      1,
       ['basic', 'algolia'],
       ['none'],
       'createdAt',
@@ -556,7 +569,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal('/1/authentications', req.path)
     assert_equal(
       { 'itemsPerPage': "10",
-        'page': "5",
+        'page': "1",
         'type': "basic%2Calgolia",
         'platform': "none",
         'sort': "createdAt",
@@ -566,6 +579,27 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_authentications_with_http_info(
+      10,
+      1,
+      ['basic', 'algolia'],
+      ['none'],
+      'createdAt',
+      'desc'
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_authentications(
+      10,
+      1,
+      ['basic', 'algolia'],
+      ['none'],
+      'createdAt',
+      'desc'
+    )
+    expected_body = JSON.parse('{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getDestination
@@ -659,14 +693,21 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # getSource
   def test_get_source0
-    req = @client.get_source_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    req = @client.get_source_with_http_info("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
     assert_equal(:get, req.method)
-    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
+    assert_equal('/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, 'body is not nil')
+
+    res = @e2e_client.get_source_with_http_info("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+    expected_body = JSON.parse('{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # getSources
@@ -777,7 +818,7 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.search_tasks_with_http_info(
       TaskSearch.new(
         task_ids: [
-          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
         ]
       )
     )
@@ -787,8 +828,27 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'), JSON.parse(req.body)
+      JSON.parse('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'), JSON.parse(req.body)
     )
+
+    res = @e2e_client.search_tasks_with_http_info(
+      TaskSearch.new(
+        task_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        ]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.search_tasks(
+      TaskSearch.new(
+        task_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        ]
+      )
+    )
+    expected_body = JSON.parse('[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # triggerDockerSourceDiscover

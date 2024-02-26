@@ -14,6 +14,12 @@ class TestInsightsClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
+
+    @e2e_client = Algolia::InsightsClient.create(
+      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('ALGOLIA_ADMIN_KEY', nil),
+      'us'
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -358,7 +364,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_641_290_601_962,
+            timestamp: 1_708_646_400_000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -368,7 +374,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_641_290_601_962,
+            timestamp: 1_708_646_400_000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -380,8 +386,63 @@ class TestInsightsClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1641290601962,"objectIDs":["9780545139700","9780439784542"]}]}'), JSON.parse(req.body)
+      JSON.parse('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708646400000,"objectIDs":["9780545139700","9780439784542"]}]}'), JSON.parse(req.body)
     )
+
+    res = @e2e_client.push_events_with_http_info(
+      InsightsEvents.new(
+        events: [
+          ConvertedObjectIDsAfterSearch.new(
+            event_type: 'conversion',
+            event_name: "Product Purchased",
+            index: "products",
+            user_token: "user-123456",
+            authenticated_user_token: "user-123456",
+            timestamp: 1_708_646_400_000,
+            object_ids: ["9780545139700", "9780439784542"],
+            query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
+          ),
+          ViewedObjectIDs.new(
+            event_type: 'view',
+            event_name: "Product Detail Page Viewed",
+            index: "products",
+            user_token: "user-123456",
+            authenticated_user_token: "user-123456",
+            timestamp: 1_708_646_400_000,
+            object_ids: ["9780545139700", "9780439784542"]
+          )
+        ]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.push_events(
+      InsightsEvents.new(
+        events: [
+          ConvertedObjectIDsAfterSearch.new(
+            event_type: 'conversion',
+            event_name: "Product Purchased",
+            index: "products",
+            user_token: "user-123456",
+            authenticated_user_token: "user-123456",
+            timestamp: 1_708_646_400_000,
+            object_ids: ["9780545139700", "9780439784542"],
+            query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
+          ),
+          ViewedObjectIDs.new(
+            event_type: 'view',
+            event_name: "Product Detail Page Viewed",
+            index: "products",
+            user_token: "user-123456",
+            authenticated_user_token: "user-123456",
+            timestamp: 1_708_646_400_000,
+            object_ids: ["9780545139700", "9780439784542"]
+          )
+        ]
+      )
+    )
+    expected_body = JSON.parse('{"message":"OK","status":200}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # ConvertedObjectIDsAfterSearch

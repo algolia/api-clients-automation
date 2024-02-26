@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-
-namespace Algolia.Search.Http;
+namespace Algolia.Search.Tests.Utils;
 
 /// <summary>
 /// Response returned by the echo API

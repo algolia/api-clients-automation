@@ -1,0 +1,54 @@
+describe('generateSecuredApiKey', () => {
+  test('generates a key without restrictions', () => {
+    const resp = client.generateSecuredApiKey({ parentApiKey: 'foo' });
+    expect(resp).toEqual(
+      'NjgzNzE2ZDlkN2Y4MmVlZDE3NGM2Y2FlYmUwODZlZTkzMzc2Yzc5ZDdjNjFkZDY3MGVhMDBmN2Y4ZDZlYjBhOA=='
+    );
+  });
+
+  test('generates a key with restrictions', () => {
+    const resp = client.generateSecuredApiKey({
+      parentApiKey: 'foo',
+      restrictions: {
+        validUntil: 100,
+        restrictIndices: ['bar'],
+        restrictSources: 'baz',
+        userToken: 'foobarbaz',
+        searchParams: {
+          query: 'foo',
+        },
+      },
+    });
+    expect(resp).toEqual(
+      'YzY5YmVhMGVhYWYyYjNhYzMxYmVmNDA2Y2NiNjZhZTk2MDFkYjMxZGEyOGRlMDg5ZDFmNzBlYTBjMjY3Zjg3ZnZhbGlkVW50aWw9MTAwJnJlc3RyaWN0SW5kaWNlcz0lNUIlMjJiYXIlMjIlNUQmcmVzdHJpY3RTb3VyY2VzPWJheiZ1c2VyVG9rZW49Zm9vYmFyYmF6JnNlYXJjaFBhcmFtcz0lN0IlMjJxdWVyeSUyMiUzQSUyMmZvbyUyMiU3RA=='
+    );
+  });
+});
+
+describe('getSecuredApiKeyRemainingValidity', () => {
+  test('is able to check the remaining validity of a key', () => {
+    const resp = client.generateSecuredApiKey({
+      parentApiKey: 'foo',
+      restrictions: { validUntil: 42 },
+    });
+    expect(resp).toEqual(
+      'NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI='
+    );
+
+    const validity = client.getSecuredApiKeyRemainingValidity({
+      securedApiKey: resp,
+    });
+    expect(validity).toEqual(42 - Math.round(new Date().getTime() / 1000));
+  });
+
+  test('throws when the validity field is not found', () => {
+    try {
+      client.getSecuredApiKeyRemainingValidity({ securedApiKey: 'foo' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch(
+        'ValidUntil not found in given secured api key.'
+      );
+    }
+  });
+});

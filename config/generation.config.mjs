@@ -139,6 +139,7 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/extension/**',
 
   // Swift
   '!snippets/swift/**',
@@ -153,5 +154,6 @@ export const patterns = [
   'clients/algoliasearch-client-swift/Sources/Core/Helpers/Version.swift',
 
   'tests/output/swift/Package.swift',
+  '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
 ];

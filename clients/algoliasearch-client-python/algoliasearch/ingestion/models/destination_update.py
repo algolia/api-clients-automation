@@ -25,7 +25,7 @@ class DestinationUpdate(BaseModel):
     )
     input: Optional[DestinationInput] = None
     authentication_id: Optional[StrictStr] = Field(
-        default=None, alias="authenticationID"
+        default=None, description="The authentication UUID.", alias="authenticationID"
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
@@ -53,8 +53,6 @@ class DestinationUpdate(BaseModel):
             exclude={},
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of
-        # input
         if self.input:
             _dict["input"] = self.input.to_dict()
         return _dict

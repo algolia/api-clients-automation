@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Abtesting;
+using Algolia.Search.Models.Common;
+using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
 using Algolia.Search.Transport;
-using Newtonsoft.Json;
 using Quibble.Xunit;
 using Xunit;
 

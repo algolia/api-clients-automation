@@ -1,14 +1,35 @@
+using System.Globalization;
 using Algolia.Search.Clients;
+using Algolia.Search.Models.Abtesting;
+using Algolia.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace Algolia.Playgrounds;
 
-public static class QuerySuggestions
+public class QuerySuggestionsPlayground : IPlayground
 {
-  public static async Task Run(Configuration configuration)
+  private readonly QuerySuggestionsClient _client;
+  private readonly Configuration _configuration;
+
+  public QuerySuggestionsPlayground(Configuration configuration)
   {
-    Console.WriteLine("------------------------------------");
-    Console.WriteLine("Starting QuerySuggestions API playground");
-    Console.WriteLine("------------------------------------");
-    var client = new QuerySuggestionsClient(new QuerySuggestionsConfig(configuration.AppId, configuration.AdminApiKey, "us"));
+    var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
+      .AddConsole());
+    var config = new QuerySuggestionsConfig(configuration.AppId, configuration.AdminApiKey, "us");
+    _client = new QuerySuggestionsClient(config, loggerFactory);
+    _configuration = configuration;
+  }
+
+  public async Task Run()
+  {
+    PlaygroundHelper.Hello("Starting QuerySuggestions API playground");
+
+    try
+    {
+    }
+    catch (Exception)
+    {
+      // ignored
+    }
   }
 }

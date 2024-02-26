@@ -45,7 +45,7 @@ func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t
     require.NoError(t, err)
     appID = os.Getenv("ALGOLIA_APPLICATION_ID")
   }
-  apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
+  apiKey := os.Getenv("{{e2eApiKey}}")
   client, err := {{clientPrefix}}.NewClient(appID, apiKey, {{#hasRegionalHost}}{{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}})
   require.NoError(t, err)
 

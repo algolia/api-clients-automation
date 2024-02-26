@@ -1,5 +1,6 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
+using Algolia.Search.Tests.Utils;
 using Xunit;
 
 namespace Algolia.Search.Tests;
