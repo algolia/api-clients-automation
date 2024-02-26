@@ -19,7 +19,7 @@ public class SecuredApiKeysTests
       "parent-api-key",
       new SecuredApiKeyRestriction
       {
-        Query = new IndexSettingsAsSearchParams
+        Query = new SearchParamsObject
         {
           Mode = Mode.NeuralSearch,
           HitsPerPage = 10,
@@ -34,14 +34,14 @@ public class SecuredApiKeysTests
           AttributeCriteriaComputedByMinProximity = false
         },
         RestrictIndices = ["index1", "index2"],
-        RestrictSources = ["source1", "source2"],
+        RestrictSources = "192.168.1.0/24",
         UserToken = "my-user-token",
         ValidUntil = 1
       }
     );
 
     const string expectedQueryParams =
-      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=source1%2Csource2&userToken=my-user-token";
+      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=192.168.1.0%2F24&userToken=my-user-token";
     var hash = HmacShaHelper.GetHash("parent-api-key", expectedQueryParams);
     var expectedKey = HmacShaHelper.Base64Encode($"{hash}{expectedQueryParams}");
 

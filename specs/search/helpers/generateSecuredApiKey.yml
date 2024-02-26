@@ -39,6 +39,8 @@ securedApiKeyRestriction:
   type: object
   additionalProperties: false
   properties:
+    query:
+      $ref: '../../common/schemas/SearchParams.yml#/searchParamsObject'
     filters:
       type: string
       description: >

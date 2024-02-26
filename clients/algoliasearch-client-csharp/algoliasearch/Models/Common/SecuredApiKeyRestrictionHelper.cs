@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using Algolia.Search.Http;
 using Algolia.Search.Utils;
 
-namespace Algolia.Search.Models.Common;
+namespace Algolia.Search.Models.Search;
 
 /// <summary>
 /// Secured Api Key restrictions
