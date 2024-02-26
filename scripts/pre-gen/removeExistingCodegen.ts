@@ -73,7 +73,7 @@ export async function removeExistingCodegen({
 
     case 'swift':
       clientModel = `${clientName}/Models`;
-      clientApi = clientName;
+      clientApi = `${clientName}/*.swift`;
       break;
     default:
       break;

@@ -96,30 +96,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       )
     );
 
-    if (CLIENT.equals("search")) {
-      supportingFiles.add(
-        new SupportingFile("SearchHelpers.mustache", "Sources" + File.separator + "Search" + File.separator + "Helpers.swift")
-      );
-      supportingFiles.add(
-        new SupportingFile(
-          "APIKeyOperation.mustache",
-          "Sources" + File.separator + "Search" + File.separator + "Models" + File.separator + "APIKeyOperation.swift"
-        )
-      );
-      supportingFiles.add(
-        new SupportingFile(
-          "SecuredAPIKeyRestriction.mustache",
-          "Sources" + File.separator + "Search" + File.separator + "Models" + File.separator + "SecuredAPIKeyRestriction.swift"
-        )
-      );
-      supportingFiles.add(
-        new SupportingFile(
-          "ReplaceAllObjectsResponse.mustache",
-          "Sources" + File.separator + "Search" + File.separator + "Models" + File.separator + "ReplaceAllObjectsResponse.swift"
-        )
-      );
-    }
-
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("gitignore.mustache") ||
       file.getTemplateFile().equals("Package.swift.mustache") ||

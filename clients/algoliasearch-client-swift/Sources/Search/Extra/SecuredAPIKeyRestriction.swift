@@ -1,7 +1,12 @@
-/// {{{generationBanner}}}
+//
+//  SecuredAPIKeyRestriction.swift
+//
+//
+//  Created by Algolia on 26/02/2024.
+//
 
-import Foundation
 import Core
+import Foundation
 
 public struct SecuredAPIKeyRestriction {
     let searchParams: SearchParamsObject?
