@@ -17,7 +17,7 @@ export async function generate(generators: Generator[]): Promise<void> {
     spinner.text = `generating ${gen.key}`;
     await run(
       `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
-      { language: 'java' }
+      { language: 'java' },
     );
 
     spinner.succeed();

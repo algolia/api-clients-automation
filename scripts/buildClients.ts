@@ -17,7 +17,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
     case 'javascript':
       const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
       const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
-        packageName === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`
+        packageName === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`,
       );
 
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
@@ -55,7 +55,7 @@ export async function buildClients(generators: Generator[]): Promise<void> {
 
       return map;
     },
-    {} as Record<Language, Generator[]>
+    {} as Record<Language, Generator[]>,
   );
 
   await Promise.all(langs.map((lang) => buildClient(lang, generatorsMap[lang])));

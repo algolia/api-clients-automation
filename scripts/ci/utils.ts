@@ -34,7 +34,7 @@ export async function getNbGitDiff({
         cwd,
       })
     ).trim(),
-    10
+    10,
   );
 }
 
