@@ -61,14 +61,14 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
       if (language === 'javascript') {
         // eslint-disable-next-line no-param-reassign
         current[key].additionalProperties.packageName = output.substring(
-          output.lastIndexOf('/') + 1
+          output.lastIndexOf('/') + 1,
         );
       }
     }
 
     return current;
   },
-  {} as Record<string, Generator>
+  {} as Record<string, Generator>,
 );
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
@@ -81,7 +81,7 @@ export const CLIENTS = [
 
 export async function run(
   command: string,
-  { errorMessage, cwd, language }: RunOptions = {}
+  { errorMessage, cwd, language }: RunOptions = {},
 ): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
   const dockerImage = getDockerImage(language);
@@ -278,14 +278,14 @@ export function isVerbose(): boolean {
 export async function callGenerator(gen: Generator): Promise<void> {
   await run(
     `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
-    { language: 'java' }
+    { language: 'java' },
   );
 }
 
 export async function setupAndGen(
   generators: Generator[],
   mode: GeneratorMode,
-  fn: (gen: Generator) => Promise<void>
+  fn: (gen: Generator) => Promise<void>,
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];

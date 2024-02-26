@@ -59,7 +59,7 @@ export function transformSelection({ langArg, clientArg }: Args): Selection {
         throw new Error(
           `The '${clientArg}' client does not exist for ${
             selection.language
-          }.\n\nAllowed choices are: ${selection.clientList.join(', ')}`
+          }.\n\nAllowed choices are: ${selection.clientList.join(', ')}`,
         );
       }
     });

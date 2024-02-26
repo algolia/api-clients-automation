@@ -45,7 +45,7 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
         },
       },
       null,
-      2
-    ).concat('\n')
+      2,
+    ).concat('\n'),
   );
 }

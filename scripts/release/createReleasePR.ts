@@ -44,7 +44,7 @@ const fetchedUsers: Record<string, string> = {};
 
 export function readVersions(): VersionsBeforeBump {
   return Object.fromEntries(
-    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }])
+    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]),
   );
 }
 
@@ -211,7 +211,7 @@ export async function decideReleaseStrategy({
 
   for (const [lang, version] of Object.entries(versions)) {
     const commitsPerLang = commits.filter(
-      (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope)
+      (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
     );
 
     const currentVersion = versions[lang].current;
@@ -330,7 +330,7 @@ async function getCommits(): Promise<{
   if (validCommits.length === 0) {
     console.log(
       chalk.black.bgYellow('[INFO]'),
-      `Skipping release because no valid commit has been added since \`released\` tag.`
+      `Skipping release because no valid commit has been added since \`released\` tag.`,
     );
     // eslint-disable-next-line no-process-exit
     process.exit(0);
