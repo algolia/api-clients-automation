@@ -400,6 +400,8 @@ jobs:
       always() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    outputs:
+      success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -443,6 +445,10 @@ jobs:
         run: yarn workspace scripts pushSpecsToNewWorldDocs
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Set output
+        id: setoutput
+        run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   check_green:
     runs-on: ubuntu-22.04
