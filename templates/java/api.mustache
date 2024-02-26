@@ -114,7 +114,6 @@ public class {{classname}} extends ApiClient {
     {{/uniqueHost}}
 
     {{#operation}}
-    {{^vendorExtensions.x-helper}}
     /**
      * {{{notes}}}{{#allParams}}
      * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
@@ -221,7 +220,6 @@ public class {{classname}} extends ApiClient {
     return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
   {{/optionalParams.0}}
-  {{/vendorExtensions.x-helper}}
   {{/operation}}
 
   {{> api_helpers}}
