@@ -61,14 +61,14 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
       if (language === 'javascript') {
         // eslint-disable-next-line no-param-reassign
         current[key].additionalProperties.packageName = output.substring(
-          output.lastIndexOf('/') + 1
+          output.lastIndexOf('/') + 1,
         );
       }
     }
 
     return current;
   },
-  {} as Record<string, Generator>
+  {} as Record<string, Generator>,
 );
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
@@ -81,7 +81,7 @@ export const CLIENTS = [
 
 export async function run(
   command: string,
-  { errorMessage, cwd, language }: RunOptions = {}
+  { errorMessage, cwd, language }: RunOptions = {},
 ): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
   const dockerImage = getDockerImage(language);
@@ -277,13 +277,13 @@ export function isVerbose(): boolean {
 
 export async function callCTSGenerator(gen: Generator, mode: 'snippets' | 'tests'): Promise<void> {
   const spinner = createSpinner(
-    `generating ${mode === 'tests' ? 'CTS' : 'code snippets'} for ${gen.key}`
+    `generating ${mode === 'tests' ? 'CTS' : 'code snippets'} for ${gen.key}`,
   );
 
   await run(
     `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate \
      -g algolia-cts -i specs/bundled/${gen.client}.yml --additional-properties="language=${gen.language},client=${gen.client},mode=${mode}"`,
-    { language: 'java' }
+    { language: 'java' },
   );
 
   spinner.succeed();
@@ -291,7 +291,7 @@ export async function callCTSGenerator(gen: Generator, mode: 'snippets' | 'tests
 
 export async function setupAndGen(
   generators: Generator[],
-  fn: (gen: Generator) => Promise<void>
+  fn: (gen: Generator) => Promise<void>,
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];

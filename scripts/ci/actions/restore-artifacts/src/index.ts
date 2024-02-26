@@ -11,7 +11,7 @@ import * as io from '@actions/io';
 async function download(
   client: DefaultArtifactClient,
   artifactID: number,
-  options?: DownloadArtifactOptions & FindOptions
+  options?: DownloadArtifactOptions & FindOptions,
 ): Promise<DownloadArtifactResponse> {
   try {
     return await client.downloadArtifact(artifactID, options);

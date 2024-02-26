@@ -35,9 +35,9 @@ describe('micromatch', () => {
 
             'tests/output/php/src/requests/test.php',
           ],
-          getPatterns()
+          getPatterns(),
         )
-        .sort()
+        .sort(),
     ).toEqual(
       [
         'clients/algoliasearch-client-java/gradle.properties',
@@ -55,7 +55,7 @@ describe('micromatch', () => {
         'tests/output/javascript/package.json',
 
         'tests/output/php/src/requests/test.php',
-      ].sort()
+      ].sort(),
     );
   });
 });

@@ -73,7 +73,7 @@ export async function computeCacheKey(baseName: string, paths: string[]): Promis
 export async function isBaseChanged(
   baseBranch: string,
   dependencies: Record<string, string[]>,
-  output?: boolean
+  output?: boolean,
 ): Promise<boolean> {
   for (const [key, path] of Object.entries(dependencies)) {
     const diff = await getNbGitDiff({
