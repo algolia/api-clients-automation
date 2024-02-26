@@ -77,7 +77,7 @@ class BrowserTests: XCTestCase {
         var aggregatedResult: [Hit] = []
 
         try await client.browseObjects(
-            indexName: indexName,
+            in: indexName,
             browseParams: BrowseParamsObject(),
             aggregator: { response in
                 aggregatedResult.append(contentsOf: response.hits)
@@ -117,7 +117,7 @@ class BrowserTests: XCTestCase {
         var aggregatedResult: [Rule] = []
 
         try await client.browseRules(
-            indexName: indexName,
+            in: indexName,
             searchRulesParams: SearchRulesParams(hitsPerPage: 2),
             aggregator: { response in
                 aggregatedResult.append(contentsOf: response.hits)
@@ -154,7 +154,7 @@ class BrowserTests: XCTestCase {
         var aggregatedResult: [SynonymHit] = []
 
         try await client.browseSynonyms(
-            indexName: indexName,
+            in: indexName,
             searchSynonymsParams: SearchSynonymsParams(hitsPerPage: 2),
             aggregator: { response in
                 aggregatedResult.append(contentsOf: response.hits)
