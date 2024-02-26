@@ -149,12 +149,6 @@ typealias Client = {{classname}}
     }{{/vendorExtensions}}
 {{/operation}}{{#isSearchClient}}
 
-    public enum ApiKeyOperation: String {
-        case add
-        case update
-        case delete
-    }
-
     /// Wait for a task to complete
     /// - parameter taskID: The id of the task to wait for
     /// - parameter indexName: The name of the index to wait for

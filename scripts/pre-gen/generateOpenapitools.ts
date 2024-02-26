@@ -23,7 +23,7 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
       gitHost: 'github.com',
       gitUserId: 'algolia',
       gitRepoId: getClientsConfigField(language, 'gitRepoId'),
-      glob: `specs/bundled/${mode !== 'client' && client === 'search' ? 'search.helpers' : client}.yml`,
+      glob: `specs/bundled/${client}.yml`,
       templateDir,
       generatorName: `algolia-${mode !== 'client' ? 'cts' : language}`,
       output: `#{cwd}/${mode === 'client' ? rest.output : ''}`,
