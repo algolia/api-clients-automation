@@ -19,7 +19,7 @@ public class SecuredApiKeysTests
       "parent-api-key",
       new SecuredApiKeyRestriction
       {
-        Query = new SearchParamsObject
+        SearchParams = new SearchParamsObject
         {
           Mode = Mode.NeuralSearch,
           HitsPerPage = 10,
