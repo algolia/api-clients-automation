@@ -3389,6 +3389,13 @@
               "type": "string"
             }
           },
+          "url": {
+            "type": "string"
+          },
+          "fallbackIsInStockValue": {
+            "type": "boolean",
+            "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
+          },
           "customFields": {
             "type": "object",
             "additionalProperties": false,
@@ -3472,6 +3479,13 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "url": {
+                "type": "string"
+              },
+              "fallbackIsInStockValue": {
+                "type": "boolean",
+                "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
               },
               "customFields": {
                 "type": "object",
@@ -3678,6 +3692,13 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "fallbackIsInStockValue": {
+                    "type": "boolean",
+                    "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
                   },
                   "customFields": {
                     "type": "object",
@@ -9729,6 +9750,13 @@
                             "items": {
                               "type": "string"
                             }
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "fallbackIsInStockValue": {
+                            "type": "boolean",
+                            "description": "Determines the value that will be stored in the Algolia record if there's no inventory information on the product.\n"
                           },
                           "customFields": {
                             "type": "object",
