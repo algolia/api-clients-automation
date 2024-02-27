@@ -19,6 +19,12 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
   @JsonProperty("locales")
   private List<String> locales;
 
+  @JsonProperty("url")
+  private String url;
+
+  @JsonProperty("fallbackIsInStockValue")
+  private Boolean fallbackIsInStockValue;
+
   @JsonProperty("customFields")
   private CommercetoolsCustomFields customFields;
 
@@ -63,6 +69,31 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     return locales;
   }
 
+  public SourceUpdateCommercetools setUrl(String url) {
+    this.url = url;
+    return this;
+  }
+
+  /** Get url */
+  @javax.annotation.Nullable
+  public String getUrl() {
+    return url;
+  }
+
+  public SourceUpdateCommercetools setFallbackIsInStockValue(Boolean fallbackIsInStockValue) {
+    this.fallbackIsInStockValue = fallbackIsInStockValue;
+    return this;
+  }
+
+  /**
+   * Determines the value that will be stored in the Algolia record if there's no inventory
+   * information on the product.
+   */
+  @javax.annotation.Nullable
+  public Boolean getFallbackIsInStockValue() {
+    return fallbackIsInStockValue;
+  }
+
   public SourceUpdateCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
     this.customFields = customFields;
     return this;
@@ -86,13 +117,15 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     return (
       Objects.equals(this.storeKeys, sourceUpdateCommercetools.storeKeys) &&
       Objects.equals(this.locales, sourceUpdateCommercetools.locales) &&
+      Objects.equals(this.url, sourceUpdateCommercetools.url) &&
+      Objects.equals(this.fallbackIsInStockValue, sourceUpdateCommercetools.fallbackIsInStockValue) &&
       Objects.equals(this.customFields, sourceUpdateCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales, customFields);
+    return Objects.hash(storeKeys, locales, url, fallbackIsInStockValue, customFields);
   }
 
   @Override
@@ -101,6 +134,8 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     sb.append("class SourceUpdateCommercetools {\n");
     sb.append("    storeKeys: ").append(toIndentedString(storeKeys)).append("\n");
     sb.append("    locales: ").append(toIndentedString(locales)).append("\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    fallbackIsInStockValue: ").append(toIndentedString(fallbackIsInStockValue)).append("\n");
     sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();
