@@ -1,7 +1,7 @@
 import Foundation
 import Core
 
-public extension SecuredApiKeyRestriction {
+public extension SecuredAPIKeyRestrictions {
    func toURLEncodedString() throws -> String {
         var queryDictionary: [String: Any] = [:]
 

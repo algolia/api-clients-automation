@@ -445,7 +445,7 @@ public extension SearchClient {
     /// - returns: String?
     func generateSecuredApiKey(
         parentApiKey: String,
-        with restriction: SecuredApiKeyRestriction = SecuredApiKeyRestriction()
+        with restriction: SecuredAPIKeyRestrictions = SecuredAPIKeyRestrictions()
     ) throws -> String? {
         let queryParams = try restriction.toURLEncodedString()
         let hash = queryParams.hmac256(withKey: parentApiKey)

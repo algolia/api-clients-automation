@@ -36,7 +36,7 @@ class SecuredApiKeyHelpersTests: XCTestCase {
 
         let securedApiKey = try client.generateSecuredApiKey(
             parentApiKey: "parent-api-key",
-            with: SecuredApiKeyRestriction(
+            with: SecuredAPIKeyRestrictions(
                 searchParams: SearchParamsObject(hitsPerPage: 2),
                 validUntil: now + .seconds(13),
                 restrictIndices: ["index1", "index2"]

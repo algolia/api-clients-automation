@@ -24,7 +24,7 @@ method:
         description: The options to add to the secured API key.
         required: true
         schema:
-          $ref: '#/securedApiKeyRestriction'
+          $ref: '#/securedAPIKeyRestrictions'
     responses:
       '200':
         description: OK
@@ -35,7 +35,7 @@ method:
       '400':
         $ref: '../../common/responses/IndexNotFound.yml'
 
-securedApiKeyRestriction:
+securedAPIKeyRestrictions:
   type: object
   additionalProperties: false
   properties:

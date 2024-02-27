@@ -22,7 +22,7 @@ def test_generate_secured_api_key_0(self):
         """
         allow generating a secured api key with from the model
         """
-        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredApiKeyRestriction(
+        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredAPIKeyRestrictions(
               search_params={"query": "bar", "page": 3},
               valid_until=42,
               restrict_indices=["baz"],

@@ -9,7 +9,7 @@ namespace Algolia.Search.Models.Search;
 /// <summary>
 /// Secured Api Key restrictions
 /// </summary>
-public partial class SecuredApiKeyRestriction
+public partial class SecuredAPIKeyRestrictions
 {
 
   /// <summary>
