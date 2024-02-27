@@ -4,7 +4,7 @@ using Algolia.Search.Models.Search;
 namespace Algolia.Search.Utils;
 
 /// <summary>
-/// All responses from the UpdateAllObjects calls.
+/// All responses from the ReplaceAllObjects calls.
 /// </summary>
 public class ReplaceAllObjectsResponse
 {
