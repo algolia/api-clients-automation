@@ -56,6 +56,11 @@ async function transformBundle({
         continue;
       }
 
+      if (specMethod['x-helper']) {
+        delete bundledDocSpec.paths[pathKey];
+        break;
+      }
+
       // Checks that specified tags are well defined at root level
       for (const tag of docMethod.tags) {
         if (tag === clientName) {
