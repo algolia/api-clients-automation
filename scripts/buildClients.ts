@@ -28,7 +28,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       break;
     case 'java':
     case 'kotlin':
-      await fsp.rm(toAbsolutePath(`tests/output/${language}/.gradle`), {
+      await fsp.rm(toAbsolutePath(`${cwd}/.gradle`), {
         recursive: true,
         force: true,
       });
