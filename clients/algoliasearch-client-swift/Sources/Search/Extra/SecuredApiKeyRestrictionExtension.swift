@@ -1,8 +1,8 @@
-import Foundation
 import Core
+import Foundation
 
 public extension SecuredAPIKeyRestrictions {
-   func toURLEncodedString() throws -> String {
+    func toURLEncodedString() throws -> String {
         var queryDictionary: [String: Any] = [:]
 
         if let searchParams {

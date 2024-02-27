@@ -52,6 +52,7 @@ func createE2EIngestionClient(t *testing.T) *ingestion.APIClient {
 
 func TestIngestion_CreateAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("createAuthenticationOAuth", func(t *testing.T) {
 		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
@@ -85,6 +86,7 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 
 func TestIngestion_CreateDestination(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("createDestination", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
@@ -104,6 +106,7 @@ func TestIngestion_CreateDestination(t *testing.T) {
 
 func TestIngestion_CreateSource(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("createSource", func(t *testing.T) {
 		_, err := client.CreateSource(client.NewApiCreateSourceRequest(
@@ -125,6 +128,7 @@ func TestIngestion_CreateSource(t *testing.T) {
 
 func TestIngestion_CreateTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("createTaskOnDemand", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
@@ -172,6 +176,7 @@ func TestIngestion_CreateTask(t *testing.T) {
 
 func TestIngestion_CustomDelete(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -205,6 +210,7 @@ func TestIngestion_CustomDelete(t *testing.T) {
 
 func TestIngestion_CustomGet(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -263,6 +269,7 @@ func TestIngestion_CustomGet(t *testing.T) {
 
 func TestIngestion_CustomPost(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -491,6 +498,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 func TestIngestion_CustomPut(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -526,6 +534,7 @@ func TestIngestion_CustomPut(t *testing.T) {
 
 func TestIngestion_DeleteAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("deleteAuthentication", func(t *testing.T) {
 		_, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
@@ -542,6 +551,7 @@ func TestIngestion_DeleteAuthentication(t *testing.T) {
 
 func TestIngestion_DeleteDestination(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("deleteDestination", func(t *testing.T) {
 		_, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(
@@ -558,6 +568,7 @@ func TestIngestion_DeleteDestination(t *testing.T) {
 
 func TestIngestion_DeleteSource(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("deleteSource", func(t *testing.T) {
 		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
@@ -574,6 +585,7 @@ func TestIngestion_DeleteSource(t *testing.T) {
 
 func TestIngestion_DeleteTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("deleteTask", func(t *testing.T) {
 		_, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
@@ -590,6 +602,7 @@ func TestIngestion_DeleteTask(t *testing.T) {
 
 func TestIngestion_DisableTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("disableTask", func(t *testing.T) {
 		_, err := client.DisableTask(client.NewApiDisableTaskRequest(
@@ -606,6 +619,7 @@ func TestIngestion_DisableTask(t *testing.T) {
 
 func TestIngestion_EnableTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("enable task e2e", func(t *testing.T) {
 		_, err := client.EnableTask(client.NewApiEnableTaskRequest(
@@ -647,6 +661,7 @@ func TestIngestion_EnableTask(t *testing.T) {
 
 func TestIngestion_GetAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getAuthentication", func(t *testing.T) {
 		_, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(
@@ -663,6 +678,7 @@ func TestIngestion_GetAuthentication(t *testing.T) {
 
 func TestIngestion_GetAuthentications(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getAuthentications", func(t *testing.T) {
 		_, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest())
@@ -719,6 +735,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 
 func TestIngestion_GetDestination(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getDestination", func(t *testing.T) {
 		_, err := client.GetDestination(client.NewApiGetDestinationRequest(
@@ -735,6 +752,7 @@ func TestIngestion_GetDestination(t *testing.T) {
 
 func TestIngestion_GetDestinations(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getDestinations", func(t *testing.T) {
 		_, err := client.GetDestinations(client.NewApiGetDestinationsRequest())
@@ -749,6 +767,7 @@ func TestIngestion_GetDestinations(t *testing.T) {
 
 func TestIngestion_GetDockerSourceStreams(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getDockerSourceStreams", func(t *testing.T) {
 		_, err := client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
@@ -765,6 +784,7 @@ func TestIngestion_GetDockerSourceStreams(t *testing.T) {
 
 func TestIngestion_GetEvent(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getEvent", func(t *testing.T) {
 		_, err := client.GetEvent(client.NewApiGetEventRequest(
@@ -781,6 +801,7 @@ func TestIngestion_GetEvent(t *testing.T) {
 
 func TestIngestion_GetEvents(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getEvents", func(t *testing.T) {
 		_, err := client.GetEvents(client.NewApiGetEventsRequest(
@@ -797,6 +818,7 @@ func TestIngestion_GetEvents(t *testing.T) {
 
 func TestIngestion_GetRun(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getRun", func(t *testing.T) {
 		_, err := client.GetRun(client.NewApiGetRunRequest(
@@ -813,6 +835,7 @@ func TestIngestion_GetRun(t *testing.T) {
 
 func TestIngestion_GetRuns(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getRuns", func(t *testing.T) {
 		_, err := client.GetRuns(client.NewApiGetRunsRequest())
@@ -827,6 +850,7 @@ func TestIngestion_GetRuns(t *testing.T) {
 
 func TestIngestion_GetSource(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getSource", func(t *testing.T) {
 		_, err := client.GetSource(client.NewApiGetSourceRequest(
@@ -868,6 +892,7 @@ func TestIngestion_GetSource(t *testing.T) {
 
 func TestIngestion_GetSources(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getSources", func(t *testing.T) {
 		_, err := client.GetSources(client.NewApiGetSourcesRequest())
@@ -882,6 +907,7 @@ func TestIngestion_GetSources(t *testing.T) {
 
 func TestIngestion_GetTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getTask", func(t *testing.T) {
 		_, err := client.GetTask(client.NewApiGetTaskRequest(
@@ -898,6 +924,7 @@ func TestIngestion_GetTask(t *testing.T) {
 
 func TestIngestion_GetTasks(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("getTasks", func(t *testing.T) {
 		_, err := client.GetTasks(client.NewApiGetTasksRequest())
@@ -912,6 +939,7 @@ func TestIngestion_GetTasks(t *testing.T) {
 
 func TestIngestion_RunTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("runTask", func(t *testing.T) {
 		_, err := client.RunTask(client.NewApiRunTaskRequest(
@@ -928,6 +956,7 @@ func TestIngestion_RunTask(t *testing.T) {
 
 func TestIngestion_SearchAuthentications(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("searchAuthentications", func(t *testing.T) {
 		_, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(
@@ -947,6 +976,7 @@ func TestIngestion_SearchAuthentications(t *testing.T) {
 
 func TestIngestion_SearchDestinations(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("searchDestinations", func(t *testing.T) {
 		_, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(
@@ -966,6 +996,7 @@ func TestIngestion_SearchDestinations(t *testing.T) {
 
 func TestIngestion_SearchSources(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("searchSources", func(t *testing.T) {
 		_, err := client.SearchSources(client.NewApiSearchSourcesRequest(
@@ -985,6 +1016,7 @@ func TestIngestion_SearchSources(t *testing.T) {
 
 func TestIngestion_SearchTasks(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("searchTasks", func(t *testing.T) {
 		_, err := client.SearchTasks(client.NewApiSearchTasksRequest(
@@ -1031,6 +1063,7 @@ func TestIngestion_SearchTasks(t *testing.T) {
 
 func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("triggerDockerSourceDiscover", func(t *testing.T) {
 		_, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(
@@ -1047,6 +1080,7 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 
 func TestIngestion_UpdateAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("updateAuthentication", func(t *testing.T) {
 		_, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
@@ -1065,6 +1099,7 @@ func TestIngestion_UpdateAuthentication(t *testing.T) {
 
 func TestIngestion_UpdateDestination(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("updateDestination", func(t *testing.T) {
 		_, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(
@@ -1083,6 +1118,7 @@ func TestIngestion_UpdateDestination(t *testing.T) {
 
 func TestIngestion_UpdateSource(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("updateSource", func(t *testing.T) {
 		_, err := client.UpdateSource(client.NewApiUpdateSourceRequest(
@@ -1101,6 +1137,7 @@ func TestIngestion_UpdateSource(t *testing.T) {
 
 func TestIngestion_UpdateTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
+	_ = echo
 
 	t.Run("updateTask", func(t *testing.T) {
 		_, err := client.UpdateTask(client.NewApiUpdateTaskRequest(

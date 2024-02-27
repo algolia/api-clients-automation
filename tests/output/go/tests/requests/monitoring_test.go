@@ -32,6 +32,7 @@ func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoReq
 
 func TestMonitoring_CustomDelete(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -65,6 +66,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 
 func TestMonitoring_CustomGet(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -123,6 +125,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 
 func TestMonitoring_CustomPost(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -351,6 +354,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 
 func TestMonitoring_CustomPut(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -386,6 +390,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 
 func TestMonitoring_GetClusterIncidents(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getClusterIncidents", func(t *testing.T) {
 		_, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
@@ -402,6 +407,7 @@ func TestMonitoring_GetClusterIncidents(t *testing.T) {
 
 func TestMonitoring_GetClusterStatus(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getClusterStatus", func(t *testing.T) {
 		_, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
@@ -418,6 +424,7 @@ func TestMonitoring_GetClusterStatus(t *testing.T) {
 
 func TestMonitoring_GetIncidents(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getIncidents", func(t *testing.T) {
 		_, err := client.GetIncidents()
@@ -432,6 +439,7 @@ func TestMonitoring_GetIncidents(t *testing.T) {
 
 func TestMonitoring_GetIndexingTime(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getIndexingTime", func(t *testing.T) {
 		_, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
@@ -448,6 +456,7 @@ func TestMonitoring_GetIndexingTime(t *testing.T) {
 
 func TestMonitoring_GetInventory(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getInventory", func(t *testing.T) {
 		_, err := client.GetInventory()
@@ -462,6 +471,7 @@ func TestMonitoring_GetInventory(t *testing.T) {
 
 func TestMonitoring_GetLatency(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getLatency", func(t *testing.T) {
 		_, err := client.GetLatency(client.NewApiGetLatencyRequest(
@@ -478,6 +488,7 @@ func TestMonitoring_GetLatency(t *testing.T) {
 
 func TestMonitoring_GetMetrics(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getMetrics", func(t *testing.T) {
 		_, err := client.GetMetrics(client.NewApiGetMetricsRequest(
@@ -494,6 +505,7 @@ func TestMonitoring_GetMetrics(t *testing.T) {
 
 func TestMonitoring_GetReachability(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getReachability", func(t *testing.T) {
 		_, err := client.GetReachability(client.NewApiGetReachabilityRequest(
@@ -510,6 +522,7 @@ func TestMonitoring_GetReachability(t *testing.T) {
 
 func TestMonitoring_GetStatus(t *testing.T) {
 	client, echo := createMonitoringClient(t)
+	_ = echo
 
 	t.Run("getStatus", func(t *testing.T) {
 		_, err := client.GetStatus()

@@ -5,6 +5,7 @@ import 'package:algoliasearch/src/model/advanced_syntax_features.dart';
 import 'package:algoliasearch/src/model/alternatives_as_exact.dart';
 import 'package:algoliasearch/src/model/anchoring.dart';
 import 'package:algoliasearch/src/model/api_key.dart';
+import 'package:algoliasearch/src/model/api_key_operation.dart';
 import 'package:algoliasearch/src/model/around_precision_from_value_inner.dart';
 import 'package:algoliasearch/src/model/around_radius_all.dart';
 import 'package:algoliasearch/src/model/automatic_facet_filter.dart';
@@ -80,6 +81,7 @@ import 'package:algoliasearch/src/model/search_strategy.dart';
 import 'package:algoliasearch/src/model/search_synonyms_response.dart';
 import 'package:algoliasearch/src/model/search_type_default.dart';
 import 'package:algoliasearch/src/model/search_type_facet.dart';
+import 'package:algoliasearch/src/model/secured_api_key_restrictions.dart';
 import 'package:algoliasearch/src/model/semantic_search.dart';
 import 'package:algoliasearch/src/model/snippet_result_option.dart';
 import 'package:algoliasearch/src/model/sort_remaining_by.dart';
@@ -128,6 +130,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Anchoring.fromJson(value) as ReturnType;
     case 'ApiKey':
       return ApiKey.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApiKeyOperation':
+      return ApiKeyOperation.fromJson(value) as ReturnType;
     case 'AroundPrecisionFromValueInner':
       return AroundPrecisionFromValueInner.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -319,6 +323,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return SearchTypeDefault.fromJson(value) as ReturnType;
     case 'SearchTypeFacet':
       return SearchTypeFacet.fromJson(value) as ReturnType;
+    case 'SecuredAPIKeyRestrictions':
+      return SecuredAPIKeyRestrictions.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)
           as ReturnType;

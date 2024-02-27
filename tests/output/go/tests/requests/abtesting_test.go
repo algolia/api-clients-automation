@@ -52,6 +52,7 @@ func createE2EAbtestingClient(t *testing.T) *abtesting.APIClient {
 
 func TestAbtesting_AddABTests(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("addABTests with minimal parameters", func(t *testing.T) {
 		_, err := client.AddABTests(client.NewApiAddABTestsRequest(
@@ -73,6 +74,7 @@ func TestAbtesting_AddABTests(t *testing.T) {
 
 func TestAbtesting_CustomDelete(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -106,6 +108,7 @@ func TestAbtesting_CustomDelete(t *testing.T) {
 
 func TestAbtesting_CustomGet(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -164,6 +167,7 @@ func TestAbtesting_CustomGet(t *testing.T) {
 
 func TestAbtesting_CustomPost(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -392,6 +396,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 
 func TestAbtesting_CustomPut(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -427,6 +432,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 
 func TestAbtesting_DeleteABTest(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("deleteABTest", func(t *testing.T) {
 		_, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
@@ -443,6 +449,7 @@ func TestAbtesting_DeleteABTest(t *testing.T) {
 
 func TestAbtesting_GetABTest(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("getABTest", func(t *testing.T) {
 		_, err := client.GetABTest(client.NewApiGetABTestRequest(
@@ -459,6 +466,7 @@ func TestAbtesting_GetABTest(t *testing.T) {
 
 func TestAbtesting_ListABTests(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("listABTests with minimal parameters", func(t *testing.T) {
 		_, err := client.ListABTests(client.NewApiListABTestsRequest())
@@ -511,6 +519,7 @@ func TestAbtesting_ListABTests(t *testing.T) {
 
 func TestAbtesting_StopABTest(t *testing.T) {
 	client, echo := createAbtestingClient(t)
+	_ = echo
 
 	t.Run("stopABTest", func(t *testing.T) {
 		_, err := client.StopABTest(client.NewApiStopABTestRequest(

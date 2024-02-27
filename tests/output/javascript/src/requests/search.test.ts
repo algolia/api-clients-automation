@@ -2666,7 +2666,7 @@ describe('generateSecuredApiKey', () => {
       restrictions: {
         validUntil: 100,
         restrictIndices: ['bar'],
-        restrictSources: 'baz',
+        restrictSources: '192,168.1.0/24',
         userToken: 'foobarbaz',
         searchParams: {
           query: 'foo',
@@ -2674,7 +2674,7 @@ describe('generateSecuredApiKey', () => {
       },
     });
     expect(resp).toEqual(
-      'YzY5YmVhMGVhYWYyYjNhYzMxYmVmNDA2Y2NiNjZhZTk2MDFkYjMxZGEyOGRlMDg5ZDFmNzBlYTBjMjY3Zjg3ZnZhbGlkVW50aWw9MTAwJnJlc3RyaWN0SW5kaWNlcz0lNUIlMjJiYXIlMjIlNUQmcmVzdHJpY3RTb3VyY2VzPWJheiZ1c2VyVG9rZW49Zm9vYmFyYmF6JnNlYXJjaFBhcmFtcz0lN0IlMjJxdWVyeSUyMiUzQSUyMmZvbyUyMiU3RA=='
+      'M2RlY2Y5ZjgzMDU1ZDRiYjkyOTdjYjYxYWNjNWNhNTQ5ZGI5Mjc3ZmVjNmNmNjM2ZjAwMTA4OGRjNDI5YjFhOXZhbGlkVW50aWw9MTAwJnJlc3RyaWN0SW5kaWNlcz0lNUIlMjJiYXIlMjIlNUQmcmVzdHJpY3RTb3VyY2VzPTE5MiUyQzE2OC4xLjAlMkYyNCZ1c2VyVG9rZW49Zm9vYmFyYmF6JnNlYXJjaFBhcmFtcz0lN0IlMjJxdWVyeSUyMiUzQSUyMmZvbyUyMiU3RA=='
     );
   });
 });
