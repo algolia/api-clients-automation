@@ -169,7 +169,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     folder: toAbsolutePath('specs/'),
     generatedFiles: [
       `bundled/${spec}.yml`,
-      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`, `bundled/${spec}.json`]),
+      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`]),
     ],
     filesToCache: [specBase, 'common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
