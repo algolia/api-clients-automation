@@ -13,9 +13,13 @@ package algoliasearch.ingestion
   *   Unique and immutable key of the referenced Store.
   * @param locales
   *   Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
+  * @param fallbackIsInStockValue
+  *   Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
   */
 case class SourceUpdateCommercetools(
     storeKeys: Option[Seq[String]] = scala.None,
     locales: Option[Seq[String]] = scala.None,
+    url: Option[String] = scala.None,
+    fallbackIsInStockValue: Option[Boolean] = scala.None,
     customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceUpdateInputTrait
