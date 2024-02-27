@@ -373,6 +373,13 @@ SourceUpdateCommercetools:
         Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
       items:
         type: string
+    url:
+      type: string
+    fallbackIsInStockValue:
+      type: boolean
+      default: true
+      description: >
+        Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
     customFields:
       $ref: '#/CommercetoolsCustomFields'
 
