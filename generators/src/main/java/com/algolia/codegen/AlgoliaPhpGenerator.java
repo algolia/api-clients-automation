@@ -9,6 +9,8 @@ import java.util.List;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.PhpClientCodegen;
+import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
@@ -68,6 +70,13 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  }
+
+  @Override
+  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
+    OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    Helpers.removeHelpers(operations);
+    return operations;
   }
 
   @Override

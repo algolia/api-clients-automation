@@ -56,6 +56,7 @@ func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t
 {{#blocksRequests}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+    _ = echo
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
@@ -66,36 +67,38 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       {{/requestOptions}})
       require.NoError(t, err)
 
-      require.Equal(t, "{{{request.path}}}", echo.Path)
-      require.Equal(t, "{{{request.method}}}", echo.Method)
+      {{#request}}
+      require.Equal(t, "{{path}}", echo.Path)
+      require.Equal(t, "{{{method}}}", echo.Method)
 
-      {{#request.body}}
+      {{#body}}
       ja := jsonassert.New(t)
-      ja.Assertf(*echo.Body, `{{{request.body}}}`)
-      {{/request.body}}
-      {{^request.body}}
+      ja.Assertf(*echo.Body, `{{{.}}}`)
+      {{/body}}
+      {{^body}}
       {{#assertNullBody}}
         require.Nil(t, echo.Body)
       {{/assertNullBody}}
       {{^assertNullBody}}
         require.Empty(t, echo.Body);
       {{/assertNullBody}}
-      {{/request.body}}
-      {{#request.headers}}
+      {{/body}}
+      {{#headers}}
         headers := map[string]string{}
         require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &headers))
         for k, v := range headers {
           require.Equal(t, v, echo.Header.Get(k))
         }
-      {{/request.headers}}
-      {{#request.queryParameters}}
+      {{/headers}}
+      {{#queryParameters}}
         queryParams := map[string]string{}
         require.NoError(t, json.Unmarshal([]byte(`{{{.}}}`), &queryParams))
         require.Len(t, queryParams, len(echo.Query))
         for k, v := range queryParams {
             require.Equal(t, v, echo.Query.Get(k))
         }
-      {{/request.queryParameters}}
+      {{/queryParameters}}
+      {{/request}}
       {{#response}}
       clientE2E := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
       res, err := clientE2E.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(

@@ -56,10 +56,17 @@ async function transformBundle({
         continue;
       }
 
+      if (specMethod['x-helper']) {
+        delete bundledDocSpec.paths[pathKey];
+        break;
+      }
+
       // Checks that specified tags are well defined at root level
       for (const tag of docMethod.tags) {
         if (tag === clientName) {
-          throw new Error(`Tag name "${tag}" must be different from client name ${clientName}`);
+          throw new Error(
+            `Tag name "${tag}" must be different from client name ${clientName} in operation ${specMethod.operationId}`,
+          );
         }
         if (alias && tag === alias) {
           throw new Error(`Tag name "${tag} must be different from alias ${alias}`);
@@ -121,11 +128,9 @@ async function lintCommon(useCache: boolean): Promise<void> {
 async function buildLiteSpec({
   spec,
   bundledPath,
-  outputFormat,
 }: {
   spec: string;
   bundledPath: string;
-  outputFormat: string;
 }): Promise<void> {
   const parsed = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
 
@@ -143,11 +148,10 @@ async function buildLiteSpec({
     {} as Spec['paths'],
   );
 
-  const liteBundledPath = `specs/bundled/${spec}.${outputFormat}`;
-  await fsp.writeFile(toAbsolutePath(liteBundledPath), yaml.dump(parsed));
+  await fsp.writeFile(bundledPath, yaml.dump(parsed));
 
   await transformBundle({
-    bundledPath: toAbsolutePath(liteBundledPath),
+    bundledPath,
     clientName: spec,
     // Lite does not need documentation because it's just a subset
     withDoc: false,
@@ -205,12 +209,11 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     await buildLiteSpec({
       spec,
       bundledPath: toAbsolutePath(bundledPath),
-      outputFormat,
     });
   }
 
   spinner.text = `validating '${spec}' bundled spec`;
-  await run(`yarn openapi lint specs/bundled/${spec}.${outputFormat}`);
+  await run(`yarn openapi lint ${bundledPath}`);
 
   spinner.text = `linting '${spec}' bundled spec`;
   await run(`yarn specs:fix bundled/${spec}.${outputFormat}`);

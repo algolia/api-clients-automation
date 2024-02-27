@@ -141,7 +141,6 @@ public GetApiKeyResponse waitForApiKey(
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
   return this.waitForApiKey(operation, key, null, maxRetries, timeout, requestOptions);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *
@@ -153,7 +152,6 @@ public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, in
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, RequestOptions requestOptions) {
   return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *
@@ -164,7 +162,6 @@ public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, Ap
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, RequestOptions requestOptions) {
   return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *
@@ -177,7 +174,6 @@ public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, Re
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForApiKey(operation, key, apiKey, maxRetries, timeout, null);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *
@@ -189,7 +185,6 @@ public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, Ap
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForApiKey(operation, key, null, maxRetries, timeout, null);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *
@@ -200,7 +195,6 @@ public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, in
 public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey) {
   return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
 }
-
 /**
   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
   *

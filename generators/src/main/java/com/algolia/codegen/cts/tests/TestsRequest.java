@@ -60,7 +60,13 @@ public class TestsRequest extends TestsGenerator {
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
+      CodegenOperation ope = entry.getValue();
+      boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
       if (!cts.containsKey(operationId)) {
+        if (isHelper) {
+          continue;
+        }
+
         throw new CTSException(
           "operationId '" +
           operationId +
@@ -85,52 +91,45 @@ public class TestsRequest extends TestsGenerator {
         test.put("testIndex", i);
 
         try {
-          CodegenOperation ope = entry.getValue();
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
           if (Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
             test.put("isCustomRequest", true);
           }
 
-          // We check on the spec if body parameters should be present in the CTS
-          // If so, we change the `null` default to an empty object, so we know if
-          // tests are properly written
-          if (ope.bodyParams.size() != 0 && req.request.body == null) {
-            req.request.body = "{}";
-          }
+          if (req.request != null && !isHelper) {
+            // We check on the spec if body parameters should be present in the CTS
+            // If so, we change the `null` default to an empty object, so we know if
+            // tests are properly written
+            if (ope.bodyParams.size() != 0 && req.request.body == null) {
+              req.request.body = "{}";
+            }
 
-          // For golang, jsonassert expect % to be formatted, we need to escape them
-          if (language.equals("go") && req.request.body != null) {
-            req.request.body = req.request.body.replace("%", "%%");
-          }
+            // For golang, jsonassert expect % to be formatted, we need to escape them
+            if (language.equals("go") && req.request.body != null) {
+              req.request.body = req.request.body.replace("%", "%%");
+            }
 
-          // For dart, same thing but for $
-          if (language.equals("dart") && req.request.body != null) {
-            req.request.body = req.request.body.replace("$", "\\$");
-          }
+            // For dart, same thing but for $
+            if (language.equals("dart") && req.request.body != null) {
+              req.request.body = req.request.body.replace("$", "\\$");
+            }
 
-          // In a case of a `GET` or `DELETE` request, we want to assert if the body
-          // is correctly parsed (absent from the payload)
-          if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
-            test.put("assertNullBody", true);
+            // In a case of a `GET` or `DELETE` request, we want to assert if the body
+            // is correctly parsed (absent from the payload)
+            if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
+              test.put("assertNullBody", true);
+            }
           }
 
           if (req.response != null) {
             bundle.put("hasE2E", true);
             test.put("response", req.response);
-
-            if (req.response.statusCode == 0) {
-              throw new CTSException(
-                "operationId '" +
-                operationId +
-                "' has a 'response' field in order to generate e2e tests but is missing the" +
-                " 'statusCode' parameter"
-              );
-            }
           }
 
           test.put("request", req.request);
           test.put("hasParameters", req.parameters.size() != 0);
           test.put("hasOperationParams", ope.hasParams);
+          test.put("isHelper", isHelper);
 
           if (req.requestOptions != null) {
             test.put("hasRequestOptions", true);

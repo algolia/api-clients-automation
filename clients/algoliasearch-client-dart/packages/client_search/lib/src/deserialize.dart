@@ -5,6 +5,7 @@ import 'package:algolia_client_search/src/model/advanced_syntax_features.dart';
 import 'package:algolia_client_search/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_search/src/model/anchoring.dart';
 import 'package:algolia_client_search/src/model/api_key.dart';
+import 'package:algolia_client_search/src/model/api_key_operation.dart';
 import 'package:algolia_client_search/src/model/around_precision_from_value_inner.dart';
 import 'package:algolia_client_search/src/model/around_radius_all.dart';
 import 'package:algolia_client_search/src/model/assign_user_id_params.dart';
@@ -120,6 +121,7 @@ import 'package:algolia_client_search/src/model/search_type_default.dart';
 import 'package:algolia_client_search/src/model/search_type_facet.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
+import 'package:algolia_client_search/src/model/secured_api_key_restrictions.dart';
 import 'package:algolia_client_search/src/model/semantic_search.dart';
 import 'package:algolia_client_search/src/model/snippet_result_option.dart';
 import 'package:algolia_client_search/src/model/sort_remaining_by.dart';
@@ -173,6 +175,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Anchoring.fromJson(value) as ReturnType;
     case 'ApiKey':
       return ApiKey.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApiKeyOperation':
+      return ApiKeyOperation.fromJson(value) as ReturnType;
     case 'AroundPrecisionFromValueInner':
       return AroundPrecisionFromValueInner.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -479,6 +483,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SearchUserIdsResponse':
       return SearchUserIdsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SecuredAPIKeyRestrictions':
+      return SecuredAPIKeyRestrictions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)

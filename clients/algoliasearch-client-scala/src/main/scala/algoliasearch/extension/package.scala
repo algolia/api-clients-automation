@@ -34,7 +34,7 @@ package object extension {
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Any] = {
       operation match {
-        case ApiKeyOperation.Create =>
+        case ApiKeyOperation.Add =>
           client.waitKeyCreation(key, maxRetries, delay, requestOptions)
         case ApiKeyOperation.Update =>
           client.waitKeyUpdate(key, apiKey.get, maxRetries, delay, requestOptions)

@@ -32,6 +32,7 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 
 func TestRecommend_CustomDelete(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -65,6 +66,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 
 func TestRecommend_CustomGet(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -123,6 +125,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 
 func TestRecommend_CustomPost(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -351,6 +354,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 func TestRecommend_CustomPut(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -386,6 +390,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 
 func TestRecommend_DeleteRecommendRule(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("deleteRecommendRule0", func(t *testing.T) {
 		_, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
@@ -402,6 +407,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 
 func TestRecommend_GetRecommendRule(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("getRecommendRule0", func(t *testing.T) {
 		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
@@ -418,6 +424,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 
 func TestRecommend_GetRecommendStatus(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("getRecommendStatus0", func(t *testing.T) {
 		_, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
@@ -434,6 +441,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 
 func TestRecommend_GetRecommendations(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("get recommendations for recommend model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -562,6 +570,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 func TestRecommend_SearchRecommendRules(t *testing.T) {
 	client, echo := createRecommendClient(t)
+	_ = echo
 
 	t.Run("searchRecommendRules0", func(t *testing.T) {
 		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(

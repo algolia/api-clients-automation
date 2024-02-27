@@ -2,7 +2,7 @@ import { writeFile } from 'fs/promises';
 
 import { toAbsolutePath } from '../common.js';
 import { getClientsConfigField } from '../config.js';
-import type { Generator } from '../types.js';
+import type { Generator, GeneratorMode } from '../types.js';
 
 /**
  * Create an on the fly openapitools.json file with default options for all generators.
@@ -10,9 +10,9 @@ import type { Generator } from '../types.js';
  * Defaults options are used to
  * - Set config path.
  */
-export async function generateOpenapitools(gens: Generator[]): Promise<void> {
+export async function generateOpenapitools(gens: Generator[], mode: GeneratorMode): Promise<void> {
   const generators = {};
-  for (const { key, client, language, additionalProperties, ...rest } of gens) {
+  for (const { key, client, language, ...rest } of gens) {
     const templateDir =
       language === 'javascript'
         ? `#{cwd}/templates/${language}/clients`
@@ -25,10 +25,12 @@ export async function generateOpenapitools(gens: Generator[]): Promise<void> {
       gitRepoId: getClientsConfigField(language, 'gitRepoId'),
       glob: `specs/bundled/${client}.yml`,
       templateDir,
-      generatorName: `algolia-${language}`,
-      output: `#{cwd}/${rest.output}`,
+      generatorName: `algolia-${mode === 'client' ? language : 'cts'}`,
+      output: `#{cwd}/${mode === 'client' ? rest.output : ''}`,
       additionalProperties: {
+        language,
         client,
+        mode,
       },
     };
   }

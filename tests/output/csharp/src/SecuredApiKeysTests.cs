@@ -17,9 +17,9 @@ public class SecuredApiKeysTests
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"));
     var securedApiKey = client.GenerateSecuredApiKey(
       "parent-api-key",
-      new SecuredApiKeyRestriction
+      new SecuredAPIKeyRestrictions
       {
-        Query = new IndexSettingsAsSearchParams
+        SearchParams = new SearchParamsObject
         {
           Mode = Mode.NeuralSearch,
           HitsPerPage = 10,
@@ -34,14 +34,14 @@ public class SecuredApiKeysTests
           AttributeCriteriaComputedByMinProximity = false
         },
         RestrictIndices = ["index1", "index2"],
-        RestrictSources = ["source1", "source2"],
+        RestrictSources = "192.168.1.0/24",
         UserToken = "my-user-token",
         ValidUntil = 1
       }
     );
 
     const string expectedQueryParams =
-      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=source1%2Csource2&userToken=my-user-token";
+      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=192.168.1.0%2F24&userToken=my-user-token";
     var hash = HmacShaHelper.GetHash("parent-api-key", expectedQueryParams);
     var expectedKey = HmacShaHelper.Base64Encode($"{hash}{expectedQueryParams}");
 
@@ -52,7 +52,7 @@ public class SecuredApiKeysTests
   public void ShouldDetectExpiredKey()
   {
     // Test an expired key
-    var restriction = new SecuredApiKeyRestriction
+    var restriction = new SecuredAPIKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(-10)).ToUnixTimeSeconds(),
       RestrictIndices = ["indexName"]
@@ -73,7 +73,7 @@ public class SecuredApiKeysTests
   public void ShouldDetectValidKey()
   {
     // Test a valid key
-    var restriction = new SecuredApiKeyRestriction
+    var restriction = new SecuredAPIKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(10)).ToUnixTimeSeconds(),
       RestrictIndices = ["indexName"]
@@ -94,7 +94,7 @@ public class SecuredApiKeysTests
   public void TestRemainingValidityParameters()
   {
     // Test a valid key, but with no validUntil
-    var restriction = new SecuredApiKeyRestriction { RestrictIndices = ["indexName"] };
+    var restriction = new SecuredAPIKeyRestrictions { RestrictIndices = ["indexName"] };
 
     var client = new SearchClient(
       new SearchConfig("test-app-id", "test-api-key"),

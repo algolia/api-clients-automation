@@ -52,6 +52,7 @@ func createE2ESuggestionsClient(t *testing.T) *suggestions.APIClient {
 
 func TestSuggestions_CreateConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("createConfig0", func(t *testing.T) {
 		_, err := client.CreateConfig(client.NewApiCreateConfigRequest(
@@ -77,6 +78,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 
 func TestSuggestions_CustomDelete(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -110,6 +112,7 @@ func TestSuggestions_CustomDelete(t *testing.T) {
 
 func TestSuggestions_CustomGet(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -168,6 +171,7 @@ func TestSuggestions_CustomGet(t *testing.T) {
 
 func TestSuggestions_CustomPost(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -396,6 +400,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 
 func TestSuggestions_CustomPut(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -431,6 +436,7 @@ func TestSuggestions_CustomPut(t *testing.T) {
 
 func TestSuggestions_DeleteConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("deleteConfig0", func(t *testing.T) {
 		_, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
@@ -447,6 +453,7 @@ func TestSuggestions_DeleteConfig(t *testing.T) {
 
 func TestSuggestions_GetAllConfigs(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("getAllConfigs0", func(t *testing.T) {
 		_, err := client.GetAllConfigs()
@@ -461,6 +468,7 @@ func TestSuggestions_GetAllConfigs(t *testing.T) {
 
 func TestSuggestions_GetConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("Retrieve QS config e2e", func(t *testing.T) {
 		_, err := client.GetConfig(client.NewApiGetConfigRequest(
@@ -502,6 +510,7 @@ func TestSuggestions_GetConfig(t *testing.T) {
 
 func TestSuggestions_GetConfigStatus(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("getConfigStatus0", func(t *testing.T) {
 		_, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
@@ -518,6 +527,7 @@ func TestSuggestions_GetConfigStatus(t *testing.T) {
 
 func TestSuggestions_GetLogFile(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("getLogFile0", func(t *testing.T) {
 		_, err := client.GetLogFile(client.NewApiGetLogFileRequest(
@@ -534,6 +544,7 @@ func TestSuggestions_GetLogFile(t *testing.T) {
 
 func TestSuggestions_UpdateConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
+	_ = echo
 
 	t.Run("updateConfig0", func(t *testing.T) {
 		_, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(

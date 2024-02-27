@@ -33,6 +33,7 @@ func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tes
 
 func TestPersonalization_CustomDelete(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -66,6 +67,7 @@ func TestPersonalization_CustomDelete(t *testing.T) {
 
 func TestPersonalization_CustomGet(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -124,6 +126,7 @@ func TestPersonalization_CustomGet(t *testing.T) {
 
 func TestPersonalization_CustomPost(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -352,6 +355,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 func TestPersonalization_CustomPut(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -387,6 +391,7 @@ func TestPersonalization_CustomPut(t *testing.T) {
 
 func TestPersonalization_DeleteUserProfile(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("delete deleteUserProfile", func(t *testing.T) {
 		_, err := client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
@@ -403,6 +408,7 @@ func TestPersonalization_DeleteUserProfile(t *testing.T) {
 
 func TestPersonalization_GetPersonalizationStrategy(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("get getPersonalizationStrategy", func(t *testing.T) {
 		_, err := client.GetPersonalizationStrategy()
@@ -417,6 +423,7 @@ func TestPersonalization_GetPersonalizationStrategy(t *testing.T) {
 
 func TestPersonalization_GetUserTokenProfile(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("get getUserTokenProfile", func(t *testing.T) {
 		_, err := client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
@@ -433,6 +440,7 @@ func TestPersonalization_GetUserTokenProfile(t *testing.T) {
 
 func TestPersonalization_SetPersonalizationStrategy(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
+	_ = echo
 
 	t.Run("set setPersonalizationStrategy", func(t *testing.T) {
 		_, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(

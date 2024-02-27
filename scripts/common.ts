@@ -15,7 +15,7 @@ import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
-import type { Generator, Language, RunOptions } from './types.js';
+import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
 
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;
@@ -275,22 +275,16 @@ export function isVerbose(): boolean {
   return verbose;
 }
 
-export async function callCTSGenerator(gen: Generator, mode: 'snippets' | 'tests'): Promise<void> {
-  const spinner = createSpinner(
-    `generating ${mode === 'tests' ? 'CTS' : 'code snippets'} for ${gen.key}`,
-  );
-
+export async function callGenerator(gen: Generator): Promise<void> {
   await run(
-    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate \
-     -g algolia-cts -i specs/bundled/${gen.client}.yml --additional-properties="language=${gen.language},client=${gen.client},mode=${mode}"`,
+    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     { language: 'java' },
   );
-
-  spinner.succeed();
 }
 
 export async function setupAndGen(
   generators: Generator[],
+  mode: GeneratorMode,
   fn: (gen: Generator) => Promise<void>,
 ): Promise<void> {
   if (!CI) {
@@ -298,10 +292,12 @@ export async function setupAndGen(
     await buildSpecs(clients, 'yml', true);
   }
 
-  await generateOpenapitools(generators);
+  await generateOpenapitools(generators, mode);
   await buildCustomGenerators();
 
   for (const gen of generators) {
+    const spinner = createSpinner(`generating ${mode} for ${gen.key}`);
     await fn(gen);
+    spinner.succeed();
   }
 }

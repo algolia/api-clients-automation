@@ -52,6 +52,7 @@ func createE2EAnalyticsClient(t *testing.T) *analytics.APIClient {
 
 func TestAnalytics_CustomDelete(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -85,6 +86,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 
 func TestAnalytics_CustomGet(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -143,6 +145,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 
 func TestAnalytics_CustomPost(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -371,6 +374,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 
 func TestAnalytics_CustomPut(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -406,6 +410,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 
 func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getAverageClickPosition with minimal parameters", func(t *testing.T) {
 		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
@@ -445,6 +450,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 
 func TestAnalytics_GetClickPositions(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getClickPositions with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
@@ -484,6 +490,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 
 func TestAnalytics_GetClickThroughRate(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getClickThroughRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
@@ -523,6 +530,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 
 func TestAnalytics_GetConversationRate(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getConversationRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
@@ -562,6 +570,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 
 func TestAnalytics_GetNoClickRate(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getNoClickRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
@@ -601,6 +610,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 
 func TestAnalytics_GetNoResultsRate(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getNoResultsRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
@@ -640,6 +650,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 
 func TestAnalytics_GetSearchesCount(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getSearchesCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
@@ -679,6 +690,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 
 func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getSearchesNoClicks with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
@@ -718,6 +730,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 
 func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getSearchesNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
@@ -757,6 +770,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 
 func TestAnalytics_GetStatus(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getStatus with minimal parameters", func(t *testing.T) {
 		_, err := client.GetStatus(client.NewApiGetStatusRequest(
@@ -779,6 +793,7 @@ func TestAnalytics_GetStatus(t *testing.T) {
 
 func TestAnalytics_GetTopCountries(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopCountries with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
@@ -818,6 +833,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 
 func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopFilterAttributes with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
@@ -857,6 +873,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 
 func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopFilterForAttribute with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
@@ -930,6 +947,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 
 func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopFiltersNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
@@ -969,6 +987,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 
 func TestAnalytics_GetTopHits(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopHits with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
@@ -1008,6 +1027,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 
 func TestAnalytics_GetTopSearches(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getTopSearches with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
@@ -1089,6 +1109,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 
 func TestAnalytics_GetUsersCount(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
+	_ = echo
 
 	t.Run("get getUsersCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(

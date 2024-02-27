@@ -52,6 +52,7 @@ func createE2EInsightsClient(t *testing.T) *insights.APIClient {
 
 func TestInsights_CustomDelete(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
@@ -85,6 +86,7 @@ func TestInsights_CustomDelete(t *testing.T) {
 
 func TestInsights_CustomGet(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
@@ -143,6 +145,7 @@ func TestInsights_CustomGet(t *testing.T) {
 
 func TestInsights_CustomPost(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -371,6 +374,7 @@ func TestInsights_CustomPost(t *testing.T) {
 
 func TestInsights_CustomPut(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -406,6 +410,7 @@ func TestInsights_CustomPut(t *testing.T) {
 
 func TestInsights_DeleteUserToken(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("deleteUserToken0", func(t *testing.T) {
 		err := client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
@@ -422,6 +427,7 @@ func TestInsights_DeleteUserToken(t *testing.T) {
 
 func TestInsights_PushEvents(t *testing.T) {
 	client, echo := createInsightsClient(t)
+	_ = echo
 
 	t.Run("pushEvents0", func(t *testing.T) {
 		_, err := client.PushEvents(client.NewApiPushEventsRequest(

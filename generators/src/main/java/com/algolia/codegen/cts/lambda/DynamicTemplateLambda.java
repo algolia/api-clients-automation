@@ -16,8 +16,8 @@ import org.openapitools.codegen.templating.TemplateManagerOptions;
 
 public class DynamicTemplateLambda implements Mustache.Lambda {
 
-  private TemplatingExecutor executor;
-  private TemplatingEngineAdapter adaptor;
+  private final TemplatingExecutor executor;
+  private final TemplatingEngineAdapter adaptor;
 
   public DynamicTemplateLambda(DefaultCodegen generator) {
     // we can't access the default template manager, so we have to create our own
