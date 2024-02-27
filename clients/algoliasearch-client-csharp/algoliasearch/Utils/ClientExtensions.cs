@@ -461,7 +461,7 @@ public static class ClientExtensions
     // Copy settings, synonyms and query rules into the temporary index
     var copyResponse = await client.OperationIndexAsync(indexName,
         new OperationIndexParams(OperationType.Copy, tmpIndexName)
-          { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+        { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
       .ConfigureAwait(false);
 
     await client.WaitForTaskAsync(indexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken)
