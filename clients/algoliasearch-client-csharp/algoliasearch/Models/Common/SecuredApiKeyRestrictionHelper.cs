@@ -19,12 +19,12 @@ public partial class SecuredApiKeyRestriction
   public string ToQueryString()
   {
     string restrictionQuery = null;
-    if (Query != null)
+    if (SearchParams != null)
     {
-      restrictionQuery = ToQueryString(Query);
+      restrictionQuery = ToQueryString(SearchParams);
     }
 
-    var restrictions = ToQueryString(this, nameof(Query));
+    var restrictions = ToQueryString(this, nameof(SearchParams));
     var array = new[] { restrictionQuery, restrictions };
 
     return string.Join("&", array.Where(s => !string.IsNullOrEmpty(s)));

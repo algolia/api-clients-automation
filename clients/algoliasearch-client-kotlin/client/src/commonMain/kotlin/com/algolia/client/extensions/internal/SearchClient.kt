@@ -1,8 +1,8 @@
 package com.algolia.client.extensions.internal
 
 import com.algolia.client.api.SearchClient
-import com.algolia.client.model.search.SecuredApiKeyRestriction
 import com.algolia.client.model.search.SearchParamsObject
+import com.algolia.client.model.search.SecuredApiKeyRestriction
 import io.ktor.http.*
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonObject
@@ -13,8 +13,8 @@ import kotlinx.serialization.json.jsonPrimitive
  */
 internal fun SearchClient.buildRestrictionString(restriction: SecuredApiKeyRestriction): String {
   return Parameters.build {
-    restriction.query?.let { query ->
-      val json = options.json.encodeToJsonElement(SearchParamsObject.serializer(), query).jsonObject
+    restriction.searchParams?.let { searchParams ->
+      val json = options.json.encodeToJsonElement(SearchParamsObject.serializer(), searchParams).jsonObject
       json.forEach { (key, element) ->
         when (element) {
           is JsonArray -> appendAll(key, element.jsonPrimitive.content.map { it.toString() })
@@ -25,6 +25,6 @@ internal fun SearchClient.buildRestrictionString(restriction: SecuredApiKeyRestr
     restriction.restrictIndices?.let { append("restrictIndices", it.joinToString(";")) }
     restriction.restrictSources?.let { append("restrictSources", it) }
     restriction.userToken?.let { append("userToken", it) }
-    restriction.validUntil?.let { append("validUntil", it.toEpochMilliseconds().toString()) }
+    restriction.validUntil?.let { append("validUntil", it.toString()) }
   }.formUrlEncode()
 }
