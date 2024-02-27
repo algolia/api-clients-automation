@@ -698,6 +698,8 @@ public class ClientExtensionsTests
 
     httpMock.VerifyAll();
 
-    Assert.Equivalent(results, new List<long> { 1, 2, 3, 4 });
+    Assert.Equal(1, results.CopyOperationResponse.TaskID);
+    Assert.Equal([2,3], results.BatchResponses.Select(r => r.TaskID));
+    Assert.Equal(4, results.MoveOperationResponse.TaskID);
   }
 }

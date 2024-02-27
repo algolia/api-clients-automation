@@ -429,7 +429,7 @@ public static class ClientExtensions
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  public static List<long> ReplaceAllObjects<T>(this SearchClient client, string indexName,
+  public static ReplaceAllObjectsResponse ReplaceAllObjects<T>(this SearchClient client, string indexName,
     IEnumerable<T> objects, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class
     => AsyncHelper.RunSync(() =>
@@ -446,8 +446,8 @@ public static class ClientExtensions
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  public static async Task<List<long>> ReplaceAllObjectsAsync<T>(this SearchClient client, string indexName,
-    IEnumerable<T> objects, int batchSize = 1000, RequestOptions options = null,
+  public static async Task<ReplaceAllObjectsResponse> ReplaceAllObjectsAsync<T>(this SearchClient client,
+    string indexName, IEnumerable<T> objects, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class
   {
     if (objects == null)
@@ -479,7 +479,12 @@ public static class ClientExtensions
     await client.WaitForTaskAsync(tmpIndexName, moveResponse.TaskID, requestOptions: options, ct: cancellationToken)
       .ConfigureAwait(false);
 
-    return [copyResponse.TaskID, ..batchResponse.Select(r => r.TaskID) , moveResponse.TaskID];
+    return new ReplaceAllObjectsResponse
+    {
+      CopyOperationResponse = copyResponse,
+      MoveOperationResponse = moveResponse,
+      BatchResponses = batchResponse
+    };
   }
 
   /// <summary>
@@ -520,7 +525,6 @@ public static class ClientExtensions
     for (var i = 0; i < batchCount; i++)
     {
       var chunk = objects.Skip(i * batchSize).Take(batchSize);
-
       var batchResponse = await client.BatchAsync(indexName,
         new BatchWriteParams(chunk.Select(x => new BatchRequest(action, x)).ToList()),
         options, cancellationToken).ConfigureAwait(false);
