@@ -615,7 +615,7 @@ public class ClientExtensionsTests
             HttpStatusCode = 200,
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
-                serializer.Serialize(new UpdatedAtResponse(3, "2021-01-01T00:00:00Z"))
+                serializer.Serialize(new UpdatedAtResponse(4, "2021-01-01T00:00:00Z"))
               )
             )
           }
@@ -634,6 +634,10 @@ public class ClientExtensionsTests
             || Regex.IsMatch(
               r.Uri.AbsolutePath,
               "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/3"
+            )
+            || Regex.IsMatch(
+              r.Uri.AbsolutePath,
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/4"
             )
           ),
           It.IsAny<TimeSpan>(),
@@ -657,7 +661,7 @@ public class ClientExtensionsTests
       );
 
     httpMock
-      .Setup(c =>
+      .SetupSequence(c =>
         c.SendRequestAsync(
           It.Is<Request>(r =>
             Regex.IsMatch(r.Uri.AbsolutePath, "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/batch")
@@ -677,12 +681,25 @@ public class ClientExtensionsTests
             )
           }
         )
+      ).Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(serializer.Serialize(new BatchResponse(3, [])))
+            )
+          }
+        )
       );
 
-    var results = await client.ReplaceAllObjectsAsync("my-test-index", new List<object> { });
+    var results =
+      await client.ReplaceAllObjectsAsync("my-test-index", new List<object> { new(), new(), new() }, batchSize: 2);
 
     httpMock.VerifyAll();
 
-    Assert.Equivalent(results, new List<long> { 1, 2, 3 });
+    Assert.Equal(1, results.CopyOperationResponse.TaskID);
+    Assert.Equal([2,3], results.BatchResponses.Select(r => r.TaskID));
+    Assert.Equal(4, results.MoveOperationResponse.TaskID);
   }
 }
