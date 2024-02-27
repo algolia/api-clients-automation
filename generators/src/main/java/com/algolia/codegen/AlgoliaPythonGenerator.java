@@ -117,6 +117,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    Helpers.removeHelpers(operations);
 
     List<Map<String, String>> imports = operations.getImports();
 

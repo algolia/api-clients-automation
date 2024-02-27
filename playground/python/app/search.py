@@ -2,7 +2,6 @@ from asyncio import run
 from os import environ
 
 from algoliasearch.search.client import SearchClient
-from algoliasearch.http.helpers import SecuredApiKeyRestrictions
 from algoliasearch.search import __version__
 from dotenv import load_dotenv
 

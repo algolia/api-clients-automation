@@ -1,5 +1,7 @@
 /* eslint-disable no-case-declarations */
-import { run } from './common.js';
+import * as fsp from 'fs/promises';
+
+import { run, toAbsolutePath } from './common.js';
 import { getClientsConfigField, getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
@@ -26,6 +28,10 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       break;
     case 'java':
     case 'kotlin':
+      await fsp.rm(toAbsolutePath(`${cwd}/.gradle`), {
+        recursive: true,
+        force: true,
+      });
       await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
       break;
     case 'python':

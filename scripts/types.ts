@@ -24,8 +24,11 @@ export type Generator = Record<string, any> & {
   language: Language;
   client: string;
   key: string;
+  output: string;
   additionalProperties: AdditionalProperties;
 };
+
+export type GeneratorMode = 'client' | 'snippets' | 'tests';
 
 export type RunOptions = {
   errorMessage?: string;

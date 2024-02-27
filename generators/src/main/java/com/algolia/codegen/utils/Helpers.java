@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenServer;
 import org.openapitools.codegen.CodegenServerVariable;
+import org.openapitools.codegen.model.OperationsMap;
 
 public class Helpers {
 
@@ -148,6 +149,10 @@ public class Helpers {
     } catch (MalformedURLException e) {
       throw new ConfigException("Invalid server URL", e);
     }
+  }
+
+  public static void removeHelpers(OperationsMap operations) {
+    operations.getOperations().getOperation().removeIf(entry -> (boolean) entry.vendorExtensions.getOrDefault("x-helper", false));
   }
 
   /**

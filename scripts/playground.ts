@@ -61,9 +61,6 @@ export async function playground({
         language,
       });
       break;
-    case 'scala':
-      // run scala playground
-      break;
     default:
   }
 }

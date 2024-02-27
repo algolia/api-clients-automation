@@ -3,7 +3,9 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
@@ -50,7 +52,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.add(new SupportingFile("build_config.mustache", invokerFolder, "BuildConfig.java"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
@@ -89,6 +90,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
   }
@@ -118,5 +120,14 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   /** Convert a Seq type to a valid class name. */
   private String typeToName(String content) {
     return content.trim().replace("<", "Of").replace(">", "").replace(",", "").replace(" ", "");
+  }
+
+  @Override
+  protected Builder<String, Lambda> addMustacheLambdas() {
+    Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+
+    return lambdas;
   }
 }

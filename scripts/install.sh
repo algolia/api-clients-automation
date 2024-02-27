@@ -58,7 +58,7 @@ _apic_cts_complete() {
 
 _apic_build_specs_complete() {
   if [[ COMP_CWORD -eq 3 ]]; then
-    COMPREPLY=($(compgen -W "$(_list_clients)" -- "$cur"))
+    COMPREPLY=($(compgen -W "algoliasearch $(_list_clients)" -- "$cur"))
   fi
 }
 

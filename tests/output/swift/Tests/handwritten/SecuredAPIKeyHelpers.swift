@@ -10,8 +10,8 @@ import XCTest
 @testable import Core
 @testable import Search
 
-class SecuredAPIKeyHelpersTests: XCTestCase {
-    func testGenerateSecuredAPIKeySuccess() async throws {
+class SecuredApiKeyHelpersTests: XCTestCase {
+    func testGenerateSecuredApiKeySuccess() async throws {
         let client = try SearchClient(appID: "my-app-id", apiKey: "my-api-key")
 
         let securedApiKey = try client.generateSecuredApiKey(
@@ -36,9 +36,10 @@ class SecuredAPIKeyHelpersTests: XCTestCase {
 
         let securedApiKey = try client.generateSecuredApiKey(
             parentApiKey: "parent-api-key",
-            with: SecuredAPIKeyRestriction(
+            with: SecuredAPIKeyRestrictions(
                 searchParams: SearchParamsObject(hitsPerPage: 2),
-                validUntil: now + .seconds(13)
+                validUntil: now + .seconds(13),
+                restrictIndices: ["index1", "index2"]
             )
         )
 
