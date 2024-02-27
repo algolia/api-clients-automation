@@ -221,9 +221,6 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
   if (!isAlgoliasearch) {
     spinner.text = `linting '${spec}' doc spec`;
     await run(`yarn specs:fix bundled/${spec}.doc.yml`);
-    await run(
-      `yarn openapi bundle specs/bundled/${spec}.doc.yml --output specs/bundled/${spec}.json --format json --ext json --dereferenced`,
-    );
   }
 
   if (useCache) {
