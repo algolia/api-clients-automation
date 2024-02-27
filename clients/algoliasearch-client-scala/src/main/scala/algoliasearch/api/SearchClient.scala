@@ -5,6 +5,7 @@ package algoliasearch.api
 
 import algoliasearch.search.AddApiKeyResponse
 import algoliasearch.search.ApiKey
+import algoliasearch.search.ApiKeyOperation._
 import algoliasearch.search.AssignUserIdParams
 import algoliasearch.search.AttributeToUpdate
 import algoliasearch.search.BatchAssignUserIdsParams
@@ -57,6 +58,7 @@ import algoliasearch.search.SearchSynonymsParams
 import algoliasearch.search.SearchSynonymsResponse
 import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
+import algoliasearch.search.SecuredAPIKeyRestrictions
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse

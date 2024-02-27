@@ -20,6 +20,7 @@ object JsonSupport {
     new AdvancedSyntaxFeaturesSerializer() :+
     new AlternativesAsExactSerializer() :+
     new AnchoringSerializer() :+
+    new ApiKeyOperationSerializer() :+
     new AroundRadiusAllSerializer() :+
     new BuiltInOperationTypeSerializer() :+
     new DictionaryActionSerializer() :+
