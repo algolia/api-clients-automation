@@ -71,8 +71,8 @@ class {{client}}RequestsTests {
               {{/requestOptions.headers.parametersWithDataType}}
             {{/hasRequestOptions}});
         });
-        EchoResponse req = echo.getLastResponse();
         {{#request}}
+        EchoResponse req = echo.getLastResponse();
         assertEquals("{{{path}}}", req.path);
         assertEquals("{{{method}}}", req.method);
         {{#body}}

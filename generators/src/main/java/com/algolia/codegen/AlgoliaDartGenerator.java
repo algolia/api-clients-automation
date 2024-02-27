@@ -133,6 +133,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
     OperationsMap operationsMap = super.postProcessOperationsWithModels(objs, allModels);
+    Helpers.removeHelpers(operationsMap);
     return support.clearOneOfFromApiImports(operationsMap);
   }
 

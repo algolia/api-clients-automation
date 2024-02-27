@@ -178,6 +178,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
     OperationsMap results = super.postProcessOperationsWithModels(objs, allModels);
+    Helpers.removeHelpers(results);
 
     setDefaultGeneratorOptions();
     try {
