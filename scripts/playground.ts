@@ -61,12 +61,6 @@ export async function playground({
         language,
       });
       break;
-    case 'scala':
-      // run scala playground
-      break;
-    case 'swift':
-      await run(`swift run`, { cwd: 'playground/swift/playground/playground', language });
-      break;
     default:
   }
 }

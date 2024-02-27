@@ -49,7 +49,7 @@ securedApiKeyRestriction:
         For example, if you set the filter group:admin on your generated API key, and you add groups:press OR groups:visitors with the filters query parameter, your final search filter is equivalent to groups:admin AND (groups:press OR groups:visitors).
     validUntil:
       type: number
-      format: int64
+      format: duration
       description: Unix timestamp used to set the expiration date of the API key.
     restrictIndices:
       type: array
