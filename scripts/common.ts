@@ -289,7 +289,7 @@ export async function setupAndGen(
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];
-    await buildSpecs(clients, 'yml', true);
+    await buildSpecs(clients, 'yml', false, true);
   }
 
   await generateOpenapitools(generators, mode);

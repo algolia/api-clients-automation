@@ -3,11 +3,85 @@ import fsp from 'fs/promises';
 import yaml from 'js-yaml';
 
 import { Cache } from './cache.js';
-import { exists, run, toAbsolutePath } from './common.js';
+import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
-import type { Spec } from './types.js';
+import type { CodeSamples, Language, Spec } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
+
+function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
+  switch (language) {
+    case 'csharp':
+      return 'csharp';
+    case 'javascript':
+      return 'JavaScript';
+    default:
+      return capitalize(language) as CodeSamples['lang'];
+  }
+}
+
+// For a given `clientName`, reads the matching snippet file for every available clients and builds an hashmap of snippets per operationId per language.
+async function transformSnippetsToCodeSamples(
+  clientName: string,
+  forDocs: boolean,
+): Promise<Record<string, Record<string, string>>> {
+  const snippetFiles: Record<string, Record<string, string>> = {};
+
+  if (!forDocs) {
+    return snippetFiles;
+  }
+
+  for (const gen of Object.values(GENERATORS)) {
+    if (gen.client !== clientName) {
+      continue;
+    }
+
+    // find snippets for each operationId in the current gen.language + clientName combo
+    const snippetFileContent = await fsp.readFile(
+      toAbsolutePath(
+        `snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
+      ),
+      'utf8',
+    );
+    // iterate over every matches (operationId) and store it in the hashmap for later use
+    for (const match of snippetFileContent.matchAll(/SEPARATOR (.+)\n([\s\S]*?)SEPARATOR/g)) {
+      const lines: string[] = match[0].split('\n');
+      if (!lines?.[0]) {
+        throw new Error(`No snippet found for ${gen.language} ${gen.client}`);
+      }
+
+      const operationIdMatch = lines[0].match(/SEPARATOR (.+)/);
+      if (!operationIdMatch?.[1]) {
+        throw new Error(`unable to determine operationId for ${gen.language} ${gen.client}`);
+      }
+
+      if (!snippetFiles[gen.language]) {
+        snippetFiles[gen.language] = {};
+      }
+
+      snippetFiles[gen.language][operationIdMatch[1]] = '';
+
+      let indent = 0;
+      for (const [i, line] of lines.entries()) {
+        // skip first and last lines because they contain the SEPARATOR or operationId
+        if (i === 0 || i === lines.length - 1) {
+          continue;
+        }
+
+        // best effort to determine how far the snippet is indented so we
+        // can have every snippets in the documentation on the far left
+        // without impacting the formatting
+        if (indent === 0) {
+          indent = line.length - line.trim().length;
+        }
+
+        snippetFiles[gen.language][operationIdMatch[1]] += `${line.slice(indent)}\n`;
+      }
+    }
+  }
+
+  return snippetFiles;
+}
 
 /**
  * This function will transform properties in the bundle depending on the context.
@@ -19,12 +93,12 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
  */
 async function transformBundle({
   bundledPath,
-  withDoc,
+  forDocs,
   clientName,
   alias,
 }: {
   bundledPath: string;
-  withDoc: boolean;
+  forDocs: boolean;
   clientName: string;
   alias?: string;
 }): Promise<void> {
@@ -33,31 +107,25 @@ async function transformBundle({
   }
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
-
-  let bundledDocSpec: Spec | undefined;
-  if (withDoc) {
-    bundledDocSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
-  }
   const tagsDefinitions = bundledSpec.tags;
+  const snippetFiles = await transformSnippetsToCodeSamples(clientName, forDocs);
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
-      // In the main bundle we need to have only the clientName
-      // because open-api-generator will use this to determine the name of the client
-      specMethod.tags = [clientName];
-
-      // Doc special cases
-      if (!withDoc || !bundledDocSpec) {
+      if (!forDocs) {
+        // In the main bundle we need to have only the clientName
+        // because open-api-generator will use this to determine the name of the client
+        specMethod.tags = [clientName];
         continue;
       }
 
-      const docMethod = bundledDocSpec.paths[pathKey][method];
+      const docMethod = bundledSpec.paths[pathKey][method];
       if (!docMethod.tags) {
         continue;
       }
 
       if (specMethod['x-helper']) {
-        delete bundledDocSpec.paths[pathKey];
+        delete specMethod.paths[pathKey];
         break;
       }
 
@@ -68,8 +136,11 @@ async function transformBundle({
             `Tag name "${tag}" must be different from client name ${clientName} in operation ${specMethod.operationId}`,
           );
         }
+
         if (alias && tag === alias) {
-          throw new Error(`Tag name "${tag} must be different from alias ${alias}`);
+          throw new Error(
+            `Tag name "${tag} for operation ${specMethod.operationId} must be different from alias ${alias}`,
+          );
         }
 
         const tagExists = tagsDefinitions ? tagsDefinitions.find((t) => t.name === tag) : null;
@@ -79,21 +150,29 @@ async function transformBundle({
           );
         }
       }
+
+      // Populate the x-codeSamples property with the snippets we retrieved in `transformSnippetsToCodeSamples`
+      for (const gen of Object.values(GENERATORS)) {
+        if (gen.client !== clientName) {
+          continue;
+        }
+
+        if (!specMethod['x-codeSamples']) {
+          specMethod['x-codeSamples'] = [];
+        }
+
+        specMethod['x-codeSamples'].push({
+          lang: mapLanguageToCodeSampleSupporter(gen.language),
+          source: snippetFiles[gen.language][specMethod.operationId],
+        });
+      }
     }
   }
 
   await fsp.writeFile(
-    bundledPath,
-    yaml.dump(bundledSpec, {
-      noRefs: true,
-    }),
+    forDocs ? toAbsolutePath(`specs/bundled/${clientName}.doc.yml`) : bundledPath,
+    yaml.dump(bundledSpec, { noRefs: true }),
   );
-
-  if (withDoc) {
-    const pathToDocFile = toAbsolutePath(`specs/bundled/${clientName}.doc.yml`);
-
-    await fsp.writeFile(pathToDocFile, yaml.dump(bundledDocSpec, { noRefs: true }));
-  }
 }
 
 async function lintCommon(useCache: boolean): Promise<void> {
@@ -154,23 +233,30 @@ async function buildLiteSpec({
     bundledPath,
     clientName: spec,
     // Lite does not need documentation because it's just a subset
-    withDoc: false,
+    forDocs: false,
   });
 }
 
 /**
  * Build spec file.
  */
-async function buildSpec(spec: string, outputFormat: string, useCache: boolean): Promise<void> {
+async function buildSpec(
+  spec: string,
+  outputFormat: string,
+  forDocs: boolean,
+  useCache: boolean,
+): Promise<void> {
   const isAlgoliasearch = spec === 'algoliasearch';
+
+  if (forDocs && isAlgoliasearch) {
+    return;
+  }
+
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isAlgoliasearch ? 'search' : spec;
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
-    generatedFiles: [
-      `bundled/${spec}.yml`,
-      ...(isAlgoliasearch ? [] : [`bundled/${spec}.doc.yml`]),
-    ],
+    generatedFiles: [forDocs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
     filesToCache: [specBase, 'common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
   });
@@ -203,7 +289,7 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
     await transformBundle({
       bundledPath: toAbsolutePath(bundledPath),
       clientName: spec,
-      withDoc: true,
+      forDocs,
     });
   } else {
     await buildLiteSpec({
@@ -234,11 +320,12 @@ async function buildSpec(spec: string, outputFormat: string, useCache: boolean):
 export async function buildSpecs(
   clients: string[],
   outputFormat: 'json' | 'yml',
+  forDocs: boolean,
   useCache: boolean,
 ): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
   await lintCommon(useCache);
 
-  await Promise.all(clients.map((client) => buildSpec(client, outputFormat, useCache)));
+  await Promise.all(clients.map((client) => buildSpec(client, outputFormat, forDocs, useCache)));
 }

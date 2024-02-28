@@ -140,7 +140,7 @@ jobs:
 
       - name: Building specs
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }}
+        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun -fd }}
 
       - name: Store bundled specs
         uses: actions/upload-artifact@v4

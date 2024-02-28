@@ -66,7 +66,42 @@ type Tag = {
   description: string;
 };
 
+type Method = 'delete' | 'get' | 'options' | 'patch' | 'post' | 'put';
+
+export type CodeSamples = {
+  lang:
+    | 'C'
+    | 'C++'
+    | 'CoffeeScript'
+    | 'csharp'
+    | 'CSS'
+    | 'Dart'
+    | 'DM'
+    | 'Elixir'
+    | 'Go'
+    | 'Groovy'
+    | 'HTML'
+    | 'Java'
+    | 'JavaScript'
+    | 'Kotlin'
+    | 'Objective-C'
+    | 'Perl'
+    | 'PHP'
+    | 'PowerShell'
+    | 'Python'
+    | 'Ruby'
+    | 'Rust'
+    | 'Scala'
+    | 'Shell'
+    | 'Swift'
+    | 'TypeScript';
+  source: string;
+};
+
 /**
  * Paths of a spec.
  */
-type Path = Record<string, Record<string, any>>;
+type Path = Record<
+  Method,
+  Record<string, any> & { operationId: string; 'x-codeSamples': CodeSamples[] }
+>;

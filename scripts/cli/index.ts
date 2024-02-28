@@ -40,6 +40,10 @@ const flags = {
     flag: '-json, --output-json',
     description: 'outputs the spec in JSON instead of yml',
   },
+  forDocs: {
+    flag: '-fd --for-docs',
+    description: 'generates the doc specs with the code snippets',
+  },
 };
 
 program.name('cli');
@@ -87,18 +91,30 @@ buildCommand
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
   .option(flags.outputType.flag, flags.outputType.description)
-  .action(async (clientArg: string[], { verbose, skipCache, outputJson }) => {
-    const { client, clientList } = transformSelection({
+  .option(flags.forDocs.flag, flags.forDocs.description)
+  .action(async (clientArg: string[], { verbose, skipCache, outputJson, forDocs }) => {
+    const { language, client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
     });
 
     setVerbose(Boolean(verbose));
-
+    const buildForDocs = Boolean(forDocs);
+    const clients = client[0] === ALL ? clientList : client;
     const outputFormat = outputJson ? 'json' : 'yml';
 
-    // ignore cache when building from cli
-    await buildSpecs(client[0] === ALL ? clientList : client, outputFormat, !skipCache);
+    // always ignore cache when building from cli
+    //
+    // we also purposely build specs twice for docs because the snippets need it
+    await buildSpecs(clients, outputFormat, false, !skipCache);
+
+    if (!buildForDocs) {
+      return;
+    }
+
+    await snippetsGenerateMany(generatorList({ language, client, clientList }));
+
+    await buildSpecs(clients, outputFormat, true, false);
   });
 
 const ctsCommand = program.command('cts');
