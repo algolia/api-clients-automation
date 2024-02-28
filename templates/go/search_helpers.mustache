@@ -318,19 +318,19 @@ func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *Sec
 func encodeRestrictions(restrictions *SecuredAPIKeyRestrictions) (string, error) {
   toSerialize := map[string]any{}
 	if restrictions.Filters != nil {
-		toSerialize["filters"] = restrictions.Filters
+		toSerialize["filters"] = *restrictions.Filters
 	}
 	if restrictions.ValidUntil != nil {
-		toSerialize["validUntil"] = restrictions.ValidUntil
+		toSerialize["validUntil"] = *restrictions.ValidUntil
 	}
 	if restrictions.RestrictIndices != nil {
 		toSerialize["restrictIndices"] = restrictions.RestrictIndices
 	}
 	if restrictions.RestrictSources != nil {
-		toSerialize["restrictSources"] = restrictions.RestrictSources
+		toSerialize["restrictSources"] = *restrictions.RestrictSources
 	}
 	if restrictions.UserToken != nil {
-		toSerialize["userToken"] = restrictions.UserToken
+		toSerialize["userToken"] = *restrictions.UserToken
 	}
   if restrictions.SearchParams != nil {
     // merge with searchParams

@@ -8,7 +8,10 @@ import (
 )
 
 func testIngestion(appID, apiKey string) int {
-	ingestionClient := ingestion.NewClient(appID, apiKey, ingestion.US)
+	ingestionClient, err := ingestion.NewClient(appID, apiKey, ingestion.US)
+	if err != nil {
+		panic(err)
+	}
 
 	// another example to generate payload for a request.
 	createAuthenticationResponse, err := ingestionClient.CreateAuthentication(ingestionClient.NewApiCreateAuthenticationRequest(

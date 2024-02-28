@@ -7,10 +7,13 @@ import (
 )
 
 func testInsights(appID, apiKey string) int {
-	insightsClient := insights.NewClient(appID, apiKey, insights.US)
+	insightsClient, err := insights.NewClient(appID, apiKey, insights.US)
+	if err != nil {
+		panic(err)
+	}
 
 	events := insights.NewInsightsEvents([]insights.EventsItems{
-		insights.ClickedObjectIDsAsEventsItems(insights.NewClickedObjectIDs("myEvent",
+		*insights.ClickedObjectIDsAsEventsItems(insights.NewClickedObjectIDs("myEvent",
 			insights.CLICKEVENT_CLICK,
 			"test_index",
 			[]string{"myObjectID"},

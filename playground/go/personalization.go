@@ -9,7 +9,10 @@ import (
 )
 
 func testPersonalization(appID, apiKey string) int {
-	personalizationClient := personalization.NewClient(appID, apiKey, personalization.US)
+	personalizationClient, err := personalization.NewClient(appID, apiKey, personalization.US)
+	if err != nil {
+		panic(err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
 	defer cancel()
 

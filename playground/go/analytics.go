@@ -8,7 +8,10 @@ import (
 
 func testAnalytics(appID, apiKey string) int {
 	indexName := getEnvWithDefault("ANALYTICS_INDEX", "test_index")
-	analyticsClient := analytics.NewClient(appID, apiKey, analytics.US)
+	analyticsClient, err := analytics.NewClient(appID, apiKey, analytics.US)
+	if err != nil {
+		panic(err)
+	}
 
 	getTopFilterForAttributeResponse, err := analyticsClient.GetTopFilterForAttribute(
 		analyticsClient.NewApiGetTopFilterForAttributeRequest("myAttribute1,myAttribute2", indexName),
