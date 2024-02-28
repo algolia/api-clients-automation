@@ -15,6 +15,8 @@ function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang
       return 'CSharp';
     case 'javascript':
       return 'JavaScript';
+    case 'php':
+      return 'PHP';
     default:
       return capitalize(language) as CodeSamples['lang'];
   }
@@ -252,6 +254,7 @@ async function buildSpec(
   }
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
+  const logSuffix = forDocs ? 'doc spec' : 'spec';
   const specBase = isAlgoliasearch ? 'search' : spec;
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
@@ -260,7 +263,7 @@ async function buildSpec(
     cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
   });
 
-  const spinner = createSpinner(`starting '${spec}' spec`);
+  const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
 
   if (useCache) {
     spinner.text = `checking cache for '${specBase}'`;
@@ -274,7 +277,7 @@ async function buildSpec(
   }
 
   // First linting the base
-  spinner.text = `linting '${spec}' spec`;
+  spinner.text = `linting '${spec}' ${logSuffix}`;
   await run(`yarn specs:fix ${specBase}`);
 
   // Then bundle the file
@@ -297,23 +300,18 @@ async function buildSpec(
     });
   }
 
-  spinner.text = `validating '${spec}' bundled spec`;
+  spinner.text = `validating '${spec}' ${logSuffix}`;
   await run(`yarn openapi lint ${bundledPath}`);
 
-  spinner.text = `linting '${spec}' bundled spec`;
-  await run(`yarn specs:fix bundled/${spec}.${outputFormat}`);
-
-  if (!isAlgoliasearch) {
-    spinner.text = `linting '${spec}' doc spec`;
-    await run(`yarn specs:fix bundled/${spec}.doc.yml`);
-  }
+  spinner.text = `linting '${spec}' ${logSuffix}`;
+  await run(`yarn specs:fix bundled/${spec}.${forDocs ? 'doc.' : ''}${outputFormat}`);
 
   if (useCache) {
-    spinner.text = `storing '${spec}' spec cache`;
+    spinner.text = `storing '${spec}' ${logSuffix}`;
     await cache.store();
   }
 
-  spinner.succeed(`building complete for '${spec}' spec`);
+  spinner.succeed(`building complete for '${spec}' ${logSuffix}`);
 }
 
 export async function buildSpecs(
