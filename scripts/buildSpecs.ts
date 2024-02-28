@@ -12,7 +12,7 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
   switch (language) {
     case 'csharp':
-      return 'csharp';
+      return 'CSharp';
     case 'javascript':
       return 'JavaScript';
     default:
@@ -119,18 +119,33 @@ async function transformBundle({
         continue;
       }
 
-      const docMethod = bundledSpec.paths[pathKey][method];
-      if (!docMethod.tags) {
-        continue;
-      }
-
       if (specMethod['x-helper']) {
         delete bundledSpec.paths[pathKey];
         break;
       }
 
+      // Populate the x-codeSamples property with the snippets we retrieved in `transformSnippetsToCodeSamples`
+      for (const gen of Object.values(GENERATORS)) {
+        if (gen.client !== clientName) {
+          continue;
+        }
+
+        if (!specMethod['x-codeSamples']) {
+          specMethod['x-codeSamples'] = [];
+        }
+
+        specMethod['x-codeSamples'].push({
+          lang: mapLanguageToCodeSampleSupporter(gen.language),
+          source: snippetFiles[gen.language][specMethod.operationId],
+        });
+      }
+
+      if (!bundledSpec.paths[pathKey][method].tags) {
+        continue;
+      }
+
       // Checks that specified tags are well defined at root level
-      for (const tag of docMethod.tags) {
+      for (const tag of bundledSpec.paths[pathKey][method].tags) {
         if (tag === clientName) {
           throw new Error(
             `Tag name "${tag}" must be different from client name ${clientName} in operation ${specMethod.operationId}`,
@@ -149,22 +164,6 @@ async function transformBundle({
             `Tag "${tag}" in "client[${clientName}] -> operation[${specMethod.operationId}]" is not defined`,
           );
         }
-      }
-
-      // Populate the x-codeSamples property with the snippets we retrieved in `transformSnippetsToCodeSamples`
-      for (const gen of Object.values(GENERATORS)) {
-        if (gen.client !== clientName) {
-          continue;
-        }
-
-        if (!specMethod['x-codeSamples']) {
-          specMethod['x-codeSamples'] = [];
-        }
-
-        specMethod['x-codeSamples'].push({
-          lang: mapLanguageToCodeSampleSupporter(gen.language),
-          source: snippetFiles[gen.language][specMethod.operationId],
-        });
       }
     }
   }

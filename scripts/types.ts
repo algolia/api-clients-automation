@@ -73,7 +73,7 @@ export type CodeSamples = {
     | 'C'
     | 'C++'
     | 'CoffeeScript'
-    | 'csharp'
+    | 'CSharp'
     | 'CSS'
     | 'Dart'
     | 'DM'
@@ -103,5 +103,5 @@ export type CodeSamples = {
  */
 type Path = Record<
   Method,
-  Record<string, any> & { operationId: string; 'x-codeSamples': CodeSamples[] }
+  Record<string, any> & { operationId: string; 'x-codeSamples': CodeSamples[]; summary: string }
 >;

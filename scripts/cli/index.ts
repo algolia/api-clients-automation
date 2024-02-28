@@ -99,11 +99,13 @@ buildCommand
     });
 
     setVerbose(Boolean(verbose));
-    const buildForDocs = Boolean(forDocs);
-    const clients = client[0] === ALL ? clientList : client;
-    const outputFormat = outputJson ? 'json' : 'yml';
 
-    await buildSpecs(clients, outputFormat, buildForDocs, !skipCache);
+    await buildSpecs(
+      client[0] === ALL ? clientList : client,
+      outputJson ? 'json' : 'yml',
+      Boolean(forDocs),
+      !skipCache,
+    );
   });
 
 const ctsCommand = program.command('cts');

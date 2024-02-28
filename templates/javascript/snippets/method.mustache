@@ -18,8 +18,10 @@ export async function snippetFor{{method}}(): Promise<void> {
     {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}
   };{{/hasRequestOptions}}
 
+  // call the API
   const response = await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
+  // use typed response
   console.log(response);
   // SEPARATOR
 }
