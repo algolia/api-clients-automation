@@ -93,7 +93,7 @@ buildCommand
   .option(flags.outputType.flag, flags.outputType.description)
   .option(flags.forDocs.flag, flags.forDocs.description)
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, forDocs }) => {
-    const { language, client, clientList } = transformSelection({
+    const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
     });
@@ -103,18 +103,7 @@ buildCommand
     const clients = client[0] === ALL ? clientList : client;
     const outputFormat = outputJson ? 'json' : 'yml';
 
-    // always ignore cache when building from cli
-    //
-    // we also purposely build specs twice for docs because the snippets need it
-    await buildSpecs(clients, outputFormat, false, !skipCache);
-
-    if (!buildForDocs) {
-      return;
-    }
-
-    await snippetsGenerateMany(generatorList({ language, client, clientList }));
-
-    await buildSpecs(clients, outputFormat, true, false);
+    await buildSpecs(clients, outputFormat, buildForDocs, !skipCache);
   });
 
 const ctsCommand = program.command('cts');
