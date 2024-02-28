@@ -5,7 +5,6 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +19,7 @@ public class SecuredAPIKeyRestrictions {
   private String filters;
 
   @JsonProperty("validUntil")
-  private BigDecimal validUntil;
+  private Long validUntil;
 
   @JsonProperty("restrictIndices")
   private List<String> restrictIndices;
@@ -59,14 +58,14 @@ public class SecuredAPIKeyRestrictions {
     return filters;
   }
 
-  public SecuredAPIKeyRestrictions setValidUntil(BigDecimal validUntil) {
+  public SecuredAPIKeyRestrictions setValidUntil(Long validUntil) {
     this.validUntil = validUntil;
     return this;
   }
 
   /** Unix timestamp used to set the expiration date of the API key. */
   @javax.annotation.Nullable
-  public BigDecimal getValidUntil() {
+  public Long getValidUntil() {
     return validUntil;
   }
 

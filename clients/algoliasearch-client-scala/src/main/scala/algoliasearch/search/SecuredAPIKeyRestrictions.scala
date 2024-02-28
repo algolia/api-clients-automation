@@ -38,7 +38,7 @@ package algoliasearch.search
 case class SecuredAPIKeyRestrictions(
     searchParams: Option[SearchParamsObject] = scala.None,
     filters: Option[String] = scala.None,
-    validUntil: Option[Double] = scala.None,
+    validUntil: Option[Long] = scala.None,
     restrictIndices: Option[Seq[String]] = scala.None,
     restrictSources: Option[String] = scala.None,
     userToken: Option[String] = scala.None

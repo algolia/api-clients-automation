@@ -27,7 +27,7 @@ final class SecuredAPIKeyRestrictions {
 
   /// Unix timestamp used to set the expiration date of the API key.
   @JsonKey(name: r'validUntil')
-  final num? validUntil;
+  final int? validUntil;
 
   /// Index names that can be queried.
   @JsonKey(name: r'restrictIndices')

@@ -19,7 +19,7 @@ SecuredAPIKeyRestrictions _$SecuredAPIKeyRestrictionsFromJson(
                   ? null
                   : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
           filters: $checkedConvert('filters', (v) => v as String?),
-          validUntil: $checkedConvert('validUntil', (v) => v as num?),
+          validUntil: $checkedConvert('validUntil', (v) => v as int?),
           restrictIndices: $checkedConvert('restrictIndices',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           restrictSources:

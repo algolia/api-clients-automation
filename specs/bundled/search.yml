@@ -3070,8 +3070,8 @@ components:
             query parameter, your final search filter is equivalent to
             groups:admin AND (groups:press OR groups:visitors).
         validUntil:
-          type: number
-          format: duration
+          type: integer
+          format: int64
           description: Unix timestamp used to set the expiration date of the API key.
         restrictIndices:
           type: array
