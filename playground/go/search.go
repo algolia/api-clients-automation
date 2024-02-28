@@ -8,7 +8,10 @@ import (
 
 func testSearch(appID, apiKey string) int {
 	indexName := getEnvWithDefault("SEARCH_INDEX", "test_index")
-	searchClient := search.NewClient(appID, apiKey)
+	searchClient, err := search.NewClient(appID, apiKey)
+	if err != nil {
+		panic(err)
+	}
 
 	response, err := searchClient.AddOrUpdateObject(
 		searchClient.NewApiAddOrUpdateObjectRequest(
@@ -40,7 +43,7 @@ func testSearch(appID, apiKey string) int {
 		searchClient.NewApiSearchRequest(
 			search.NewSearchMethodParams(
 				[]search.SearchQuery{
-					search.SearchForHitsAsSearchQuery(
+					*search.SearchForHitsAsSearchQuery(
 						search.NewSearchForHits(
 							indexName,
 							search.WithSearchForHitsQuery("foo"),

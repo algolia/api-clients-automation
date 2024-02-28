@@ -7,7 +7,10 @@ import (
 )
 
 func testQuerySuggestions(appID, apiKey string) int {
-	suggestionsClient := suggestions.NewClient(appID, apiKey, suggestions.US)
+	suggestionsClient, err := suggestions.NewClient(appID, apiKey, suggestions.US)
+	if err != nil {
+		panic(err)
+	}
 
 	// if there is no params for the requests, we don't need to give empty request instance such as `suggestionsClient.NewApiGetAllConfigsRequest()`.
 	querySuggestionsIndex, err := suggestionsClient.GetAllConfigs()

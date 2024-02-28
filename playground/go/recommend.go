@@ -4,10 +4,14 @@ import (
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func testRecommend(appID, apiKey string) int {
-	recommendClient := recommend.NewClient(appID, apiKey)
+	recommendClient, err := recommend.NewClient(appID, apiKey)
+	if err != nil {
+		panic(err)
+	}
 
 	/*
 		recommend.NewGetRecommendationsParams([]recommend.RecommendationsRequest{
@@ -22,7 +26,7 @@ func testRecommend(appID, apiKey string) int {
 					Model:     recommend.RECOMMENDATIONMODELS_BOUGHT_TOGETHER,
 					ObjectID:  "test_query",
 					IndexName: "test_index",
-					Threshold: recommend.PtrInt32(0),
+					Threshold: utils.PtrInt32(0),
 				},
 			},
 		},
