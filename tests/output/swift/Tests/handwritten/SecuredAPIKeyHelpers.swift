@@ -38,7 +38,7 @@ class SecuredApiKeyHelpersTests: XCTestCase {
             parentApiKey: "parent-api-key",
             with: SecuredAPIKeyRestrictions(
                 searchParams: SearchParamsObject(hitsPerPage: 2),
-                validUntil: now + .seconds(13),
+                validUntil: Int64(now + .seconds(13)),
                 restrictIndices: ["index1", "index2"]
             )
         )
