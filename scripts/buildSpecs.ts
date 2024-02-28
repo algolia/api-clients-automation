@@ -125,7 +125,7 @@ async function transformBundle({
       }
 
       if (specMethod['x-helper']) {
-        delete specMethod.paths[pathKey];
+        delete bundledSpec.paths[pathKey];
         break;
       }
 
