@@ -40,14 +40,14 @@ $client->waitForTask($indexName, $response['taskID']);
 //
 //$client->waitForTask($indexName, $response['taskID']);
 
-//$newGuys = [
-//  ['objectID' => "3", 'name' => 'Hubert'],
-//  ['objectID' => "4", 'name' => 'Bob'],
-//  ['objectID' => "5", 'name' => $env['SEARCH_QUERY']],
-//];
-//
-//$response = $client->replaceAllObjects($indexName, $newGuys);
-//
+$newGuys = [
+  ['objectID' => "3", 'name' => 'Hubert'],
+  ['objectID' => "4", 'name' => 'Bob'],
+  ['objectID' => "5", 'name' => $env['SEARCH_QUERY']],
+];
+
+$response = $client->replaceAllObjects($indexName, $newGuys, 2);
+
 //var_dump(
 //    $client->search([
 //        'requests' => [
