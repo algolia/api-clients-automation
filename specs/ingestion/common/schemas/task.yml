@@ -302,28 +302,18 @@ MappingKitAction:
     - trigger
     - fieldDirectives
 
-MappingInputFormat:
-  type: string
-  description: Name of the mapping format schema.
-  enum: ['mappingkit/v1']
-
-MappingKitInput:
+MappingInput:
   type: object
   additionalProperties: false
   description: Transformations to apply to source, serialized as a JSON string.
   properties:
     format:
-      $ref: '#/MappingInputFormat'
+      description: Name of the mapping format schema, `mappingkit/v1` is currently the only supported format.
+      type: string
     actions:
       type: array
       items:
         $ref: '#/MappingKitAction'
-
-MappingInput:
-  oneOf:
-    - $ref: '#/MappingKitInput'
-  discriminator:
-    propertyName: format
 
 OnDemandDateUtilsInput:
   type: object
