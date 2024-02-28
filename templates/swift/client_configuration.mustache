@@ -6,7 +6,7 @@ import Core
 
 typealias {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}ClientConfiguration = Configuration
 
-public struct Configuration: Core.Configuration, Credentials {
+public struct Configuration: BaseConfiguration, Credentials {
 {{#hasRegionalHost}}
 
   private let authorizedRegions: [Region] = [

@@ -1,5 +1,5 @@
 //
-//  Configuration.swift
+//  BaseConfiguration.swift
 //
 //
 //  Created by Algolia on 20/02/2020.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: - Configuration
+// MARK: - BaseConfiguration
 
-public protocol Configuration {
+public protocol BaseConfiguration {
     /// The timeout for each request when performing write operations (POST, PUT ..).
     var writeTimeout: TimeInterval { get }
 
@@ -29,7 +29,7 @@ public protocol Configuration {
     var compression: CompressionAlgorithm { get }
 }
 
-extension Configuration {
+extension BaseConfiguration {
     func timeout(for callType: CallType) -> TimeInterval {
         switch callType {
         case .read:
@@ -42,8 +42,8 @@ extension Configuration {
 
 // MARK: - DefaultConfiguration
 
-public struct DefaultConfiguration: Configuration {
-    public static let `default`: Configuration = DefaultConfiguration()
+public struct DefaultConfiguration: BaseConfiguration {
+    public static let `default`: BaseConfiguration = DefaultConfiguration()
 
     public let writeTimeout: TimeInterval = 30
     public let readTimeout: TimeInterval = 5

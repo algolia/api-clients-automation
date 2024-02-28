@@ -16,6 +16,9 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +63,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     // We will use the default URLSession library coming from the Foundation package to handle HTTP
     // requests
     setLibrary(LIBRARY_URLSESSION);
+
+    try {
+      additionalProperties.put("swiftVersion", Files.readString(Paths.get("config/.swift-version")).trim());
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
