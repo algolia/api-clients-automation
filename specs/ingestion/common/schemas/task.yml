@@ -278,6 +278,9 @@ MappingFieldDirective:
       type: object
       additionalProperties: true
       description: How the destination field should be resolved from the source.
+  required:
+    - fieldKey
+    - value
 
 MappingKitAction:
   type: object
@@ -314,6 +317,9 @@ MappingInput:
       type: array
       items:
         $ref: '#/MappingKitAction'
+  required:
+    - format
+    - actions
 
 OnDemandDateUtilsInput:
   type: object
