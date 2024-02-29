@@ -40,6 +40,7 @@ final class RecommendationsResults {
     this.serverTimeMS,
     this.serverUsed,
     this.userData,
+    this.queryID,
     required this.hits,
     this.query,
     this.params,
@@ -156,6 +157,10 @@ final class RecommendationsResults {
   @JsonKey(name: r'userData')
   final Object? userData;
 
+  /// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  @JsonKey(name: r'queryID')
+  final String? queryID;
+
   /// One of types:
   /// - [RecommendHit]
   /// - [TrendingFacetHit]
@@ -198,6 +203,7 @@ final class RecommendationsResults {
           other.serverTimeMS == serverTimeMS &&
           other.serverUsed == serverUsed &&
           other.userData == userData &&
+          other.queryID == queryID &&
           other.hits == hits &&
           other.query == query &&
           other.params == params;
@@ -228,6 +234,7 @@ final class RecommendationsResults {
       serverTimeMS.hashCode +
       serverUsed.hashCode +
       userData.hashCode +
+      queryID.hashCode +
       hits.hashCode +
       query.hashCode +
       params.hashCode;

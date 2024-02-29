@@ -952,7 +952,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_708_905_600_000)
+                            timestamp: Int64(1_709_164_800_000)
                         )
                     ),
                     EventsItems.viewedObjectIDs(
@@ -966,7 +966,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             ],
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_708_905_600_000)
+                            timestamp: Int64(1_709_164_800_000)
                         )
                     ),
                 ]
@@ -979,7 +979,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1708905600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1708905600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1709164800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1709164800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1010,7 +1010,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_708_905_600_000)
+                            timestamp: Int64(1_709_164_800_000)
                         )
                     ),
                     EventsItems.viewedObjectIDs(
@@ -1024,7 +1024,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             ],
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
-                            timestamp: Int64(1_708_905_600_000)
+                            timestamp: Int64(1_709_164_800_000)
                         )
                     ),
                 ]

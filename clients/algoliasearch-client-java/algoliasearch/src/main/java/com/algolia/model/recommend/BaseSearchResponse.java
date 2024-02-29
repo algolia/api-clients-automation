@@ -93,6 +93,9 @@ public class BaseSearchResponse {
   @JsonProperty("userData")
   private Object userData;
 
+  @JsonProperty("queryID")
+  private String queryID;
+
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonAnyGetter
@@ -451,6 +454,20 @@ public class BaseSearchResponse {
     return userData;
   }
 
+  public BaseSearchResponse setQueryID(String queryID) {
+    this.queryID = queryID;
+    return this;
+  }
+
+  /**
+   * Unique identifier for the query. This is used for [click
+   * analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   */
+  @javax.annotation.Nullable
+  public String getQueryID() {
+    return queryID;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -488,6 +505,7 @@ public class BaseSearchResponse {
       Objects.equals(this.serverTimeMS, baseSearchResponse.serverTimeMS) &&
       Objects.equals(this.serverUsed, baseSearchResponse.serverUsed) &&
       Objects.equals(this.userData, baseSearchResponse.userData) &&
+      Objects.equals(this.queryID, baseSearchResponse.queryID) &&
       super.equals(o)
     );
   }
@@ -522,6 +540,7 @@ public class BaseSearchResponse {
       serverTimeMS,
       serverUsed,
       userData,
+      queryID,
       super.hashCode()
     );
   }
@@ -558,6 +577,7 @@ public class BaseSearchResponse {
     sb.append("    serverTimeMS: ").append(toIndentedString(serverTimeMS)).append("\n");
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
+    sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("}");
     return sb.toString();
   }
