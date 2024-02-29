@@ -65,6 +65,7 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
           serverTimeMS: $checkedConvert('serverTimeMS', (v) => v as int?),
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
+          queryID: $checkedConvert('queryID', (v) => v as String?),
           hits: $checkedConvert(
               'hits',
               (v) => (v as List<dynamic>)
@@ -115,6 +116,7 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
   writeNotNull('serverTimeMS', instance.serverTimeMS);
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
+  writeNotNull('queryID', instance.queryID);
   val['hits'] = instance.hits.map((e) => e.toJson()).toList();
   val['query'] = instance.query;
   val['params'] = instance.params;

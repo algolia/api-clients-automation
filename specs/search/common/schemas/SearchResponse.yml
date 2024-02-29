@@ -174,8 +174,12 @@ baseSearchResponse:
       type: string
       description: Host name of the server that processed the request.
       example: 'c2-uk-3.algolia.net'
-    userData:
+    userData: 
       $ref: '../../../common/schemas/IndexSettings.yml#/userData'
+    queryID:
+      type: string
+      description: Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+      example: 'a00dbc80a8d13c4565a442e7e2dca80a'
 
 nbHits:
   type: integer

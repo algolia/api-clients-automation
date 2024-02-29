@@ -1524,6 +1524,12 @@ components:
           example: c2-uk-3.algolia.net
         userData:
           $ref: '#/components/schemas/userData'
+        queryID:
+          type: string
+          description: >-
+            Unique identifier for the query. This is used for [click
+            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+          example: a00dbc80a8d13c4565a442e7e2dca80a
     highlightedValue:
       type: string
       description: Markup text with `facetQuery` matches highlighted.
