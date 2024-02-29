@@ -38,7 +38,8 @@
         "query": "parameters with space",
         "and an array": [
           "array",
-          "with spaces"
+          "with spaces",
+          "and weird characters: % ( { [ ! @ # $ ^ & * ) } ] = + - _ . < > ? /"
         ]
       },
       "headers": {
@@ -50,7 +51,7 @@
       "method": "GET",
       "queryParameters": {
         "query": "parameters%20with%20space",
-        "and%20an%20array": "array%2Cwith%20spaces"
+        "and%20an%20array": "array%2Cwith%20spaces%2Cand%20weird%20characters%3A%20%25%20%28%20%7B%20%5B%20%21%20%40%20%23%20%24%20%5E%20%26%20%2A%20%29%20%7D%20%5D%20%3D%20%2B%20-%20_%20.%20%3C%20%3E%20%3F%20%2F"
       },
       "headers": {
         "x-header-1": "spaces are left alone"
