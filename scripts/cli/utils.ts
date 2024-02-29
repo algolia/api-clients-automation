@@ -1,5 +1,5 @@
-import { CLIENTS, GENERATORS, LANGUAGES, capitalize } from '../common.js';
-import type { CodeSamples, Generator, Language } from '../types.js';
+import { CLIENTS, GENERATORS, LANGUAGES } from '../common.js';
+import type { Generator, Language } from '../types.js';
 
 export const ALL = 'all';
 export const PROMPT_LANGUAGES = [ALL, ...LANGUAGES];
@@ -68,17 +68,4 @@ export function transformSelection({ langArg, clientArg }: Args): Selection {
   }
 
   return selection;
-}
-
-export function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
-  switch (language) {
-    case 'csharp':
-      return 'CSharp';
-    case 'javascript':
-      return 'JavaScript';
-    case 'php':
-      return 'PHP';
-    default:
-      return capitalize(language) as CodeSamples['lang'];
-  }
 }
