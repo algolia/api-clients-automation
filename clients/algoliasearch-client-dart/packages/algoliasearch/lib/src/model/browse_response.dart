@@ -41,6 +41,7 @@ final class BrowseResponse {
     this.serverTimeMS,
     this.serverUsed,
     this.userData,
+    this.queryID,
     required this.hits,
     required this.query,
     required this.params,
@@ -158,6 +159,10 @@ final class BrowseResponse {
   @JsonKey(name: r'userData')
   final Object? userData;
 
+  /// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  @JsonKey(name: r'queryID')
+  final String? queryID;
+
   @JsonKey(name: r'hits')
   final List<Hit> hits;
 
@@ -201,6 +206,7 @@ final class BrowseResponse {
           other.serverTimeMS == serverTimeMS &&
           other.serverUsed == serverUsed &&
           other.userData == userData &&
+          other.queryID == queryID &&
           other.hits == hits &&
           other.query == query &&
           other.params == params &&
@@ -232,6 +238,7 @@ final class BrowseResponse {
       serverTimeMS.hashCode +
       serverUsed.hashCode +
       userData.hashCode +
+      queryID.hashCode +
       hits.hashCode +
       query.hashCode +
       params.hashCode +

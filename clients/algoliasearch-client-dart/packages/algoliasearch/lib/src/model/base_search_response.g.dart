@@ -65,6 +65,7 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
           serverTimeMS: $checkedConvert('serverTimeMS', (v) => v as int?),
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
+          queryID: $checkedConvert('queryID', (v) => v as String?),
         );
         return val;
       },
@@ -99,6 +100,7 @@ const _$BaseSearchResponseFieldMap = <String, String>{
   'serverTimeMS': 'serverTimeMS',
   'serverUsed': 'serverUsed',
   'userData': 'userData',
+  'queryID': 'queryID',
 };
 
 Map<String, dynamic> _$BaseSearchResponseToJson(BaseSearchResponse instance) {
@@ -138,5 +140,6 @@ Map<String, dynamic> _$BaseSearchResponseToJson(BaseSearchResponse instance) {
   writeNotNull('serverTimeMS', instance.serverTimeMS);
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
+  writeNotNull('queryID', instance.queryID);
   return val;
 }
