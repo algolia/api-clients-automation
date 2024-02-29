@@ -7,6 +7,7 @@ use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Configuration\{{configClassname}};
 use {{invokerPackage}}\Exceptions\ExceededRetriesException;
+use {{invokerPackage}}\Exceptions\ValidUntilNotFoundException;
 use {{invokerPackage}}\Iterators\ObjectIterator;
 use {{invokerPackage}}\Iterators\RuleIterator;
 use {{invokerPackage}}\Iterators\SynonymIterator;
@@ -528,7 +529,7 @@ use {{invokerPackage}}\Support\Helpers;
         preg_match($regex, $decodedKey, $matches);
 
         if (0 === count($matches)) {
-            throw new ValidUntilNotFoundException("The SecuredAPIKey doesn't have a validUntil parameter.");
+            throw new ValidUntilNotFoundException("validUntil not found in given secured api key.");
         }
 
         $validUntil = (int) $matches[1];
