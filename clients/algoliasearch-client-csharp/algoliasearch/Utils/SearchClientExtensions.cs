@@ -417,7 +417,7 @@ public partial class SearchClient
     // Copy settings, synonyms and query rules into the temporary index
     var copyResponse = await OperationIndexAsync(indexName,
         new OperationIndexParams(OperationType.Copy, tmpIndexName)
-          { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+        { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
       .ConfigureAwait(false);
 
     await WaitForTaskAsync(indexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken)
