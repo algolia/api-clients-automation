@@ -511,6 +511,30 @@ use {{invokerPackage}}\Support\Helpers;
 
         return base64_encode($content);
     }
+
+    /**
+    * Helper: Returns the time the given securedAPIKey remains valid in seconds.
+    *
+    * @param string $securedAPIKey the key to check
+    *
+    * @return int remaining validity in seconds
+    *
+    * @throws ValidUntilNotFoundException
+    */
+    public static function getSecuredApiKeyRemainingValidity($securedAPIKey)
+    {
+        $decodedKey = base64_decode($securedAPIKey);
+        $regex = '/validUntil=(\d+)/';
+        preg_match($regex, $decodedKey, $matches);
+
+        if (0 === count($matches)) {
+            throw new ValidUntilNotFoundException("The SecuredAPIKey doesn't have a validUntil parameter.");
+        }
+
+        $validUntil = (int) $matches[1];
+
+        return $validUntil - time();
+    }
     {{/isSearchClient}}
 
     private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
