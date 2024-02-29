@@ -95,6 +95,9 @@ public class RecommendationsResults {
   @JsonProperty("userData")
   private Object userData;
 
+  @JsonProperty("queryID")
+  private String queryID;
+
   @JsonProperty("hits")
   private List<RecommendationsHit> hits = new ArrayList<>();
 
@@ -449,6 +452,20 @@ public class RecommendationsResults {
     return userData;
   }
 
+  public RecommendationsResults setQueryID(String queryID) {
+    this.queryID = queryID;
+    return this;
+  }
+
+  /**
+   * Unique identifier for the query. This is used for [click
+   * analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   */
+  @javax.annotation.Nullable
+  public String getQueryID() {
+    return queryID;
+  }
+
   public RecommendationsResults setHits(List<RecommendationsHit> hits) {
     this.hits = hits;
     return this;
@@ -524,6 +541,7 @@ public class RecommendationsResults {
       Objects.equals(this.serverTimeMS, recommendationsResults.serverTimeMS) &&
       Objects.equals(this.serverUsed, recommendationsResults.serverUsed) &&
       Objects.equals(this.userData, recommendationsResults.userData) &&
+      Objects.equals(this.queryID, recommendationsResults.queryID) &&
       Objects.equals(this.hits, recommendationsResults.hits) &&
       Objects.equals(this.query, recommendationsResults.query) &&
       Objects.equals(this.params, recommendationsResults.params)
@@ -560,6 +578,7 @@ public class RecommendationsResults {
       serverTimeMS,
       serverUsed,
       userData,
+      queryID,
       hits,
       query,
       params
@@ -597,6 +616,7 @@ public class RecommendationsResults {
     sb.append("    serverTimeMS: ").append(toIndentedString(serverTimeMS)).append("\n");
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
+    sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");

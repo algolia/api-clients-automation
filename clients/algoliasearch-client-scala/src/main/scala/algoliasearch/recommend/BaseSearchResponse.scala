@@ -66,6 +66,9 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   *   Host name of the server that processed the request.
   * @param userData
   *   Lets you store custom data in your indices.
+  * @param queryID
+  *   Unique identifier for the query. This is used for [click
+  *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
   */
 case class BaseSearchResponse(
     abTestID: Option[Int] = scala.None,
@@ -95,6 +98,7 @@ case class BaseSearchResponse(
     serverTimeMS: Option[Int] = scala.None,
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
+    queryID: Option[String] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
@@ -135,7 +139,8 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
             "renderingContent",
             "serverTimeMS",
             "serverUsed",
-            "userData"
+            "userData",
+            "queryID"
           )
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true

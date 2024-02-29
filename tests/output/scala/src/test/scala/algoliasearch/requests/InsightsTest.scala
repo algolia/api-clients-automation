@@ -596,7 +596,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1708905600000L),
+            timestamp = Some(1709164800000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -606,7 +606,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1708905600000L),
+            timestamp = Some(1709164800000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -619,7 +619,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.path == "/1/events")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708905600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1708905600000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1709164800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1709164800000,"objectIDs":["9780545139700","9780439784542"]}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -633,7 +633,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1708905600000L),
+            timestamp = Some(1709164800000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -643,7 +643,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1708905600000L),
+            timestamp = Some(1709164800000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
