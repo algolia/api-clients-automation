@@ -18,7 +18,7 @@ export async function snippetFor{{method}}(): Promise<void> {
     {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}
   };{{/hasRequestOptions}}
 
-  // call the API
+  // Call the API
   const response = await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
   // use typed response
