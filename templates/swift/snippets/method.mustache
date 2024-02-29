@@ -1,6 +1,8 @@
 import AnyCodable
 
-import Core
+#if canImport(Core)
+  import Core
+#endif
 import {{import}}
 
 final class {{client}}Snippet {

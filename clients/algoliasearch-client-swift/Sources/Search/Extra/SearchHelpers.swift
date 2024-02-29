@@ -6,7 +6,9 @@
 //
 
 import AnyCodable
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Foundation
 
 public extension SearchClient {

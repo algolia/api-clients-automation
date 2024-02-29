@@ -2,7 +2,9 @@
 
 import AnyCodable
 import Foundation
-import Core
+#if canImport(Core)
+    import Core
+#endif
 
 typealias Client = {{classname}}
 
