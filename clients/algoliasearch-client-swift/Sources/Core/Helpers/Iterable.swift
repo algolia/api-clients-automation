@@ -45,8 +45,12 @@ public func createIterable<T>(
             throw AlgoliaError.wait(errorMessage(response))
         }
 
-        try await Task.sleep(nanoseconds: UInt64(timeout()) * 1_000_000_000)
-
+        if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+            try await Task.sleep(nanoseconds: UInt64(timeout()) * 1_000_000_000)
+        } else {
+            sleep(UInt32(timeout()))
+        }
+        
         return try await executor(previousResponse: response)
     }
 
