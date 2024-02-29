@@ -225,12 +225,12 @@ async function buildLiteSpec({
 /**
  * Build spec file.
  */
-async function buildSpec(
-  spec: string,
-  outputFormat: string,
-  docs: boolean,
-  useCache: boolean,
-): Promise<void> {
+async function buildSpec({
+  spec,
+  outputFormat,
+  docs,
+  useCache,
+}: BaseBuildSpecsOptions & { spec: string }): Promise<void> {
   const isAlgoliasearch = spec === 'algoliasearch';
 
   if (docs && isAlgoliasearch) {
@@ -298,20 +298,23 @@ async function buildSpec(
   spinner.succeed(`building complete for '${spec}' ${logSuffix}`);
 }
 
+type BaseBuildSpecsOptions = {
+  outputFormat: 'json' | 'yml';
+  docs: boolean;
+  useCache: boolean;
+};
+
 export async function buildSpecs({
   clients,
   outputFormat,
   docs,
   useCache,
-}: {
-  clients: string[];
-  outputFormat: 'json' | 'yml';
-  docs: boolean;
-  useCache: boolean;
-}): Promise<void> {
+}: BaseBuildSpecsOptions & { clients: string[] }): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
   await lintCommon(useCache);
 
-  await Promise.all(clients.map((client) => buildSpec(client, outputFormat, docs, useCache)));
+  await Promise.all(
+    clients.map((client) => buildSpec({ spec: client, outputFormat, docs, useCache })),
+  );
 }
