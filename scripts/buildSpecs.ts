@@ -3,24 +3,12 @@ import fsp from 'fs/promises';
 import yaml from 'js-yaml';
 
 import { Cache } from './cache.js';
-import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath } from './common.js';
+import { mapLanguageToCodeSampleSupporter } from './cli/utils.js';
+import { GENERATORS, createClientName, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
-import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
+import type { SnippetSamples, Spec } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
-
-function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
-  switch (language) {
-    case 'csharp':
-      return 'CSharp';
-    case 'javascript':
-      return 'JavaScript';
-    case 'php':
-      return 'PHP';
-    default:
-      return capitalize(language) as CodeSamples['lang'];
-  }
-}
 
 // For a given `clientName`, reads the matching snippet file for every available clients and builds an hashmap of snippets per operationId per language.
 async function transformSnippetsToCodeSamples(clientName: string): Promise<SnippetSamples> {
