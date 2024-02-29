@@ -15,7 +15,7 @@ class Snippet{{client}}
     */
     public function snippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}()
     {
-        // SEPARATOR {{method}}
+        // >SEPARATOR {{method}}
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\{{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
@@ -39,7 +39,7 @@ class Snippet{{client}}
 
         // play with the response
         var_dump($response);
-        // SEPARATOR
+        // SEPARATOR<
     }
 
     {{/snippet}}

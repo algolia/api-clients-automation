@@ -10,7 +10,7 @@ class Snippet{{client}} {
   //
   // {{{description}}}
   void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
-    // SEPARATOR {{method}}
+    // >SEPARATOR {{method}}
     // Initialize the client
     {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
@@ -23,7 +23,7 @@ class Snippet{{client}} {
         .addExtraHeader("{{{key}}}", "{{{value}}}")
       {{/requestOptions.headers.parametersWithDataType}}
     {{/hasRequestOptions}});
-    // SEPARATOR
+    // SEPARATOR<
   }
 
   {{/snippet}}

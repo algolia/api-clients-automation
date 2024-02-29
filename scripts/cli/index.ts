@@ -40,8 +40,8 @@ const flags = {
     flag: '-json, --output-json',
     description: 'outputs the spec in JSON instead of yml',
   },
-  forDocs: {
-    flag: '-fd --for-docs',
+  docs: {
+    flag: '-d, --docs',
     description: 'generates the doc specs with the code snippets',
   },
 };
@@ -91,8 +91,8 @@ buildCommand
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
   .option(flags.outputType.flag, flags.outputType.description)
-  .option(flags.forDocs.flag, flags.forDocs.description)
-  .action(async (clientArg: string[], { verbose, skipCache, outputJson, forDocs }) => {
+  .option(flags.docs.flag, flags.docs.description)
+  .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
     const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
@@ -100,12 +100,12 @@ buildCommand
 
     setVerbose(Boolean(verbose));
 
-    await buildSpecs(
-      client[0] === ALL ? clientList : client,
-      outputJson ? 'json' : 'yml',
-      Boolean(forDocs),
-      !skipCache,
-    );
+    await buildSpecs({
+      clients: client[0] === ALL ? clientList : client,
+      outputFormat: outputJson ? 'json' : 'yml',
+      docs: Boolean(docs),
+      useCache: !skipCache,
+    });
   });
 
 const ctsCommand = program.command('cts');

@@ -422,7 +422,7 @@ jobs:
 
       - name: Generate documentation specs with code snippets
         if: ${{ needs.setup.outputs.RUN_GEN == 'true' || needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
-        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} -fd
+        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} --docs
 
       - name: Build website
         run: yarn website:build

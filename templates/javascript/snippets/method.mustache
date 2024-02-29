@@ -9,7 +9,7 @@ import type { RequestOptions } from '{{{npmNamespace}}}/client-common';
 //
 // {{{description}}}
 export async function snippetFor{{method}}(): Promise<void> {
-  // SEPARATOR {{method}}
+  // >SEPARATOR {{method}}
   // Initialize the client
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
@@ -23,7 +23,7 @@ export async function snippetFor{{method}}(): Promise<void> {
 
   // use typed response
   console.log(response);
-  // SEPARATOR
+  // SEPARATOR<
 }
 
 {{/snippet}}
