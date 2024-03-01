@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetMonitoringClient {
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -17,11 +18,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -32,11 +35,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -47,11 +52,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -62,11 +69,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetClusterIncidents() {
+    // >SEPARATOR getClusterIncidents
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -77,11 +86,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetClusterStatus() {
+    // >SEPARATOR getClusterStatus
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -92,11 +103,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetIncidents() {
+    // >SEPARATOR getIncidents
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -105,11 +118,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetIndexingTime() {
+    // >SEPARATOR getIndexingTime
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -120,11 +135,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetInventory() {
+    // >SEPARATOR getInventory
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -133,11 +150,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetLatency() {
+    // >SEPARATOR getLatency
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -148,11 +167,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetMetrics() {
+    // >SEPARATOR getMetrics
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -164,11 +185,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetReachability() {
+    // >SEPARATOR getReachability
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -179,11 +202,13 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetStatus() {
+    // >SEPARATOR getStatus
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -192,6 +217,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

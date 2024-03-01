@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetQuerySuggestionsClient {
   suspend fun snippetForCreateConfig() {
+    // >SEPARATOR createConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -32,11 +33,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -47,11 +50,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -62,11 +67,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -77,11 +84,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -92,11 +101,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteConfig() {
+    // >SEPARATOR deleteConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -107,11 +118,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetAllConfigs() {
+    // >SEPARATOR getAllConfigs
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -120,11 +133,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetConfig() {
+    // >SEPARATOR getConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -135,11 +150,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetConfigStatus() {
+    // >SEPARATOR getConfigStatus
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -150,11 +167,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetLogFile() {
+    // >SEPARATOR getLogFile
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -165,11 +184,13 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForUpdateConfig() {
+    // >SEPARATOR updateConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -195,6 +216,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

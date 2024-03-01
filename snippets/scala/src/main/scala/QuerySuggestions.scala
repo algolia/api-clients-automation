@@ -18,6 +18,7 @@ class SnippetQuerySuggestionsClient {
     * createConfig0
     */
   def snippetForQuerySuggestionsClientCreateConfig(): Unit = {
+    // >SEPARATOR createConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -45,6 +46,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customDelete method.
@@ -52,6 +54,7 @@ class SnippetQuerySuggestionsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -62,6 +65,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -69,6 +73,7 @@ class SnippetQuerySuggestionsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -79,6 +84,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -86,6 +92,7 @@ class SnippetQuerySuggestionsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -96,6 +103,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -103,6 +111,7 @@ class SnippetQuerySuggestionsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -113,6 +122,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteConfig method.
@@ -120,6 +130,7 @@ class SnippetQuerySuggestionsClient {
     * deleteConfig0
     */
   def snippetForQuerySuggestionsClientDeleteConfig(): Unit = {
+    // >SEPARATOR deleteConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -130,6 +141,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getAllConfigs method.
@@ -137,6 +149,7 @@ class SnippetQuerySuggestionsClient {
     * getAllConfigs0
     */
   def snippetForQuerySuggestionsClientGetAllConfigs(): Unit = {
+    // >SEPARATOR getAllConfigs
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -146,6 +159,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getConfig method.
@@ -153,6 +167,7 @@ class SnippetQuerySuggestionsClient {
     * Retrieve QS config e2e
     */
   def snippetForQuerySuggestionsClientGetConfig(): Unit = {
+    // >SEPARATOR getConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -163,6 +178,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getConfigStatus method.
@@ -170,6 +186,7 @@ class SnippetQuerySuggestionsClient {
     * getConfigStatus0
     */
   def snippetForQuerySuggestionsClientGetConfigStatus(): Unit = {
+    // >SEPARATOR getConfigStatus
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -180,6 +197,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getLogFile method.
@@ -187,6 +205,7 @@ class SnippetQuerySuggestionsClient {
     * getLogFile0
     */
   def snippetForQuerySuggestionsClientGetLogFile(): Unit = {
+    // >SEPARATOR getLogFile
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -197,6 +216,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateConfig method.
@@ -204,6 +224,7 @@ class SnippetQuerySuggestionsClient {
     * updateConfig0
     */
   def snippetForQuerySuggestionsClientUpdateConfig(): Unit = {
+    // >SEPARATOR updateConfig
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -231,6 +252,7 @@ class SnippetQuerySuggestionsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

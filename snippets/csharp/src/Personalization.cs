@@ -12,6 +12,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -19,6 +20,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -28,6 +30,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -35,6 +38,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -44,6 +48,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -51,6 +56,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -60,6 +66,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -67,6 +74,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -76,6 +84,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientDeleteUserProfile()
   {
+    // >SEPARATOR deleteUserProfile
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -83,6 +92,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.DeleteUserProfileAsync("UserToken");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -92,6 +102,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientGetPersonalizationStrategy()
   {
+    // >SEPARATOR getPersonalizationStrategy
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -99,6 +110,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.GetPersonalizationStrategyAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -108,6 +120,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientGetUserTokenProfile()
   {
+    // >SEPARATOR getUserTokenProfile
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -115,6 +128,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.GetUserTokenProfileAsync("UserToken");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -124,6 +138,7 @@ public class SnippetPersonalizationClient
   /// </summary>
   public async Task SnippetForPersonalizationClientSetPersonalizationStrategy()
   {
+    // >SEPARATOR setPersonalizationStrategy
     // Initialize the client
     var client = new PersonalizationClient(
       new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -149,5 +164,6 @@ public class SnippetPersonalizationClient
         PersonalizationImpact = 42,
       }
     );
+    // SEPARATOR<
   }
 }

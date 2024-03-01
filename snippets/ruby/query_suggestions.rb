@@ -4,6 +4,7 @@ require 'algolia'
 #
 # createConfig0
 def snippet_for_create_config
+  # >SEPARATOR createConfig
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -30,12 +31,14 @@ def snippet_for_create_config
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -51,12 +54,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -72,12 +77,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -93,12 +100,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -114,12 +123,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteConfig method.
 #
 # deleteConfig0
 def snippet_for_delete_config
+  # >SEPARATOR deleteConfig
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -135,12 +146,14 @@ def snippet_for_delete_config
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getAllConfigs method.
 #
 # getAllConfigs0
 def snippet_for_get_all_configs
+  # >SEPARATOR getAllConfigs
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -156,12 +169,14 @@ def snippet_for_get_all_configs
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getConfig method.
 #
 # Retrieve QS config e2e
 def snippet_for_get_config
+  # >SEPARATOR getConfig
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -177,12 +192,14 @@ def snippet_for_get_config
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getConfigStatus method.
 #
 # getConfigStatus0
 def snippet_for_get_config_status
+  # >SEPARATOR getConfigStatus
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -198,12 +215,14 @@ def snippet_for_get_config_status
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getLogFile method.
 #
 # getLogFile0
 def snippet_for_get_log_file
+  # >SEPARATOR getLogFile
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -219,12 +238,14 @@ def snippet_for_get_log_file
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateConfig method.
 #
 # updateConfig0
 def snippet_for_update_config
+  # >SEPARATOR updateConfig
   # Initialize the client
   client = Algolia::QuerySuggestionsClient.create(
     'YOUR_APP_ID',
@@ -251,4 +272,5 @@ def snippet_for_update_config
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

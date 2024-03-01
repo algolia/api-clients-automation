@@ -11,6 +11,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCreateConfig()
     {
+        // >SEPARATOR createConfig
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -47,6 +48,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -56,6 +58,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -66,6 +69,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -75,6 +79,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -85,6 +90,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -94,6 +100,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -104,6 +111,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -113,6 +121,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -123,6 +132,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -132,6 +142,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForDeleteConfig()
     {
+        // >SEPARATOR deleteConfig
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -142,6 +153,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -151,6 +163,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetAllConfigs()
     {
+        // >SEPARATOR getAllConfigs
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -159,6 +172,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -168,6 +182,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetConfig()
     {
+        // >SEPARATOR getConfig
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -178,6 +193,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -187,6 +203,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetConfigStatus()
     {
+        // >SEPARATOR getConfigStatus
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -197,6 +214,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -206,6 +224,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetLogFile()
     {
+        // >SEPARATOR getLogFile
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -216,6 +235,7 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -225,6 +245,7 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForUpdateConfig()
     {
+        // >SEPARATOR updateConfig
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -261,5 +282,6 @@ class SnippetQuerySuggestionsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

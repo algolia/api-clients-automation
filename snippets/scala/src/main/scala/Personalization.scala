@@ -18,6 +18,7 @@ class SnippetPersonalizationClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -28,6 +29,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -35,6 +37,7 @@ class SnippetPersonalizationClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -45,6 +48,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -52,6 +56,7 @@ class SnippetPersonalizationClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -62,6 +67,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -69,6 +75,7 @@ class SnippetPersonalizationClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -79,6 +86,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteUserProfile method.
@@ -86,6 +94,7 @@ class SnippetPersonalizationClient {
     * delete deleteUserProfile
     */
   def snippetForPersonalizationClientDeleteUserProfile(): Unit = {
+    // >SEPARATOR deleteUserProfile
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -96,6 +105,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getPersonalizationStrategy method.
@@ -103,6 +113,7 @@ class SnippetPersonalizationClient {
     * get getPersonalizationStrategy
     */
   def snippetForPersonalizationClientGetPersonalizationStrategy(): Unit = {
+    // >SEPARATOR getPersonalizationStrategy
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -112,6 +123,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getUserTokenProfile method.
@@ -119,6 +131,7 @@ class SnippetPersonalizationClient {
     * get getUserTokenProfile
     */
   def snippetForPersonalizationClientGetUserTokenProfile(): Unit = {
+    // >SEPARATOR getUserTokenProfile
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -129,6 +142,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the setPersonalizationStrategy method.
@@ -136,6 +150,7 @@ class SnippetPersonalizationClient {
     * set setPersonalizationStrategy
     */
   def snippetForPersonalizationClientSetPersonalizationStrategy(): Unit = {
+    // >SEPARATOR setPersonalizationStrategy
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -161,6 +176,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

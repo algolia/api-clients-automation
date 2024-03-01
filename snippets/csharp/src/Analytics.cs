@@ -12,6 +12,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -19,6 +20,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -28,6 +30,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -35,6 +38,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -44,6 +48,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -51,6 +56,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -60,6 +66,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -67,6 +74,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -76,6 +84,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetAverageClickPosition()
   {
+    // >SEPARATOR getAverageClickPosition
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -83,6 +92,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetAverageClickPositionAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -92,6 +102,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetClickPositions()
   {
+    // >SEPARATOR getClickPositions
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -99,6 +110,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetClickPositionsAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -108,6 +120,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetClickThroughRate()
   {
+    // >SEPARATOR getClickThroughRate
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -115,6 +128,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetClickThroughRateAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -124,6 +138,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetConversationRate()
   {
+    // >SEPARATOR getConversationRate
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -131,6 +146,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetConversationRateAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -140,6 +156,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetNoClickRate()
   {
+    // >SEPARATOR getNoClickRate
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -147,6 +164,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoClickRateAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -156,6 +174,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetNoResultsRate()
   {
+    // >SEPARATOR getNoResultsRate
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -163,6 +182,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoResultsRateAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -172,6 +192,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetSearchesCount()
   {
+    // >SEPARATOR getSearchesCount
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -179,6 +200,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesCountAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -188,6 +210,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetSearchesNoClicks()
   {
+    // >SEPARATOR getSearchesNoClicks
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -195,6 +218,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesNoClicksAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -204,6 +228,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetSearchesNoResults()
   {
+    // >SEPARATOR getSearchesNoResults
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -211,6 +236,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesNoResultsAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -220,6 +246,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetStatus()
   {
+    // >SEPARATOR getStatus
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -227,6 +254,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetStatusAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -236,6 +264,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopCountries()
   {
+    // >SEPARATOR getTopCountries
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -243,6 +272,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopCountriesAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -252,6 +282,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopFilterAttributes()
   {
+    // >SEPARATOR getTopFilterAttributes
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -259,6 +290,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFilterAttributesAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -268,6 +300,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopFilterForAttribute()
   {
+    // >SEPARATOR getTopFilterForAttribute
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -275,6 +308,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFilterForAttributeAsync("myAttribute", "index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -284,6 +318,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopFiltersNoResults()
   {
+    // >SEPARATOR getTopFiltersNoResults
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -291,6 +326,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFiltersNoResultsAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -300,6 +336,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopHits()
   {
+    // >SEPARATOR getTopHits
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -307,6 +344,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopHitsAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -316,6 +354,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetTopSearches()
   {
+    // >SEPARATOR getTopSearches
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -323,6 +362,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopSearchesAsync("index");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -332,6 +372,7 @@ public class SnippetAnalyticsClient
   /// </summary>
   public async Task SnippetForAnalyticsClientGetUsersCount()
   {
+    // >SEPARATOR getUsersCount
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -339,5 +380,6 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetUsersCountAsync("index");
+    // SEPARATOR<
   }
 }

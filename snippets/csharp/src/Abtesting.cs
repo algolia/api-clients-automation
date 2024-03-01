@@ -12,6 +12,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientAddABTests()
   {
+    // >SEPARATOR addABTests
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -32,6 +33,7 @@ public class SnippetAbtestingClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -41,6 +43,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -48,6 +51,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -57,6 +61,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -64,6 +69,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -73,6 +79,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -80,6 +87,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -89,6 +97,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -96,6 +105,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -105,6 +115,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientDeleteABTest()
   {
+    // >SEPARATOR deleteABTest
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -112,6 +123,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.DeleteABTestAsync(42);
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -121,6 +133,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientGetABTest()
   {
+    // >SEPARATOR getABTest
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -128,6 +141,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.GetABTestAsync(42);
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -137,6 +151,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientListABTests()
   {
+    // >SEPARATOR listABTests
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -144,6 +159,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.ListABTestsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -153,6 +169,7 @@ public class SnippetAbtestingClient
   /// </summary>
   public async Task SnippetForAbtestingClientStopABTest()
   {
+    // >SEPARATOR stopABTest
     // Initialize the client
     var client = new AbtestingClient(
       new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -160,5 +177,6 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.StopABTestAsync(42);
+    // SEPARATOR<
   }
 }

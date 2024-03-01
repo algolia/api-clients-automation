@@ -11,6 +11,7 @@ func SnippetForAddABTestsOfAbtesting() {
 	   addABTests with minimal parameters
 	*/
 
+	// >SEPARATOR addABTests
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -33,6 +34,7 @@ func SnippetForAddABTestsOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomDeleteOfAbtesting() {
 	/*
@@ -41,6 +43,7 @@ func SnippetForCustomDeleteOfAbtesting() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -59,6 +62,7 @@ func SnippetForCustomDeleteOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfAbtesting() {
 	/*
@@ -67,6 +71,7 @@ func SnippetForCustomGetOfAbtesting() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -85,6 +90,7 @@ func SnippetForCustomGetOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfAbtesting() {
 	/*
@@ -93,6 +99,7 @@ func SnippetForCustomPostOfAbtesting() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -111,6 +118,7 @@ func SnippetForCustomPostOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfAbtesting() {
 	/*
@@ -119,6 +127,7 @@ func SnippetForCustomPutOfAbtesting() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -137,6 +146,7 @@ func SnippetForCustomPutOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteABTestOfAbtesting() {
 	/*
@@ -145,6 +155,7 @@ func SnippetForDeleteABTestOfAbtesting() {
 	   deleteABTest
 	*/
 
+	// >SEPARATOR deleteABTest
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -163,6 +174,7 @@ func SnippetForDeleteABTestOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetABTestOfAbtesting() {
 	/*
@@ -171,6 +183,7 @@ func SnippetForGetABTestOfAbtesting() {
 	   getABTest
 	*/
 
+	// >SEPARATOR getABTest
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -189,6 +202,7 @@ func SnippetForGetABTestOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForListABTestsOfAbtesting() {
 	/*
@@ -197,6 +211,7 @@ func SnippetForListABTestsOfAbtesting() {
 	   listABTests with minimal parameters
 	*/
 
+	// >SEPARATOR listABTests
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -213,6 +228,7 @@ func SnippetForListABTestsOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForStopABTestOfAbtesting() {
 	/*
@@ -221,6 +237,7 @@ func SnippetForStopABTestOfAbtesting() {
 	   stopABTest
 	*/
 
+	// >SEPARATOR stopABTest
 	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
 	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
 	if err != nil {
@@ -239,4 +256,5 @@ func SnippetForStopABTestOfAbtesting() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

@@ -12,6 +12,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientAddApiKey()
   {
+    // >SEPARATOR addApiKey
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -26,6 +27,7 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -35,6 +37,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientAddOrUpdateObject()
   {
+    // >SEPARATOR addOrUpdateObject
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -44,6 +47,7 @@ public class SnippetSearchClient
       "uniqueID",
       new Dictionary<string, string> { { "key", "value" } }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -53,6 +57,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientAppendSource()
   {
+    // >SEPARATOR appendSource
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -60,6 +65,7 @@ public class SnippetSearchClient
     var response = await client.AppendSourceAsync(
       new Source { VarSource = "theSource", Description = "theDescription", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -69,6 +75,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientAssignUserId()
   {
+    // >SEPARATOR assignUserId
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -77,6 +84,7 @@ public class SnippetSearchClient
       "userID",
       new AssignUserIdParams { Cluster = "theCluster", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -86,6 +94,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientBatch()
   {
+    // >SEPARATOR batch
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -104,6 +113,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -113,6 +123,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientBatchAssignUserIds()
   {
+    // >SEPARATOR batchAssignUserIds
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -125,6 +136,7 @@ public class SnippetSearchClient
         Users = new List<string> { "user1", "user2" },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -134,6 +146,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientBatchDictionaryEntries()
   {
+    // >SEPARATOR batchDictionaryEntries
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -157,6 +170,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -166,11 +180,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientBrowse()
   {
+    // >SEPARATOR browse
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.BrowseAsync<Object>("cts_e2e_browse");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -180,11 +196,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientClearObjects()
   {
+    // >SEPARATOR clearObjects
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ClearObjectsAsync("theIndexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -194,11 +212,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientClearRules()
   {
+    // >SEPARATOR clearRules
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ClearRulesAsync("indexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -208,11 +228,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientClearSynonyms()
   {
+    // >SEPARATOR clearSynonyms
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ClearSynonymsAsync("indexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -222,11 +244,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -236,11 +260,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -250,11 +276,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -264,11 +292,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -278,11 +308,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteApiKey()
   {
+    // >SEPARATOR deleteApiKey
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteApiKeyAsync("myTestApiKey");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -292,6 +324,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteBy()
   {
+    // >SEPARATOR deleteBy
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -300,6 +333,7 @@ public class SnippetSearchClient
       "theIndexName",
       new DeleteByParams { Filters = "brand:brandName", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -309,11 +343,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteIndex()
   {
+    // >SEPARATOR deleteIndex
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteIndexAsync("theIndexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -323,11 +359,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteObject()
   {
+    // >SEPARATOR deleteObject
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteObjectAsync("theIndexName", "uniqueID");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -337,11 +375,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteRule()
   {
+    // >SEPARATOR deleteRule
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteRuleAsync("indexName", "id1");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -351,11 +391,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteSource()
   {
+    // >SEPARATOR deleteSource
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteSourceAsync("theSource");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -365,11 +407,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientDeleteSynonym()
   {
+    // >SEPARATOR deleteSynonym
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.DeleteSynonymAsync("indexName", "id1");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -379,11 +423,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetApiKey()
   {
+    // >SEPARATOR getApiKey
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetApiKeyAsync("myTestApiKey");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -393,11 +439,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetDictionaryLanguages()
   {
+    // >SEPARATOR getDictionaryLanguages
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetDictionaryLanguagesAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -407,11 +455,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetDictionarySettings()
   {
+    // >SEPARATOR getDictionarySettings
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetDictionarySettingsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -421,11 +471,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetLogs()
   {
+    // >SEPARATOR getLogs
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetLogsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -435,6 +487,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetObject()
   {
+    // >SEPARATOR getObject
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -444,6 +497,7 @@ public class SnippetSearchClient
       "uniqueID",
       new List<string> { "attr1", "attr2" }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -453,6 +507,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetObjects()
   {
+    // >SEPARATOR getObjects
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -471,6 +526,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -480,11 +536,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetRule()
   {
+    // >SEPARATOR getRule
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetRuleAsync("indexName", "id1");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -494,11 +552,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetSettings()
   {
+    // >SEPARATOR getSettings
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetSettingsAsync("cts_e2e_settings");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -508,11 +568,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetSources()
   {
+    // >SEPARATOR getSources
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetSourcesAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -522,11 +584,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetSynonym()
   {
+    // >SEPARATOR getSynonym
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetSynonymAsync("indexName", "id1");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -536,11 +600,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetTask()
   {
+    // >SEPARATOR getTask
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetTaskAsync("theIndexName", 123L);
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -550,11 +616,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetTopUserIds()
   {
+    // >SEPARATOR getTopUserIds
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetTopUserIdsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -564,11 +632,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetUserId()
   {
+    // >SEPARATOR getUserId
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetUserIdAsync("uniqueID");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -578,11 +648,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientHasPendingMappings()
   {
+    // >SEPARATOR hasPendingMappings
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.HasPendingMappingsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -592,11 +664,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientListApiKeys()
   {
+    // >SEPARATOR listApiKeys
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ListApiKeysAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -606,11 +680,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientListClusters()
   {
+    // >SEPARATOR listClusters
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ListClustersAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -620,11 +696,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientListIndices()
   {
+    // >SEPARATOR listIndices
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ListIndicesAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -634,11 +712,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientListUserIds()
   {
+    // >SEPARATOR listUserIds
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.ListUserIdsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -648,6 +728,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientMultipleBatch()
   {
+    // >SEPARATOR multipleBatch
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -666,6 +747,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -675,6 +757,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientOperationIndex()
   {
+    // >SEPARATOR operationIndex
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -692,6 +775,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -701,6 +785,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObject()
   {
+    // >SEPARATOR partialUpdateObject
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -724,6 +809,7 @@ public class SnippetSearchClient
       },
       true
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -733,11 +819,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientRemoveUserId()
   {
+    // >SEPARATOR removeUserId
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.RemoveUserIdAsync("uniqueID");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -747,6 +835,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientReplaceSources()
   {
+    // >SEPARATOR replaceSources
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -757,6 +846,7 @@ public class SnippetSearchClient
         new Source { VarSource = "theSource", Description = "theDescription", }
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -766,11 +856,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientRestoreApiKey()
   {
+    // >SEPARATOR restoreApiKey
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.RestoreApiKeyAsync("myApiKey");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -780,6 +872,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveObject()
   {
+    // >SEPARATOR saveObject
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -788,6 +881,7 @@ public class SnippetSearchClient
       "theIndexName",
       new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -797,6 +891,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveRule()
   {
+    // >SEPARATOR saveRule
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -813,6 +908,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -822,6 +918,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveRules()
   {
+    // >SEPARATOR saveRules
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -848,6 +945,7 @@ public class SnippetSearchClient
         }
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -857,6 +955,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveSynonym()
   {
+    // >SEPARATOR saveSynonym
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -872,6 +971,7 @@ public class SnippetSearchClient
       },
       true
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -881,6 +981,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveSynonyms()
   {
+    // >SEPARATOR saveSynonyms
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -906,6 +1007,7 @@ public class SnippetSearchClient
       true,
       false
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -915,6 +1017,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearch()
   {
+    // >SEPARATOR search
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -928,6 +1031,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -937,6 +1041,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchDictionaryEntries()
   {
+    // >SEPARATOR searchDictionaryEntries
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -945,6 +1050,7 @@ public class SnippetSearchClient
       Enum.Parse<DictionaryType>("Compounds"),
       new SearchDictionaryEntriesParams { Query = "foo", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -954,11 +1060,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchForFacetValues()
   {
+    // >SEPARATOR searchForFacetValues
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.SearchForFacetValuesAsync("indexName", "facetName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -968,6 +1076,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchRules()
   {
+    // >SEPARATOR searchRules
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -976,6 +1085,7 @@ public class SnippetSearchClient
       "indexName",
       new SearchRulesParams { Query = "something", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -985,11 +1095,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex()
   {
+    // >SEPARATOR searchSingleIndex
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.SearchSingleIndexAsync<Object>("indexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -999,11 +1111,13 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchSynonyms()
   {
+    // >SEPARATOR searchSynonyms
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.SearchSynonymsAsync("indexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -1013,6 +1127,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSearchUserIds()
   {
+    // >SEPARATOR searchUserIds
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -1026,6 +1141,7 @@ public class SnippetSearchClient
         HitsPerPage = 10,
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -1035,6 +1151,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSetDictionarySettings()
   {
+    // >SEPARATOR setDictionarySettings
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -1053,6 +1170,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -1062,6 +1180,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSetSettings()
   {
+    // >SEPARATOR setSettings
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -1071,6 +1190,7 @@ public class SnippetSearchClient
       new IndexSettings { PaginationLimitedTo = 10, },
       true
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -1080,6 +1200,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientUpdateApiKey()
   {
+    // >SEPARATOR updateApiKey
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -1094,5 +1215,6 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // SEPARATOR<
   }
 }

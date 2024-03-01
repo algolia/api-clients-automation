@@ -1,12 +1,7 @@
 openapi: 3.0.2
 info:
   title: Insights API
-  description: >-
-    The Algolia Insights API lets you collect events related to your search and
-    discovery experience. Events represent actions that users take on your app
-    or website. They unlock powerful features, such as recommendations,
-    personalization, smarter search results, and analytics that help you
-    optimize your user experience.
+  description: The Algolia Insights API lets you collect events related to your search and discovery experience. Events represent actions that users take on your app or website. They unlock powerful features, such as recommendations, personalization, smarter search results, and analytics that help you optimize your user experience.
   version: 1.0.0
 components:
   securitySchemes:
@@ -48,14 +43,11 @@ components:
       minLength: 1
       maxLength: 64
       pattern: '[\x20-\x7E]{1,64}'
-      description: >
+      description: |
         The name of the event, up to 64 ASCII characters.
 
-
         Consider naming events consistently—for example, by adopting Segment's
-
         [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
-
         framework.
       example: Product Clicked
     ClickEvent:
@@ -98,49 +90,38 @@ components:
       pattern: '[0-9a-f]{32}'
       minLength: 32
       maxLength: 32
-      description: >
+      description: |
         Unique identifier for a search query.
 
-
-        The query ID is required for events related to search or browse
-        requests.
-
-        If you add `clickAnalytics: true` as a search request parameter, the
-        query ID is included in the API response.
+        The query ID is required for events related to search or browse requests.
+        If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
       example: 3e48cd0616e466948dd85abf5c3fbbe2
     userToken:
       type: string
       minLength: 1
       maxLength: 129
       pattern: '[a-zA-Z0-9_=/+-]{1,129}'
-      description: >
+      description: |
         An anonymous or pseudonymous user identifier.
 
-
-        > **Note**: Never include personally identifiable information in user
-        tokens.
+        > **Note**: Never include personally identifiable information in user tokens.
       example: test-user-1
     authenticatedUserToken:
       type: string
       minLength: 1
       maxLength: 129
       pattern: '[a-zA-Z0-9_=/+-]{1,129}'
-      description: >
+      description: |
         An identifier for authenticated users.
 
-
-        > **Note**: Never include personally identifiable information in user
-        tokens.
+        > **Note**: Never include personally identifiable information in user tokens.
       example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
     timestamp:
       type: integer
       format: int64
-      description: >
-        The timestamp of the event in milliseconds in [Unix epoch
-        time](https://wikipedia.org/wiki/Unix_time).
-
-        By default, the Insights API uses the time it receives an event as its
-        timestamp.
+      description: |
+        The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+        By default, the Insights API uses the time it receives an event as its timestamp.
       example: 1687193127
     ClickedObjectIDsAfterSearch:
       type: object
@@ -194,14 +175,11 @@ components:
     currency:
       type: string
       format: ISO 4217
-      description: >-
-        Three-letter [currency
-        code](https://www.iso.org/iso-4217-currency-codes.html).
+      description: Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
       example: EUR
     price:
-      description: >
-        The total price of a product, including any discounts, in units of
-        `currency`.
+      description: |
+        The total price of a product, including any discounts, in units of `currency`.
       oneOf:
         - type: number
           format: double
@@ -212,15 +190,12 @@ components:
       type: integer
       format: int32
       example: 2
-      description: >
+      description: |
         The quantity of a product that has been purchased or added to the cart.
-
-        The total value of a purchase is the sum of `quantity` multiplied with
-        the `price` for each purchased item.
+        The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
     discount:
-      description: >
-        The absolute value of the discount for this product, in units of
-        `currency`.
+      description: |
+        The absolute value of the discount for this product, in units of `currency`.
       oneOf:
         - type: number
           format: double
@@ -236,9 +211,7 @@ components:
           pattern: '[0-9a-f]{32}'
           minLength: 32
           maxLength: 32
-          description: >-
-            Unique identifier for a search query, used to track purchase events
-            with multiple records that originate from different searches.
+          description: Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
           example: 3e48cd0616e466948dd85abf5c3fbbe2
         price:
           $ref: '#/components/schemas/price'
@@ -248,10 +221,8 @@ components:
           $ref: '#/components/schemas/discount'
     objectDataAfterSearchList:
       type: array
-      description: >
-        Extra information about the records involved in a purchase or
-        add-to-cart events.
-
+      description: |
+        Extra information about the records involved in a purchase or add-to-cart events.
 
         If provided, it must be the same length as `objectIDs`.
       items:
@@ -269,12 +240,9 @@ components:
     AddedToCartObjectIDsAfterSearch:
       type: object
       title: Added to cart object IDs after search
-      description: >
-        Use this event to track when users add items to their shopping cart
-        after a previous Algolia request.
-
-        If you're building your category pages with Algolia, you'll also use
-        this event.
+      description: |
+        Use this event to track when users add items to their shopping cart after a previous Algolia request.
+        If you're building your category pages with Algolia, you'll also use this event.
       additionalProperties: false
       properties:
         eventName:
@@ -321,12 +289,9 @@ components:
     PurchasedObjectIDsAfterSearch:
       type: object
       title: Purchased object IDs after search
-      description: >
-        Use this event to track when users make a purchase after a previous
-        Algolia request.
-
-        If you're building your category pages with Algolia, you'll also use
-        this event.
+      description: |
+        Use this event to track when users make a purchase after a previous Algolia request.
+        If you're building your category pages with Algolia, you'll also use this event.
       additionalProperties: false
       properties:
         eventName:
@@ -366,18 +331,12 @@ components:
     ConvertedObjectIDsAfterSearch:
       type: object
       title: Converted object IDs after search
-      description: >
-        Use this event to track when users convert after a previous Algolia
-        request.
-
-        For example, a user clicks on an item in the search results to view the
-        product detail page.
-
+      description: |
+        Use this event to track when users convert after a previous Algolia request.
+        For example, a user clicks on an item in the search results to view the product detail page.
         Then, the user adds the item to their shopping cart.
 
-
         If you're building your category pages with Algolia,
-
         you'll also use this event.
       additionalProperties: false
       properties:
@@ -410,16 +369,11 @@ components:
     ClickedObjectIDs:
       type: object
       title: Clicked object IDs
-      description: >
-        Use this event to track when users click items unrelated to a previous
-        Algolia request.
+      description: |
+        Use this event to track when users click items unrelated to a previous Algolia request.
+        For example, if you don't use Algolia to build your category pages, use this event.
 
-        For example, if you don't use Algolia to build your category pages, use
-        this event.
-
-
-        To track click events related to Algolia requests, use the "Clicked
-        object IDs after search" event.
+        To track click events related to Algolia requests, use the "Clicked object IDs after search" event.
       additionalProperties: false
       properties:
         eventName:
@@ -457,10 +411,8 @@ components:
           $ref: '#/components/schemas/discount'
     objectDataList:
       type: array
-      description: >
-        Extra information about the records involved in a purchase or
-        add-to-cart event.
-
+      description: |
+        Extra information about the records involved in a purchase or add-to-cart event.
 
         If specified, it must have the same length as `objectIDs`.
       items:
@@ -470,14 +422,10 @@ components:
     PurchasedObjectIDs:
       type: object
       title: Purchased object IDs
-      description: >
-        Use this event to track when users make a purchase unrelated to a
-        previous Algolia request. For example, if you don't use Algolia to build
-        your category pages, use this event.
+      description: |
+        Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.
 
-
-        To track purchase events related to Algolia requests, use the "Purchased
-        object IDs after search" event.
+        To track purchase events related to Algolia requests, use the "Purchased object IDs after search" event.
       additionalProperties: false
       properties:
         eventName:
@@ -516,14 +464,10 @@ components:
     AddedToCartObjectIDs:
       type: object
       title: Added to cart object IDs
-      description: >
-        Use this event to track when users add items to their shopping cart
-        unrelated to a previous Algolia request. For example, if you don't use
-        Algolia to build your category pages, use this event.
+      description: |
+        Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.
 
-
-        To track add-to-cart events related to Algolia requests, use the "Added
-        to cart object IDs after search" event.
+        To track add-to-cart events related to Algolia requests, use the "Added to cart object IDs after search" event.
       additionalProperties: false
       properties:
         eventName:
@@ -562,16 +506,11 @@ components:
     ConvertedObjectIDs:
       type: object
       title: Converted object IDs
-      description: >
-        Use this event to track when users convert on items unrelated to a
-        previous Algolia request.
+      description: |
+        Use this event to track when users convert on items unrelated to a previous Algolia request.
+        For example, if you don't use Algolia to build your category pages, use this event.
 
-        For example, if you don't use Algolia to build your category pages, use
-        this event.
-
-
-        To track conversion events related to Algolia requests, use the
-        "Converted object IDs after search" event.
+        To track conversion events related to Algolia requests, use the "Converted object IDs after search" event.
       additionalProperties: false
       properties:
         eventName:
@@ -612,9 +551,7 @@ components:
     ClickedFilters:
       type: object
       title: Clicked filters
-      description: >-
-        Use this event to track when users click facet filters in your user
-        interface.
+      description: Use this event to track when users click facet filters in your user interface.
       additionalProperties: false
       properties:
         eventName:
@@ -798,9 +735,7 @@ security:
 tags:
   - name: events
     x-displayName: Events
-    description: >-
-      Events represent user interactions with your website or app. They include
-      details like the event's name, type, a timestamp or a user token.
+    description: Events represent user interactions with your website or app. They include details like the event's name, type, a timestamp or a user token.
   - name: usertokens
     x-displayName: User tokens
     description: |
@@ -834,8 +769,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - insights
     post:
       operationId: customPost
       requestBody:
@@ -864,8 +797,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - insights
     put:
       operationId: customPut
       requestBody:
@@ -894,8 +825,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - insights
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -918,12 +847,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - insights
   /1/events:
     post:
       tags:
-        - insights
+        - events
       operationId: pushEvents
       summary: Send events.
       description: |
@@ -944,19 +871,14 @@ paths:
               properties:
                 events:
                   type: array
-                  description: >
+                  description: |
                     List of click and conversion events.
 
-
                     An event is an object representing a user interaction.
-
                     Events have attributes that describe the interaction,
-
                     such as an event name, a type, or a user token.
 
-
-                    **All** events must be valid, otherwise the API returns an
-                    error.
+                    **All** events must be valid, otherwise the API returns an error.
                   minItems: 1
                   maxItems: 1000
                   items:
@@ -1141,13 +1063,7 @@ paths:
               examples:
                 Success:
                   summary: Events successfully sent to the Insights API.
-                  description: >-
-                    Success indicates that the Insights API received the events
-                    correctly, and that event properties are formatted
-                    correctly. Success doesn't imply that the event can be used
-                    by any Algolia feature. For example, the Insights API
-                    doesn't check if the index name you provided exists, or if
-                    the object IDs exist in your index.
+                  description: Success indicates that the Insights API received the events correctly, and that event properties are formatted correctly. Success doesn't imply that the event can be used by any Algolia feature. For example, the Insights API doesn't check if the index name you provided exists, or if the object IDs exist in your index.
                   value:
                     status: 200
                     message: OK
@@ -1162,9 +1078,7 @@ paths:
                 BadRequest:
                   summary: Bad request.
                   description: This error doesn't return a JSON object, but HTML.
-                  value: >-
-                    Error: Bad Request. Your client has issued a malformed or
-                    illegal request.
+                  value: 'Error: Bad Request. Your client has issued a malformed or illegal request.'
         '401':
           description: Unauthorized
           content:
@@ -1174,10 +1088,7 @@ paths:
               examples:
                 Unauthorized:
                   summary: Invalid credentials.
-                  description: >-
-                    You need to provide your application ID using the
-                    `X-Algolia-Application-ID` header and your (search) API key
-                    with the `X-Algolia-API-Key` header.
+                  description: You need to provide your application ID using the `X-Algolia-Application-ID` header and your (search) API key with the `X-Algolia-API-Key` header.
                   value:
                     status: 401
                     message: Invalid credentials
@@ -1193,11 +1104,7 @@ paths:
                   description: Check that you're using the correct URL.
                   value:
                     status: 404
-                    message: >-
-                      Path not supported by Insights REST API. Please have a
-                      look at
-                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
-                      for the list of valid commands.
+                    message: Path not supported by Insights REST API. Please have a look at [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/) for the list of valid commands.
         '405':
           description: Method Not Allowed.
           content:
@@ -1237,23 +1144,16 @@ paths:
                     message: Invalid payload
                 NoEvents:
                   summary: No events.
-                  description: >-
-                    This can happen if you're sending an empty `events` array,
-                    or if you try to send a single event object instead of the
-                    `events` array.
+                  description: This can happen if you're sending an empty `events` array, or if you try to send a single event object instead of the `events` array.
                   value:
                     status: 422
                     message: No events to process
                 NoEventsField:
                   summary: Missing events attribute.
-                  description: >-
-                    This can happen if you try to send an array of events
-                    directly instead of using the `events` attribute.
+                  description: This can happen if you try to send an array of events directly instead of using the `events` attribute.
                   value:
                     status: 422
-                    message: >-
-                      Invalid type for field : expected
-                      insights.PublicEventsBatch, got array
+                    message: 'Invalid type for field : expected insights.PublicEventsBatch, got array'
                 EventNameRequired:
                   summary: Missing eventName attribute.
                   value:
@@ -1263,9 +1163,7 @@ paths:
                   summary: Event name too long or wrong characters.
                   value:
                     status: 422
-                    message: >-
-                      EventName must contain only visible ASCII characters, and
-                      be between 1 and 64 characters long
+                    message: EventName must contain only visible ASCII characters, and be between 1 and 64 characters long
                 EventTypeRequired:
                   summary: Missing eventType attribute.
                   value:
@@ -1290,15 +1188,10 @@ paths:
                   summary: Malformed user token.
                   value:
                     status: 422
-                    message: >-
-                      UserToken must contain only alphanumeric, equal, plus,
-                      slash, hyphen, or underscore characters, and be between 1
-                      and 128 characters long
+                    message: UserToken must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 128 characters long
                 NoObjectIDsOrFilters:
                   summary: Missing objectIDs or filters attribute.
-                  description: >-
-                    Each event must include either the `objectIDs` or `filters`
-                    attribute.
+                  description: Each event must include either the `objectIDs` or `filters` attribute.
                   value:
                     status: 422
                     message: Event should specify either some ObjectIDs or some Filters
@@ -1311,50 +1204,33 @@ paths:
                   summary: Wrong combination of positions and eventType attributes.
                   value:
                     status: 422
-                    message: >-
-                      Only event of type click should specify the positions
-                      attribute
+                    message: Only event of type click should specify the positions attribute
                 PositionsWithoutQueryID:
                   summary: Positions attribute without queryID.
-                  description: >-
-                    Click events with the `positions` attribute require the
-                    `queryID` attribute.
+                  description: Click events with the `positions` attribute require the `queryID` attribute.
                   value:
                     status: 422
-                    message: >-
-                      Event of type click with positions should specify a
-                      queryID
+                    message: Event of type click with positions should specify a queryID
                 WrongPositionsValue:
                   summary: Wrong value in positions array.
                   description: Any value in the `positions` array must be greater than 0.
                   value:
                     status: 422
-                    message: >-
-                      Event of type click may only have strictly positive
-                      positions
+                    message: Event of type click may only have strictly positive positions
                 WrongPositionsItems:
                   summary: Wrong number of items in positions array.
-                  description: >-
-                    For click events with the `queryID` and `objectIDs`
-                    attributes, you must include the `positions` attribute with
-                    the same number of items as the `objectIDs` attribute.
+                  description: For click events with the `queryID` and `objectIDs` attributes, you must include the `positions` attribute with the same number of items as the `objectIDs` attribute.
                   value:
                     status: 422
-                    message: >-
-                      Event of type click should have the same number of
-                      ObjectIDs and Positions
+                    message: Event of type click should have the same number of ObjectIDs and Positions
                 WrongQueryID:
                   summary: Malformed query ID.
                   value:
                     status: 422
-                    message: >-
-                      Query ID must be a search query ID (32 characters
-                      hexadecimal string)
+                    message: Query ID must be a search query ID (32 characters hexadecimal string)
                 InvalidDataType:
                   summary: Wrong data type.
-                  description: >-
-                    This can happen if one or more attribute is a number instead
-                    of a string.
+                  description: This can happen if one or more attribute is a number instead of a string.
                   value:
                     status: 422
                     message: 'Invalid type for field events: expected string, got number'
@@ -1372,15 +1248,12 @@ paths:
   /1/usertokens/{userToken}:
     delete:
       tags:
-        - insights
+        - usertokens
       operationId: deleteUserToken
       summary: Delete user token.
-      description: >
-        Delete all events related to a certain user token from events metrics
-        and analytics.
-
-        To delete a personalization user profile, see [Delete a user
-        profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+      description: |
+        Delete all events related to a certain user token from events metrics and analytics.
+        To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
       parameters:
         - name: userToken
           in: path
@@ -1397,15 +1270,11 @@ paths:
           description: No content.
           headers:
             x-ratelimit-limit:
-              description: >-
-                The current rate limit. The maximum number of requests you can
-                make to this endpoint.
+              description: The current rate limit. The maximum number of requests you can make to this endpoint.
               schema:
                 type: integer
             x-ratelimit-remaining:
-              description: >-
-                The number of remaining API requests you can make to this
-                endpoint before reaching the rate limit.
+              description: The number of remaining API requests you can make to this endpoint before reaching the rate limit.
               schema:
                 type: integer
             x-ratelimit-reset:
@@ -1419,9 +1288,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/EventsResponse'
         '429':
-          description: >
-            Too Many Requests. This operation is rate-limited. Check the
-            `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
+          description: |
+            Too Many Requests. This operation is rate-limited. Check the `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
           content:
             application/json:
               schema:

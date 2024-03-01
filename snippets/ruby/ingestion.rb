@@ -4,6 +4,7 @@ require 'algolia'
 #
 # createAuthenticationOAuth
 def snippet_for_create_authentication
+  # >SEPARATOR createAuthentication
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -21,12 +22,14 @@ def snippet_for_create_authentication
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the createDestination method.
 #
 # createDestination
 def snippet_for_create_destination
+  # >SEPARATOR createDestination
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -45,12 +48,14 @@ def snippet_for_create_destination
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the createSource method.
 #
 # createSource
 def snippet_for_create_source
+  # >SEPARATOR createSource
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -74,12 +79,14 @@ def snippet_for_create_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the createTask method.
 #
 # createTaskOnDemand
 def snippet_for_create_task
+  # >SEPARATOR createTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -98,12 +105,14 @@ def snippet_for_create_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -115,12 +124,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -132,12 +143,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -149,12 +162,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -166,12 +181,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteAuthentication method.
 #
 # deleteAuthentication
 def snippet_for_delete_authentication
+  # >SEPARATOR deleteAuthentication
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -183,12 +200,14 @@ def snippet_for_delete_authentication
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteDestination method.
 #
 # deleteDestination
 def snippet_for_delete_destination
+  # >SEPARATOR deleteDestination
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -200,12 +219,14 @@ def snippet_for_delete_destination
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteSource method.
 #
 # deleteSource
 def snippet_for_delete_source
+  # >SEPARATOR deleteSource
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -217,12 +238,14 @@ def snippet_for_delete_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteTask method.
 #
 # deleteTask
 def snippet_for_delete_task
+  # >SEPARATOR deleteTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -234,12 +257,14 @@ def snippet_for_delete_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the disableTask method.
 #
 # disableTask
 def snippet_for_disable_task
+  # >SEPARATOR disableTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -251,12 +276,14 @@ def snippet_for_disable_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the enableTask method.
 #
 # enable task e2e
 def snippet_for_enable_task
+  # >SEPARATOR enableTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -268,12 +295,14 @@ def snippet_for_enable_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getAuthentication method.
 #
 # getAuthentication
 def snippet_for_get_authentication
+  # >SEPARATOR getAuthentication
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -285,12 +314,14 @@ def snippet_for_get_authentication
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getAuthentications method.
 #
 # getAuthentications
 def snippet_for_get_authentications
+  # >SEPARATOR getAuthentications
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -302,12 +333,14 @@ def snippet_for_get_authentications
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getDestination method.
 #
 # getDestination
 def snippet_for_get_destination
+  # >SEPARATOR getDestination
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -319,12 +352,14 @@ def snippet_for_get_destination
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getDestinations method.
 #
 # getDestinations
 def snippet_for_get_destinations
+  # >SEPARATOR getDestinations
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -336,12 +371,14 @@ def snippet_for_get_destinations
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getDockerSourceStreams method.
 #
 # getDockerSourceStreams
 def snippet_for_get_docker_source_streams
+  # >SEPARATOR getDockerSourceStreams
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -353,12 +390,14 @@ def snippet_for_get_docker_source_streams
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getEvent method.
 #
 # getEvent
 def snippet_for_get_event
+  # >SEPARATOR getEvent
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -373,12 +412,14 @@ def snippet_for_get_event
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getEvents method.
 #
 # getEvents
 def snippet_for_get_events
+  # >SEPARATOR getEvents
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -390,12 +431,14 @@ def snippet_for_get_events
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRun method.
 #
 # getRun
 def snippet_for_get_run
+  # >SEPARATOR getRun
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -407,12 +450,14 @@ def snippet_for_get_run
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRuns method.
 #
 # getRuns
 def snippet_for_get_runs
+  # >SEPARATOR getRuns
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -424,12 +469,14 @@ def snippet_for_get_runs
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSource method.
 #
 # getSource
 def snippet_for_get_source
+  # >SEPARATOR getSource
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -441,12 +488,14 @@ def snippet_for_get_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSources method.
 #
 # getSources
 def snippet_for_get_sources
+  # >SEPARATOR getSources
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -458,12 +507,14 @@ def snippet_for_get_sources
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTask method.
 #
 # getTask
 def snippet_for_get_task
+  # >SEPARATOR getTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -475,12 +526,14 @@ def snippet_for_get_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTasks method.
 #
 # getTasks
 def snippet_for_get_tasks
+  # >SEPARATOR getTasks
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -492,12 +545,14 @@ def snippet_for_get_tasks
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the runTask method.
 #
 # runTask
 def snippet_for_run_task
+  # >SEPARATOR runTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -509,12 +564,14 @@ def snippet_for_run_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchAuthentications method.
 #
 # searchAuthentications
 def snippet_for_search_authentications
+  # >SEPARATOR searchAuthentications
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -532,12 +589,14 @@ def snippet_for_search_authentications
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchDestinations method.
 #
 # searchDestinations
 def snippet_for_search_destinations
+  # >SEPARATOR searchDestinations
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -555,12 +614,14 @@ def snippet_for_search_destinations
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchSources method.
 #
 # searchSources
 def snippet_for_search_sources
+  # >SEPARATOR searchSources
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -578,12 +639,14 @@ def snippet_for_search_sources
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchTasks method.
 #
 # searchTasks
 def snippet_for_search_tasks
+  # >SEPARATOR searchTasks
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -601,12 +664,14 @@ def snippet_for_search_tasks
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the triggerDockerSourceDiscover method.
 #
 # triggerDockerSourceDiscover
 def snippet_for_trigger_docker_source_discover
+  # >SEPARATOR triggerDockerSourceDiscover
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -618,12 +683,14 @@ def snippet_for_trigger_docker_source_discover
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateAuthentication method.
 #
 # updateAuthentication
 def snippet_for_update_authentication
+  # >SEPARATOR updateAuthentication
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -638,12 +705,14 @@ def snippet_for_update_authentication
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateDestination method.
 #
 # updateDestination
 def snippet_for_update_destination
+  # >SEPARATOR updateDestination
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -658,12 +727,14 @@ def snippet_for_update_destination
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateSource method.
 #
 # updateSource
 def snippet_for_update_source
+  # >SEPARATOR updateSource
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -678,12 +749,14 @@ def snippet_for_update_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateTask method.
 #
 # updateTask
 def snippet_for_update_task
+  # >SEPARATOR updateTask
   # Initialize the client
   client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -698,4 +771,5 @@ def snippet_for_update_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

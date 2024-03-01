@@ -18,6 +18,7 @@ class SnippetRecommendClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -28,6 +29,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -35,6 +37,7 @@ class SnippetRecommendClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -45,6 +48,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -52,6 +56,7 @@ class SnippetRecommendClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -62,6 +67,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -69,6 +75,7 @@ class SnippetRecommendClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -79,6 +86,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteRecommendRule method.
@@ -86,6 +94,7 @@ class SnippetRecommendClient {
     * deleteRecommendRule0
     */
   def snippetForRecommendClientDeleteRecommendRule(): Unit = {
+    // >SEPARATOR deleteRecommendRule
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -98,6 +107,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRecommendRule method.
@@ -105,6 +115,7 @@ class SnippetRecommendClient {
     * getRecommendRule0
     */
   def snippetForRecommendClientGetRecommendRule(): Unit = {
+    // >SEPARATOR getRecommendRule
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -117,6 +128,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRecommendStatus method.
@@ -124,6 +136,7 @@ class SnippetRecommendClient {
     * getRecommendStatus0
     */
   def snippetForRecommendClientGetRecommendStatus(): Unit = {
+    // >SEPARATOR getRecommendStatus
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -136,6 +149,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRecommendations method.
@@ -143,6 +157,7 @@ class SnippetRecommendClient {
     * get recommendations for recommend model with minimal parameters
     */
   def snippetForRecommendClientGetRecommendations(): Unit = {
+    // >SEPARATOR getRecommendations
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -162,6 +177,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchRecommendRules method.
@@ -169,6 +185,7 @@ class SnippetRecommendClient {
     * searchRecommendRules0
     */
   def snippetForRecommendClientSearchRecommendRules(): Unit = {
+    // >SEPARATOR searchRecommendRules
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -180,6 +197,7 @@ class SnippetRecommendClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

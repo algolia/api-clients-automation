@@ -4,6 +4,7 @@ require 'algolia'
 #
 # addABTests with minimal parameters
 def snippet_for_add_ab_tests
+  # >SEPARATOR addABTests
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -22,12 +23,14 @@ def snippet_for_add_ab_tests
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -39,12 +42,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -56,12 +61,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -73,12 +80,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -90,12 +99,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteABTest method.
 #
 # deleteABTest
 def snippet_for_delete_ab_test
+  # >SEPARATOR deleteABTest
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -107,12 +118,14 @@ def snippet_for_delete_ab_test
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getABTest method.
 #
 # getABTest
 def snippet_for_get_ab_test
+  # >SEPARATOR getABTest
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -124,12 +137,14 @@ def snippet_for_get_ab_test
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the listABTests method.
 #
 # listABTests with minimal parameters
 def snippet_for_list_ab_tests
+  # >SEPARATOR listABTests
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -141,12 +156,14 @@ def snippet_for_list_ab_tests
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the stopABTest method.
 #
 # stopABTest
 def snippet_for_stop_ab_test
+  # >SEPARATOR stopABTest
   # Initialize the client
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -158,4 +175,5 @@ def snippet_for_stop_ab_test
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

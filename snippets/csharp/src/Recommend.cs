@@ -12,11 +12,13 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -26,11 +28,13 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -40,11 +44,13 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -54,11 +60,13 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -68,6 +76,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientDeleteRecommendRule()
   {
+    // >SEPARATOR deleteRecommendRule
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -77,6 +86,7 @@ public class SnippetRecommendClient
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -86,6 +96,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientGetRecommendRule()
   {
+    // >SEPARATOR getRecommendRule
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -95,6 +106,7 @@ public class SnippetRecommendClient
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -104,6 +116,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientGetRecommendStatus()
   {
+    // >SEPARATOR getRecommendStatus
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -113,6 +126,7 @@ public class SnippetRecommendClient
       Enum.Parse<RecommendModels>("RelatedProducts"),
       12345L
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -122,6 +136,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientGetRecommendations()
   {
+    // >SEPARATOR getRecommendations
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -143,6 +158,7 @@ public class SnippetRecommendClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -152,6 +168,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientSearchRecommendRules()
   {
+    // >SEPARATOR searchRecommendRules
     // Initialize the client
     var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -160,5 +177,6 @@ public class SnippetRecommendClient
       "indexName",
       Enum.Parse<RecommendModels>("RelatedProducts")
     );
+    // SEPARATOR<
   }
 }

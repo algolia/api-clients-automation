@@ -11,6 +11,7 @@ class SnippetRecommendClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -21,6 +22,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -30,6 +32,7 @@ class SnippetRecommendClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -40,6 +43,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -49,6 +53,7 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -59,6 +64,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -68,6 +74,7 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -78,6 +85,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -87,6 +95,7 @@ class SnippetRecommendClient
      */
     public function snippetForDeleteRecommendRule()
     {
+        // >SEPARATOR deleteRecommendRule
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -99,6 +108,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -108,6 +118,7 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendRule()
     {
+        // >SEPARATOR getRecommendRule
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -120,6 +131,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -129,6 +141,7 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendStatus()
     {
+        // >SEPARATOR getRecommendStatus
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -141,6 +154,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -150,6 +164,7 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendations()
     {
+        // >SEPARATOR getRecommendations
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -167,6 +182,7 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -176,6 +192,7 @@ class SnippetRecommendClient
      */
     public function snippetForSearchRecommendRules()
     {
+        // >SEPARATOR searchRecommendRules
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -187,5 +204,6 @@ class SnippetRecommendClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

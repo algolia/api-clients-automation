@@ -4,6 +4,7 @@ require 'algolia'
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -15,12 +16,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -32,12 +35,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -49,12 +54,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -66,12 +73,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getAverageClickPosition method.
 #
 # get getAverageClickPosition with minimal parameters
 def snippet_for_get_average_click_position
+  # >SEPARATOR getAverageClickPosition
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -83,12 +92,14 @@ def snippet_for_get_average_click_position
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getClickPositions method.
 #
 # get getClickPositions with minimal parameters
 def snippet_for_get_click_positions
+  # >SEPARATOR getClickPositions
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -100,12 +111,14 @@ def snippet_for_get_click_positions
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getClickThroughRate method.
 #
 # get getClickThroughRate with minimal parameters
 def snippet_for_get_click_through_rate
+  # >SEPARATOR getClickThroughRate
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -117,12 +130,14 @@ def snippet_for_get_click_through_rate
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getConversationRate method.
 #
 # get getConversationRate with minimal parameters
 def snippet_for_get_conversation_rate
+  # >SEPARATOR getConversationRate
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -134,12 +149,14 @@ def snippet_for_get_conversation_rate
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getNoClickRate method.
 #
 # get getNoClickRate with minimal parameters
 def snippet_for_get_no_click_rate
+  # >SEPARATOR getNoClickRate
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -151,12 +168,14 @@ def snippet_for_get_no_click_rate
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getNoResultsRate method.
 #
 # get getNoResultsRate with minimal parameters
 def snippet_for_get_no_results_rate
+  # >SEPARATOR getNoResultsRate
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -168,12 +187,14 @@ def snippet_for_get_no_results_rate
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSearchesCount method.
 #
 # get getSearchesCount with minimal parameters
 def snippet_for_get_searches_count
+  # >SEPARATOR getSearchesCount
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -185,12 +206,14 @@ def snippet_for_get_searches_count
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSearchesNoClicks method.
 #
 # get getSearchesNoClicks with minimal parameters
 def snippet_for_get_searches_no_clicks
+  # >SEPARATOR getSearchesNoClicks
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -202,12 +225,14 @@ def snippet_for_get_searches_no_clicks
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSearchesNoResults method.
 #
 # get getSearchesNoResults with minimal parameters
 def snippet_for_get_searches_no_results
+  # >SEPARATOR getSearchesNoResults
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -219,12 +244,14 @@ def snippet_for_get_searches_no_results
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getStatus method.
 #
 # get getStatus with minimal parameters
 def snippet_for_get_status
+  # >SEPARATOR getStatus
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -236,12 +263,14 @@ def snippet_for_get_status
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopCountries method.
 #
 # get getTopCountries with minimal parameters
 def snippet_for_get_top_countries
+  # >SEPARATOR getTopCountries
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -253,12 +282,14 @@ def snippet_for_get_top_countries
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopFilterAttributes method.
 #
 # get getTopFilterAttributes with minimal parameters
 def snippet_for_get_top_filter_attributes
+  # >SEPARATOR getTopFilterAttributes
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -270,12 +301,14 @@ def snippet_for_get_top_filter_attributes
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopFilterForAttribute method.
 #
 # get getTopFilterForAttribute with minimal parameters
 def snippet_for_get_top_filter_for_attribute
+  # >SEPARATOR getTopFilterForAttribute
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -287,12 +320,14 @@ def snippet_for_get_top_filter_for_attribute
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopFiltersNoResults method.
 #
 # get getTopFiltersNoResults with minimal parameters
 def snippet_for_get_top_filters_no_results
+  # >SEPARATOR getTopFiltersNoResults
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -304,12 +339,14 @@ def snippet_for_get_top_filters_no_results
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopHits method.
 #
 # get getTopHits with minimal parameters
 def snippet_for_get_top_hits
+  # >SEPARATOR getTopHits
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -321,12 +358,14 @@ def snippet_for_get_top_hits
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopSearches method.
 #
 # get getTopSearches with minimal parameters
 def snippet_for_get_top_searches
+  # >SEPARATOR getTopSearches
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -338,12 +377,14 @@ def snippet_for_get_top_searches
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getUsersCount method.
 #
 # get getUsersCount with minimal parameters
 def snippet_for_get_users_count
+  # >SEPARATOR getUsersCount
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
@@ -355,4 +396,5 @@ def snippet_for_get_users_count
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

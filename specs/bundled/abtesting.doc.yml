@@ -526,6 +526,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_get("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customGet(
+                path: "/test/minimal"
+            )
     post:
       operationId: customPost
       requestBody:
@@ -554,6 +730,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_post("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPost(
+                path: "/test/minimal"
+            )
     put:
       operationId: customPut
       requestBody:
@@ -582,6 +934,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_put("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPut(
+                path: "/test/minimal"
+            )
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -604,6 +1132,188 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_delete("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customDelete(
+                path: "/test/minimal"
+            )
   /2/abtests:
     post:
       tags:
@@ -652,6 +1362,287 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.AddABTestsAsync(
+              new AddABTestsRequest
+              {
+                EndAt = "2022-12-31T00:00:00.000Z",
+                Name = "myABTest",
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(
+                    new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30, }
+                  ),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50, })
+                },
+              }
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.AddABTests(client.NewApiAddABTestsRequest(
+
+              abtesting.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetVariants(
+                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.addABTests(
+              new AddABTestsRequest()
+                .setEndAt("2022-12-31T00:00:00.000Z")
+                .setName("myABTest")
+                .setVariants(
+                  List.of(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.addABTests({
+              endAt: '2022-12-31T00:00:00.000Z',
+              name: 'myABTest',
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 30 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.addABTests(
+              addABTestsRequest = AddABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                name = "myABTest",
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->addABTests(
+                ['endAt' => '2022-12-31T00:00:00.000Z',
+                    'name' => 'myABTest',
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 30,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.add_ab_tests(
+                add_ab_tests_request={
+                    "endAt": "2022-12-31T00:00:00.000Z",
+                    "name": "myABTest",
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 30,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.add_ab_tests(
+              AddABTestsRequest.new(
+                end_at: "2022-12-31T00:00:00.000Z",
+                name: "myABTest",
+                variants: [AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+                  AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)]
+              )
+            )
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.addABTests(
+              addABTestsRequest = AddABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                name = "myABTest",
+                variants = Seq(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50
+                  )
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.addABTests(
+                addABTestsRequest: AddABTestsRequest(
+                    name: "myABTest",
+                    variants: [AddABTestsVariant.abTestsVariant(
+                        AbTestsVariant(
+                            index: "AB_TEST_1",
+                            trafficPercentage: 30
+                        )
+                    ), AddABTestsVariant.abTestsVariant(
+                        AbTestsVariant(
+                            index: "AB_TEST_2",
+                            trafficPercentage: 50
+                        )
+                    )],
+                    endAt: "2022-12-31T00:00:00.000Z"
+                )
+            )
     get:
       tags:
         - abtest
@@ -707,6 +1698,172 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.ListABTestsAsync();
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.ListABTests(client.NewApiListABTestsRequest())
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.listABTests();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.listABTests();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.listABTests()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->listABTests();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.list_ab_tests()
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.list_ab_tests
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.listABTests(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.listABTests()
   /2/abtests/{id}:
     get:
       tags:
@@ -737,6 +1894,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetABTestAsync(42);
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetABTest(client.NewApiGetABTestRequest(
+              42,
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getABTest(42);
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getABTest({ id: 42 });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getABTest(
+              id = 42,
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getABTest(
+                42,
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_ab_test(
+                id=42,
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_ab_test(42)
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getABTest(
+              id = 42
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getABTest(
+                id: 42
+            )
     delete:
       tags:
         - abtest
@@ -766,6 +2099,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.DeleteABTestAsync(42);
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
+              42,
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.deleteABTest(42);
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.deleteABTest({ id: 42 });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteABTest(
+              id = 42,
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteABTest(
+                42,
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.delete_ab_test(
+                id=42,
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.delete_ab_test(42)
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.deleteABTest(
+              id = 42
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.deleteABTest(
+                id: 42
+            )
   /2/abtests/{id}/stop:
     post:
       tags:
@@ -799,3 +2308,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.StopABTestAsync(42);
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.StopABTest(client.NewApiStopABTestRequest(
+              42,
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.stopABTest(42);
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = abtestingClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.stopABTest({ id: 42 });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.stopABTest(
+              id = 42,
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->stopABTest(
+                42,
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.stop_ab_test(
+                id=42,
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.stop_ab_test(42)
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.stopABTest(
+              id = 42
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.stopABTest(
+                id: 42
+            )

@@ -6,6 +6,7 @@ import { ingestionClient } from '@algolia/ingestion';
 //
 // createAuthenticationOAuth
 export async function snippetForcreateAuthentication(): Promise<void> {
+  // >SEPARATOR createAuthentication
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -24,14 +25,16 @@ export async function snippetForcreateAuthentication(): Promise<void> {
     },
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the createDestination method.
 //
 // createDestination
 export async function snippetForcreateDestination(): Promise<void> {
+  // >SEPARATOR createDestination
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -47,14 +50,16 @@ export async function snippetForcreateDestination(): Promise<void> {
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the createSource method.
 //
 // createSource
 export async function snippetForcreateSource(): Promise<void> {
+  // >SEPARATOR createSource
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -75,14 +80,16 @@ export async function snippetForcreateSource(): Promise<void> {
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the createTask method.
 //
 // createTaskOnDemand
 export async function snippetForcreateTask(): Promise<void> {
+  // >SEPARATOR createTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -98,14 +105,16 @@ export async function snippetForcreateTask(): Promise<void> {
     action: 'replace',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // >SEPARATOR customDelete
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -116,14 +125,16 @@ export async function snippetForcustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // >SEPARATOR customGet
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -134,14 +145,16 @@ export async function snippetForcustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // >SEPARATOR customPost
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -152,14 +165,16 @@ export async function snippetForcustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // >SEPARATOR customPut
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -170,14 +185,16 @@ export async function snippetForcustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteAuthentication method.
 //
 // deleteAuthentication
 export async function snippetFordeleteAuthentication(): Promise<void> {
+  // >SEPARATOR deleteAuthentication
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -190,14 +207,16 @@ export async function snippetFordeleteAuthentication(): Promise<void> {
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteDestination method.
 //
 // deleteDestination
 export async function snippetFordeleteDestination(): Promise<void> {
+  // >SEPARATOR deleteDestination
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -210,14 +229,16 @@ export async function snippetFordeleteDestination(): Promise<void> {
     destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteSource method.
 //
 // deleteSource
 export async function snippetFordeleteSource(): Promise<void> {
+  // >SEPARATOR deleteSource
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -230,14 +251,16 @@ export async function snippetFordeleteSource(): Promise<void> {
     sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteTask method.
 //
 // deleteTask
 export async function snippetFordeleteTask(): Promise<void> {
+  // >SEPARATOR deleteTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -250,14 +273,16 @@ export async function snippetFordeleteTask(): Promise<void> {
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the disableTask method.
 //
 // disableTask
 export async function snippetFordisableTask(): Promise<void> {
+  // >SEPARATOR disableTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -270,14 +295,16 @@ export async function snippetFordisableTask(): Promise<void> {
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the enableTask method.
 //
 // enable task e2e
 export async function snippetForenableTask(): Promise<void> {
+  // >SEPARATOR enableTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -290,14 +317,16 @@ export async function snippetForenableTask(): Promise<void> {
     taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getAuthentication method.
 //
 // getAuthentication
 export async function snippetForgetAuthentication(): Promise<void> {
+  // >SEPARATOR getAuthentication
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -310,14 +339,16 @@ export async function snippetForgetAuthentication(): Promise<void> {
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getAuthentications method.
 //
 // getAuthentications
 export async function snippetForgetAuthentications(): Promise<void> {
+  // >SEPARATOR getAuthentications
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -328,14 +359,16 @@ export async function snippetForgetAuthentications(): Promise<void> {
   // Call the API
   const response = await client.getAuthentications();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getDestination method.
 //
 // getDestination
 export async function snippetForgetDestination(): Promise<void> {
+  // >SEPARATOR getDestination
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -348,14 +381,16 @@ export async function snippetForgetDestination(): Promise<void> {
     destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getDestinations method.
 //
 // getDestinations
 export async function snippetForgetDestinations(): Promise<void> {
+  // >SEPARATOR getDestinations
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -366,14 +401,16 @@ export async function snippetForgetDestinations(): Promise<void> {
   // Call the API
   const response = await client.getDestinations();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getDockerSourceStreams method.
 //
 // getDockerSourceStreams
 export async function snippetForgetDockerSourceStreams(): Promise<void> {
+  // >SEPARATOR getDockerSourceStreams
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -386,14 +423,16 @@ export async function snippetForgetDockerSourceStreams(): Promise<void> {
     sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getEvent method.
 //
 // getEvent
 export async function snippetForgetEvent(): Promise<void> {
+  // >SEPARATOR getEvent
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -407,14 +446,16 @@ export async function snippetForgetEvent(): Promise<void> {
     eventID: '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getEvents method.
 //
 // getEvents
 export async function snippetForgetEvents(): Promise<void> {
+  // >SEPARATOR getEvents
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -427,14 +468,16 @@ export async function snippetForgetEvents(): Promise<void> {
     runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getRun method.
 //
 // getRun
 export async function snippetForgetRun(): Promise<void> {
+  // >SEPARATOR getRun
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -447,14 +490,16 @@ export async function snippetForgetRun(): Promise<void> {
     runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getRuns method.
 //
 // getRuns
 export async function snippetForgetRuns(): Promise<void> {
+  // >SEPARATOR getRuns
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -465,14 +510,16 @@ export async function snippetForgetRuns(): Promise<void> {
   // Call the API
   const response = await client.getRuns();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getSource method.
 //
 // getSource
 export async function snippetForgetSource(): Promise<void> {
+  // >SEPARATOR getSource
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -485,14 +532,16 @@ export async function snippetForgetSource(): Promise<void> {
     sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getSources method.
 //
 // getSources
 export async function snippetForgetSources(): Promise<void> {
+  // >SEPARATOR getSources
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -503,14 +552,16 @@ export async function snippetForgetSources(): Promise<void> {
   // Call the API
   const response = await client.getSources();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTask method.
 //
 // getTask
 export async function snippetForgetTask(): Promise<void> {
+  // >SEPARATOR getTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -523,14 +574,16 @@ export async function snippetForgetTask(): Promise<void> {
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTasks method.
 //
 // getTasks
 export async function snippetForgetTasks(): Promise<void> {
+  // >SEPARATOR getTasks
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -541,14 +594,16 @@ export async function snippetForgetTasks(): Promise<void> {
   // Call the API
   const response = await client.getTasks();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the runTask method.
 //
 // runTask
 export async function snippetForrunTask(): Promise<void> {
+  // >SEPARATOR runTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -561,14 +616,16 @@ export async function snippetForrunTask(): Promise<void> {
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the searchAuthentications method.
 //
 // searchAuthentications
 export async function snippetForsearchAuthentications(): Promise<void> {
+  // >SEPARATOR searchAuthentications
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -584,14 +641,16 @@ export async function snippetForsearchAuthentications(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the searchDestinations method.
 //
 // searchDestinations
 export async function snippetForsearchDestinations(): Promise<void> {
+  // >SEPARATOR searchDestinations
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -607,14 +666,16 @@ export async function snippetForsearchDestinations(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the searchSources method.
 //
 // searchSources
 export async function snippetForsearchSources(): Promise<void> {
+  // >SEPARATOR searchSources
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -630,14 +691,16 @@ export async function snippetForsearchSources(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the searchTasks method.
 //
 // searchTasks
 export async function snippetForsearchTasks(): Promise<void> {
+  // >SEPARATOR searchTasks
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -654,14 +717,16 @@ export async function snippetForsearchTasks(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the triggerDockerSourceDiscover method.
 //
 // triggerDockerSourceDiscover
 export async function snippetFortriggerDockerSourceDiscover(): Promise<void> {
+  // >SEPARATOR triggerDockerSourceDiscover
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -674,14 +739,16 @@ export async function snippetFortriggerDockerSourceDiscover(): Promise<void> {
     sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the updateAuthentication method.
 //
 // updateAuthentication
 export async function snippetForupdateAuthentication(): Promise<void> {
+  // >SEPARATOR updateAuthentication
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -695,14 +762,16 @@ export async function snippetForupdateAuthentication(): Promise<void> {
     authenticationUpdate: { name: 'newName' },
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the updateDestination method.
 //
 // updateDestination
 export async function snippetForupdateDestination(): Promise<void> {
+  // >SEPARATOR updateDestination
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -716,14 +785,16 @@ export async function snippetForupdateDestination(): Promise<void> {
     destinationUpdate: { name: 'newName' },
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the updateSource method.
 //
 // updateSource
 export async function snippetForupdateSource(): Promise<void> {
+  // >SEPARATOR updateSource
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -737,14 +808,16 @@ export async function snippetForupdateSource(): Promise<void> {
     sourceUpdate: { name: 'newName' },
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the updateTask method.
 //
 // updateTask
 export async function snippetForupdateTask(): Promise<void> {
+  // >SEPARATOR updateTask
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -758,6 +831,7 @@ export async function snippetForupdateTask(): Promise<void> {
     taskUpdate: { enabled: false },
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }

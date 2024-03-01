@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetRecommendClient {
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -17,11 +18,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -32,11 +35,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -47,11 +52,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -62,11 +69,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteRecommendRule() {
+    // >SEPARATOR deleteRecommendRule
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -79,11 +88,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetRecommendRule() {
+    // >SEPARATOR getRecommendRule
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -96,11 +107,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetRecommendStatus() {
+    // >SEPARATOR getRecommendStatus
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -113,11 +126,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetRecommendations() {
+    // >SEPARATOR getRecommendations
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -137,11 +152,13 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchRecommendRules() {
+    // >SEPARATOR searchRecommendRules
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -153,6 +170,7 @@ class SnippetRecommendClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

@@ -18,6 +18,7 @@ class SnippetAbtestingClient {
     * addABTests with minimal parameters
     */
   def snippetForAbtestingClientAddABTests(): Unit = {
+    // >SEPARATOR addABTests
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -41,6 +42,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customDelete method.
@@ -48,6 +50,7 @@ class SnippetAbtestingClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -58,6 +61,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -65,6 +69,7 @@ class SnippetAbtestingClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -75,6 +80,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -82,6 +88,7 @@ class SnippetAbtestingClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -92,6 +99,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -99,6 +107,7 @@ class SnippetAbtestingClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -109,6 +118,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteABTest method.
@@ -116,6 +126,7 @@ class SnippetAbtestingClient {
     * deleteABTest
     */
   def snippetForAbtestingClientDeleteABTest(): Unit = {
+    // >SEPARATOR deleteABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -126,6 +137,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getABTest method.
@@ -133,6 +145,7 @@ class SnippetAbtestingClient {
     * getABTest
     */
   def snippetForAbtestingClientGetABTest(): Unit = {
+    // >SEPARATOR getABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -143,6 +156,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the listABTests method.
@@ -150,6 +164,7 @@ class SnippetAbtestingClient {
     * listABTests with minimal parameters
     */
   def snippetForAbtestingClientListABTests(): Unit = {
+    // >SEPARATOR listABTests
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -159,6 +174,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the stopABTest method.
@@ -166,6 +182,7 @@ class SnippetAbtestingClient {
     * stopABTest
     */
   def snippetForAbtestingClientStopABTest(): Unit = {
+    // >SEPARATOR stopABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -176,6 +193,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

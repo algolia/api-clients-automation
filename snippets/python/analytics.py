@@ -7,6 +7,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -20,6 +21,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -28,6 +30,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -41,6 +44,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -49,6 +53,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -62,6 +67,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -70,6 +76,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -83,6 +90,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_average_click_position():
@@ -91,6 +99,7 @@ async def snippet_for_get_average_click_position():
 
     get getAverageClickPosition with minimal parameters
     """
+    # >SEPARATOR getAverageClickPosition
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -104,6 +113,7 @@ async def snippet_for_get_average_click_position():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_click_positions():
@@ -112,6 +122,7 @@ async def snippet_for_get_click_positions():
 
     get getClickPositions with minimal parameters
     """
+    # >SEPARATOR getClickPositions
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -125,6 +136,7 @@ async def snippet_for_get_click_positions():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_click_through_rate():
@@ -133,6 +145,7 @@ async def snippet_for_get_click_through_rate():
 
     get getClickThroughRate with minimal parameters
     """
+    # >SEPARATOR getClickThroughRate
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -146,6 +159,7 @@ async def snippet_for_get_click_through_rate():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_conversation_rate():
@@ -154,6 +168,7 @@ async def snippet_for_get_conversation_rate():
 
     get getConversationRate with minimal parameters
     """
+    # >SEPARATOR getConversationRate
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -167,6 +182,7 @@ async def snippet_for_get_conversation_rate():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_no_click_rate():
@@ -175,6 +191,7 @@ async def snippet_for_get_no_click_rate():
 
     get getNoClickRate with minimal parameters
     """
+    # >SEPARATOR getNoClickRate
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -188,6 +205,7 @@ async def snippet_for_get_no_click_rate():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_no_results_rate():
@@ -196,6 +214,7 @@ async def snippet_for_get_no_results_rate():
 
     get getNoResultsRate with minimal parameters
     """
+    # >SEPARATOR getNoResultsRate
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -209,6 +228,7 @@ async def snippet_for_get_no_results_rate():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_searches_count():
@@ -217,6 +237,7 @@ async def snippet_for_get_searches_count():
 
     get getSearchesCount with minimal parameters
     """
+    # >SEPARATOR getSearchesCount
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -230,6 +251,7 @@ async def snippet_for_get_searches_count():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_searches_no_clicks():
@@ -238,6 +260,7 @@ async def snippet_for_get_searches_no_clicks():
 
     get getSearchesNoClicks with minimal parameters
     """
+    # >SEPARATOR getSearchesNoClicks
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -251,6 +274,7 @@ async def snippet_for_get_searches_no_clicks():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_searches_no_results():
@@ -259,6 +283,7 @@ async def snippet_for_get_searches_no_results():
 
     get getSearchesNoResults with minimal parameters
     """
+    # >SEPARATOR getSearchesNoResults
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -272,6 +297,7 @@ async def snippet_for_get_searches_no_results():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_status():
@@ -280,6 +306,7 @@ async def snippet_for_get_status():
 
     get getStatus with minimal parameters
     """
+    # >SEPARATOR getStatus
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -293,6 +320,7 @@ async def snippet_for_get_status():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_countries():
@@ -301,6 +329,7 @@ async def snippet_for_get_top_countries():
 
     get getTopCountries with minimal parameters
     """
+    # >SEPARATOR getTopCountries
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -314,6 +343,7 @@ async def snippet_for_get_top_countries():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_filter_attributes():
@@ -322,6 +352,7 @@ async def snippet_for_get_top_filter_attributes():
 
     get getTopFilterAttributes with minimal parameters
     """
+    # >SEPARATOR getTopFilterAttributes
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -335,6 +366,7 @@ async def snippet_for_get_top_filter_attributes():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_filter_for_attribute():
@@ -343,6 +375,7 @@ async def snippet_for_get_top_filter_for_attribute():
 
     get getTopFilterForAttribute with minimal parameters
     """
+    # >SEPARATOR getTopFilterForAttribute
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -357,6 +390,7 @@ async def snippet_for_get_top_filter_for_attribute():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_filters_no_results():
@@ -365,6 +399,7 @@ async def snippet_for_get_top_filters_no_results():
 
     get getTopFiltersNoResults with minimal parameters
     """
+    # >SEPARATOR getTopFiltersNoResults
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -378,6 +413,7 @@ async def snippet_for_get_top_filters_no_results():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_hits():
@@ -386,6 +422,7 @@ async def snippet_for_get_top_hits():
 
     get getTopHits with minimal parameters
     """
+    # >SEPARATOR getTopHits
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -399,6 +436,7 @@ async def snippet_for_get_top_hits():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_searches():
@@ -407,6 +445,7 @@ async def snippet_for_get_top_searches():
 
     get getTopSearches with minimal parameters
     """
+    # >SEPARATOR getTopSearches
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -420,6 +459,7 @@ async def snippet_for_get_top_searches():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_users_count():
@@ -428,6 +468,7 @@ async def snippet_for_get_users_count():
 
     get getUsersCount with minimal parameters
     """
+    # >SEPARATOR getUsersCount
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -441,3 +482,4 @@ async def snippet_for_get_users_count():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

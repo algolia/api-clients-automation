@@ -179,6 +179,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_get("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customGet(
+                path: "/test/minimal"
+            )
     post:
       operationId: customPost
       requestBody:
@@ -207,6 +380,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_post("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPost(
+                path: "/test/minimal"
+            )
     put:
       operationId: customPut
       requestBody:
@@ -235,6 +581,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_put("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPut(
+                path: "/test/minimal"
+            )
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -257,6 +776,185 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_delete("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customDelete(
+                path: "/test/minimal"
+            )
   /1/profiles/personalization/{userToken}:
     get:
       tags:
@@ -307,6 +1005,186 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetUserTokenProfileAsync("UserToken");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
+              "UserToken",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getUserTokenProfile("UserToken");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getUserTokenProfile({ userToken:
+            'UserToken' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getUserTokenProfile(
+              userToken = "UserToken",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getUserTokenProfile(
+                'UserToken',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_user_token_profile(
+                user_token="UserToken",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_user_token_profile("UserToken")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getUserTokenProfile(
+              userToken = "UserToken"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getUserTokenProfile(
+                userToken: "UserToken"
+            )
   /1/profiles/{userToken}:
     delete:
       tags:
@@ -360,6 +1238,186 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.DeleteUserProfileAsync("UserToken");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
+              "UserToken",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.deleteUserProfile("UserToken");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.deleteUserProfile({ userToken:
+            'UserToken' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteUserProfile(
+              userToken = "UserToken",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteUserProfile(
+                'UserToken',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.delete_user_profile(
+                user_token="UserToken",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.delete_user_profile("UserToken")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.deleteUserProfile(
+              userToken = "UserToken"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.deleteUserProfile(
+                userToken: "UserToken"
+            )
   /1/strategies/personalization:
     get:
       tags:
@@ -386,6 +1444,169 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetPersonalizationStrategyAsync();
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetPersonalizationStrategy()
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getPersonalizationStrategy();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getPersonalizationStrategy();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getPersonalizationStrategy()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getPersonalizationStrategy();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_personalization_strategy()
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_personalization_strategy
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getPersonalizationStrategy(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getPersonalizationStrategy()
     post:
       tags:
         - strategies
@@ -425,3 +1646,289 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new PersonalizationClient(
+              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.SetPersonalizationStrategyAsync(
+              new PersonalizationStrategyParams
+              {
+                EventScoring = new List<EventScoring>
+                {
+                  new EventScoring
+                  {
+                    Score = 42,
+                    EventName = "Algolia",
+                    EventType = "Event",
+                  }
+                },
+                FacetScoring = new List<FacetScoring>
+                {
+                  new FacetScoring { Score = 42, FacetName = "Event", }
+                },
+                PersonalizationImpact = 42,
+              }
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            personalization.YOUR_APP_ID_REGION
+
+            client, err := personalization.NewClient("YOUR_APP_ID",
+            "YOUR_API_KEY", personalization.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
+
+              personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
+                []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType("Event")}).SetFacetScoring(
+                []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            PersonalizationClient client = new
+            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.setPersonalizationStrategy(
+              new PersonalizationStrategyParams()
+                .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType("Event")))
+                .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
+                .setPersonalizationImpact(42)
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = personalizationClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.setPersonalizationStrategy({
+              eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
+              facetScoring: [{ score: 42, facetName: 'Event' }],
+              personalizationImpact: 42,
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.setPersonalizationStrategy(
+              personalizationStrategyParams = PersonalizationStrategyParams(
+                eventScoring = listOf(
+                  EventScoring(
+                    score = 42,
+                    eventName = "Algolia",
+                    eventType = "Event",
+                  ),
+                ),
+                facetScoring = listOf(
+                  FacetScoring(
+                    score = 42,
+                    facetName = "Event",
+                  ),
+                ),
+                personalizationImpact = 42,
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->setPersonalizationStrategy(
+                ['eventScoring' => [
+                    ['score' => 42,
+                        'eventName' => 'Algolia',
+                        'eventType' => 'Event',
+                    ],
+                ],
+                    'facetScoring' => [
+                        ['score' => 42,
+                            'facetName' => 'Event',
+                        ],
+                    ],
+                    'personalizationImpact' => 42,
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.set_personalization_strategy(
+                personalization_strategy_params={
+                    "eventScoring": [
+                        {
+                            "score": 42,
+                            "eventName": "Algolia",
+                            "eventType": "Event",
+                        },
+                    ],
+                    "facetScoring": [
+                        {
+                            "score": 42,
+                            "facetName": "Event",
+                        },
+                    ],
+                    "personalizationImpact": 42,
+                },
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::PersonalizationClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.set_personalization_strategy(
+              PersonalizationStrategyParams.new(
+                event_scoring: [EventScoring.new(
+                  score: 42,
+                  event_name: "Algolia",
+                  event_type: "Event"
+                )],
+                facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
+                personalization_impact: 42
+              )
+            )
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.setPersonalizationStrategy(
+              personalizationStrategyParams = PersonalizationStrategyParams(
+                eventScoring = Seq(
+                  EventScoring(
+                    score = 42,
+                    eventName = "Algolia",
+                    eventType = "Event"
+                  )
+                ),
+                facetScoring = Seq(
+                  FacetScoring(
+                    score = 42,
+                    facetName = "Event"
+                  )
+                ),
+                personalizationImpact = 42
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.setPersonalizationStrategy(
+                personalizationStrategyParams: PersonalizationStrategyParams(
+                    eventScoring: [
+                        EventScoring(
+                            score: 42,
+                            eventName: "Algolia",
+                            eventType: "Event"
+                        ),
+                    ],
+                    facetScoring: [
+                        FacetScoring(
+                            score: 42,
+                            facetName: "Event"
+                        ),
+                    ],
+                    personalizationImpact: 42
+                )
+            )

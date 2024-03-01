@@ -12,6 +12,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCreateAuthentication()
   {
+    // >SEPARATOR createAuthentication
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -33,6 +34,7 @@ public class SnippetIngestionClient
         ),
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -42,6 +44,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCreateDestination()
   {
+    // >SEPARATOR createDestination
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -57,6 +60,7 @@ public class SnippetIngestionClient
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -66,6 +70,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCreateSource()
   {
+    // >SEPARATOR createSource
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -89,6 +94,7 @@ public class SnippetIngestionClient
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -98,6 +104,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCreateTask()
   {
+    // >SEPARATOR createTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -115,6 +122,7 @@ public class SnippetIngestionClient
         Action = Enum.Parse<ActionType>("Replace"),
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -124,6 +132,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -131,6 +140,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -140,6 +150,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -147,6 +158,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -156,6 +168,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -163,6 +176,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -172,6 +186,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -179,6 +194,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -188,6 +204,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientDeleteAuthentication()
   {
+    // >SEPARATOR deleteAuthentication
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -195,6 +212,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -204,6 +222,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientDeleteDestination()
   {
+    // >SEPARATOR deleteDestination
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -211,6 +230,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -220,6 +240,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientDeleteSource()
   {
+    // >SEPARATOR deleteSource
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -227,6 +248,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -236,6 +258,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientDeleteTask()
   {
+    // >SEPARATOR deleteTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -243,6 +266,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -252,6 +276,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientDisableTask()
   {
+    // >SEPARATOR disableTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -259,6 +284,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -268,6 +294,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientEnableTask()
   {
+    // >SEPARATOR enableTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -275,6 +302,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -284,6 +312,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetAuthentication()
   {
+    // >SEPARATOR getAuthentication
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -291,6 +320,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -300,6 +330,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetAuthentications()
   {
+    // >SEPARATOR getAuthentications
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -307,6 +338,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetAuthenticationsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -316,6 +348,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetDestination()
   {
+    // >SEPARATOR getDestination
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -323,6 +356,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -332,6 +366,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetDestinations()
   {
+    // >SEPARATOR getDestinations
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -339,6 +374,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDestinationsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -348,6 +384,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetDockerSourceStreams()
   {
+    // >SEPARATOR getDockerSourceStreams
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -355,6 +392,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -364,6 +402,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetEvent()
   {
+    // >SEPARATOR getEvent
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -374,6 +413,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -383,6 +423,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetEvents()
   {
+    // >SEPARATOR getEvents
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -390,6 +431,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -399,6 +441,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetRun()
   {
+    // >SEPARATOR getRun
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -406,6 +449,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -415,6 +459,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetRuns()
   {
+    // >SEPARATOR getRuns
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -422,6 +467,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetRunsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -431,6 +477,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetSource()
   {
+    // >SEPARATOR getSource
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -438,6 +485,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -447,6 +495,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetSources()
   {
+    // >SEPARATOR getSources
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -454,6 +503,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetSourcesAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -463,6 +513,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetTask()
   {
+    // >SEPARATOR getTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -470,6 +521,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -479,6 +531,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientGetTasks()
   {
+    // >SEPARATOR getTasks
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -486,6 +539,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetTasksAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -495,6 +549,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientRunTask()
   {
+    // >SEPARATOR runTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -502,6 +557,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -511,6 +567,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientSearchAuthentications()
   {
+    // >SEPARATOR searchAuthentications
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -527,6 +584,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -536,6 +594,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientSearchDestinations()
   {
+    // >SEPARATOR searchDestinations
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -552,6 +611,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -561,6 +621,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientSearchSources()
   {
+    // >SEPARATOR searchSources
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -577,6 +638,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -586,6 +648,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientSearchTasks()
   {
+    // >SEPARATOR searchTasks
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -603,6 +666,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -612,6 +676,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientTriggerDockerSourceDiscover()
   {
+    // >SEPARATOR triggerDockerSourceDiscover
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -621,6 +686,7 @@ public class SnippetIngestionClient
     var response = await client.TriggerDockerSourceDiscoverAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -630,6 +696,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientUpdateAuthentication()
   {
+    // >SEPARATOR updateAuthentication
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -640,6 +707,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new AuthenticationUpdate { Name = "newName", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -649,6 +717,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientUpdateDestination()
   {
+    // >SEPARATOR updateDestination
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -659,6 +728,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new DestinationUpdate { Name = "newName", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -668,6 +738,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientUpdateSource()
   {
+    // >SEPARATOR updateSource
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -678,6 +749,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName", }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -687,6 +759,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientUpdateTask()
   {
+    // >SEPARATOR updateTask
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -697,5 +770,6 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdate { Enabled = false, }
     );
+    // SEPARATOR<
   }
 }

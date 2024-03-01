@@ -18,6 +18,7 @@ class SnippetSearchClient {
     * addApiKey0
     */
   def snippetForSearchClientAddApiKey(): Unit = {
+    // >SEPARATOR addApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -34,6 +35,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the addOrUpdateObject method.
@@ -41,6 +43,7 @@ class SnippetSearchClient {
     * addOrUpdateObject0
     */
   def snippetForSearchClientAddOrUpdateObject(): Unit = {
+    // >SEPARATOR addOrUpdateObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -53,6 +56,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the appendSource method.
@@ -60,6 +64,7 @@ class SnippetSearchClient {
     * appendSource0
     */
   def snippetForSearchClientAppendSource(): Unit = {
+    // >SEPARATOR appendSource
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -73,6 +78,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the assignUserId method.
@@ -80,6 +86,7 @@ class SnippetSearchClient {
     * assignUserId0
     */
   def snippetForSearchClientAssignUserId(): Unit = {
+    // >SEPARATOR assignUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -93,6 +100,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the batch method.
@@ -100,6 +108,7 @@ class SnippetSearchClient {
     * allows batch method with `addObject` action
     */
   def snippetForSearchClientBatch(): Unit = {
+    // >SEPARATOR batch
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -118,6 +127,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the batchAssignUserIds method.
@@ -125,6 +135,7 @@ class SnippetSearchClient {
     * batchAssignUserIds0
     */
   def snippetForSearchClientBatchAssignUserIds(): Unit = {
+    // >SEPARATOR batchAssignUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -139,6 +150,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the batchDictionaryEntries method.
@@ -146,6 +158,7 @@ class SnippetSearchClient {
     * get batchDictionaryEntries results with minimal parameters
     */
   def snippetForSearchClientBatchDictionaryEntries(): Unit = {
+    // >SEPARATOR batchDictionaryEntries
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -174,6 +187,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the browse method.
@@ -181,6 +195,7 @@ class SnippetSearchClient {
     * browse with minimal parameters
     */
   def snippetForSearchClientBrowse(): Unit = {
+    // >SEPARATOR browse
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -191,6 +206,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the clearObjects method.
@@ -198,6 +214,7 @@ class SnippetSearchClient {
     * clearObjects0
     */
   def snippetForSearchClientClearObjects(): Unit = {
+    // >SEPARATOR clearObjects
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -208,6 +225,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the clearRules method.
@@ -215,6 +233,7 @@ class SnippetSearchClient {
     * clearRules0
     */
   def snippetForSearchClientClearRules(): Unit = {
+    // >SEPARATOR clearRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -225,6 +244,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the clearSynonyms method.
@@ -232,6 +252,7 @@ class SnippetSearchClient {
     * clearSynonyms0
     */
   def snippetForSearchClientClearSynonyms(): Unit = {
+    // >SEPARATOR clearSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -242,6 +263,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customDelete method.
@@ -249,6 +271,7 @@ class SnippetSearchClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForSearchClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -259,6 +282,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -266,6 +290,7 @@ class SnippetSearchClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForSearchClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -276,6 +301,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -283,6 +309,7 @@ class SnippetSearchClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForSearchClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -293,6 +320,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -300,6 +328,7 @@ class SnippetSearchClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForSearchClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -310,6 +339,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteApiKey method.
@@ -317,6 +347,7 @@ class SnippetSearchClient {
     * deleteApiKey0
     */
   def snippetForSearchClientDeleteApiKey(): Unit = {
+    // >SEPARATOR deleteApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -327,6 +358,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteBy method.
@@ -334,6 +366,7 @@ class SnippetSearchClient {
     * deleteBy0
     */
   def snippetForSearchClientDeleteBy(): Unit = {
+    // >SEPARATOR deleteBy
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -347,6 +380,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteIndex method.
@@ -354,6 +388,7 @@ class SnippetSearchClient {
     * deleteIndex0
     */
   def snippetForSearchClientDeleteIndex(): Unit = {
+    // >SEPARATOR deleteIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -364,6 +399,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteObject method.
@@ -371,6 +407,7 @@ class SnippetSearchClient {
     * deleteObject0
     */
   def snippetForSearchClientDeleteObject(): Unit = {
+    // >SEPARATOR deleteObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -382,6 +419,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteRule method.
@@ -389,6 +427,7 @@ class SnippetSearchClient {
     * delete rule simple case
     */
   def snippetForSearchClientDeleteRule(): Unit = {
+    // >SEPARATOR deleteRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -400,6 +439,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteSource method.
@@ -407,6 +447,7 @@ class SnippetSearchClient {
     * deleteSource0
     */
   def snippetForSearchClientDeleteSource(): Unit = {
+    // >SEPARATOR deleteSource
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -417,6 +458,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteSynonym method.
@@ -424,6 +466,7 @@ class SnippetSearchClient {
     * deleteSynonym0
     */
   def snippetForSearchClientDeleteSynonym(): Unit = {
+    // >SEPARATOR deleteSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -435,6 +478,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getApiKey method.
@@ -442,6 +486,7 @@ class SnippetSearchClient {
     * getApiKey0
     */
   def snippetForSearchClientGetApiKey(): Unit = {
+    // >SEPARATOR getApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -452,6 +497,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getDictionaryLanguages method.
@@ -459,6 +505,7 @@ class SnippetSearchClient {
     * get getDictionaryLanguages
     */
   def snippetForSearchClientGetDictionaryLanguages(): Unit = {
+    // >SEPARATOR getDictionaryLanguages
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -468,6 +515,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getDictionarySettings method.
@@ -475,6 +523,7 @@ class SnippetSearchClient {
     * get getDictionarySettings results
     */
   def snippetForSearchClientGetDictionarySettings(): Unit = {
+    // >SEPARATOR getDictionarySettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -484,6 +533,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getLogs method.
@@ -491,6 +541,7 @@ class SnippetSearchClient {
     * getLogs with minimal parameters
     */
   def snippetForSearchClientGetLogs(): Unit = {
+    // >SEPARATOR getLogs
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -500,6 +551,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getObject method.
@@ -507,6 +559,7 @@ class SnippetSearchClient {
     * getObject0
     */
   def snippetForSearchClientGetObject(): Unit = {
+    // >SEPARATOR getObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -519,6 +572,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getObjects method.
@@ -526,6 +580,7 @@ class SnippetSearchClient {
     * getObjects0
     */
   def snippetForSearchClientGetObjects(): Unit = {
+    // >SEPARATOR getObjects
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -544,6 +599,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRule method.
@@ -551,6 +607,7 @@ class SnippetSearchClient {
     * getRule0
     */
   def snippetForSearchClientGetRule(): Unit = {
+    // >SEPARATOR getRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -562,6 +619,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSettings method.
@@ -569,6 +627,7 @@ class SnippetSearchClient {
     * getSettings0
     */
   def snippetForSearchClientGetSettings(): Unit = {
+    // >SEPARATOR getSettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -579,6 +638,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSources method.
@@ -586,6 +646,7 @@ class SnippetSearchClient {
     * getSources0
     */
   def snippetForSearchClientGetSources(): Unit = {
+    // >SEPARATOR getSources
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -595,6 +656,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSynonym method.
@@ -602,6 +664,7 @@ class SnippetSearchClient {
     * getSynonym0
     */
   def snippetForSearchClientGetSynonym(): Unit = {
+    // >SEPARATOR getSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -613,6 +676,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTask method.
@@ -620,6 +684,7 @@ class SnippetSearchClient {
     * getTask0
     */
   def snippetForSearchClientGetTask(): Unit = {
+    // >SEPARATOR getTask
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -631,6 +696,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopUserIds method.
@@ -638,6 +704,7 @@ class SnippetSearchClient {
     * getTopUserIds0
     */
   def snippetForSearchClientGetTopUserIds(): Unit = {
+    // >SEPARATOR getTopUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -647,6 +714,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getUserId method.
@@ -654,6 +722,7 @@ class SnippetSearchClient {
     * getUserId0
     */
   def snippetForSearchClientGetUserId(): Unit = {
+    // >SEPARATOR getUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -664,6 +733,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the hasPendingMappings method.
@@ -671,6 +741,7 @@ class SnippetSearchClient {
     * hasPendingMappings with minimal parameters
     */
   def snippetForSearchClientHasPendingMappings(): Unit = {
+    // >SEPARATOR hasPendingMappings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -680,6 +751,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the listApiKeys method.
@@ -687,6 +759,7 @@ class SnippetSearchClient {
     * listApiKeys0
     */
   def snippetForSearchClientListApiKeys(): Unit = {
+    // >SEPARATOR listApiKeys
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -696,6 +769,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the listClusters method.
@@ -703,6 +777,7 @@ class SnippetSearchClient {
     * listClusters0
     */
   def snippetForSearchClientListClusters(): Unit = {
+    // >SEPARATOR listClusters
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -712,6 +787,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the listIndices method.
@@ -719,6 +795,7 @@ class SnippetSearchClient {
     * listIndices with minimal parameters
     */
   def snippetForSearchClientListIndices(): Unit = {
+    // >SEPARATOR listIndices
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -728,6 +805,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the listUserIds method.
@@ -735,6 +813,7 @@ class SnippetSearchClient {
     * listUserIds with minimal parameters
     */
   def snippetForSearchClientListUserIds(): Unit = {
+    // >SEPARATOR listUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -744,6 +823,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the multipleBatch method.
@@ -751,6 +831,7 @@ class SnippetSearchClient {
     * multipleBatch0
     */
   def snippetForSearchClientMultipleBatch(): Unit = {
+    // >SEPARATOR multipleBatch
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -769,6 +850,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the operationIndex method.
@@ -776,6 +858,7 @@ class SnippetSearchClient {
     * operationIndex0
     */
   def snippetForSearchClientOperationIndex(): Unit = {
+    // >SEPARATOR operationIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -791,6 +874,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the partialUpdateObject method.
@@ -798,6 +882,7 @@ class SnippetSearchClient {
     * partialUpdateObject0
     */
   def snippetForSearchClientPartialUpdateObject(): Unit = {
+    // >SEPARATOR partialUpdateObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -817,6 +902,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the removeUserId method.
@@ -824,6 +910,7 @@ class SnippetSearchClient {
     * removeUserId0
     */
   def snippetForSearchClientRemoveUserId(): Unit = {
+    // >SEPARATOR removeUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -834,6 +921,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the replaceSources method.
@@ -841,6 +929,7 @@ class SnippetSearchClient {
     * replaceSources0
     */
   def snippetForSearchClientReplaceSources(): Unit = {
+    // >SEPARATOR replaceSources
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -856,6 +945,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the restoreApiKey method.
@@ -863,6 +953,7 @@ class SnippetSearchClient {
     * restoreApiKey0
     */
   def snippetForSearchClientRestoreApiKey(): Unit = {
+    // >SEPARATOR restoreApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -873,6 +964,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the saveObject method.
@@ -880,6 +972,7 @@ class SnippetSearchClient {
     * saveObject0
     */
   def snippetForSearchClientSaveObject(): Unit = {
+    // >SEPARATOR saveObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -891,6 +984,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the saveRule method.
@@ -898,6 +992,7 @@ class SnippetSearchClient {
     * saveRule with minimal parameters
     */
   def snippetForSearchClientSaveRule(): Unit = {
+    // >SEPARATOR saveRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -920,6 +1015,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the saveRules method.
@@ -927,6 +1023,7 @@ class SnippetSearchClient {
     * saveRules with minimal parameters
     */
   def snippetForSearchClientSaveRules(): Unit = {
+    // >SEPARATOR saveRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -961,6 +1058,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the saveSynonym method.
@@ -968,6 +1066,7 @@ class SnippetSearchClient {
     * saveSynonym0
     */
   def snippetForSearchClientSaveSynonym(): Unit = {
+    // >SEPARATOR saveSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -985,6 +1084,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the saveSynonyms method.
@@ -992,6 +1092,7 @@ class SnippetSearchClient {
     * saveSynonyms0
     */
   def snippetForSearchClientSaveSynonyms(): Unit = {
+    // >SEPARATOR saveSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1017,6 +1118,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the search method.
@@ -1024,6 +1126,7 @@ class SnippetSearchClient {
     * search for a single hits request with minimal parameters
     */
   def snippetForSearchClientSearch(): Unit = {
+    // >SEPARATOR search
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1040,6 +1143,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchDictionaryEntries method.
@@ -1047,6 +1151,7 @@ class SnippetSearchClient {
     * get searchDictionaryEntries results with minimal parameters
     */
   def snippetForSearchClientSearchDictionaryEntries(): Unit = {
+    // >SEPARATOR searchDictionaryEntries
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1060,6 +1165,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchForFacetValues method.
@@ -1067,6 +1173,7 @@ class SnippetSearchClient {
     * get searchForFacetValues results with minimal parameters
     */
   def snippetForSearchClientSearchForFacetValues(): Unit = {
+    // >SEPARATOR searchForFacetValues
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1078,6 +1185,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchRules method.
@@ -1085,6 +1193,7 @@ class SnippetSearchClient {
     * searchRules0
     */
   def snippetForSearchClientSearchRules(): Unit = {
+    // >SEPARATOR searchRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1100,6 +1209,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchSingleIndex method.
@@ -1107,6 +1217,7 @@ class SnippetSearchClient {
     * search with minimal parameters
     */
   def snippetForSearchClientSearchSingleIndex(): Unit = {
+    // >SEPARATOR searchSingleIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1117,6 +1228,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchSynonyms method.
@@ -1124,6 +1236,7 @@ class SnippetSearchClient {
     * searchSynonyms with minimal parameters
     */
   def snippetForSearchClientSearchSynonyms(): Unit = {
+    // >SEPARATOR searchSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1134,6 +1247,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchUserIds method.
@@ -1141,6 +1255,7 @@ class SnippetSearchClient {
     * searchUserIds0
     */
   def snippetForSearchClientSearchUserIds(): Unit = {
+    // >SEPARATOR searchUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1156,6 +1271,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the setDictionarySettings method.
@@ -1163,6 +1279,7 @@ class SnippetSearchClient {
     * get setDictionarySettings results with minimal parameters
     */
   def snippetForSearchClientSetDictionarySettings(): Unit = {
+    // >SEPARATOR setDictionarySettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1177,6 +1294,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the setSettings method.
@@ -1184,6 +1302,7 @@ class SnippetSearchClient {
     * setSettings with minimal parameters
     */
   def snippetForSearchClientSetSettings(): Unit = {
+    // >SEPARATOR setSettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1198,6 +1317,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateApiKey method.
@@ -1205,6 +1325,7 @@ class SnippetSearchClient {
     * updateApiKey0
     */
   def snippetForSearchClientUpdateApiKey(): Unit = {
+    // >SEPARATOR updateApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1221,6 +1342,7 @@ class SnippetSearchClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

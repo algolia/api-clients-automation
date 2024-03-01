@@ -12,11 +12,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -26,11 +28,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -40,11 +44,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -54,11 +60,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -68,11 +76,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetClusterIncidents()
   {
+    // >SEPARATOR getClusterIncidents
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetClusterIncidentsAsync("c1-de");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -82,11 +92,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetClusterStatus()
   {
+    // >SEPARATOR getClusterStatus
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetClusterStatusAsync("c1-de");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -96,11 +108,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetIncidents()
   {
+    // >SEPARATOR getIncidents
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetIncidentsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -110,11 +124,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetIndexingTime()
   {
+    // >SEPARATOR getIndexingTime
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetIndexingTimeAsync("c1-de");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -124,11 +140,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetInventory()
   {
+    // >SEPARATOR getInventory
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetInventoryAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -138,11 +156,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetLatency()
   {
+    // >SEPARATOR getLatency
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetLatencyAsync("c1-de");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -152,6 +172,7 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetMetrics()
   {
+    // >SEPARATOR getMetrics
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -160,6 +181,7 @@ public class SnippetMonitoringClient
       Enum.Parse<Metric>("AvgBuildTime"),
       Enum.Parse<Period>("Minute")
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -169,11 +191,13 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetReachability()
   {
+    // >SEPARATOR getReachability
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetReachabilityAsync("c1-de");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -183,10 +207,12 @@ public class SnippetMonitoringClient
   /// </summary>
   public async Task SnippetForMonitoringClientGetStatus()
   {
+    // >SEPARATOR getStatus
     // Initialize the client
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
     var response = await client.GetStatusAsync();
+    // SEPARATOR<
   }
 }

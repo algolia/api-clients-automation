@@ -11,6 +11,7 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	   createAuthenticationOAuth
 	*/
 
+	// >SEPARATOR createAuthentication
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -31,6 +32,7 @@ func SnippetForCreateAuthenticationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCreateDestinationOfIngestion() {
 	/*
@@ -39,6 +41,7 @@ func SnippetForCreateDestinationOfIngestion() {
 	   createDestination
 	*/
 
+	// >SEPARATOR createDestination
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -59,6 +62,7 @@ func SnippetForCreateDestinationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCreateSourceOfIngestion() {
 	/*
@@ -67,6 +71,7 @@ func SnippetForCreateSourceOfIngestion() {
 	   createSource
 	*/
 
+	// >SEPARATOR createSource
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -89,6 +94,7 @@ func SnippetForCreateSourceOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCreateTaskOfIngestion() {
 	/*
@@ -97,6 +103,7 @@ func SnippetForCreateTaskOfIngestion() {
 	   createTaskOnDemand
 	*/
 
+	// >SEPARATOR createTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -117,6 +124,7 @@ func SnippetForCreateTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomDeleteOfIngestion() {
 	/*
@@ -125,6 +133,7 @@ func SnippetForCustomDeleteOfIngestion() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -143,6 +152,7 @@ func SnippetForCustomDeleteOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfIngestion() {
 	/*
@@ -151,6 +161,7 @@ func SnippetForCustomGetOfIngestion() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -169,6 +180,7 @@ func SnippetForCustomGetOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfIngestion() {
 	/*
@@ -177,6 +189,7 @@ func SnippetForCustomPostOfIngestion() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -195,6 +208,7 @@ func SnippetForCustomPostOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfIngestion() {
 	/*
@@ -203,6 +217,7 @@ func SnippetForCustomPutOfIngestion() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -221,6 +236,7 @@ func SnippetForCustomPutOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteAuthenticationOfIngestion() {
 	/*
@@ -229,6 +245,7 @@ func SnippetForDeleteAuthenticationOfIngestion() {
 	   deleteAuthentication
 	*/
 
+	// >SEPARATOR deleteAuthentication
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -247,6 +264,7 @@ func SnippetForDeleteAuthenticationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteDestinationOfIngestion() {
 	/*
@@ -255,6 +273,7 @@ func SnippetForDeleteDestinationOfIngestion() {
 	   deleteDestination
 	*/
 
+	// >SEPARATOR deleteDestination
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -273,6 +292,7 @@ func SnippetForDeleteDestinationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteSourceOfIngestion() {
 	/*
@@ -281,6 +301,7 @@ func SnippetForDeleteSourceOfIngestion() {
 	   deleteSource
 	*/
 
+	// >SEPARATOR deleteSource
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -299,6 +320,7 @@ func SnippetForDeleteSourceOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteTaskOfIngestion() {
 	/*
@@ -307,6 +329,7 @@ func SnippetForDeleteTaskOfIngestion() {
 	   deleteTask
 	*/
 
+	// >SEPARATOR deleteTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -325,6 +348,7 @@ func SnippetForDeleteTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDisableTaskOfIngestion() {
 	/*
@@ -333,6 +357,7 @@ func SnippetForDisableTaskOfIngestion() {
 	   disableTask
 	*/
 
+	// >SEPARATOR disableTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -351,6 +376,7 @@ func SnippetForDisableTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForEnableTaskOfIngestion() {
 	/*
@@ -359,6 +385,7 @@ func SnippetForEnableTaskOfIngestion() {
 	   enable task e2e
 	*/
 
+	// >SEPARATOR enableTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -377,6 +404,7 @@ func SnippetForEnableTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetAuthenticationOfIngestion() {
 	/*
@@ -385,6 +413,7 @@ func SnippetForGetAuthenticationOfIngestion() {
 	   getAuthentication
 	*/
 
+	// >SEPARATOR getAuthentication
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -403,6 +432,7 @@ func SnippetForGetAuthenticationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetAuthenticationsOfIngestion() {
 	/*
@@ -411,6 +441,7 @@ func SnippetForGetAuthenticationsOfIngestion() {
 	   getAuthentications
 	*/
 
+	// >SEPARATOR getAuthentications
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -427,6 +458,7 @@ func SnippetForGetAuthenticationsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetDestinationOfIngestion() {
 	/*
@@ -435,6 +467,7 @@ func SnippetForGetDestinationOfIngestion() {
 	   getDestination
 	*/
 
+	// >SEPARATOR getDestination
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -453,6 +486,7 @@ func SnippetForGetDestinationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetDestinationsOfIngestion() {
 	/*
@@ -461,6 +495,7 @@ func SnippetForGetDestinationsOfIngestion() {
 	   getDestinations
 	*/
 
+	// >SEPARATOR getDestinations
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -477,6 +512,7 @@ func SnippetForGetDestinationsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetDockerSourceStreamsOfIngestion() {
 	/*
@@ -485,6 +521,7 @@ func SnippetForGetDockerSourceStreamsOfIngestion() {
 	   getDockerSourceStreams
 	*/
 
+	// >SEPARATOR getDockerSourceStreams
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -503,6 +540,7 @@ func SnippetForGetDockerSourceStreamsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetEventOfIngestion() {
 	/*
@@ -511,6 +549,7 @@ func SnippetForGetEventOfIngestion() {
 	   getEvent
 	*/
 
+	// >SEPARATOR getEvent
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -529,6 +568,7 @@ func SnippetForGetEventOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetEventsOfIngestion() {
 	/*
@@ -537,6 +577,7 @@ func SnippetForGetEventsOfIngestion() {
 	   getEvents
 	*/
 
+	// >SEPARATOR getEvents
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -555,6 +596,7 @@ func SnippetForGetEventsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRunOfIngestion() {
 	/*
@@ -563,6 +605,7 @@ func SnippetForGetRunOfIngestion() {
 	   getRun
 	*/
 
+	// >SEPARATOR getRun
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -581,6 +624,7 @@ func SnippetForGetRunOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRunsOfIngestion() {
 	/*
@@ -589,6 +633,7 @@ func SnippetForGetRunsOfIngestion() {
 	   getRuns
 	*/
 
+	// >SEPARATOR getRuns
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -605,6 +650,7 @@ func SnippetForGetRunsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSourceOfIngestion() {
 	/*
@@ -613,6 +659,7 @@ func SnippetForGetSourceOfIngestion() {
 	   getSource
 	*/
 
+	// >SEPARATOR getSource
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -631,6 +678,7 @@ func SnippetForGetSourceOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSourcesOfIngestion() {
 	/*
@@ -639,6 +687,7 @@ func SnippetForGetSourcesOfIngestion() {
 	   getSources
 	*/
 
+	// >SEPARATOR getSources
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -655,6 +704,7 @@ func SnippetForGetSourcesOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTaskOfIngestion() {
 	/*
@@ -663,6 +713,7 @@ func SnippetForGetTaskOfIngestion() {
 	   getTask
 	*/
 
+	// >SEPARATOR getTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -681,6 +732,7 @@ func SnippetForGetTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTasksOfIngestion() {
 	/*
@@ -689,6 +741,7 @@ func SnippetForGetTasksOfIngestion() {
 	   getTasks
 	*/
 
+	// >SEPARATOR getTasks
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -705,6 +758,7 @@ func SnippetForGetTasksOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForRunTaskOfIngestion() {
 	/*
@@ -713,6 +767,7 @@ func SnippetForRunTaskOfIngestion() {
 	   runTask
 	*/
 
+	// >SEPARATOR runTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -731,6 +786,7 @@ func SnippetForRunTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchAuthenticationsOfIngestion() {
 	/*
@@ -739,6 +795,7 @@ func SnippetForSearchAuthenticationsOfIngestion() {
 	   searchAuthentications
 	*/
 
+	// >SEPARATOR searchAuthentications
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -759,6 +816,7 @@ func SnippetForSearchAuthenticationsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchDestinationsOfIngestion() {
 	/*
@@ -767,6 +825,7 @@ func SnippetForSearchDestinationsOfIngestion() {
 	   searchDestinations
 	*/
 
+	// >SEPARATOR searchDestinations
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -787,6 +846,7 @@ func SnippetForSearchDestinationsOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchSourcesOfIngestion() {
 	/*
@@ -795,6 +855,7 @@ func SnippetForSearchSourcesOfIngestion() {
 	   searchSources
 	*/
 
+	// >SEPARATOR searchSources
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -815,6 +876,7 @@ func SnippetForSearchSourcesOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchTasksOfIngestion() {
 	/*
@@ -823,6 +885,7 @@ func SnippetForSearchTasksOfIngestion() {
 	   searchTasks
 	*/
 
+	// >SEPARATOR searchTasks
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -843,6 +906,7 @@ func SnippetForSearchTasksOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	/*
@@ -851,6 +915,7 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	   triggerDockerSourceDiscover
 	*/
 
+	// >SEPARATOR triggerDockerSourceDiscover
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -869,6 +934,7 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateAuthenticationOfIngestion() {
 	/*
@@ -877,6 +943,7 @@ func SnippetForUpdateAuthenticationOfIngestion() {
 	   updateAuthentication
 	*/
 
+	// >SEPARATOR updateAuthentication
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -896,6 +963,7 @@ func SnippetForUpdateAuthenticationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateDestinationOfIngestion() {
 	/*
@@ -904,6 +972,7 @@ func SnippetForUpdateDestinationOfIngestion() {
 	   updateDestination
 	*/
 
+	// >SEPARATOR updateDestination
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -923,6 +992,7 @@ func SnippetForUpdateDestinationOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateSourceOfIngestion() {
 	/*
@@ -931,6 +1001,7 @@ func SnippetForUpdateSourceOfIngestion() {
 	   updateSource
 	*/
 
+	// >SEPARATOR updateSource
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -950,6 +1021,7 @@ func SnippetForUpdateSourceOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateTaskOfIngestion() {
 	/*
@@ -958,6 +1030,7 @@ func SnippetForUpdateTaskOfIngestion() {
 	   updateTask
 	*/
 
+	// >SEPARATOR updateTask
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -977,4 +1050,5 @@ func SnippetForUpdateTaskOfIngestion() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
