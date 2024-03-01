@@ -9,6 +9,7 @@ import type { RequestOptions } from '{{{npmNamespace}}}/client-common';
 //
 // {{{description}}}
 export async function snippetFor{{method}}(): Promise<void> {
+  // >SEPARATOR {{method}}
   // Initialize the client
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
@@ -20,8 +21,9 @@ export async function snippetFor{{method}}(): Promise<void> {
   // Call the API
   const response = await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 {{/snippet}}

@@ -10,6 +10,7 @@ final class {{client}}Snippet {
   //
   // {{{description}}}
   func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() async throws {
+    // >SEPARATOR {{method}}
     // Initialize the client
     let client = try {{client}}(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
 
@@ -23,6 +24,7 @@ final class {{client}}Snippet {
 
     // Call the API
     let _ = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+    // SEPARATOR<
   }
   {{/snippet}}
   {{/blocksRequests}}

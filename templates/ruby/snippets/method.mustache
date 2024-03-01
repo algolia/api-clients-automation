@@ -6,6 +6,7 @@ require 'algolia'
 #
 # {{{description}}}
 def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}
+  # >SEPARATOR {{method}}
   # Initialize the client
   client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create('YOUR_APP_ID','YOUR_API_KEY'{{#hasRegionalHost}},'YOUR_APP_ID_REGION'{{/hasRegionalHost}})
 
@@ -17,6 +18,7 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 {{/snippet}}

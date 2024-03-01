@@ -20,6 +20,7 @@ class Snippet{{client}} {
     * {{{description}}}
     */
   def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}(): Unit = {
+    // >SEPARATOR {{method}}
     // Initialize the client
     val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"YOUR_APP_ID_REGION"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}}{{/hasRegionalHost}})
 
@@ -42,6 +43,7 @@ class Snippet{{client}} {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   {{/snippet}}
